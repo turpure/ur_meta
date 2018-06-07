@@ -21,7 +21,7 @@ export default {
     });
 
     //登录
-    mock.onPost('/v1/user/login').reply(config => {
+    mock.onPost('/login').reply(config => {
       let {username, password} = JSON.parse(config.data);
       return new Promise((resolve, reject) => {
         let user = null;
