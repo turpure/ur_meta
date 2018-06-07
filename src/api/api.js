@@ -1,8 +1,9 @@
 import axios from 'axios';
 
-let base = '';
+// http://192.168.0.134:8089/v1/user/login 
+let base = 'http://192.168.0.134:8089';
 
-export const requestLogin = params => { return axios.post(`${base}/login`, params).then(res => res.data); };
+export const requestLogin = params => { return axios.post(`${base}/v1/user/login`, params).then(res => res.data); };
 
 export const getUserList = params => { return axios.get(`${base}/user/list`, { params: params }); };
 
