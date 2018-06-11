@@ -72,12 +72,13 @@
 </template>
 
 <script>
+	import {getUserInfo} from '../api/login'
 	export default {
 		data() {
 			return {
 				sysName:'VUEADMIN',
 				collapsed:false,
-				sysUserName: '',
+				sysUserName: 'fefefe',
 				sysUserAvatar: '',
 				form: {
 					name: '',
@@ -126,12 +127,23 @@
 			}
 		},
 		mounted() {
-			var user = sessionStorage.getItem('user');
-			if (user) {
-				user = JSON.parse(user);
-				this.sysUserName = user.name || '';
-				this.sysUserAvatar = user.avatar || '';
-			}
+			// var user = sessionStorage.getItem('user');
+			var token = this.$store.getters.token;
+			console.log(token);
+			return new Promise((resolve, reject) => {
+        	getUserInfo(token).then(response => {
+			  const data = response.data.data
+			  this.sysUserName = data.username
+          	resolve()
+        	}).catch(error => {
+         	reject(error)
+        		})
+      		})
+			// if (user) {
+			// 	user = JSON.parse(user);
+			// 	this.sysUserName = user.name || '';
+			// 	this.sysUserAvatar = user.avatar || '';
+			// }
 
 		}
 	}
