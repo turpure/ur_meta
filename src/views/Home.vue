@@ -78,7 +78,7 @@
 			return {
 				sysName:'VUEADMIN',
 				collapsed:false,
-				sysUserName: 'fefefe',
+				sysUserName: '',
 				sysUserAvatar: '',
 				form: {
 					name: '',
@@ -127,24 +127,21 @@
 			}
 		},
 		mounted() {
-			// var user = sessionStorage.getItem('user');
-			var token = this.$store.getters.token;
-			console.log(token);
-			return new Promise((resolve, reject) => {
-        	getUserInfo(token).then(response => {
-			  const data = response.data.data
-			  this.sysUserName = data.username
-          	resolve()
-        	}).catch(error => {
-         	reject(error)
-        		})
-      		})
-			// if (user) {
-			// 	user = JSON.parse(user);
-			// 	this.sysUserName = user.name || '';
-			// 	this.sysUserAvatar = user.avatar || '';
-			// }
-
+			// var token = this.$store.getters.token;
+			// return new Promise((resolve, reject) => {
+        	// getUserInfo(token).then(response => {
+			//   const data = response.data.data
+			//   this.sysUserName = data.username
+          	// resolve()
+        	// }).catch(error => {
+         	// reject(error)
+        	// 	})
+			  // })
+			  var token = this.$store.getters.token;
+			  this.$store.dispatch('GetUserInfo').then(()=>{
+				  console.log(this.$store.getters);
+				  this.sysUserName = this.$store.getters.name;
+			  })
 		}
 	}
 
