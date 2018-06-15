@@ -3,19 +3,26 @@ import { Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 
+
+// http://192.168.0.134:8089/v1/user/login 
+
 // create an axios instance
 const service = axios.create({
+  // baseURL: 'http://192.168.0.134:8089', // api的base_url
   baseURL: process.env.BASE_API, // api的base_url
   timeout: 5000 // request timeout
 })
 
+
 // request interceptor
 service.interceptors.request.use(config => {
+  // console.log(1)
+  // console.log(store.getters.access_token)
   // Do something before request is sent
+  
   if (store.getters.token) {
     // config.headers['Vue-Token'] = getToken() // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
     config.headers['Authorization'] = 'Bearer ' + getToken() // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
-    console.log(config.headers)
   }
   return config
 }, error => {

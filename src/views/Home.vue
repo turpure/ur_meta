@@ -2,16 +2,18 @@
 	<el-row class="container">
 		<el-col :span="24" class="header">
 			<el-col :span="10" class="logo" :class="collapsed?'logo-collapse-width':'logo-width'">
-				{{collapsed?'':sysName}}
+				<!-- {{collapsed?'':sysName}} -->
+				UR-META
+				<!-- stop -->
 			</el-col>
-			<el-col :span="10">
+			<!-- <el-col :span="10">
 				<div class="tools" @click.prevent="collapse">
 					<i class="fa fa-align-justify"></i>
 				</div>
-			</el-col>
+			</el-col> -->
 			<el-col :span="4" class="userinfo">
 				<el-dropdown trigger="hover">
-					<span class="el-dropdown-link userinfo-inner"><img :src="this.sysUserAvatar" /> {{sysUserName}}</span>
+					<span class="el-dropdown-link userinfo-inner"><img :src="this.sysUserAvatar" />{{sysUserName}}</span>
 					<el-dropdown-menu slot="dropdown">
 						<el-dropdown-item>我的消息</el-dropdown-item>
 						<el-dropdown-item>设置</el-dropdown-item>
@@ -23,18 +25,29 @@
 		<el-col :span="24" class="main">
 			<aside :class="collapsed?'menu-collapsed':'menu-expanded'">
 				<!--导航菜单-->
+				
 				<el-menu :default-active="$route.path" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose" @select="handleselect"
 					 unique-opened router v-show="!collapsed">
-					<template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
+					<template v-for="(item,index) in lside.data" v-if="!item.hidden">
 						<el-submenu :index="index+''" v-if="!item.leaf">
 							<template slot="title"><i :class="item.iconCls"></i>{{item.name}}</template>
-							<el-menu-item v-for="child in item.children" :index="child.path" :key="child.path" v-if="!child.hidden">{{child.name}}</el-menu-item>
+							<!-- <el-menu-item v-for="child in item.children" :index="child.path" :key="child.path" v-if="!child.hidden">{{child.name}}</el-menu-item>	 -->
+							<el-menu-item><router-link to="/sell">销售毛利润</router-link></el-menu-item>
+							<el-menu-item><router-link to="/exploit">开发毛利润</router-link></el-menu-item>
+							<el-menu-item><router-link to="/purchease">采购毛利润</router-link></el-menu-item>
+							<el-menu-item><router-link to="/artist">美工买利润</router-link></el-menu-item>
+							<el-menu-item><router-link to="/ebaysell">ebay销售毛利润</router-link></el-menu-item>
+							<el-menu-item><router-link to="/trend">销售额走势</router-link></el-menu-item>
+							<el-menu-item><router-link to="/fixed">死库</router-link></el-menu-item>
+							<el-menu-item><router-link to="/operate">运营</router-link></el-menu-item>
+							<el-menu-item><router-link to="/dollar">美元</router-link></el-menu-item>						
+
 						</el-submenu>
-						<el-menu-item v-if="item.leaf&&item.children.length>0" :index="item.children[0].path"><i :class="item.iconCls"></i>{{item.children[0].name}}</el-menu-item>
+						<!-- <el-menu-item v-if="item.leaf&&item.children.length>0" :index="item.children[0].path"><i :class="item.iconCls"></i>{{item.children[0].name}}</el-menu-item> -->
 					</template>
 				</el-menu>
 				<!--导航菜单-折叠后-->
-				<ul class="el-menu el-menu-vertical-demo collapsed" v-show="collapsed" ref="menuCollapsed">
+				<!-- <ul class="el-menu el-menu-vertical-demo collapsed" v-show="collapsed" ref="menuCollapsed">
 					<li v-for="(item,index) in $router.options.routes" v-if="!item.hidden" class="el-submenu item">
 						<template v-if="!item.leaf">
 							<div class="el-submenu__title" style="padding-left: 20px;" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)"><i :class="item.iconCls"></i></div>
@@ -48,7 +61,7 @@
 							</li>
 						</template>
 					</li>
-				</ul>
+				</ul> -->
 			</aside>
 			<section class="content-container">
 				<div class="grid-content bg-purple-light">
@@ -72,7 +85,10 @@
 </template>
 
 <script>
-	import {getUserInfo} from '../api/login'
+
+import {removeToken } from '../utils/auth'
+import { getMenu } from '../api/login'
+
 	export default {
 		data() {
 			return {
@@ -80,6 +96,7 @@
 				collapsed:false,
 				sysUserName: '',
 				sysUserAvatar: '',
+				lside:[],
 				form: {
 					name: '',
 					region: '',
@@ -104,19 +121,17 @@
 			},
 			handleselect: function (a, b) {
 			},
-			//退出登录
 			logout: function () {
 				var _this = this;
 				this.$confirm('确认退出吗?', '提示', {
 					//type: 'warning'
 				}).then(() => {
 					sessionStorage.removeItem('user');
+					removeToken();
 					_this.$router.push('/login');
 				}).catch(() => {
 
 				});
-
-
 			},
 			//折叠导航栏
 			collapse:function(){
@@ -124,24 +139,16 @@
 			},
 			showMenu(i,status){
 				this.$refs.menuCollapsed.getElementsByClassName('submenu-hook-'+i)[0].style.display=status?'block':'none';
-			}
+			},
+			
 		},
 		mounted() {
-			// var token = this.$store.getters.token;
-			// return new Promise((resolve, reject) => {
-        	// getUserInfo(token).then(response => {
-			//   const data = response.data.data
-			//   this.sysUserName = data.username
-          	// resolve()
-        	// }).catch(error => {
-         	// reject(error)
-        	// 	})
-			  // })
-			  var token = this.$store.getters.token;
-			  this.$store.dispatch('GetUserInfo').then(()=>{
-				  console.log(this.$store.getters);
-				  this.sysUserName = this.$store.getters.name;
-			  })
+			this.$store.dispatch('GetUserInfo').then(() => {
+				this.sysUserName = this.$store.getters.name
+			}),
+			getMenu().then(response=>{
+				this.lside = response.data
+			})
 		}
 	}
 

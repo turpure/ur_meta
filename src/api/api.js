@@ -1,5 +1,4 @@
 import request from '@/utils/request'
-
 export function loginByUsername(username, password) {
   const data = {
     username,
@@ -19,11 +18,7 @@ export function logout() {
   })
 }
 
-export function getUserInfo(token) {
-  return request({
-    url: '/user/user-profile',
-    method: 'get',
-    params: { token }
-  })
-}
+
+
+
 

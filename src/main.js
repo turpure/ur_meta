@@ -15,6 +15,8 @@ import routes from './routes'
 // Mock.bootstrap();
 import 'font-awesome/css/font-awesome.min.css'
 
+import { getToken } from './utils/auth'
+
 Vue.use(ElementUI)
 Vue.use(VueRouter)
 Vue.use(Vuex)
