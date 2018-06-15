@@ -51,6 +51,7 @@ const user = {
         loginByUsername(username, userInfo.password).then(response => {
           const data = response.data.data
           commit('SET_TOKEN', data.access_token)
+          console.log(data.access_token)
           setToken(data.access_token)
           resolve()
         }).catch(error => {
