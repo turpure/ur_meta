@@ -1,11 +1,6 @@
 import request from '@/utils/request'
-// import getToken from '@/utils/auth'
-import Cookies from 'js-cookie'
 
-
-const TokenKey = 'Admin-Token'
-
-
+// http://192.168.0.134:8089/v1/user/login 
 
 export function loginByUsername(username, password) {
   const data = {
@@ -26,17 +21,10 @@ export function logout() {
   })
 }
 
-export function getUserInfo(access_token) {
+export function getUserInfo(token) {
   return request({
-    url: '/v1/user/login',
+    url: '/user/info',
     method: 'get',
-    params: { access_token }
+    params: { token }
   })
 }
-
-export function getMyToken() {
-  return Cookies.get(TokenKey)
-}
-
-
-

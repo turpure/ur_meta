@@ -10,6 +10,18 @@ import Page5 from './views/nav2/Page5.vue'
 import Page6 from './views/nav3/Page6.vue'
 import echarts from './views/charts/echarts.vue'
 
+import sell from './views/reports/sell.vue'
+import exploit from './views/reports/exploit.vue'
+import purchease from './views/reports/purchease.vue'
+import artist from './views/reports/artist.vue'
+import ebaysell from './views/reports/ebaysell.vue'
+import trend from './views/reports/trend.vue'
+import fixed from './views/reports/fixed.vue'
+import operate from './views/reports/operate.vue'
+import dollar from './views/reports/dollar.vue'
+
+import aaa from './views/reports/aaa.vue'
+
 let routes = [
     {
         path: '/login',
@@ -23,7 +35,23 @@ let routes = [
         name: '',
         hidden: true
     },
-    //{ path: '/main', component: Main },
+    { path: '/main', component: Main },
+    {
+        path:'/',
+        component:Home,
+        children:[
+            {path:'/sell',component:sell},
+            {path:'/exploit',component:exploit},
+            {path:'/purchease',component:purchease},
+            {path:'/artist',component:artist},
+            {path:'/ebaysell',component:ebaysell},
+            {path:'/trend',component:trend},
+            {path:'/fixed',component:fixed},
+            {path:'/operate',component:operate},
+            {path:'/dollar',component:dollar},
+            {path:'/aaa',component:aaa},
+        ]
+    },
     {
         path: '/',
         component: Home,
