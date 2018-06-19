@@ -11,11 +11,11 @@ import Page6 from './views/nav3/Page6.vue'
 import echarts from './views/charts/echarts.vue'
 
 import sell from './views/reports/sell.vue'
-import exploit from './views/reports/exploit.vue'
-import purchease from './views/reports/purchease.vue'
+import develop from './views/reports/develop.vue'
+import purchase from './views/reports/purchase.vue'
 import artist from './views/reports/artist.vue'
 import ebaysell from './views/reports/ebaysell.vue'
-import trend from './views/reports/trend.vue'
+import trending from './views/reports/trending.vue'
 import fixed from './views/reports/fixed.vue'
 import operate from './views/reports/operate.vue'
 import dollar from './views/reports/dollar.vue'
@@ -41,11 +41,11 @@ let routes = [
         component:Home,
         children:[
             {path:'/sell',component:sell},
-            {path:'/exploit',component:exploit},
-            {path:'/purchease',component:purchease},
+            {path:'/develop',component:develop},
+            {path:'/purchase',component:purchase},
             {path:'/artist',component:artist},
             {path:'/ebaysell',component:ebaysell},
-            {path:'/trend',component:trend},
+            {path:'/trending',component:trending},
             {path:'/fixed',component:fixed},
             {path:'/operate',component:operate},
             {path:'/dollar',component:dollar},

@@ -28,11 +28,14 @@
 				
 				<el-menu :default-active="$route.path" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose" @select="handleselect"
 					 unique-opened router v-show="!collapsed">
-					<template v-for="(item,index) in lside.data" v-if="!item.hidden">
-						<el-submenu :index="index+''" v-if="!item.leaf">
+					<template v-for="(item,index) in lside">
+						<el-submenu :index="index+''">
 							<template slot="title"><i :class="item.iconCls"></i>{{item.name}}</template>
-							<!-- <el-menu-item v-for="child in item.children" :index="child.path" :key="child.path" v-if="!child.hidden">{{child.name}}</el-menu-item>	 -->
-							<el-menu-item><router-link to="/sell">销售毛利润</router-link></el-menu-item>
+							<el-menu-item v-for="child in item.children" :index="child.route" :key="child.route" >{{child.name}}</el-menu-item>	
+							<!-- <el-menu-item  v-for="child in item.children" :index="child.route" :key="child.route" >
+								<router-link :to="child.route"><a>{{child.name}}</a></router-link>
+								</el-menu-item>	 -->
+							<!-- <el-menu-item><router-link to="/sell">销售毛利润</router-link></el-menu-item>
 							<el-menu-item><router-link to="/exploit">开发毛利润</router-link></el-menu-item>
 							<el-menu-item><router-link to="/purchease">采购毛利润</router-link></el-menu-item>
 							<el-menu-item><router-link to="/artist">美工买利润</router-link></el-menu-item>
@@ -40,7 +43,7 @@
 							<el-menu-item><router-link to="/trend">销售额走势</router-link></el-menu-item>
 							<el-menu-item><router-link to="/fixed">死库</router-link></el-menu-item>
 							<el-menu-item><router-link to="/operate">运营</router-link></el-menu-item>
-							<el-menu-item><router-link to="/dollar">美元</router-link></el-menu-item>						
+							<el-menu-item><router-link to="/dollar">美元</router-link></el-menu-item>						 -->
 
 						</el-submenu>
 						<!-- <el-menu-item v-if="item.leaf&&item.children.length>0" :index="item.children[0].path"><i :class="item.iconCls"></i>{{item.children[0].name}}</el-menu-item> -->
@@ -147,7 +150,7 @@ import { getMenu } from '../api/login'
 				this.sysUserName = this.$store.getters.name
 			}),
 			getMenu().then(response=>{
-				this.lside = response.data
+				this.lside = response.data.data
 			})
 		}
 	}
