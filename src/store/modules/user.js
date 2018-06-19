@@ -60,7 +60,6 @@ const user = {
     },
     // 获取用户信息
     GetUserInfo({ commit, state }) {
-      console.log("here")
       return new Promise((resolve, reject) => {
         getUserInfo().then(response => {
           if (!response.data) { // 由于mockjs 不支持自定义状态码只能这样hack

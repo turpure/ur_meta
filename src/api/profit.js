@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // section 部门 http://192.168.0.134:8089/v1/condition/index
 export function getSection(){
     return request({
-        url: '/v1/condition/index',
+        url: '/condition/index',
         method: 'get',
     })
 }
@@ -11,14 +11,14 @@ export function getSection(){
 // platform 平台 http://192.168.0.134:8089/v1/condition/plat 
 export function getPlatform(){
     return request({
-        url: '/v1/condition/plat',
+        url: '/condition/plat',
         method: 'get',
     })
 }
 //member 销售员 http://192.168.0.134:8089/v1/condition/member 
 export function getMember(){
     return request({
-        url: '/v1/condition/member',
+        url: '/condition/member',
         method: 'get',
     })
 }
@@ -27,7 +27,7 @@ export function getMember(){
 
 export function getStore(){
     return request({
-        url: '/v1/condition/store',
+        url: '/condition/store',
         method: 'get',
     })
 }
@@ -36,7 +36,7 @@ export function getStore(){
 
 export function getAccount(){
     return request({
-        url: '/v1/condition/account',
+        url: '/condition/account',
         method: 'get',
     })
 }

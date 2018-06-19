@@ -1,4 +1,6 @@
 import request from '@/utils/request'
+import store from '@/store'
+
 export function loginByUsername(username, password) {
   const data = {
     username,
@@ -17,6 +19,11 @@ export function logout() {
     method: 'post'
   })
 }
+
+export function getMyToken() {
+  return store.getters.token
+}
+
 
 
 
