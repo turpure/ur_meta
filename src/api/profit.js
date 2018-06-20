@@ -40,3 +40,13 @@ export function getAccount(){
         method: 'get',
     })
 }
+
+
+// name:sales method:post url:http://192.168.0.134:8089/v1/report/sales
+
+export function getSales(){
+    return request({
+        url: '/report/sales',
+        method: 'post'
+    })
+}
