@@ -50,10 +50,10 @@
         <el-button type="primary" @click="onSubmit(conditionForm)">查询</el-button>
       </el-form-item> 
     </el-form>
-
-     <el-table :data="tableData" height="800" style="width: 100%">
-      <el-table-column prop="pingtai" label="日期" width="180"></el-table-column>
-      <el-table-column prop="suffix" label="姓名" width="180"></el-table-column>
+    <el-button type="default"  @click="exportExcel">导出Excel</el-button>
+     <el-table :data="tableData" id="sale-table" stripe show-summary  :summary-method="getSummaries" height="680" style="width: 100%">
+      <el-table-column prop="pingtai" label="日期" fixed></el-table-column>
+      <el-table-column prop="suffix" label="姓名" fixed></el-table-column>
       <el-table-column prop="salesman" label="地址"></el-table-column>
       <el-table-column prop="salemoney" label="地址"></el-table-column>
       <el-table-column prop="salemoneyzn" label="地址"></el-table-column>
@@ -85,6 +85,8 @@ import {
   getAccount,
   getSales
 } from "../../api/profit";
+import FileSaver from 'file-saver'
+import XLSX from 'xlsx'
 
 export default {
   data() {
@@ -146,6 +148,44 @@ export default {
         this.tableData = response.data.data;
       });
     },
+    //导出
+     exportExcel () {
+         /* generate workbook object from table */
+         var wb = XLSX.utils.table_to_book(document.querySelector('#sale-table'))
+         /* get binary string as output */
+         var wbout = XLSX.write(ab, { bookType: 'xlsx', bookSST: true, type: 'array' })
+         try {
+             FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), 'sheetjs.xlsx')
+         } catch (e) { if (typeof console !== 'undefined') console.log(e, wbout) }
+        //  return wbout
+     },
+    //合计
+     getSummaries(param) {
+        const { columns, data } = param;
+        const sums = [];
+        columns.forEach((column, index) => {
+          if (index === 0) {
+            sums[index] = '总价';
+            return;
+          }
+          const values = data.map(item => Number(item[column.property]));
+          if (!values.every(value => isNaN(value))) {
+            sums[index] = values.reduce((prev, curr) => {
+              const value = Number(curr);
+              if (!isNaN(value)) {
+                return prev + curr;
+              } else {
+                return prev;
+              }
+            }, 0);
+            sums[index] += ' 元';
+          } else {
+            sums[index] = 'N/A';
+          }
+        });
+
+        return sums;
+      },
     //折叠导航栏
     collapse: function() {
       this.collapsed = !this.collapsed;
