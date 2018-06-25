@@ -13,3 +13,7 @@ export function setToken(access_token) {
 export function removeToken() {
   return Cookies.remove(TokenKey)
 }
+
+export function setBackendDebug() {
+  return Cookies.set('Cookies', 'XDEBUG_SESSION=PHPSTORM')
+}

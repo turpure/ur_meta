@@ -44,9 +44,11 @@ export function getAccount(){
 
 // name:sales method:post url:http://192.168.0.134:8089/v1/report/sales
 
-export function getSales(){
+export function getSales(param){
+    const data = {'condition': param}
     return request({
         url: '/report/sales',
-        method: 'post'
+        method: 'post',
+        data
     })
 }

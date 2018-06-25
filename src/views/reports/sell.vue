@@ -4,22 +4,22 @@
     <el-form :model="conditionForm" :inline="true" ref="conditionForm" class="demo-form-inline">
        <el-form-item   label="部门"  class="input" >
         <el-select v-model="conditionForm.department" placeholder="部门">
-          <el-option v-for="(item,index) in department" :index="index" :key="item.id" :label="item.department" :value="item.id"></el-option>
+          <el-option v-for="(item,index) in department" :index="index" :key="item.department" :label="item.department" :value="item.department"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="平台"  class="input" >
         <el-select v-model="conditionForm.plat" placeholder="平台">
-          <el-option  v-for="(item,index) in plat" :index="index" :key="item.id" :label="item.plat" :value="item.id"></el-option>
+          <el-option  v-for="(item,index) in plat" :index="index" :key="item.plat" :label="item.plat" :value="item.plat"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="销售员" class="input" >
         <el-select v-model="conditionForm.member" placeholder="销售员">
-          <el-option v-for="(item,index) in member" :index="index" :key="item.id" :label="item.username" :value="item.id"></el-option>
+          <el-option v-for="(item,index) in member" :index="index" :key="item.username" :label="item.username" :value="item.username"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="出货仓库" class="input">
         <el-select v-model="conditionForm.store" multiple collapse-tags placeholder="请选择">
-            <el-option v-for="(item,index) in store" :index="index" :key="item.id" :label="item.store" :value="item.id">
+            <el-option v-for="(item,index) in store" :index="index" :key="item.store" :label="item.store" :value="item.store">
             </el-option>
         </el-select>  
       </el-form-item>
@@ -33,6 +33,7 @@
            <el-date-picker
               v-model="conditionForm.dateRange"
               type="daterange"
+              value-format="yyyy-MM-dd"
               align="right"
               unlink-panels
               range-separator="至"
@@ -43,7 +44,7 @@
         </el-form-item>    
         <el-form-item label="账号" class="input" >
           <el-select v-model="conditionForm.account" multiple collapse-tags placeholder="账号" style="margin-left:12px">
-            <el-option v-for="(item,index) in account"  :index="item[index]" :key="item.id" :label="item.store" :value="item.id"></el-option>
+            <el-option v-for="(item,index) in account"  :index="item[index]" :key="item.store" :label="item.store" :value="item.store"></el-option>
           </el-select>
         </el-form-item>
       <el-form-item >
@@ -51,27 +52,27 @@
       </el-form-item> 
     </el-form>
     <el-button type="default"  @click="exportExcel">导出Excel</el-button>
-     <el-table :data="tableData" id="sale-table" stripe show-summary  :summary-method="getSummaries" height="680" style="width: 100%">
-      <el-table-column prop="pingtai" label="日期" fixed></el-table-column>
-      <el-table-column prop="suffix" label="姓名" fixed></el-table-column>
-      <el-table-column prop="salesman" label="地址"></el-table-column>
-      <el-table-column prop="salemoney" label="地址"></el-table-column>
-      <el-table-column prop="salemoneyzn" label="地址"></el-table-column>
-      <el-table-column prop="ebayFeeebay" label="地址"></el-table-column>
-      <el-table-column prop="ebayfeeznebay" label="地址"></el-table-column>
-      <el-table-column prop="ppFee" label="地址"></el-table-column>
-      <el-table-column prop="ppFeezn" label="地址"></el-table-column>
-      <el-table-column prop="costmoney" label="地址"></el-table-column>
-      <el-table-column prop="expressFare" label="地址"></el-table-column>
-      <el-table-column prop="inpackagemoney" label="地址"></el-table-column>
-      <el-table-column prop="storename" label="地址"></el-table-column>
-      <el-table-column prop="refund" label="地址"></el-table-column>
-      <el-table-column prop="refundrate" label="地址"></el-table-column>
-      <el-table-column prop="diefeeZn" label="地址"></el-table-column>
-      <el-table-column prop="insertionFee" label="地址"></el-table-column>
-      <el-table-column prop="saleOpeFeeZn" label="地址"></el-table-column>
-      <el-table-column prop="grossprofit" label="地址"></el-table-column>
-      <el-table-column prop="grossprofitRate" label="地址"></el-table-column>
+ <el-table :data="tableData" id="sale-table" v-loading="listLoading"  show-summary  :summary-method="getSummaries" height="680" style="width: 100%">
+      <el-table-column prop="pingtai" label="平台" fixed></el-table-column>
+      <el-table-column prop="suffix" label="账号" fixed></el-table-column>
+      <el-table-column prop="salesman" label="销售员"></el-table-column>
+      <el-table-column prop="salemoney" label="成交价$"></el-table-column>
+      <el-table-column prop="salemoneyzn" label="成交价￥"></el-table-column>
+      <el-table-column prop="ebayFeeebay" label="eBay成交费$"></el-table-column>
+      <el-table-column prop="ebayfeeznebay" label="eBay成交费￥"></el-table-column>
+      <el-table-column prop="ppFee" label="PP成交费$"></el-table-column>
+      <el-table-column prop="ppFeezn" label="PP成交费￥"></el-table-column>
+      <el-table-column prop="costmoney" label="商品成本￥"></el-table-column>
+      <el-table-column prop="expressFare" label="运费成本￥"></el-table-column>
+      <el-table-column prop="inpackagemoney" label="包装成本￥"></el-table-column>
+      <el-table-column prop="storename" label="发货仓库"></el-table-column>
+      <el-table-column prop="refund" label="退款金额￥"></el-table-column>
+      <el-table-column prop="refundrate" label="退款率%"></el-table-column>
+      <el-table-column prop="diefeeZn" label="死库处理￥"></el-table-column>
+      <el-table-column prop="insertionFee" label="店铺杂费￥"></el-table-column>
+      <el-table-column prop="saleOpeFeeZn" label="运营杂费￥"></el-table-column>
+      <el-table-column prop="grossprofit" label="毛利￥"></el-table-column>
+      <el-table-column prop="grossprofitRate" label="毛利率%"></el-table-column>
     </el-table>
     </div>
 </template>
@@ -87,17 +88,17 @@ import {
 } from "../../api/profit";
 import FileSaver from 'file-saver'
 import XLSX from 'xlsx'
-
 export default {
   data() {
     return {
       tableData: [
       ],
+      listLoading: false,
       department: [],
       plat: [],
       member: [],
       store: [{ id: 1, store: "中国仓" }, { id: 2, store: "海外仓" }],
-      dateType: [{ id: 1, type: "发货时间" }, { id: 2, type: "交易时间" }],
+      dateType: [{ id: 0, type: "发货时间" }, { id: 1, type: "交易时间" }],
       dateRange: [],
       account: [],
       conditionForm: {
@@ -144,7 +145,9 @@ export default {
   },
   methods: {
     onSubmit(form) {
-      getSales().then(response => {
+      this.listLoading = true;
+      getSales(form).then(response => {
+        this.listLoading = false;
         this.tableData = response.data.data;
       });
     },
@@ -153,7 +156,7 @@ export default {
          /* generate workbook object from table */
          var wb = XLSX.utils.table_to_book(document.querySelector('#sale-table'))
          /* get binary string as output */
-         var wbout = XLSX.write(ab, { bookType: 'xlsx', bookSST: true, type: 'array' })
+         var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'array' })
          try {
              FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), 'sheetjs.xlsx')
          } catch (e) { if (typeof console !== 'undefined') console.log(e, wbout) }
@@ -178,7 +181,7 @@ export default {
                 return prev;
               }
             }, 0);
-            sums[index] += ' 元';
+            sums[index] = Math.round(sums[index]*100)/100;
           } else {
             sums[index] = 'N/A';
           }
@@ -224,3 +227,4 @@ export default {
   }
 }
 </style>
+

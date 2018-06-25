@@ -3,14 +3,12 @@ import { Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 
-
-// http://192.168.0.134:8089/v1/user/login 
-
 // create an axios instance
 const service = axios.create({
   // baseURL: 'http://192.168.0.134:8089', // api的base_url
   baseURL: process.env.BASE_API, // api的base_url
-  timeout: 500000 // request timeout
+  timeout: 500000, // request timeout
+  //允许携带cookie
 })
 
 
