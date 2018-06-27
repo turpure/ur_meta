@@ -26,7 +26,6 @@ export function getUserInfo() {
 }
 
 export function getMenu() {
-  debugger
   return request({
     url: '/menu',
     method: 'get'

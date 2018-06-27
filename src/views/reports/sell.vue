@@ -52,27 +52,27 @@
       </el-form-item> 
     </el-form>
     <el-button type="default"  @click="exportExcel">导出Excel</el-button>
- <el-table :data="tableData" id="sale-table" v-loading="listLoading"  show-summary  :summary-method="getSummaries" height="680" style="width: 100%">
-      <el-table-column prop="pingtai" label="平台" fixed></el-table-column>
-      <el-table-column prop="suffix" label="账号" fixed></el-table-column>
-      <el-table-column prop="salesman" label="销售员"></el-table-column>
-      <el-table-column prop="salemoney" label="成交价$"></el-table-column>
-      <el-table-column prop="salemoneyzn" label="成交价￥"></el-table-column>
-      <el-table-column prop="ebayFeeebay" label="eBay成交费$"></el-table-column>
-      <el-table-column prop="ebayfeeznebay" label="eBay成交费￥"></el-table-column>
-      <el-table-column prop="ppFee" label="PP成交费$"></el-table-column>
-      <el-table-column prop="ppFeezn" label="PP成交费￥"></el-table-column>
-      <el-table-column prop="costmoney" label="商品成本￥"></el-table-column>
-      <el-table-column prop="expressFare" label="运费成本￥"></el-table-column>
-      <el-table-column prop="inpackagemoney" label="包装成本￥"></el-table-column>
-      <el-table-column prop="storename" label="发货仓库"></el-table-column>
-      <el-table-column prop="refund" label="退款金额￥"></el-table-column>
-      <el-table-column prop="refundrate" label="退款率%"></el-table-column>
-      <el-table-column prop="diefeeZn" label="死库处理￥"></el-table-column>
-      <el-table-column prop="insertionFee" label="店铺杂费￥"></el-table-column>
-      <el-table-column prop="saleOpeFeeZn" label="运营杂费￥"></el-table-column>
-      <el-table-column prop="grossprofit" label="毛利￥"></el-table-column>
-      <el-table-column prop="grossprofitRate" label="毛利率%"></el-table-column>
+ <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary  :summary-method="getSummaries" height="768"  style="width: 100%">
+      <el-table-column prop="pingtai" label="平台" sortable ></el-table-column>
+      <el-table-column prop="suffix" label="账号" sortable ></el-table-column>
+      <el-table-column prop="salesman" label="销售员" sortable="custom"></el-table-column>
+      <el-table-column prop="salemoney" label="成交价$" sortable="custom"></el-table-column>
+      <el-table-column prop="salemoneyzn" label="成交价￥" sortable="custom"></el-table-column>
+      <el-table-column prop="ebayFeeebay" label="eBay成交费$" sortable="custom"></el-table-column>
+      <el-table-column prop="ebayfeeznebay" label="eBay成交费￥" sortable="custom"></el-table-column>
+      <el-table-column prop="ppFee" label="PP成交费$" sortable="custom"></el-table-column>
+      <el-table-column prop="ppFeezn" label="PP成交费￥" sortable="custom"></el-table-column>
+      <el-table-column prop="costmoney" label="商品成本￥" sortable="custom"></el-table-column>
+      <el-table-column prop="expressFare" label="运费成本￥" sortable="custom"></el-table-column>
+      <el-table-column prop="inpackagemoney" label="包装成本￥" sortable="custom"></el-table-column>
+      <el-table-column prop="storename" label="发货仓库" sortable="custom"></el-table-column>
+      <el-table-column prop="refund" label="退款金额￥" sortable="custom"></el-table-column>
+      <el-table-column prop="refundrate" label="退款率%" sortable="custom"></el-table-column>
+      <el-table-column prop="diefeeZn" label="死库处理￥" sortable="custom"></el-table-column>
+      <el-table-column prop="insertionFee" label="店铺杂费￥" sortable="custom"></el-table-column>
+      <el-table-column prop="saleOpeFeeZn" label="运营杂费￥" sortable="custom"></el-table-column>
+      <el-table-column prop="grossprofit" label="毛利￥" sortable="custom"></el-table-column>
+      <el-table-column prop="grossprofitRate" label="毛利率%" sortable="custom"></el-table-column>
     </el-table>
     </div>
 </template>
@@ -85,14 +85,14 @@ import {
   getStore,
   getAccount,
   getSales
-} from "../../api/profit";
+} from "../../api/profit"
+import {compareUp, compareDown} from "../../api/tools"
 import FileSaver from 'file-saver'
 import XLSX from 'xlsx'
 export default {
   data() {
     return {
-      tableData: [
-      ],
+      tableData: [],
       listLoading: false,
       department: [],
       plat: [],
@@ -108,7 +108,6 @@ export default {
         store: "",
         dateType: "",
         dateRange: "",
-        account: ""
       },
       pickerOptions2: {
         shortcuts: [
@@ -150,6 +149,23 @@ export default {
         this.listLoading = false;
         this.tableData = response.data.data;
       });
+    },
+    //格式化数据
+    formatter(row, column) {
+        return parseFloat(row.salemoneyzn);
+      },
+
+    //数字排序
+    sortNumber(column, prop, order) {
+      console.log(column);
+      let data = this .tableData;
+      if (column.order === 'descending') {
+        this.tableData = data.sort(compareDown(data, column.prop));
+      }
+      else {
+        this.tableData = data.sort(compareUp(data, column.prop));
+      }
+
     },
     //导出
      exportExcel () {
