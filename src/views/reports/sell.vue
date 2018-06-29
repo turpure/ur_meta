@@ -208,7 +208,8 @@ export default {
             sums[index] = '总价';
             return;
           }
-          const values = data.map(item => Number(item[column.property]));
+          const values = data.map(item => Number(item[column.property]?item[column.property]:'unkonwn'));
+          debugger;
           if (!values.every(value => isNaN(value))) {
             sums[index] = values.reduce((prev, curr) => {
               const value = Number(curr);
