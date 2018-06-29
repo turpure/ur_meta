@@ -203,13 +203,13 @@ export default {
      getSummaries(param) {
         const { columns, data } = param;
         const sums = [];
+        const fileds = columns.map(item => item.property);
         columns.forEach((column, index) => {
           if (index === 0) {
             sums[index] = '总价';
             return;
           }
           const values = data.map(item => Number(item[column.property]?item[column.property]:'unkonwn'));
-          debugger;
           if (!values.every(value => isNaN(value))) {
             sums[index] = values.reduce((prev, curr) => {
               const value = Number(curr);
@@ -224,7 +224,10 @@ export default {
             sums[index] = 'N/A';
           }
         });
-
+        //退款率和利润率核算
+        sums[fileds.indexOf('refundrate')] = Math.round(sums[fileds.indexOf('refund')]*10000/sums[fileds.indexOf('salemoneyzn')])/100;
+        sums[fileds.indexOf('grossprofitRate')] = Math.round(sums[fileds.indexOf('grossprofit')]*10000/sums[fileds.indexOf('salemoneyzn')])/100;
+        debugger;
         return sums;
       },
     //折叠导航栏
