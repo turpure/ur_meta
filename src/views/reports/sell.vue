@@ -3,17 +3,17 @@
     <div>
     <el-form :model="conditionForm" :inline="true" ref="conditionForm" class="demo-form-inline">
        <el-form-item   label="部门"  class="input" >
-        <el-select v-model="conditionForm.department" placeholder="部门">
+        <el-select v-model="conditionForm.department" clearable placeholder="部门">
           <el-option v-for="(item,index) in department" :index="index" :key="item.department" :label="item.department" :value="item.department"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="平台"  class="input" >
-        <el-select v-model="conditionForm.plat" placeholder="平台">
+        <el-select v-model="conditionForm.plat"  clearable placeholder="平台">
           <el-option  v-for="(item,index) in plat" :index="index" :key="item.plat" :label="item.plat" :value="item.plat"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="销售员" class="input" >
-        <el-select v-model="conditionForm.member" placeholder="销售员">
+        <el-select v-model="conditionForm.member"  clearable placeholder="销售员">
           <el-option v-for="(item,index) in member" :index="index" :key="item.username" :label="item.username" :value="item.username"></el-option>
         </el-select>
       </el-form-item>
@@ -53,7 +53,7 @@
     </el-form>
     <el-row :gutter="20">
     <el-col :span="6"><el-button type="default"  @click="exportExcel">导出Excel</el-button> </el-col>
-    <el-col :span="6"><el-input placeholder="search" v-model="searchValue" v-on:change="handleSearch"></el-input> </el-col>
+    <el-col :span="6"><el-input  clearable placeholder="search" v-model="searchValue" v-on:change="handleSearch"></el-input> </el-col>
     </el-row>
  <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary  :summary-method="getSummaries" height="680"  style="width: 100%">
       <el-table-column prop="pingtai" label="平台" sortable ></el-table-column>
