@@ -51,8 +51,11 @@
         <el-button type="primary" @click="onSubmit(conditionForm)">查询</el-button>
       </el-form-item> 
     </el-form>
-    <el-button type="default"  @click="exportExcel">导出Excel</el-button>
- <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary  :summary-method="getSummaries" height="768"  style="width: 100%">
+    <el-row :gutter="20">
+    <el-col :span="6"><el-button type="default"  @click="exportExcel">导出Excel</el-button> </el-col>
+    <el-col :span="6"><el-input placeholder="search" v-model="searchValue" v-on:change="handleSearch"></el-input> </el-col>
+    </el-row>
+ <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary  :summary-method="getSummaries" height="680"  style="width: 100%">
       <el-table-column prop="pingtai" label="平台" sortable ></el-table-column>
       <el-table-column prop="suffix" label="账号" sortable ></el-table-column>
       <el-table-column prop="salesman" label="销售员" sortable="custom"></el-table-column>
@@ -93,6 +96,8 @@ export default {
   data() {
     return {
       tableData: [],
+      searchTable: [],
+      searchValue: '',
       listLoading: false,
       department: [],
       plat: [],
@@ -147,8 +152,25 @@ export default {
       this.listLoading = true;
       getSales(form).then(response => {
         this.listLoading = false;
-        this.tableData = response.data.data;
+        this.tableData =this.searchTable = response.data.data;
       });
+    },
+    //搜索
+    handleSearch() {
+      let searchValue = this.searchValue && this.searchValue.toLowerCase();
+      let data = this.searchTable;
+
+      if(searchValue) {
+        this.tableData = data.filter(function(row) {
+          return Object.keys(row).some(function(key) {
+            return String(row[key]).toLowerCase().indexOf(searchValue) >-1;
+          })
+        })
+      }
+      else {
+        this.tableData = data; 
+      }
+      console.log("Running!");
     },
     //格式化数据
     formatter(row, column) {
@@ -157,7 +179,6 @@ export default {
 
     //数字排序
     sortNumber(column, prop, order) {
-      console.log(column);
       let data = this .tableData;
       if (column.order === 'descending') {
         this.tableData = data.sort(compareDown(data, column.prop));
