@@ -145,6 +145,7 @@ import { getMenu } from '../api/login'
 			},
 			
 		},
+
 		mounted() {
 			this.$store.dispatch('GetUserInfo').then(() => {
 				this.sysUserName = this.$store.getters.name

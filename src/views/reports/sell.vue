@@ -1,7 +1,7 @@
 <template>
     <!-- <div>销售毛利润报表</div>     -->
     <div>
-    <el-form :model="conditionForm" :inline="true" ref="conditionForm" class="demo-form-inline">
+    <el-form :model="conditionForm" :inline="true" ref="conditionForm" label-width="100px" class="demo-form-inline">
        <el-form-item   label="部门"  class="input" >
         <el-select v-model="conditionForm.department" clearable placeholder="部门">
           <el-option v-for="(item,index) in department" :index="index" :key="item.department" :label="item.department" :value="item.department"></el-option>
@@ -23,14 +23,20 @@
             </el-option>
         </el-select>  
       </el-form-item>
-    
-      <el-form-item label="" class="input">
-        <el-select v-model="conditionForm.dateType" placeholder="发货时间" style="margin-left:40px">
-          <el-option v-for="(item,index) in dateType" :index="index" :key="item.id" :label="item.type" :value="item.id"></el-option>
+
+      <el-form-item label="账号" class="input" >
+        <el-select v-model="conditionForm.account" multiple collapse-tags placeholder="账号">
+          <el-option v-for="(item,index) in account"  :index="item[index]" :key="item.store" :label="item.store" :value="item.store"></el-option>
         </el-select>
       </el-form-item>
-        <el-form-item  class="input">
-           <el-date-picker
+
+      <el-form-item label="时间类型" class="input" prop="dateType">
+        <el-radio-group v-model="conditionForm.dateType">
+          <el-radio border v-for="(item,index) in dateType" :index="index" :key="item.id" :label="item.id" :value="item.id">{{item.type}}</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item label="日期" class="input">
+        <el-date-picker
               v-model="conditionForm.dateRange"
               type="daterange"
               value-format="yyyy-MM-dd"
@@ -39,23 +45,19 @@
               range-separator="至"
               start-placeholder="开始日期"
               end-placeholder="结束日期"
-              :picker-options="pickerOptions2" style="margin-left:40px">
-            </el-date-picker>
-        </el-form-item>    
-        <el-form-item label="账号" class="input" >
-          <el-select v-model="conditionForm.account" multiple collapse-tags placeholder="账号" style="margin-left:12px">
-            <el-option v-for="(item,index) in account"  :index="item[index]" :key="item.store" :label="item.store" :value="item.store"></el-option>
-          </el-select>
-        </el-form-item>
+              :picker-options="pickerOptions2">
+        </el-date-picker>
+      </el-form-item>    
+
       <el-form-item >
-        <el-button type="primary" @click="onSubmit(conditionForm)">查询</el-button>
+        <el-button type="primary" class="input"  @click="onSubmit(conditionForm)">查询</el-button>
       </el-form-item> 
     </el-form>
     <el-row :gutter="20">
-    <el-col :span="6"><el-button type="default"  @click="exportExcel">导出Excel</el-button> </el-col>
-    <el-col :span="6"><el-input  clearable placeholder="search" v-model="searchValue" v-on:change="handleSearch"></el-input> </el-col>
+      <el-col :span="2" :offset="20"><el-input  clearable placeholder="search" v-model="searchValue" v-on:change="handleSearch"></el-input> </el-col>
+      <el-col :span="2"><el-button type="default"  @click="exportExcel">导出Excel</el-button> </el-col>
     </el-row>
- <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary  :summary-method="getSummaries" height="680"  style="width: 100%">
+ <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary  :summary-method="getSummaries" height="630"  style="width: 100%">
       <el-table-column prop="pingtai" label="平台" sortable ></el-table-column>
       <el-table-column prop="suffix" label="账号" sortable ></el-table-column>
       <el-table-column prop="salesman" label="销售员" sortable="custom"></el-table-column>
@@ -227,7 +229,6 @@ export default {
         //退款率和利润率核算
         sums[fileds.indexOf('refundrate')] = Math.round(sums[fileds.indexOf('refund')]*10000/sums[fileds.indexOf('salemoneyzn')])/100;
         sums[fileds.indexOf('grossprofitRate')] = Math.round(sums[fileds.indexOf('grossprofit')]*10000/sums[fileds.indexOf('salemoneyzn')])/100;
-        debugger;
         return sums;
       },
     //折叠导航栏
