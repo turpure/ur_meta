@@ -1,6 +1,6 @@
 <template>
     <!-- <div>开发毛利润报表</div>     -->
-<el-form :inline="true" class="demo-form-inline">
+<el-form  :model="conditionForm" :inline="true" ref="conditionForm" label-width="100px" class="demo-form-inline">
   <el-form-item   label="部门"  class="input">
         <el-select v-model="formInline.region" placeholder="部门">
           <el-option v-for="(item,index) in section" :index="item[index]" :key="item.id" :label="item.department" :value="item.id"></el-option>
@@ -14,13 +14,13 @@
         </el-select>
       </el-form-item>
 
-  <el-form-item label="" class="input">
-    <el-select v-model="formInline.region" placeholder="发货时间" style="margin-left:40px">
+  <el-form-item label="发货时间" class="input">
+    <el-select v-model="formInline.region" placeholder="发货时间">
       <el-option label="发货时间" ></el-option>
       <el-option label="交易时间" ></el-option>
     </el-select>
   </el-form-item>
-    <el-form-item  class="input">
+    <el-form-item label="日期" class="input">
         <el-date-picker
           v-model="value7"
           type="daterange"
@@ -109,7 +109,7 @@ import { getSection,getMember } from '../../api/profit'
 
 <style lang="scss" scoped>
  .input{
-     margin-left: 20px;
+     margin-left: 100px;
      .input_w{
          width:350px
      }

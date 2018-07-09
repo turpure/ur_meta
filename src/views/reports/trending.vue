@@ -1,8 +1,8 @@
 <template>
     <!-- <div>销售额走势</div>     -->
-<el-form :inline="true" class="demo-form-inline">
-  <el-form-item label=""  class="input" >
-    <el-select v-model="formInline.region" placeholder="按天" style="margin-left:40px">
+<el-form  :model="conditionForm" :inline="true" ref="conditionForm" label-width="100px" class="demo-form-inline">
+  <el-form-item label="时间类型"  class="input" >
+    <el-select v-model="formInline.region" placeholder="按天">
       <el-option label="按天" value="shanghai"></el-option>
       <el-option label="按月" value="beijing"></el-option>
     </el-select>
@@ -14,6 +14,7 @@
         </el-option>
     </el-select>
   </el-form-item>
+
   <el-form-item label="平台" class="input">
     <el-select v-model="value5" multiple placeholder="平台">
         <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
@@ -27,13 +28,13 @@
     </el-select>
   </el-form-item>
 
-  <el-form-item label="" class="input">
-    <el-select v-model="formInline.region" placeholder="发货时间" style="margin-left:40px">
+  <el-form-item label="发货时间" class="input">
+    <el-select v-model="formInline.region" placeholder="发货时间">
       <el-option label="发货时间" value="shanghai"></el-option>
       <el-option label="交易时间" value="beijing"></el-option>
     </el-select>
   </el-form-item>
-    <el-form-item  class="input">
+    <el-form-item label="日期" class="input">
        <el-date-picker
           v-model="date"
           type="daterange"
@@ -42,11 +43,11 @@
           range-separator="至"
           start-placeholder="开始日期"
           end-placeholder="开始日期至结束日期"
-          :picker-options="pickerOptions2" style="margin-left:40px">
+          :picker-options="pickerOptions2">
         </el-date-picker>
     </el-form-item>    
     <el-form-item label="账号" class="input" >
-          <el-select v-model="accounty.region" placeholder="账号" style="margin-left:12px">
+          <el-select v-model="accounty.region" placeholder="账号">
             <el-option v-for="(item,index) in account"  :index="item[index]" :key="item.id" :label="item.store" :value="item.id"></el-option>
             <!-- <el-option label="区域二" value="beijing"></el-option> -->
           </el-select>

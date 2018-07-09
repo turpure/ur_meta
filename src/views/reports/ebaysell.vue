@@ -1,13 +1,13 @@
 <template>
     <!-- <div>ebay销售毛利润报表</div>     -->
-<el-form :inline="true" :model="formInline" class="demo-form-inline">
-  <el-form-item label="" class="input">
-    <el-select v-model="formInline.region" placeholder="发货时间" style="margin-left:40px">
+<el-form  :model="conditionForm" :inline="true" ref="conditionForm" label-width="100px" class="demo-form-inline">
+  <el-form-item label="发货时间" class="input">
+    <el-select v-model="formInline.region" placeholder="发货时间" >
       <el-option label="发货时间" value="shanghai"></el-option>
       <el-option label="交易时间" value="beijing"></el-option>
     </el-select>
   </el-form-item>
-    <el-form-item  class="input">
+    <el-form-item label="日期" class="input">
         <el-date-picker
           v-model="value7"
           type="daterange"
@@ -76,7 +76,7 @@
 
 <style lang="scss" scoped>
  .input{
-     margin-left: 20px;
+     margin-left: 100px;
      .input_w{
          width:350px
      }
