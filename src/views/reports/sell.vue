@@ -152,6 +152,7 @@ export default {
   methods: {
     onSubmit(form) {
       this.listLoading = true;
+      debugger;
       getSales(form).then(response => {
         this.listLoading = false;
         this.tableData =this.searchTable = response.data.data;
