@@ -11,7 +11,10 @@
 			</el-col> 
 			<el-col :span="4" class="userinfo">
 				<el-dropdown trigger="hover">
-					<span class="el-dropdown-link userinfo-inner"><img :src="this.sysUserAvatar" />{{sysUserName}}</span>
+					<span class="el-dropdown-link userinfo-inner">
+						<img :src="userInfo.avatar" @click.stop="uploadHeadImg" />{{sysUserName}}
+						<input type="file" accept="image/*" @change="handleFile" class="hiddenInput"/>
+					</span>
 					<el-dropdown-menu slot="dropdown">
 						<el-dropdown-item>我的消息</el-dropdown-item>
 						<el-dropdown-item>设置</el-dropdown-item>
@@ -83,6 +86,9 @@ import { getMenu } from '../api/login'
 				collapsed:false,
 				sysUserName: '',
 				sysUserAvatar: '',
+				userInfo: {
+					avatar:'https://raw.githubusercontent.com/taylorchen709/markdown-images/master/vueadmin/user.png'
+					},
 				//lside:[],
 				form: {
 					name: '',
@@ -127,9 +133,20 @@ import { getMenu } from '../api/login'
 			showMenu(i,status){
 				this.$refs.menuCollapsed.getElementsByClassName('submenu-hook-'+i)[0].style.display=status?'block':'none';
 			},
-			
+			uploadHeadImg: function () {
+              this.$el.querySelector('.hiddenInput').click()
+            },
+            handleFile: function (e) {
+              let $target = e.target || e.srcElement
+              let file = $target.files[0]
+              var reader = new FileReader()
+              reader.onload = (data) => {
+              let res = data.target || data.srcElement
+              this.userInfo.avatar = res.result
+              }
+            reader.readAsDataURL(file)
+            }
 		},
-
 		mounted() {
 			this.$store.dispatch('GetUserInfo').then(() => {
 				this.sysUserName = this.$store.getters.name
@@ -137,7 +154,7 @@ import { getMenu } from '../api/login'
 			getMenu().then(response=>{
 				this.lside = response.data.data
 			})
-		}
+		},
 	}
 
 </script>
@@ -169,6 +186,9 @@ import { getMenu } from '../api/login'
 						margin: 10px 0px 10px 10px;
 						float: right;
 					}
+					.hiddenInput{
+					  display:none;
+				    }
 				}
 			}
 			.logo {
@@ -219,7 +239,7 @@ import { getMenu } from '../api/login'
 				.el-menu{
 					height: 100%;
 				}
-				.data-scroll-width{width: 230px;}
+				.data-scroll-width{width: 230px; }
 				.collapsed{
 					width:60px;
 					.item{
