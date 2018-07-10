@@ -2,15 +2,13 @@
 	<el-row class="container">
 		<el-col :span="24" class="header">
 			<el-col :span="10" class="logo" :class="collapsed?'logo-collapse-width':'logo-width'">
-				<!-- {{collapsed?'':sysName}} -->
-				UR-META
-				<!-- stop -->
+				{{collapsed?'':sysName}}  
 			</el-col>
-			<!-- <el-col :span="10">
+		    <el-col :span="10">
 				<div class="tools" @click.prevent="collapse">
 					<i class="fa fa-align-justify"></i>
 				</div>
-			</el-col> -->
+			</el-col> 
 			<el-col :span="4" class="userinfo">
 				<el-dropdown trigger="hover">
 					<span class="el-dropdown-link userinfo-inner"><img :src="this.sysUserAvatar" />{{sysUserName}}</span>
@@ -25,28 +23,14 @@
 		<el-col :span="24" class="main">
 			<aside :class="collapsed?'menu-collapsed':'menu-expanded'">
 				<!--导航菜单-->
-				
-				<el-menu :default-active="$route.path" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose" @select="handleselect"
+				<el-menu :default-active="$route.path" class="el-menu-vertical-demo data-scroll-width" @open="handleopen" @close="handleclose" @select="handleselect"
 					 unique-opened router v-show="!collapsed">
-					<template v-for="(item,index) in lside">
-						<el-submenu :index="index+''">
+					<template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
+						<el-submenu :index="index+''" v-if="!item.leaf">
 							<template slot="title"><i :class="item.iconCls"></i>{{item.name}}</template>
-							<el-menu-item v-for="child in item.children" :index="child.route" :key="child.route" >{{child.name}}</el-menu-item>	
-							<!-- <el-menu-item  v-for="child in item.children" :index="child.route" :key="child.route" >
-								<router-link :to="child.route"><a>{{child.name}}</a></router-link>
-								</el-menu-item>	 -->
-							<!-- <el-menu-item><router-link to="/sell">销售毛利润</router-link></el-menu-item>
-							<el-menu-item><router-link to="/exploit">开发毛利润</router-link></el-menu-item>
-							<el-menu-item><router-link to="/purchease">采购毛利润</router-link></el-menu-item>
-							<el-menu-item><router-link to="/artist">美工买利润</router-link></el-menu-item>
-							<el-menu-item><router-link to="/ebaysell">ebay销售毛利润</router-link></el-menu-item>
-							<el-menu-item><router-link to="/trend">销售额走势</router-link></el-menu-item>
-							<el-menu-item><router-link to="/fixed">死库</router-link></el-menu-item>
-							<el-menu-item><router-link to="/operate">运营</router-link></el-menu-item>
-							<el-menu-item><router-link to="/dollar">美元</router-link></el-menu-item>						 -->
-
+							<el-menu-item v-for="child in item.children" :index="child.path" :key="child.path" v-if="!child.hidden">{{child.name}}</el-menu-item>
 						</el-submenu>
-						<!-- <el-menu-item v-if="item.leaf&&item.children.length>0" :index="item.children[0].path"><i :class="item.iconCls"></i>{{item.children[0].name}}</el-menu-item> -->
+					    <el-menu-item v-if="item.leaf&&item.children.length>0" :index="item.children[0].path"><i :class="item.iconCls"></i>{{item.children[0].name}}</el-menu-item>
 					</template>
 				</el-menu>
 				<!--导航菜单-折叠后-->
@@ -69,12 +53,12 @@
 			<section class="content-container">
 				<div class="grid-content bg-purple-light">
 					<el-col :span="24" class="breadcrumb-container">
-						<strong class="title">{{$route.name}}</strong>
-						<el-breadcrumb separator="/" class="breadcrumb-inner">
+					    <strong class="title"><!--{{$route.name}}--></strong>
+						<el-breadcrumb separator="" class="breadcrumb-inner">
 							<el-breadcrumb-item v-for="item in $route.matched" :key="item.path">
-								{{ item.name }}
+								<!-- {{ item.name }} -->
 							</el-breadcrumb-item>
-						</el-breadcrumb>
+						</el-breadcrumb> 
 					</el-col>
 					<el-col :span="24" class="content-wrapper">
 						<transition name="fade" mode="out-in">
@@ -95,11 +79,11 @@ import { getMenu } from '../api/login'
 	export default {
 		data() {
 			return {
-				sysName:'VUEADMIN',
+				sysName:'UR-META',
 				collapsed:false,
 				sysUserName: '',
 				sysUserAvatar: '',
-				lside:[],
+				//lside:[],
 				form: {
 					name: '',
 					region: '',
@@ -235,6 +219,7 @@ import { getMenu } from '../api/login'
 				.el-menu{
 					height: 100%;
 				}
+				.data-scroll-width{width: 230px;}
 				.collapsed{
 					width:60px;
 					.item{
@@ -248,7 +233,6 @@ import { getMenu } from '../api/login'
 						height:auto;
 						display:none;
 					}
-
 				}
 			}
 			.menu-collapsed{
@@ -262,11 +246,11 @@ import { getMenu } from '../api/login'
 			.content-container {
 				// background: #f1f2f7;
 				flex:1;
-				// position: absolute;
+				//position: absolute;
 				// right: 0px;
 				// top: 0px;
 				// bottom: 0px;
-				// left: 230px;
+				//left: 230px;
 				overflow-y: scroll;
 				padding: 20px;
 				.breadcrumb-container {

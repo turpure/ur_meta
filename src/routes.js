@@ -2,13 +2,6 @@ import Login from './views/Login.vue'
 import NotFound from './views/404.vue'
 import Home from './views/Home.vue'
 import Main from './views/Main.vue'
-import Table from './views/nav1/Table.vue'
-import Form from './views/nav1/Form.vue'
-import user from './views/nav1/user.vue'
-import Page4 from './views/nav2/Page4.vue'
-import Page5 from './views/nav2/Page5.vue'
-import Page6 from './views/nav3/Page6.vue'
-import echarts from './views/charts/echarts.vue'
 
 import sell from './views/reports/sell.vue'
 import develop from './views/reports/develop.vue'
@@ -19,7 +12,6 @@ import trending from './views/reports/trending.vue'
 import fixed from './views/reports/fixed.vue'
 import operate from './views/reports/operate.vue'
 import dollar from './views/reports/dollar.vue'
-
 import aaa from './views/reports/aaa.vue'
 
 let routes = [
@@ -35,62 +27,23 @@ let routes = [
         name: '',
         hidden: true
     },
-    { path: '/main', component: Main },
+    //{ path: '/main', component: Main },
     {
         path:'/',
-        component:Home,
+        component: Home,
+        name: '毛利率报表',
+        iconCls: 'el-icon-message',
         children:[
-            {path:'/sell',component:sell},
-            {path:'/develop',component:develop},
-            {path:'/purchase',component:purchase},
-            {path:'/artist',component:artist},
-            {path:'/ebaysell',component:ebaysell},
-            {path:'/trending',component:trending},
-            {path:'/fixed',component:fixed},
-            {path:'/operate',component:operate},
-            {path:'/dollar',component:dollar},
-            {path:'/aaa',component:aaa},
-        ]
-    },
-    {
-        path: '/',
-        component: Home,
-        name: '导航一',
-        iconCls: 'el-icon-message',//图标样式class
-        children: [
-            { path: '/main', component: Main, name: '主页', hidden: true },
-            { path: '/table', component: Table, name: 'Table' },
-            { path: '/form', component: Form, name: 'Form' },
-            { path: '/user', component: user, name: '列表' },
-        ]
-    },
-    {
-        path: '/',
-        component: Home,
-        name: '导航二',
-        iconCls: 'fa fa-id-card-o',
-        children: [
-            { path: '/page4', component: Page4, name: '页面4' },
-            { path: '/page5', component: Page5, name: '页面5' }
-        ]
-    },
-    {
-        path: '/',
-        component: Home,
-        name: '',
-        iconCls: 'fa fa-address-card',
-        leaf: true,//只有一个节点
-        children: [
-            { path: '/page6', component: Page6, name: '导航三' }
-        ]
-    },
-    {
-        path: '/',
-        component: Home,
-        name: 'Charts',
-        iconCls: 'fa fa-bar-chart',
-        children: [
-            { path: '/echarts', component: echarts, name: 'echarts' }
+            { path: '/sell', component: sell, name: '销售毛利润'},
+            { path: '/develop', component:develop, name: '开发毛利润'},
+            { path: '/purchase', component:purchase, name: '采购毛利润'},
+            { path: '/artist', component:artist, name: '美工毛利润'},
+            { path: '/ebaysell', component:ebaysell, name: 'ebay销售毛利润'},
+            { path: '/trending', component:trending, name: '销售额走势'},
+            { path: '/fixed', component:fixed, name: '死库'},
+            { path: '/operate', component:operate, name: '运营'},
+            { path: '/dollar', component:dollar, name: '美元'},
+            { path: '/aaa', component:aaa, name: '仓储'},
         ]
     },
     {
