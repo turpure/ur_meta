@@ -13,7 +13,7 @@
 				<el-dropdown trigger="hover">
 					<span class="el-dropdown-link userinfo-inner">
 						<img :src="userInfo.avatar" @click.stop="uploadHeadImg" />{{sysUserName}}
-						<input type="file" accept="image/*" @change="handleFile" class="hiddenInput"/>
+						<input type="file" style="position:absolute; clip:rect(0 0 0 0);" accept="image/*" @change="handleFile($event,1)" class="hiddenInput"/>
 					</span>
 					<el-dropdown-menu slot="dropdown">
 						<el-dropdown-item>我的消息</el-dropdown-item>
@@ -22,12 +22,24 @@
 					</el-dropdown-menu>
 				</el-dropdown>
 			</el-col>
+			<div class="vue-cropper-box" v-if="isShowCropper">
+			   <div class="vue-cropper-content">
+	               <vueCropper
+	                 ref="cropper"
+		             :img="option.img"
+		             :autoCrop="option.autoCrop"
+		             :autoCropWidth="option.autoCropWidth"
+		             :autoCropHeight="option.autoCropHeight"
+		             :fixedBox="option.fixedBox"
+	               ></vueCropper>
+         	   </div>
+			       <el-button v-if="isShowCropper" type="danger" @click="onCubeImg">确定裁剪</el-button>
+			</div>
 		</el-col>
 		<el-col :span="24" class="main">
 			<aside :class="collapsed?'menu-collapsed':'menu-expanded'">
 				<!--导航菜单-->
-				<el-menu :default-active="$route.path" class="el-menu-vertical-demo data-scroll-width" @open="handleopen" @close="handleclose" @select="handleselect"
-					 unique-opened router v-show="!collapsed">
+				<el-menu :default-active="$route.path" class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="!collapsed">
 					<template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
 						<el-submenu :index="index+''" v-if="!item.leaf">
 							<template slot="title"><i :class="item.iconCls"></i>{{item.name}}</template>
@@ -75,13 +87,29 @@
 </template>
 
 <script>
-
-import {removeToken } from '../utils/auth'
+import { removeToken } from '../utils/auth'
 import { getMenu } from '../api/login'
+import VueCropper from 'vue-cropperjs'
 
 	export default {
+		components:{
+			VueCropper
+		},
 		data() {
 			return {
+				option: {
+				img: '',
+				info:true,
+				outputSize:1,
+				outputType:'png',
+				canScale:true,
+				autoCrop: true,
+				autoCropWidth: 200,
+				autoCropHeight: 200,
+				fixedBox: true,
+				full:true,
+				},
+				isShowCropper: false,
 				sysName:'UR-META',
 				collapsed:false,
 				sysUserName: '',
@@ -103,17 +131,6 @@ import { getMenu } from '../api/login'
 			}
 		},
 		methods: {
-			onSubmit() {
-				console.log('submit!');
-			},
-			handleopen() {
-				//console.log('handleopen');
-			},
-			handleclose() {
-				//console.log('handleclose');
-			},
-			handleselect: function (a, b) {
-			},
 			logout: function () {
 				var _this = this;
 				this.$confirm('确认退出吗?', '提示', {
@@ -123,7 +140,6 @@ import { getMenu } from '../api/login'
 					removeToken();
 					_this.$router.push('/login');
 				}).catch(() => {
-
 				});
 			},
 			//折叠导航栏
@@ -135,17 +151,51 @@ import { getMenu } from '../api/login'
 			},
 			uploadHeadImg: function () {
               this.$el.querySelector('.hiddenInput').click()
-            },
+			},
+			//头像显示
             handleFile: function (e) {
+				
               let $target = e.target || e.srcElement
               let file = $target.files[0]
               var reader = new FileReader()
               reader.onload = (data) => {
               let res = data.target || data.srcElement
-              this.userInfo.avatar = res.result
+			  this.userInfo.avatar = res.result
+			  this.$nextTick(()=>{
+				 this.option.img=file.url;
+				 this.isShowCropper=true;
+			 })
               }
-            reader.readAsDataURL(file)
-            }
+			 reader.readAsDataURL(file)
+			 
+			},
+			onCubeImg() {
+       // 获取cropper的截图的base64 数据
+      this.$refs.cropper.getCropData(data => {
+        this.fileinfo.url = data
+        this.isShowCropper = false
+       //先将显示图片地址清空，防止重复显示
+        this.option.img = ''
+       //将剪裁后base64的图片转化为file格式
+        let file = this.convertBase64UrlToBlob(data)
+        file.name = this.fileUpload.name
+        //将剪裁后的图片执行上传
+        this.uploadFile(file).then(res => {
+          this.form.content = res.file_id    //将上传的文件id赋值给表单from的content
+        })
+      })
+	},
+	// 将base64的图片转换为file文件
+    convertBase64UrlToBlob(urlData) {
+      let bytes = window.atob(urlData.split(',')[1]);//去掉url的头，并转换为byte
+      //处理异常,将ascii码小于0的转换为大于0
+      let ab = new ArrayBuffer(bytes.length);
+      let ia = new Uint8Array(ab);
+      for (var i = 0; i < bytes.length; i++) {
+        ia[i] = bytes.charCodeAt(i);
+      }
+      return new Blob([ab], { type: 'image/jpeg' });
+    },
 		},
 		mounted() {
 			this.$store.dispatch('GetUserInfo').then(() => {
