@@ -22,7 +22,8 @@
 					</el-dropdown-menu>
 				</el-dropdown>
 			</el-col>
-			<div class="vue-cropper-box" v-if="isShowCropper">
+			<modal name="hello-world">
+				<div class="vue-cropper-box" v-if="isShowCropper">
 			   <div class="vue-cropper-content">
 	               <vueCropper
 	                 ref="cropper"
@@ -35,6 +36,8 @@
          	   </div>
 			       <el-button v-if="isShowCropper" type="danger" @click="onCubeImg">确定裁剪</el-button>
 			</div>
+			</modal>
+			
 		</el-col>
 		<el-col :span="24" class="main">
 			<aside :class="collapsed?'menu-collapsed':'menu-expanded'">
@@ -150,6 +153,7 @@ import VueCropper from 'vue-cropperjs'
 				this.$refs.menuCollapsed.getElementsByClassName('submenu-hook-'+i)[0].style.display=status?'block':'none';
 			},
 			uploadHeadImg: function () {
+				this.$modal.show('hello-world');
               this.$el.querySelector('.hiddenInput').click()
 			},
 			//头像显示

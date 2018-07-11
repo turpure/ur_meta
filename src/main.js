@@ -18,6 +18,10 @@ import 'font-awesome/css/font-awesome.min.css'
 
 import { getToken } from './utils/auth'
 
+import VModal from 'vue-js-modal'
+
+Vue.use(VModal)
+
 Vue.use(ElementUI)
 Vue.use(VueRouter)
 Vue.use(Vuex)
