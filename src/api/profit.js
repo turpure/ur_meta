@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // section 部门 http://192.168.0.134:8089/v1/condition/index
 export function getSection(){
     return request({
-        url: '/condition/index',
+        url: '/condition/department',
         method: 'get',
     })
 }
