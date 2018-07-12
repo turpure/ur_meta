@@ -22,12 +22,12 @@
           </el-dropdown-menu>
         </el-dropdown>
       </el-col>
-      <modal name="hello-world">
+      <modal name="avator">
         <div style="width: 400px; height:300px; border: 1px solid gray; display: inline-block;">
           <vueCropper ref="cropper" :img="option.img" :autoCrop="option.autoCrop" :autoCropWidth="option.autoCropWidth" :autoCropHeight="option.autoCropHeight" :fixedBox="option.fixedBox"></vueCropper>
         </div>
-        <el-button class="myCropper-btn" type="primary" @click="cropImage" v-if="imgSrc != ''">确定</el-button>
-        <el-button class="myCropper-btn" type="primary" @click="rotate" v-if="imgSrc != ''">旋转</el-button>
+        <el-button class="myCropper-btn" type="primary" @click="cropImage" v-if="option.img != ''">确定</el-button>
+        <el-button class="myCropper-btn" type="primary" @click="rotate" v-if="option.img != ''">旋转</el-button>
       </modal>
 
     </el-col>
@@ -112,7 +112,6 @@ export default {
         fixedBox: true
       },
       imgSrc: "",
-      cropImg: "",
       sysName: "UR-META",
       collapsed: false,
       sysUserName: "",
@@ -156,11 +155,12 @@ export default {
       )[0].style.display = status ? "block" : "none";
     },
     uploadHeadImg: function() {
-      this.$modal.show("hello-world");
+      
       this.$el.querySelector(".hiddenInput").click();
     },
     //头像显示
     handleFile: function(e) {
+      this.$modal.show("avator");
       const file = e.target.files[0];
       if (!file.type.includes("image/")) {
         alert("Please select an image file");
@@ -169,8 +169,9 @@ export default {
       if (typeof FileReader === "function") {
         const reader = new FileReader();
         reader.onload = event => {
-          this.imgSrc = event.target.result;
+          // this.imgSrc = event.target.result;
           // rebuild cropperjs with the updated source
+          this.option.img = event.target.result; 
           this.$refs.cropper.replace(event.target.result);
         };
         reader.readAsDataURL(file);
@@ -179,92 +180,24 @@ export default {
       }
     },
     cropImage() {
-      let _this = this,
-        imgToken = null,
-        imgBase64Data = null;
-      // 判断是否选择图片
-      if (_this.hasSelectImg == false) {
-        _this.$Modal.error({
-          title: "裁剪失败",
-          content: "请选择图片，然后进行裁剪操作！"
-        });
-        return false;
-      }
-      // 确认按钮不可用
-      _this.cropperLoading = true;
-      let $imgData = _this.imgObj.cropper("getCroppedCanvas");
-      imgBase64Data = $imgData.toDataURL("image/png");
-      // 构造上传图片的数据
-      let formData = new FormData();
-      // 截取字符串
-      let photoType = imgBase64Data.substring(imgBase64Data.indexOf(",") + 1);
-      //进制转换
-      const b64toBlob = (b64Data, contentType = "", sliceSize = 512) => {
-        const byteCharacters = atob(b64Data);
-        const byteArrays = [];
-        for (
-          let offset = 0;
-          offset < byteCharacters.length;
-          offset += sliceSize
-        ) {
-          const slice = byteCharacters.slice(offset, offset + sliceSize);
-          const byteNumbers = new Array(slice.length);
-          for (let i = 0; i < slice.length; i++) {
-            byteNumbers[i] = slice.charCodeAt(i);
-          }
-          const byteArray = new Uint8Array(byteNumbers);
-          byteArrays.push(byteArray);
-        }
-        const blob = new Blob(byteArrays, {
-          type: contentType
-        });
-        return blob;
-      };
-      const contentType = "image/jepg";
-      const b64Data2 = photoType;
-      const blob = b64toBlob(b64Data2, contentType);
-      formData.append("file", blob, "client-camera-photo.png");
-      formData.append("type", _this.imgType);
-      // ajax上传
-      $.ajax({
-        url: _this.$nfs.uploadUrl,
-        method: "POST",
-        data: formData,
-        // 默认为true，设为false后直到ajax请求结束(调完回掉函数)后才会执行$.ajax(...)后面的代码
-        async: false,
-        // 下面三个，因为直接使用FormData作为数据，contentType会自动设置，也不需要jquery做进一步的数据处理(序列化)。
-        cache: false,
-        contentType: false,
-        processData: false,
-        type: _this.imgType,
-        success: function(res) {
-          let imgToken = res.data.token;
-          _this.cropperLoading = false;
-          // 传参
-          Bus.$emit("getTarget", imgToken);
-        },
-        error: function(error) {
-          _this.cropperLoading = false;
-          _this.$Modal.error({
-            title: "系统错误",
-            content: "请重新裁剪图片进行上传！"
-          });
-        }
-      });
+      this.imgSrc = this.$refs.cropper.getCroppedCanvas().toDataURL();
+      //upload
     },
     rotate() {
       // guess what this does :)
       this.$refs.cropper.rotate(90);
     },
-    mounted() {
+  },
+  mounted() {
       this.$store.dispatch("GetUserInfo").then(() => {
+        debugger;
+        console.log(this.$store);
         this.sysUserName = this.$store.getters.name;
       }),
         getMenu().then(response => {
           this.lside = response.data.data;
         });
     }
-  }
 };
 </script>
 
