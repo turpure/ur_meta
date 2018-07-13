@@ -111,7 +111,8 @@ export default {
         canMove: true,
         fixedBox: true
       },
-      imgSrc: "",
+      imgSrc:
+        "https://raw.githubusercontent.com/taylorchen709/markdown-images/master/vueadmin/user.png",
       sysName: "UR-META",
       collapsed: false,
       sysUserName: "",
@@ -131,6 +132,14 @@ export default {
         desc: ""
       }
     };
+  },
+  mounted() {
+    this.$store.dispatch("GetUserInfo").then(() => {
+      this.sysUserName = this.$store.getters.name;
+    }),
+      getMenu().then(response => {
+        this.lside = response.data.data;
+      });
   },
   methods: {
     logout: function() {
@@ -155,7 +164,6 @@ export default {
       )[0].style.display = status ? "block" : "none";
     },
     uploadHeadImg: function() {
-      
       this.$el.querySelector(".hiddenInput").click();
     },
     //头像显示
@@ -171,7 +179,9 @@ export default {
         reader.onload = event => {
           // this.imgSrc = event.target.result;
           // rebuild cropperjs with the updated source
-          this.option.img = event.target.result; 
+          //console.log(event, "event");
+          this.option.img = event.target.result;
+          //console.log(this.$refs.cropper);
           this.$refs.cropper.replace(event.target.result);
         };
         reader.readAsDataURL(file);
@@ -181,23 +191,14 @@ export default {
     },
     cropImage() {
       this.imgSrc = this.$refs.cropper.getCroppedCanvas().toDataURL();
+      this.$modal.hide("avator");
       //upload
     },
     rotate() {
       // guess what this does :)
       this.$refs.cropper.rotate(90);
-    },
-  },
-  mounted() {
-      this.$store.dispatch("GetUserInfo").then(() => {
-        debugger;
-        console.log(this.$store);
-        this.sysUserName = this.$store.getters.name;
-      }),
-        getMenu().then(response => {
-          this.lside = response.data.data;
-        });
     }
+  }
 };
 </script>
 
