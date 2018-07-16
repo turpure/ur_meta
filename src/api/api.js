@@ -24,6 +24,17 @@ export function getMyToken() {
   return store.getters.token
 }
 
+export function uploadImage(avatar) {
+  const data = {
+    avatar
+  }
+  return request({
+    url: '/user/avatar',
+    method: 'post',
+    data
+  })
+}
+
 
 
 

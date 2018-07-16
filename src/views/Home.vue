@@ -92,6 +92,7 @@
 <script>
 import { removeToken } from "../utils/auth";
 import { getMenu } from "../api/login";
+import { uploadImage } from "../api/api";
 import VueCropper from "vue-cropperjs";
 
 export default {
@@ -181,6 +182,7 @@ export default {
     },
     cropImage() {
       this.imgSrc = this.$refs.cropper.getCroppedCanvas().toDataURL();
+      uploadImage(this.imgSrc);
       //upload
     },
     rotate() {
@@ -190,9 +192,8 @@ export default {
   },
   mounted() {
       this.$store.dispatch("GetUserInfo").then(() => {
-        debugger;
-        console.log(this.$store);
         this.sysUserName = this.$store.getters.name;
+        this.imgSrc = this.$store.getters.avatar;
       }),
         getMenu().then(response => {
           this.lside = response.data.data;
