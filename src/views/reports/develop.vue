@@ -3,7 +3,7 @@
   <div>
     <el-form :model="conditionForm" :inline="true" ref="conditionForm" label-width="100px" class="demo-form-inline">
       <el-form-item label="部门" class="input">
-        <el-select v-model="conditionForm.department" placeholder="部门">
+        <el-select v-model="conditionForm.department" clearable placeholder="部门">
           <el-option v-for="(item,index) in department" :index="index" :key="item.department" :label="item.department" :value="item.department"></el-option>
         </el-select>
       </el-form-item>
@@ -95,10 +95,6 @@ export default {
         member: "",
         dateType: "",
         dateRange: ""
-      },
-      membery: {
-        id: "",
-        region: ""
       },
       pickerOptions2: {
         shortcuts: [
@@ -238,6 +234,9 @@ export default {
     });
     getMember(access_token).then(response => {
       this.member = response.data.data;
+    });
+    getSection().then(response => {
+      this.department = response.data.data;
     });
   }
 };
