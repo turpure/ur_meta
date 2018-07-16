@@ -1,32 +1,32 @@
 <template>
-    <!-- <div>销售毛利润报表</div>     -->
-    <div>
+  <!-- <div>销售毛利润报表</div>     -->
+  <div>
     <el-form :model="conditionForm" :inline="true" ref="conditionForm" label-width="100px" class="demo-form-inline">
-       <el-form-item   label="部门"  class="input" >
+      <el-form-item label="部门" class="input">
         <el-select v-model="conditionForm.department" clearable placeholder="部门">
           <el-option v-for="(item,index) in department" :index="index" :key="item.department" :label="item.department" :value="item.department"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="平台"  class="input" >
-        <el-select v-model="conditionForm.plat"  clearable placeholder="平台">
-          <el-option  v-for="(item,index) in plat" :index="index" :key="item.plat" :label="item.plat" :value="item.plat"></el-option>
+      <el-form-item label="平台" class="input">
+        <el-select v-model="conditionForm.plat" clearable placeholder="平台">
+          <el-option v-for="(item,index) in plat" :index="index" :key="item.plat" :label="item.plat" :value="item.plat"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="销售员" class="input" >
-        <el-select v-model="conditionForm.member"  clearable placeholder="销售员">
+      <el-form-item label="销售员" class="input">
+        <el-select v-model="conditionForm.member" clearable placeholder="销售员">
           <el-option v-for="(item,index) in member" :index="index" :key="item.username" :label="item.username" :value="item.username"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="出货仓库" class="input">
         <el-select v-model="conditionForm.store" multiple collapse-tags placeholder="请选择">
-            <el-option v-for="(item,index) in store" :index="index" :key="item.store" :label="item.store" :value="item.store">
-            </el-option>
-        </el-select>  
+          <el-option v-for="(item,index) in store" :index="index" :key="item.store" :label="item.store" :value="item.store">
+          </el-option>
+        </el-select>
       </el-form-item>
 
-      <el-form-item label="账号" class="input" >
+      <el-form-item label="账号" class="input">
         <el-select v-model="conditionForm.account" multiple collapse-tags placeholder="账号">
-          <el-option v-for="(item,index) in account"  :index="item[index]" :key="item.store" :label="item.store" :value="item.store"></el-option>
+          <el-option v-for="(item,index) in account" :index="item[index]" :key="item.store" :label="item.store" :value="item.store"></el-option>
         </el-select>
       </el-form-item>
 
@@ -36,30 +36,25 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="日期" class="input">
-        <el-date-picker
-              v-model="conditionForm.dateRange"
-              type="daterange"
-              value-format="yyyy-MM-dd"
-              align="right"
-              unlink-panels
-              range-separator="至"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-              :picker-options="pickerOptions2">
+        <el-date-picker v-model="conditionForm.dateRange" type="daterange" value-format="yyyy-MM-dd" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions2">
         </el-date-picker>
-      </el-form-item>    
+      </el-form-item>
 
-      <el-form-item >
-        <el-button type="primary" class="input"  @click="onSubmit(conditionForm)">查询</el-button>
-      </el-form-item> 
+      <el-form-item>
+        <el-button type="primary" class="input" @click="onSubmit(conditionForm)">查询</el-button>
+      </el-form-item>
     </el-form>
     <el-row :gutter="20">
-      <el-col :span="2" :offset="20"><el-input  clearable placeholder="search" v-model="searchValue" v-on:change="handleSearch"></el-input> </el-col>
-      <el-col :span="2"><el-button type="default"  @click="exportExcel">导出Excel</el-button> </el-col>
+      <el-col :span="2" :offset="20">
+        <el-input clearable placeholder="search" v-model="searchValue" v-on:change="handleSearch"></el-input>
+      </el-col>
+      <el-col :span="2">
+        <el-button type="default" @click="exportExcel">导出Excel</el-button>
+      </el-col>
     </el-row>
- <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary  :summary-method="getSummaries" height="630"  style="width: 100%">
-      <el-table-column prop="pingtai" label="平台" sortable ></el-table-column>
-      <el-table-column prop="suffix" label="账号" sortable ></el-table-column>
+    <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="630" style="width: 100%">
+      <el-table-column prop="pingtai" label="平台" sortable></el-table-column>
+      <el-table-column prop="suffix" label="账号" sortable></el-table-column>
       <el-table-column prop="salesman" label="销售员" sortable="custom"></el-table-column>
       <el-table-column prop="salemoney" label="成交价$" sortable="custom"></el-table-column>
       <el-table-column prop="salemoneyzn" label="成交价￥" sortable="custom"></el-table-column>
@@ -79,7 +74,7 @@
       <el-table-column prop="grossprofit" label="毛利￥" sortable="custom"></el-table-column>
       <el-table-column prop="grossprofitRate" label="毛利率%" sortable="custom"></el-table-column>
     </el-table>
-    </div>
+  </div>
 </template>
 
 <script>
@@ -89,17 +84,23 @@ import {
   getMember,
   getStore,
   getAccount,
-  getSales
-} from "../../api/profit"
-import {compareUp, compareDown} from "../../api/tools"
-import FileSaver from 'file-saver'
-import XLSX from 'xlsx'
+  getSales,
+  getDevelop,
+  getPurchase,
+  getPossess,
+  getEbaysales,
+  getSalestrend,
+  getArtist
+} from "../../api/profit";
+import { compareUp, compareDown } from "../../api/tools";
+import FileSaver from "file-saver";
+import XLSX from "xlsx";
 export default {
   data() {
     return {
       tableData: [],
       searchTable: [],
-      searchValue: '',
+      searchValue: "",
       listLoading: false,
       department: [],
       plat: [],
@@ -114,7 +115,7 @@ export default {
         member: "",
         store: "",
         dateType: "",
-        dateRange: "",
+        dateRange: ""
       },
       pickerOptions2: {
         shortcuts: [
@@ -152,10 +153,9 @@ export default {
   methods: {
     onSubmit(form) {
       this.listLoading = true;
-      debugger;
       getSales(form).then(response => {
         this.listLoading = false;
-        this.tableData =this.searchTable = response.data.data;
+        this.tableData = this.searchTable = response.data.data;
       });
     },
     //搜索
@@ -163,75 +163,97 @@ export default {
       let searchValue = this.searchValue && this.searchValue.toLowerCase();
       let data = this.searchTable;
 
-      if(searchValue) {
+      if (searchValue) {
         this.tableData = data.filter(function(row) {
           return Object.keys(row).some(function(key) {
-            return String(row[key]).toLowerCase().indexOf(searchValue) >-1;
-          })
-        })
-      }
-      else {
-        this.tableData = data; 
+            return (
+              String(row[key])
+                .toLowerCase()
+                .indexOf(searchValue) > -1
+            );
+          });
+        });
+      } else {
+        this.tableData = data;
       }
       console.log("Running!");
     },
     //格式化数据
     formatter(row, column) {
-        return parseFloat(row.salemoneyzn);
-      },
+      return parseFloat(row.salemoneyzn);
+    },
 
     //数字排序
     sortNumber(column, prop, order) {
-      let data = this .tableData;
-      if (column.order === 'descending') {
+      let data = this.tableData;
+      if (column.order === "descending") {
         this.tableData = data.sort(compareDown(data, column.prop));
-      }
-      else {
+      } else {
         this.tableData = data.sort(compareUp(data, column.prop));
       }
-
     },
     //导出
-     exportExcel () {
-         /* generate workbook object from table */
-         var wb = XLSX.utils.table_to_book(document.querySelector('#sale-table'))
-         /* get binary string as output */
-         var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'array' })
-         try {
-             FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), 'sheetjs.xlsx')
-         } catch (e) { if (typeof console !== 'undefined') console.log(e, wbout) }
-        //  return wbout
-     },
+    exportExcel() {
+      /* generate workbook object from table */
+      var wb = XLSX.utils.table_to_book(document.querySelector("#sale-table"));
+      /* get binary string as output */
+      var wbout = XLSX.write(wb, {
+        bookType: "xlsx",
+        bookSST: true,
+        type: "array"
+      });
+      try {
+        FileSaver.saveAs(
+          new Blob([wbout], { type: "application/octet-stream" }),
+          "sheetjs.xlsx"
+        );
+      } catch (e) {
+        if (typeof console !== "undefined") console.log(e, wbout);
+      }
+      //  return wbout
+    },
     //合计
-     getSummaries(param) {
-        const { columns, data } = param;
-        const sums = [];
-        const fileds = columns.map(item => item.property);
-        columns.forEach((column, index) => {
-          if (index === 0) {
-            sums[index] = '总价';
-            return;
-          }
-          const values = data.map(item => Number(item[column.property]?item[column.property]:'unkonwn'));
-          if (!values.every(value => isNaN(value))) {
-            sums[index] = values.reduce((prev, curr) => {
-              const value = Number(curr);
-              if (!isNaN(value)) {
-                return prev + curr;
-              } else {
-                return prev;
-              }
-            }, 0);
-            sums[index] = Math.round(sums[index]*100)/100;
-          } else {
-            sums[index] = 'N/A';
-          }
-        });
-        //退款率和利润率核算
-        sums[fileds.indexOf('refundrate')] = Math.round(sums[fileds.indexOf('refund')]*10000/sums[fileds.indexOf('salemoneyzn')])/100;
-        sums[fileds.indexOf('grossprofitRate')] = Math.round(sums[fileds.indexOf('grossprofit')]*10000/sums[fileds.indexOf('salemoneyzn')])/100;
-        return sums;
-      },
+    getSummaries(param) {
+      const { columns, data } = param;
+      const sums = [];
+      const fileds = columns.map(item => item.property);
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = "总价";
+          return;
+        }
+        const values = data.map(item =>
+          Number(item[column.property] ? item[column.property] : "unkonwn")
+        );
+        if (!values.every(value => isNaN(value))) {
+          sums[index] = values.reduce((prev, curr) => {
+            const value = Number(curr);
+            if (!isNaN(value)) {
+              return prev + curr;
+            } else {
+              return prev;
+            }
+          }, 0);
+          sums[index] = Math.round(sums[index] * 100) / 100;
+        } else {
+          sums[index] = "N/A";
+        }
+      });
+      //退款率和利润率核算
+      sums[fileds.indexOf("refundrate")] =
+        Math.round(
+          sums[fileds.indexOf("refund")] *
+            10000 /
+            sums[fileds.indexOf("salemoneyzn")]
+        ) / 100;
+      sums[fileds.indexOf("grossprofitRate")] =
+        Math.round(
+          sums[fileds.indexOf("grossprofit")] *
+            10000 /
+            sums[fileds.indexOf("salemoneyzn")]
+        ) / 100;
+      return sums;
+    },
     //折叠导航栏
     collapse: function() {
       this.collapsed = !this.collapsed;
