@@ -3,46 +3,45 @@
   <div>
     <el-form :model="conditionForm" :inline="true" ref="conditionForm" label-width="100px" class="demo-form-inline">
       <el-form-item label="时间类型" class="input">
-        <el-select v-model="formInline.region" placeholder="按天">
+        <el-select v-model="conditionForm.dateType" placeholder="按天">
           <el-option label="按天" value="shanghai"></el-option>
           <el-option label="按月" value="beijing"></el-option>
         </el-select>
       </el-form-item>
 
       <el-form-item label="部门" class="input">
-        <el-select v-model="value5" multiple placeholder="部门">
+        <el-select v-model="conditionForm.department" multiple placeholder="部门">
           <el-option v-for="(item,index) in department" :index="index" :key="item.department" :label="item.department" :value="item.department">
           </el-option>
         </el-select>
       </el-form-item>
 
       <el-form-item label="平台" class="input">
-        <el-select v-model="value5" multiple placeholder="平台">
+        <el-select v-model="conditionForm.plat" multiple placeholder="平台">
           <el-option v-for="(item,index) in plat" :index="index" :key="item.plat" :label="item.plat" :value="item.plat">
           </el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="销售员" class="input">
-        <el-select v-model="value5" multiple placeholder="销售员">
+        <el-select v-model="conditionForm.member" multiple placeholder="销售员">
           <el-option v-for="(item,index) in member" :index="index" :key="item.username" :label="item.username" :value="item.username">
           </el-option>
         </el-select>
       </el-form-item>
 
-      <el-form-item label="发货时间" class="input">
-        <el-select v-model="formInline.region" placeholder="发货时间">
+      <el-form-item label="时间类型" class="input">
+        <el-select v-model="conditionForm.dateType" placeholder="发货时间">
           <el-option label="发货时间" value="shanghai"></el-option>
           <el-option label="交易时间" value="beijing"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="日期" class="input">
-        <el-date-picker v-model="date" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="开始日期至结束日期" :picker-options="pickerOptions2">
+        <el-date-picker v-model="conditionForm.dateRange" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="开始日期至结束日期" :picker-options="pickerOptions2">
         </el-date-picker>
       </el-form-item>
       <el-form-item label="账号" class="input">
-        <el-select v-model="accounty.region" placeholder="账号">
-          <el-option v-for="(item,index) in account" :index="item[index]" :key="item.id" :label="item.store" :value="item.id"></el-option>
-          <!-- <el-option label="区域二" value="beijing"></el-option> -->
+        <el-select v-model="conditionForm.account" multiple collapse-tags placeholder="账号">
+          <el-option v-for="(item,index) in account" :index="item[index]" :key="item.store" :label="item.store" :value="item.store"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -112,22 +111,14 @@ export default {
       member: [],
       account: [],
       department: [],
-      formInline: {
-        user: "",
-        region: ""
-      },
+      dateRange: [],
       conditionForm: {
         department: "",
         plat: "",
         member: "",
-        store: [],
-        dateType: 0,
-        dateRange: ["2018-07-04", "2018-07-13"],
-        account: []
-      },
-      accounty: {
-        user: "",
-        region: ""
+        store: "",
+        dateType: "",
+        dateRange: ""
       },
       // options: [
       //   {
@@ -181,9 +172,7 @@ export default {
             }
           }
         ]
-      },
-      value5: [],
-      date: ""
+      }
     };
   },
   methods: {
@@ -297,6 +286,15 @@ export default {
     });
     getAccount(access_token).then(response => {
       this.account = response.data.data;
+    });
+    getMember().then(response => {
+      this.member = response.data.data;
+    });
+    getSection().then(response => {
+      this.department = response.data.data;
+    });
+    getPlatform().then(response => {
+      this.plat = response.data.data;
     });
   }
 };

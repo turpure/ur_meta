@@ -238,6 +238,9 @@ export default {
     getSection().then(response => {
       this.department = response.data.data;
     });
+    getPlatform().then(response => {
+      this.plat = response.data.data;
+    });
   }
 };
 </script>
