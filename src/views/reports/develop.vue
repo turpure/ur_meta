@@ -3,23 +3,20 @@
   <div>
     <el-form :model="conditionForm" :inline="true" ref="conditionForm" label-width="100px" class="demo-form-inline">
       <el-form-item label="部门" class="input">
-        <el-select v-model="formInline.region" placeholder="部门">
-          <el-option v-for="(item,index) in section" :index="item[index]" :key="item.id" :label="item.department" :value="item.id"></el-option>
+        <el-select v-model="conditionForm.department" placeholder="部门">
+          <el-option v-for="(item,index) in department" :index="index" :key="item.department" :label="item.department" :value="item.department"></el-option>
         </el-select>
       </el-form-item>
-
       <el-form-item label="销售员" class="input">
-        <el-select v-model="membery.region" placeholder="销售员">
-          <el-option v-for="(item,index) in member" :index="item[index]" :key="item.id" :label="item.username" :value="item.id"></el-option>
+        <el-select v-model="conditionForm.member" placeholder="销售员">
+          <el-option v-for="(item,index) in member" :index="index" :key="item.username" :label="item.username" :value="item.username"></el-option>
           <!-- <el-option label="区域二" value="beijing"></el-option> -->
         </el-select>
       </el-form-item>
-
-      <el-form-item label="发货时间" class="input">
-        <el-select v-model="formInline.region" placeholder="发货时间">
-          <el-option label="发货时间"></el-option>
-          <el-option label="交易时间"></el-option>
-        </el-select>
+      <el-form-item label="时间类型" class="input" prop="dateType">
+        <el-radio-group v-model="conditionForm.dateType">
+          <el-radio border v-for="(item,index) in dateType" :index="index" :key="item.id" :label="item.id" :value="item.id">{{item.type}}</el-radio>
+        </el-radio-group>
       </el-form-item>
       <el-form-item label="日期" class="input">
         <el-date-picker v-model="conditionForm.dateRange" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions2">
@@ -90,14 +87,13 @@ export default {
       listLoading: false,
       section: [],
       member: [],
+      department: [],
       dateRange: [],
-      formInline: {
-        user: "",
-        region: ""
-      },
+      dateType: [{ id: 0, type: "发货时间" }, { id: 1, type: "交易时间" }],
       conditionForm: {
+        department: "",
         member: "",
-        dateType: 0,
+        dateType: "",
         dateRange: ""
       },
       membery: {
