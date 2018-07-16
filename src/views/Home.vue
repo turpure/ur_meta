@@ -192,30 +192,23 @@ export default {
     },
     cropImage() {
       this.imgSrc = this.$refs.cropper.getCroppedCanvas().toDataURL();
-<<<<<<< HEAD
       uploadImage(this.imgSrc);
-=======
       this.$modal.hide("avator");
->>>>>>> 6ee8663aa9e20245cbd95fcf330caf24f62f51c7
       //upload
     },
     rotate() {
       // guess what this does :)
       this.$refs.cropper.rotate(90);
-<<<<<<< HEAD
-    },
+    }
   },
   mounted() {
-      this.$store.dispatch("GetUserInfo").then(() => {
-        this.sysUserName = this.$store.getters.name;
-        this.imgSrc = this.$store.getters.avatar;
-      }),
-        getMenu().then(response => {
-          this.lside = response.data.data;
-        });
-=======
->>>>>>> 6ee8663aa9e20245cbd95fcf330caf24f62f51c7
-    }
+    this.$store.dispatch("GetUserInfo").then(() => {
+      this.sysUserName = this.$store.getters.name;
+      this.imgSrc = this.$store.getters.avatar;
+    }),
+      getMenu().then(response => {
+        this.lside = response.data.data;
+      });
   }
 };
 </script>
