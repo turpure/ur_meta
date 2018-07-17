@@ -1,7 +1,7 @@
 <template>
   <!-- <div>ebay销售毛利润报表</div>     -->
   <div>
-    <el-form :model="conditionForm" :inline="true" ref="conditionForm" label-width="100px" class="demo-form-inline">
+    <el-form :model="condition" :inline="true" ref="condition" label-width="100px" class="demo-form-inline">
       <el-form-item label="发货时间" class="input">
         <el-select v-model="formInline.region" placeholder="发货时间">
           <el-option label="发货时间" value="shanghai"></el-option>
@@ -14,7 +14,7 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">查询</el-button>
+        <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
       </el-form-item>
     </el-form>
     <el-row :gutter="20">
@@ -76,7 +76,7 @@ export default {
         user: "",
         region: ""
       },
-      conditionForm: {
+      condition: {
         member: "",
         dateType: 0,
         dateRange: ["2018-07-04", "2018-07-13"]

@@ -1,7 +1,7 @@
 <template>
   <!-- <div>美工毛利润报表</div>     -->
   <div>
-    <el-form :model="conditionForm" :inline="true" ref="conditionForm" label-width="100px" class="demo-form-inline">
+    <el-form :model="condition" :inline="true" ref="condition" label-width="100px" class="demo-form-inline">
       <el-form-item label="部门" class="input">
         <el-select v-model="formInline.region" placeholder="部门">
           <el-option v-for="(item,index) in section" :index="item[index]" :key="item.id" :label="item.department" :value="item.id"></el-option>
@@ -11,7 +11,6 @@
       <el-form-item label="销售员" class="input">
         <el-select v-model="membery.region" placeholder="销售员">
           <el-option v-for="(item,index) in member" :index="item[index]" :key="item.id" :label="item.username" :value="item.id"></el-option>
-          <!-- <el-option label="区域二" value="beijing"></el-option> -->
         </el-select>
       </el-form-item>
 
@@ -27,7 +26,7 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">查询</el-button>
+        <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
       </el-form-item>
     </el-form>
     <el-row :gutter="20">
@@ -39,26 +38,19 @@
       </el-col>
     </el-row>
     <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="630" style="width: 100%">
-      <el-table-column prop="pingtai" label="平台" sortable></el-table-column>
-      <el-table-column prop="suffix" label="账号" sortable></el-table-column>
-      <el-table-column prop="salesman" label="销售员" sortable="custom"></el-table-column>
-      <el-table-column prop="salemoney" label="成交价$" sortable="custom"></el-table-column>
-      <el-table-column prop="salemoneyzn" label="成交价￥" sortable="custom"></el-table-column>
-      <el-table-column prop="ebayFeeebay" label="eBay成交费$" sortable="custom"></el-table-column>
-      <el-table-column prop="ebayfeeznebay" label="eBay成交费￥" sortable="custom"></el-table-column>
-      <el-table-column prop="ppFee" label="PP成交费$" sortable="custom"></el-table-column>
-      <el-table-column prop="ppFeezn" label="PP成交费￥" sortable="custom"></el-table-column>
-      <el-table-column prop="costmoney" label="商品成本￥" sortable="custom"></el-table-column>
-      <el-table-column prop="expressFare" label="运费成本￥" sortable="custom"></el-table-column>
-      <el-table-column prop="inpackagemoney" label="包装成本￥" sortable="custom"></el-table-column>
-      <el-table-column prop="storename" label="发货仓库" sortable="custom"></el-table-column>
-      <el-table-column prop="refund" label="退款金额￥" sortable="custom"></el-table-column>
-      <el-table-column prop="refundrate" label="退款率%" sortable="custom"></el-table-column>
-      <el-table-column prop="diefeeZn" label="死库处理￥" sortable="custom"></el-table-column>
-      <el-table-column prop="insertionFee" label="店铺杂费￥" sortable="custom"></el-table-column>
-      <el-table-column prop="saleOpeFeeZn" label="运营杂费￥" sortable="custom"></el-table-column>
-      <el-table-column prop="grossprofit" label="毛利￥" sortable="custom"></el-table-column>
-      <el-table-column prop="grossprofitRate" label="毛利率%" sortable="custom"></el-table-column>
+      <el-table-column prop="possessman1Zero" label="责任人" sortable></el-table-column>
+      <el-table-column prop="salemoneyrmbznZero" label="销售额￥（0-6月）" sortable></el-table-column>
+      <el-table-column prop="netprofitZero" label="毛利润￥（0-6月）" sortable="custom"></el-table-column>
+      <el-table-column prop="netrateZero" label="毛利率%（0-6月）" sortable="custom"></el-table-column>
+      <el-table-column prop="salemoneyrmbznSix" label="销售额￥（6-12月）" sortable="custom"></el-table-column>
+      <el-table-column prop="netprofitSix" label="毛利润￥（6-12月）" sortable="custom"></el-table-column>
+      <el-table-column prop="netrateSix" label="毛利率%（6-12月）" sortable="custom"></el-table-column>
+      <el-table-column prop="salemoneyrmbznTwe" label="销售额￥（12月以上）" sortable="custom"></el-table-column>
+      <el-table-column prop="netprofitTwe" label="毛利润￥（12月以上）" sortable="custom"></el-table-column>
+      <el-table-column prop="netrateTwe" label="毛利率%（12月以上）" sortable="custom"></el-table-column>
+      <el-table-column prop="salemoneyrmbtotal" label="销售额￥（汇总）" sortable="custom"></el-table-column>
+      <el-table-column prop="netprofittotal" label="毛利润￥（汇总）" sortable="custom"></el-table-column>
+      <el-table-column prop="netratetotal" label="毛利率%￥（汇总）" sortable="custom"></el-table-column>
     </el-table>
   </div>
 </template>
@@ -93,7 +85,7 @@ export default {
         user: "",
         region: ""
       },
-      conditionForm: {
+      condition: {
         member: "",
         dateType: 0,
         dateRange: ["2018-07-04", "2018-07-13"]
