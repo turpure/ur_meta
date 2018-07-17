@@ -2,11 +2,11 @@
   <!-- <div>开发毛利润报表</div>     -->
   <div>
     <el-form :model="condition" :inline="true" ref="condition" label-width="100px" class="demo-form-inline">
-      <!-- <el-form-item label="部门" class="input">
-        <el-select v-model="condition.department" clearable placeholder="部门">
-          <el-option v-for="(item,index) in department" :index="index" :key="item.department" :label="item.department" :value="item.department"></el-option>
+      <el-form-item label="部门" class="input">
+        <el-select v-model="formInline.region" placeholder="部门">
+          <el-option v-for="(item,index) in section" :index="item[index]" :key="item.id" :label="item.department" :value="item.id"></el-option>
         </el-select>
-      </el-form-item> -->
+      </el-form-item>
       <el-form-item label="销售员" class="input">
         <el-select v-model="condition.member" placeholder="销售员">
           <el-option v-for="(item,index) in member" :index="index" :key="item.username" :label="item.username" :value="item.username"></el-option>
@@ -103,9 +103,13 @@ export default {
       listLoading: false,
       section: [],
       member: [],
-      //department: [],
+      department: [],
       dateRange: [],
       dateType: [{ id: 0, type: "发货时间" }, { id: 1, type: "交易时间" }],
+      formInline: {
+        user: "",
+        region: ""
+      },
       condition: {
         member: "",
         dateType: "",
@@ -150,7 +154,6 @@ export default {
     },
     onSubmit(form) {
       this.listLoading = true;
-
       getDevelop(form).then(response => {
         this.listLoading = false;
         const ret = response.data.data;
@@ -163,22 +166,20 @@ export default {
       });
     },
     handleSearch() {
-      let searchValue01 =
-        this.searchValue01 && this.searchValue01.toLowerCase();
-      let data = this.searchTable01;
-
-      if (searchValue01) {
-        this.tableData01 = data.filter(function(row) {
+      let searchValue = this.searchValue && this.searchValue.toLowerCase();
+      let data = this.searchTable;
+      if (searchValue) {
+        this.tableData = data.filter(function(row) {
           return Object.keys(row).some(function(key) {
             return (
               String(row[key])
                 .toLowerCase()
-                .indexOf(searchValue01) > -1
+                .indexOf(searchValue) > -1
             );
           });
         });
       } else {
-        this.tableData01 = data;
+        this.tableData = data;
       }
       console.log("Running!");
     },
