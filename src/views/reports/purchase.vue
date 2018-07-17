@@ -1,7 +1,7 @@
 <template>
   <!-- <div>采购毛利润报表</div>     -->
   <div>
-    <el-form :model="conditionForm" :inline="true" ref="conditionForm" label-width="100px" class="demo-form-inline">
+    <el-form :model="condition" :inline="true" ref="condition" label-width="100px" class="demo-form-inline">
 
       <el-form-item label="销售员" class="input">
         <el-select v-model="formInline.region" placeholder="销售员">
@@ -22,7 +22,7 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">查询</el-button>
+        <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
       </el-form-item>
     </el-form>
     <el-row :gutter="20">
@@ -34,26 +34,19 @@
       </el-col>
     </el-row>
     <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="630" style="width: 100%">
-      <el-table-column prop="pingtai" label="平台" sortable></el-table-column>
-      <el-table-column prop="suffix" label="账号" sortable></el-table-column>
-      <el-table-column prop="salesman" label="销售员" sortable="custom"></el-table-column>
-      <el-table-column prop="salemoney" label="成交价$" sortable="custom"></el-table-column>
-      <el-table-column prop="salemoneyzn" label="成交价￥" sortable="custom"></el-table-column>
-      <el-table-column prop="ebayFeeebay" label="eBay成交费$" sortable="custom"></el-table-column>
-      <el-table-column prop="ebayfeeznebay" label="eBay成交费￥" sortable="custom"></el-table-column>
-      <el-table-column prop="ppFee" label="PP成交费$" sortable="custom"></el-table-column>
-      <el-table-column prop="ppFeezn" label="PP成交费￥" sortable="custom"></el-table-column>
-      <el-table-column prop="costmoney" label="商品成本￥" sortable="custom"></el-table-column>
-      <el-table-column prop="expressFare" label="运费成本￥" sortable="custom"></el-table-column>
-      <el-table-column prop="inpackagemoney" label="包装成本￥" sortable="custom"></el-table-column>
-      <el-table-column prop="storename" label="发货仓库" sortable="custom"></el-table-column>
-      <el-table-column prop="refund" label="退款金额￥" sortable="custom"></el-table-column>
-      <el-table-column prop="refundrate" label="退款率%" sortable="custom"></el-table-column>
-      <el-table-column prop="diefeeZn" label="死库处理￥" sortable="custom"></el-table-column>
-      <el-table-column prop="insertionFee" label="店铺杂费￥" sortable="custom"></el-table-column>
-      <el-table-column prop="saleOpeFeeZn" label="运营杂费￥" sortable="custom"></el-table-column>
-      <el-table-column prop="grossprofit" label="毛利￥" sortable="custom"></el-table-column>
-      <el-table-column prop="grossprofitRate" label="毛利率%" sortable="custom"></el-table-column>
+      <el-table-column prop="purchaser" label="采购员" sortable></el-table-column>
+      <el-table-column prop="salemoneyrmbus" label="成交价$" sortable="custom"></el-table-column>
+      <el-table-column prop="salemoneyrmbzn" label="成交价￥" sortable="custom"></el-table-column>
+      <el-table-column prop="ppebayus" label="交易费汇总$" sortable="custom"></el-table-column>
+      <el-table-column prop="ppebayzn" label="交易费汇总￥" sortable="custom"></el-table-column>
+      <el-table-column prop="costmoneyrmb" label="商品成本￥" sortable="custom"></el-table-column>
+      <el-table-column prop="expressfarermb" label="运费成本￥" sortable="custom"></el-table-column>
+      <el-table-column prop="inpackagefeermb" label="包装成本￥" sortable="custom"></el-table-column>
+      <el-table-column prop="devofflinefee" label="死库处理￥" sortable="custom"></el-table-column>
+      <el-table-column prop="devopefee" label="运营杂费￥" sortable="custom"></el-table-column>
+      <el-table-column prop="netprofit" label="毛利￥" sortable="custom"></el-table-column>
+      <el-table-column prop="netrate" label="毛利率%" sortable="custom"></el-table-column>
+      <el-table-column prop="totalamount" label="采购差额￥" sortable="custom"></el-table-column>
     </el-table>
   </div>
 </template>
@@ -87,7 +80,7 @@ export default {
         user: "",
         region: ""
       },
-      conditionForm: {
+      condition: {
         member: "",
         dateType: 0,
         dateRange: ["2018-07-04", "2018-07-13"]

@@ -1,8 +1,8 @@
 <template>
   <el-form :inline="true" class="demo-form-inline">
     <el-form-item label="出货仓库" class="input">
-      <el-select v-model="value5" multiple placeholder="请选择">
-        <el-option v-for="(item,index) in options" :index="index" :key="item.value" :label="item.label" :value="item.value">
+      <el-select v-model="conditionForm.store" multiple collapse-tags placeholder="请选择">
+        <el-option v-for="(item,index) in store" :index="index" :key="item.store" :label="item.store" :value="item.store">
         </el-option>
       </el-select>
     </el-form-item>
@@ -15,34 +15,19 @@ import { getStore } from "../../api/profit";
 export default {
   data() {
     return {
-      options: [
-        {
-          value: "选项1",
-          label: "黄金糕"
-        },
-        {
-          value: "选项2",
-          label: "双皮奶"
-        },
-        {
-          value: "选项3",
-          label: "蚵仔煎"
-        },
-        {
-          value: "选项4",
-          label: "龙须面"
-        },
-        {
-          value: "选项5",
-          label: "北京烤鸭"
-        }
-      ],
-      value5: []
+      store: [{ id: 1, store: "中国仓" }, { id: 2, store: "海外仓" }],
+      conditionForm: {
+        store: ""
+      }
     };
   },
   methods: {
-    onSubmit() {
-      console.log("submit!");
+    onSubmit(form) {
+      this.listLoading = true;
+      getSales(form).then(response => {
+        this.listLoading = false;
+        this.tableData = this.searchTable = response.data.data;
+      });
     }
   },
   mounted() {

@@ -1,52 +1,51 @@
 <template>
   <!-- <div>销售额走势</div>     -->
   <div>
-    <el-form :model="conditionForm" :inline="true" ref="conditionForm" label-width="100px" class="demo-form-inline">
+    <el-form :model="condition" :inline="true" ref="condition" label-width="100px" class="demo-form-inline">
       <el-form-item label="时间类型" class="input">
-        <el-select v-model="formInline.region" placeholder="按天">
+        <el-select v-model="condition.dateType" placeholder="按天">
           <el-option label="按天" value="shanghai"></el-option>
           <el-option label="按月" value="beijing"></el-option>
         </el-select>
       </el-form-item>
 
       <el-form-item label="部门" class="input">
-        <el-select v-model="value5" multiple placeholder="部门">
+        <el-select v-model="condition.department" multiple placeholder="部门">
           <el-option v-for="(item,index) in department" :index="index" :key="item.department" :label="item.department" :value="item.department">
           </el-option>
         </el-select>
       </el-form-item>
 
       <el-form-item label="平台" class="input">
-        <el-select v-model="value5" multiple placeholder="平台">
+        <el-select v-model="condition.plat" multiple placeholder="平台">
           <el-option v-for="(item,index) in plat" :index="index" :key="item.plat" :label="item.plat" :value="item.plat">
           </el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="销售员" class="input">
-        <el-select v-model="value5" multiple placeholder="销售员">
+        <el-select v-model="condition.member" multiple placeholder="销售员">
           <el-option v-for="(item,index) in member" :index="index" :key="item.username" :label="item.username" :value="item.username">
           </el-option>
         </el-select>
       </el-form-item>
 
-      <el-form-item label="发货时间" class="input">
-        <el-select v-model="formInline.region" placeholder="发货时间">
+      <el-form-item label="时间类型" class="input">
+        <el-select v-model="condition.dateType" placeholder="发货时间">
           <el-option label="发货时间" value="shanghai"></el-option>
           <el-option label="交易时间" value="beijing"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="日期" class="input">
-        <el-date-picker v-model="date" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="开始日期至结束日期" :picker-options="pickerOptions2">
+        <el-date-picker v-model="condition.dateRange" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="开始日期至结束日期" :picker-options="pickerOptions2">
         </el-date-picker>
       </el-form-item>
       <el-form-item label="账号" class="input">
-        <el-select v-model="accounty.region" placeholder="账号">
-          <el-option v-for="(item,index) in account" :index="item[index]" :key="item.id" :label="item.store" :value="item.id"></el-option>
-          <!-- <el-option label="区域二" value="beijing"></el-option> -->
+        <el-select v-model="condition.account" multiple collapse-tags placeholder="账号">
+          <el-option v-for="(item,index) in account" :index="item[index]" :key="item.store" :label="item.store" :value="item.store"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">查询</el-button>
+        <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
       </el-form-item>
     </el-form>
     <el-row :gutter="20">
@@ -57,12 +56,12 @@
         <el-button type="default" @click="exportExcel">导出Excel</el-button>
       </el-col>
     </el-row>
-    <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="630" style="width: 100%">
-      <el-table-column prop="pingtai" label="平台" sortable></el-table-column>
-      <el-table-column prop="suffix" label="账号" sortable></el-table-column>
-      <el-table-column prop="salesman" label="销售员" sortable="custom"></el-table-column>
-      <el-table-column prop="salemoney" label="成交价$" sortable="custom"></el-table-column>
-      <el-table-column prop="salemoneyzn" label="成交价￥" sortable="custom"></el-table-column>
+    <!-- <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="630" style="width: 100%">
+      <el-table-column prop="title" label="公司全部" sortable></el-table-column>
+      <el-table-column prop="ordertime" label="2018-07-04" sortable></el-table-column>
+      <el-table-column prop="totalamt" label="46360.48" sortable="custom"></el-table-column>
+      <el-table-column prop="totalamtun" label="139.79" sortable="custom"></el-table-column> -->
+    <!-- <el-table-column prop="salemoneyzn" label="成交价￥" sortable="custom"></el-table-column>
       <el-table-column prop="ebayFeeebay" label="eBay成交费$" sortable="custom"></el-table-column>
       <el-table-column prop="ebayfeeznebay" label="eBay成交费￥" sortable="custom"></el-table-column>
       <el-table-column prop="ppFee" label="PP成交费$" sortable="custom"></el-table-column>
@@ -73,12 +72,12 @@
       <el-table-column prop="storename" label="发货仓库" sortable="custom"></el-table-column>
       <el-table-column prop="refund" label="退款金额￥" sortable="custom"></el-table-column>
       <el-table-column prop="refundrate" label="退款率%" sortable="custom"></el-table-column>
-      <el-table-column prop="diefeeZn" label="死库处理￥" sortable="custom"></el-table-column>
-      <el-table-column prop="insertionFee" label="店铺杂费￥" sortable="custom"></el-table-column>
+      <el-table-column prop="diefeeZn" label="死库处理￥" sortable="custom"></el-table-column> -->
+    <!-- <el-table-column prop="insertionFee" label="店铺杂费￥" sortable="custom"></el-table-column>
       <el-table-column prop="saleOpeFeeZn" label="运营杂费￥" sortable="custom"></el-table-column>
       <el-table-column prop="grossprofit" label="毛利￥" sortable="custom"></el-table-column>
-      <el-table-column prop="grossprofitRate" label="毛利率%" sortable="custom"></el-table-column>
-    </el-table>
+      <el-table-column prop="grossprofitRate" label="毛利率%" sortable="custom"></el-table-column> -->
+    <!-- </el-table> -->
   </div>
 </template>
 
@@ -112,45 +111,16 @@ export default {
       member: [],
       account: [],
       department: [],
-      formInline: {
-        user: "",
-        region: ""
-      },
-      conditionForm: {
+      dateRange: [],
+      condition: {
         department: "",
         plat: "",
         member: "",
         store: [],
-        dateType: 0,
+        dateType: "",
         dateRange: ["2018-07-04", "2018-07-13"],
         account: []
       },
-      accounty: {
-        user: "",
-        region: ""
-      },
-      // options: [
-      //   {
-      //     value: "选项1",
-      //     label: "黄金糕"
-      //   },
-      //   {
-      //     value: "选项2",
-      //     label: "双皮奶"
-      //   },
-      //   {
-      //     value: "选项3",
-      //     label: "蚵仔煎"
-      //   },
-      //   {
-      //     value: "选项4",
-      //     label: "龙须面"
-      //   },
-      //   {
-      //     value: "选项5",
-      //     label: "北京烤鸭"
-      //   }
-      // ],
       pickerOptions2: {
         shortcuts: [
           {
@@ -181,9 +151,7 @@ export default {
             }
           }
         ]
-      },
-      value5: [],
-      date: ""
+      }
     };
   },
   methods: {
@@ -297,6 +265,15 @@ export default {
     });
     getAccount(access_token).then(response => {
       this.account = response.data.data;
+    });
+    getMember().then(response => {
+      this.member = response.data.data;
+    });
+    getSection().then(response => {
+      this.department = response.data.data;
+    });
+    getPlatform().then(response => {
+      this.plat = response.data.data;
     });
   }
 };

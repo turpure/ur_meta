@@ -1,30 +1,30 @@
 <template>
   <!-- <div>开发毛利润报表</div>     -->
   <div>
-    <el-form :model="conditionForm" :inline="true" ref="conditionForm" label-width="100px" class="demo-form-inline">
+    <el-form :model="condition" :inline="true" ref="condition" label-width="100px" class="demo-form-inline">
       <el-form-item label="部门" class="input">
-        <el-select v-model="conditionForm.department" placeholder="部门">
-          <el-option v-for="(item,index) in department" :index="index" :key="item.department" :label="item.department" :value="item.department"></el-option>
+        <el-select v-model="formInline.region" placeholder="部门">
+          <el-option v-for="(item,index) in section" :index="item[index]" :key="item.id" :label="item.department" :value="item.id"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="销售员" class="input">
-        <el-select v-model="conditionForm.member" placeholder="销售员">
+        <el-select v-model="condition.member" placeholder="销售员">
           <el-option v-for="(item,index) in member" :index="index" :key="item.username" :label="item.username" :value="item.username"></el-option>
           <!-- <el-option label="区域二" value="beijing"></el-option> -->
         </el-select>
       </el-form-item>
       <el-form-item label="时间类型" class="input" prop="dateType">
-        <el-radio-group v-model="conditionForm.dateType">
+        <el-radio-group v-model="condition.dateType">
           <el-radio border v-for="(item,index) in dateType" :index="index" :key="item.id" :label="item.id" :value="item.id">{{item.type}}</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="日期" class="input">
-        <el-date-picker v-model="conditionForm.dateRange" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions2">
+        <el-date-picker v-model="condition.dateRange" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions2">
         </el-date-picker>
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">查询</el-button>
+        <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
       </el-form-item>
     </el-form>
     <el-row :gutter="20">
@@ -35,28 +35,42 @@
         <el-button type="default" @click="exportExcel">导出Excel</el-button>
       </el-col>
     </el-row>
-    <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="630" style="width: 100%">
-      <el-table-column prop="pingtai" label="平台" sortable></el-table-column>
-      <el-table-column prop="suffix" label="账号" sortable></el-table-column>
-      <el-table-column prop="salesman" label="销售员" sortable="custom"></el-table-column>
-      <el-table-column prop="salemoney" label="成交价$" sortable="custom"></el-table-column>
-      <el-table-column prop="salemoneyzn" label="成交价￥" sortable="custom"></el-table-column>
-      <el-table-column prop="ebayFeeebay" label="eBay成交费$" sortable="custom"></el-table-column>
-      <el-table-column prop="ebayfeeznebay" label="eBay成交费￥" sortable="custom"></el-table-column>
-      <el-table-column prop="ppFee" label="PP成交费$" sortable="custom"></el-table-column>
-      <el-table-column prop="ppFeezn" label="PP成交费￥" sortable="custom"></el-table-column>
-      <el-table-column prop="costmoney" label="商品成本￥" sortable="custom"></el-table-column>
-      <el-table-column prop="expressFare" label="运费成本￥" sortable="custom"></el-table-column>
-      <el-table-column prop="inpackagemoney" label="包装成本￥" sortable="custom"></el-table-column>
-      <el-table-column prop="storename" label="发货仓库" sortable="custom"></el-table-column>
-      <el-table-column prop="refund" label="退款金额￥" sortable="custom"></el-table-column>
-      <el-table-column prop="refundrate" label="退款率%" sortable="custom"></el-table-column>
-      <el-table-column prop="diefeeZn" label="死库处理￥" sortable="custom"></el-table-column>
-      <el-table-column prop="insertionFee" label="店铺杂费￥" sortable="custom"></el-table-column>
-      <el-table-column prop="saleOpeFeeZn" label="运营杂费￥" sortable="custom"></el-table-column>
-      <el-table-column prop="grossprofit" label="毛利￥" sortable="custom"></el-table-column>
-      <el-table-column prop="grossprofitRate" label="毛利率%" sortable="custom"></el-table-column>
-    </el-table>
+    <el-tabs v-model="activeName" @tab-click="handleClick">
+      <el-tab-pane label="业绩归属1人表" name="first">
+        <el-table :data="tableData01" id="sale-table01" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="630" style="width: 100%">
+          <el-table-column prop="salernameZero" label="业绩归属人" sortable></el-table-column>
+          <el-table-column prop="salemoneyrmbznZero" label="销售额￥（0-6月）" sortable></el-table-column>
+          <el-table-column prop="netprofitZero" label="毛利润￥（0-6月）" sortable="custom"></el-table-column>
+          <el-table-column prop="netrateZero" label="毛利率%（0-6月）" sortable="custom"></el-table-column>
+          <el-table-column prop="salemoneyrmbznSix" label="销售额￥（6-12月）" sortable="custom"></el-table-column>
+          <el-table-column prop="netprofitSix" label="毛利润￥（6-12月）" sortable="custom"></el-table-column>
+          <el-table-column prop="netrateSix" label="毛利率%（6-12月）" sortable="custom"></el-table-column>
+          <el-table-column prop="salemoneyrmbznTwe" label="销售额￥（12月以上）" sortable="custom"></el-table-column>
+          <el-table-column prop="netprofitTwe" label="毛利润￥（12月以上）" sortable="custom"></el-table-column>
+          <el-table-column prop="netrateTwe" label="毛利率%（12月以上）" sortable="custom"></el-table-column>
+          <el-table-column prop="salemoneyrmbtotal" label="销售额￥（汇总）" sortable="custom"></el-table-column>
+          <el-table-column prop="netprofittotal" label="毛利润￥（汇总）" sortable="custom"></el-table-column>
+          <el-table-column prop="netratetotal" label="毛利率%（汇总）" sortable="custom"></el-table-column>
+        </el-table>
+      </el-tab-pane>
+      <el-tab-pane label="业绩归属2人表" name="second">
+        <el-table :data="tableData02" id="sale-table02" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="630" style="width: 100%">
+          <el-table-column prop="salernameZero" label="业绩归属人2" sortable></el-table-column>
+          <el-table-column prop="salemoneyrmbznZero" label="销售额￥（0-6月）" sortable></el-table-column>
+          <el-table-column prop="netprofitZero" label="毛利润￥（0-6月）" sortable="custom"></el-table-column>
+          <el-table-column prop="netrateZero" label="毛利率%（0-6月）" sortable="custom"></el-table-column>
+          <el-table-column prop="salemoneyrmbznSix" label="销售额￥（6-12月）" sortable="custom"></el-table-column>
+          <el-table-column prop="netprofitSix" label="毛利润￥（6-12月）" sortable="custom"></el-table-column>
+          <el-table-column prop="netrateSix" label="毛利率%（6-12月）" sortable="custom"></el-table-column>
+          <el-table-column prop="salemoneyrmbznTwe" label="销售额￥（12月以上）" sortable="custom"></el-table-column>
+          <el-table-column prop="netprofitTwe" label="毛利润￥（12月以上）" sortable="custom"></el-table-column>
+          <el-table-column prop="netrateTwe" label="毛利率%（12月以上）" sortable="custom"></el-table-column>
+          <el-table-column prop="salemoneyrmbtotal" label="销售额￥（汇总）" sortable="custom"></el-table-column>
+          <el-table-column prop="netprofittotal" label="毛利润￥（汇总）" sortable="custom"></el-table-column>
+          <el-table-column prop="netratetotal" label="毛利率%（汇总）" sortable="custom"></el-table-column>
+        </el-table>
+      </el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 
@@ -81,7 +95,9 @@ import {
 export default {
   data() {
     return {
-      tableData: [],
+      activeName: "first",
+      tableData01: [],
+      tableData02: [],
       searchTable: [],
       searchValue: "",
       listLoading: false,
@@ -90,15 +106,14 @@ export default {
       department: [],
       dateRange: [],
       dateType: [{ id: 0, type: "发货时间" }, { id: 1, type: "交易时间" }],
-      conditionForm: {
-        department: "",
+      formInline: {
+        user: "",
+        region: ""
+      },
+      condition: {
         member: "",
         dateType: "",
-        dateRange: ""
-      },
-      membery: {
-        id: "",
-        region: ""
+        dateRange: ["2018-07-04", "2018-07-13"]
       },
       pickerOptions2: {
         shortcuts: [
@@ -134,12 +149,39 @@ export default {
     };
   },
   methods: {
+    handleClick(tab, event) {
+      console.log(tab, event);
+    },
     onSubmit(form) {
       this.listLoading = true;
       getDevelop(form).then(response => {
         this.listLoading = false;
-        this.tableData = this.searchTable = response.data.data;
+        const ret = response.data.data;
+        let posseman1Data = ret.filter(ele => ele.tableType == "归属1人表");
+        let posseman2Data = ret.filter(ele => ele.tableType == "归属2人表");
+        this.tableData01 = this.searchTable = posseman1Data;
+        this.tableData02 = this.searchTable = posseman2Data;
+        //this.tableData01 = this.searchTable = response.data.data[0];
+        //this.tableData02 = this.searchTable = response.data.data[1];
       });
+    },
+    handleSearch() {
+      let searchValue = this.searchValue && this.searchValue.toLowerCase();
+      let data = this.searchTable;
+      if (searchValue) {
+        this.tableData = data.filter(function(row) {
+          return Object.keys(row).some(function(key) {
+            return (
+              String(row[key])
+                .toLowerCase()
+                .indexOf(searchValue) > -1
+            );
+          });
+        });
+      } else {
+        this.tableData = data;
+      }
+      console.log("Running!");
     },
     getSummaries(param) {
       const { columns, data } = param;
@@ -210,25 +252,6 @@ export default {
         if (typeof console !== "undefined") console.log(e, wbout);
       }
       //  return wbout
-    },
-    handleSearch() {
-      let searchValue = this.searchValue && this.searchValue.toLowerCase();
-      let data = this.searchTable;
-
-      if (searchValue) {
-        this.tableData = data.filter(function(row) {
-          return Object.keys(row).some(function(key) {
-            return (
-              String(row[key])
-                .toLowerCase()
-                .indexOf(searchValue) > -1
-            );
-          });
-        });
-      } else {
-        this.tableData = data;
-      }
-      console.log("Running!");
     }
   },
   mounted() {
@@ -238,6 +261,12 @@ export default {
     });
     getMember(access_token).then(response => {
       this.member = response.data.data;
+    });
+    getSection().then(response => {
+      this.department = response.data.data;
+    });
+    getPlatform().then(response => {
+      this.plat = response.data.data;
     });
   }
 };

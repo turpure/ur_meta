@@ -103,3 +103,11 @@ export function getArtist(param) {
         data
     })
 }
+export function getaccount(param) {
+    const data = { 'condition': param }
+    return request({
+        url: '/report/account',
+        method: 'post',
+        data
+    })
+}
