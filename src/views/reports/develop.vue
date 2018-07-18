@@ -98,7 +98,8 @@ export default {
       activeName: "first",
       tableData01: [],
       tableData02: [],
-      searchTable: [],
+      searchTableFirst: [],
+      searchTableSecond: [],
       searchValue: "",
       listLoading: false,
       section: [],
@@ -150,7 +151,7 @@ export default {
   },
   methods: {
     handleClick(tab, event) {
-      console.log(tab, event);
+      this.activeName = tab.name;
     },
     onSubmit(form) {
       this.listLoading = true;
@@ -159,29 +160,37 @@ export default {
         const ret = response.data.data;
         let posseman1Data = ret.filter(ele => ele.tableType == "归属1人表");
         let posseman2Data = ret.filter(ele => ele.tableType == "归属2人表");
-        this.tableData01 = this.searchTable = posseman1Data;
-        this.tableData02 = this.searchTable = posseman2Data;
-        //this.tableData01 = this.searchTable = response.data.data[0];
-        //this.tableData02 = this.searchTable = response.data.data[1];
+        this.tableData01 = this.searchTableFirst = posseman1Data;
+        this.tableData02 = this.searchTableSecond = posseman2Data;
       });
     },
     handleSearch() {
       let searchValue = this.searchValue && this.searchValue.toLowerCase();
-      let data = this.searchTable;
+      const tableMap = {
+        first: {
+          tableData: 'tableData01',
+          searchTable: 'searchTableFirst'
+        },
+        second:{
+          tableData: 'tableData02',
+          searchTable: 'searchTableSecond'
+        },
+      };
+      let activeTable = this.activeName;
+      let data = this[tableMap[activeTable]['searchTable']];
       if (searchValue) {
-        this.tableData = data.filter(function(row) {
+        this[tableMap[activeTable]['tableData']] = data.filter(function(row) {
           return Object.keys(row).some(function(key) {
             return (
-              String(row[key])
+              String(row[key])  
                 .toLowerCase()
                 .indexOf(searchValue) > -1
             );
           });
         });
       } else {
-        this.tableData = data;
+        this[tableMap[activeTable]['tableData']] = data;
       }
-      console.log("Running!");
     },
     getSummaries(param) {
       const { columns, data } = param;
