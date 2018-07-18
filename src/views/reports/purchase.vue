@@ -178,17 +178,11 @@ export default {
         }
       });
       //退款率和利润率核算
-      sums[fileds.indexOf("refundrate")] =
+      sums[fileds.indexOf("netrate")] =
         Math.round(
-          sums[fileds.indexOf("refund")] *
+          sums[fileds.indexOf("netprofit")] *
             10000 /
-            sums[fileds.indexOf("salemoneyzn")]
-        ) / 100;
-      sums[fileds.indexOf("grossprofitRate")] =
-        Math.round(
-          sums[fileds.indexOf("grossprofit")] *
-            10000 /
-            sums[fileds.indexOf("salemoneyzn")]
+            sums[fileds.indexOf("salemoneyrmbzn")]
         ) / 100;
       return sums;
     },
