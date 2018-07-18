@@ -39,7 +39,7 @@
       <el-tab-pane label="业绩归属1人表" name="first">
         <el-table :data="tableData01" id="sale-table01" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="630" style="width: 100%">
           <el-table-column prop="salernameZero" label="业绩归属人" sortable></el-table-column>
-          <el-table-column prop="salemoneyrmbznZero" label="销售额￥（0-6月）" sortable></el-table-column>
+          <el-table-column prop="salemoneyrmbznZero" label="销售额￥（0-6月）" sortable="custom"></el-table-column>
           <el-table-column prop="netprofitZero" label="毛利润￥（0-6月）" sortable="custom"></el-table-column>
           <el-table-column prop="netrateZero" label="毛利率%（0-6月）" sortable="custom"></el-table-column>
           <el-table-column prop="salemoneyrmbznSix" label="销售额￥（6-12月）" sortable="custom"></el-table-column>
@@ -119,6 +119,16 @@ export default {
         dateType: "",
         dateRange: ["2018-07-04", "2018-07-13"]
       },
+      tableMap: {
+        first: {
+          tableData: 'tableData01',
+          searchTable: 'searchTableFirst'
+        },
+        second:{
+          tableData: 'tableData02',
+          searchTable: 'searchTableSecond'
+        },
+      },
       pickerOptions2: {
         shortcuts: [
           {
@@ -169,20 +179,11 @@ export default {
     },
     handleSearch() {
       let searchValue = this.searchValue && this.searchValue.toLowerCase();
-      const tableMap = {
-        first: {
-          tableData: 'tableData01',
-          searchTable: 'searchTableFirst'
-        },
-        second:{
-          tableData: 'tableData02',
-          searchTable: 'searchTableSecond'
-        },
-      };
+      
       let activeTable = this.activeName;
-      let data = this[tableMap[activeTable]['searchTable']];
+      let data = this[this.tableMap[activeTable]['searchTable']];
       if (searchValue) {
-        this[tableMap[activeTable]['tableData']] = data.filter(function(row) {
+        this[this.tableMap[activeTable]['tableData']] = data.filter(function(row) {
           return Object.keys(row).some(function(key) {
             return (
               String(row[key])  
@@ -192,7 +193,7 @@ export default {
           });
         });
       } else {
-        this[tableMap[activeTable]['tableData']] = data;
+        this[this.tableMap[activeTable]['tableData']] = data;
       }
     },
     getSummaries(param) {
@@ -238,7 +239,8 @@ export default {
     },
     //数字排序
     sortNumber(column, prop, order) {
-      let data = this.tableData;
+      let activeTable = this.activeName;
+      let data = this[this.tableMap[activeTable]['tableData']];
       if (column.order === "descending") {
         this.tableData = data.sort(compareDown(data, column.prop));
       } else {
