@@ -97,6 +97,9 @@ import {
   getSalestrend,
   getArtist
 } from "../../api/profit";
+import { compareUp, compareDown } from "../../api/tools";
+import FileSaver from "file-saver";
+import XLSX from "xlsx";
 
 export default {
   data() {

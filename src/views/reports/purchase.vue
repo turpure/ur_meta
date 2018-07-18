@@ -34,7 +34,7 @@
       </el-col>
     </el-row>
     <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="630" style="width: 100%">
-      <el-table-column prop="purchaser" label="采购员" sortable></el-table-column>
+      <el-table-column prop="purchaser" label="采购员" sortable="custom"></el-table-column>
       <el-table-column prop="salemoneyrmbus" label="成交价$" sortable="custom"></el-table-column>
       <el-table-column prop="salemoneyrmbzn" label="成交价￥" sortable="custom"></el-table-column>
       <el-table-column prop="ppebayus" label="交易费汇总$" sortable="custom"></el-table-column>
@@ -67,6 +67,9 @@ import {
   getSalestrend,
   getArtist
 } from "../../api/profit";
+import { compareUp, compareDown } from "../../api/tools";
+import FileSaver from "file-saver";
+import XLSX from "xlsx";
 
 export default {
   data() {

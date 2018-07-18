@@ -55,8 +55,8 @@
       </el-tab-pane>
       <el-tab-pane label="业绩归属2人表" name="second">
         <el-table :data="tableData02" id="sale-table02" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="630" style="width: 100%">
-          <el-table-column prop="salernameZero" label="业绩归属人2" sortable></el-table-column>
-          <el-table-column prop="salemoneyrmbznZero" label="销售额￥（0-6月）" sortable></el-table-column>
+          <el-table-column prop="salernameZero" label="业绩归属人2" sortable="custom"></el-table-column>
+          <el-table-column prop="salemoneyrmbznZero" label="销售额￥（0-6月）" sortable="custom"></el-table-column>
           <el-table-column prop="netprofitZero" label="毛利润￥（0-6月）" sortable="custom"></el-table-column>
           <el-table-column prop="netrateZero" label="毛利率%（0-6月）" sortable="custom"></el-table-column>
           <el-table-column prop="salemoneyrmbznSix" label="销售额￥（6-12月）" sortable="custom"></el-table-column>
@@ -90,6 +90,9 @@ import {
   getSalestrend,
   getArtist
 } from "../../api/profit";
+import { compareUp, compareDown } from "../../api/tools";
+import FileSaver from "file-saver";
+import XLSX from "xlsx";
 // import { getSection,getPlatform,getMember,getStore,getAccount } from '../../api/profit'
 
 export default {
