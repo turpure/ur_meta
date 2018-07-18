@@ -37,7 +37,15 @@
     </el-row>
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="业绩归属1人表" name="first">
+<<<<<<< HEAD
         <el-table :data="tableData01" id="sale-table01" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="630" style="width: 100%" empty-text="--">
+=======
+<<<<<<< HEAD
+        <el-table :data="tableData01" id="sale-table01" empty-text="" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="630" style="width: 100%">
+=======
+        <el-table :data="tableData01" id="sale-table01" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="630" style="width: 100%" empty-text="--">
+>>>>>>> 8de8ff685ae56c0f951a851d0f2150427f696c53
+>>>>>>> 1a8a890fa7ce2eab38abe6b76e1434ebe2b0c7df
           <el-table-column prop="salernameZero" label="业绩归属人" sortable></el-table-column>
           <el-table-column prop="salemoneyrmbznZero" label="销售额￥（0-6月）"  :formatter="empty" sortable="custom"></el-table-column>
           <el-table-column prop="netprofitZero" label="毛利润￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
@@ -173,8 +181,18 @@ export default {
         const ret = response.data.data;
         let posseman1Data = ret.filter(ele => ele.tableType == "归属1人表");
         let posseman2Data = ret.filter(ele => ele.tableType == "归属2人表");
+<<<<<<< HEAD
         this.tableData01 = this.searchTableFirst = posseman1Data;
         this.tableData02 = this.searchTableSecond = posseman2Data;
+=======
+<<<<<<< HEAD
+        this.tableData01 = this.searchTableFirst = posseman1Data;
+        this.tableData02 = this.searchTableSecond = posseman2Data;
+=======
+        this.tableData01 = this.searchTable = posseman1Data;
+        this.tableData02 = this.searchTable = posseman2Data;
+>>>>>>> 8de8ff685ae56c0f951a851d0f2150427f696c53
+>>>>>>> 1a8a890fa7ce2eab38abe6b76e1434ebe2b0c7df
       });
     },
     handleSearch() {
