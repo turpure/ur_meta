@@ -168,17 +168,29 @@ export default {
         }
       });
       //退款率和利润率核算
-      sums[fileds.indexOf("refundrate")] =
+      sums[fileds.indexOf("netrateZero")] =
         Math.round(
-          sums[fileds.indexOf("refund")] *
+          sums[fileds.indexOf("netprofitZero")] *
             10000 /
-            sums[fileds.indexOf("salemoneyzn")]
+            sums[fileds.indexOf("salemoneyrmbznZero")]
         ) / 100;
-      sums[fileds.indexOf("grossprofitRate")] =
+      sums[fileds.indexOf("netrateSix")] =
         Math.round(
-          sums[fileds.indexOf("grossprofit")] *
+          sums[fileds.indexOf("netprofitSix")] *
             10000 /
-            sums[fileds.indexOf("salemoneyzn")]
+            sums[fileds.indexOf("salemoneyrmbznSix")]
+        ) / 100;
+      sums[fileds.indexOf("netrateTwe")] =
+        Math.round(
+          sums[fileds.indexOf("netprofitTwe")] *
+            10000 /
+            sums[fileds.indexOf("salemoneyrmbznTwe")]
+        ) / 100;
+      sums[fileds.indexOf("netratetotal")] =
+        Math.round(
+          sums[fileds.indexOf("netprofittotal")] *
+            10000 /
+            sums[fileds.indexOf("salemoneyrmbtotal")]
         ) / 100;
       return sums;
     },

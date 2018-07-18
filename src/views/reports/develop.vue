@@ -37,7 +37,7 @@
     </el-row>
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="业绩归属1人表" name="first">
-        <el-table :data="tableData01" id="sale-table01" empty-text="" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="630" style="width: 100%">
+        <el-table :data="tableData01" id="sale-table01" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="630" style="width: 100%" empty-text="--">
           <el-table-column prop="salernameZero" label="业绩归属人" sortable></el-table-column>
           <el-table-column prop="salemoneyrmbznZero" label="销售额￥（0-6月）"  :formatter="empty" sortable="custom"></el-table-column>
           <el-table-column prop="netprofitZero" label="毛利润￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
@@ -54,7 +54,7 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="业绩归属2人表" name="second">
-        <el-table :data="tableData02" id="sale-table02" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="630" style="width: 100%">
+        <el-table :data="tableData02" id="sale-table02" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="630" style="width: 100%" empty-text="--">
           <el-table-column prop="salernameZero" label="业绩归属人2" sortable="custom"></el-table-column>
           <el-table-column prop="salemoneyrmbznZero" label="销售额￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
           <el-table-column prop="netprofitZero" label="毛利润￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
@@ -223,17 +223,29 @@ export default {
         }
       });
       //退款率和利润率核算
-      sums[fileds.indexOf("refundrate")] =
+      sums[fileds.indexOf("netrateZero")] =
         Math.round(
-          sums[fileds.indexOf("refund")] *
+          sums[fileds.indexOf("netprofitZero")] *
             10000 /
-            sums[fileds.indexOf("salemoneyzn")]
+            sums[fileds.indexOf("salemoneyrmbznZero")]
         ) / 100;
-      sums[fileds.indexOf("grossprofitRate")] =
+      sums[fileds.indexOf("netrateSix")] =
         Math.round(
-          sums[fileds.indexOf("grossprofit")] *
+          sums[fileds.indexOf("netprofitSix")] *
             10000 /
-            sums[fileds.indexOf("salemoneyzn")]
+            sums[fileds.indexOf("salemoneyrmbznSix")]
+        ) / 100;
+      sums[fileds.indexOf("netrateTwe")] =
+        Math.round(
+          sums[fileds.indexOf("netprofitTwe")] *
+            10000 /
+            sums[fileds.indexOf("salemoneyrmbznTwe")]
+        ) / 100;
+      sums[fileds.indexOf("netratetotal")] =
+        Math.round(
+          sums[fileds.indexOf("netprofittotal")] *
+            10000 /
+            sums[fileds.indexOf("salemoneyrmbtotal")]
         ) / 100;
       return sums;
     },
