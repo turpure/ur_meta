@@ -1,7 +1,7 @@
 <template>
   <!-- <div>ebay销售毛利润报表</div>     -->
   <div>
-    <el-form :model="condition" :inline="true" ref="condition" label-width="100px" class="demo-form-inline">
+    <el-form :model="condition" :inline="true" ref="condition" label-width="68px" class="demo-form-inline">
       <el-form-item label="发货时间" class="input">
         <el-select v-model="formInline.region" placeholder="发货时间">
           <el-option label="发货时间" value="shanghai"></el-option>
@@ -221,10 +221,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.input {
-  margin-left: 100px;
-  .input_w {
-    width: 350px;
-  }
-}
 </style>

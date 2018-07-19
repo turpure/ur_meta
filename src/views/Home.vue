@@ -68,16 +68,16 @@
       </aside>
       <section class="content-container">
         <div class="grid-content bg-purple-light">
-          <el-col :span="24" class="breadcrumb-container">
+          <!-- <el-col :span="24" class="breadcrumb-container">
             <strong class="title">
-              <!--{{$route.name}}-->
+              {{$route.name}}
             </strong>
             <el-breadcrumb separator="" class="breadcrumb-inner">
               <el-breadcrumb-item v-for="item in $route.matched" :key="item.path">
-                <!-- {{ item.name }} -->
+                {{ item.name }}
               </el-breadcrumb-item>
             </el-breadcrumb>
-          </el-col>
+          </el-col> -->
           <el-col :span="24" class="content-wrapper">
             <transition name="fade" mode="out-in">
               <router-view></router-view>
@@ -269,7 +269,7 @@ export default {
       }
     }
     .logo-width {
-      width: 230px;
+      width: 160px;
     }
     .logo-collapse-width {
       width: 60px;
@@ -290,8 +290,8 @@ export default {
     bottom: 0px;
     overflow: hidden;
     aside {
-      flex: 0 0 230px;
-      width: 230px;
+      flex: 0 0 160px;
+      width: 160px;
       // position: absolute;
       // top: 0px;
       // bottom: 0px;
@@ -299,7 +299,7 @@ export default {
         height: 100%;
       }
       .data-scroll-width {
-        width: 230px;
+        width: 160px;
       }
       .collapsed {
         width: 60px;
@@ -321,8 +321,8 @@ export default {
       width: 60px;
     }
     .menu-expanded {
-      flex: 0 0 230px;
-      width: 230px;
+      flex: 0 0 160px;
+      width: 160px;
     }
     .content-container {
       // background: #f1f2f7;
@@ -333,18 +333,18 @@ export default {
       // bottom: 0px;
       //left: 230px;
       overflow-y: scroll;
-      padding: 20px;
-      .breadcrumb-container {
-        //margin-bottom: 15px;
-        .title {
-          width: 200px;
-          float: left;
-          color: #475669;
-        }
-        .breadcrumb-inner {
-          float: right;
-        }
-      }
+      padding: 10px; //二次修改
+      // .breadcrumb-container {
+      //   //margin-bottom: 15px;
+      //   .title {
+      //     width: 200px;
+      //     float: left;
+      //     color: #475669;
+      //   }
+      //   .breadcrumb-inner {
+      //     float: right;
+      //   }
+      // }          //二次修改
       .content-wrapper {
         background-color: #fff;
         box-sizing: border-box;

@@ -19,12 +19,14 @@ import 'font-awesome/css/font-awesome.min.css'
 import { getToken } from './utils/auth'
 
 import VModal from 'vue-js-modal'
+import HighchartsVue from "highcharts-vue";
 
 Vue.use(VModal)
-
+Vue.use(HighchartsVue)
 Vue.use(ElementUI)
 Vue.use(VueRouter)
 Vue.use(Vuex)
+
 
 //NProgress.configure({ showSpinner: false });
 
@@ -55,7 +57,7 @@ new Vue({
   //template: '<App/>',
   router,
   store,
-  //components: { App }
+  //components: { App },
   render: h => h(App)
 }).$mount('#app')
 

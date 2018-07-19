@@ -1,7 +1,7 @@
 <template>
   <!-- <div>美工毛利润报表</div>     -->
   <div>
-    <el-form :model="condition" :inline="true" ref="condition" label-width="100px" class="demo-form-inline">
+    <el-form :model="condition" :inline="true" ref="condition" label-width="68px" class="demo-form-inline">
       <el-form-item label="部门" class="input">
         <el-select v-model="formInline.region" placeholder="部门">
           <el-option v-for="(item,index) in section" :index="item[index]" :key="item.id" :label="item.department" :value="item.id"></el-option>
@@ -256,10 +256,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.input {
-  margin-left: 100px;
-  .input_w {
-    width: 350px;
-  }
-}
 </style>
