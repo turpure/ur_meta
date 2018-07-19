@@ -34,19 +34,19 @@
       </el-col>
     </el-row>
     <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="630" style="width: 100%">
-      <el-table-column prop="purchaser" label="采购员" sortable="custom"></el-table-column>
-      <el-table-column prop="salemoneyrmbus" label="成交价$" sortable="custom"></el-table-column>
-      <el-table-column prop="salemoneyrmbzn" label="成交价￥" sortable="custom"></el-table-column>
-      <el-table-column prop="ppebayus" label="交易费汇总$" sortable="custom"></el-table-column>
-      <el-table-column prop="ppebayzn" label="交易费汇总￥" sortable="custom"></el-table-column>
-      <el-table-column prop="costmoneyrmb" label="商品成本￥" sortable="custom"></el-table-column>
-      <el-table-column prop="expressfarermb" label="运费成本￥" sortable="custom"></el-table-column>
-      <el-table-column prop="inpackagefeermb" label="包装成本￥" sortable="custom"></el-table-column>
-      <el-table-column prop="devofflinefee" label="死库处理￥" sortable="custom"></el-table-column>
-      <el-table-column prop="devopefee" label="运营杂费￥" sortable="custom"></el-table-column>
-      <el-table-column prop="netprofit" label="毛利￥" sortable="custom"></el-table-column>
-      <el-table-column prop="netrate" label="毛利率%" sortable="custom"></el-table-column>
-      <el-table-column prop="totalamount" label="采购差额￥" sortable="custom"></el-table-column>
+      <el-table-column min-width="90px" prop="purchaser" label="采购员" sortable="custom"></el-table-column>
+      <el-table-column min-width="100px" prop="salemoneyrmbus" label="成交价$" sortable="custom"></el-table-column>
+      <el-table-column min-width="100px" prop="salemoneyrmbzn" label="成交价￥" sortable="custom"></el-table-column>
+      <el-table-column min-width="130px" prop="ppebayus" label="交易费汇总$" sortable="custom"></el-table-column>
+      <el-table-column min-width="130px" prop="ppebayzn" label="交易费汇总￥" sortable="custom"></el-table-column>
+      <el-table-column min-width="115px" prop="costmoneyrmb" label="商品成本￥" sortable="custom"></el-table-column>
+      <el-table-column min-width="115px" prop="expressfarermb" label="运费成本￥" sortable="custom"></el-table-column>
+      <el-table-column min-width="115px" prop="inpackagefeermb" label="包装成本￥" sortable="custom"></el-table-column>
+      <el-table-column min-width="115px" prop="devofflinefee" label="死库处理￥" sortable="custom"></el-table-column>
+      <el-table-column min-width="120px" prop="devopefee" label="运营杂费￥" sortable="custom"></el-table-column>
+      <el-table-column min-width="90px" prop="netprofit" label="毛利￥" sortable="custom"></el-table-column>
+      <el-table-column min-width="100px" prop="netrate" label="毛利率%" sortable="custom"></el-table-column>
+      <el-table-column min-width="120px" prop="totalamount" label="采购差额￥" sortable="custom"></el-table-column>
     </el-table>
   </div>
 </template>

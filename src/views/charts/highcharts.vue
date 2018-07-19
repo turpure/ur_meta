@@ -1,27 +1,21 @@
 <template>
-  <div class="highcharts-container"></div>
+  <div class="x-bar">
+    <div :id="id" :option="option"></div>
+  </div>
 </template>
 
 <script>
-import Highcharts from "highcharts-vue";
+import HighchartsVue from "highcharts-vue";
 
 export default {
-  props: ["options", "styles"],
-  name: "highcharts",
-  data() {
-    return {
-      chart: null
-    };
-  },
-  mounted() {
-    this.initChart();
-  },
-  methods: {
-    initChart() {
-      console.log(this.$el);
-      this.$el.style.width = (this.styles.width || 800) + "px";
-      this.$el.style.height = (this.styles.height || 400) + "px";
-      this.chart = new Highcharts.Chart(this.$el, this.options);
+  props: {
+    id: {
+      type: String,
+      default: "chart"
+    },
+    option: {
+      type: Object,
+      required: true
     }
   }
 };
@@ -30,6 +24,5 @@ export default {
 <style lang="scss">
 .highcharts-container {
   width: 800px;
-  height: 400px;
 }
 </style>

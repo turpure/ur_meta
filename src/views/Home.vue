@@ -49,11 +49,11 @@
         <ul class="el-menu el-menu-vertical-demo collapsed" v-show="collapsed" ref="menuCollapsed">
           <li v-for="(item,index) in $router.options.routes" v-if="!item.hidden" class="el-submenu item">
             <template v-if="!item.leaf">
-              <div class="el-submenu__title" style="padding-left: 20px;" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
+              <div class="el-submenu__title" style="padding-left: 10px;" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
                 <i :class="item.iconCls"></i>
               </div>
               <ul class="el-menu submenu" :class="'submenu-hook-'+index" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
-                <li v-for="child in item.children" v-if="!child.hidden" :key="child.path" class="el-menu-item" style="padding-left: 40px;" :class="$route.path==child.path?'is-active':''" @click="$router.push(child.path)">{{child.name}}</li>
+                <li v-for="child in item.children" v-if="!child.hidden" :key="child.path" class="el-menu-item" :class="$route.path==child.path?'is-active':''" @click="$router.push(child.path)">{{child.name}}</li>
               </ul>
             </template>
             <template v-else>
@@ -68,16 +68,7 @@
       </aside>
       <section class="content-container">
         <div class="grid-content bg-purple-light">
-          <!-- <el-col :span="24" class="breadcrumb-container">
-            <strong class="title">
-              {{$route.name}}
-            </strong>
-            <el-breadcrumb separator="" class="breadcrumb-inner">
-              <el-breadcrumb-item v-for="item in $route.matched" :key="item.path">
-                {{ item.name }}
-              </el-breadcrumb-item>
-            </el-breadcrumb>
-          </el-col> -->
+
           <el-col :span="24" class="content-wrapper">
             <transition name="fade" mode="out-in">
               <router-view></router-view>

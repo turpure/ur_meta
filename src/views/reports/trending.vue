@@ -48,7 +48,7 @@
         <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
       </el-form-item>
     </el-form>
-    <highcharts :options="options"></highcharts>
+    <highcharts :options="options" style="height:600px"></highcharts>
   </div>
 </template>
 
@@ -71,6 +71,7 @@ import {
 import { compareUp, compareDown } from "../../api/tools";
 import FileSaver from "file-saver";
 import XLSX from "xlsx";
+import highcharts from "../charts/highcharts";
 
 export default {
   data() {
@@ -106,11 +107,6 @@ export default {
         credits: {
           enabled: false // 禁用版权信息
         },
-        plotOptions: {
-          areaspline: {
-            fillOpacity: 0.5
-          }
-        },
         series: [
           {
             name: "公司全部",
@@ -136,7 +132,7 @@ export default {
         member: "",
         store: [],
         dateType: "",
-        dateRange: ["2018-07-04", "2018-07-13"],
+        dateRange: ["2018-07-01", "2018-07-13"],
         account: []
       },
       pickerOptions2: {
@@ -186,8 +182,8 @@ export default {
         });
         console.log(posseman1Data);
         console.log(posseman2Data);
-        options.xAxis.categories.push(posseman1Data);
-        options.series.data.push(posseman2Data);
+        this.options.xAxis.categories = posseman1Data;
+        this.options.series[0].data = posseman2Data.map(Number);
       });
     },
     handleSearch() {
