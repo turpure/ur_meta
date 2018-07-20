@@ -45,7 +45,11 @@
         <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
       </el-form-item>
     </el-form>
-    <el-button @click="show = !show">隐藏</el-button>
+    <el-button type="text" @click="handleChange" style="width:100%;">
+      <center>
+        <i class="el-icon-caret-bottom"></i>
+      </center>
+    </el-button>
     <highcharts :options="options" style="height:700px;width:100%;"></highcharts>
   </div>
 </template>
@@ -74,6 +78,7 @@ import highcharts from "../charts/highcharts";
 export default {
   data() {
     return {
+      activeNames: [],
       id: "test",
       options: {
         chart: {
@@ -112,7 +117,7 @@ export default {
           }
         ]
       },
-      show: "true",
+      show: "false",
       tableData: [],
       searchTable: [],
       searchValue: "",
@@ -168,6 +173,9 @@ export default {
     };
   },
   methods: {
+    handleChange() {
+      this.show = !this.show;
+    },
     onSubmit(form) {
       this.listLoading = true;
       getSalestrend(form).then(response => {
@@ -309,9 +317,5 @@ export default {
 }
 .el-date-editor .el-range-separator {
   line-height: 20px;
-}
-.el-button {
-  padding: 10px 20px;
-  float: right;
 }
 </style>
