@@ -287,6 +287,10 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.el-radio.is-bordered {
+  padding: 6px 16px 0 6px;
+  height: 30px;
+}
 </style>
 

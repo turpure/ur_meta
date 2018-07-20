@@ -15,7 +15,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="平台" class="input">
-        <el-select v-model="condition.plat" multiple placeholder="平台">
+        <el-select v-model="condition.plat" multiple placeholder="平台" style="height: 30px;">
           <el-option v-for="(item,index) in plat" :index="index" :key="item.plat" :label="item.plat" :value="item.plat">
           </el-option>
         </el-select>
@@ -300,49 +300,18 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.el-input__inner {
+  height: 30px !important;
+}
+.el-date-editor .el-range__icon {
+  line-height: 1px;
+}
+.el-date-editor .el-range-separator {
+  line-height: 20px;
+}
 .el-button {
   padding: 10px 20px;
   float: right;
 }
-// .container .main .content-container[data-v-0ff1e341] {
-//   padding: 5px 0;
-//   .el-form-item {
-//     margin-bottom: 5px;
-//     margin-left: 5px;
-//     .el-form-item__label {
-//       line-height: 0px;
-//       padding: 0 5px 0 0;
-//     }
-//     .el-form-item__content {
-//       vertical-align: middle;
-//       line-height: 0px;
-//       .el-range-editor {
-//         padding: 0 5px;
-//       }
-//       .el-date-editor--daterange {
-//         width: 220px;
-//       }
-//       .el-button {
-//         padding: 10px 20px;
-//         position: fixed;
-//         right: 1.2%;
-//       }
-//       .el-date-editor .el-range-separator {
-//         padding: 0 5px;
-//         line-height: 36px;
-//         width: 10%;
-//       }
-//       .el-input {
-//         width: 90px;
-//         .el-input__inner {
-//           padding: 0 5px;
-//         }
-//         .el-range-editor .el-input__inner {
-//           padding: 0 5px;
-//         }
-//       }
-//     }
-//   }
-// }
 </style>
