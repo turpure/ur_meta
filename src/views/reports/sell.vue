@@ -53,7 +53,7 @@
         <el-button style="float:right;" @click="show = !show">隐藏</el-button>
       </el-col>
     </el-row>
-    <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="630" style="width: 100% ">
+    <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="690" style="width: 100% ">
       <el-table-column min-width="72px" prop="pingtai" label="平台" sortable="custom"></el-table-column>
       <el-table-column min-width="72px" prop="suffix" label="账号" sortable="custom"></el-table-column>
       <el-table-column min-width="87px" prop="salesman" label="销售员" sortable="custom"></el-table-column>

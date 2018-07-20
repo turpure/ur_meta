@@ -46,7 +46,7 @@
       </el-form-item>
     </el-form>
     <el-button @click="show = !show">隐藏</el-button>
-    <highcharts :options="options" style="height:600px;width:100%;"></highcharts>
+    <highcharts :options="options" style="height:700px;width:100%;"></highcharts>
   </div>
 </template>
 

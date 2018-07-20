@@ -33,7 +33,7 @@
         <el-button style="float:right;" @click="show = !show">隐藏</el-button>
       </el-col>
     </el-row>
-    <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="630" style="width: 100%">
+    <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="690" style="width: 100%">
       <el-table-column min-width="90px" prop="purchaser" label="采购员" sortable="custom"></el-table-column>
       <el-table-column min-width="100px" prop="salemoneyrmbus" label="成交价$" sortable="custom"></el-table-column>
       <el-table-column min-width="100px" prop="salemoneyrmbzn" label="成交价￥" sortable="custom"></el-table-column>
