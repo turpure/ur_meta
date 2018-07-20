@@ -288,6 +288,9 @@ export default {
       .el-menu {
         height: 100%;
       }
+      .el-submenu .el-menu-item {
+        min-width: 160px;
+      }
       .data-scroll-width {
         width: 160px;
       }
