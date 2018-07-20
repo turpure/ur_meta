@@ -69,70 +69,71 @@ import {
   getArtist
 } from "../../api/profit";
 import { compareUp, compareDown } from "../../api/tools";
-import Highcharts from "Highcharts"
+import Highcharts from "Highcharts";
 
 export default {
   data() {
     return {
       id: "test",
       options: {
-    chart: {
-        type: 'areaspline'
-    },
-    title: {
-        text: 'Average fruit consumption during one week'
-    },
-    legend: {
-        layout: 'vertical',
-        align: 'left',
-        verticalAlign: 'top',
-        x: 150,
-        y: 100,
-        floating: true,
-        borderWidth: 1,
-        backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
-    },
-    xAxis: {
-        categories: [
-            'Monday',
-            'Tuesday',
-            'Wednesday',
-            'Thursday',
-            'Friday',
-            'Saturday',
-            'Sunday'
-        ],
-        plotBands: [{ // visualize the weekend
-            from: 4.5,
-            to: 6.5,
-            color: 'rgba(68, 170, 213, .2)'
-        }]
-    },
-    yAxis: {
+        chart: {
+          type: "areaspline"
+        },
         title: {
-            text: 'Fruit units'
-        }
-    },
-    tooltip: {
-        shared: true,
-        valueSuffix: ' units'
-    },
-    credits: {
-        enabled: false
-    },
-    plotOptions: {
-        areaspline: {
+          text: "销售额趋势"
+        },
+        legend: {
+          layout: "vertical",
+          align: "left",
+          verticalAlign: "top",
+          x: 150,
+          y: 100,
+          floating: true,
+          borderWidth: 1,
+          backgroundColor:
+            (Highcharts.theme && Highcharts.theme.legendBackgroundColor) ||
+            "#FFFFFF"
+        },
+        xAxis: {
+          categories: [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+          ],
+          plotBands: [
+            {
+              // visualize the weekend
+              // from: 4.5,
+              // to: 6.5,
+              // color: "rgba(68, 170, 213, .2)"
+            }
+          ]
+        },
+        yAxis: {
+          title: {
+            text: "销售额($)"
+          }
+        },
+        tooltip: {
+          shared: true,
+          valueSuffix: "$"
+        },
+        credits: {
+          enabled: false
+        },
+        plotOptions: {
+          areaspline: {
             fillOpacity: 0.5
-        }
-    },
-    series: [{
-        name: 'John',
-        data: [3, 4, 3, 5, 4, 10, 12]
-    }, {
-        name: 'Jane',
-        data: [1, 3, 4, 3, 3, 5, 4]
-    }]
-},
+          }
+        },
+        series: [
+                  
+        ]
+      },
       tableData: [],
       searchTable: [],
       searchValue: "",
@@ -146,7 +147,7 @@ export default {
       dateType: [],
       dateRange: [],
       condition: {
-        department: "",
+        department:"",
         plat: "",
         member: "",
         store: [],
@@ -190,18 +191,34 @@ export default {
   methods: {
     onSubmit(form) {
       this.listLoading = true;
-      // getSalestrend(form).then(response => {
-      //   this.listLoading = false;
-      //   let ret = response.data.data;
-      //   let posseman1Data = ret.map(ele => {
-      //     return ele.ordertime;
-      //   });
-      //   let posseman2Data = ret.map(ele => {
-      //     return ele.totalamt;
-      //   });
-      //   this.options.xAxis.categories = posseman1Data;
-      //   this.options.series[0].data = posseman2Data.map(Number);
-      // });
+      form.department = ["运营一部","运营二部","运营三部"];
+       getSalestrend(form).then(response => {
+        this.listLoading = false;
+        let ret = response.data.data;
+        let lineName = [];
+        let series = []
+        ret.forEach(element => {
+          if (lineName.indexOf(element.title) < 0) {
+            lineName.push(element.title);
+          }  
+        });
+        let date = [];
+        lineName.forEach(name => {
+          let sery = {};
+          let amt = [];
+          ret.map(element => {
+            if (element.title == name){
+              amt.push(Number(element.totalamt));
+              date.push(element.ordertime);
+            }
+          })
+          sery["data"] = amt;
+          sery["name"] = name;
+          series.push(sery);
+        })
+        this.options.xAxis.categories = date;
+        this.options.series = series; 
+      })
     },
   },
   mounted() {
