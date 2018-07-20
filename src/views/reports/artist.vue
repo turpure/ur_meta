@@ -1,7 +1,7 @@
 <template>
   <!-- <div>美工毛利润报表</div>     -->
   <div>
-    <el-form :model="condition" :inline="true" ref="condition" label-width="100px" class="demo-form-inline">
+    <el-form :model="condition" :inline="true" ref="condition" label-width="68px" class="demo-form-inline">
       <el-form-item label="部门" class="input">
         <el-select v-model="formInline.region" placeholder="部门">
           <el-option v-for="(item,index) in section" :index="item[index]" :key="item.id" :label="item.department" :value="item.id"></el-option>
@@ -38,19 +38,19 @@
       </el-col>
     </el-row>
     <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="630" style="width: 100%">
-      <el-table-column prop="possessman1Zero" label="责任人" sortable="custom"></el-table-column>
-      <el-table-column prop="salemoneyrmbznZero" label="销售额￥（0-6月）" sortable="custom"></el-table-column>
-      <el-table-column prop="netprofitZero" label="毛利润￥（0-6月）" sortable="custom"></el-table-column>
-      <el-table-column prop="netrateZero" label="毛利率%（0-6月）" sortable="custom"></el-table-column>
-      <el-table-column prop="salemoneyrmbznSix" label="销售额￥（6-12月）" sortable="custom"></el-table-column>
-      <el-table-column prop="netprofitSix" label="毛利润￥（6-12月）" sortable="custom"></el-table-column>
-      <el-table-column prop="netrateSix" label="毛利率%（6-12月）" sortable="custom"></el-table-column>
-      <el-table-column prop="salemoneyrmbznTwe" label="销售额￥（12月以上）" sortable="custom"></el-table-column>
-      <el-table-column prop="netprofitTwe" label="毛利润￥（12月以上）" sortable="custom"></el-table-column>
-      <el-table-column prop="netrateTwe" label="毛利率%（12月以上）" sortable="custom"></el-table-column>
-      <el-table-column prop="salemoneyrmbtotal" label="销售额￥（汇总）" sortable="custom"></el-table-column>
-      <el-table-column prop="netprofittotal" label="毛利润￥（汇总）" sortable="custom"></el-table-column>
-      <el-table-column prop="netratetotal" label="毛利率%￥（汇总）" sortable="custom"></el-table-column>
+      <el-table-column min-width="90px" prop="possessman1Zero" label="责任人" sortable="custom"></el-table-column>
+      <el-table-column min-width="170px" prop="salemoneyrmbznZero" label="销售额￥（0-6月）" sortable="custom"></el-table-column>
+      <el-table-column min-width="170px" prop="netprofitZero" label="毛利润￥（0-6月）" sortable="custom"></el-table-column>
+      <el-table-column min-width="170px" prop="netrateZero" label="毛利率%（0-6月）" sortable="custom"></el-table-column>
+      <el-table-column min-width="190px" prop="salemoneyrmbznSix" label="销售额￥（6-12月）" sortable="custom"></el-table-column>
+      <el-table-column min-width="190px" prop="netprofitSix" label="毛利润￥（6-12月）" sortable="custom"></el-table-column>
+      <el-table-column min-width="190px" prop="netrateSix" label="毛利率%（6-12月）" sortable="custom"></el-table-column>
+      <el-table-column min-width="190px" prop="salemoneyrmbznTwe" label="销售额￥（12月以上）" sortable="custom"></el-table-column>
+      <el-table-column min-width="190px" prop="netprofitTwe" label="毛利润￥（12月以上）" sortable="custom"></el-table-column>
+      <el-table-column min-width="190px" prop="netrateTwe" label="毛利率%（12月以上）" sortable="custom"></el-table-column>
+      <el-table-column min-width="170px" prop="salemoneyrmbtotal" label="销售额￥（汇总）" sortable="custom"></el-table-column>
+      <el-table-column min-width="170px" prop="netprofittotal" label="毛利润￥（汇总）" sortable="custom"></el-table-column>
+      <el-table-column min-width="170px" prop="netratetotal" label="毛利率%￥（汇总）" sortable="custom"></el-table-column>
     </el-table>
   </div>
 </template>
@@ -256,10 +256,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.input {
-  margin-left: 100px;
-  .input_w {
-    width: 350px;
-  }
-}
 </style>

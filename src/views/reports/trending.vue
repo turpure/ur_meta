@@ -1,7 +1,7 @@
 <template>
   <!-- <div>销售额走势</div>     -->
   <div>
-    <el-form :model="condition" :inline="true" ref="condition" label-width="100px" class="demo-form-inline">
+    <el-form :model="condition" :inline="true" ref="condition" label-width="68px" class="demo-form-inline">
       <el-form-item label="时间类型" class="input">
         <el-select v-model="condition.dateType" placeholder="按天">
           <el-option label="按天" value="shanghai"></el-option>
@@ -48,36 +48,7 @@
         <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
       </el-form-item>
     </el-form>
-    <el-row :gutter="20">
-      <el-col :span="2" :offset="20">
-        <el-input clearable placeholder="search" v-model="searchValue" v-on:change="handleSearch"></el-input>
-      </el-col>
-      <el-col :span="2">
-        <el-button type="default" @click="exportExcel">导出Excel</el-button>
-      </el-col>
-    </el-row>
-    <!-- <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="630" style="width: 100%">
-      <el-table-column prop="title" label="公司全部" sortable></el-table-column>
-      <el-table-column prop="ordertime" label="2018-07-04" sortable></el-table-column>
-      <el-table-column prop="totalamt" label="46360.48" sortable="custom"></el-table-column>
-      <el-table-column prop="totalamtun" label="139.79" sortable="custom"></el-table-column> -->
-    <!-- <el-table-column prop="salemoneyzn" label="成交价￥" sortable="custom"></el-table-column>
-      <el-table-column prop="ebayFeeebay" label="eBay成交费$" sortable="custom"></el-table-column>
-      <el-table-column prop="ebayfeeznebay" label="eBay成交费￥" sortable="custom"></el-table-column>
-      <el-table-column prop="ppFee" label="PP成交费$" sortable="custom"></el-table-column>
-      <el-table-column prop="ppFeezn" label="PP成交费￥" sortable="custom"></el-table-column>
-      <el-table-column prop="costmoney" label="商品成本￥" sortable="custom"></el-table-column>
-      <el-table-column prop="expressFare" label="运费成本￥" sortable="custom"></el-table-column>
-      <el-table-column prop="inpackagemoney" label="包装成本￥" sortable="custom"></el-table-column>
-      <el-table-column prop="storename" label="发货仓库" sortable="custom"></el-table-column>
-      <el-table-column prop="refund" label="退款金额￥" sortable="custom"></el-table-column>
-      <el-table-column prop="refundrate" label="退款率%" sortable="custom"></el-table-column>
-      <el-table-column prop="diefeeZn" label="死库处理￥" sortable="custom"></el-table-column> -->
-    <!-- <el-table-column prop="insertionFee" label="店铺杂费￥" sortable="custom"></el-table-column>
-      <el-table-column prop="saleOpeFeeZn" label="运营杂费￥" sortable="custom"></el-table-column>
-      <el-table-column prop="grossprofit" label="毛利￥" sortable="custom"></el-table-column>
-      <el-table-column prop="grossprofitRate" label="毛利率%" sortable="custom"></el-table-column> -->
-    <!-- </el-table> -->
+    <highcharts :options="options" style="height:600px"></highcharts>
   </div>
 </template>
 
@@ -100,10 +71,49 @@ import {
 import { compareUp, compareDown } from "../../api/tools";
 import FileSaver from "file-saver";
 import XLSX from "xlsx";
+import highcharts from "../charts/highcharts";
 
 export default {
   data() {
     return {
+      id: "test",
+      options: {
+        chart: {
+          type: "areaspline"
+        },
+        title: {
+          text: "销售额走势$"
+        },
+        subtitle: {
+          text: "数据来源: "
+        },
+        xAxis: {
+          categories: []
+        },
+        yAxis: {
+          title: {
+            text: "美元 ( $ )"
+          },
+          labels: {
+            formatter: function() {
+              return this.value + "$";
+            }
+          }
+        },
+        tooltip: {
+          shared: true,
+          pointFormat: "{series.name}：<b>{point.y:,.2f}</b>"
+        },
+        credits: {
+          enabled: false // 禁用版权信息
+        },
+        series: [
+          {
+            name: "公司全部",
+            data: []
+          }
+        ]
+      },
       tableData: [],
       searchTable: [],
       searchValue: "",
@@ -114,6 +124,7 @@ export default {
       member: [],
       account: [],
       department: [],
+      dateType: [],
       dateRange: [],
       condition: {
         department: "",
@@ -121,7 +132,7 @@ export default {
         member: "",
         store: [],
         dateType: "",
-        dateRange: ["2018-07-04", "2018-07-13"],
+        dateRange: ["2018-07-01", "2018-07-13"],
         account: []
       },
       pickerOptions2: {
@@ -162,7 +173,17 @@ export default {
       this.listLoading = true;
       getSalestrend(form).then(response => {
         this.listLoading = false;
-        this.tableData = this.searchTable = response.data.data;
+        let ret = response.data.data;
+        let posseman1Data = ret.map(ele => {
+          return ele.ordertime;
+        });
+        let posseman2Data = ret.map(ele => {
+          return ele.totalamt;
+        });
+        console.log(posseman1Data);
+        console.log(posseman2Data);
+        this.options.xAxis.categories = posseman1Data;
+        this.options.series[0].data = posseman2Data.map(Number);
       });
     },
     handleSearch() {
@@ -283,10 +304,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.input {
-  margin-left: 100px;
-  .input_w {
-    width: 350px;
-  }
-}
 </style>

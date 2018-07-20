@@ -29,21 +29,21 @@ let routes = [
     },
     //{ path: '/main', component: Main },
     {
-        path:'/',
+        path: '/',
         component: Home,
         name: '毛利率报表',
         iconCls: 'el-icon-message',
-        children:[
-            { path: '/sell', component: sell, name: '销售毛利润'},
-            { path: '/develop', component:develop, name: '开发毛利润'},
-            { path: '/purchase', component:purchase, name: '采购毛利润'},
-            { path: '/artist', component:artist, name: '美工毛利润'},
-            { path: '/ebaysell', component:ebaysell, name: 'ebay销售毛利润'},
-            { path: '/trending', component:trending, name: '销售额走势'},
-            { path: '/fixed', component:fixed, name: '死库'},
-            { path: '/operate', component:operate, name: '运营'},
-            { path: '/dollar', component:dollar, name: '美元'},
-            { path: '/aaa', component:aaa, name: '仓储'},
+        children: [
+            { path: '/sell', component: sell, name: '销售毛利润' },
+            { path: '/develop', component: develop, name: '开发毛利润' },
+            { path: '/purchase', component: purchase, name: '采购毛利润' },
+            { path: '/artist', component: artist, name: '美工毛利润' },
+            { path: '/ebaysell', component: ebaysell, name: 'ebay销售毛利润' },
+            { path: '/trending', component: trending, name: '销售额走势' },
+            { path: '/fixed', component: fixed, name: '死库' },
+            { path: '/operate', component: operate, name: '运营' },
+            { path: '/dollar', component: dollar, name: '美元' },
+            { path: '/aaa', component: aaa, name: '仓储' },
         ]
     },
     {
