@@ -1,7 +1,7 @@
 <template>
   <!-- <div>美工毛利润报表</div>     -->
   <div>
-    <el-form :model="condition" :inline="true" ref="condition" label-width="68px" class="demo-form-inline">
+    <el-form :model="condition" :inline="true" ref="condition" label-width="68px" class="demo-form-inline" v-show="show">
       <el-form-item label="部门" class="input">
         <el-select v-model="formInline.region" placeholder="部门">
           <el-option v-for="(item,index) in section" :index="item[index]" :key="item.id" :label="item.department" :value="item.id"></el-option>
@@ -29,6 +29,7 @@
         <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
       </el-form-item>
     </el-form>
+    <el-button @click="show = !show">隐藏</el-button>
     <el-row :gutter="20">
       <el-col :span="2" :offset="20">
         <el-input clearable placeholder="search" v-model="searchValue" v-on:change="handleSearch"></el-input>
@@ -78,6 +79,7 @@ import XLSX from "xlsx";
 export default {
   data() {
     return {
+      show: "true",
       tableData: [],
       searchTable: [],
       searchValue: "",

@@ -1,7 +1,8 @@
 <template>
   <!-- <div>销售毛利润报表</div>     -->
   <div>
-    <el-form :model="condition" :inline="true" ref="condition" label-width="68px" class="demo-form-inline">
+
+    <el-form :model="condition" :inline="true" ref="condition" label-width="68px" class="demo-form-inline" v-show="show">
       <el-form-item label="部门" class="input">
         <el-select v-model="condition.department" clearable placeholder="部门">
           <el-option v-for="(item,index) in department" :index="index" :key="item.department" :label="item.department" :value="item.department"></el-option>
@@ -39,11 +40,11 @@
         <el-date-picker v-model="condition.dateRange" type="daterange" value-format="yyyy-MM-dd" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions2">
         </el-date-picker>
       </el-form-item>
-
       <el-form-item>
         <el-button type="primary" class="input" @click="onSubmit(condition)">查询</el-button>
       </el-form-item>
     </el-form>
+    <el-button @click="show = !show">隐藏</el-button>
     <el-row :gutter="20">
       <el-col :span="2" :offset="20">
         <el-input clearable placeholder="search" v-model="searchValue" v-on:change="handleSearch"></el-input>
@@ -98,6 +99,7 @@ import XLSX from "xlsx";
 export default {
   data() {
     return {
+      show: "true",
       tableData: [],
       searchTable: [],
       searchValue: "",
@@ -115,7 +117,7 @@ export default {
         member: "",
         store: [],
         dateType: "",
-        dateRange: ["2018-07-04", "2018-07-13"],
+        dateRange: [],
         account: []
       },
       pickerOptions2: {

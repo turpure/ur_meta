@@ -22,7 +22,4 @@ export default {
 </script>
 
 <style lang="scss">
-.highcharts-container {
-  width: 800px;
-}
 </style>

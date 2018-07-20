@@ -1,21 +1,19 @@
 <template>
   <!-- <div>销售额走势</div>     -->
   <div>
-    <el-form :model="condition" :inline="true" ref="condition" label-width="68px" class="demo-form-inline">
+    <el-form :model="condition" :inline="true" ref="condition" class="demo-form-inline" label-width="68px" v-show="show">
       <el-form-item label="时间类型" class="input">
         <el-select v-model="condition.dateType" placeholder="按天">
           <el-option label="按天" value="shanghai"></el-option>
           <el-option label="按月" value="beijing"></el-option>
         </el-select>
       </el-form-item>
-
       <el-form-item label="部门" class="input">
         <el-select v-model="condition.department" multiple placeholder="部门">
           <el-option v-for="(item,index) in department" :index="index" :key="item.department" :label="item.department" :value="item.department">
           </el-option>
         </el-select>
       </el-form-item>
-
       <el-form-item label="平台" class="input">
         <el-select v-model="condition.plat" multiple placeholder="平台">
           <el-option v-for="(item,index) in plat" :index="index" :key="item.plat" :label="item.plat" :value="item.plat">
@@ -28,7 +26,6 @@
           </el-option>
         </el-select>
       </el-form-item>
-
       <el-form-item label="时间类型" class="input">
         <el-select v-model="condition.dateType" placeholder="发货时间">
           <el-option label="发货时间" value="shanghai"></el-option>
@@ -36,7 +33,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="日期" class="input">
-        <el-date-picker v-model="condition.dateRange" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="开始日期至结束日期" :picker-options="pickerOptions2">
+        <el-date-picker v-model="condition.dateRange" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions2">
         </el-date-picker>
       </el-form-item>
       <el-form-item label="账号" class="input">
@@ -48,7 +45,8 @@
         <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
       </el-form-item>
     </el-form>
-    <highcharts :options="options" style="height:600px"></highcharts>
+    <el-button @click="show = !show">隐藏</el-button>
+    <highcharts :options="options" style="height:600px;width:100%;"></highcharts>
   </div>
 </template>
 
@@ -114,6 +112,7 @@ export default {
           }
         ]
       },
+      show: "true",
       tableData: [],
       searchTable: [],
       searchValue: "",
@@ -132,7 +131,7 @@ export default {
         member: "",
         store: [],
         dateType: "",
-        dateRange: ["2018-07-01", "2018-07-13"],
+        dateRange: [],
         account: []
       },
       pickerOptions2: {
@@ -180,8 +179,6 @@ export default {
         let posseman2Data = ret.map(ele => {
           return ele.totalamt;
         });
-        console.log(posseman1Data);
-        console.log(posseman2Data);
         this.options.xAxis.categories = posseman1Data;
         this.options.series[0].data = posseman2Data.map(Number);
       });
@@ -304,4 +301,47 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.el-button {
+  padding: 10px 20px;
+}
+// .container .main .content-container[data-v-0ff1e341] {
+//   padding: 5px 0;
+//   .el-form-item {
+//     margin-bottom: 5px;
+//     margin-left: 5px;
+//     .el-form-item__label {
+//       line-height: 0px;
+//       padding: 0 5px 0 0;
+//     }
+//     .el-form-item__content {
+//       vertical-align: middle;
+//       line-height: 0px;
+//       .el-range-editor {
+//         padding: 0 5px;
+//       }
+//       .el-date-editor--daterange {
+//         width: 220px;
+//       }
+//       .el-button {
+//         padding: 10px 20px;
+//         position: fixed;
+//         right: 1.2%;
+//       }
+//       .el-date-editor .el-range-separator {
+//         padding: 0 5px;
+//         line-height: 36px;
+//         width: 10%;
+//       }
+//       .el-input {
+//         width: 90px;
+//         .el-input__inner {
+//           padding: 0 5px;
+//         }
+//         .el-range-editor .el-input__inner {
+//           padding: 0 5px;
+//         }
+//       }
+//     }
+//   }
+// }
 </style>
