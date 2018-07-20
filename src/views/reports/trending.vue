@@ -303,6 +303,7 @@ export default {
 <style lang="scss" scoped>
 .el-button {
   padding: 10px 20px;
+  float: right;
 }
 // .container .main .content-container[data-v-0ff1e341] {
 //   padding: 5px 0;

@@ -24,13 +24,13 @@
         <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
       </el-form-item>
     </el-form>
-    <el-button @click="show = !show">隐藏</el-button>
-    <el-row :gutter="20">
-      <el-col :span="2" :offset="20">
+    <el-row :gutter="10">
+      <el-col :span="2" :offset="17">
         <el-input clearable placeholder="search" v-model="searchValue" v-on:change="handleSearch"></el-input>
       </el-col>
-      <el-col :span="2">
-        <el-button type="default" @click="exportExcel">导出Excel</el-button>
+      <el-col :span="5">
+        <el-button style="float:left;" type="default" @click="exportExcel">导出Excel</el-button>
+        <el-button style="float:right;" @click="show = !show">隐藏</el-button>
       </el-col>
     </el-row>
     <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="630" style="width: 100%">
