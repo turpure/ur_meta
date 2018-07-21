@@ -48,7 +48,7 @@
         <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
       </el-form-item>
     </el-form>
-     <div id="chartArea" style="width:100%; height:400px;"></div>
+    <Myecharts :options="options" ref="myecharts"></Myecharts>
   </div>
 </template>
 
@@ -75,16 +75,46 @@ export default {
     return {
       id: "test",
       options: {
-        columns: ['date', 'PV'],
-        rows: [
-          { 'date': '01-01', 'PV': 1231 },
-          { 'date': '01-02', 'PV': 1223 },
-          { 'date': '01-03', 'PV': 2123 },
-          { 'date': '01-04', 'PV': 4123 },
-          { 'date': '01-05', 'PV': 3123 },
-          { 'date': '01-06', 'PV': 7123 }
-        ]
-    },
+        title: {
+          text: "堆叠区域图"
+        },
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "cross",
+            label: {
+              backgroundColor: "#6a7985"
+            }
+          }
+        },
+        legend: {
+          data: [String]
+        },
+        toolbox: {
+          feature: {
+            saveAsImage: {}
+          }
+        },
+        grid: {
+          left: "3%",
+          right: "4%",
+          bottom: "3%",
+          containLabel: true
+        },
+        xAxis: [
+          {
+            type: "category",
+            boundaryGap: false,
+            data: [String]
+          }
+        ],
+        yAxis: [
+          {
+            type: "value"
+          }
+        ],
+        series: [Object]
+      },
       tableData: [],
       searchTable: [],
       searchValue: "",
@@ -98,7 +128,7 @@ export default {
       dateType: [],
       dateRange: [],
       condition: {
-        department:"",
+        department: "",
         plat: "",
         member: "",
         store: [],
@@ -142,35 +172,42 @@ export default {
   methods: {
     onSubmit(form) {
       this.listLoading = true;
-      form.department = ["运营一部","运营二部","运营三部"];
-       getSalestrend(form).then(response => {
+      form.department = ["运营一部", "运营二部", "运营三部"];
+      getSalestrend(form).then(response => {
         this.listLoading = false;
         let ret = response.data.data;
         let lineName = [];
-        let series = []
+        let series = [];
         ret.forEach(element => {
           if (lineName.indexOf(element.title) < 0) {
             lineName.push(element.title);
-          }  
+          }
         });
         let date = [];
         lineName.forEach(name => {
-          let sery = {};
+          let sery = {type:"line", stack: '总量',
+            areaStyle: {normal: {}},};
           let amt = [];
           ret.map(element => {
-            if (element.title == name){
+            if (element.title == name) {
               amt.push(Number(element.totalamt));
-              date.push(element.ordertime);
+              if (date.indexOf(element.ordertime) <0) {
+                date.push(element.ordertime);
+              }
             }
-          })
+          });
+          
           sery["data"] = amt;
           sery["name"] = name;
           series.push(sery);
-        })
-        this.options.xAxis.categories = date;
-        this.options.series = series; 
-      })
-    },
+        });
+        this.options.legend.data = lineName;
+        this.options.xAxis[0].data = date;
+        this.options.series = series;
+        let _this = this;
+        _this.$refs.myecharts.drawAreaStack(this.options);
+      });
+    }
   },
   mounted() {
     var access_token = getMyToken();
