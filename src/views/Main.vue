@@ -1,15 +1,3 @@
 <template>
-	<section>
-		main
-	</section>
+	<Myecharts></Myecharts>
 </template>
-
-<script>
-	export default {
-	}
-
-</script>
-
-<style scoped>
-
-</style>

@@ -48,7 +48,7 @@
         <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
       </el-form-item>
     </el-form>
-    <highcharts :options="options" style="height:600px"></highcharts>
+     <div id="chartArea" style="width:100%; height:400px;"></div>
   </div>
 </template>
 
@@ -69,71 +69,22 @@ import {
   getArtist
 } from "../../api/profit";
 import { compareUp, compareDown } from "../../api/tools";
-import Highcharts from "Highcharts";
 
 export default {
   data() {
     return {
       id: "test",
       options: {
-        chart: {
-          type: "areaspline"
-        },
-        title: {
-          text: "销售额趋势"
-        },
-        legend: {
-          layout: "vertical",
-          align: "left",
-          verticalAlign: "top",
-          x: 150,
-          y: 100,
-          floating: true,
-          borderWidth: 1,
-          backgroundColor:
-            (Highcharts.theme && Highcharts.theme.legendBackgroundColor) ||
-            "#FFFFFF"
-        },
-        xAxis: {
-          categories: [
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday",
-            "Sunday"
-          ],
-          plotBands: [
-            {
-              // visualize the weekend
-              // from: 4.5,
-              // to: 6.5,
-              // color: "rgba(68, 170, 213, .2)"
-            }
-          ]
-        },
-        yAxis: {
-          title: {
-            text: "销售额($)"
-          }
-        },
-        tooltip: {
-          shared: true,
-          valueSuffix: "$"
-        },
-        credits: {
-          enabled: false
-        },
-        plotOptions: {
-          areaspline: {
-            fillOpacity: 0.5
-          }
-        },
-        series: [
-                  
+        columns: ['date', 'PV'],
+        rows: [
+          { 'date': '01-01', 'PV': 1231 },
+          { 'date': '01-02', 'PV': 1223 },
+          { 'date': '01-03', 'PV': 2123 },
+          { 'date': '01-04', 'PV': 4123 },
+          { 'date': '01-05', 'PV': 3123 },
+          { 'date': '01-06', 'PV': 7123 }
         ]
-      },
+    },
       tableData: [],
       searchTable: [],
       searchValue: "",

@@ -12,7 +12,7 @@ import trending from './views/reports/trending.vue'
 import fixed from './views/reports/fixed.vue'
 import operate from './views/reports/operate.vue'
 import dollar from './views/reports/dollar.vue'
-import aaa from './views/reports/aaa.vue'
+import warehouse from './views/reports/warehouse.vue'
 
 let routes = [
     {
@@ -27,7 +27,7 @@ let routes = [
         name: '',
         hidden: true
     },
-    //{ path: '/main', component: Main },
+    { path: '/main', component: Main },
     {
         path: '/',
         component: Home,
@@ -43,7 +43,7 @@ let routes = [
             { path: '/fixed', component: fixed, name: '死库' },
             { path: '/operate', component: operate, name: '运营' },
             { path: '/dollar', component: dollar, name: '美元' },
-            { path: '/aaa', component: aaa, name: '仓储' },
+            { path: '/warehouse', component: warehouse, name: '仓储' },
         ]
     },
     {

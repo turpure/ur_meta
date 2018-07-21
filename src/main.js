@@ -19,15 +19,19 @@ import 'font-awesome/css/font-awesome.min.css'
 import { getToken } from './utils/auth'
 
 import VModal from 'vue-js-modal'
-import VueHighcharts from 'vue-highcharts';
-import Highcharts from 'highcharts';
-import Exporting from 'highcharts/modules/exporting';
-import ExportData from 'highcharts/modules/export-data'
-Exporting(Highcharts);
-ExportData(Highcharts);
+import Myecharts from './component/Myecharts'
+// import VueHighcharts from 'vue-highcharts'
+// import Highcharts from 'highcharts'
+// import Exporting from 'highcharts/modules/exporting'
+// import ExportData from 'highcharts/modules/export-data'
+// Exporting(Highcharts)
+// ExportData(Highcharts)
+// Vue.use(VueHighcharts)
+// Vue.use(Highcharts)
+// import VCharts from 'v-charts'
+
+Vue.use(Myecharts)
 Vue.use(VModal)
-Vue.use(VueHighcharts)
-Vue.use(Highcharts)
 Vue.use(ElementUI)
 Vue.use(VueRouter)
 Vue.use(Vuex)
