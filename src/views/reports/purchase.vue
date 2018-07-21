@@ -1,36 +1,48 @@
 <template>
   <!-- <div>采购毛利润报表</div>     -->
   <div>
-    <el-form :model="condition" :inline="true" ref="condition" label-width="68px" class="demo-form-inline" v-show="show">
-      <el-form-item label="销售员" class="input">
-        <el-select v-model="formInline.region" placeholder="销售员">
-          <el-option v-for="(item,index) in member" :index="item[index]" :key="item.id" :label="item.username" :value="item.id"></el-option>
-          <!-- <el-option label="区域二" value="beijing"></el-option> -->
-        </el-select>
-      </el-form-item>
+    <div class="demo-block demo-box demo-zh-CN demo-transition" @mouseover="changeActive" @mouseout="removeActive">
+      <transition name="el-fade-in-linear">
+        <el-form :model="condition" :inline="true" ref="condition" label-width="68px" class="demo-form-inline" v-show="show">
+          <el-form-item label="销售员" class="input">
+            <el-select v-model="formInline.region" placeholder="销售员">
+              <el-option v-for="(item,index) in member" :index="item[index]" :key="item.id" :label="item.username" :value="item.id"></el-option>
+              <!-- <el-option label="区域二" value="beijing"></el-option> -->
+            </el-select>
+          </el-form-item>
 
-      <el-form-item label="发货时间" class="input">
-        <el-select v-model="formInline.region" placeholder="发货时间">
-          <el-option label="发货时间" value="shanghai"></el-option>
-          <el-option label="交易时间" value="beijing"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="日期" class="input">
-        <el-date-picker v-model="value7" type="daterange" align="right" unlink-panels start-placeholder="开始日期" range-separator="至" end-placeholder="结束日期" :picker-options="pickerOptions2">
-        </el-date-picker>
-      </el-form-item>
+          <el-form-item label="发货时间" class="input">
+            <el-select v-model="formInline.region" placeholder="发货时间">
+              <el-option label="发货时间" value="shanghai"></el-option>
+              <el-option label="交易时间" value="beijing"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="日期" class="input">
+            <el-date-picker v-model="value7" type="daterange" align="right" unlink-panels start-placeholder="开始日期" range-separator="至" end-placeholder="结束日期" :picker-options="pickerOptions2">
+            </el-date-picker>
+          </el-form-item>
 
-      <el-form-item>
-        <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
-      </el-form-item>
-    </el-form>
+          <el-form-item>
+            <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
+          </el-form-item>
+        </el-form>
+      </transition>
+      <div class="demo-block-control" @click="handleChange" style="left:0px;">
+        <transition>
+          <i :class="{'el-icon-caret-bottom':isA,'el-icon-caret-top':!isA}" class="transition-i">
+          </i>
+        </transition>
+        <transition>
+          <span v-show="show1" class="transition-span">{{text}}</span>
+        </transition>
+      </div>
+    </div>
     <el-row :gutter="10">
-      <el-col :span="2" :offset="17">
-        <el-input clearable placeholder="search" v-model="searchValue" v-on:change="handleSearch"></el-input>
+      <el-col :span="2" :offset="20">
+        <el-input clearable placeholder="search" v-model="searchValue" @change="handleSearch"></el-input>
       </el-col>
-      <el-col :span="5">
+      <el-col :span="2">
         <el-button style="float:left;" type="default" @click="exportExcel">导出Excel</el-button>
-        <el-button style="float:right;" @click="show = !show">隐藏</el-button>
       </el-col>
     </el-row>
     <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="690" style="width: 100%">
@@ -74,7 +86,10 @@ import XLSX from "xlsx";
 export default {
   data() {
     return {
-      show: "true",
+      isA: true,
+      text: "显示输入框",
+      show: false,
+      show1: false,
       tableData: [],
       searchTable: [],
       searchValue: "",
@@ -126,6 +141,21 @@ export default {
     };
   },
   methods: {
+    handleChange() {
+      this.show = !this.show;
+      this.isA = !this.isA;
+      if (this.show == false) {
+        this.text = "显示输入框";
+      } else if (this.show == true) {
+        this.text = "隐藏输入框";
+      }
+    },
+    changeActive() {
+      this.show1 = true;
+    },
+    removeActive() {
+      this.show1 = false;
+    },
     onSubmit(form) {
       this.listLoading = true;
       getPurchase(form).then(response => {
