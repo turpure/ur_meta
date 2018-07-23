@@ -38,11 +38,11 @@
           <template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
             <el-submenu :index="index+''" v-if="!item.leaf">
               <template slot="title">
-                <i :class="item.iconCls"></i>{{item.name}}</template>
-              <el-menu-item v-for="child in item.children" :index="child.path" :key="child.path" v-if="!child.hidden">{{child.name}}</el-menu-item>
+                <i :class="item.iconCls"></i>{{item.name}}
+              </template>
+              <el-menu-item v-for="child in item.children" :index="child.path" :key="child.path" v-if="!child.hidden">{{child.name}}
+              </el-menu-item>
             </el-submenu>
-            <el-menu-item v-if="item.leaf&&item.children.length>0" :index="item.children[0].path">
-              <i :class="item.iconCls"></i>{{item.children[0].name}}</el-menu-item>
           </template>
         </el-menu>
         <!--导航菜单-折叠后-->
@@ -53,15 +53,9 @@
                 <i :class="item.iconCls"></i>
               </div>
               <ul class="el-menu submenu" :class="'submenu-hook-'+index" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
-                <li v-for="child in item.children" v-if="!child.hidden" :key="child.path" class="el-menu-item" :class="$route.path==child.path?'is-active':''" @click="$router.push(child.path)">{{child.name}}</li>
+                <li v-for="child in item.children" v-if="!child.hidden" :key="child.path" class="el-menu-item" :class="$route.path==child.path?'is-active':''" @click="$router.push(child.path)">{{child.name}}
+                </li>
               </ul>
-            </template>
-            <template v-else>
-              <li class="el-submenu">
-                <div class="el-submenu__title el-menu-item" style="padding-left: 20px;height: 56px;line-height: 56px;padding: 0 20px;" :class="$route.path==item.children[0].path?'is-active':''" @click="$router.push(item.children[0].path)">
-                  <i :class="item.iconCls"></i>
-                </div>
-              </li>
             </template>
           </li>
         </ul>
@@ -189,18 +183,18 @@ export default {
     rotate() {
       // guess what this does :)
       this.$refs.cropper.rotate(90);
-    },
+    }
   },
   mounted() {
-      this.$store.dispatch("GetUserInfo").then(() => {
-        this.sysUserName = this.$store.getters.name;
-        this.imgSrc = this.$store.getters.avatar;
-      }),
-        getMenu().then(response => {
-          this.lside = response.data.data;
-        });
-    }
+    this.$store.dispatch("GetUserInfo").then(() => {
+      this.sysUserName = this.$store.getters.name;
+      this.imgSrc = this.$store.getters.avatar;
+    }),
+      getMenu().then(response => {
+        this.lside = response.data.data;
+      });
   }
+};
 </script>
 
 <style scoped lang="scss">
@@ -288,7 +282,7 @@ export default {
       .el-menu {
         height: 100%;
       }
-      .el-submenu .el-menu-item {
+      .el-menu-item {
         min-width: 160px;
       }
       .data-scroll-width {
