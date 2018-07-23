@@ -50,7 +50,7 @@
         <el-button style="float:left;" type="default" @click="exportExcel">导出Excel</el-button>
       </el-col>
     </el-row>
-    <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="690" style="width: 100%">
+    <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="820" style="width: 100%">
       <el-table-column min-width="90px" prop="possessman1Zero" label="责任人" sortable="custom"></el-table-column>
       <el-table-column min-width="170px" prop="salemoneyrmbznZero" label="销售额￥（0-6月）" sortable="custom"></el-table-column>
       <el-table-column min-width="170px" prop="netprofitZero" label="毛利润￥（0-6月）" sortable="custom"></el-table-column>
