@@ -68,7 +68,6 @@
       </aside>
       <section class="content-container">
         <div class="grid-content bg-purple-light">
-
           <el-col :span="24" class="content-wrapper">
             <transition name="fade" mode="out-in">
               <router-view></router-view>
@@ -288,6 +287,9 @@ export default {
       // bottom: 0px;
       .el-menu {
         height: 100%;
+      }
+      .el-submenu .el-menu-item {
+        min-width: 160px;
       }
       .data-scroll-width {
         width: 160px;
