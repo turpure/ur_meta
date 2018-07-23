@@ -27,7 +27,6 @@ let routes = [
         name: '',
         hidden: true
     },
-    { path: '/main', component: Main },
     {
         path: '/',
         component: Home,
