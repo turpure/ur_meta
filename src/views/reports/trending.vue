@@ -228,7 +228,6 @@ export default {
               }
             }
           });
-
           sery["data"] = amt;
           sery["name"] = name;
           series.push(sery);
