@@ -4,7 +4,7 @@
         <div class="frist">
             <div>
                 <p>销售死库费用 :
-                    <el-button @click="export01Excel">下载
+                    <el-button @click="export01Excel">下载模板
                     </el-button>
                 </p>
                 <el-upload class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" multiple>
@@ -16,7 +16,7 @@
             </div>
             <div>
                 <p>开发死库费用 :
-                    <el-button @click="export02Excel">下载
+                    <el-button @click="export02Excel">下载模板
                     </el-button>
                 </p>
                 <el-upload class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" multiple>
@@ -30,7 +30,7 @@
         <div class="frist">
             <div>
                 <p>美工死库费用 :
-                    <el-button @click="export03Excel">下载
+                    <el-button @click="export03Excel">下载模板
                     </el-button>
                 </p>
                 <el-upload class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" multiple>
@@ -42,7 +42,7 @@
             </div>
             <div>
                 <p>采购死库费用 :
-                    <el-button @click="export04Excel">下载
+                    <el-button @click="export04Excel">下载模板
                     </el-button>
                 </p>
                 <el-upload class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" multiple>
