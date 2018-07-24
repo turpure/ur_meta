@@ -48,6 +48,7 @@
     </el-row>
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="业绩归属1人表" name="first">
+<<<<<<< HEAD
         <el-table :data="tableData01" id="sale-table01" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="630" style="width: 100%" empty-text="--">
           <el-table-column min-width="130px" prop="salernameZero" label="业绩归属人" sortable></el-table-column>
           <el-table-column min-width="180px" prop="salemoneyrmbznZero" label="销售额￥（0-6月）" sortable></el-table-column>
@@ -62,11 +63,26 @@
           <el-table-column min-width="180px" prop="salemoneyrmbtotal" label="销售额￥（汇总）" sortable="custom"></el-table-column>
           <el-table-column min-width="180px" prop="netprofittotal" label="毛利润￥（汇总）" sortable="custom"></el-table-column>
           <el-table-column min-width="180px" prop="netratetotal" label="毛利率%（汇总）" sortable="custom"></el-table-column>
+=======
+        <el-table :data="tableData01" id="sale-table01" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="780" style="width: 100%" empty-text="--">
+          <el-table-column prop="salernameZero" label="业绩归属人" sortable></el-table-column>
+          <el-table-column prop="salemoneyrmbznZero" label="销售额￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column prop="netprofitZero" label="毛利润￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column prop="netrateZero" label="毛利率%（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column prop="salemoneyrmbznSix" label="销售额￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column prop="netprofitSix" label="毛利润￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column prop="netrateSix" label="毛利率%（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column prop="salemoneyrmbznTwe" label="销售额￥（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column prop="netprofitTwe" label="毛利润￥（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column prop="netrateTwe" label="毛利率%（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column prop="salemoneyrmbtotal" label="销售额￥（汇总）" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column prop="netprofittotal" label="毛利润￥（汇总）" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column prop="netratetotal" label="毛利率%（汇总）" :formatter="empty" sortable="custom"></el-table-column>
+>>>>>>> 40462899ab78bdaaf7cbccdbb1f29b83cface13b
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="业绩归属2人表" name="second">
-        <el-table :data="tableData02" id="sale-table02" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="630" style="width: 100%" empty-text="--">
-<<<<<<< HEAD
+        <el-table :data="tableData02" id="sale-table02" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="780" style="width: 100%" empty-text="--">
           <el-table-column prop="salernameZero" label="业绩归属人2" sortable="custom"></el-table-column>
           <el-table-column prop="salemoneyrmbznZero" label="销售额￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
           <el-table-column prop="netprofitZero" label="毛利润￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
@@ -80,21 +96,6 @@
           <el-table-column prop="salemoneyrmbtotal" label="销售额￥（汇总）" :formatter="empty" sortable="custom"></el-table-column>
           <el-table-column prop="netprofittotal" label="毛利润￥（汇总）" :formatter="empty" sortable="custom"></el-table-column>
           <el-table-column prop="netratetotal" label="毛利率%（汇总）" :formatter="empty" sortable="custom"></el-table-column>
-=======
-          <el-table-column min-width="130px" prop="salernameZero" label="业绩归属人2" sortable="custom"></el-table-column>
-          <el-table-column min-width="180px" prop="salemoneyrmbznZero" label="销售额￥（0-6月）" sortable="custom"></el-table-column>
-          <el-table-column min-width="180px" prop="netprofitZero" label="毛利润￥（0-6月）" sortable="custom"></el-table-column>
-          <el-table-column min-width="180px" prop="netrateZero" label="毛利率%（0-6月）" sortable="custom"></el-table-column>
-          <el-table-column min-width="180px" prop="salemoneyrmbznSix" label="销售额￥（6-12月）" sortable="custom"></el-table-column>
-          <el-table-column min-width="180px" prop="netprofitSix" label="毛利润￥（6-12月）" sortable="custom"></el-table-column>
-          <el-table-column min-width="180px" prop="netrateSix" label="毛利率%（6-12月）" sortable="custom"></el-table-column>
-          <el-table-column min-width="200px" prop="salemoneyrmbznTwe" label="销售额￥（12月以上）" sortable="custom"></el-table-column>
-          <el-table-column min-width="200px" prop="netprofitTwe" label="毛利润￥（12月以上）" sortable="custom"></el-table-column>
-          <el-table-column min-width="200px" prop="netrateTwe" label="毛利率%（12月以上）" sortable="custom"></el-table-column>
-          <el-table-column min-width="180px" prop="salemoneyrmbtotal" label="销售额￥（汇总）" sortable="custom"></el-table-column>
-          <el-table-column min-width="180px" prop="netprofittotal" label="毛利润￥（汇总）" sortable="custom"></el-table-column>
-          <el-table-column min-width="180px" prop="netratetotal" label="毛利率%（汇总）" sortable="custom"></el-table-column>
->>>>>>> 61a33c08c3e949b935233d231824110b07deebfb
         </el-table>
       </el-tab-pane>
     </el-tabs>
@@ -151,13 +152,13 @@ export default {
       },
       tableMap: {
         first: {
-          tableData: 'tableData01',
-          searchTable: 'searchTableFirst'
+          tableData: "tableData01",
+          searchTable: "searchTableFirst"
         },
-        second:{
-          tableData: 'tableData02',
-          searchTable: 'searchTableSecond'
-        },
+        second: {
+          tableData: "tableData02",
+          searchTable: "searchTableSecond"
+        }
       },
       pickerOptions2: {
         shortcuts: [
@@ -224,21 +225,23 @@ export default {
     },
     handleSearch() {
       let searchValue = this.searchValue && this.searchValue.toLowerCase();
-      
+
       let activeTable = this.activeName;
-      let data = this[this.tableMap[activeTable]['searchTable']];
+      let data = this[this.tableMap[activeTable]["searchTable"]];
       if (searchValue) {
-        this[this.tableMap[activeTable]['tableData']] = data.filter(function(row) {
+        this[this.tableMap[activeTable]["tableData"]] = data.filter(function(
+          row
+        ) {
           return Object.keys(row).some(function(key) {
             return (
-              String(row[key])  
+              String(row[key])
                 .toLowerCase()
                 .indexOf(searchValue) > -1
             );
           });
         });
       } else {
-        this[this.tableMap[activeTable]['tableData']] = data;
+        this[this.tableMap[activeTable]["tableData"]] = data;
       }
     },
     getSummaries(param) {
@@ -297,7 +300,7 @@ export default {
     //数字排序
     sortNumber(column, prop, order) {
       let activeTable = this.activeName;
-      let data = this[this.tableMap[activeTable]['tableData']];
+      let data = this[this.tableMap[activeTable]["tableData"]];
       if (column.order === "descending") {
         this.tableData = data.sort(compareDown(data, column.prop));
       } else {

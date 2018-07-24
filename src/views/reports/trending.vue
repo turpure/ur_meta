@@ -202,7 +202,6 @@ export default {
     onSubmit(form) {
       this.listLoading = true;
       form.department = ["运营一部", "运营二部", "运营三部"];
-      debugger;
       getSalestrend(form).then(response => {
         this.listLoading = false;
         let ret = response.data.data;
@@ -215,18 +214,20 @@ export default {
         });
         let date = [];
         lineName.forEach(name => {
-          let sery = {type:"line", stack: '总量',
-            areaStyle: {normal: {}},};
+          let sery = {
+            type: "line",
+            stack: "总量",
+            areaStyle: { normal: {} }
+          };
           let amt = [];
           ret.map(element => {
             if (element.title == name) {
               amt.push(Number(element.totalamt));
-              if (date.indexOf(element.ordertime) <0) {
+              if (date.indexOf(element.ordertime) < 0) {
                 date.push(element.ordertime);
               }
             }
           });
-          
           sery["data"] = amt;
           sery["name"] = name;
           series.push(sery);
