@@ -48,6 +48,22 @@
     </el-row>
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="业绩归属1人表" name="first">
+<<<<<<< HEAD
+        <el-table :data="tableData01" id="sale-table01" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="630" style="width: 100%" empty-text="--">
+          <el-table-column min-width="130px" prop="salernameZero" label="业绩归属人" sortable></el-table-column>
+          <el-table-column min-width="180px" prop="salemoneyrmbznZero" label="销售额￥（0-6月）" sortable></el-table-column>
+          <el-table-column min-width="180px" prop="netprofitZero" label="毛利润￥（0-6月）" sortable="custom"></el-table-column>
+          <el-table-column min-width="180px" prop="netrateZero" label="毛利率%（0-6月）" sortable="custom"></el-table-column>
+          <el-table-column min-width="180px" prop="salemoneyrmbznSix" label="销售额￥（6-12月）" sortable="custom"></el-table-column>
+          <el-table-column min-width="180px" prop="netprofitSix" label="毛利润￥（6-12月）" sortable="custom"></el-table-column>
+          <el-table-column min-width="180px" prop="netrateSix" label="毛利率%（6-12月）" sortable="custom"></el-table-column>
+          <el-table-column min-width="200px" prop="salemoneyrmbznTwe" label="销售额￥（12月以上）" sortable="custom"></el-table-column>
+          <el-table-column min-width="200px" prop="netprofitTwe" label="毛利润￥（12月以上）" sortable="custom"></el-table-column>
+          <el-table-column min-width="200px" prop="netrateTwe" label="毛利率%（12月以上）" sortable="custom"></el-table-column>
+          <el-table-column min-width="180px" prop="salemoneyrmbtotal" label="销售额￥（汇总）" sortable="custom"></el-table-column>
+          <el-table-column min-width="180px" prop="netprofittotal" label="毛利润￥（汇总）" sortable="custom"></el-table-column>
+          <el-table-column min-width="180px" prop="netratetotal" label="毛利率%（汇总）" sortable="custom"></el-table-column>
+=======
         <el-table :data="tableData01" id="sale-table01" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="780" style="width: 100%" empty-text="--">
           <el-table-column prop="salernameZero" label="业绩归属人" sortable></el-table-column>
           <el-table-column prop="salemoneyrmbznZero" label="销售额￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
@@ -62,6 +78,7 @@
           <el-table-column prop="salemoneyrmbtotal" label="销售额￥（汇总）" :formatter="empty" sortable="custom"></el-table-column>
           <el-table-column prop="netprofittotal" label="毛利润￥（汇总）" :formatter="empty" sortable="custom"></el-table-column>
           <el-table-column prop="netratetotal" label="毛利率%（汇总）" :formatter="empty" sortable="custom"></el-table-column>
+>>>>>>> 40462899ab78bdaaf7cbccdbb1f29b83cface13b
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="业绩归属2人表" name="second">
