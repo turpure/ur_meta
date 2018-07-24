@@ -18,7 +18,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="日期" class="input">
-            <el-date-picker v-model="value7" type="daterange" align="right" unlink-panels start-placeholder="开始日期" range-separator="至" end-placeholder="结束日期" :picker-options="pickerOptions2">
+            <el-date-picker v-model="value7" value-format="yyyy-MM-dd" type="daterange" align="right" unlink-panels start-placeholder="开始日期" range-separator="至" end-placeholder="结束日期" :picker-options="pickerOptions2">
             </el-date-picker>
           </el-form-item>
 
