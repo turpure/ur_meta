@@ -11,19 +11,19 @@
             </el-select>
           </el-form-item>
           <el-form-item label="部门" class="input">
-            <el-select v-model="condition.department" multiple placeholder="部门">
+            <el-select v-model="condition.department" multiple collapse-tags placeholder="部门">
               <el-option v-for="(item,index) in department" :index="index" :key="item.department" :label="item.department" :value="item.department">
               </el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="平台" class="input">
-            <el-select v-model="condition.plat" multiple placeholder="平台" style="height: 30px;">
+            <el-select v-model="condition.plat" multiple collapse-tags placeholder="平台" style="height: 30px;">
               <el-option v-for="(item,index) in plat" :index="index" :key="item.plat" :label="item.plat" :value="item.plat">
               </el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="销售员" class="input">
-            <el-select v-model="condition.member" multiple placeholder="销售员">
+            <el-select v-model="condition.member" multiple collapse-tags placeholder="销售员">
               <el-option v-for="(item,index) in member" :index="index" :key="item.username" :label="item.username" :value="item.username">
               </el-option>
             </el-select>
@@ -58,7 +58,7 @@
         </transition>
       </div>
     </div>
-    <Myecharts :options="options" ref="myecharts"></Myecharts>
+    <Myecharts :options="options" v-loading="listLoading" ref="myecharts"></Myecharts>
   </div>
 </template>
 
@@ -88,7 +88,7 @@ export default {
       id: "test",
       options: {
         title: {
-          text: "堆叠区域图"
+          text: "销售额走势$"
         },
         tooltip: {
           trigger: "axis",
@@ -103,8 +103,13 @@ export default {
           data: [String]
         },
         toolbox: {
+          show: true,
           feature: {
-            saveAsImage: {}
+            //mark: { show: true },
+            dataView: { show: true, readOnly: false },
+            magicType: { show: true, type: ["line", "bar", "stack", "tiled"] },
+            restore: { show: true },
+            saveAsImage: { show: true }
           }
         },
         grid: {
@@ -122,7 +127,10 @@ export default {
         ],
         yAxis: [
           {
-            type: "value"
+            type: "value",
+            axisLabel: {
+              formatter: "{value} $"
+            }
           }
         ],
         series: [Object]

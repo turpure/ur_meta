@@ -5,13 +5,13 @@
       <transition name="el-fade-in-linear">
         <el-form :model="condition" :inline="true" ref="condition" label-width="68px" class="demo-form-inline" v-show="show">
           <el-form-item label="销售员" class="input">
-            <el-select v-model="formInline.region" placeholder="销售员">
+            <el-select v-model="formInline.user" multiple collapse-tags placeholder="销售员">
               <el-option v-for="(item,index) in member" :index="item[index]" :key="item.id" :label="item.username" :value="item.id"></el-option>
               <!-- <el-option label="区域二" value="beijing"></el-option> -->
             </el-select>
           </el-form-item>
 
-          <el-form-item label="发货时间" class="input">
+          <el-form-item label="时间类型" class="input">
             <el-select v-model="formInline.region" placeholder="发货时间">
               <el-option label="发货时间" value="shanghai"></el-option>
               <el-option label="交易时间" value="beijing"></el-option>
@@ -46,19 +46,19 @@
       </el-col>
     </el-row>
     <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="820" style="width: 100%">
-      <el-table-column min-width="90px" prop="purchaser" label="采购员" sortable="custom"></el-table-column>
-      <el-table-column min-width="100px" prop="salemoneyrmbus" label="成交价$" sortable="custom"></el-table-column>
-      <el-table-column min-width="100px" prop="salemoneyrmbzn" label="成交价￥" sortable="custom"></el-table-column>
-      <el-table-column min-width="130px" prop="ppebayus" label="交易费汇总$" sortable="custom"></el-table-column>
-      <el-table-column min-width="130px" prop="ppebayzn" label="交易费汇总￥" sortable="custom"></el-table-column>
-      <el-table-column min-width="115px" prop="costmoneyrmb" label="商品成本￥" sortable="custom"></el-table-column>
-      <el-table-column min-width="115px" prop="expressfarermb" label="运费成本￥" sortable="custom"></el-table-column>
-      <el-table-column min-width="115px" prop="inpackagefeermb" label="包装成本￥" sortable="custom"></el-table-column>
-      <el-table-column min-width="115px" prop="devofflinefee" label="死库处理￥" sortable="custom"></el-table-column>
-      <el-table-column min-width="120px" prop="devopefee" label="运营杂费￥" sortable="custom"></el-table-column>
-      <el-table-column min-width="90px" prop="netprofit" label="毛利￥" sortable="custom"></el-table-column>
-      <el-table-column min-width="100px" prop="netrate" label="毛利率%" sortable="custom"></el-table-column>
-      <el-table-column min-width="120px" prop="totalamount" label="采购差额￥" sortable="custom"></el-table-column>
+      <el-table-column min-width="90px" prop="purchaser" label="采购员" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="100px" prop="salemoneyrmbus" label="成交价$" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="100px" prop="salemoneyrmbzn" label="成交价￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="130px" prop="ppebayus" label="交易费汇总$" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="130px" prop="ppebayzn" label="交易费汇总￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="115px" prop="costmoneyrmb" label="商品成本￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="115px" prop="expressfarermb" label="运费成本￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="115px" prop="inpackagefeermb" label="包装成本￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="115px" prop="devofflinefee" label="死库处理￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="120px" prop="devopefee" label="运营杂费￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="90px" prop="netprofit" label="毛利￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="100px" prop="netrate" label="毛利率%" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="120px" prop="totalamount" label="采购差额￥" :formatter="empty" sortable="custom"></el-table-column>
     </el-table>
   </div>
 </template>
@@ -181,6 +181,9 @@ export default {
         this.tableData = data;
       }
       console.log("Running!");
+    },
+    empty(row, column, cellValue, index) {
+      return cellValue ? cellValue : "--";
     },
     getSummaries(param) {
       const { columns, data } = param;

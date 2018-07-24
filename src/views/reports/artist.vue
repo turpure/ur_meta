@@ -4,19 +4,19 @@
     <div class="demo-block demo-box demo-zh-CN demo-transition" @mouseover="changeActive" @mouseout="removeActive">
       <transition name="el-fade-in-linear">
         <el-form :model="condition" :inline="true" ref="condition" label-width="68px" class="demo-form-inline" v-show="show">
-          <el-form-item label="部门" class="input">
-            <el-select v-model="formInline.region" placeholder="部门">
+          <!-- <el-form-item label="部门" class="input">
+            <el-select v-model="formInline.region" multiple collapse-tags placeholder="部门">
               <el-option v-for="(item,index) in section" :index="item[index]" :key="item.id" :label="item.department" :value="item.id"></el-option>
             </el-select>
-          </el-form-item>
+          </el-form-item> -->
 
           <el-form-item label="销售员" class="input">
-            <el-select v-model="membery.region" placeholder="销售员">
+            <el-select v-model="membery.user" multiple collapse-tags placeholder="销售员">
               <el-option v-for="(item,index) in member" :index="item[index]" :key="item.id" :label="item.username" :value="item.id"></el-option>
             </el-select>
           </el-form-item>
 
-          <el-form-item label="发货时间" class="input">
+          <el-form-item label="时间类型" class="input">
             <el-select v-model="formInline.region" placeholder="发货时间">
               <el-option label="发货时间" value="shanghai"></el-option>
               <el-option label="交易时间" value="beijing"></el-option>
@@ -50,20 +50,20 @@
         <el-button style="float:left;" type="default" @click="exportExcel">导出Excel</el-button>
       </el-col>
     </el-row>
-    <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="820" style="width: 100%">
-      <el-table-column min-width="90px" prop="possessman1Zero" label="责任人" sortable="custom"></el-table-column>
-      <el-table-column min-width="170px" prop="salemoneyrmbznZero" label="销售额￥（0-6月）" sortable="custom"></el-table-column>
-      <el-table-column min-width="170px" prop="netprofitZero" label="毛利润￥（0-6月）" sortable="custom"></el-table-column>
-      <el-table-column min-width="170px" prop="netrateZero" label="毛利率%（0-6月）" sortable="custom"></el-table-column>
-      <el-table-column min-width="190px" prop="salemoneyrmbznSix" label="销售额￥（6-12月）" sortable="custom"></el-table-column>
-      <el-table-column min-width="190px" prop="netprofitSix" label="毛利润￥（6-12月）" sortable="custom"></el-table-column>
-      <el-table-column min-width="190px" prop="netrateSix" label="毛利率%（6-12月）" sortable="custom"></el-table-column>
-      <el-table-column min-width="190px" prop="salemoneyrmbznTwe" label="销售额￥（12月以上）" sortable="custom"></el-table-column>
-      <el-table-column min-width="190px" prop="netprofitTwe" label="毛利润￥（12月以上）" sortable="custom"></el-table-column>
-      <el-table-column min-width="190px" prop="netrateTwe" label="毛利率%（12月以上）" sortable="custom"></el-table-column>
-      <el-table-column min-width="170px" prop="salemoneyrmbtotal" label="销售额￥（汇总）" sortable="custom"></el-table-column>
-      <el-table-column min-width="170px" prop="netprofittotal" label="毛利润￥（汇总）" sortable="custom"></el-table-column>
-      <el-table-column min-width="170px" prop="netratetotal" label="毛利率%￥（汇总）" sortable="custom"></el-table-column>
+    <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="820" style="width: 100%" empty-text="--">
+      <el-table-column min-width="90px" prop="possessman1Zero" label="责任人" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="170px" prop="salemoneyrmbznZero" label="销售额￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="170px" prop="netprofitZero" label="毛利润￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="170px" prop="netrateZero" label="毛利率%（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="190px" prop="salemoneyrmbznSix" label="销售额￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="190px" prop="netprofitSix" label="毛利润￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="190px" prop="netrateSix" label="毛利率%（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="190px" prop="salemoneyrmbznTwe" label="销售额￥（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="190px" prop="netprofitTwe" label="毛利润￥（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="190px" prop="netrateTwe" label="毛利率%（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="170px" prop="salemoneyrmbtotal" label="销售额￥（汇总）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="170px" prop="netprofittotal" label="毛利润￥（汇总）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="170px" prop="netratetotal" label="毛利率%￥（汇总）" :formatter="empty" sortable="custom"></el-table-column>
     </el-table>
   </div>
 </template>
@@ -172,6 +172,10 @@ export default {
         this.listLoading = false;
         this.tableData = this.searchTable = response.data.data;
       });
+    },
+    //空值显示“--”
+    empty(row, column, cellValue, index) {
+      return cellValue ? cellValue : "--";
     },
     getSummaries(param) {
       const { columns, data } = param;

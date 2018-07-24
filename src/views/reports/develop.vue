@@ -5,12 +5,12 @@
       <transition name="el-fade-in-linear">
         <el-form :model="condition" :inline="true" ref="condition" label-width="68px" class="demo-form-inline" v-show="show">
           <el-form-item label="部门" class="input">
-            <el-select v-model="formInline.region" placeholder="部门">
+            <el-select v-model="formInline.region" multiple collapse-tags placeholder="部门">
               <el-option v-for="(item,index) in section" :index="item[index]" :key="item.id" :label="item.department" :value="item.id"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="销售员" class="input">
-            <el-select v-model="condition.member" placeholder="销售员">
+            <el-select v-model="condition.member" multiple collapse-tags placeholder="销售员">
               <el-option v-for="(item,index) in member" :index="index" :key="item.username" :label="item.username" :value="item.username"></el-option>
             </el-select>
           </el-form-item>
@@ -48,23 +48,7 @@
     </el-row>
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="业绩归属1人表" name="first">
-<<<<<<< HEAD
-        <el-table :data="tableData01" id="sale-table01" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="630" style="width: 100%" empty-text="--">
-          <el-table-column min-width="130px" prop="salernameZero" label="业绩归属人" sortable></el-table-column>
-          <el-table-column min-width="180px" prop="salemoneyrmbznZero" label="销售额￥（0-6月）" sortable></el-table-column>
-          <el-table-column min-width="180px" prop="netprofitZero" label="毛利润￥（0-6月）" sortable="custom"></el-table-column>
-          <el-table-column min-width="180px" prop="netrateZero" label="毛利率%（0-6月）" sortable="custom"></el-table-column>
-          <el-table-column min-width="180px" prop="salemoneyrmbznSix" label="销售额￥（6-12月）" sortable="custom"></el-table-column>
-          <el-table-column min-width="180px" prop="netprofitSix" label="毛利润￥（6-12月）" sortable="custom"></el-table-column>
-          <el-table-column min-width="180px" prop="netrateSix" label="毛利率%（6-12月）" sortable="custom"></el-table-column>
-          <el-table-column min-width="200px" prop="salemoneyrmbznTwe" label="销售额￥（12月以上）" sortable="custom"></el-table-column>
-          <el-table-column min-width="200px" prop="netprofitTwe" label="毛利润￥（12月以上）" sortable="custom"></el-table-column>
-          <el-table-column min-width="200px" prop="netrateTwe" label="毛利率%（12月以上）" sortable="custom"></el-table-column>
-          <el-table-column min-width="180px" prop="salemoneyrmbtotal" label="销售额￥（汇总）" sortable="custom"></el-table-column>
-          <el-table-column min-width="180px" prop="netprofittotal" label="毛利润￥（汇总）" sortable="custom"></el-table-column>
-          <el-table-column min-width="180px" prop="netratetotal" label="毛利率%（汇总）" sortable="custom"></el-table-column>
-=======
-        <el-table :data="tableData01" id="sale-table01" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="780" style="width: 100%" empty-text="--">
+        <el-table :data="tableData01" id="sale-table01" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="770" style="width: 100%">
           <el-table-column prop="salernameZero" label="业绩归属人" sortable></el-table-column>
           <el-table-column prop="salemoneyrmbznZero" label="销售额￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
           <el-table-column prop="netprofitZero" label="毛利润￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
@@ -78,11 +62,10 @@
           <el-table-column prop="salemoneyrmbtotal" label="销售额￥（汇总）" :formatter="empty" sortable="custom"></el-table-column>
           <el-table-column prop="netprofittotal" label="毛利润￥（汇总）" :formatter="empty" sortable="custom"></el-table-column>
           <el-table-column prop="netratetotal" label="毛利率%（汇总）" :formatter="empty" sortable="custom"></el-table-column>
->>>>>>> 40462899ab78bdaaf7cbccdbb1f29b83cface13b
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="业绩归属2人表" name="second">
-        <el-table :data="tableData02" id="sale-table02" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="780" style="width: 100%" empty-text="--">
+        <el-table :data="tableData02" id="sale-table02" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="770" style="width: 100%">
           <el-table-column prop="salernameZero" label="业绩归属人2" sortable="custom"></el-table-column>
           <el-table-column prop="salemoneyrmbznZero" label="销售额￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
           <el-table-column prop="netprofitZero" label="毛利润￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>

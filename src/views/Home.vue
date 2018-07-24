@@ -60,7 +60,7 @@
           </li>
         </ul>
       </aside>
-      <section class="content-container">
+      <section class="content-container" :class="collapsed?'content-container2':'content-container1'">
         <div class="grid-content bg-purple-light">
           <el-col :span="24" class="content-wrapper">
             <transition name="fade" mode="out-in">
@@ -197,7 +197,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped >
 @import "~scss_vars";
 
 .container {
@@ -268,7 +268,6 @@ export default {
   }
   .main {
     display: flex;
-    // background: #324057;
     position: absolute;
     top: 60px;
     bottom: 0px;
@@ -276,9 +275,6 @@ export default {
     aside {
       flex: 0 0 160px;
       width: 160px;
-      // position: absolute;
-      // top: 0px;
-      // bottom: 0px;
       .el-menu {
         height: 100%;
       }
@@ -311,27 +307,35 @@ export default {
       flex: 0 0 160px;
       width: 160px;
     }
-    .content-container {
-      // background: #f1f2f7;
+    .content-container1 {
       flex: 1;
-      //position: absolute;
-      // right: 0px;
-      // top: 0px;
-      // bottom: 0px;
-      //left: 230px;
-      overflow-y: scroll;
+      position: absolute;
+      right: 0px;
+      top: 0px;
+      bottom: 0px;
+      left: 160px;
+      //overflow-y: scroll;
       padding: 10px; //二次修改
-      // .breadcrumb-container {
-      //   //margin-bottom: 15px;
-      //   .title {
-      //     width: 200px;
-      //     float: left;
-      //     color: #475669;
-      //   }
-      //   .breadcrumb-inner {
-      //     float: right;
-      //   }
-      // }          //二次修改
+      .grid-content .bg-purple-light {
+        overflow-x: scroll;
+      }
+      .content-wrapper {
+        background-color: #fff;
+        box-sizing: border-box;
+      }
+    }
+    .content-container2 {
+      flex: 1;
+      position: absolute;
+      right: 0px;
+      top: 0px;
+      bottom: 0px;
+      left: 60px;
+      //overflow-y: scroll;
+      padding: 10px; //二次修改
+      .grid-content .bg-purple-light {
+        overflow-x: scroll;
+      }
       .content-wrapper {
         background-color: #fff;
         box-sizing: border-box;
