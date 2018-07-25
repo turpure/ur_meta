@@ -1,11 +1,11 @@
 <template>
-    <section class="chart-container">
-        <el-row>
-            <el-col :span="24">
-                <div id="areaStack" style="width:100%; height:400px;"></div>
-            </el-col>
-        </el-row>
-    </section>
+  <section class="chart-container">
+    <el-row>
+      <el-col :span="24">
+        <div id="areaStack" style="width:100%; height:600px;"></div>
+      </el-col>
+    </el-row>
+  </section>
 </template>
 
 <script>
@@ -27,7 +27,7 @@ export default {
       this.areaStack.setOption(opt);
     },
     drawCharts() {
-    //   this.drawAreaStack();
+      //   this.drawAreaStack();
     }
   },
 

@@ -9,7 +9,7 @@
               <el-option v-for="(item,index) in section" :index="item[index]" :key="item.id" :label="item.department" :value="item.id"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="销售员" class="input">
+          <el-form-item label="开发员" class="input">
             <el-select v-model="condition.member" multiple collapse-tags placeholder="销售员">
               <el-option v-for="(item,index) in member" :index="index" :key="item.username" :label="item.username" :value="item.username"></el-option>
             </el-select>
@@ -131,7 +131,7 @@ export default {
       condition: {
         member: "",
         dateType: "",
-        dateRange: ["2018-07-04", "2018-07-13"]
+        dateRange: []
       },
       tableMap: {
         first: {
@@ -321,7 +321,8 @@ export default {
       this.section = response.data.data;
     });
     getMember(access_token).then(response => {
-      this.member = response.data.data;
+      let res = response.data.data;
+      this.member = res.filter(ele => ele.position == "开发");
     });
     getSection().then(response => {
       this.department = response.data.data;

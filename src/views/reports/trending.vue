@@ -257,13 +257,11 @@ export default {
       this.platform = response.data;
     });
     getMember(access_token).then(response => {
-      this.member = response.data;
+      let res = response.data.data;
+      this.member = res.filter(ele => ele.position == "销售");
     });
     getAccount(access_token).then(response => {
       this.account = response.data.data;
-    });
-    getMember().then(response => {
-      this.member = response.data.data;
     });
     getSection().then(response => {
       this.department = response.data.data;

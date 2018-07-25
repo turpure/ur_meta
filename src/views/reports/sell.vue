@@ -131,7 +131,7 @@ export default {
         member: "",
         store: [],
         dateType: "",
-        dateRange: ["2018-07-04", "2018-07-13"],
+        dateRange: [],
         account: []
       },
       pickerOptions2: {
@@ -307,7 +307,8 @@ export default {
       this.plat = response.data.data;
     });
     getMember().then(response => {
-      this.member = response.data.data;
+      let res = response.data.data;
+      this.member = res.filter(ele => ele.position == "销售");
     });
     getStore().then(response => {
       this.options = response.dataget;

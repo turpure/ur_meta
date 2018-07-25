@@ -10,7 +10,7 @@
             </el-select>
           </el-form-item> -->
 
-          <el-form-item label="销售员" class="input">
+          <el-form-item label="美工员" class="input">
             <el-select v-model="membery.user" multiple collapse-tags placeholder="销售员">
               <el-option v-for="(item,index) in member" :index="item[index]" :key="item.id" :label="item.username" :value="item.id"></el-option>
             </el-select>
@@ -285,7 +285,8 @@ export default {
       this.section = response.data.data;
     });
     getMember(access_token).then(response => {
-      this.member = response.data.data;
+      let res = response.data.data;
+      this.member = res.filter(ele => ele.position == "美工");
     });
   }
 };

@@ -4,7 +4,7 @@
     <div class="demo-block demo-box demo-zh-CN demo-transition" @mouseover="changeActive" @mouseout="removeActive">
       <transition name="el-fade-in-linear">
         <el-form :model="condition" :inline="true" ref="condition" label-width="68px" class="demo-form-inline" v-show="show">
-          <el-form-item label="销售员" class="input">
+          <el-form-item label="采购员" class="input">
             <el-select v-model="formInline.user" multiple collapse-tags placeholder="销售员">
               <el-option v-for="(item,index) in member" :index="item[index]" :key="item.id" :label="item.username" :value="item.id"></el-option>
               <!-- <el-option label="区域二" value="beijing"></el-option> -->
@@ -253,7 +253,8 @@ export default {
   mounted() {
     var access_token = getMyToken();
     getMember(access_token).then(response => {
-      this.member = response.data.data;
+      let res = response.data.data;
+      this.member = res.filter(ele => ele.position == "采购");
     });
   }
 };
