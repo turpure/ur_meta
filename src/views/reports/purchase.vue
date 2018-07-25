@@ -5,7 +5,7 @@
       <transition name="el-fade-in-linear">
         <el-form :model="condition" :inline="true" ref="condition" label-width="68px" class="demo-form-inline" v-show="show">
           <el-form-item label="采购员" class="input">
-            <el-select v-model="formInline.user" multiple collapse-tags placeholder="销售员">
+            <el-select v-model="formInline.user" multiple collapse-tags placeholder="采购员">
               <el-option v-for="(item,index) in member" :index="item[index]" :key="item.id" :label="item.username" :value="item.id"></el-option>
               <!-- <el-option label="区域二" value="beijing"></el-option> -->
             </el-select>

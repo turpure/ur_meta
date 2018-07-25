@@ -11,7 +11,7 @@
           </el-form-item> -->
 
           <el-form-item label="美工员" class="input">
-            <el-select v-model="membery.user" multiple collapse-tags placeholder="销售员">
+            <el-select v-model="membery.user" multiple collapse-tags placeholder="美工员">
               <el-option v-for="(item,index) in member" :index="item[index]" :key="item.id" :label="item.username" :value="item.id"></el-option>
             </el-select>
           </el-form-item>

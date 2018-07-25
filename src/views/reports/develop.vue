@@ -10,7 +10,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="开发员" class="input">
-            <el-select v-model="condition.member" multiple collapse-tags placeholder="销售员">
+            <el-select v-model="condition.member" multiple collapse-tags placeholder="开发员">
               <el-option v-for="(item,index) in member" :index="index" :key="item.username" :label="item.username" :value="item.username"></el-option>
             </el-select>
           </el-form-item>
