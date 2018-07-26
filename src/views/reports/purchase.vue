@@ -18,7 +18,7 @@
             </el-radio-group>
           </el-form-item>
           <el-form-item label="日期" class="input" prop="dateRange" :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
-            <el-date-picker v-model="value7" value-format="yyyy-MM-dd" type="daterange" align="right" unlink-panels start-placeholder="开始日期" range-separator="至" end-placeholder="结束日期" :picker-options="pickerOptions2">
+            <el-date-picker v-model="condition.dateRange" value-format="yyyy-MM-dd" type="daterange" align="right" unlink-panels start-placeholder="开始日期" range-separator="至" end-placeholder="结束日期" :picker-options="pickerOptions2">
             </el-date-picker>
           </el-form-item>
 
@@ -135,6 +135,8 @@ export default {
               const start = new Date();
               const y = start.getFullYear();
               let m = start.getMonth();
+              let lastday;
+              let firstday;
               if (
                 m == 1 ||
                 m == 3 ||
@@ -144,15 +146,16 @@ export default {
                 m == 10 ||
                 m == 12
               ) {
-                start.setTime(start.getTime() - 3600 * 1000 * 24 * 31);
+                lastday = y + "-" + ("0" + m) + "-" + "31";
               } else if (m == 4 || m == 6 || m == 9 || m == 11) {
-                start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+                lastday = y + "-" + ("0" + m) + "-" + "30";
               } else if (y % 4 == 0 && (y % 100 != 0 || y % 400 == 0)) {
-                start.setTime(start.getTime() - 3600 * 1000 * 24 * 29);
+                lastday = y + "-" + "02" + "-" + "29";
               } else {
-                start.setTime(start.getTime() - 3600 * 1000 * 24 * 28);
+                lastday = y + "-" + "02" + "-" + "28";
               }
-              picker.$emit("pick", [start, end]);
+              firstday = y + "-" + ("0" + m) + "-" + "01";
+              picker.$emit("pick", [firstday, lastday]);
             }
           },
           {
