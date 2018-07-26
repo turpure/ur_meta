@@ -5,7 +5,7 @@
       <transition name="el-fade-in-linear">
         <el-form :model="condition" :inline="true" ref="condition" class="demo-form-inline" label-width="68px" v-show="show">
           <el-form-item label="时间类型" class="input">
-            <el-select v-model="condition.dateType" placeholder="按天">
+            <el-select v-model="formInline.region" placeholder="按天">
               <el-option label="按天" value="shanghai"></el-option>
               <el-option label="按月" value="beijing"></el-option>
             </el-select>
@@ -28,13 +28,15 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="时间类型" class="input">
-            <el-select v-model="condition.dateType" placeholder="发货时间">
-              <el-option label="发货时间" value="shanghai"></el-option>
-              <el-option label="交易时间" value="beijing"></el-option>
-            </el-select>
+          <el-form-item label="时间类型" class="input" prop="dateType">
+            <el-radio-group v-model="condition.dateType">
+              <el-radio border v-for="(item,index) in dateType" :index="index" :key="item.id" :label="item.id" :value="item.id">{{item.type}}</el-radio>
+            </el-radio-group>
           </el-form-item>
-          <el-form-item label="日期" class="input">
+          <el-form-item label="日期" class="input" prop="dateRange" :rules="[
+      { required: true, message: '请选择时间', trigger: 'blur' },
+      { type: 'date', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+    ]">
             <el-date-picker v-model="condition.dateRange" value-format="yyyy-MM-dd" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions2">
             </el-date-picker>
           </el-form-item>
@@ -147,17 +149,31 @@ export default {
       member: [],
       account: [],
       department: [],
-      dateType: [],
+      dateType: [{ id: 0, type: "发货时间" }, { id: 1, type: "交易时间" }],
       dateRange: [],
+      formInline: {
+        user: "",
+        region: ""
+      },
       condition: {
         department: "",
         plat: "",
         member: "",
         store: [],
-        dateType: "",
-        dateRange: [],
+        dateType: 0,
+        dateRange: "",
         account: []
       },
+      // rules: {
+      //   dateRange: [
+      //     {
+      //       type: "date",
+      //       required: true,
+      //       message: "请选择时间",
+      //       trigger: "blur"
+      //     }
+      //   ]
+      // },
       pickerOptions2: {
         shortcuts: [
           {
@@ -167,6 +183,27 @@ export default {
               const start = new Date();
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
               picker.$emit("pick", [start, end]);
+            }
+          },
+          {
+            text: "本月",
+            onClick(picker) {
+              const end = new Date();
+              const y = end.getFullYear();
+              let m = end.getMonth() + 1;
+              if (m < 10) {
+                m = "0" + m;
+              }
+              const firstday = y + "-" + m + "-" + "01";
+              const start = new Date();
+              const sy = start.getFullYear();
+              let sm = start.getMonth() + 1;
+              const sd = start.getDate();
+              if (sm < 10) {
+                sm = "0" + sm;
+              }
+              const sfirstday = sy + "-" + sm + "-" + sd;
+              picker.$emit("pick", [firstday, sfirstday]);
             }
           },
           {
@@ -208,43 +245,50 @@ export default {
       this.show1 = false;
     },
     onSubmit(form) {
-      this.listLoading = true;
-      form.department = ["运营一部", "运营二部", "运营三部"];
-      getSalestrend(form).then(response => {
-        this.listLoading = false;
-        let ret = response.data.data;
-        let lineName = [];
-        let series = [];
-        ret.forEach(element => {
-          if (lineName.indexOf(element.title) < 0) {
-            lineName.push(element.title);
-          }
-        });
-        let date = [];
-        lineName.forEach(name => {
-          let sery = {
-            type: "line",
-            stack: "总量",
-            areaStyle: { normal: {} }
-          };
-          let amt = [];
-          ret.map(element => {
-            if (element.title == name) {
-              amt.push(Number(element.totalamt));
-              if (date.indexOf(element.ordertime) < 0) {
-                date.push(element.ordertime);
+      this.$refs.condition.validate(valid => {
+        if (valid) {
+          this.listLoading = true;
+          form.department = ["运营一部", "运营二部", "运营三部"];
+          getSalestrend(form).then(response => {
+            this.listLoading = false;
+            let ret = response.data.data;
+            let lineName = [];
+            let series = [];
+            ret.forEach(element => {
+              if (lineName.indexOf(element.title) < 0) {
+                lineName.push(element.title);
               }
-            }
+            });
+            let date = [];
+            lineName.forEach(name => {
+              let sery = {
+                type: "line",
+                stack: "总量",
+                areaStyle: { normal: {} }
+              };
+              let amt = [];
+              ret.map(element => {
+                if (element.title == name) {
+                  amt.push(Number(element.totalamt));
+                  if (date.indexOf(element.ordertime) < 0) {
+                    date.push(element.ordertime);
+                  }
+                }
+              });
+              sery["data"] = amt;
+              sery["name"] = name;
+              series.push(sery);
+            });
+            this.options.legend.data = lineName;
+            this.options.xAxis[0].data = date;
+            this.options.series = series;
+            let _this = this;
+            _this.$refs.myecharts.drawAreaStack(this.options);
           });
-          sery["data"] = amt;
-          sery["name"] = name;
-          series.push(sery);
-        });
-        this.options.legend.data = lineName;
-        this.options.xAxis[0].data = date;
-        this.options.series = series;
-        let _this = this;
-        _this.$refs.myecharts.drawAreaStack(this.options);
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
       });
     }
   },

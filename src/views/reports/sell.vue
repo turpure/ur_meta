@@ -10,7 +10,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="平台" class="input">
-            <el-select v-model="condition.plat" multiple collapse-tags placeholder="平台">
+            <el-select v-model="condition.plat" placeholder="平台">
               <el-option v-for="(item,index) in plat" :index="index" :key="item.plat" :label="item.plat" :value="item.plat"></el-option>
             </el-select>
           </el-form-item>
@@ -130,7 +130,7 @@ export default {
         plat: "",
         member: "",
         store: [],
-        dateType: "",
+        dateType: 0,
         dateRange: [],
         account: []
       },
@@ -143,6 +143,27 @@ export default {
               const start = new Date();
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
               picker.$emit("pick", [start, end]);
+            }
+          },
+          {
+            text: "本月",
+            onClick(picker) {
+              const end = new Date();
+              const y = end.getFullYear();
+              let m = end.getMonth() + 1;
+              if (m < 10) {
+                m = "0" + m;
+              }
+              const firstday = y + "-" + m + "-" + "01";
+              const start = new Date();
+              const sy = start.getFullYear();
+              let sm = start.getMonth() + 1;
+              const sd = start.getDate();
+              if (sm < 10) {
+                sm = "0" + sm;
+              }
+              const sfirstday = sy + "-" + sm + "-" + sd;
+              picker.$emit("pick", [firstday, sfirstday]);
             }
           },
           {

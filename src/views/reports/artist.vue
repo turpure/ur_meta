@@ -16,11 +16,10 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item label="时间类型" class="input">
-            <el-select v-model="formInline.region" placeholder="发货时间">
-              <el-option label="发货时间" value="shanghai"></el-option>
-              <el-option label="交易时间" value="beijing"></el-option>
-            </el-select>
+          <el-form-item label="时间类型" class="input" prop="dateType">
+            <el-radio-group v-model="condition.dateType">
+              <el-radio border v-for="(item,index) in dateType" :index="index" :key="item.id" :label="item.id" :value="item.id">{{item.type}}</el-radio>
+            </el-radio-group>
           </el-form-item>
           <el-form-item label="日期" class="input">
             <el-date-picker v-model="value7" value-format="yyyy-MM-dd" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions2">
@@ -100,6 +99,7 @@ export default {
       searchValue: "",
       listLoading: false,
       section: [],
+      dateType: [{ id: 0, type: "发货时间" }, { id: 1, type: "交易时间" }],
       member: [],
       formInline: {
         user: "",
@@ -123,6 +123,27 @@ export default {
               const start = new Date();
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
               picker.$emit("pick", [start, end]);
+            }
+          },
+          {
+            text: "本月",
+            onClick(picker) {
+              const end = new Date();
+              const y = end.getFullYear();
+              let m = end.getMonth() + 1;
+              if (m < 10) {
+                m = "0" + m;
+              }
+              const firstday = y + "-" + m + "-" + "01";
+              const start = new Date();
+              const sy = start.getFullYear();
+              let sm = start.getMonth() + 1;
+              const sd = start.getDate();
+              if (sm < 10) {
+                sm = "0" + sm;
+              }
+              const sfirstday = sy + "-" + sm + "-" + sd;
+              picker.$emit("pick", [firstday, sfirstday]);
             }
           },
           {

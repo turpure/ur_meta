@@ -130,7 +130,7 @@ export default {
       },
       condition: {
         member: "",
-        dateType: "",
+        dateType: 0,
         dateRange: []
       },
       tableMap: {
@@ -152,6 +152,27 @@ export default {
               const start = new Date();
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
               picker.$emit("pick", [start, end]);
+            }
+          },
+          {
+            text: "本月",
+            onClick(picker) {
+              const end = new Date();
+              const y = end.getFullYear();
+              let m = end.getMonth() + 1;
+              if (m < 10) {
+                m = "0" + m;
+              }
+              const firstday = y + "-" + m + "-" + "01";
+              const start = new Date();
+              const sy = start.getFullYear();
+              let sm = start.getMonth() + 1;
+              const sd = start.getDate();
+              if (sm < 10) {
+                sm = "0" + sm;
+              }
+              const sfirstday = sy + "-" + sm + "-" + sd;
+              picker.$emit("pick", [firstday, sfirstday]);
             }
           },
           {
