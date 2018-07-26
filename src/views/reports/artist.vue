@@ -4,11 +4,11 @@
     <div class="demo-block demo-box demo-zh-CN demo-transition" @mouseover="changeActive" @mouseout="removeActive">
       <transition name="el-fade-in-linear">
         <el-form :model="condition" :inline="true" ref="condition" label-width="68px" class="demo-form-inline" v-show="show">
-          <!-- <el-form-item label="部门" class="input">
+          <el-form-item label="部门" class="input">
             <el-select v-model="formInline.region" multiple collapse-tags placeholder="部门">
               <el-option v-for="(item,index) in section" :index="item[index]" :key="item.id" :label="item.department" :value="item.id"></el-option>
             </el-select>
-          </el-form-item> -->
+          </el-form-item>
 
           <el-form-item label="美工员" class="input">
             <el-select v-model="membery.user" multiple collapse-tags placeholder="美工员">
@@ -117,15 +117,6 @@ export default {
       pickerOptions2: {
         shortcuts: [
           {
-            text: "最近一周",
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit("pick", [start, end]);
-            }
-          },
-          {
             text: "本月",
             onClick(picker) {
               const end = new Date();
@@ -147,20 +138,38 @@ export default {
             }
           },
           {
+            text: "上个月",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              const y = start.getFullYear();
+              let m = start.getMonth();
+              if (
+                m == 1 ||
+                m == 3 ||
+                m == 5 ||
+                m == 7 ||
+                m == 8 ||
+                m == 10 ||
+                m == 12
+              ) {
+                start.setTime(start.getTime() - 3600 * 1000 * 24 * 31);
+              } else if (m == 4 || m == 6 || m == 9 || m == 11) {
+                start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              } else if (y % 4 == 0 && (y % 100 != 0 || y % 400 == 0)) {
+                start.setTime(start.getTime() - 3600 * 1000 * 24 * 29);
+              } else {
+                start.setTime(start.getTime() - 3600 * 1000 * 24 * 28);
+              }
+              picker.$emit("pick", [start, end]);
+            }
+          },
+          {
             text: "最近一个月",
             onClick(picker) {
               const end = new Date();
               const start = new Date();
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-              picker.$emit("pick", [start, end]);
-            }
-          },
-          {
-            text: "最近三个月",
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
               picker.$emit("pick", [start, end]);
             }
           }
