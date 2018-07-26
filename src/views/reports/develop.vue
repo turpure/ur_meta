@@ -19,7 +19,7 @@
               <el-radio border v-for="(item,index) in dateType" :index="index" :key="item.id" :label="item.id" :value="item.id">{{item.type}}</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="日期" class="input">
+          <el-form-item label="日期" class="input" prop="dateRange" :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
             <el-date-picker v-model="condition.dateRange" value-format="yyyy-MM-dd" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions2">
             </el-date-picker>
           </el-form-item>
@@ -217,14 +217,21 @@ export default {
       this.activeName = tab.name;
     },
     onSubmit(form) {
-      this.listLoading = true;
-      getDevelop(form).then(response => {
-        this.listLoading = false;
-        const ret = response.data.data;
-        let posseman1Data = ret.filter(ele => ele.tableType == "归属1人表");
-        let posseman2Data = ret.filter(ele => ele.tableType == "归属2人表");
-        this.tableData01 = this.searchTableFirst = posseman1Data;
-        this.tableData02 = this.searchTableSecond = posseman2Data;
+      this.$refs.condition.validate(valid => {
+        if (valid) {
+          this.listLoading = true;
+          getDevelop(form).then(response => {
+            this.listLoading = false;
+            const ret = response.data.data;
+            let posseman1Data = ret.filter(ele => ele.tableType == "归属1人表");
+            let posseman2Data = ret.filter(ele => ele.tableType == "归属2人表");
+            this.tableData01 = this.searchTableFirst = posseman1Data;
+            this.tableData02 = this.searchTableSecond = posseman2Data;
+          });
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
       });
     },
     handleSearch() {

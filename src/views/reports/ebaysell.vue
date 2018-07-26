@@ -9,8 +9,8 @@
               <el-radio border v-for="(item,index) in dateType" :index="index" :key="item.id" :label="item.id" :value="item.id">{{item.type}}</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="日期" class="input">
-            <el-date-picker v-model="value7" value-format="yyyy-MM-dd" type="daterange" align="right" unlink-panels start-placeholder="开始日期" range-separator="至" end-placeholder="结束日期" :picker-options="pickerOptions2">
+          <el-form-item label="日期" class="input" prop="dateRange" :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
+            <el-date-picker v-model="condition.dateRange" value-format="yyyy-MM-dd" type="daterange" align="right" unlink-panels start-placeholder="开始日期" range-separator="至" end-placeholder="结束日期" :picker-options="pickerOptions2">
             </el-date-picker>
           </el-form-item>
 
@@ -99,7 +99,7 @@ export default {
       condition: {
         member: "",
         dateType: 0,
-        dateRange: ["2018-07-04", "2018-07-13"]
+        dateRange: []
       },
       pickerOptions2: {
         shortcuts: [
@@ -174,10 +174,17 @@ export default {
       this.show1 = false;
     },
     onSubmit(form) {
-      this.listLoading = true;
-      getEbaysales(form).then(response => {
-        this.listLoading = false;
-        this.tableData = this.searchTable = response.data.data;
+      this.$refs.condition.validate(valid => {
+        if (valid) {
+          this.listLoading = true;
+          getEbaysales(form).then(response => {
+            this.listLoading = false;
+            this.tableData = this.searchTable = response.data.data;
+          });
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
       });
     },
     empty(row, column, cellValue, index) {
