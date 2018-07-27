@@ -5,7 +5,7 @@
       <transition name="el-fade-in-linear">
         <el-form :model="condition" :inline="true" ref="condition" label-width="68px" class="demo-form-inline" v-show="show">
           <el-form-item label="部门" class="input">
-            <el-select v-model="formInline.region" multiple collapse-tags placeholder="部门">
+            <el-select v-model="formInline.region" multiple collapse-tags placeholder="部门" @change="choosed">
               <el-option v-for="(item,index) in section" :index="item[index]" :key="item.id" :label="item.department" :value="item.id"></el-option>
             </el-select>
           </el-form-item>
@@ -108,6 +108,7 @@ import XLSX from "xlsx";
 export default {
   data() {
     return {
+      allMember: [],
       isA: true,
       text: "显示输入框",
       show: false,
@@ -129,7 +130,7 @@ export default {
         region: ""
       },
       condition: {
-        member: "",
+        member: [],
         dateType: 0,
         dateRange: []
       },
@@ -210,6 +211,20 @@ export default {
     };
   },
   methods: {
+    choosed() {
+      let res = [];
+      let val = this.formInline.region;
+      res = this.allMember;
+      if (val != "") {
+        for (let i = 0; i < val.length; i++) {
+          this.member = res.filter(
+            ele => ele.department == val[i] && ele.position == "销售"
+          );
+        }
+      } else {
+        this.member = res;
+      }
+    },
     handleChange() {
       this.show = !this.show;
       this.isA = !this.isA;
@@ -231,15 +246,31 @@ export default {
     onSubmit(form) {
       this.$refs.condition.validate(valid => {
         if (valid) {
-          this.listLoading = true;
-          getDevelop(form).then(response => {
-            this.listLoading = false;
-            const ret = response.data.data;
-            let posseman1Data = ret.filter(ele => ele.tableType == "归属1人表");
-            let posseman2Data = ret.filter(ele => ele.tableType == "归属2人表");
-            this.tableData01 = this.searchTableFirst = posseman1Data;
-            this.tableData02 = this.searchTableSecond = posseman2Data;
-          });
+          if (this.formInline.region != "" && this.condition.member == "") {
+            this.listLoading = true;
+            let val = this.formInline.region;
+            let res = [];
+            res = this.allMember;
+            for (let i = 0; i < val.length; i++) {
+              this.member = res.filter(
+                ele => ele.department == val[i] && ele.position == "销售"
+              );
+              form.member = this.member.map(m => {
+                return m.username;
+              });
+            }
+            getSales(form).then(response => {
+              this.listLoading = false;
+              this.tableData = this.searchTable = response.data.data;
+            });
+          } else if (this.condition.member != "") {
+            this.listLoading = true;
+            form.member = this.condition.member;
+            getSales(form).then(response => {
+              this.listLoading = false;
+              this.tableData = this.searchTable = response.data.data;
+            });
+          }
         } else {
           console.log("error submit!!");
           return false;
@@ -362,7 +393,7 @@ export default {
     });
     getMember(access_token).then(response => {
       let res = response.data.data;
-      this.member = res.filter(ele => ele.position == "开发");
+      this.allMember = this.member = res.filter(ele => ele.position == "开发");
     });
     getSection().then(response => {
       this.department = response.data.data;

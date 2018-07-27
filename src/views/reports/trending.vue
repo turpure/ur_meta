@@ -11,13 +11,13 @@
             </el-select>
           </el-form-item>
           <el-form-item label="部门" class="input">
-            <el-select v-model="condition.department" multiple collapse-tags placeholder="部门">
+            <el-select v-model="condition.department" multiple collapse-tags placeholder="部门" @change="choosed">
               <el-option v-for="(item,index) in department" :index="index" :key="item.department" :label="item.department" :value="item.department">
               </el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="平台" class="input">
-            <el-select v-model="condition.plat" multiple collapse-tags placeholder="平台" style="height: 30px;">
+            <el-select v-model="condition.plat" multiple collapse-tags placeholder="平台" style="height: 40px;">
               <el-option v-for="(item,index) in plat" :index="index" :key="item.plat" :label="item.plat" :value="item.plat">
               </el-option>
             </el-select>
@@ -82,6 +82,7 @@ import { compareUp, compareDown } from "../../api/tools";
 export default {
   data() {
     return {
+      allMember: [],
       isA: true,
       text: "显示输入框",
       id: "test",
@@ -228,6 +229,20 @@ export default {
     };
   },
   methods: {
+    choosed() {
+      let res = [];
+      let val = this.condition.department;
+      res = this.allMember;
+      if (val != "") {
+        for (let i = 0; i < val.length; i++) {
+          this.member = res.filter(
+            ele => ele.department == val[i] && ele.position == "销售"
+          );
+        }
+      } else {
+        this.member = res;
+      }
+    },
     handleChange() {
       this.show = !this.show;
       this.isA = !this.isA;
@@ -246,44 +261,33 @@ export default {
     onSubmit(form) {
       this.$refs.condition.validate(valid => {
         if (valid) {
-          this.listLoading = true;
-          form.department = ["运营一部", "运营二部", "运营三部"];
-          getSalestrend(form).then(response => {
-            this.listLoading = false;
-            let ret = response.data.data;
-            let lineName = [];
-            let series = [];
-            ret.forEach(element => {
-              if (lineName.indexOf(element.title) < 0) {
-                lineName.push(element.title);
-              }
-            });
-            let date = [];
-            lineName.forEach(name => {
-              let sery = {
-                type: "line",
-                stack: "总量",
-                areaStyle: { normal: {} }
-              };
-              let amt = [];
-              ret.map(element => {
-                if (element.title == name) {
-                  amt.push(Number(element.totalamt));
-                  if (date.indexOf(element.ordertime) < 0) {
-                    date.push(element.ordertime);
-                  }
-                }
+          if (this.condition.department != "" && this.condition.member == "") {
+            this.listLoading = true;
+            let val = this.condition.department;
+            let res = [];
+            res = this.allMember;
+            for (let i = 0; i < val.length; i++) {
+              this.member = res.filter(
+                ele => ele.department == val[i] && ele.position == "销售"
+              );
+              form.member = this.member.map(m => {
+                return m.username;
               });
-              sery["data"] = amt;
-              sery["name"] = name;
-              series.push(sery);
+              console.log(form.member);
+              //form.member = this.member.username;
+            }
+            getSales(form).then(response => {
+              this.listLoading = false;
+              this.tableData = this.searchTable = response.data.data;
             });
-            this.options.legend.data = lineName;
-            this.options.xAxis[0].data = date;
-            this.options.series = series;
-            let _this = this;
-            _this.$refs.myecharts.drawAreaStack(this.options);
-          });
+          } else if (this.condition.member != "") {
+            this.listLoading = true;
+            form.member = this.condition.member;
+            getSales(form).then(response => {
+              this.listLoading = false;
+              this.tableData = this.searchTable = response.data.data;
+            });
+          }
         } else {
           console.log("error submit!!");
           return false;
@@ -301,7 +305,7 @@ export default {
     });
     getMember(access_token).then(response => {
       let res = response.data.data;
-      this.member = res.filter(ele => ele.position == "销售");
+      this.allMember = this.member = res.filter(ele => ele.position == "销售");
     });
     getAccount(access_token).then(response => {
       this.account = response.data.data;
