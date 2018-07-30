@@ -6,13 +6,13 @@
         <el-form :model="condition" :inline="true" ref="condition" label-width="68px" class="demo-form-inline" v-show="show">
           <el-form-item label="部门" class="input">
             <el-select v-model="formInline.region" multiple collapse-tags placeholder="部门" @change="choosed">
-              <el-option v-for="(item,index) in department" :index="item[index]" :key="item.department" :label="item.department" :value="item.department"></el-option>
+              <el-option v-for="(item,index) in section" :index="item[index]" :key="item.department" :label="item.department" :value="item.department"></el-option>
             </el-select>
           </el-form-item>
 
           <el-form-item label="美工员" class="input">
             <el-select v-model="condition.member" multiple collapse-tags placeholder="美工员">
-              <el-option v-for="(item,index) in member" :index="item[index]" :key="item.id" :label="item.username" :value="item.id"></el-option>
+              <el-option v-for="(item,index) in member" :index="item[index]" :key="item.username" :label="item.username" :value="item.username"></el-option>
             </el-select>
           </el-form-item>
 
@@ -99,6 +99,7 @@ export default {
       searchTable: [],
       searchValue: "",
       listLoading: false,
+      section: [],
       department: [],
       dateType: [{ id: 0, type: "发货时间" }, { id: 1, type: "交易时间" }],
       member: [],
@@ -236,14 +237,20 @@ export default {
                 return m.username;
               });
             }
-            getSales(form).then(response => {
+            getPossess(form).then(response => {
               this.listLoading = false;
               this.tableData = this.searchTable = response.data.data;
             });
           } else if (this.condition.member != "") {
             this.listLoading = true;
             form.member = this.condition.member;
-            getSales(form).then(response => {
+            getPossess(form).then(response => {
+              this.listLoading = false;
+              this.tableData = this.searchTable = response.data.data;
+            });
+          } else {
+            this.listLoading = true;
+            getPossess(form).then(response => {
               this.listLoading = false;
               this.tableData = this.searchTable = response.data.data;
             });
@@ -368,9 +375,6 @@ export default {
     getMember(access_token).then(response => {
       let res = response.data.data;
       this.allMember = this.member = res.filter(ele => ele.position == "美工");
-    });
-    getSection().then(response => {
-      this.department = response.data.data;
     });
   }
 };

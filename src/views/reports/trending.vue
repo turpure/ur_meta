@@ -154,12 +154,12 @@ export default {
         region: ""
       },
       condition: {
-        department: "",
+        department: [],
         plat: "",
-        member: "",
+        member: [],
         store: [],
         dateType: 0,
-        dateRange: "",
+        dateRange: [],
         account: []
       },
       pickerOptions2: {
@@ -268,28 +268,132 @@ export default {
             this.listLoading = true;
             let val = this.condition.department;
             let res = [];
-            this.member = [];
-            let person = [];
             res = this.allMember;
+            let per = [];
+            this.member = [];
             for (let i = 0; i < val.length; i++) {
-              person = res.filter(
+              per = res.filter(
                 ele => ele.department == val[i] && ele.position == "销售"
               );
-              this.member = this.member.concat(person);
-              form.member = this.member.map(m => {
-                return m.username;
-              });
+              this.member = this.member.concat(per);
             }
-            getSales(form).then(response => {
+            form.member = this.member.map(m => {
+              return m.username;
+            });
+            form.department = ["运营一部", "运营二部", "运营三部"];
+            getSalestrend(form).then(response => {
               this.listLoading = false;
-              this.tableData = this.searchTable = response.data.data;
+              let ret = response.data.data;
+              let lineName = [];
+              let series = [];
+              ret.forEach(element => {
+                if (lineName.indexOf(element.title) < 0) {
+                  lineName.push(element.title);
+                }
+              });
+              let date = [];
+              lineName.forEach(name => {
+                let sery = {
+                  type: "line",
+                  stack: "总量",
+                  areaStyle: { normal: {} }
+                };
+                let amt = [];
+                ret.map(element => {
+                  if (element.title == name) {
+                    amt.push(Number(element.totalamt));
+                    if (date.indexOf(element.ordertime) < 0) {
+                      date.push(element.ordertime);
+                    }
+                  }
+                });
+                sery["data"] = amt;
+                sery["name"] = name;
+                series.push(sery);
+              });
+              this.options.legend.data = lineName;
+              this.options.xAxis[0].data = date;
+              this.options.series = series;
+              let _this = this;
+              _this.$refs.myecharts.drawAreaStack(this.options);
             });
           } else if (this.condition.member != "") {
             this.listLoading = true;
             form.member = this.condition.member;
-            getSales(form).then(response => {
+            form.department = ["运营一部", "运营二部", "运营三部"];
+            getSalestrend(form).then(response => {
               this.listLoading = false;
-              this.tableData = this.searchTable = response.data.data;
+              let ret = response.data.data;
+              let lineName = [];
+              let series = [];
+              ret.forEach(element => {
+                if (lineName.indexOf(element.title) < 0) {
+                  lineName.push(element.title);
+                }
+              });
+              let date = [];
+              lineName.forEach(name => {
+                let sery = {
+                  type: "line",
+                  stack: "总量",
+                  areaStyle: { normal: {} }
+                };
+                let amt = [];
+                ret.map(element => {
+                  if (element.title == name) {
+                    amt.push(Number(element.totalamt));
+                    if (date.indexOf(element.ordertime) < 0) {
+                      date.push(element.ordertime);
+                    }
+                  }
+                });
+                sery["data"] = amt;
+                sery["name"] = name;
+                series.push(sery);
+              });
+              this.options.legend.data = lineName;
+              this.options.xAxis[0].data = date;
+              this.options.series = series;
+              let _this = this;
+              _this.$refs.myecharts.drawAreaStack(this.options);
+            });
+          } else {
+            form.department = ["运营一部", "运营二部", "运营三部"];
+            getSalestrend(form).then(response => {
+              this.listLoading = false;
+              let ret = response.data.data;
+              let lineName = [];
+              let series = [];
+              ret.forEach(element => {
+                if (lineName.indexOf(element.title) < 0) {
+                  lineName.push(element.title);
+                }
+              });
+              let date = [];
+              lineName.forEach(name => {
+                let sery = {
+                  type: "line",
+                  stack: "总量",
+                  areaStyle: { normal: {} }
+                };
+                let amt = [];
+                ret.map(element => {
+                  if (element.title == name) {
+                    amt.push(Number(element.totalamt));
+                    if (date.indexOf(element.ordertime) < 0) {
+                      date.push(element.ordertime);
+                    }
+                  }
+                });
+                sery["data"] = amt;
+                sery["name"] = name;
+                series.push(sery);
+              });
+              this.options.legend.data = lineName;
+              this.options.xAxis[0].data = date;
+              this.options.series = series;
+              let _this = this;
+              _this.$refs.myecharts.drawAreaStack(this.options);
             });
           }
         } else {

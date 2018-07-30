@@ -5,7 +5,7 @@
       <transition name="el-fade-in-linear">
         <el-form :model="condition" :inline="true" ref="condition" label-width="68px" class="demo-form-inline" v-show="show">
           <el-form-item label="采购员" class="input">
-            <el-select v-model="formInline.user" multiple collapse-tags placeholder="采购员">
+            <el-select v-model="condition.member" multiple collapse-tags placeholder="采购员">
               <el-option v-for="(item,index) in member" :index="item[index]" :key="item.id" :label="item.username" :value="item.id"></el-option>
               <!-- <el-option label="区域二" value="beijing"></el-option> -->
             </el-select>
@@ -101,7 +101,7 @@ export default {
         region: ""
       },
       condition: {
-        member: "",
+        member: [],
         dateType: 0,
         dateRange: []
       },
@@ -193,11 +193,20 @@ export default {
     onSubmit(form) {
       this.$refs.condition.validate(valid => {
         if (valid) {
-          this.listLoading = true;
-          getPurchase(form).then(response => {
-            this.listLoading = false;
-            this.tableData = this.searchTable = response.data.data;
-          });
+          if (this.condition.member != "") {
+            this.listLoading = true;
+            form.member = this.condition.member;
+            getPurchase(form).then(response => {
+              this.listLoading = false;
+              this.tableData = this.searchTable = response.data.data;
+            });
+          } else {
+            this.listLoading = true;
+            getPurchase(form).then(response => {
+              this.listLoading = false;
+              this.tableData = this.searchTable = response.data.data;
+            });
+          }
         } else {
           console.log("error submit!!");
           return false;

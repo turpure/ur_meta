@@ -129,7 +129,7 @@ export default {
       dateRange: [],
       account: [],
       condition: {
-        department: [],
+        department: "",
         plat: "",
         member: [],
         store: [],
@@ -204,25 +204,22 @@ export default {
     };
   },
   methods: {
-    //此处多选时销售输入框只能出现最后选择的部门成员
     choosed() {
       let res = [];
-      this.member = [];
       let val = this.condition.department;
       res = this.allMember;
       let per = [];
+      this.member = [];
       if (val != "") {
         for (let i = 0; i < val.length; i++) {
           per = res.filter(
             ele => ele.department == val[i] && ele.position == "销售"
           );
           this.member = this.member.concat(per);
-          console.log(val[i]);
         }
       } else {
         this.member = res;
       }
-      console.log(val);
     },
     handleChange() {
       this.show = !this.show;
@@ -246,18 +243,18 @@ export default {
             this.listLoading = true;
             let val = this.condition.department;
             let res = [];
+            let per = [];
             this.member = [];
-            let person = [];
             res = this.allMember;
             for (let i = 0; i < val.length; i++) {
-              person = res.filter(
+              per = res.filter(
                 ele => ele.department == val[i] && ele.position == "销售"
               );
-              this.member = this.member.concat(person);
-              form.member = this.member.map(m => {
-                return m.username;
-              });
             }
+            this.member = this.member.concat(per);
+            form.member = this.member.map(m => {
+              return m.username;
+            });
             getSales(form).then(response => {
               this.listLoading = false;
               this.tableData = this.searchTable = response.data.data;
@@ -265,6 +262,12 @@ export default {
           } else if (this.condition.member != "") {
             this.listLoading = true;
             form.member = this.condition.member;
+            getSales(form).then(response => {
+              this.listLoading = false;
+              this.tableData = this.searchTable = response.data.data;
+            });
+          } else {
+            this.listLoading = true;
             getSales(form).then(response => {
               this.listLoading = false;
               this.tableData = this.searchTable = response.data.data;

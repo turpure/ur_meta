@@ -6,7 +6,7 @@
         <el-form :model="condition" :inline="true" ref="condition" label-width="68px" class="demo-form-inline" v-show="show">
           <el-form-item label="部门" class="input">
             <el-select v-model="formInline.region" multiple collapse-tags placeholder="部门" @change="choosed">
-              <el-option v-for="(item,index) in department" :index="index" :key="item.department" :label="item.department" :value="item.department"></el-option>
+              <el-option v-for="(item,index) in section" :index="index" :key="item.department" :label="item.department" :value="item.department"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="开发员" class="input">
@@ -216,14 +216,13 @@ export default {
       this.member = [];
       let val = this.formInline.region;
       res = this.allMember;
-      let per;
+      let per = [];
       if (val != "") {
         for (let i = 0; i < val.length; i++) {
           per = res.filter(
             ele => ele.department == val[i] && ele.position == "开发"
           );
           this.member = this.member.concat(per);
-          console.log(per);
         }
       } else {
         this.member = res;
@@ -248,11 +247,14 @@ export default {
       this.activeName = tab.name;
     },
     onSubmit(form) {
+      let posseman1Data;
+      let posseman2Data;
+      let ret;
       this.$refs.condition.validate(valid => {
         if (valid) {
           if (this.formInline.region != "" && this.condition.member == "") {
             this.listLoading = true;
-            let val = this.section;
+            let val = this.formInline.region;
             let res = [];
             this.member = [];
             let person = [];
@@ -261,21 +263,39 @@ export default {
               person = res.filter(
                 ele => ele.department == val[i] && ele.position == "开发"
               );
-              this.member = this.member.concat(person);
-              form.member = this.member.map(m => {
-                return m.username;
-              });
             }
-            getSales(form).then(response => {
+            this.member = this.member.concat(person);
+            form.member = this.member.map(m => {
+              return m.username;
+            });
+            getDevelop(form).then(response => {
               this.listLoading = false;
-              this.tableData = this.searchTable = response.data.data;
+              ret = response.data.data; //请求是失败的
+              posseman1Data = ret.filter(ele => ele.tableType == "归属1人表");
+              posseman2Data = ret.filter(ele => ele.tableType == "归属2人表");
+              this.tableData01 = this.searchTableFirst = posseman1Data;
+              this.tableData02 = this.searchTableSecond = posseman2Data;
             });
           } else if (this.condition.member != "") {
             this.listLoading = true;
             form.member = this.condition.member;
-            getSales(form).then(response => {
+            getDevelop(form).then(response => {
               this.listLoading = false;
-              this.tableData = this.searchTable = response.data.data;
+              ret = response.data.data;
+              posseman1Data = ret.filter(ele => ele.tableType == "归属1人表");
+              posseman2Data = ret.filter(ele => ele.tableType == "归属2人表");
+              this.tableData01 = this.searchTableFirst = posseman1Data;
+              this.tableData02 = this.searchTableSecond = posseman2Data;
+            });
+          } else {
+            this.listLoading = true;
+            getDevelop(form).then(response => {
+              this.listLoading = false;
+              ret = response.data.data;
+              posseman1Data = ret.filter(ele => ele.tableType == "归属1人表");
+              posseman2Data = ret.filter(ele => ele.tableType == "归属2人表");
+              this.tableData01 = this.searchTableFirst = posseman1Data;
+              this.tableData02 = this.searchTableSecond = posseman2Data;
             });
           }
         } else {
@@ -286,7 +306,6 @@ export default {
     },
     handleSearch() {
       let searchValue = this.searchValue && this.searchValue.toLowerCase();
-
       let activeTable = this.activeName;
       let data = this[this.tableMap[activeTable]["searchTable"]];
       if (searchValue) {
@@ -401,9 +420,6 @@ export default {
     getMember(access_token).then(response => {
       let res = response.data.data;
       this.allMember = this.member = res.filter(ele => ele.position == "开发");
-    });
-    getSection().then(response => {
-      this.department = response.data.data;
     });
   }
 };
