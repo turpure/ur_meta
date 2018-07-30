@@ -6,7 +6,7 @@
         <el-form :model="condition" :inline="true" ref="condition" label-width="68px" class="demo-form-inline" v-show="show">
           <el-form-item label="部门" class="input">
             <el-select v-model="formInline.region" multiple collapse-tags placeholder="部门" @change="choosed">
-              <el-option v-for="(item,index) in section" :index="item[index]" :key="item.id" :label="item.department" :value="item.id"></el-option>
+              <el-option v-for="(item,index) in department" :index="index" :key="item.department" :label="item.department" :value="item.department"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="开发员" class="input">
@@ -121,13 +121,13 @@ export default {
       searchValue: "",
       listLoading: false,
       section: [],
-      member: [],
       department: [],
+      member: [],
       dateRange: [],
       dateType: [{ id: 0, type: "发货时间" }, { id: 1, type: "交易时间" }],
       formInline: {
         user: "",
-        region: ""
+        region: []
       },
       condition: {
         member: [],
@@ -213,13 +213,17 @@ export default {
   methods: {
     choosed() {
       let res = [];
+      this.member = [];
       let val = this.formInline.region;
       res = this.allMember;
+      let per;
       if (val != "") {
         for (let i = 0; i < val.length; i++) {
-          this.member = res.filter(
-            ele => ele.department == val[i] && ele.position == "销售"
+          per = res.filter(
+            ele => ele.department == val[i] && ele.position == "开发"
           );
+          this.member = this.member.concat(per);
+          console.log(per);
         }
       } else {
         this.member = res;
@@ -248,13 +252,16 @@ export default {
         if (valid) {
           if (this.formInline.region != "" && this.condition.member == "") {
             this.listLoading = true;
-            let val = this.formInline.region;
+            let val = this.section;
             let res = [];
+            this.member = [];
+            let person = [];
             res = this.allMember;
             for (let i = 0; i < val.length; i++) {
-              this.member = res.filter(
-                ele => ele.department == val[i] && ele.position == "销售"
+              person = res.filter(
+                ele => ele.department == val[i] && ele.position == "开发"
               );
+              this.member = this.member.concat(person);
               form.member = this.member.map(m => {
                 return m.username;
               });
@@ -397,9 +404,6 @@ export default {
     });
     getSection().then(response => {
       this.department = response.data.data;
-    });
-    getPlatform().then(response => {
-      this.plat = response.data.data;
     });
   }
 };

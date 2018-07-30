@@ -207,17 +207,22 @@ export default {
     //此处多选时销售输入框只能出现最后选择的部门成员
     choosed() {
       let res = [];
+      this.member = [];
       let val = this.condition.department;
       res = this.allMember;
+      let per = [];
       if (val != "") {
         for (let i = 0; i < val.length; i++) {
-          this.member = res.filter(
+          per = res.filter(
             ele => ele.department == val[i] && ele.position == "销售"
           );
+          this.member = this.member.concat(per);
+          console.log(val[i]);
         }
       } else {
         this.member = res;
       }
+      console.log(val);
     },
     handleChange() {
       this.show = !this.show;
@@ -241,16 +246,17 @@ export default {
             this.listLoading = true;
             let val = this.condition.department;
             let res = [];
+            this.member = [];
+            let person = [];
             res = this.allMember;
             for (let i = 0; i < val.length; i++) {
-              this.member = res.filter(
+              person = res.filter(
                 ele => ele.department == val[i] && ele.position == "销售"
               );
+              this.member = this.member.concat(person);
               form.member = this.member.map(m => {
                 return m.username;
               });
-              console.log(form.member);
-              //form.member = this.member.username;
             }
             getSales(form).then(response => {
               this.listLoading = false;
