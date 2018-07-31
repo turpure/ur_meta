@@ -48,7 +48,7 @@
     </el-row>
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="业绩归属1人表" name="first">
-        <el-table :data="tableData01" id="sale-table01" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="790" style="width: 100%">
+        <el-table :data="tableData01" id="sale-table01" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="790" style="width: 100%">
           <el-table-column prop="salernameZero" label="业绩归属人" sortable></el-table-column>
           <el-table-column prop="salemoneyrmbznZero" label="销售额￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
           <el-table-column prop="netprofitZero" label="毛利润￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
