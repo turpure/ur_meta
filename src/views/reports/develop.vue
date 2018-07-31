@@ -48,7 +48,7 @@
     </el-row>
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="业绩归属1人表" name="first">
-        <el-table :data="tableData01" id="sale-table01" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="770" style="width: 100%">
+        <el-table :data="tableData01" id="sale-table01" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="790" style="width: 100%">
           <el-table-column prop="salernameZero" label="业绩归属人" sortable></el-table-column>
           <el-table-column prop="salemoneyrmbznZero" label="销售额￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
           <el-table-column prop="netprofitZero" label="毛利润￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
@@ -130,7 +130,7 @@ export default {
         region: []
       },
       condition: {
-        member: "",
+        member: [],
         dateType: 0,
         dateRange: []
       },
@@ -256,7 +256,6 @@ export default {
             this.listLoading = true;
             let val = this.formInline.region;
             let res = [];
-            this.member = [];
             let person = [];
             res = this.allMember;
             for (let i = 0; i < val.length; i++) {
@@ -264,11 +263,11 @@ export default {
                 ele => ele.department == val[i] && ele.position == "开发"
               );
             }
+            console.log(person);
             this.member = this.member.concat(person);
             form.member = this.member.map(m => {
               return m.username;
             });
-            form.member = form.member.toString();
             getDevelop(form).then(response => {
               this.listLoading = false;
               ret = response.data.data;
@@ -280,7 +279,6 @@ export default {
           } else if (this.condition.member != "") {
             this.listLoading = true;
             form.member = this.condition.member;
-            form.member = form.member.toString();
             getDevelop(form).then(response => {
               this.listLoading = false;
               ret = response.data.data;
@@ -291,7 +289,6 @@ export default {
             });
           } else {
             this.listLoading = true;
-            form.member = form.member.toString();
             getDevelop(form).then(response => {
               this.listLoading = false;
               ret = response.data.data;

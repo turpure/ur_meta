@@ -49,7 +49,7 @@
         <el-button style="float:left;" type="default" @click="exportExcel">导出Excel</el-button>
       </el-col>
     </el-row>
-    <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="820" style="width: 100%" empty-text="--">
+    <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="840" style="width: 100%">
       <el-table-column min-width="90px" prop="possessman1Zero" label="责任人" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="170px" prop="salemoneyrmbznZero" label="销售额￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="170px" prop="netprofitZero" label="毛利润￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
@@ -108,7 +108,7 @@ export default {
         region: []
       },
       condition: {
-        member: "",
+        member: [],
         dateType: 0,
         dateRange: []
       },
@@ -222,7 +222,6 @@ export default {
             this.listLoading = true;
             let val = this.formInline.region;
             let res = [];
-            this.member = [];
             let person = [];
             res = this.allMember;
             for (let i = 0; i < val.length; i++) {
@@ -234,7 +233,6 @@ export default {
                 return m.username;
               });
             }
-            form.member = form.member.toString();
             getPossess(form).then(response => {
               this.listLoading = false;
               this.tableData = this.searchTable = response.data.data;
@@ -242,14 +240,12 @@ export default {
           } else if (this.condition.member != "") {
             this.listLoading = true;
             form.member = this.condition.member;
-            form.member = form.member.toString();
             getPossess(form).then(response => {
               this.listLoading = false;
               this.tableData = this.searchTable = response.data.data;
             });
           } else {
             this.listLoading = true;
-            form.member = form.member.toString();
             getPossess(form).then(response => {
               this.listLoading = false;
               this.tableData = this.searchTable = response.data.data;

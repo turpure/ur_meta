@@ -64,7 +64,7 @@
         <el-button style="float:left;" type="default" @click="exportExcel">导出Excel</el-button>
       </el-col>
     </el-row>
-    <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="820" style="width: 100% ">
+    <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="840" style="width: 100% ">
       <el-table-column min-width="72px" prop="pingtai" label="平台" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="72px" prop="suffix" label="账号" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="87px" prop="salesman" label="销售员" :formatter="empty" sortable="custom"></el-table-column>
@@ -129,7 +129,7 @@ export default {
       dateRange: [],
       account: [],
       condition: {
-        department: "",
+        department: [],
         plat: "",
         member: [],
         store: [],
@@ -244,7 +244,6 @@ export default {
             let val = this.condition.department;
             let res = [];
             let per = [];
-            this.member = [];
             res = this.allMember;
             for (let i = 0; i < val.length; i++) {
               per = res.filter(

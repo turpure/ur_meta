@@ -6,7 +6,7 @@
         <el-form :model="condition" :inline="true" ref="condition" label-width="68px" class="demo-form-inline" v-show="show">
           <el-form-item label="采购员" class="input">
             <el-select v-model="condition.member" multiple collapse-tags placeholder="采购员">
-              <el-option v-for="(item,index) in member" :index="item[index]" :key="item.id" :label="item.username" :value="item.id"></el-option>
+              <el-option v-for="(item,index) in member" :index="item[index]" :key="item.username" :label="item.username" :value="item.username"></el-option>
               <!-- <el-option label="区域二" value="beijing"></el-option> -->
             </el-select>
           </el-form-item>
@@ -45,7 +45,7 @@
         <el-button style="float:left;" type="default" @click="exportExcel">导出Excel</el-button>
       </el-col>
     </el-row>
-    <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="820" style="width: 100%">
+    <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="840" style="width: 100%">
       <el-table-column min-width="90px" prop="purchaser" label="采购员" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="100px" prop="salemoneyrmbus" label="成交价$" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="100px" prop="salemoneyrmbzn" label="成交价￥" :formatter="empty" sortable="custom"></el-table-column>
@@ -101,7 +101,7 @@ export default {
         region: ""
       },
       condition: {
-        member: "",
+        member: [],
         dateType: 0,
         dateRange: []
       },
@@ -196,14 +196,12 @@ export default {
           if (this.condition.member != "") {
             this.listLoading = true;
             form.member = this.condition.member;
-            form.member = form.member.toString();
             getPurchase(form).then(response => {
               this.listLoading = false;
               this.tableData = this.searchTable = response.data.data;
             });
           } else {
             this.listLoading = true;
-            form.member = form.member.toString();
             getPurchase(form).then(response => {
               this.listLoading = false;
               this.tableData = this.searchTable = response.data.data;
