@@ -101,7 +101,7 @@ export default {
         region: ""
       },
       condition: {
-        member: [],
+        member: "",
         dateType: 0,
         dateRange: []
       },
@@ -196,12 +196,14 @@ export default {
           if (this.condition.member != "") {
             this.listLoading = true;
             form.member = this.condition.member;
+            form.member = form.member.toString();
             getPurchase(form).then(response => {
               this.listLoading = false;
               this.tableData = this.searchTable = response.data.data;
             });
           } else {
             this.listLoading = true;
+            form.member = form.member.toString();
             getPurchase(form).then(response => {
               this.listLoading = false;
               this.tableData = this.searchTable = response.data.data;

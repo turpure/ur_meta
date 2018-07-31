@@ -130,7 +130,7 @@ export default {
         region: []
       },
       condition: {
-        member: [],
+        member: "",
         dateType: 0,
         dateRange: []
       },
@@ -268,9 +268,10 @@ export default {
             form.member = this.member.map(m => {
               return m.username;
             });
+            form.member = form.member.toString();
             getDevelop(form).then(response => {
               this.listLoading = false;
-              ret = response.data.data; //请求是失败的
+              ret = response.data.data;
               posseman1Data = ret.filter(ele => ele.tableType == "归属1人表");
               posseman2Data = ret.filter(ele => ele.tableType == "归属2人表");
               this.tableData01 = this.searchTableFirst = posseman1Data;
@@ -279,6 +280,7 @@ export default {
           } else if (this.condition.member != "") {
             this.listLoading = true;
             form.member = this.condition.member;
+            form.member = form.member.toString();
             getDevelop(form).then(response => {
               this.listLoading = false;
               ret = response.data.data;
@@ -289,6 +291,7 @@ export default {
             });
           } else {
             this.listLoading = true;
+            form.member = form.member.toString();
             getDevelop(form).then(response => {
               this.listLoading = false;
               ret = response.data.data;

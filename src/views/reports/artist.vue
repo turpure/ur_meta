@@ -108,7 +108,7 @@ export default {
         region: []
       },
       condition: {
-        member: [],
+        member: "",
         dateType: 0,
         dateRange: []
       },
@@ -179,10 +179,7 @@ export default {
             }
           }
         ]
-      },
-      value5: [],
-      value11: [],
-      value7: ""
+      }
     };
   },
   methods: {
@@ -237,6 +234,7 @@ export default {
                 return m.username;
               });
             }
+            form.member = form.member.toString();
             getPossess(form).then(response => {
               this.listLoading = false;
               this.tableData = this.searchTable = response.data.data;
@@ -244,12 +242,14 @@ export default {
           } else if (this.condition.member != "") {
             this.listLoading = true;
             form.member = this.condition.member;
+            form.member = form.member.toString();
             getPossess(form).then(response => {
               this.listLoading = false;
               this.tableData = this.searchTable = response.data.data;
             });
           } else {
             this.listLoading = true;
+            form.member = form.member.toString();
             getPossess(form).then(response => {
               this.listLoading = false;
               this.tableData = this.searchTable = response.data.data;
