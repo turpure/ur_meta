@@ -37,7 +37,7 @@
         <el-button style="float:left;" type="default" @click="exportExcel">导出Excel</el-button>
       </el-col>
     </el-row>
-    <el-table :data="tableData" id="sale-table" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="840" style="width: 100%">
+    <el-table :data="tableData" id="sale-table" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="830" style="width: 100%">
       <el-table-column min-width="80px" prop="pingtai" label="平台" :formatter="empty" sortable></el-table-column>
       <el-table-column min-width="80px" prop="suffix" label="账号" :formatter="empty" sortable></el-table-column>
       <el-table-column min-width="90px" prop="salesman" label="销售员" :formatter="empty" sortable="custom"></el-table-column>
