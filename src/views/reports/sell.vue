@@ -168,7 +168,7 @@ export default {
               }
               const firstDay = [year, month, '01'].join('-')
               const myDate = new Date(year, month, 0)
-              const lastDay = [year, month, myDate].join('-')
+              const lastDay = [year, month, myDate.getDate()].join('-')
               picker.$emit('pick', [firstDay, lastDay])
             }
           },
@@ -411,5 +411,8 @@ export default {
   padding: 6px 16px 0 6px;
   height: 30px
 }
-</style>
+table {
+  zoom: 0.3 ;
+}
+</style
 
