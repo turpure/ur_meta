@@ -12,12 +12,12 @@
       <el-col :span="4" class="userinfo">
         <el-dropdown trigger="hover">
           <span class="el-dropdown-link userinfo-inner">
-            <img :src="imgSrc" @click.stop="uploadHeadImg" />{{sysUserName}}
+            <img :src="imgSrc" />{{sysUserName}}
             <input type="file" accept="image/*" @change="handleFile" class="hiddenInput" />
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>我的消息</el-dropdown-item>
-            <el-dropdown-item>设置</el-dropdown-item>
+            <el-dropdown-item @click.native="setclick">设置</el-dropdown-item>
             <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -148,7 +148,7 @@ export default {
         "submenu-hook-" + i
       )[0].style.display = status ? "block" : "none";
     },
-    uploadHeadImg: function() {
+    setclick() {
       this.$el.querySelector(".hiddenInput").click();
     },
     //头像显示
