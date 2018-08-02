@@ -64,7 +64,7 @@
         <el-button style="float:left;" type="default" @click="exportExcel">导出Excel</el-button>
       </el-col>
     </el-row>
-    <el-table :data="tableData" id="sale-table" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="745" style="width: 100%;zoom:0.9;">
+    <el-table :data="tableData" id="sale-table" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show2" :height="show?745:882" style="width: 100%;zoom:0.9;">
       <el-table-column min-width="75px" prop="pingtai" label="平台" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="75px" prop="suffix" label="账号" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="87px" prop="salesman" label="销售员" :formatter="empty" sortable="custom"></el-table-column>
@@ -116,6 +116,7 @@ export default {
       text: "显示输入框",
       show: false,
       show1: false,
+      show2: false,
       tableData: [],
       res: [],
       searchTable: [],
@@ -237,6 +238,7 @@ export default {
       this.show1 = false;
     },
     onSubmit(form) {
+      this.show2 = !this.show2;
       this.$refs.condition.validate(valid => {
         if (valid) {
           if (this.condition.department != "" && this.condition.member == "") {
