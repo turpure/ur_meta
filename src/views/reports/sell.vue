@@ -207,9 +207,9 @@ export default {
     handleChange() {
       this.show = !this.show
       this.isA = !this.isA
-      if (this.show == false) {
+      if (this.show === false) {
         this.text = '显示输入框'
-      } else if (this.show == true) {
+      } else if (this.show === true) {
         this.text = '隐藏输入框'
       }
     },
@@ -220,21 +220,19 @@ export default {
       this.show1 = false
     },
     onSubmit(form) {
-      this.show2 = !this.show2;
+      this.show2 = !this.show2
       this.$refs.condition.validate(valid => {
         if (valid) {
-          if (this.condition.department !== '' && this.condition.member === '') {
+          if (form.department.length > 0 && form.member.length === 0) {
             this.listLoading = true
-            const val = this.condition.department
-            let res = []
-            let per = []
-            res = this.allMember
+            const val = form.department
+            const res = this.allMember
             for (let i = 0; i < val.length; i++) {
-              per = res.filter(
+              const per = res.filter(
                 ele => ele.department === val[i] && ele.position === '销售'
               )
+              this.member.concat(per)
             }
-            this.member = this.member.concat(per)
             form.member = this.member.map(m => {
               return m.username
             })
@@ -414,5 +412,5 @@ export default {
   padding: 6px 16px 0 6px;
   height: 30px
 }
-</style
+</style>
 
