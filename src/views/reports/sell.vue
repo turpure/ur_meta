@@ -64,7 +64,7 @@
         <el-button style="float:left;" type="default" @click="exportExcel">导出Excel</el-button>
       </el-col>
     </el-row>
-    <el-table :data="tableData" id="sale-table" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="920" style="width: 100%;zoom:0.9;">
+    <el-table :data="tableData" id="sale-table" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="882" style="width: 100%;zoom:0.9;">
       <el-table-column min-width="75px" prop="pingtai" label="平台" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="75px" prop="suffix" label="账号" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="87px" prop="salesman" label="销售员" :formatter="empty" sortable="custom"></el-table-column>
@@ -409,7 +409,7 @@ export default {
 </script>
 
 <style lang="scss">
-.el-table__body-wrapper {
+.el-table__body {
   td {
     padding: 5px 0;
     .cell {
@@ -417,7 +417,9 @@ export default {
     }
   }
 }
-.el-table__footer-wrapper {
+.el-table__footer {
+  position: fixed;
+  bottom: 0;
   .cell {
     line-height: normal;
     color: red;
