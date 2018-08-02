@@ -49,7 +49,7 @@
         <el-button style="float:left;" type="default" @click="exportExcel">导出Excel</el-button>
       </el-col>
     </el-row>
-    <el-table :data="tableData" id="sale-table" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" height="790" style="width: 100%">
+    <el-table :data="tableData" id="sale-table" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show2" :height="show?813:882" style="width: 100%;zoom:0.9;">
       <el-table-column min-width="90px" prop="possessman1Zero" label="责任人" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="170px" prop="salemoneyrmbznZero" label="销售额￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="170px" prop="netprofitZero" label="毛利润￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
@@ -95,6 +95,7 @@ export default {
       text: "显示输入框",
       show: false,
       show1: false,
+      show2: false,
       tableData: [],
       searchTable: [],
       searchValue: "",
@@ -216,6 +217,7 @@ export default {
       this.show1 = false;
     },
     onSubmit(form) {
+      this.show2 = !this.show2;
       this.$refs.condition.validate(valid => {
         if (valid) {
           if (this.formInline.region != "" && this.condition.member == "") {

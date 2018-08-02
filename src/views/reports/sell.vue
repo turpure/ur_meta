@@ -64,27 +64,27 @@
         <el-button style='float:left' type='default' @click='exportExcel'>导出Excel</el-button>
       </el-col>
     </el-row>
-    <el-table :data='tableData' id='sale-table' size='medium' v-loading='listLoading' @sort-change='sortNumber' show-summary :summary-method='getSummaries' height='882' style='width: 100%zoom:0.9'>
-      <el-table-column min-width='75px' prop='pingtai' label='平台' :formatter='empty' sortable='custom'></el-table-column>
-      <el-table-column min-width='75px' prop='suffix' label='账号' :formatter='empty' sortable='custom'></el-table-column>
-      <el-table-column min-width='87px' prop='salesman' label='销售员' :formatter='empty' sortable='custom'></el-table-column>
-      <el-table-column min-width='106px' prop='salemoney' label='成交价$' :formatter='empty' sortable='custom'></el-table-column>
-      <el-table-column min-width='106px' prop='salemoneyzn' label='成交价￥' :formatter='empty' sortable='custom'></el-table-column>
-      <el-table-column min-width='130px' prop='ebayFeeebay' label='eBay成交费$' :formatter='empty' sortable='custom'></el-table-column>
-      <el-table-column min-width='140px' prop='ebayfeeznebay' label='eBay成交费￥' :formatter='empty' sortable='custom'></el-table-column>
-      <el-table-column min-width='120px' prop='ppFee' label='PP成交费$' :formatter='empty' sortable='custom'></el-table-column>
-      <el-table-column min-width='120px' prop='ppFeezn' label='PP成交费￥' :formatter='empty' sortable='custom'></el-table-column>
-      <el-table-column min-width='120px' prop='costmoney' label='商品成本￥' :formatter='empty' sortable='custom'></el-table-column>
-      <el-table-column min-width='120px' prop='expressFare' label='运费成本￥' :formatter='empty' sortable='custom'></el-table-column>
-      <el-table-column min-width='120px' prop='inpackagemoney' label='包装成本￥' :formatter='empty' sortable='custom'></el-table-column>
-      <el-table-column min-width='100px' prop='storename' label='发货仓库' :formatter='empty' sortable='custom'></el-table-column>
-      <el-table-column min-width='120px' prop='refund' label='退款金额￥' :formatter='empty' sortable='custom'></el-table-column>
-      <el-table-column min-width='100px' prop='refundrate' label='退款率%' :formatter='empty' sortable='custom'></el-table-column>
-      <el-table-column min-width='120px' prop='diefeeZn' label='死库处理￥' :formatter='empty' sortable='custom'></el-table-column>
-      <el-table-column min-width='120px' prop='insertionFee' label='店铺杂费￥' :formatter='empty' sortable='custom'></el-table-column>
-      <el-table-column min-width='120px' prop='saleOpeFeeZn' label='运营杂费￥' :formatter='empty' sortable='custom'></el-table-column>
-      <el-table-column min-width='106px' prop='grossprofit' label='毛利￥' :formatter='empty' sortable='custom'></el-table-column>
-      <el-table-column min-width='100px' prop='grossprofitRate' label='毛利率%' :formatter='empty' sortable='custom'></el-table-column>
+    <el-table :data="tableData" id="sale-table" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show2" :height="show?1100:1300" style="width: 100%;zoom:0.6;">
+      <el-table-column min-width="75px" prop="pingtai" label="平台" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="75px" prop="suffix" label="账号" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="87px" prop="salesman" label="销售员" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="106px" prop="salemoney" label="成交价$" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="106px" prop="salemoneyzn" label="成交价￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="130px" prop="ebayFeeebay" label="eBay成交费$" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="140px" prop="ebayfeeznebay" label="eBay成交费￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="120px" prop="ppFee" label="PP成交费$" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="120px" prop="ppFeezn" label="PP成交费￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="120px" prop="costmoney" label="商品成本￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="120px" prop="expressFare" label="运费成本￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="120px" prop="inpackagemoney" label="包装成本￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="100px" prop="storename" label="发货仓库" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="120px" prop="refund" label="退款金额￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="100px" prop="refundrate" label="退款率%" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="120px" prop="diefeeZn" label="死库处理￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="120px" prop="insertionFee" label="店铺杂费￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="120px" prop="saleOpeFeeZn" label="运营杂费￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="106px" prop="grossprofit" label="毛利￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="100px" prop="grossprofitRate" label="毛利率%" :formatter="empty" sortable="custom"></el-table-column>
     </el-table>
   </div>
 </template>
@@ -109,6 +109,7 @@ export default {
       text: '显示输入框',
       show: false,
       show1: false,
+      show2: false,
       tableData: [],
       res: [],
       searchTable: [],
@@ -219,6 +220,7 @@ export default {
       this.show1 = false
     },
     onSubmit(form) {
+      this.show2 = !this.show2;
       this.$refs.condition.validate(valid => {
         if (valid) {
           if (this.condition.department !== '' && this.condition.member === '') {
@@ -404,15 +406,13 @@ export default {
   bottom: 0;
   .cell {
     line-height: normal;
-    color: red
+    color: red;
+    font-weight: 550;
   }
 }
 .el-radio.is-bordered {
   padding: 6px 16px 0 6px;
   height: 30px
-}
-table {
-  zoom: 0.3 ;
 }
 </style
 
