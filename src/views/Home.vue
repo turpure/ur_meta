@@ -12,24 +12,16 @@
       <el-col :span="4" class="userinfo">
         <el-dropdown trigger="hover">
           <span class="el-dropdown-link userinfo-inner">
-            <img :src="imgSrc" />{{sysUserName}}
-            <input type="file" accept="image/*" @change="handleFile" class="hiddenInput" />
+            <img :src="image" />{{sysUserName}}
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>我的消息</el-dropdown-item>
-            <el-dropdown-item @click.native="setclick">设置头像</el-dropdown-item>
+            <el-dropdown-item @click.native="imagecropperShow=true">设置头像</el-dropdown-item>
             <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </el-col>
-      <modal name="avator">
-        <div style="width: 400px; height:300px; border: 1px solid gray; display: inline-block;">
-          <vueCropper ref="cropper" :img="option.img" :autoCrop="option.autoCrop" :autoCropWidth="option.autoCropWidth" :autoCropHeight="option.autoCropHeight" :fixedBox="option.fixedBox"></vueCropper>
-        </div>
-        <el-button class="myCropper-btn" type="primary" @click="cropImage" v-if="option.img != ''">确定</el-button>
-        <el-button class="myCropper-btn" type="primary" @click="rotate" v-if="option.img != ''">旋转</el-button>
-      </modal>
-
+      <image-cropper :width="300" :height="300" url="https://httpbin.org/post" @close='close' @crop-upload-success="cropSuccess" @change="handleFile" langType="en" :key="imagecropperKey" v-show="imagecropperShow"></image-cropper>
     </el-col>
     <el-col :span="24" class="main">
       <aside :class="collapsed?'menu-collapsed':'menu-expanded'">
@@ -77,27 +69,20 @@
 import { removeToken } from "../utils/auth";
 import { getMenu } from "../api/login";
 import { uploadImage } from "../api/api";
-import VueCropper from "vue-cropperjs";
+// import VueCropper from "vue-cropperjs";
+import ImageCropper from "@/components/ImageCropper";
 
 export default {
-  components: {
-    VueCropper
-  },
+  name: "avatarUpload-demo",
+  components: { ImageCropper },
+  // components: {
+  //   VueCropper
+  // },
   data() {
     return {
-      picValue: "",
-      option: {
-        img: "",
-        canSccale: true,
-        autoCrop: true,
-        outputSize: 1,
-        autoCropWidth: 100,
-        autoCropHeight: 100,
-        outputType: "png",
-        canMove: true,
-        fixedBox: true
-      },
-      imgSrc:
+      imagecropperShow: false,
+      imagecropperKey: 0,
+      image:
         "https://raw.githubusercontent.com/taylorchen709/markdown-images/master/vueadmin/user.png",
       sysName: "UR-META",
       collapsed: false,
@@ -128,6 +113,14 @@ export default {
       });
   },
   methods: {
+    cropSuccess(resData) {
+      this.imagecropperShow = false;
+      this.imagecropperKey = this.imagecropperKey + 1;
+      this.image = resData.files.avatar;
+    },
+    close() {
+      this.imagecropperShow = false;
+    },
     logout: function() {
       var _this = this;
       this.$confirm("确认退出吗?", "提示", {
@@ -148,38 +141,6 @@ export default {
       this.$refs.menuCollapsed.getElementsByClassName(
         "submenu-hook-" + i
       )[0].style.display = status ? "block" : "none";
-    },
-    setclick() {
-      this.$el.querySelector(".hiddenInput").click();
-    },
-    //头像显示
-    handleFile: function(e) {
-      this.$modal.show("avator");
-      const file = e.target.files[0];
-      if (!file.type.includes("image/")) {
-        alert("Please select an image file");
-        return;
-      }
-      if (typeof FileReader === "function") {
-        const reader = new FileReader();
-        reader.onload = event => {
-          this.option.img = event.target.result;
-          this.$refs.cropper.replace(event.target.result);
-        };
-        reader.readAsDataURL(file);
-      } else {
-        alert("Sorry, FileReader API not supported");
-      }
-    },
-    cropImage() {
-      this.imgSrc = this.$refs.cropper.getCroppedCanvas().toDataURL();
-      uploadImage(this.imgSrc);
-      this.$modal.hide("avator");
-      //upload
-    },
-    rotate() {
-      // guess what this does :)
-      this.$refs.cropper.rotate(90);
     }
   },
   mounted() {
@@ -196,7 +157,11 @@ export default {
 
 <style lang="scss" scoped >
 @import "~scss_vars";
-
+.avatar {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
 .container {
   position: absolute;
   top: 0px;
