@@ -275,7 +275,7 @@ export default {
               per = res.filter(
                 ele => ele.department == val[i] && ele.position == "销售"
               );
-              this.member = this.member.concat(per);
+              this.member.concat(per);
             }
             form.member = this.member.map(m => {
               return m.username;

@@ -165,9 +165,7 @@ export default {
             }
           }
         ]
-      },
-
-      value7: ""
+      }
     };
   },
   methods: {
@@ -187,7 +185,7 @@ export default {
       this.show1 = false;
     },
     onSubmit(form) {
-      this.show2 = !this.show2;
+      this.show2 = true;
       this.$refs.condition.validate(valid => {
         if (valid) {
           this.listLoading = true;

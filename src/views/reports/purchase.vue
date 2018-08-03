@@ -192,10 +192,10 @@ export default {
       this.show1 = false;
     },
     onSubmit(form) {
-      this.show2 = !this.show2;
+      this.show2 = true;
       this.$refs.condition.validate(valid => {
         if (valid) {
-          if (this.condition.member != "") {
+          if (this.condition.member.length !== 0) {
             this.listLoading = true;
             form.member = this.condition.member;
             getPurchase(form).then(response => {

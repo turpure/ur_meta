@@ -251,10 +251,13 @@ export default {
       let posseman1Data;
       let posseman2Data;
       let ret;
-      this.show2 = !this.show2;
+      this.show2 = true;
       this.$refs.condition.validate(valid => {
         if (valid) {
-          if (this.formInline.region != "" && this.condition.member == "") {
+          if (
+            this.formInline.region.length !== 0 &&
+            this.condition.member.length === 0
+          ) {
             this.listLoading = true;
             let val = this.formInline.region;
             let res = [];
@@ -264,9 +267,8 @@ export default {
               person = res.filter(
                 ele => ele.department == val[i] && ele.position == "开发"
               );
+              this.member.concat(person);
             }
-            console.log(person);
-            this.member = this.member.concat(person);
             form.member = this.member.map(m => {
               return m.username;
             });
@@ -278,7 +280,7 @@ export default {
               this.tableData01 = this.searchTableFirst = posseman1Data;
               this.tableData02 = this.searchTableSecond = posseman2Data;
             });
-          } else if (this.condition.member != "") {
+          } else if (this.condition.member.length > 0) {
             this.listLoading = true;
             form.member = this.condition.member;
             getDevelop(form).then(response => {

@@ -17,7 +17,7 @@
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>我的消息</el-dropdown-item>
-            <el-dropdown-item @click.native="setclick">设置</el-dropdown-item>
+            <el-dropdown-item @click.native="setclick">设置头像</el-dropdown-item>
             <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -85,6 +85,7 @@ export default {
   },
   data() {
     return {
+      picValue: "",
       option: {
         img: "",
         canSccale: true,
@@ -162,11 +163,7 @@ export default {
       if (typeof FileReader === "function") {
         const reader = new FileReader();
         reader.onload = event => {
-          // this.imgSrc = event.target.result;
-          // rebuild cropperjs with the updated source
-          //console.log(event, "event");
           this.option.img = event.target.result;
-          //console.log(this.$refs.cropper);
           this.$refs.cropper.replace(event.target.result);
         };
         reader.readAsDataURL(file);

@@ -217,10 +217,13 @@ export default {
       this.show1 = false;
     },
     onSubmit(form) {
-      this.show2 = !this.show2;
+      this.show2 = true;
       this.$refs.condition.validate(valid => {
         if (valid) {
-          if (this.formInline.region != "" && this.condition.member == "") {
+          if (
+            this.formInline.region.length !== 0 &&
+            this.condition.member.length === 0
+          ) {
             this.listLoading = true;
             let val = this.formInline.region;
             let res = [];
@@ -230,16 +233,16 @@ export default {
               person = res.filter(
                 ele => ele.department == val[i] && ele.position == "美工"
               );
-              this.member = this.member.concat(person);
-              form.member = this.member.map(m => {
-                return m.username;
-              });
+              this.member.concat(person);
             }
+            form.member = this.member.map(m => {
+              return m.username;
+            });
             getPossess(form).then(response => {
               this.listLoading = false;
               this.tableData = this.searchTable = response.data.data;
             });
-          } else if (this.condition.member != "") {
+          } else if (this.condition.member.length !== 0) {
             this.listLoading = true;
             form.member = this.condition.member;
             getPossess(form).then(response => {
