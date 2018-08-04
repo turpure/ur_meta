@@ -10,6 +10,9 @@
         </div>
       </el-col>
       <el-col :span="4" class="userinfo">
+        <el-col :span="14">
+          <screenfull class="screenfull right-menu-item"></screenfull>
+        </el-col>
         <el-dropdown trigger="hover">
           <span class="el-dropdown-link userinfo-inner">
             <img :src="image" />{{sysUserName}}
@@ -21,7 +24,7 @@
           </el-dropdown-menu>
         </el-dropdown>
       </el-col>
-      <image-cropper :width="300" :height="300" url="https://httpbin.org/post" @close='close' @crop-upload-success="cropSuccess" @change="handleFile" langType="en" :key="imagecropperKey" v-show="imagecropperShow"></image-cropper>
+      <image-cropper :width="300" :height="300" url="https://httpbin.org/post" @close='close' @crop-upload-success="cropSuccess" langType="en" :key="imagecropperKey" v-show="imagecropperShow"></image-cropper>
     </el-col>
     <el-col :span="24" class="main">
       <aside :class="collapsed?'menu-collapsed':'menu-expanded'">
@@ -69,12 +72,12 @@
 import { removeToken } from "../utils/auth";
 import { getMenu } from "../api/login";
 import { uploadImage } from "../api/api";
-// import VueCropper from "vue-cropperjs";
 import ImageCropper from "@/components/ImageCropper";
+import Screenfull from "@/components/Screenfull";
 
 export default {
   name: "avatarUpload-demo",
-  components: { ImageCropper },
+  components: { ImageCropper, Screenfull },
   // components: {
   //   VueCropper
   // },
@@ -172,15 +175,13 @@ export default {
     line-height: 60px;
     background: $color-primary;
     color: #fff;
-    .myCropper-btn {
-      float: right;
-      margin-top: 250px;
-      margin-right: 20px;
-    }
     .userinfo {
       text-align: right;
       padding-right: 35px;
       float: right;
+      .screenfull {
+        margin-top: 14px;
+      }
       .userinfo-inner {
         cursor: pointer;
         color: #fff;
