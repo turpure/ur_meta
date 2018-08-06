@@ -10,7 +10,7 @@
         </div>
       </el-col>
       <el-col :span="4" class="userinfo">
-        <el-col :span="14">
+        <el-col :span="10">
           <screenfull class="screenfull right-menu-item"></screenfull>
         </el-col>
         <el-dropdown trigger="hover">
@@ -180,7 +180,7 @@ export default {
       padding-right: 35px;
       float: right;
       .screenfull {
-        margin-top: 14px;
+        padding-top: 14px;
       }
       .userinfo-inner {
         cursor: pointer;

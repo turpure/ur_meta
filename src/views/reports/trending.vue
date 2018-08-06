@@ -135,7 +135,7 @@ export default {
         ],
         series: [Object]
       },
-      show: false,
+      show: true,
       show1: false,
       tableData: [],
       searchTable: [],

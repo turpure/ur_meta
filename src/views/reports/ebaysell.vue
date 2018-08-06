@@ -85,7 +85,7 @@ export default {
     return {
       isA: true,
       text: "显示输入框",
-      show: false,
+      show: true,
       show1: false,
       show2: false,
       tableData: [],
