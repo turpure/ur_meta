@@ -7,7 +7,7 @@
                     <el-button @click="export01Excel">下载模板
                     </el-button>
                 </p>
-                <el-upload class="upload-demo" drag :action='action' :onError="uploadError" :on-success="uploadSuccess">
+                <el-upload class="upload-demo" drag :action='action' :headers='headers'  :onError="uploadError" :on-success="uploadSuccess">
                     <i class="el-icon-upload"></i>
                     <div class="el-upload__text">将文件拖到此处，或
                         <em>点击上传</em>
@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { uploadFile } from "../../api/api";
+import { uploadFile, getHeaders } from "../../api/api";
 import FileSaver from "file-saver";                           
 import XLSX from "xlsx";
 import Cookies from "js-cookie";
@@ -65,13 +65,8 @@ export default {
   data() {
     return {
       action: '',
-      data01: [["plat", "suffix", "diefeeZn", "ClearanceDate"]],
-      data02: [
-        ["SalerName", "SalerName2", "TimeGroup", "Amount", "devClearnTime"]
-      ],
-      data03: [["id", "Possess", "TimeGroup", "PossessClearnTime"]],
-      data04: [["purchaser", "amount", "createdDate"]]
-    };
+      headers: ''
+    }
   },
   methods: {
     uploadSuccess(response, file, fileList) {
@@ -140,6 +135,7 @@ export default {
   },
   mounted() {
     this.action = uploadFile()
+    this.headers = getHeaders()
   }
 }
 </script>
