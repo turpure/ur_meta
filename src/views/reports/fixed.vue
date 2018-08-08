@@ -7,7 +7,7 @@
                     <el-button @click="export01Excel">下载模板
                     </el-button>
                 </p>
-                <el-upload class="upload-demo" drag :action='action' :headers='headers'  :onError="uploadError" :on-success="uploadSuccess">
+                <el-upload class="upload-demo" drag :action='action' :headers='headers' :onError="uploadError" :on-success="uploadSuccess">
                     <i class="el-icon-upload"></i>
                     <div class="el-upload__text">将文件拖到此处，或
                         <em>点击上传</em>
@@ -58,9 +58,8 @@
 
 <script>
 import { uploadFile, getHeaders } from "../../api/api";
-import FileSaver from "file-saver";                           
+import FileSaver from "file-saver";
 import XLSX from "xlsx";
-import { getToken } from "@/utils/auth";
 
 export default {
   data() {
@@ -116,10 +115,10 @@ export default {
     }
   },
   mounted() {
-    this.action = uploadFile()
-    this.headers = getHeaders()
+    this.action = uploadFile();
+    this.headers = getHeaders();
   }
-}
+};
 </script>
 
 <style scoped lang="scss">
