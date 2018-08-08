@@ -65,7 +65,13 @@ export default {
   data() {
     return {
       action: "",
-      headers: {}
+      headers: {},
+      data01: [["plat", "suffix", "diefeeZn", "ClearanceDate"]],
+      data02: [
+        ["SalerName", "SalerName2", "TimeGroup", "Amount", "devClearnTime"]
+      ],
+      data03: [["id", "Possess", "TimeGroup", "PossessClearnTime"]],
+      data04: [["purchaser", "amount", "createdDate"]]
     };
   },
   methods: {
