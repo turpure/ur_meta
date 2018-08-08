@@ -7,7 +7,7 @@
                     <el-button @click="export01Excel">下载模板
                     </el-button>
                 </p>
-                <el-upload class="upload-demo" drag action="/v1/upload/sales-dead-fee" :headers='header' :onError="uploadError" :on-success="uploadSuccess">
+                <el-upload class="upload-demo" drag :action='action' :onError="uploadError" :on-success="uploadSuccess">
                     <i class="el-icon-upload"></i>
                     <div class="el-upload__text">将文件拖到此处，或
                         <em>点击上传</em>
@@ -57,17 +57,14 @@
 </template>
 
 <script>
-import { getSalesdeadfee } from "../../api/profit";
-import FileSaver from "file-saver";
+import { uploadFile } from "../../api/api";
+import FileSaver from "file-saver";                           
 import XLSX from "xlsx";
 import Cookies from "js-cookie";
 export default {
   data() {
     return {
-      header: {
-        //Accept: "application/json",
-        token: state => state.user.token
-      },
+      action: '',
       data01: [["plat", "suffix", "diefeeZn", "ClearanceDate"]],
       data02: [
         ["SalerName", "SalerName2", "TimeGroup", "Amount", "devClearnTime"]
@@ -83,7 +80,6 @@ export default {
     },
     uploadError(err, file, fileList) {
       console.log(file);
-      console.log(header);
     },
     // beforeAvatarUpload(file) {
     //   const extension = file.name.split(".")[1] === "xlsx";
@@ -141,8 +137,11 @@ export default {
       /* generate file and send to client */
       XLSX.writeFile(wb, "Y_purOfflineClearn.xlsx");
     }
+  },
+  mounted() {
+    this.action = uploadFile()
   }
-};
+}
 </script>
 
 <style scoped lang="scss">
