@@ -32,9 +32,9 @@ service.interceptors.request.use(config => {
 // respone interceptor
 service.interceptors.response.use(
   response => {
-    if (response.status == 401) {
-      window.location.href = "http://localhost:8080/#/login?redirect_url=" + encodeURIComponent(location.href);
-    }
+    // if (response.status == 401) {
+    //   window.location.href = "http://localhost:8080/#/login?redirect_url=" + encodeURIComponent(location.href);
+    // }
     return response;
   },
   /**
@@ -67,13 +67,19 @@ service.interceptors.response.use(
   //       return response.data;
   //     }
   error => {
-    console.log('err' + error)// for debug
-    Message({
-      message: error.message,
-      type: 'error',
-      duration: 5 * 1000
-    })
-    return Promise.reject(error)
+    if (error.response) {
+      switch (error.response.status) {
+        case 401:
+          window.location.href = "http://192.168.0.134:8089/v1/#/login?redirect_url=" + encodeURIComponent(location.href);
+      }
+      console.log('err' + error)// for debug
+      Message({
+        message: error.message,
+        type: 'error',
+        duration: 5 * 1000
+      })
+      return Promise.reject(error)
+    }
   });
 
 export default service

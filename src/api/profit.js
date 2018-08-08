@@ -111,3 +111,12 @@ export function getaccount(param) {
         data
     })
 }
+
+export function getSalesdeadfee(param) {
+    const data = { 'formdata': param }
+    return request({
+        url: '/upload/sales-dead-fee',
+        method: 'post',
+        data
+    })
+}
