@@ -70,7 +70,7 @@ service.interceptors.response.use(
     if (error.response) {
       switch (error.response.status) {
         case 401:
-          window.location.href = "http://192.168.0.134:8089/v1/#/login?redirect_url=" + encodeURIComponent(location.href);
+          window.location.href = "http://localhost:8080/#/login?redirect_url=" + encodeURIComponent(location.href);
       }
       console.log('err' + error)// for debug
       Message({
