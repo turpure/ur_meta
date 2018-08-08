@@ -8,7 +8,7 @@
                     <el-button @click="export01Excel">下载模板
                     </el-button>
                 </p>
-                <el-upload class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" multiple>
+                <el-upload class="upload-demo" drag :action="url" multiple>
                     <i class="el-icon-upload"></i>
                     <div class="el-upload__text">将文件拖到此处，或
                         <em>点击上传</em>
@@ -20,7 +20,7 @@
                     <el-button @click="export02Excel">下载模板
                     </el-button>
                 </p>
-                <el-upload class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" multiple>
+                <el-upload class="upload-demo" drag :action="url" multiple>
                     <i class="el-icon-upload"></i>
                     <div class="el-upload__text">将文件拖到此处，或
                         <em>点击上传</em>
@@ -34,7 +34,7 @@
                     <el-button @click="export03Excel">下载模板
                     </el-button>
                 </p>
-                <el-upload class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" multiple>
+                <el-upload class="upload-demo" drag :action="url" multiple>
                     <i class="el-icon-upload"></i>
                     <div class="el-upload__text">将文件拖到此处，或
                         <em>点击上传</em>
@@ -46,7 +46,7 @@
                     <el-button @click="export04Excel">下载模板
                     </el-button>
                 </p>
-                <el-upload class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" multiple>
+                <el-upload class="upload-demo" drag :action="url" multiple>
                     <i class="el-icon-upload"></i>
                     <div class="el-upload__text">将文件拖到此处，或
                         <em>点击上传</em>
@@ -60,9 +60,15 @@
 <script>
 import FileSaver from "file-saver";
 import XLSX from "xlsx";
+import { getToken } from "@/utils/auth";
 export default {
   data() {
     return {
+      url:
+        "http://192.168.0.134:8089/v1/upload/sales-dead-fee" +
+        "?" +
+        "token=" +
+        getToken(),
       data01: [["plat", "suffix", "saleOpeFeeZn", "saleOpeTime"]],
       data02: [
         ["SalerName", "SalerName2", "TimeGroup", "Amount", "devOperateTime"]

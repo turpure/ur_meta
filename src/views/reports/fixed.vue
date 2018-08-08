@@ -7,7 +7,11 @@
                     <el-button @click="export01Excel">下载模板
                     </el-button>
                 </p>
+<<<<<<< HEAD
                 <el-upload class="upload-demo" drag :action='action' :headers='headers'  :onError="uploadError" :on-success="uploadSuccess">
+=======
+                <el-upload class="upload-demo" drag :action="url" :onError="uploadError" :on-success="uploadSuccess">
+>>>>>>> 04c2762be2252c51698fbecc2287267f831f0554
                     <i class="el-icon-upload"></i>
                     <div class="el-upload__text">将文件拖到此处，或
                         <em>点击上传</em>
@@ -19,7 +23,7 @@
                     <el-button @click="export02Excel">下载模板
                     </el-button>
                 </p>
-                <el-upload class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" multiple>
+                <el-upload class="upload-demo" drag :action="url" multiple>
                     <i class="el-icon-upload"></i>
                     <div class="el-upload__text">将文件拖到此处，或
                         <em>点击上传</em>
@@ -33,7 +37,7 @@
                     <el-button @click="export03Excel">下载模板
                     </el-button>
                 </p>
-                <el-upload class="upload-demo" drag action="http://192.168.0.134:8089/v1/upload/sales-dead-fee" multiple>
+                <el-upload class="upload-demo" drag :action="url" multiple>
                     <i class="el-icon-upload"></i>
                     <div class="el-upload__text">将文件拖到此处，或
                         <em>点击上传</em>
@@ -45,7 +49,7 @@
                     <el-button @click="export04Excel">下载模板
                     </el-button>
                 </p>
-                <el-upload class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" multiple>
+                <el-upload class="upload-demo" drag :action="url" multiple>
                     <i class="el-icon-upload"></i>
                     <div class="el-upload__text">将文件拖到此处，或
                         <em>点击上传</em>
@@ -57,49 +61,48 @@
 </template>
 
 <script>
+<<<<<<< HEAD
 import { uploadFile, getHeaders } from "../../api/api";
 import FileSaver from "file-saver";                           
+=======
+import FileSaver from "file-saver";
+>>>>>>> 04c2762be2252c51698fbecc2287267f831f0554
 import XLSX from "xlsx";
-import Cookies from "js-cookie";
+import { getToken } from "@/utils/auth";
+
 export default {
   data() {
     return {
+<<<<<<< HEAD
       action: '',
       headers: ''
     }
+=======
+      url:
+        "http://192.168.0.134:8089/v1/upload/sales-dead-fee" +
+        "?" +
+        "token=" +
+        getToken(),
+      data01: [["plat", "suffix", "diefeeZn", "ClearanceDate"]],
+      data02: [
+        ["SalerName", "SalerName2", "TimeGroup", "Amount", "devClearnTime"]
+      ],
+      data03: [["id", "Possess", "TimeGroup", "PossessClearnTime"]],
+      data04: [["purchaser", "amount", "createdDate"]]
+    };
+>>>>>>> 04c2762be2252c51698fbecc2287267f831f0554
   },
   methods: {
     uploadSuccess(response, file, fileList) {
       console.log(response);
-      console.log(file);
     },
     uploadError(err, file, fileList) {
+<<<<<<< HEAD
       console.log(file);
+=======
+      console.log(err);
+>>>>>>> 04c2762be2252c51698fbecc2287267f831f0554
     },
-    // beforeAvatarUpload(file) {
-    //   const extension = file.name.split(".")[1] === "xlsx";
-    //   if (!extension) {
-    //     alert("上传模板只能是xlsx格式！");
-    //   }
-    //   let formData = new FormData();
-    //   formData.append("file", file);
-    //   console.log(file);
-    //   console.log(formData);
-    //   let config = {
-    //     headers: {
-    //       "Content-Type": "application/x-www-form-urlencoded"
-    //     }
-    //   };
-    //   debugger;
-    //   getSalesdeadfee({ formdata: file }, config).then(response => {
-    //     if (response.code == 200) {
-    //       alert("上传成功");
-    //     } else {
-    //       alert("上传失败");
-    //     }
-    //     return false;
-    //   });
-    // },
     export01Excel() {
       /* convert state to workbook */
       const ws = XLSX.utils.aoa_to_sheet(this.data01);
