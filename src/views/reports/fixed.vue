@@ -19,7 +19,7 @@
                     <el-button @click="export02Excel">下载模板
                     </el-button>
                 </p>
-                <el-upload class="upload-demo" drag :action="url" multiple>
+                <el-upload class="upload-demo" drag action="url" multiple>
                     <i class="el-icon-upload"></i>
                     <div class="el-upload__text">将文件拖到此处，或
                         <em>点击上传</em>
@@ -33,7 +33,7 @@
                     <el-button @click="export03Excel">下载模板
                     </el-button>
                 </p>
-                <el-upload class="upload-demo" drag :action="url" multiple>
+                <el-upload class="upload-demo" drag action="url" multiple>
                     <i class="el-icon-upload"></i>
                     <div class="el-upload__text">将文件拖到此处，或
                         <em>点击上传</em>
@@ -45,7 +45,7 @@
                     <el-button @click="export04Excel">下载模板
                     </el-button>
                 </p>
-                <el-upload class="upload-demo" drag :action="url" multiple>
+                <el-upload class="upload-demo" drag action="url" multiple>
                     <i class="el-icon-upload"></i>
                     <div class="el-upload__text">将文件拖到此处，或
                         <em>点击上传</em>
@@ -65,8 +65,14 @@ import { getToken } from "@/utils/auth";
 export default {
   data() {
     return {
-      action: '',
-      headers: ''
+      action: 'upload',
+      headers: Object(),
+      data01: [["plat", "suffix", "diefeeZn", "ClearanceDate"]],
+      data02: [
+        ["SalerName", "SalerName2", "TimeGroup", "Amount", "devClearnTime"]
+      ],
+      data03: [["id", "Possess", "TimeGroup", "PossessClearnTime"]],
+      data04: [["purchaser", "amount", "createdDate"]]
     }
   },
   methods: {

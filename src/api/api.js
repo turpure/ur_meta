@@ -44,7 +44,7 @@ export function uploadFile() {
 }
 
 export function getHeaders() {
-  const headers = Object
+  const headers = Object()
   headers.Authorization = 'Bearer ' + getMyToken()
   return headers
 }
