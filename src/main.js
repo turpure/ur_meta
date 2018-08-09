@@ -5,62 +5,27 @@ import ElementUI from 'element-ui'
 // import 'element-ui/lib/theme-default/index.css'
 import 'element-ui/lib/theme-chalk/index.css'
 // import './assets/theme/theme-green/index.css'
-import VueRouter from 'vue-router'
 // import store from './vuex/store'
 import store from './store'
 import Vuex from 'vuex'
 //import NProgress from 'nprogress'
 //import 'nprogress/nprogress.css'
-import routes from './routes'
+
 // import Mock from './mock'
 // Mock.bootstrap();
 import 'font-awesome/css/font-awesome.min.css'
 
 import { getToken } from './utils/auth'
-
+import router from './routes/router'
 import VModal from 'vue-js-modal'
 import Myecharts from './component/Myecharts'
-// import VueHighcharts from 'vue-highcharts'
-// import Highcharts from 'highcharts'
-// import Exporting from 'highcharts/modules/exporting'
-// import ExportData from 'highcharts/modules/export-data'
-// Exporting(Highcharts)
-// ExportData(Highcharts)
-// Vue.use(VueHighcharts)
-// Vue.use(Highcharts)
-// import VCharts from 'v-charts'
 
 Vue.use(Myecharts)
 Vue.use(VModal)
 Vue.use(ElementUI)
-Vue.use(VueRouter)
+
 Vue.use(Vuex)
 
-
-//NProgress.configure({ showSpinner: false });
-
-const router = new VueRouter({
-  routes
-})
-
-router.beforeEach((to, from, next) => {
-  //NProgress.start();
-  debugger
-  if (to.path == '/login') {
-    sessionStorage.removeItem('user');
-  }
-  // let user = JSON.parse(sessionStorage.getItem('user'));
-  let user = sessionStorage.getItem('user');
-  if (!user && to.path != '/login') {
-    next({ path: '/login' })
-  } else {
-    next()
-  }
-})
-
-//router.afterEach(transition => {
-//NProgress.done();
-//});
 
 new Vue({
   //el: '#app',

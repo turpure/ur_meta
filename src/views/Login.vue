@@ -16,7 +16,6 @@
 </template>
 
 <script>
-  import { loginByUsername } from '../api/api';
   //import NProgress from 'nprogress'
   export default {
     data() {
@@ -37,19 +36,16 @@
           ]
         },
         checked: true
-      };
+      }
     },
     methods: {
-      // handleReset2() {
-      //   this.$refs.ruleForm2.resetFields();
-      // },
-       handleSubmit2 () {
+      handleSubmit2() {
         this.$refs.ruleForm2.validate(valid => {
           if (valid) {
             this.loading = true
             this.$store.dispatch('LoginByUsername', this.ruleForm2).then(() => {
               this.loading = false
-              sessionStorage.setItem('user','fefawefaewfawfaw');
+              sessionStorage.setItem('user', 'fefawefaewfawfaw')
               this.$router.push({ path: '/sell' })
             }).catch(() => {
               this.loading = false

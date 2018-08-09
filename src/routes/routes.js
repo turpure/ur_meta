@@ -1,20 +1,20 @@
-import Login from './views/Login.vue'
-import NotFound from './views/404.vue'
-import Home from './views/Home.vue'
-import Main from './views/Main.vue'
+import Login from '../views/Login.vue'
+import NotFound from '../views/404.vue'
+import Home from '../views/Home.vue'
+import Main from '../views/Main.vue'
 
-import sell from './views/reports/sell.vue'
-import develop from './views/reports/develop.vue'
-import purchase from './views/reports/purchase.vue'
-import artist from './views/reports/artist.vue'
-import ebaysell from './views/reports/ebaysell.vue'
-import trending from './views/reports/trending.vue'
-import fixed from './views/reports/fixed.vue'
-import operate from './views/reports/operate.vue'
-import dollar from './views/reports/dollar.vue'
-import warehouse from './views/reports/warehouse.vue'
+import sell from '../views/reports/sell.vue'
+import develop from '../views/reports/develop.vue'
+import purchase from '../views/reports/purchase.vue'
+import artist from '../views/reports/artist.vue'
+import ebaysell from '../views/reports/ebaysell.vue'
+import trending from '../views/reports/trending.vue'
+import fixed from '../views/reports/fixed.vue'
+import operate from '../views/reports/operate.vue'
+import dollar from '../views/reports/dollar.vue'
+import warehouse from '../views/reports/warehouse.vue'
 
-let routes = [{
+const routes = [{
   path: '/login',
   component: Login,
   name: '',
