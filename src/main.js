@@ -15,7 +15,6 @@ import Vuex from 'vuex'
 // Mock.bootstrap();
 import 'font-awesome/css/font-awesome.min.css'
 
-import { getToken } from './utils/auth'
 import router from './routes/router'
 import VModal from 'vue-js-modal'
 import Myecharts from './component/Myecharts'
@@ -25,7 +24,6 @@ Vue.use(VModal)
 Vue.use(ElementUI)
 
 Vue.use(Vuex)
-
 
 new Vue({
   //el: '#app',

@@ -50,9 +50,14 @@ const user = {
       return new Promise((resolve, reject) => {
         loginByUsername(username, userInfo.password).then(response => {
           const data = response.data.data
-          commit('SET_TOKEN', data.access_token)
-          setToken(data.access_token)
-          resolve()
+          const token = data.access_token
+          if (token) {
+            commit('SET_TOKEN', data.access_token)
+            setToken(data.access_token)
+            resolve()
+          } else {
+            reject('wrong username or password')
+          }
         }).catch(error => {
           reject(error)
         })

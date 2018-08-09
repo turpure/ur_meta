@@ -16,7 +16,6 @@
 </template>
 
 <script>
-  //import NProgress from 'nprogress'
   export default {
     data() {
       return {
@@ -27,18 +26,19 @@
         },
         rules2: {
           username: [
-            { required: true, message: '请输入账号', trigger: 'blur' },
-            //{ validator: validaePass }
+            { required: true, message: '请输入账号', trigger: 'blur' }
           ],
           password: [
-            { required: true, message: '请输入密码', trigger: 'blur' },
-            //{ validator: validaePass2 }
+            { required: true, message: '请输入密码', trigger: 'blur' }
           ]
         },
         checked: true
       }
     },
     methods: {
+      // handleReset2() {
+      //   this.$refs.ruleForm2.resetFields();
+      // },
       handleSubmit2() {
         this.$refs.ruleForm2.validate(valid => {
           if (valid) {
@@ -47,7 +47,8 @@
               this.loading = false
               sessionStorage.setItem('user', 'fefawefaewfawfaw')
               this.$router.push({ path: '/sell' })
-            }).catch(() => {
+            }).catch(err => {
+              this.$message.error(err)
               this.loading = false
             })
           } else {
@@ -55,7 +56,7 @@
             return false
           }
         })
-    },
+      }
     }
   }
 
