@@ -24,31 +24,32 @@
           </el-dropdown-menu>
         </el-dropdown>
       </el-col>
-      <image-cropper :width="300" :height="300" url="https://httpbin.org/post" @close='close' @crop-upload-success="cropSuccess" langType="en" :key="imagecropperKey" v-show="imagecropperShow"></image-cropper>
+      <image-cropper :width="300" :height="300" :url="url" @close='close' @crop-upload-success="cropSuccess" langType="en" :key="imagecropperKey" v-show="imagecropperShow"></image-cropper>
     </el-col>
     <el-col :span="24" class="main">
       <aside :class="collapsed?'menu-collapsed':'menu-expanded'">
         <!--导航菜单-->
         <el-menu :default-active="$route.path" class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="!collapsed">
-          <template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
-            <el-submenu :index="index+''" v-if="!item.leaf">
+          <template v-for="(item,index) in lside" v-if="!item.hidden">
+            <el-submenu :index="index+''">
               <template slot="title">
-                <i :class="item.iconCls"></i>{{item.name}}
+                <i class="el-icon-message"></i>{{item.name}}
               </template>
-              <el-menu-item v-for="child in item.children" :index="child.path" :key="child.path" v-if="!child.hidden">{{child.name}}
+              <el-menu-item v-for="child in item.children" :index="child.route" :key="child.route" v-if="!child.hidden">
+                {{child.name}}
               </el-menu-item>
             </el-submenu>
           </template>
         </el-menu>
         <!--导航菜单-折叠后-->
         <ul class="el-menu el-menu-vertical-demo collapsed" v-show="collapsed" ref="menuCollapsed">
-          <li v-for="(item,index) in $router.options.routes" v-if="!item.hidden" class="el-submenu item">
-            <template v-if="!item.leaf">
+          <li v-for="(item,index) in lside" v-if="!item.hidden" class="el-submenu item">
+            <template>
               <div class="el-submenu__title" style="padding-left: 10px;" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
-                <i :class="item.iconCls"></i>
+                <i class="el-icon-message"></i>
               </div>
               <ul class="el-menu submenu" :class="'submenu-hook-'+index" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
-                <li v-for="child in item.children" v-if="!child.hidden" :key="child.path" class="el-menu-item" :class="$route.path==child.path?'is-active':''" @click="$router.push(child.path)">{{child.name}}
+                <li v-for="child in item.children" v-if="!child.hidden" :key="child.route" class="el-menu-item" :class="$route.path==child.route?'is-active':''" @click="$router.push(child.route)">{{child.name}}
                 </li>
               </ul>
             </template>
@@ -69,20 +70,18 @@
 </template>
 
 <script>
-import { removeToken } from "../utils/auth";
+import { removeToken, getToken } from "../utils/auth";
 import { getMenu } from "../api/login";
-import { uploadImage } from "../api/api";
+import { uploadImage, getHeaders } from "../api/api";
 import ImageCropper from "@/components/ImageCropper";
 import Screenfull from "@/components/Screenfull";
 
 export default {
   name: "avatarUpload-demo",
   components: { ImageCropper, Screenfull },
-  // components: {
-  //   VueCropper
-  // },
   data() {
     return {
+      url: "http://192.168.0.134:8089/v1/user/avatar?token=" + getToken(),
       imagecropperShow: false,
       imagecropperKey: 0,
       image:
@@ -91,10 +90,7 @@ export default {
       collapsed: false,
       sysUserName: "",
       sysUserAvatar: "",
-      userInfo: {
-        avatar:
-          "https://raw.githubusercontent.com/taylorchen709/markdown-images/master/vueadmin/user.png"
-      },
+      lside: [],
       form: {
         name: "",
         region: "",
@@ -119,6 +115,7 @@ export default {
     cropSuccess(resData) {
       this.imagecropperShow = false;
       this.imagecropperKey = this.imagecropperKey + 1;
+      console.log(resData);
       this.image = resData.files.avatar;
     },
     close() {
@@ -145,15 +142,6 @@ export default {
         "submenu-hook-" + i
       )[0].style.display = status ? "block" : "none";
     }
-  },
-  mounted() {
-    this.$store.dispatch("GetUserInfo").then(() => {
-      this.sysUserName = this.$store.getters.name;
-      this.imgSrc = this.$store.getters.avatar;
-    }),
-      getMenu().then(response => {
-        this.lside = response.data.data;
-      });
   }
 };
 </script>
@@ -216,7 +204,7 @@ export default {
       }
     }
     .logo-width {
-      width: 160px;
+      width: 230px;
     }
     .logo-collapse-width {
       width: 60px;
@@ -236,16 +224,17 @@ export default {
     bottom: 0px;
     overflow: hidden;
     aside {
-      flex: 0 0 160px;
-      width: 160px;
+      flex: 0 0 230px;
+      width: 230px;
       .el-menu {
         height: 100%;
       }
       .el-menu-item {
-        min-width: 160px;
+        min-width: 230px;
+        left: 20px;
       }
       .data-scroll-width {
-        width: 160px;
+        width: 230px;
       }
       .collapsed {
         width: 60px;
@@ -267,8 +256,8 @@ export default {
       width: 60px;
     }
     .menu-expanded {
-      flex: 0 0 160px;
-      width: 160px;
+      flex: 0 0 230px;
+      width: 230px;
     }
     .content-container1 {
       flex: 1;
@@ -276,7 +265,7 @@ export default {
       right: 0px;
       top: 0px;
       bottom: 0px;
-      left: 160px;
+      left: 230px;
       //overflow-y: scroll;
       padding: 10px; //二次修改
       .grid-content .bg-purple-light {
