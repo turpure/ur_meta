@@ -116,7 +116,7 @@ export default {
       this.imagecropperShow = false;
       this.imagecropperKey = this.imagecropperKey + 1;
       console.log(resData);
-      this.image = resData.toString();
+      this.image = resData.files.avatar;
     },
     close() {
       this.imagecropperShow = false;
