@@ -24,7 +24,7 @@
           </el-dropdown-menu>
         </el-dropdown>
       </el-col>
-      <image-cropper :width="300" :height="300" :url="url" @close='close' @crop-upload-success="cropSuccess" langType="en" :key="imagecropperKey" v-show="imagecropperShow"></image-cropper>
+      <image-cropper ref="cropper" :width="300" :height="300" :url="url" @close='close' @crop-upload-success="cropSuccess" langType="en" :key="imagecropperKey" v-show="imagecropperShow"></image-cropper>
     </el-col>
     <el-col :span="24" class="main">
       <aside :class="collapsed?'menu-collapsed':'menu-expanded'">
@@ -116,7 +116,7 @@ export default {
       this.imagecropperShow = false;
       this.imagecropperKey = this.imagecropperKey + 1;
       console.log(resData);
-      this.image = resData.files.avatar;
+      this.image = resData.toString();
     },
     close() {
       this.imagecropperShow = false;
@@ -231,7 +231,7 @@ export default {
       }
       .el-menu-item {
         min-width: 230px;
-        left: 20px;
+        padding-left: 60px !important;
       }
       .data-scroll-width {
         width: 230px;

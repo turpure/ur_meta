@@ -725,7 +725,7 @@ export default {
         fmData = new FormData();
       fmData.append(
         field,
-        data2blob(createImgUrl, mime),
+        //data2blob(createImgUrl, mime),
         field + "." + imgFormat
       );
       // 添加其他参数

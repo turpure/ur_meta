@@ -1,7 +1,6 @@
 <template>
     <!-- <div>运营</div> -->
     <div class="main">
-        <div>运营</div>
         <div class="frist">
             <div>
                 <p>销售运营杂费 :
