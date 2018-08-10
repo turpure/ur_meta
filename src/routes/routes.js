@@ -34,27 +34,27 @@ const routes = [{
   children: [{
     path: '/sell',
     component: sell,
-    name: '销售毛利润'
+    name: '销售毛利润报表'
   },
   {
     path: '/develop',
     component: develop,
-    name: '开发毛利润'
+    name: '开发毛利润报表'
   },
   {
     path: '/purchase',
     component: purchase,
-    name: '采购毛利润'
+    name: '采购毛利润报表'
   },
   {
     path: '/artist',
     component: artist,
-    name: '美工毛利润'
+    name: '美工毛利润报表'
   },
   {
     path: '/ebaysell',
     component: ebaysell,
-    name: 'ebay销售毛利润'
+    name: 'ebay销售毛利润报表'
   },
   {
     path: '/trending',
@@ -64,23 +64,23 @@ const routes = [{
   {
     path: '/fixed',
     component: fixed,
-    name: '死库'
+    name: '死库费用'
   },
   {
     path: '/operate',
     component: operate,
-    name: '运营'
+    name: '运营杂费'
   },
   {
     path: '/dollar',
     component: dollar,
-    name: '美元'
-  },
-  {
-    path: '/warehouse',
-    component: warehouse,
-    name: '仓储'
+    name: '美元汇率'
   }
+    // {
+    //   path: '/warehouse',
+    //   component: warehouse,
+    //   name: '仓储'
+    // }
   ]
 },
 {
