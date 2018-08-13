@@ -696,7 +696,7 @@ export default {
         width / scale,
         height / scale
       );
-      that.createImgUrl = canvas.toDataURL(mime);
+      that.createImgUrl = canvas.toDataURL();
     },
     prepareUpload() {
       const { url, createImgUrl, field, ki } = this;
@@ -725,8 +725,8 @@ export default {
         fmData = new FormData();
       fmData.append(
         field,
-        data2blob(createImgUrl, mime),
-        field + "." + imgFormat
+        createImgUrl
+        //field + "." + imgFormat
       );
       // 添加其他参数
       if (typeof params === "object" && params) {
@@ -744,6 +744,7 @@ export default {
       that.reset();
       that.loading = 1;
       that.setStep(3);
+
       request({
         url,
         method: "post",
