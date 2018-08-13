@@ -72,7 +72,7 @@
 <script>
 import { removeToken, getToken } from "../utils/auth";
 import { getMenu } from "../api/login";
-import { uploadImage, getHeaders } from "../api/api";
+import { getAvatarUrl } from "../api/api";
 import ImageCropper from "@/components/ImageCropper";
 import Screenfull from "@/components/Screenfull";
 import avatar from "@/components/ImageCropper";
@@ -81,11 +81,10 @@ export default {
   components: { ImageCropper, Screenfull },
   data() {
     return {
-      url: "http://192.168.0.134:8089/v1/user/avatar?token=" + getToken(),
+      url: getAvatarUrl(),
       imagecropperShow: false,
       imagecropperKey: 0,
-      image:
-        "https://raw.githubusercontent.com/taylorchen709/markdown-images/master/vueadmin/user.png",
+      image: "",
       sysName: "UR-META",
       collapsed: false,
       sysUserName: "",
@@ -106,17 +105,18 @@ export default {
   mounted() {
     this.$store.dispatch("GetUserInfo").then(() => {
       this.sysUserName = this.$store.getters.name;
-    }),
-      getMenu().then(response => {
-        this.lside = response.data.data;
-      });
+      this.image = this.$store.getters.avatar;
+    });
+    getMenu().then(response => {
+      this.lside = response.data.data;
+    });
   },
   methods: {
     cropSuccess(resData) {
       this.imagecropperShow = false;
       this.imagecropperKey = this.imagecropperKey + 1;
-      //debugger;
-      this.image = resData.data;
+      const image = resData.data[0];
+      this.image = image;
     },
     close() {
       this.imagecropperShow = false;

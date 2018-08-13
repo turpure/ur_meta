@@ -48,3 +48,10 @@ export function getHeaders() {
   headers.Authorization = 'Bearer ' + getMyToken()
   return headers
 }
+
+export function getAvatarUrl() {
+  const baseUrl = process.env.BASE_API
+  const url = '/user/avatar'
+  const token = getMyToken()
+  return baseUrl + url + '?token=' + token
+}

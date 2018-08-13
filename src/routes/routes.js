@@ -15,80 +15,80 @@ import dollar from '../views/reports/dollar.vue'
 import warehouse from '../views/reports/warehouse.vue'
 
 const routes = [{
-  path: '/login',
-  component: Login,
-  name: '',
-  hidden: true
+    path: '/login',
+    component: Login,
+    name: '',
+    hidden: true
 },
 {
-  path: '/404',
-  component: NotFound,
-  name: '',
-  hidden: true
+    path: '/404',
+    component: NotFound,
+    name: '',
+    hidden: true
 },
 {
-  path: '/',
-  component: Home,
-  name: '毛利率报表',
-  iconCls: 'el-icon-message',
-  children: [{
-    path: '/sell',
-    component: sell,
-    name: '销售毛利润'
-  },
-  {
-    path: '/develop',
-    component: develop,
-    name: '开发毛利润'
-  },
-  {
-    path: '/purchase',
-    component: purchase,
-    name: '采购毛利润'
-  },
-  {
-    path: '/artist',
-    component: artist,
-    name: '美工毛利润'
-  },
-  {
-    path: '/ebaysell',
-    component: ebaysell,
-    name: 'ebay销售毛利润'
-  },
-  {
-    path: '/trending',
-    component: trending,
-    name: '销售额走势'
-  },
-  {
-    path: '/fixed',
-    component: fixed,
-    name: '死库'
-  },
-  {
-    path: '/operate',
-    component: operate,
-    name: '运营'
-  },
-  {
-    path: '/dollar',
-    component: dollar,
-    name: '美元'
-  },
-  {
-    path: '/warehouse',
-    component: warehouse,
-    name: '仓储'
-  }
-  ]
+    path: '/',
+    component: Home,
+    name: '毛利率报表',
+    iconCls: 'el-icon-message',
+    children: [{
+        path: '/sell',
+        component: sell,
+        name: '销售毛利润报表'
+    },
+    {
+        path: '/develop',
+        component: develop,
+        name: '开发毛利润报表'
+    },
+    {
+        path: '/purchase',
+        component: purchase,
+        name: '采购毛利润报表'
+    },
+    {
+        path: '/artist',
+        component: artist,
+        name: '美工毛利润报表'
+    },
+    {
+        path: '/ebaysell',
+        component: ebaysell,
+        name: 'ebay销售毛利润报表'
+    },
+    {
+        path: '/trending',
+        component: trending,
+        name: '销售额走势'
+    },
+    {
+        path: '/fixed',
+        component: fixed,
+        name: '死库费用'
+    },
+    {
+        path: '/operate',
+        component: operate,
+        name: '运营杂费'
+    },
+    {
+        path: '/dollar',
+        component: dollar,
+        name: '美元汇率'
+    }
+        // {
+        //   path: '/warehouse',
+        //   component: warehouse,
+        //   name: '仓储'
+        // }
+    ]
 },
 {
-  path: '*',
-  hidden: true,
-  redirect: {
-    path: '/404'
-  }
+    path: '*',
+    hidden: true,
+    redirect: {
+        path: '/404'
+    }
 }
 ]
 
