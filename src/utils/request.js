@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Message, MessageBox } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
-
+import router from '../routes/router'
 // create an axios instance
 const service = axios.create({
   // baseURL: 'http://192.168.0.134:8089', // api的base_url
@@ -32,10 +32,7 @@ service.interceptors.request.use(config => {
 // respone interceptor
 service.interceptors.response.use(
   response => {
-    // if (response.status == 401) {
-    //   window.location.href = "http://localhost:8080/#/login?redirect_url=" + encodeURIComponent(location.href);
-    // }
-    return response;
+    return response
   },
   /**
   * 下面的注释为通过response自定义code来标示请求状态，当code返回如下情况为权限有问题，登出并返回到登录页
@@ -70,8 +67,9 @@ service.interceptors.response.use(
     if (error.response) {
       switch (error.response.status) {
         case 401:
-          router.replace('login')
-        // window.location.href = "http://localhost:8080/#/login?redirect_url=" + encodeURIComponent(location.href);
+          router.replace({
+            path: 'login'
+          })
       }
       console.log('err' + error)// for debug
       Message({
@@ -81,6 +79,6 @@ service.interceptors.response.use(
       })
       return Promise.reject(error)
     }
-  });
+  })
 
 export default service

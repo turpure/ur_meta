@@ -115,8 +115,8 @@ export default {
     cropSuccess(resData) {
       this.imagecropperShow = false;
       this.imagecropperKey = this.imagecropperKey + 1;
-      debugger;
-      this.image = resData.data[0];
+      //debugger;
+      this.image = resData.data;
     },
     close() {
       this.imagecropperShow = false;

@@ -1,53 +1,53 @@
 <template>
     <!-- <div>死库</div> -->
-    <div class="main">
-        <div class="frist">
+    <div class='main'>
+        <div class='frist'>
             <div>
                 <p>销售死库费用 :
-                    <el-button @click="export01Excel">下载模板
+                    <el-button @click='export01Excel'>下载模板
                     </el-button>
                 </p>
-                <el-upload class="upload-demo" drag :action='action' :headers='headers' :onError="uploadError" :on-success="uploadSuccess">
-                    <i class="el-icon-upload"></i>
-                    <div class="el-upload__text">将文件拖到此处，或
+                <el-upload class='upload-demo' drag :action='action' :headers='headers' :onError='uploadError' :on-success='uploadSuccess'>
+                    <i class='el-icon-upload'></i>
+                    <div class='el-upload__text'>将文件拖到此处，或
                         <em>点击上传</em>
                     </div>
                 </el-upload>
             </div>
             <div>
                 <p>开发死库费用 :
-                    <el-button @click="export02Excel">下载模板
+                    <el-button @click='export02Excel'>下载模板
                     </el-button>
                 </p>
-                <el-upload class="upload-demo" drag :action="action" :headers='headers' multiple>
-                    <i class="el-icon-upload"></i>
-                    <div class="el-upload__text">将文件拖到此处，或
+                <el-upload class='upload-demo' drag action='url' multiple>
+                    <i class='el-icon-upload'></i>
+                    <div class='el-upload__text'>将文件拖到此处，或
                         <em>点击上传</em>
                     </div>
                 </el-upload>
             </div>
         </div>
-        <div class="frist">
+        <div class='frist'>
             <div>
                 <p>美工死库费用 :
-                    <el-button @click="export03Excel">下载模板
+                    <el-button @click='export03Excel'>下载模板
                     </el-button>
                 </p>
-                <el-upload class="upload-demo" drag :action="action" :headers='headers' multiple>
-                    <i class="el-icon-upload"></i>
-                    <div class="el-upload__text">将文件拖到此处，或
+                <el-upload class='upload-demo' drag action='url' multiple>
+                    <i class='el-icon-upload'></i>
+                    <div class='el-upload__text'>将文件拖到此处，或
                         <em>点击上传</em>
                     </div>
                 </el-upload>
             </div>
             <div>
                 <p>采购死库费用 :
-                    <el-button @click="export04Excel">下载模板
+                    <el-button @click='export04Excel'>下载模板
                     </el-button>
                 </p>
-                <el-upload class="upload-demo" drag :action="action" :headers='headers' multiple>
-                    <i class="el-icon-upload"></i>
-                    <div class="el-upload__text">将文件拖到此处，或
+                <el-upload class='upload-demo' drag action='url' multiple>
+                    <i class='el-icon-upload'></i>
+                    <div class='el-upload__text'>将文件拖到此处，或
                         <em>点击上传</em>
                     </div>
                 </el-upload>
@@ -58,14 +58,13 @@
 
 <script>
 import { uploadFile, getHeaders } from "../../api/api";
-import FileSaver from "file-saver";
 import XLSX from "xlsx";
 
 export default {
   data() {
     return {
-      action: "",
-      headers: {},
+      action: "upload",
+      headers: Object(),
       data01: [["plat", "suffix", "diefeeZn", "ClearanceDate"]],
       data02: [
         ["SalerName", "SalerName2", "TimeGroup", "Amount", "devClearnTime"]
@@ -79,7 +78,7 @@ export default {
       console.log(response);
     },
     uploadError(err, file, fileList) {
-      console.log(file);
+      console.log(err);
     },
     export01Excel() {
       /* convert state to workbook */
@@ -121,7 +120,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .main {
   .frist {
     float: left;

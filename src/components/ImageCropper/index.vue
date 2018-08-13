@@ -744,7 +744,6 @@ export default {
       that.reset();
       that.loading = 1;
       that.setStep(3);
-
       request({
         url,
         method: "post",
