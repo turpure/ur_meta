@@ -75,7 +75,7 @@ import { getMenu } from "../api/login";
 import { uploadImage, getHeaders } from "../api/api";
 import ImageCropper from "@/components/ImageCropper";
 import Screenfull from "@/components/Screenfull";
-
+import avatar from "@/components/ImageCropper";
 export default {
   name: "avatarUpload-demo",
   components: { ImageCropper, Screenfull },
@@ -115,8 +115,8 @@ export default {
     cropSuccess(resData) {
       this.imagecropperShow = false;
       this.imagecropperKey = this.imagecropperKey + 1;
-      console.log(resData);
-      this.image = resData.files.avatar;
+      debugger;
+      this.image = resData.data[0];
     },
     close() {
       this.imagecropperShow = false;
