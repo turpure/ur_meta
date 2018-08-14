@@ -143,7 +143,7 @@ export default {
       listLoading: false,
       section: [],
       platform: [],
-      plat: [],
+      plat: "",
       member: [],
       account: [],
       department: [],
@@ -264,8 +264,8 @@ export default {
     onSubmit(form) {
       this.$refs.condition.validate(valid => {
         if (valid) {
+          this.listLoading = true;
           if (this.condition.department != "" && this.condition.member == "") {
-            this.listLoading = true;
             let val = this.condition.department;
             let res = [];
             res = this.allMember;
@@ -280,7 +280,7 @@ export default {
             form.member = this.member.map(m => {
               return m.username;
             });
-            form.department = ["运营一部", "运营二部", "运营三部"];
+            //form.department = ["运营一部", "运营二部", "运营三部"];
             getSalestrend(form).then(response => {
               this.listLoading = false;
               let ret = response.data.data;
@@ -320,7 +320,7 @@ export default {
           } else if (this.condition.member != "") {
             this.listLoading = true;
             form.member = this.condition.member;
-            form.department = ["运营一部", "运营二部", "运营三部"];
+            //form.department = ["运营一部", "运营二部", "运营三部"];
             getSalestrend(form).then(response => {
               this.listLoading = false;
               let ret = response.data.data;
@@ -358,7 +358,7 @@ export default {
               _this.$refs.myecharts.drawAreaStack(this.options);
             });
           } else {
-            form.department = ["运营一部", "运营二部", "运营三部"];
+            //form.department = ["运营一部", "运营二部", "运营三部"];
             getSalestrend(form).then(response => {
               this.listLoading = false;
               let ret = response.data.data;

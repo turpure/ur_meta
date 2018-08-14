@@ -20,15 +20,15 @@
             </el-select>
           </el-form-item>
           <el-form-item label='出货仓库' class='input'>
-            <el-select v-model='condition.store' placeholder='请选择'>
-              <el-option v-for='(item,index) in store' :index='index' :key='item.store' :label='item.store' :value='item.store'>
+            <el-select v-model='condition.store' multiple collapse-tags placeholder='请选择'>
+              <el-option v-for='item in store' :key='item' :value='item'>
               </el-option>
             </el-select>
           </el-form-item>
 
           <el-form-item label='账号' class='input'>
             <el-select v-model='condition.account' multiple collapse-tags placeholder='账号'>
-              <el-option v-for='(item,index) in account' :index='item[index]' :key='item.store' :label='item.store' :value='item.store'></el-option>
+              <el-option v-for='(item,index) in account' :index='item[index]' :key='item.id' :label='item.store' :value='item.store'></el-option>
             </el-select>
           </el-form-item>
 
@@ -116,9 +116,9 @@ export default {
       searchValue: "",
       listLoading: false,
       department: [],
-      plat: [],
+      plat: "",
       member: [],
-      store: [{ id: 1, store: "中国仓" }, { id: 2, store: "海外仓" }],
+      store: [],
       dateType: [{ id: 0, type: "发货时间" }, { id: 1, type: "交易时间" }],
       dateRange: [],
       account: [],
@@ -381,7 +381,7 @@ export default {
       this.allMember = this.member = res.filter(ele => ele.position === "销售");
     });
     getStore().then(response => {
-      this.options = response.dataget;
+      this.store = response.data.data;
     });
     getAccount().then(response => {
       this.account = response.data.data;
