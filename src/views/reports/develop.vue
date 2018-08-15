@@ -48,7 +48,7 @@
     </el-row>
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="业绩归属1人表" name="first">
-        <el-table :data="tableData01" id="sale-table01" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show2" height="860" style="width: 100%;zoom:0.9">
+        <el-table :data="tableData01" id="sale-table01" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show2" height="1000" style="width: 100%;zoom:0.9">
           <el-table-column prop="salernameZero" label="业绩归属人" sortable></el-table-column>
           <el-table-column prop="salemoneyrmbznZero" label="销售额￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
           <el-table-column prop="netprofitZero" label="毛利润￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
@@ -65,7 +65,7 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="业绩归属2人表" name="second">
-        <el-table :data="tableData02" id="sale-table02" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show2" height="860" style="width: 100%;zoom:0.9">
+        <el-table :data="tableData02" id="sale-table02" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show2" height="1000" style="width: 100%;zoom:0.9">
           <el-table-column prop="salernameZero" label="业绩归属人2" sortable="custom"></el-table-column>
           <el-table-column prop="salemoneyrmbznZero" label="销售额￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
           <el-table-column prop="netprofitZero" label="毛利润￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>

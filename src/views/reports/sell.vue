@@ -10,7 +10,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label='平台' class='input'>
-            <el-select v-model='condition.plat' placeholder='平台'>
+            <el-select v-model='condition.plat' clearable placeholder='平台'>
               <el-option v-for='(item,index) in plat' :index='index' :key='item.plat' :label='item.plat' :value='item.plat'></el-option>
             </el-select>
           </el-form-item>
@@ -27,7 +27,7 @@
           </el-form-item>
 
           <el-form-item label='账号' class='input'>
-            <el-select v-model='condition.account' multiple collapse-tags placeholder='账号'>
+            <el-select v-model='condition.account' filterable multiple collapse-tags placeholder='账号'>
               <el-option v-for='(item,index) in account' :index='item[index]' :key='item.id' :label='item.store' :value='item.store'></el-option>
             </el-select>
           </el-form-item>
@@ -64,7 +64,7 @@
         <el-button style='float:left' type='default' @click='exportExcel'>导出Excel</el-button>
       </el-col>
     </el-row>
-    <el-table :data="tableData" id="sale-table" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show2" :height="show?1127:1332" style="width: 100%;zoom:0.6;">
+    <el-table :data="tableData" id="sale-table" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show2" :height="show?1127:1532" style="width: 100%;zoom:0.6;">
       <el-table-column min-width="75px" prop="pingtai" label="平台" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="75px" prop="suffix" label="账号" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="87px" prop="salesman" label="销售员" :formatter="empty" sortable="custom"></el-table-column>
