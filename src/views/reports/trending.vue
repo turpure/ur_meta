@@ -17,13 +17,13 @@
             </el-select>
           </el-form-item>
           <el-form-item label="平台" class="input">
-            <el-select v-model="condition.plat" multiple collapse-tags placeholder="平台" style="height: 40px;">
+            <el-select v-model="condition.plat" clearable placeholder="平台" style="height: 40px;">
               <el-option v-for="(item,index) in plat" :index="index" :key="item.plat" :label="item.plat" :value="item.plat">
               </el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="销售员" class="input">
-            <el-select v-model="condition.member" multiple collapse-tags placeholder="销售员">
+            <el-select v-model="condition.member" filterable multiple collapse-tags placeholder="销售员">
               <el-option v-for="(item,index) in member" :index="index" :key="item.username" :label="item.username" :value="item.username">
               </el-option>
             </el-select>
