@@ -49,19 +49,19 @@
         <el-button style="float:left;" type="default" @click="exportExcel">导出Excel</el-button>
       </el-col>
     </el-row>
-    <el-table :data="tableData" id="sale-table" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show2" :height="show?813:882" style="width: 100%;zoom:0.9;">
+    <el-table :data="tableData" id="sale-table" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show2" :height="show?810:880" style="width: 100%;zoom:0.9;">
       <el-table-column min-width="90px" prop="possessman1Zero" label="责任人" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="170px" prop="salemoneyrmbznZero" label="销售额￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="170px" prop="netprofitZero" label="毛利润￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="170px" prop="netrateZero" label="毛利率%（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="190px" prop="salemoneyrmbznSix" label="销售额￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="190px" prop="netprofitSix" label="毛利润￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="190px" prop="netrateSix" label="毛利率%（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="170px" prop="salemoneyrmbznSix" label="销售额￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="170px" prop="netprofitSix" label="毛利润￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="170px" prop="netrateSix" label="毛利率%（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="190px" prop="salemoneyrmbznTwe" label="销售额￥（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="190px" prop="netprofitTwe" label="毛利润￥（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="190px" prop="netrateTwe" label="毛利率%（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="170px" prop="salemoneyrmbtotal" label="销售额￥（汇总）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="170px" prop="netprofittotal" label="毛利润￥（汇总）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="160px" prop="salemoneyrmbtotal" label="销售额￥（汇总）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="160px" prop="netprofittotal" label="毛利润￥（汇总）" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="170px" prop="netratetotal" label="毛利率%￥（汇总）" :formatter="empty" sortable="custom"></el-table-column>
     </el-table>
   </div>
@@ -220,11 +220,11 @@ export default {
       this.show2 = true;
       this.$refs.condition.validate(valid => {
         if (valid) {
+          this.listLoading = true;
           if (
             this.formInline.region.length !== 0 &&
             this.condition.member.length === 0
           ) {
-            this.listLoading = true;
             let val = this.formInline.region;
             let res = [];
             let person = [];

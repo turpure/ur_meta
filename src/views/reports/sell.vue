@@ -119,12 +119,12 @@ export default {
       plat: "",
       member: [],
       store: [],
-      dateType: [{ id: 1, type: '发货时间' }, { id: 0, type: '交易时间' }],
+      dateType: [{ id: 1, type: "发货时间" }, { id: 0, type: "交易时间" }],
       dateRange: [],
       account: [],
       condition: {
         department: [],
-        plat: '',
+        plat: "",
         member: [],
         store: [],
         dateType: 1,
@@ -261,7 +261,12 @@ export default {
       });
     },
     empty(row, column, cellValue, index) {
-      return cellValue ? cellValue : '--' 
+      if (typeof parseFloat(cellValue) !== NaN) {
+        cellValue = Math.round(cellValue * 100) / 100;
+      }
+      return cellValue;
+      console.log(cellValue);
+      //return cellValue ? cellValue : "--";
     },
     // 搜索
     handleSearch() {
@@ -284,9 +289,9 @@ export default {
       console.log("Running!");
     },
     // 格式化数据
-    formatter(row, column,cellValue) {
-      return parseFloat(row.salemoneyzn);
-    },
+    // formatter(row, column, cellValue) {
+    //   return parseFloat(row.salemoneyzn);
+    // },
 
     // 数字排序
     sortNumber(column, prop, order) {
