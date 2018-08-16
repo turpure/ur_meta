@@ -119,15 +119,15 @@ export default {
       plat: "",
       member: [],
       store: [],
-      dateType: [{ id: 0, type: "发货时间" }, { id: 1, type: "交易时间" }],
+      dateType: [{ id: 1, type: '发货时间' }, { id: 0, type: '交易时间' }],
       dateRange: [],
       account: [],
       condition: {
         department: [],
-        plat: "",
+        plat: '',
         member: [],
         store: [],
-        dateType: 0,
+        dateType: 1,
         dateRange: [],
         account: []
       },
@@ -261,7 +261,7 @@ export default {
       });
     },
     empty(row, column, cellValue, index) {
-      return cellValue ? cellValue : "--";
+      return cellValue ? cellValue : '--' 
     },
     // 搜索
     handleSearch() {
@@ -284,7 +284,7 @@ export default {
       console.log("Running!");
     },
     // 格式化数据
-    formatter(row, column) {
+    formatter(row, column,cellValue) {
       return parseFloat(row.salemoneyzn);
     },
 
