@@ -22,10 +22,9 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="销售员" class="input">
-            <el-select v-model="condition.member" filterable multiple collapse-tags placeholder="销售员">
-              <el-option v-for="(item,index) in member" :index="index" :key="item.username" :label="item.username" :value="item.username">
-              </el-option>
+          <el-form-item label='销售员' class='input'>
+            <el-select v-model='condition.member' multiple collapse-tags placeholder='销售员'>
+              <el-option v-for='(item,index) in member' :index='index' :key='item.username' :label='item.username' :value='item.username'></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="时间类型" class="input" prop="dateType">

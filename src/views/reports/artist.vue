@@ -407,5 +407,24 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.el-table__body {
+  td {
+    padding: 5px 0;
+    .cell {
+      line-height: normal;
+    }
+  }
+}
+.el-table__footer {
+  .cell {
+    line-height: normal;
+    color: red;
+    font-weight: 550;
+  }
+}
+.el-radio.is-bordered {
+  padding: 6px 16px 0 6px;
+  height: 30px;
+}
 </style>

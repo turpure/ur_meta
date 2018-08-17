@@ -26,9 +26,12 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item label='账号' class='input'>
-            <el-select v-model='condition.account' filterable multiple collapse-tags placeholder='账号'>
-              <el-option v-for='(item,index) in account' :index='item[index]' :key='item.id' :label='item.store' :value='item.store'></el-option>
+          <el-form-item label="账号" class="input">
+            <el-select v-model="condition.account" multiple collapse-tags placeholder="账号">
+              <el-button plain type="info" @click="selectall">全选</el-button>
+              <el-button plain type="info" @click="noselect">取消</el-button>
+              <el-option v-for="(item,index) in account" :index="item[index]" :key="item.store" :label="item.store" :value="item.store">
+              </el-option>
             </el-select>
           </el-form-item>
 
@@ -89,6 +92,7 @@
   </div>
 </template>
 
+<!--<script src="/assets/js/bootstrap-select.min.js"></script>-->
 <script>
 import {
   getSection,
@@ -189,6 +193,12 @@ export default {
     };
   },
   methods: {
+    selectall() {
+      this.condition.account = this.account;
+    },
+    noselect() {
+      this.condition.account = "";
+    },
     choosed() {
       let res = [];
       let val = this.condition.department;
@@ -425,28 +435,7 @@ export default {
 };
 </script>
 
-<style lang='scss'>
-.el-table__body {
-  //margin-bottom: 10px;
-  td {
-    padding: 5px 0;
-    .cell {
-      line-height: normal;
-    }
-  }
-}
-.el-table__footer {
-  //position: fixed;
-  //bottom: 0;
-  .cell {
-    line-height: normal;
-    color: red;
-    font-weight: 550;
-  }
-}
-.el-radio.is-bordered {
-  padding: 6px 16px 0 6px;
-  height: 30px;
-}
+<style scoped>
+/* @import "bootstrap-select.min.css"; */
 </style>
 
