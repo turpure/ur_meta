@@ -4,11 +4,10 @@
     <div class="demo-block demo-box demo-zh-CN demo-transition" @mouseover="changeActive" @mouseout="removeActive">
       <transition name="el-fade-in-linear">
         <el-form :model="condition" :inline="true" ref="condition" class="demo-form-inline" label-width="68px" v-show="show">
-          <el-form-item label="时间类型" class="input">
-            <el-select v-model="formInline.region" placeholder="按天">
-              <el-option label="按天" value="shanghai"></el-option>
-              <el-option label="按月" value="beijing"></el-option>
-            </el-select>
+          <el-form-item label="显示方式" class="input" prop="flag">
+            <el-radio-group v-model="condition.flag">
+              <el-radio border v-for="(item,index) in flag" :index="index" :key="item.id" :label="item.id" :value="item.id">{{item.type}}</el-radio>
+            </el-radio-group>
           </el-form-item>
           <el-form-item label="部门" class="input">
             <el-select v-model="condition.department" multiple collapse-tags placeholder="部门" @change="choosed">
@@ -147,7 +146,8 @@ export default {
       member: [],
       account: [],
       department: [],
-      dateType: [{ id: 0, type: "发货时间" }, { id: 1, type: "交易时间" }],
+      dateType: [{ id: 1, type: "发货时间" }, { id: 0, type: "交易时间" }],
+      flag: [{ id: 0, type: '按天' }, { id: 2, type: '按月' }],
       dateRange: [],
       formInline: {
         user: "",
@@ -158,7 +158,8 @@ export default {
         plat: "",
         member: [],
         store: [],
-        dateType: 0,
+        dateType: 1,
+        flag: 0,
         dateRange: [],
         account: []
       },
@@ -262,6 +263,7 @@ export default {
       this.show1 = false;
     },
     onSubmit(form) {
+      debugger
       this.$refs.condition.validate(valid => {
         if (valid) {
           this.listLoading = true;

@@ -125,14 +125,14 @@ export default {
       department: [],
       member: [],
       dateRange: [],
-      dateType: [{ id: 0, type: "发货时间" }, { id: 1, type: "交易时间" }],
+      dateType: [{ id: 1, type: "发货时间" }, { id: 0, type: "交易时间" }],
       formInline: {
         user: "",
         region: []
       },
       condition: {
         member: [],
-        dateType: 0,
+        dateType: 1,
         dateRange: []
       },
       tableMap: {
