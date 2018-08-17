@@ -19,6 +19,7 @@ import router from './routes/router'
 import VModal from 'vue-js-modal'
 import Myecharts from './component/Myecharts'
 
+
 Vue.use(Myecharts)
 Vue.use(VModal)
 Vue.use(ElementUI)

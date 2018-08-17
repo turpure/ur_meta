@@ -48,37 +48,37 @@
     </el-row>
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="业绩归属1人表" name="first">
-        <el-table :data="tableData01" id="sale-table01" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show2" height="1000" style="width: 100%;zoom:0.9">
-          <el-table-column prop="salernameZero" label="业绩归属人" sortable></el-table-column>
-          <el-table-column prop="salemoneyrmbznZero" label="销售额￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
-          <el-table-column prop="netprofitZero" label="毛利润￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
-          <el-table-column prop="netrateZero" label="毛利率%（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
-          <el-table-column prop="salemoneyrmbznSix" label="销售额￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
-          <el-table-column prop="netprofitSix" label="毛利润￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
-          <el-table-column prop="netrateSix" label="毛利率%（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
-          <el-table-column prop="salemoneyrmbznTwe" label="销售额￥（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
-          <el-table-column prop="netprofitTwe" label="毛利润￥（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
-          <el-table-column prop="netrateTwe" label="毛利率%（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
-          <el-table-column prop="salemoneyrmbtotal" label="销售额￥（汇总）" :formatter="empty" sortable="custom"></el-table-column>
-          <el-table-column prop="netprofittotal" label="毛利润￥（汇总）" :formatter="empty" sortable="custom"></el-table-column>
-          <el-table-column prop="netratetotal" label="毛利率%（汇总）" :formatter="empty" sortable="custom"></el-table-column>
+        <el-table :data="tableData01" id="sale-table01" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show2" :height="tableHeight" :max-height="tableHeight" :highlight-current-row="true" style="width: 100%;zoom:0.6">
+          <el-table-column min-width="150px" prop="salernameZero" label="业绩归属人" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column min-width="220px" prop="salemoneyrmbznZero" label="销售额￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column min-width="220px" prop="netprofitZero" label="毛利润￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column min-width="220px" prop="netrateZero" label="毛利率%（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column min-width="230px" prop="salemoneyrmbznSix" label="销售额￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column min-width="230px" prop="netprofitSix" label="毛利润￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column min-width="230px" prop="netrateSix" label="毛利率%（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column min-width="250px" prop="salemoneyrmbznTwe" label="销售额￥（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column min-width="250px" prop="netprofitTwe" label="毛利润￥（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column min-width="250px" prop="netrateTwe" label="毛利率%（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column min-width="220px" prop="salemoneyrmbtotal" label="销售额￥（汇总）" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column min-width="220px" prop="netprofittotal" label="毛利润￥（汇总）" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column min-width="220px" prop="netratetotal" label="毛利率%（汇总）" :formatter="empty" sortable="custom"></el-table-column>
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="业绩归属2人表" name="second">
-        <el-table :data="tableData02" id="sale-table02" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show2" height="1000" style="width: 100%;zoom:0.9">
-          <el-table-column prop="salernameZero" label="业绩归属人2" sortable="custom"></el-table-column>
-          <el-table-column prop="salemoneyrmbznZero" label="销售额￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
-          <el-table-column prop="netprofitZero" label="毛利润￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
-          <el-table-column prop="netrateZero" label="毛利率%（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
-          <el-table-column prop="salemoneyrmbznSix" label="销售额￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
-          <el-table-column prop="netprofitSix" label="毛利润￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
-          <el-table-column prop="netrateSix" label="毛利率%（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
-          <el-table-column prop="salemoneyrmbznTwe" label="销售额￥（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
-          <el-table-column prop="netprofitTwe" label="毛利润￥（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
-          <el-table-column prop="netrateTwe" label="毛利率%（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
-          <el-table-column prop="salemoneyrmbtotal" label="销售额￥（汇总）" :formatter="empty" sortable="custom"></el-table-column>
-          <el-table-column prop="netprofittotal" label="毛利润￥（汇总）" :formatter="empty" sortable="custom"></el-table-column>
-          <el-table-column prop="netratetotal" label="毛利率%（汇总）" :formatter="empty" sortable="custom"></el-table-column>
+        <el-table :data="tableData02" id="sale-table02" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show2" :height="tableHeight" :max-height="tableHeight" :highlight-current-row="true" style="width: 100%;zoom:0.6">
+          <el-table-column min-width="160px" prop="salernameZero" label="业绩归属人2" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column min-width="220px" prop="salemoneyrmbznZero" label="销售额￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column min-width="220px" prop="netprofitZero" label="毛利润￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column min-width="220px" prop="netrateZero" label="毛利率%（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column min-width="230px" prop="salemoneyrmbznSix" label="销售额￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column min-width="230px" prop="netprofitSix" label="毛利润￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column min-width="230px" prop="netrateSix" label="毛利率%（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column min-width="250px" prop="salemoneyrmbznTwe" label="销售额￥（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column min-width="250px" prop="netprofitTwe" label="毛利润￥（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column min-width="250px" prop="netrateTwe" label="毛利率%（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column min-width="210px" prop="salemoneyrmbtotal" label="销售额￥（汇总）" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column min-width="210px" prop="netprofittotal" label="毛利润￥（汇总）" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column min-width="210px" prop="netratetotal" label="毛利率%（汇总）" :formatter="empty" sortable="custom"></el-table-column>
         </el-table>
       </el-tab-pane>
     </el-tabs>
@@ -108,6 +108,8 @@ import XLSX from "xlsx";
 export default {
   data() {
     return {
+      autoHeight: "",
+      tableHeight: 0,
       allMember: [],
       isA: true,
       text: "显示输入框",
@@ -234,8 +236,24 @@ export default {
       this.isA = !this.isA;
       if (this.show == false) {
         this.text = "显示输入框";
+        let height = document.getElementById("app").clientHeight;
+        this.autoHeight = height + 320 + "px";
+        this.tableHeight = height + 320 + "px";
+        let that = this;
+        window.onload = () => {
+          that.autoHeight = height + 320 + "px";
+          that.tableHeight = height + 320 + "px";
+        };
       } else if (this.show == true) {
         this.text = "隐藏输入框";
+        let height = document.getElementById("app").clientHeight;
+        this.autoHeight = height + 220 + "px";
+        this.tableHeight = height + 220 + "px";
+        let that = this;
+        window.onload = () => {
+          that.autoHeight = height + 220 + "px";
+          that.tableHeight = height + 220 + "px";
+        };
       }
     },
     changeActive() {
@@ -248,17 +266,25 @@ export default {
       this.activeName = tab.name;
     },
     onSubmit(form) {
+      let height = document.getElementById("app").clientHeight;
+      this.autoHeight = height + 220 + "px";
+      this.tableHeight = height + 220 + "px";
+      let that = this;
+      window.onload = () => {
+        that.autoHeight = height + 220 + "px";
+        that.tableHeight = height + 220 + "px";
+      };
       let posseman1Data;
       let posseman2Data;
       let ret;
       this.show2 = true;
       this.$refs.condition.validate(valid => {
         if (valid) {
+          this.listLoading = true;
           if (
             this.formInline.region.length !== 0 &&
             this.condition.member.length === 0
           ) {
-            this.listLoading = true;
             let val = this.formInline.region;
             let res = [];
             let person = [];
@@ -452,4 +478,7 @@ export default {
 </script>
 
 <style lang="scss">
+.el-table__body {
+  overflow: scroll;
+}
 </style>
