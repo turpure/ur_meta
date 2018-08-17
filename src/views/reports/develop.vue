@@ -48,7 +48,7 @@
     </el-row>
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="业绩归属1人表" name="first">
-        <el-table :data="tableData01" id="sale-table01" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show2" :height="show?1148:1253" style="width: 100%;zoom:0.6">
+        <el-table :data="tableData01" id="sale-table01" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show2" :height="tableHeight" :max-height="tableHeight" :highlight-current-row="true" style="width: 100%;zoom:0.6">
           <el-table-column min-width="150px" prop="salernameZero" label="业绩归属人" :formatter="empty" sortable="custom"></el-table-column>
           <el-table-column min-width="220px" prop="salemoneyrmbznZero" label="销售额￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
           <el-table-column min-width="220px" prop="netprofitZero" label="毛利润￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
@@ -65,7 +65,7 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="业绩归属2人表" name="second">
-        <el-table :data="tableData02" id="sale-table02" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show2" :height="show?1149:1253" style="width: 100%;zoom:0.6">
+        <el-table :data="tableData02" id="sale-table02" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show2" :height="tableHeight" :max-height="tableHeight" :highlight-current-row="true" style="width: 100%;zoom:0.6">
           <el-table-column min-width="160px" prop="salernameZero" label="业绩归属人2" :formatter="empty" sortable="custom"></el-table-column>
           <el-table-column min-width="220px" prop="salemoneyrmbznZero" label="销售额￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
           <el-table-column min-width="220px" prop="netprofitZero" label="毛利润￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
@@ -108,6 +108,8 @@ import XLSX from "xlsx";
 export default {
   data() {
     return {
+      autoHeight: "",
+      tableHeight: 0,
       allMember: [],
       isA: true,
       text: "显示输入框",
@@ -234,8 +236,24 @@ export default {
       this.isA = !this.isA;
       if (this.show == false) {
         this.text = "显示输入框";
+        let height = document.getElementById("app").clientHeight;
+        this.autoHeight = height + 320 + "px";
+        this.tableHeight = height + 320 + "px";
+        let that = this;
+        window.onload = () => {
+          that.autoHeight = height + 320 + "px";
+          that.tableHeight = height + 320 + "px";
+        };
       } else if (this.show == true) {
         this.text = "隐藏输入框";
+        let height = document.getElementById("app").clientHeight;
+        this.autoHeight = height + 220 + "px";
+        this.tableHeight = height + 220 + "px";
+        let that = this;
+        window.onload = () => {
+          that.autoHeight = height + 220 + "px";
+          that.tableHeight = height + 220 + "px";
+        };
       }
     },
     changeActive() {
@@ -248,6 +266,14 @@ export default {
       this.activeName = tab.name;
     },
     onSubmit(form) {
+      let height = document.getElementById("app").clientHeight;
+      this.autoHeight = height + 220 + "px";
+      this.tableHeight = height + 220 + "px";
+      let that = this;
+      window.onload = () => {
+        that.autoHeight = height + 220 + "px";
+        that.tableHeight = height + 220 + "px";
+      };
       let posseman1Data;
       let posseman2Data;
       let ret;

@@ -64,10 +64,10 @@
         <el-button style='float:left' type='default' @click='exportExcel'>导出Excel</el-button>
       </el-col>
     </el-row>
-    <el-table :data="tableData" id="sale-table" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show2" :height="show?1127:1532" style="width: 100%;zoom:0.6;">
+    <el-table :data="tableData" id="sale-table" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" :height="tableHeight" :max-height="tableHeight" :highlight-current-row="true" v-show="show2" style="width: 100%;zoom:0.6;">
       <el-table-column min-width="75px" prop="pingtai" label="平台" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="75px" prop="suffix" label="账号" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="87px" prop="salesman" label="销售员" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="80px" prop="suffix" label="账号" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="90px" prop="salesman" label="销售员" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="106px" prop="salemoney" label="成交价$" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="106px" prop="salemoneyzn" label="成交价￥" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="130px" prop="ebayFeeebay" label="eBay成交费$" :formatter="empty" sortable="custom"></el-table-column>
@@ -104,6 +104,8 @@ import XLSX from "xlsx";
 export default {
   data() {
     return {
+      autoHeight: "",
+      tableHeight: 0,
       allMember: [],
       isA: true,
       text: "显示输入框",
@@ -209,8 +211,24 @@ export default {
       this.isA = !this.isA;
       if (this.show === false) {
         this.text = "显示输入框";
+        let height = document.getElementById("app").clientHeight;
+        this.autoHeight = height + 408 + "px";
+        this.tableHeight = height + 408 + "px";
+        let that = this;
+        window.onload = () => {
+          that.autoHeight = height + 408 + "px";
+          that.tableHeight = height + 408 + "px";
+        };
       } else if (this.show === true) {
         this.text = "隐藏输入框";
+        let height = document.getElementById("app").clientHeight;
+        this.autoHeight = height + 200 + "px";
+        this.tableHeight = height + 200 + "px";
+        let that = this;
+        window.onload = () => {
+          that.autoHeight = height + 200 + "px";
+          that.tableHeight = height + 200 + "px";
+        };
       }
     },
     changeActive() {
@@ -220,6 +238,14 @@ export default {
       this.show1 = false;
     },
     onSubmit(form) {
+      let height = document.getElementById("app").clientHeight;
+      this.autoHeight = height + 220 + "px";
+      this.tableHeight = height + 220 + "px";
+      let that = this;
+      window.onload = () => {
+        that.autoHeight = height + 220 + "px";
+        that.tableHeight = height + 220 + "px";
+      };
       this.show2 = true;
       this.$refs.condition.validate(valid => {
         if (valid) {
@@ -261,12 +287,16 @@ export default {
       });
     },
     empty(row, column, cellValue, index) {
+      //cellValue = cellValue.map(Number);
+      let cell;
       if (typeof parseFloat(cellValue) !== NaN) {
-        cellValue = Math.round(cellValue * 100) / 100;
+        cell = Math.round(cellValue * 100) / 100;
+      } else {
+        cell = cellValue;
       }
-      return cellValue;
-      console.log(cellValue);
-      //return cellValue ? cellValue : "--";
+      console.log(cell);
+      //return false;
+      return cell ? cell : "--";
     },
     // 搜索
     handleSearch() {
@@ -397,6 +427,7 @@ export default {
 
 <style lang='scss'>
 .el-table__body {
+  //margin-bottom: 10px;
   td {
     padding: 5px 0;
     .cell {
@@ -405,8 +436,8 @@ export default {
   }
 }
 .el-table__footer {
-  position: fixed;
-  bottom: 0;
+  //position: fixed;
+  //bottom: 0;
   .cell {
     line-height: normal;
     color: red;
