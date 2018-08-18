@@ -16,7 +16,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="平台" class="input">
-            <el-select v-model="condition.plat" clearable placeholder="平台" style="height: 40px;">
+            <el-select v-model="condition.plat"  multiple collapse-tags placeholder="平台" style="height: 40px;">
               <el-option v-for="(item,index) in plat" :index="index" :key="item.plat" :label="item.plat" :value="item.plat">
               </el-option>
             </el-select>
@@ -39,10 +39,9 @@
             <el-select v-model="condition.account" multiple collapse-tags placeholder="账号">
               <el-button plain type="info" @click="selectall">全选</el-button>
               <el-button plain type="info" @click="noselect">取消</el-button>
-              <el-option v-for="(item,index) in account" :index="item[index]" :key="item.id" :label="item.store" :value="item.id"></el-option>
+              <el-option v-for="(item,index) in account" :index="index" :key="item.store" :label="item.store" :value="item.store"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item>
             <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
           </el-form-item>
         </el-form>
@@ -142,8 +141,7 @@ export default {
       searchValue: "",
       listLoading: false,
       section: [],
-      platform: [],
-      plat: "",
+      plat: [],
       member: [],
       account: [],
       department: [],
@@ -234,7 +232,7 @@ export default {
     selectall() {
       const allValues = [];
       for (const item of this.account) {
-        allValues.push(item.id);
+        allValues.push(item.store);
       }
       this.condition.account = allValues;
     },
