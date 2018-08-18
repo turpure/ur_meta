@@ -439,94 +439,23 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.container .main .content-container[data-v-0ff1e341] {
-  margin: 0px;
-  padding: 1px;
-  .demo-block.hover {
-    box-shadow: 0 0 8px 0 rgba(232, 237, 250, 0.6),
-      0 2px 4px 0 rgba(232, 237, 250, 0.5);
+<style lang="scss" scoped>
+.el-select-dropdown {
+  .el-button--info.is-plain {
+    width: 50%;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    margin-left: 0;
+    float: left;
+    border-radius: 0 !important;
+    color: #333;
+    background-color: #fff;
   }
-  .demo-block {
-    border: 0px solid #ebebeb;
-    border-radius: 3px;
-    transition: height 0.2s;
-    .demo-block-control:hover {
-      color: #409eff;
-      background-color: #f9fafc;
-    }
-    .demo-block-control {
-      border-bottom: 1px solid #eaeefb;
-      border-top: 1px solid #eaeefb;
-      height: 44px;
-      box-sizing: border-box;
-      background-color: #fff;
-      border-bottom-left-radius: 4px;
-      border-bottom-right-radius: 4px;
-      text-align: center;
-      margin-top: -1px;
-      color: #d3dce6;
-      cursor: pointer;
-      position: relative;
-      i {
-        font-size: 16px;
-        line-height: 44px;
-        transition: 0.3s;
-      }
-      i.hovering {
-        transform: translateX(-40px);
-      }
-      [class^="el-icon-"] {
-        font-family: element-icons !important;
-
-        font-style: normal;
-        font-weight: 400;
-        font-variant: normal;
-        text-transform: none;
-        line-height: 1;
-        vertical-align: baseline;
-        display: inline-block;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
-      .demo-block-control > span {
-        position: absolute;
-        transform: translateX(-30px);
-        font-size: 14px;
-        line-height: 44px;
-        transition: 0.3s;
-      }
-    }
-    form {
-      margin-left: 5px;
-      background-color: #fafafa;
-      transition: 0.2s 0.2s;
-      .el-input__inner {
-        height: 30px !important;
-      }
-      .el-date-editor .el-range__icon {
-        line-height: 1px;
-      }
-      .el-date-editor .el-range-separator {
-        line-height: 20px;
-      }
-    }
+  .el-button:hover {
+    color: #333;
+    background-color: #ebebeb;
+    border-color: #adadad;
   }
-}
-.el-button--info.is-plain {
-  width: 50%;
-  padding: 5px 10px;
-  font-size: 12px;
-  line-height: 1.5;
-  margin-left: 0;
-  float: left;
-  border-radius: 0 !important;
-  color: #333;
-  background-color: #fff;
-}
-.el-button:hover {
-  color: #333;
-  background-color: #ebebeb;
-  border-color: #adadad;
 }
 </style>

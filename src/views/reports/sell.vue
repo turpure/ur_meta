@@ -108,8 +108,6 @@ import XLSX from "xlsx";
 export default {
   data() {
     return {
-      oldOptions: [],
-      choosePerson: [],
       autoHeight: "",
       tableHeight: 0,
       allMember: [],
@@ -303,16 +301,15 @@ export default {
       });
     },
     empty(row, column, cellValue, index) {
-      //cellValue = cellValue.map(Number);
-      let cell;
-      if (typeof parseFloat(cellValue) !== NaN) {
-        cell = Math.round(cellValue * 100) / 100;
-      } else {
-        cell = cellValue;
-      }
-      console.log(cell);
-      //return false;
-      return cell ? cell : "--";
+      row.grossprofitRate = Math.round(row.grossprofitRate * 100) / 100;
+      row.expressFare = Math.round(row.expressFare * 100) / 100;
+      row.refund = Math.round(row.refund * 100) / 100;
+      row.refundrate = Math.round(row.refundrate * 100) / 100;
+      row.diefeeZn = Math.round(row.diefeeZn * 100) / 100;
+      row.insertionFee = Math.round(row.insertionFee * 100) / 100;
+      row.grossprofit = Math.round(row.grossprofit * 100) / 100;
+
+      return cellValue ? cellValue : "--";
     },
     // 搜索
     handleSearch() {
@@ -334,11 +331,6 @@ export default {
       }
       console.log("Running!");
     },
-    // 格式化数据
-    // formatter(row, column, cellValue) {
-    //   return parseFloat(row.salemoneyzn);
-    // },
-
     // 数字排序
     sortNumber(column, prop, order) {
       const data = this.tableData;
@@ -441,23 +433,24 @@ export default {
 };
 </script>
 
-<style scoped>
-/* @import "bootstrap-select.min.css"; */
-.el-button--info.is-plain {
-  width: 50%;
-  padding: 5px 10px;
-  font-size: 12px;
-  line-height: 1.5;
-  margin-left: 0;
-  float: left;
-  border-radius: 0 !important;
-  color: #333;
-  background-color: #fff;
-}
-.el-button:hover {
-  color: #333;
-  background-color: #ebebeb;
-  border-color: #adadad;
+<style lang="scss" scoped>
+.el-select-dropdown {
+  .el-button--info.is-plain {
+    width: 50%;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    margin-left: 0;
+    float: left;
+    border-radius: 0 !important;
+    color: #333;
+    background-color: #fff;
+  }
+  .el-button:hover {
+    color: #333;
+    background-color: #ebebeb;
+    border-color: #adadad;
+  }
 }
 </style>
 
