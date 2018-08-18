@@ -38,7 +38,9 @@
           </el-form-item>
           <el-form-item label="账号" class="input">
             <el-select v-model="condition.account" multiple collapse-tags placeholder="账号">
-              <el-option v-for="(item,index) in account" :index="item[index]" :key="item.store" :label="item.store" :value="item.store"></el-option>
+              <el-button plain type="info" @click="selectall">全选</el-button>
+              <el-button plain type="info" @click="noselect">取消</el-button>
+              <el-option v-for="(item,index) in account" :index="item[index]" :key="item.id" :label="item.store" :value="item.id"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item>
@@ -228,6 +230,16 @@ export default {
     };
   },
   methods: {
+    selectall() {
+      const allValues = [];
+      for (const item of this.account) {
+        allValues.push(item.id);
+      }
+      this.condition.account = allValues;
+    },
+    noselect() {
+      this.condition.account = [];
+    },
     choosed() {
       let res = [];
       this.member = [];
@@ -500,5 +512,21 @@ export default {
       }
     }
   }
+}
+.el-button--info.is-plain {
+  width: 50%;
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  margin-left: 0;
+  float: left;
+  border-radius: 0 !important;
+  color: #333;
+  background-color: #fff;
+}
+.el-button:hover {
+  color: #333;
+  background-color: #ebebeb;
+  border-color: #adadad;
 }
 </style>
