@@ -308,14 +308,12 @@ export default {
       row.diefeeZn = Math.round(row.diefeeZn * 100) / 100;
       row.insertionFee = Math.round(row.insertionFee * 100) / 100;
       row.grossprofit = Math.round(row.grossprofit * 100) / 100;
-
       return cellValue ? cellValue : "--";
     },
     // 搜索
     handleSearch() {
       const searchValue = this.searchValue && this.searchValue.toLowerCase();
       const data = this.searchTable;
-
       if (searchValue) {
         this.tableData = data.filter(function(row) {
           return Object.keys(row).some(function(key) {
