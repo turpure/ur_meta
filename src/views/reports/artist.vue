@@ -6,13 +6,13 @@
         <el-form :model="condition" :inline="true" ref="condition" label-width="68px" class="demo-form-inline" v-show="show">
           <el-form-item label="部门" class="input">
             <el-select v-model="formInline.region" multiple collapse-tags placeholder="部门" @change="choosed">
-              <el-option v-for="(item,index) in section" :index="item[index]" :key="item.department" :label="item.department" :value="item.department"></el-option>
+              <el-option v-for="(item,index) in section" :index="item[index]" :key="item.id" :label="item.department" :value="item.id"></el-option>
             </el-select>
           </el-form-item>
 
           <el-form-item label="美工员" class="input">
             <el-select v-model="condition.member" multiple collapse-tags placeholder="美工员">
-              <el-option v-for="(item,index) in member" :index="item[index]" :key="item.username" :label="item.username" :value="item.username"></el-option>
+              <el-option v-for="(item,index) in member" :index="item[index]" :key="item.id" :label="item.username" :value="item.id"></el-option>
             </el-select>
           </el-form-item>
 
@@ -377,7 +377,6 @@ export default {
     handleSearch() {
       let searchValue = this.searchValue && this.searchValue.toLowerCase();
       let data = this.searchTable;
-
       if (searchValue) {
         this.tableData = data.filter(function(row) {
           return Object.keys(row).some(function(key) {
@@ -391,15 +390,13 @@ export default {
       } else {
         this.tableData = data;
       }
-      console.log("Running!");
     }
   },
   mounted() {
-    var access_token = getMyToken();
-    getSection(access_token).then(response => {
+    getSection().then(response => {
       this.section = response.data.data;
     });
-    getMember(access_token).then(response => {
+    getMember().then(response => {
       let res = response.data.data;
       this.allMember = this.member = res.filter(ele => ele.position == "美工");
     });
@@ -407,5 +404,24 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.el-table__body {
+  td {
+    padding: 5px 0;
+    .cell {
+      line-height: normal;
+    }
+  }
+}
+.el-table__footer {
+  .cell {
+    line-height: normal;
+    color: red;
+    font-weight: 550;
+  }
+}
+.el-radio.is-bordered {
+  padding: 6px 16px 0 6px;
+  height: 30px;
+}
 </style>

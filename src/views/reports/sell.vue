@@ -26,9 +26,12 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item label='账号' class='input'>
-            <el-select v-model='condition.account' filterable multiple collapse-tags placeholder='账号'>
-              <el-option v-for='(item,index) in account' :index='item[index]' :key='item.id' :label='item.store' :value='item.store'></el-option>
+          <el-form-item label="账号" class="input">
+            <el-select v-model="condition.account" multiple collapse-tags placeholder="账号">
+              <el-button plain type="info" @click="selectall">全选</el-button>
+              <el-button plain type="info" @click="noselect">取消</el-button>
+              <el-option v-for="(item,index) in account" :index="item[index]" :key="item.id" :label="item.store" :value="item.id">
+              </el-option>
             </el-select>
           </el-form-item>
 
@@ -89,6 +92,7 @@
   </div>
 </template>
 
+<!--<script src="/assets/js/bootstrap-select.min.js"></script>-->
 <script>
 import {
   getSection,
@@ -189,6 +193,16 @@ export default {
     };
   },
   methods: {
+    selectall() {
+      const allValues = [];
+      for (const item of this.account) {
+        allValues.push(item.id);
+      }
+      this.condition.account = allValues;
+    },
+    noselect() {
+      this.condition.account = [];
+    },
     choosed() {
       let res = [];
       let val = this.condition.department;
@@ -287,16 +301,15 @@ export default {
       });
     },
     empty(row, column, cellValue, index) {
-      //cellValue = cellValue.map(Number);
-      let cell;
-      if (typeof parseFloat(cellValue) !== NaN) {
-        cell = Math.round(cellValue * 100) / 100;
-      } else {
-        cell = cellValue;
-      }
-      console.log(cell);
-      //return false;
-      return cell ? cell : "--";
+      row.grossprofitRate = Math.round(row.grossprofitRate * 100) / 100;
+      row.expressFare = Math.round(row.expressFare * 100) / 100;
+      row.refund = Math.round(row.refund * 100) / 100;
+      row.refundrate = Math.round(row.refundrate * 100) / 100;
+      row.diefeeZn = Math.round(row.diefeeZn * 100) / 100;
+      row.insertionFee = Math.round(row.insertionFee * 100) / 100;
+      row.grossprofit = Math.round(row.grossprofit * 100) / 100;
+
+      return cellValue ? cellValue : "--";
     },
     // 搜索
     handleSearch() {
@@ -318,11 +331,6 @@ export default {
       }
       console.log("Running!");
     },
-    // 格式化数据
-    // formatter(row, column, cellValue) {
-    //   return parseFloat(row.salemoneyzn);
-    // },
-
     // 数字排序
     sortNumber(column, prop, order) {
       const data = this.tableData;
@@ -425,28 +433,24 @@ export default {
 };
 </script>
 
-<style lang='scss'>
-.el-table__body {
-  //margin-bottom: 10px;
-  td {
-    padding: 5px 0;
-    .cell {
-      line-height: normal;
-    }
+<style lang="scss" scoped>
+.el-select-dropdown {
+  .el-button--info.is-plain {
+    width: 50%;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    margin-left: 0;
+    float: left;
+    border-radius: 0 !important;
+    color: #333;
+    background-color: #fff;
   }
-}
-.el-table__footer {
-  //position: fixed;
-  //bottom: 0;
-  .cell {
-    line-height: normal;
-    color: red;
-    font-weight: 550;
+  .el-button:hover {
+    color: #333;
+    background-color: #ebebeb;
+    border-color: #adadad;
   }
-}
-.el-radio.is-bordered {
-  padding: 6px 16px 0 6px;
-  height: 30px;
 }
 </style>
 
