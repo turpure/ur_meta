@@ -1,3 +1,0 @@
-<template>
-    <Myehcharts></Myehcharts>    
-</template>

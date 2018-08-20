@@ -6,6 +6,8 @@
         <el-form :model='condition' :inline='true' ref='condition' label-width='68px' class='demo-form-inline' v-show='show'>
           <el-form-item label='部门' class='input'>
             <el-select v-model='condition.department' multiple collapse-tags placeholder='部门' @change='choosed'>
+              <el-button plain type="info" @click="selectalld">全选</el-button>
+              <el-button plain type="info" @click="noselectd">取消</el-button>
               <el-option v-for='(item,index) in department' :index='index' :key='item.department' :label='item.department' :value='item.department'></el-option>
             </el-select>
           </el-form-item>
@@ -16,11 +18,15 @@
           </el-form-item>
           <el-form-item label='销售员' class='input'>
             <el-select v-model='condition.member' multiple collapse-tags placeholder='销售员'>
+              <el-button plain type="info" @click="selectallm">全选</el-button>
+              <el-button plain type="info" @click="noselectm">取消</el-button>
               <el-option v-for='(item,index) in member' :index='index' :key='item.username' :label='item.username' :value='item.username'></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label='出货仓库' class='input'>
             <el-select v-model='condition.store' multiple collapse-tags placeholder='请选择'>
+              <el-button plain type="info" @click="selectalls">全选</el-button>
+              <el-button plain type="info" @click="noselects">取消</el-button>
               <el-option v-for='item in store' :key='item' :value='item'>
               </el-option>
             </el-select>
@@ -68,9 +74,9 @@
       </el-col>
     </el-row>
     <el-table :data="tableData" id="sale-table" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" :height="tableHeight" :max-height="tableHeight" :highlight-current-row="true" v-show="show2" style="width: 100%;zoom:0.6;">
-      <el-table-column min-width="75px" prop="pingtai" label="平台" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="80px" prop="suffix" label="账号" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="90px" prop="salesman" label="销售员" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="75px" prop="pingtai" label="平台" :formatter="empty" sortable></el-table-column>
+      <el-table-column min-width="80px" prop="suffix" label="账号" :formatter="empty" sortable></el-table-column>
+      <el-table-column min-width="90px" prop="salesman" label="销售员" :formatter="empty" sortable></el-table-column>
       <el-table-column min-width="106px" prop="salemoney" label="成交价$" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="106px" prop="salemoneyzn" label="成交价￥" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="130px" prop="ebayFeeebay" label="eBay成交费$" :formatter="empty" sortable="custom"></el-table-column>
@@ -92,7 +98,6 @@
   </div>
 </template>
 
-<!--<script src="/assets/js/bootstrap-select.min.js"></script>-->
 <script>
 import {
   getSection,
@@ -193,6 +198,36 @@ export default {
     };
   },
   methods: {
+    selectalls() {
+      const allValues = [];
+      for (const item of this.store) {
+        allValues.push(item);
+      }
+      this.condition.store = allValues;
+    },
+    noselects() {
+      this.condition.store = [];
+    },
+    selectallm() {
+      const allValues = [];
+      for (const item of this.member) {
+        allValues.push(item.username);
+      }
+      this.condition.member = allValues;
+    },
+    noselectm() {
+      this.condition.member = [];
+    },
+    selectalld() {
+      const allValues = [];
+      for (const item of this.department) {
+        allValues.push(item.department);
+      }
+      this.condition.department = allValues;
+    },
+    noselectd() {
+      this.condition.department = [];
+    },
     selectall() {
       const allValues = [];
       for (const item of this.account) {
@@ -226,23 +261,11 @@ export default {
       if (this.show === false) {
         this.text = "显示输入框";
         let height = document.getElementById("app").clientHeight;
-        this.autoHeight = height + 408 + "px";
         this.tableHeight = height + 408 + "px";
-        let that = this;
-        window.onload = () => {
-          that.autoHeight = height + 408 + "px";
-          that.tableHeight = height + 408 + "px";
-        };
       } else if (this.show === true) {
         this.text = "隐藏输入框";
         let height = document.getElementById("app").clientHeight;
-        this.autoHeight = height + 200 + "px";
         this.tableHeight = height + 200 + "px";
-        let that = this;
-        window.onload = () => {
-          that.autoHeight = height + 200 + "px";
-          that.tableHeight = height + 200 + "px";
-        };
       }
     },
     changeActive() {
@@ -252,14 +275,9 @@ export default {
       this.show1 = false;
     },
     onSubmit(form) {
+      debugger
       let height = document.getElementById("app").clientHeight;
-      this.autoHeight = height + 220 + "px";
       this.tableHeight = height + 220 + "px";
-      let that = this;
-      window.onload = () => {
-        that.autoHeight = height + 220 + "px";
-        that.tableHeight = height + 220 + "px";
-      };
       this.show2 = true;
       this.$refs.condition.validate(valid => {
         if (valid) {
@@ -300,16 +318,6 @@ export default {
         }
       });
     },
-    empty(row, column, cellValue, index) {
-      row.grossprofitRate = Math.round(row.grossprofitRate * 100) / 100;
-      row.expressFare = Math.round(row.expressFare * 100) / 100;
-      row.refund = Math.round(row.refund * 100) / 100;
-      row.refundrate = Math.round(row.refundrate * 100) / 100;
-      row.diefeeZn = Math.round(row.diefeeZn * 100) / 100;
-      row.insertionFee = Math.round(row.insertionFee * 100) / 100;
-      row.grossprofit = Math.round(row.grossprofit * 100) / 100;
-      return cellValue ? cellValue : "--";
-    },
     // 搜索
     handleSearch() {
       const searchValue = this.searchValue && this.searchValue.toLowerCase();
@@ -337,6 +345,17 @@ export default {
       } else {
         this.tableData = data.sort(compareUp(data, column.prop));
       }
+    },
+    empty(row, column, cellValue, index) {
+      row.grossprofitRate = Math.round(row.grossprofitRate * 100) / 100;
+      row.expressFare = Math.round(row.expressFare * 100) / 100;
+      row.refund = Math.round(row.refund * 100) / 100;
+      row.refundrate = Math.round(row.refundrate * 100) / 100;
+      row.diefeeZn = Math.round(row.diefeeZn * 100) / 100;
+      row.insertionFee = Math.round(row.insertionFee * 100) / 100;
+      row.grossprofit = Math.round(row.grossprofit * 100) / 100;
+      row.saleOpeFeeZn = Math.round(row.saleOpeFeeZn * 100) / 100;
+      return cellValue ? cellValue : "--";
     },
     // 导出
     exportExcel() {

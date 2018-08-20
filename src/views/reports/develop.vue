@@ -6,11 +6,15 @@
         <el-form :model="condition" :inline="true" ref="condition" label-width="68px" class="demo-form-inline" v-show="show">
           <el-form-item label="部门" class="input">
             <el-select v-model="formInline.region" multiple collapse-tags placeholder="部门" @change="choosed">
-              <el-option v-for="(item,index) in section" :index="index" :key="item.department" :label="item.department" :value="item.department"></el-option>
+              <el-button plain type="info" @click="selectalld">全选</el-button>
+              <el-button plain type="info" @click="noselectd">取消</el-button>
+              <el-option v-for="(item,index) in department" :index="index" :key="item.department" :label="item.department" :value="item.department"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="开发员" class="input">
             <el-select v-model="condition.member" multiple collapse-tags placeholder="开发员">
+              <el-button plain type="info" @click="selectallm">全选</el-button>
+              <el-button plain type="info" @click="noselectm">取消</el-button>
               <el-option v-for="(item,index) in member" :index="index" :key="item.username" :label="item.username" :value="item.username"></el-option>
             </el-select>
           </el-form-item>
@@ -49,7 +53,7 @@
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="业绩归属1人表" name="first">
         <el-table :data="tableData01" id="sale-table01" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show2" :height="tableHeight" :max-height="tableHeight" :highlight-current-row="true" style="width: 100%;zoom:0.6">
-          <el-table-column min-width="150px" prop="salernameZero" label="业绩归属人" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column min-width="150px" prop="salernameZero" label="业绩归属人" :formatter="empty" sortable></el-table-column>
           <el-table-column min-width="220px" prop="salemoneyrmbznZero" label="销售额￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
           <el-table-column min-width="220px" prop="netprofitZero" label="毛利润￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
           <el-table-column min-width="220px" prop="netrateZero" label="毛利率%（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
@@ -66,7 +70,7 @@
       </el-tab-pane>
       <el-tab-pane label="业绩归属2人表" name="second">
         <el-table :data="tableData02" id="sale-table02" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show2" :height="tableHeight" :max-height="tableHeight" :highlight-current-row="true" style="width: 100%;zoom:0.6">
-          <el-table-column min-width="160px" prop="salernameZero" label="业绩归属人2" :formatter="empty" sortable="custom"></el-table-column>
+          <el-table-column min-width="160px" prop="salernameZero" label="业绩归属人2" :formatter="empty" sortable></el-table-column>
           <el-table-column min-width="220px" prop="salemoneyrmbznZero" label="销售额￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
           <el-table-column min-width="220px" prop="netprofitZero" label="毛利润￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
           <el-table-column min-width="220px" prop="netrateZero" label="毛利率%（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
@@ -87,20 +91,7 @@
 
 <script>
 import { getMyToken } from "../../api/api";
-import {
-  getSection,
-  getPlatform,
-  getMember,
-  getStore,
-  getAccount,
-  getSales,
-  getDevelop,
-  getPurchase,
-  getPossess,
-  getEbaysales,
-  getSalestrend,
-  getArtist
-} from "../../api/profit";
+import { getSection, getMember, getDevelop } from "../../api/profit";
 import { compareUp, compareDown } from "../../api/tools";
 import FileSaver from "file-saver";
 import XLSX from "xlsx";
@@ -123,13 +114,11 @@ export default {
       searchTableSecond: [],
       searchValue: "",
       listLoading: false,
-      section: [],
       department: [],
       member: [],
       dateRange: [],
       dateType: [{ id: 1, type: "发货时间" }, { id: 0, type: "交易时间" }],
       formInline: {
-        user: "",
         region: []
       },
       condition: {
@@ -214,6 +203,26 @@ export default {
     };
   },
   methods: {
+    selectalld() {
+      const allValues = [];
+      for (const item of this.department) {
+        allValues.push(item.department);
+      }
+      this.formInline.region = allValues;
+    },
+    noselectd() {
+      this.formInline.region = [];
+    },
+    selectallm() {
+      const allValues = [];
+      for (const item of this.member) {
+        allValues.push(item.username);
+      }
+      this.condition.member = allValues;
+    },
+    noselectm() {
+      this.condition.member = [];
+    },
     choosed() {
       let res = [];
       this.member = [];
@@ -465,11 +474,10 @@ export default {
     }
   },
   mounted() {
-    var access_token = getMyToken();
-    getSection(access_token).then(response => {
-      this.section = response.data.data;
+    getSection().then(response => {
+      this.department = response.data.data;
     });
-    getMember(access_token).then(response => {
+    getMember().then(response => {
       let res = response.data.data;
       this.allMember = this.member = res.filter(ele => ele.position == "开发");
     });
@@ -551,7 +559,10 @@ export default {
     }
   }
 }
-.el-table__body {
+.el-table__body-wrapper {
   overflow: scroll;
+}
+.scroll {
+  height: 20px !important;
 }
 </style>

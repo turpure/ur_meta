@@ -6,12 +6,16 @@
         <el-form :model="condition" :inline="true" ref="condition" label-width="68px" class="demo-form-inline" v-show="show">
           <el-form-item label="部门" class="input">
             <el-select v-model="formInline.region" multiple collapse-tags placeholder="部门" @change="choosed">
+              <el-button plain type="info" @click="selectalld">全选</el-button>
+              <el-button plain type="info" @click="noselectd">取消</el-button>
               <el-option v-for="(item,index) in section" :index="item[index]" :key="item.department" :label="item.department" :value="item.department"></el-option>
             </el-select>
           </el-form-item>
 
           <el-form-item label="美工员" class="input">
             <el-select v-model="condition.member" multiple collapse-tags placeholder="美工员">
+              <el-button plain type="info" @click="selectallm">全选</el-button>
+              <el-button plain type="info" @click="noselectm">取消</el-button>
               <el-option v-for="(item,index) in member" :index="item[index]" :key="item.username" :label="item.username" :value="item.username"></el-option>
             </el-select>
           </el-form-item>
@@ -107,17 +111,12 @@ export default {
       dateType: [{ id: 1, type: "发货时间" }, { id: 0, type: "交易时间" }],
       member: [],
       formInline: {
-        user: "",
         region: []
       },
       condition: {
         member: [],
         dateType: 1,
         dateRange: []
-      },
-      membery: {
-        id: "",
-        region: ""
       },
       pickerOptions2: {
         shortcuts: [
@@ -186,6 +185,26 @@ export default {
     };
   },
   methods: {
+    selectalld() {
+      const allValues = [];
+      for (const item of this.section) {
+        allValues.push(item.department);
+      }
+      this.formInline.region = allValues;
+    },
+    noselectd() {
+      this.formInline.region = [];
+    },
+    selectallm() {
+      const allValues = [];
+      for (const item of this.member) {
+        allValues.push(item.username);
+      }
+      this.condition.member = allValues;
+    },
+    noselectm() {
+      this.condition.member = [];
+    },
     choosed() {
       let res = [];
       this.member = [];
@@ -277,6 +296,9 @@ export default {
             });
           } else {
             this.listLoading = true;
+            form.member = this.member.map(m => {
+              return m.username;
+            });
             getPossess(form).then(response => {
               this.listLoading = false;
               this.tableData = this.searchTable = response.data.data;
@@ -405,6 +427,24 @@ export default {
 </script>
 
 <style lang="scss">
+.el-select-dropdown {
+  .el-button--info.is-plain {
+    width: 50%;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    margin-left: 0;
+    float: left;
+    border-radius: 0 !important;
+    color: #333;
+    background-color: #fff;
+  }
+  .el-button:hover {
+    color: #333;
+    background-color: #ebebeb;
+    border-color: #adadad;
+  }
+}
 .el-table__body {
   td {
     padding: 5px 0;
