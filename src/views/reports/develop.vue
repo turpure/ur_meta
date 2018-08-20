@@ -227,6 +227,7 @@ export default {
     choosed() {
       let res = [];
       this.member = [];
+      this.condition.member = [];
       let val = this.formInline.region;
       res = this.allMember;
       let per = [];
