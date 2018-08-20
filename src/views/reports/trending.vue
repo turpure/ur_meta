@@ -74,13 +74,7 @@ import {
   getMember,
   getStore,
   getAccount,
-  getSales,
-  getDevelop,
-  getPurchase,
-  getPossess,
-  getEbaysales,
-  getSalestrend,
-  getArtist
+  getSalestrend
 } from "../../api/profit";
 import { compareUp, compareDown } from "../../api/tools";
 
@@ -110,7 +104,6 @@ export default {
         toolbox: {
           show: true,
           feature: {
-            //mark: { show: true },
             dataView: { show: true, readOnly: false },
             magicType: { show: true, type: ["line", "bar", "stack", "tiled"] },
             restore: { show: true },
@@ -313,7 +306,6 @@ export default {
             form.member = this.member.map(m => {
               return m.username;
             });
-            //form.department = ["运营一部", "运营二部", "运营三部"];
             getSalestrend(form).then(response => {
               this.listLoading = false;
               let ret = response.data.data;
@@ -353,7 +345,6 @@ export default {
           } else if (this.condition.member != "") {
             this.listLoading = true;
             form.member = this.condition.member;
-            //form.department = ["运营一部", "运营二部", "运营三部"];
             getSalestrend(form).then(response => {
               this.listLoading = false;
               let ret = response.data.data;
@@ -391,7 +382,6 @@ export default {
               _this.$refs.myecharts.drawAreaStack(this.options);
             });
           } else {
-            //form.department = ["运营一部", "运营二部", "运营三部"];
             getSalestrend(form).then(response => {
               this.listLoading = false;
               let ret = response.data.data;
