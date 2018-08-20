@@ -6,6 +6,8 @@
         <el-form :model="condition" :inline="true" ref="condition" label-width="68px" class="demo-form-inline" v-show="show">
           <el-form-item label="采购员" class="input">
             <el-select v-model="condition.member" multiple collapse-tags placeholder="采购员">
+              <el-button plain type="info" @click="selectallm">全选</el-button>
+              <el-button plain type="info" @click="noselectm">取消</el-button>
               <el-option v-for="(item,index) in member" :index="item[index]" :key="item.username" :label="item.username" :value="item.username"></el-option>
               <!-- <el-option label="区域二" value="beijing"></el-option> -->
             </el-select>
@@ -46,7 +48,7 @@
       </el-col>
     </el-row>
     <el-table :data="tableData" id="sale-table" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show2" height="830" style="width: 100%">
-      <el-table-column min-width="90px" prop="purchaser" label="采购员" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="90px" prop="purchaser" label="采购员" :formatter="empty" sortable></el-table-column>
       <el-table-column min-width="100px" prop="salemoneyrmbus" label="成交价$" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="100px" prop="salemoneyrmbzn" label="成交价￥" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="130px" prop="ppebayus" label="交易费汇总$" :formatter="empty" sortable="custom"></el-table-column>
@@ -65,20 +67,7 @@
 
 <script>
 import { getMyToken } from "../../api/api";
-import {
-  getSection,
-  getPlatform,
-  getMember,
-  getStore,
-  getAccount,
-  getSales,
-  getDevelop,
-  getPurchase,
-  getPossess,
-  getEbaysales,
-  getSalestrend,
-  getArtist
-} from "../../api/profit";
+import { getMember, getPurchase } from "../../api/profit";
 import { compareUp, compareDown } from "../../api/tools";
 import FileSaver from "file-saver";
 import XLSX from "xlsx";
@@ -176,6 +165,16 @@ export default {
     };
   },
   methods: {
+    selectallm() {
+      const allValues = [];
+      for (const item of this.member) {
+        allValues.push(item.username);
+      }
+      this.condition.member = allValues;
+    },
+    noselectm() {
+      this.condition.member = [];
+    },
     handleChange() {
       this.show = !this.show;
       this.isA = !this.isA;
@@ -235,6 +234,7 @@ export default {
       console.log("Running!");
     },
     empty(row, column, cellValue, index) {
+      row.totalamount = Math.round(row.totalamount * 100) / 100;
       return cellValue ? cellValue : "--";
     },
     getSummaries(param) {

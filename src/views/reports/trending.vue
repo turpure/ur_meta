@@ -12,6 +12,8 @@
           </el-form-item>
           <el-form-item label="部门" class="input">
             <el-select v-model="condition.department" multiple collapse-tags placeholder="部门" @change="choosed">
+              <el-button plain type="info" @click="selectalld">全选</el-button>
+              <el-button plain type="info" @click="noselectd">取消</el-button>
               <el-option v-for="(item,index) in department" :index="index" :key="item.department" :label="item.department" :value="item.department">
               </el-option>
             </el-select>
@@ -24,6 +26,8 @@
           </el-form-item>
           <el-form-item label='销售员' class='input'>
             <el-select v-model='condition.member' multiple collapse-tags placeholder='销售员'>
+              <el-button plain type="info" @click="selectallm">全选</el-button>
+              <el-button plain type="info" @click="noselectm">取消</el-button>
               <el-option v-for='(item,index) in member' :index='index' :key='item.username' :label='item.username' :value='item.username'></el-option>
             </el-select>
           </el-form-item>
@@ -142,7 +146,6 @@ export default {
       searchTable: [],
       searchValue: "",
       listLoading: false,
-      section: [],
       platform: [],
       plat: "",
       member: [],
@@ -151,7 +154,6 @@ export default {
       dateType: [{ id: 0, type: "发货时间" }, { id: 1, type: "交易时间" }],
       dateRange: [],
       formInline: {
-        user: "",
         region: ""
       },
       condition: {
@@ -230,6 +232,26 @@ export default {
     };
   },
   methods: {
+    selectallm() {
+      const allValues = [];
+      for (const item of this.member) {
+        allValues.push(item.username);
+      }
+      this.condition.member = allValues;
+    },
+    noselectm() {
+      this.condition.member = [];
+    },
+    selectalld() {
+      const allValues = [];
+      for (const item of this.department) {
+        allValues.push(item.department);
+      }
+      this.condition.department = allValues;
+    },
+    noselectd() {
+      this.condition.department = [];
+    },
     selectall() {
       const allValues = [];
       for (const item of this.account) {
@@ -415,18 +437,11 @@ export default {
     }
   },
   mounted() {
-    var access_token = getMyToken();
-    getSection(access_token).then(response => {
-      this.section = response.data;
-    });
-    getPlatform(access_token).then(response => {
-      this.platform = response.data;
-    });
-    getMember(access_token).then(response => {
+    getMember().then(response => {
       let res = response.data.data;
       this.allMember = this.member = res.filter(ele => ele.position == "销售");
     });
-    getAccount(access_token).then(response => {
+    getAccount().then(response => {
       this.account = response.data.data;
     });
     getSection().then(response => {
