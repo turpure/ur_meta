@@ -18,7 +18,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="平台" class="input">
-            <el-select v-model="condition.plat"  multiple collapse-tags placeholder="平台" style="height: 40px;">
+            <el-select v-model="condition.plat" multiple collapse-tags placeholder="平台" style="height: 40px;">
               <el-option v-for="(item,index) in plat" :index="index" :key="item.plat" :label="item.plat" :value="item.plat">
               </el-option>
             </el-select>
@@ -46,8 +46,7 @@
               <el-option v-for="(item,index) in account" :index="index" :key="item.store" :label="item.store" :value="item.store"></el-option>
             </el-select>
           </el-form-item>
-            <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
-          </el-form-item>
+          <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
         </el-form>
       </transition>
       <div class="demo-block-control" @click="handleChange" style="left:0px;">
@@ -72,13 +71,7 @@ import {
   getMember,
   getStore,
   getAccount,
-  getSales,
-  getDevelop,
-  getPurchase,
-  getPossess,
-  getEbaysales,
-  getSalestrend,
-  getArtist
+  getSalestrend
 } from "../../api/profit";
 import { compareUp, compareDown } from "../../api/tools";
 
@@ -108,7 +101,6 @@ export default {
         toolbox: {
           show: true,
           feature: {
-            //mark: { show: true },
             dataView: { show: true, readOnly: false },
             magicType: { show: true, type: ["line", "bar", "stack", "tiled"] },
             restore: { show: true },
@@ -150,7 +142,7 @@ export default {
       account: [],
       department: [],
       dateType: [{ id: 1, type: "发货时间" }, { id: 0, type: "交易时间" }],
-      flag: [{ id: 0, type: '按天' }, { id: 2, type: '按月' }],
+      flag: [{ id: 0, type: "按天" }, { id: 2, type: "按月" }],
       dateRange: [],
       formInline: {
         region: ""
@@ -251,6 +243,7 @@ export default {
     },
     noselectd() {
       this.condition.department = [];
+      this.member = this.allMember;
     },
     selectall() {
       const allValues = [];
@@ -295,7 +288,7 @@ export default {
       this.show1 = false;
     },
     onSubmit(form) {
-      debugger
+      debugger;
       this.$refs.condition.validate(valid => {
         if (valid) {
           this.listLoading = true;
@@ -314,7 +307,6 @@ export default {
             form.member = this.member.map(m => {
               return m.username;
             });
-            //form.department = ["运营一部", "运营二部", "运营三部"];
             getSalestrend(form).then(response => {
               this.listLoading = false;
               let ret = response.data.data;
@@ -354,7 +346,6 @@ export default {
           } else if (this.condition.member != "") {
             this.listLoading = true;
             form.member = this.condition.member;
-            //form.department = ["运营一部", "运营二部", "运营三部"];
             getSalestrend(form).then(response => {
               this.listLoading = false;
               let ret = response.data.data;
@@ -392,7 +383,6 @@ export default {
               _this.$refs.myecharts.drawAreaStack(this.options);
             });
           } else {
-            //form.department = ["运营一部", "运营二部", "运营三部"];
             getSalestrend(form).then(response => {
               this.listLoading = false;
               let ret = response.data.data;

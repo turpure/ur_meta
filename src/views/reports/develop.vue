@@ -212,6 +212,7 @@ export default {
     },
     noselectd() {
       this.formInline.region = [];
+      this.member = this.allMember;
     },
     selectallm() {
       const allValues = [];

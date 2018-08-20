@@ -49,7 +49,7 @@
       <el-col :span="2" :offset="20">
         <el-input clearable placeholder="search" v-model="searchValue" @change="handleSearch"></el-input>
       </el-col>
-      <el-col :span="2"
+      <el-col :span="2">
         <el-button style="float:left;" type="default" @click="exportExcel">导出Excel</el-button>
       </el-col>
     </el-row>
@@ -194,6 +194,7 @@ export default {
     },
     noselectd() {
       this.formInline.region = [];
+      this.member = this.allMember;
     },
     selectallm() {
       const allValues = [];
