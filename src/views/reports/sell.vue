@@ -276,12 +276,13 @@ export default {
       this.show1 = false;
     },
     onSubmit(form) {
+      let myform = JSON.parse(JSON.stringify(form))
       let height = document.getElementById("app").clientHeight;
       this.tableHeight = height + 220 + "px";
       this.show2 = true;
       this.$refs.condition.validate(valid => {
         if (valid) {
-          if (form.department.length > 0 && form.member.length === 0) {
+          if (myform.department.length > 0 && myform.member.length === 0) {
             this.listLoading = true;
             const val = form.department;
             const res = this.allMember;
@@ -291,23 +292,23 @@ export default {
               );
               this.member.concat(per);
             }
-            form.member = this.member.map(m => {
+            myform.member = this.member.map(m => {
               return m.username;
             });
-            getSales(form).then(response => {
+            getSales(myform).then(response => {
               this.listLoading = false;
               this.tableData = this.searchTable = response.data.data;
             });
           } else if (this.condition.member !== "") {
             this.listLoading = true;
-            form.member = this.condition.member;
-            getSales(form).then(response => {
+            myform.member = this.condition.member;
+            getSales(myform).then(response => {
               this.listLoading = false;
               this.tableData = this.searchTable = response.data.data;
             });
           } else {
             this.listLoading = true;
-            getSales(form).then(response => {
+            getSales(myform).then(response => {
               this.listLoading = false;
               this.tableData = this.searchTable = response.data.data;
             });
