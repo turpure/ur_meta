@@ -107,14 +107,15 @@ export default {
       searchValue: "",
       listLoading: false,
       section: [],
-      dateType: [{ id: 0, type: "发货时间" }, { id: 1, type: "交易时间" }],
+      department: [],
+      dateType: [{ id: 1, type: "发货时间" }, { id: 0, type: "交易时间" }],
       member: [],
       formInline: {
         region: []
       },
       condition: {
         member: [],
-        dateType: 0,
+        dateType: 1,
         dateRange: []
       },
       pickerOptions2: {
@@ -193,6 +194,7 @@ export default {
     },
     noselectd() {
       this.formInline.region = [];
+      this.member = this.allMember;
     },
     selectallm() {
       const allValues = [];

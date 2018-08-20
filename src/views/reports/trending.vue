@@ -4,11 +4,10 @@
     <div class="demo-block demo-box demo-zh-CN demo-transition" @mouseover="changeActive" @mouseout="removeActive">
       <transition name="el-fade-in-linear">
         <el-form :model="condition" :inline="true" ref="condition" class="demo-form-inline" label-width="68px" v-show="show">
-          <el-form-item label="时间类型" class="input">
-            <el-select v-model="formInline.region" placeholder="按天">
-              <el-option label="按天" value="shanghai"></el-option>
-              <el-option label="按月" value="beijing"></el-option>
-            </el-select>
+          <el-form-item label="显示方式" class="input" prop="flag">
+            <el-radio-group v-model="condition.flag">
+              <el-radio border v-for="(item,index) in flag" :index="index" :key="item.id" :label="item.id" :value="item.id">{{item.type}}</el-radio>
+            </el-radio-group>
           </el-form-item>
           <el-form-item label="部门" class="input">
             <el-select v-model="condition.department" multiple collapse-tags placeholder="部门" @change="choosed">
@@ -19,7 +18,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="平台" class="input">
-            <el-select v-model="condition.plat" clearable placeholder="平台" style="height: 40px;">
+            <el-select v-model="condition.plat" multiple collapse-tags placeholder="平台" style="height: 40px;">
               <el-option v-for="(item,index) in plat" :index="index" :key="item.plat" :label="item.plat" :value="item.plat">
               </el-option>
             </el-select>
@@ -44,12 +43,10 @@
             <el-select v-model="condition.account" multiple collapse-tags placeholder="账号">
               <el-button plain type="info" @click="selectall">全选</el-button>
               <el-button plain type="info" @click="noselect">取消</el-button>
-              <el-option v-for="(item,index) in account" :index="item[index]" :key="item.id" :label="item.store" :value="item.id"></el-option>
+              <el-option v-for="(item,index) in account" :index="index" :key="item.store" :label="item.store" :value="item.store"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
-          </el-form-item>
+          <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
         </el-form>
       </transition>
       <div class="demo-block-control" @click="handleChange" style="left:0px;">
@@ -139,12 +136,13 @@ export default {
       searchTable: [],
       searchValue: "",
       listLoading: false,
-      platform: [],
-      plat: "",
+      section: [],
+      plat: [],
       member: [],
       account: [],
       department: [],
-      dateType: [{ id: 0, type: "发货时间" }, { id: 1, type: "交易时间" }],
+      dateType: [{ id: 1, type: "发货时间" }, { id: 0, type: "交易时间" }],
+      flag: [{ id: 0, type: "按天" }, { id: 2, type: "按月" }],
       dateRange: [],
       formInline: {
         region: ""
@@ -154,7 +152,8 @@ export default {
         plat: "",
         member: [],
         store: [],
-        dateType: 0,
+        dateType: 1,
+        flag: 0,
         dateRange: [],
         account: []
       },
@@ -244,11 +243,12 @@ export default {
     },
     noselectd() {
       this.condition.department = [];
+      this.member = this.allMember;
     },
     selectall() {
       const allValues = [];
       for (const item of this.account) {
-        allValues.push(item.id);
+        allValues.push(item.store);
       }
       this.condition.account = allValues;
     },
@@ -288,6 +288,7 @@ export default {
       this.show1 = false;
     },
     onSubmit(form) {
+      debugger;
       this.$refs.condition.validate(valid => {
         if (valid) {
           this.listLoading = true;

@@ -113,7 +113,6 @@ import XLSX from "xlsx";
 export default {
   data() {
     return {
-      autoHeight: "",
       tableHeight: 0,
       allMember: [],
       isA: true,
@@ -227,6 +226,7 @@ export default {
     },
     noselectd() {
       this.condition.department = [];
+      this.member = this.allMember;
     },
     selectall() {
       const allValues = [];
