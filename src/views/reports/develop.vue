@@ -208,6 +208,7 @@ export default {
         allValues.push(item.department);
       }
       this.formInline.region = allValues;
+      this.member = this.allMember;
     },
     noselectd() {
       this.formInline.region = [];
