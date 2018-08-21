@@ -222,6 +222,7 @@ export default {
         allValues.push(item.department);
       }
       this.condition.department = allValues;
+      this.member = this.allMember;
     },
     noselectd() {
       this.condition.department = [];
