@@ -17,7 +17,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label='销售员' class='input'>
-            <el-select v-model='condition.member' multiple collapse-tags placeholder='销售员'>
+            <el-select v-model='condition.member' filterable multiple collapse-tags placeholder='销售员'>
               <el-button plain type="info" @click="selectallm">全选</el-button>
               <el-button plain type="info" @click="noselectm">取消</el-button>
               <el-option v-for='(item,index) in member' :index='index' :key='item.username' :label='item.username' :value='item.username'></el-option>
@@ -33,7 +33,7 @@
           </el-form-item>
 
           <el-form-item label="账号" class="input">
-            <el-select v-model="condition.account" multiple collapse-tags placeholder="账号">
+            <el-select v-model="condition.account" filterable multiple collapse-tags placeholder="账号">
               <el-button plain type="info" @click="selectall">全选</el-button>
               <el-button plain type="info" @click="noselect">取消</el-button>
               <el-option v-for="(item,index) in account" :index="item[index]" :key="item.id" :label="item.store" :value="item.id">
@@ -121,7 +121,6 @@ export default {
       show1: false,
       show2: false,
       tableData: [],
-      res: [],
       searchTable: [],
       searchValue: "",
       listLoading: false,
@@ -276,7 +275,7 @@ export default {
       this.show1 = false;
     },
     onSubmit(form) {
-      let myform = JSON.parse(JSON.stringify(form))
+      let myform = JSON.parse(JSON.stringify(form));
       let height = document.getElementById("app").clientHeight;
       this.tableHeight = height + 220 + "px";
       this.show2 = true;
@@ -336,7 +335,6 @@ export default {
       } else {
         this.tableData = data;
       }
-      console.log("Running!");
     },
     // 数字排序
     sortNumber(column, prop, order) {
@@ -347,6 +345,7 @@ export default {
         this.tableData = data.sort(compareUp(data, column.prop));
       }
     },
+    //小数和空值格式化
     empty(row, column, cellValue, index) {
       row.grossprofitRate = Math.round(row.grossprofitRate * 100) / 100;
       row.expressFare = Math.round(row.expressFare * 100) / 100;

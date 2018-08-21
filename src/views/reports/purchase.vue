@@ -9,7 +9,6 @@
               <el-button plain type="info" @click="selectallm">全选</el-button>
               <el-button plain type="info" @click="noselectm">取消</el-button>
               <el-option v-for="(item,index) in member" :index="item[index]" :key="item.username" :label="item.username" :value="item.username"></el-option>
-              <!-- <el-option label="区域二" value="beijing"></el-option> -->
             </el-select>
           </el-form-item>
 
@@ -86,10 +85,6 @@ export default {
       listLoading: false,
       member: [],
       dateType: [{ id: 1, type: "发货时间" }, { id: 0, type: "交易时间" }],
-      formInline: {
-        user: "",
-        region: ""
-      },
       condition: {
         member: [],
         dateType: 1,
@@ -158,10 +153,7 @@ export default {
             }
           }
         ]
-      },
-      value5: [],
-      value11: [],
-      value7: ""
+      }
     };
   },
   methods: {
@@ -217,7 +209,6 @@ export default {
     handleSearch() {
       let searchValue = this.searchValue && this.searchValue.toLowerCase();
       let data = this.searchTable;
-
       if (searchValue) {
         this.tableData = data.filter(function(row) {
           return Object.keys(row).some(function(key) {
@@ -231,7 +222,6 @@ export default {
       } else {
         this.tableData = data;
       }
-      console.log("Running!");
     },
     empty(row, column, cellValue, index) {
       row.totalamount = Math.round(row.totalamount * 100) / 100;
@@ -303,8 +293,7 @@ export default {
     //  return wbout
   },
   mounted() {
-    var access_token = getMyToken();
-    getMember(access_token).then(response => {
+    getMember().then(response => {
       let res = response.data.data;
       this.member = res.filter(ele => ele.position == "采购");
     });

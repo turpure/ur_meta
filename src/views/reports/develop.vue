@@ -12,7 +12,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="开发员" class="input">
-            <el-select v-model="condition.member" multiple collapse-tags placeholder="开发员">
+            <el-select v-model="condition.member" filterable multiple collapse-tags placeholder="开发员">
               <el-button plain type="info" @click="selectallm">全选</el-button>
               <el-button plain type="info" @click="noselectm">取消</el-button>
               <el-option v-for="(item,index) in member" :index="index" :key="item.username" :label="item.username" :value="item.username"></el-option>
@@ -99,7 +99,6 @@ import XLSX from "xlsx";
 export default {
   data() {
     return {
-      autoHeight: "",
       tableHeight: 0,
       allMember: [],
       isA: true,
@@ -248,23 +247,11 @@ export default {
       if (this.show == false) {
         this.text = "显示输入框";
         let height = document.getElementById("app").clientHeight;
-        this.autoHeight = height + 320 + "px";
         this.tableHeight = height + 320 + "px";
-        let that = this;
-        window.onload = () => {
-          that.autoHeight = height + 320 + "px";
-          that.tableHeight = height + 320 + "px";
-        };
       } else if (this.show == true) {
         this.text = "隐藏输入框";
         let height = document.getElementById("app").clientHeight;
-        this.autoHeight = height + 220 + "px";
         this.tableHeight = height + 220 + "px";
-        let that = this;
-        window.onload = () => {
-          that.autoHeight = height + 220 + "px";
-          that.tableHeight = height + 220 + "px";
-        };
       }
     },
     changeActive() {
@@ -277,14 +264,9 @@ export default {
       this.activeName = tab.name;
     },
     onSubmit(form) {
+      let myform = JSON.parse(JSON.stringify(form));
       let height = document.getElementById("app").clientHeight;
-      this.autoHeight = height + 220 + "px";
       this.tableHeight = height + 220 + "px";
-      let that = this;
-      window.onload = () => {
-        that.autoHeight = height + 220 + "px";
-        that.tableHeight = height + 220 + "px";
-      };
       let posseman1Data;
       let posseman2Data;
       let ret;
@@ -306,10 +288,10 @@ export default {
               );
               this.member.concat(person);
             }
-            form.member = this.member.map(m => {
+            myform.member = this.member.map(m => {
               return m.username;
             });
-            getDevelop(form).then(response => {
+            getDevelop(myform).then(response => {
               this.listLoading = false;
               ret = response.data.data;
               posseman1Data = ret.filter(ele => ele.tableType == "归属1人表");
@@ -319,8 +301,8 @@ export default {
             });
           } else if (this.condition.member.length > 0) {
             this.listLoading = true;
-            form.member = this.condition.member;
-            getDevelop(form).then(response => {
+            myform.member = this.condition.member;
+            getDevelop(myform).then(response => {
               this.listLoading = false;
               ret = response.data.data;
               posseman1Data = ret.filter(ele => ele.tableType == "归属1人表");
@@ -330,7 +312,7 @@ export default {
             });
           } else {
             this.listLoading = true;
-            getDevelop(form).then(response => {
+            getDevelop(myform).then(response => {
               this.listLoading = false;
               ret = response.data.data;
               posseman1Data = ret.filter(ele => ele.tableType == "归属1人表");

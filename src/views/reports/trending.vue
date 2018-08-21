@@ -18,13 +18,13 @@
             </el-select>
           </el-form-item>
           <el-form-item label="平台" class="input">
-            <el-select v-model="condition.plat" multiple collapse-tags placeholder="平台" style="height: 40px;">
+            <el-select v-model="condition.plat" clearable placeholder="平台" style="height: 40px;">
               <el-option v-for="(item,index) in plat" :index="index" :key="item.plat" :label="item.plat" :value="item.plat">
               </el-option>
             </el-select>
           </el-form-item>
           <el-form-item label='销售员' class='input'>
-            <el-select v-model='condition.member' multiple collapse-tags placeholder='销售员'>
+            <el-select v-model='condition.member' filterable multiple collapse-tags placeholder='销售员'>
               <el-button plain type="info" @click="selectallm">全选</el-button>
               <el-button plain type="info" @click="noselectm">取消</el-button>
               <el-option v-for='(item,index) in member' :index='index' :key='item.username' :label='item.username' :value='item.username'></el-option>
@@ -40,7 +40,7 @@
             </el-date-picker>
           </el-form-item>
           <el-form-item label="账号" class="input">
-            <el-select v-model="condition.account" multiple collapse-tags placeholder="账号">
+            <el-select v-model="condition.account" filterable multiple collapse-tags placeholder="账号">
               <el-button plain type="info" @click="selectall">全选</el-button>
               <el-button plain type="info" @click="noselect">取消</el-button>
               <el-option v-for="(item,index) in account" :index="index" :key="item.store" :label="item.store" :value="item.store"></el-option>
@@ -69,7 +69,6 @@ import {
   getSection,
   getPlatform,
   getMember,
-  getStore,
   getAccount,
   getSalestrend
 } from "../../api/profit";
@@ -132,21 +131,16 @@ export default {
       },
       show: true,
       show1: false,
-      tableData: [],
       searchTable: [],
       searchValue: "",
       listLoading: false,
-      section: [],
-      plat: [],
+      plat: "",
       member: [],
       account: [],
       department: [],
       dateType: [{ id: 1, type: "发货时间" }, { id: 0, type: "交易时间" }],
       flag: [{ id: 0, type: "按天" }, { id: 2, type: "按月" }],
       dateRange: [],
-      formInline: {
-        region: ""
-      },
       condition: {
         department: [],
         plat: "",
@@ -289,7 +283,7 @@ export default {
       this.show1 = false;
     },
     onSubmit(form) {
-      debugger;
+      let myform = JSON.parse(JSON.stringify(form));
       this.$refs.condition.validate(valid => {
         if (valid) {
           this.listLoading = true;
@@ -305,10 +299,10 @@ export default {
               );
               this.member.concat(per);
             }
-            form.member = this.member.map(m => {
+            myform.member = this.member.map(m => {
               return m.username;
             });
-            getSalestrend(form).then(response => {
+            getSalestrend(myform).then(response => {
               this.listLoading = false;
               let ret = response.data.data;
               let lineName = [];
@@ -346,8 +340,8 @@ export default {
             });
           } else if (this.condition.member != "") {
             this.listLoading = true;
-            form.member = this.condition.member;
-            getSalestrend(form).then(response => {
+            myform.member = this.condition.member;
+            getSalestrend(myform).then(response => {
               this.listLoading = false;
               let ret = response.data.data;
               let lineName = [];
@@ -384,7 +378,7 @@ export default {
               _this.$refs.myecharts.drawAreaStack(this.options);
             });
           } else {
-            getSalestrend(form).then(response => {
+            getSalestrend(myform).then(response => {
               this.listLoading = false;
               let ret = response.data.data;
               let lineName = [];

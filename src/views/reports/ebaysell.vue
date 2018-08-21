@@ -63,27 +63,13 @@
 </template>
 
 <script>
-import {
-  getSection,
-  getPlatform,
-  getMember,
-  getStore,
-  getAccount,
-  getSales,
-  getDevelop,
-  getPurchase,
-  getPossess,
-  getEbaysales,
-  getSalestrend,
-  getArtist
-} from "../../api/profit";
+import { getEbaysales } from "../../api/profit";
 import { compareUp, compareDown } from "../../api/tools";
 import FileSaver from "file-saver";
 import XLSX from "xlsx";
 export default {
   data() {
     return {
-      autoHeight: "",
       tableHeight: 0,
       isA: true,
       text: "显示输入框",
@@ -95,12 +81,8 @@ export default {
       searchValue: "",
       listLoading: false,
       dateType: [{ id: 0, type: "发货时间" }, { id: 1, type: "交易时间" }],
-      formInline: {
-        user: "",
-        region: ""
-      },
       condition: {
-        member: "",
+        member: [],
         dateType: 0,
         dateRange: []
       },
@@ -177,23 +159,11 @@ export default {
       if (this.show == false) {
         this.text = "显示输入框";
         let height = document.getElementById("app").clientHeight;
-        this.autoHeight = height - 58 + "px";
         this.tableHeight = height - 58 + "px";
-        let that = this;
-        window.onload = () => {
-          that.autoHeight = height - 58 + "px";
-          that.tableHeight = height - 58 + "px";
-        };
       } else if (this.show == true) {
         this.text = "隐藏输入框";
         let height = document.getElementById("app").clientHeight;
-        this.autoHeight = height - 123 + "px";
         this.tableHeight = height - 123 + "px";
-        let that = this;
-        window.onload = () => {
-          that.autoHeight = height - 123 + "px";
-          that.tableHeight = height - 123 + "px";
-        };
       }
     },
     changeActive() {
@@ -204,13 +174,7 @@ export default {
     },
     onSubmit(form) {
       let height = document.getElementById("app").clientHeight;
-      this.autoHeight = height - 123 + "px";
       this.tableHeight = height - 123 + "px";
-      let that = this;
-      window.onload = () => {
-        that.autoHeight = height - 123 + "px";
-        that.tableHeight = height - 123 + "px";
-      };
       this.show2 = true;
       this.$refs.condition.validate(valid => {
         if (valid) {
@@ -301,7 +265,6 @@ export default {
     handleSearch() {
       let searchValue = this.searchValue && this.searchValue.toLowerCase();
       let data = this.searchTable;
-
       if (searchValue) {
         this.tableData = data.filter(function(row) {
           return Object.keys(row).some(function(key) {
@@ -315,7 +278,6 @@ export default {
       } else {
         this.tableData = data;
       }
-      console.log("Running!");
     }
   }
 };

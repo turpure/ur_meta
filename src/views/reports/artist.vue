@@ -13,7 +13,7 @@
           </el-form-item>
 
           <el-form-item label="美工员" class="input">
-            <el-select v-model="condition.member" multiple collapse-tags placeholder="美工员">
+            <el-select v-model="condition.member" filterable multiple collapse-tags placeholder="美工员">
               <el-button plain type="info" @click="selectallm">全选</el-button>
               <el-button plain type="info" @click="noselectm">取消</el-button>
               <el-option v-for="(item,index) in member" :index="item[index]" :key="item.username" :label="item.username" :value="item.username"></el-option>
@@ -73,20 +73,7 @@
 
 <script>
 import { getMyToken } from "../../api/api";
-import {
-  getSection,
-  getPlatform,
-  getMember,
-  getStore,
-  getAccount,
-  getSales,
-  getDevelop,
-  getPurchase,
-  getPossess,
-  getEbaysales,
-  getSalestrend,
-  getArtist
-} from "../../api/profit";
+import { getSection, getMember, getPossess } from "../../api/profit";
 import { compareUp, compareDown } from "../../api/tools";
 import FileSaver from "file-saver";
 import XLSX from "xlsx";
@@ -94,7 +81,6 @@ import XLSX from "xlsx";
 export default {
   data() {
     return {
-      autoHeight: "",
       tableHeight: 0,
       allMember: [],
       isA: true,
@@ -107,7 +93,6 @@ export default {
       searchValue: "",
       listLoading: false,
       section: [],
-      department: [],
       dateType: [{ id: 1, type: "发货时间" }, { id: 0, type: "交易时间" }],
       member: [],
       formInline: {
@@ -230,23 +215,11 @@ export default {
       if (this.show == false) {
         this.text = "显示输入框";
         let height = document.getElementById("app").clientHeight;
-        this.autoHeight = height - 58 + "px";
         this.tableHeight = height - 58 + "px";
-        let that = this;
-        window.onload = () => {
-          that.autoHeight = height - 58 + "px";
-          that.tableHeight = height - 58 + "px";
-        };
       } else if (this.show == true) {
         this.text = "隐藏输入框";
         let height = document.getElementById("app").clientHeight;
-        this.autoHeight = height - 123 + "px";
         this.tableHeight = height - 123 + "px";
-        let that = this;
-        window.onload = () => {
-          that.autoHeight = height - 123 + "px";
-          that.tableHeight = height - 123 + "px";
-        };
       }
     },
     changeActive() {
@@ -256,14 +229,9 @@ export default {
       this.show1 = false;
     },
     onSubmit(form) {
+      let myform = JSON.parse(JSON.stringify(form));
       let height = document.getElementById("app").clientHeight;
-      this.autoHeight = height - 123 + "px";
       this.tableHeight = height - 123 + "px";
-      let that = this;
-      window.onload = () => {
-        that.autoHeight = height - 123 + "px";
-        that.tableHeight = height - 123 + "px";
-      };
       this.show2 = true;
       this.$refs.condition.validate(valid => {
         if (valid) {
@@ -282,26 +250,26 @@ export default {
               );
               this.member.concat(person);
             }
-            form.member = this.member.map(m => {
+            myform.member = this.member.map(m => {
               return m.username;
             });
-            getPossess(form).then(response => {
+            getPossess(myform).then(response => {
               this.listLoading = false;
               this.tableData = this.searchTable = response.data.data;
             });
           } else if (this.condition.member.length !== 0) {
             this.listLoading = true;
-            form.member = this.condition.member;
-            getPossess(form).then(response => {
+            myform.member = this.condition.member;
+            getPossess(myform).then(response => {
               this.listLoading = false;
               this.tableData = this.searchTable = response.data.data;
             });
           } else {
             this.listLoading = true;
-            form.member = this.member.map(m => {
+            myform.member = this.member.map(m => {
               return m.username;
             });
-            getPossess(form).then(response => {
+            getPossess(myform).then(response => {
               this.listLoading = false;
               this.tableData = this.searchTable = response.data.data;
             });
