@@ -18,7 +18,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="平台" class="input">
-            <el-select v-model="condition.plat" clearable placeholder="平台" style="height: 40px;">
+            <el-select v-model="condition.plat" multiple placeholder="平台" style="height: 40px;">
               <el-option v-for="(item,index) in plat" :index="index" :key="item.plat" :label="item.plat" :value="item.plat">
               </el-option>
             </el-select>
@@ -134,7 +134,7 @@ export default {
       searchTable: [],
       searchValue: "",
       listLoading: false,
-      plat: "",
+      plat: [],
       member: [],
       account: [],
       department: [],
@@ -143,7 +143,7 @@ export default {
       dateRange: [],
       condition: {
         department: [],
-        plat: "",
+        plat: [],
         member: [],
         store: [],
         dateType: 1,
