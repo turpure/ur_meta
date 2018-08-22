@@ -46,7 +46,7 @@
         <el-button style="float:left;" type="default" @click="exportExcel">导出Excel</el-button>
       </el-col>
     </el-row>
-    <el-table :data="tableData" id="sale-table" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show2" height="830" style="width: 100%">
+    <el-table :data="tableData" id="sale-table" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show2" :height="tableHeight" :max-height="tableHeight" :highlight-current-row="true" style="width: 100%">
       <el-table-column min-width="90px" prop="purchaser" label="采购员" :formatter="empty" sortable></el-table-column>
       <el-table-column min-width="100px" prop="salemoneyrmbus" label="成交价$" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="100px" prop="salemoneyrmbzn" label="成交价￥" :formatter="empty" sortable="custom"></el-table-column>
@@ -74,6 +74,7 @@ import XLSX from "xlsx";
 export default {
   data() {
     return {
+      tableHeight: 0,
       isA: true,
       text: "显示输入框",
       show: true,
@@ -172,8 +173,12 @@ export default {
       this.isA = !this.isA;
       if (this.show == false) {
         this.text = "显示输入框";
+        let height = document.getElementById("app").clientHeight;
+        this.tableHeight = height - 140 + "px";
       } else if (this.show == true) {
         this.text = "隐藏输入框";
+        let height = document.getElementById("app").clientHeight;
+        this.tableHeight = height - 200 + "px";
       }
     },
     changeActive() {
@@ -183,6 +188,8 @@ export default {
       this.show1 = false;
     },
     onSubmit(form) {
+      let height = document.getElementById("app").clientHeight;
+      this.tableHeight = height - 200 + "px";
       this.show2 = true;
       this.$refs.condition.validate(valid => {
         if (valid) {

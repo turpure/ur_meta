@@ -262,11 +262,11 @@ export default {
       if (this.show === false) {
         this.text = "显示输入框";
         let height = document.getElementById("app").clientHeight;
-        this.tableHeight = height + 408 + "px";
+        this.tableHeight = height + 402 + "px";
       } else if (this.show === true) {
         this.text = "隐藏输入框";
         let height = document.getElementById("app").clientHeight;
-        this.tableHeight = height + 200 + "px";
+        this.tableHeight = height + 195 + "px";
       }
     },
     changeActive() {
@@ -278,7 +278,7 @@ export default {
     onSubmit(form) {
       let myform = JSON.parse(JSON.stringify(form));
       let height = document.getElementById("app").clientHeight;
-      this.tableHeight = height + 220 + "px";
+      this.tableHeight = height + 215 + "px";
       this.show2 = true;
       this.$refs.condition.validate(valid => {
         if (valid) {
