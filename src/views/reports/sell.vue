@@ -134,7 +134,7 @@ export default {
         plat: "",
         member: [],
         store: [],
-        dateType: 0,
+        dateType: 1,
         dateRange: [],
         account: []
       },
