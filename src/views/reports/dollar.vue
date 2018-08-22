@@ -1,14 +1,14 @@
 <template>
   <el-form :inline="true" :model="condition" class="demo-form-inline">
     <el-form-item label="销售汇率">
-      <el-input v-model="sell.mun" placeholder="销售汇率"></el-input>
+      <el-input v-model="sell.mun" :placeholder="placeholders"></el-input>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="onSubmit">保存</el-button>
     </el-form-item>
     <br>
     <el-form-item label="开发汇率">
-      <el-input v-model="oper.mun" placeholder="开发汇率"></el-input>
+      <el-input v-model="oper.mun" :placeholder="placeholderd"></el-input>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="onSubmit2">保存</el-button>
@@ -20,6 +20,8 @@ import { getUpdateexchange, getExchange } from "../../api/profit";
 export default {
   data() {
     return {
+      placeholderd: "",
+      placeholders: "",
       sell: {
         mun: ""
       },
@@ -51,11 +53,11 @@ export default {
   mounted() {
     getExchange().then(response => {
       let saler = response.data.data;
-      this.sell.mun = saler.salerRate;
+      this.placeholders = saler.salerRate;
     });
     getExchange().then(response => {
       let dev = response.data.data;
-      this.oper.mun = dev.devRate;
+      this.placeholderd = dev.devRate;
     });
   }
 };
