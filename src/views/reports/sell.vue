@@ -24,7 +24,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label='出货仓库' class='input'>
-            <el-select v-model='condition.store' multiple collapse-tags placeholder='请选择'>
+            <el-select v-model='condition.store' filterable multiple collapse-tags placeholder='请选择'>
               <el-button plain type="info" @click="selectalls">全选</el-button>
               <el-button plain type="info" @click="noselects">取消</el-button>
               <el-option v-for='item in store' :key='item' :value='item'>

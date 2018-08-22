@@ -20,7 +20,7 @@ export default {
     return {
       logining: false,
       ruleForm2: {
-        username: "",
+        username: "毕郑强",
         password: ""
       },
       rules2: {
