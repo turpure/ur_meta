@@ -122,7 +122,7 @@ export default {
       },
       condition: {
         member: [],
-        dateType: 0,
+        dateType: 1,
         dateRange: []
       },
       tableMap: {
