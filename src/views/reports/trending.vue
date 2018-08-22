@@ -146,7 +146,7 @@ export default {
         plat: [],
         member: [],
         store: [],
-        dateType: 1,
+        dateType: 0,
         flag: 0,
         dateRange: [],
         account: []

@@ -41,7 +41,12 @@ export function getAccount() {
     })
 }
 
-
+export function getExchange() {
+    return request({
+        url: '/upload/exchange',
+        method: 'get',
+    })
+}
 // name:sales method:post url:http://192.168.0.134:8089/v1/report/sales
 
 export function getSales(param) {
@@ -116,6 +121,14 @@ export function getSalesdeadfee(param) {
     const data = { 'formdata': param }
     return request({
         url: '/upload/sales-dead-fee',
+        method: 'post',
+        data
+    })
+}
+export function getUpdateexchange(param) {
+    const data = { 'condition': param }
+    return request({
+        url: '/upload/exchange',
         method: 'post',
         data
     })

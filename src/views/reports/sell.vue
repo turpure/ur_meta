@@ -31,7 +31,6 @@
               </el-option>
             </el-select>
           </el-form-item>
-
           <el-form-item label="账号" class="input">
             <el-select v-model="condition.account" filterable multiple collapse-tags placeholder="账号">
               <el-button plain type="info" @click="selectall">全选</el-button>
@@ -40,7 +39,6 @@
               </el-option>
             </el-select>
           </el-form-item>
-
           <el-form-item label='时间类型' class='input' prop='dateType'>
             <el-radio-group v-model='condition.dateType'>
               <el-radio border v-for='(item,index) in dateType' :index='index' :key='item.id' :label='item.id' :value='item.id'>{{item.type}}</el-radio>
@@ -74,26 +72,26 @@
       </el-col>
     </el-row>
     <el-table :data="tableData" id="sale-table" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" :height="tableHeight" :max-height="tableHeight" :highlight-current-row="true" v-show="show2" style="width: 100%;zoom:0.6;">
-      <el-table-column min-width="75px" prop="pingtai" label="平台" :formatter="empty" sortable></el-table-column>
-      <el-table-column min-width="80px" prop="suffix" label="账号" :formatter="empty" sortable></el-table-column>
-      <el-table-column min-width="90px" prop="salesman" label="销售员" :formatter="empty" sortable></el-table-column>
-      <el-table-column min-width="106px" prop="salemoney" label="成交价$" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="106px" prop="salemoneyzn" label="成交价￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="130px" prop="ebayFeeebay" label="eBay成交费$" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="140px" prop="ebayfeeznebay" label="eBay成交费￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="120px" prop="ppFee" label="PP成交费$" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="120px" prop="ppFeezn" label="PP成交费￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="120px" prop="costmoney" label="商品成本￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="120px" prop="expressFare" label="运费成本￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="120px" prop="inpackagemoney" label="包装成本￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="100px" prop="storename" label="发货仓库" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="120px" prop="refund" label="退款金额￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="100px" prop="refundrate" label="退款率%" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="120px" prop="diefeeZn" label="死库处理￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="120px" prop="insertionFee" label="店铺杂费￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="120px" prop="saleOpeFeeZn" label="运营杂费￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="106px" prop="grossprofit" label="毛利￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="100px" prop="grossprofitRate" label="毛利率%" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="50px" prop="pingtai" label="平台" :formatter="empty" sortable></el-table-column>
+      <el-table-column min-width="55px" prop="suffix" label="账号" :formatter="empty" sortable></el-table-column>
+      <el-table-column min-width="70px" prop="salesman" label="销售员" :formatter="empty" sortable></el-table-column>
+      <el-table-column min-width="80px" prop="salemoney" label="成交价$" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="80px" prop="salemoneyzn" label="成交价￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="100px" prop="ebayFeeebay" label="eBay成交费$" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="102px" prop="ebayfeeznebay" label="eBay成交费￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="90px" prop="ppFee" label="PP成交费$" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="90px" prop="ppFeezn" label="PP成交费￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="90px" prop="costmoney" label="商品成本￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="90px" prop="expressFare" label="运费成本￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="90px" prop="inpackagemoney" label="包装成本￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="80px" prop="storename" label="发货仓库" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="90px" prop="refund" label="退款金额￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="85px" prop="refundrate" label="退款率%" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="90px" prop="diefeeZn" label="死库处理￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="90px" prop="insertionFee" label="店铺杂费￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="90px" prop="saleOpeFeeZn" label="运营杂费￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="70px" prop="grossprofit" label="毛利￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="75px" prop="grossprofitRate" label="毛利率%" :formatter="empty" sortable="custom"></el-table-column>
     </el-table>
   </div>
 </template>
@@ -136,7 +134,7 @@ export default {
         plat: "",
         member: [],
         store: [],
-        dateType: 1,
+        dateType: 0,
         dateRange: [],
         account: []
       },

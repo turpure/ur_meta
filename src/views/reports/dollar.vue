@@ -1,25 +1,22 @@
 <template>
-  <el-form>
-    <el-form :inline="true" :model="sell" class="demo-form-inline">
-      <el-form-item label="销售汇率">
-        <el-input v-model="sell.mun" placeholder="销售汇率"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="onSubmit">查询</el-button>
-      </el-form-item>
-    </el-form>
-    <el-form :inline="true" :model="oper" class="demo-form-inline">
-      <el-form-item label="开发汇率">
-        <el-input v-model="oper.mun" placeholder="开发汇率"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="onSubmit2">查询</el-button>
-      </el-form-item>
-    </el-form>
+  <el-form :inline="true" :model="condition" class="demo-form-inline">
+    <el-form-item label="销售汇率">
+      <el-input v-model="sell.mun" placeholder="销售汇率"></el-input>
+    </el-form-item>
+    <el-form-item>
+      <el-button type="primary" @click="onSubmit">保存</el-button>
+    </el-form-item>
+    <br>
+    <el-form-item label="开发汇率">
+      <el-input v-model="oper.mun" placeholder="开发汇率"></el-input>
+    </el-form-item>
+    <el-form-item>
+      <el-button type="primary" @click="onSubmit2">保存</el-button>
+    </el-form-item>
   </el-form>
-
 </template>
 <script>
+import { getUpdateexchange, getExchange } from "../../api/profit";
 export default {
   data() {
     return {
@@ -28,16 +25,38 @@ export default {
       },
       oper: {
         mun: ""
+      },
+      condition: {
+        devRate: "",
+        saleRate: ""
       }
     };
   },
   methods: {
-    onSubmit() {
-      alert("submit!");
+    onSubmit(form) {
+      form.saleRate = this.sell.mun;
+      form.devRate = this.oper.mun;
+      getUpdateexchange(form).then(response => {
+        alert("更新销售汇率成功！");
+      });
     },
-    onSubmit2() {
-      alert("submit2!");
+    onSubmit2(form) {
+      form.saleRate = this.sell.mun;
+      form.devRate = this.oper.mun;
+      getUpdateexchange(form).then(response => {
+        alert("更新开发汇率成功！");
+      });
     }
+  },
+  mounted() {
+    getExchange().then(response => {
+      let saler = response.data.data;
+      this.sell.mun = saler.salerRate;
+    });
+    getExchange().then(response => {
+      let dev = response.data.data;
+      this.oper.mun = dev.devRate;
+    });
   }
 };
 </script>
