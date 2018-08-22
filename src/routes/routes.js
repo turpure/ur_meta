@@ -12,7 +12,7 @@ import trending from '../views/reports/trending.vue'
 import fixed from '../views/reports/fixed.vue'
 import operate from '../views/reports/operate.vue'
 import dollar from '../views/reports/dollar.vue'
-import warehouse from '../views/reports/warehouse.vue'
+import index from '../views/reports/index.vue'
 
 const routes = [{
     path: '/login',
@@ -23,8 +23,7 @@ const routes = [{
 {
     path: '/404',
     component: NotFound,
-    name: '',
-    hidden: true
+    name: '主页'
 },
 {
     path: '/',
@@ -75,12 +74,12 @@ const routes = [{
         path: '/dollar',
         component: dollar,
         name: '美元汇率'
+    },
+    {
+        path: '/index',
+        component: index,
+        hidden: true
     }
-        // {
-        //   path: '/warehouse',
-        //   component: warehouse,
-        //   name: '仓储'
-        // }
     ]
 },
 {

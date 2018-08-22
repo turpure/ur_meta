@@ -262,11 +262,11 @@ export default {
       if (this.show === false) {
         this.text = "显示输入框";
         let height = document.getElementById("app").clientHeight;
-        this.tableHeight = height + 402 + "px";
+        this.tableHeight = height + 408 + "px";
       } else if (this.show === true) {
         this.text = "隐藏输入框";
         let height = document.getElementById("app").clientHeight;
-        this.tableHeight = height + 195 + "px";
+        this.tableHeight = height + 200 + "px";
       }
     },
     changeActive() {
@@ -278,7 +278,7 @@ export default {
     onSubmit(form) {
       let myform = JSON.parse(JSON.stringify(form));
       let height = document.getElementById("app").clientHeight;
-      this.tableHeight = height + 215 + "px";
+      this.tableHeight = height + 220 + "px";
       this.show2 = true;
       this.$refs.condition.validate(valid => {
         if (valid) {
@@ -385,7 +385,7 @@ export default {
       const fileds = columns.map(item => item.property);
       columns.forEach((column, index) => {
         if (index === 0) {
-          sums[index] = "总价";
+          sums[index] = "合计";
           return;
         }
         const values = data.map(item =>

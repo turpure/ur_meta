@@ -43,7 +43,7 @@ export default {
             .then(() => {
               this.loading = false;
               sessionStorage.setItem("user", "fefawefaewfawfaw");
-              this.$router.push({ path: "/sell" });
+              this.$router.push({ path: "/index" });
             })
             .catch(err => {
               this.$message.error(err);
