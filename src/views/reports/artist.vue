@@ -100,7 +100,7 @@ export default {
       },
       condition: {
         member: [],
-        dateType: 1,
+        dateType: 0,
         dateRange: []
       },
       pickerOptions2: {

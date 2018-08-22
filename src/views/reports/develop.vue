@@ -122,7 +122,7 @@ export default {
       },
       condition: {
         member: [],
-        dateType: 1,
+        dateType: 0,
         dateRange: []
       },
       tableMap: {
@@ -543,11 +543,5 @@ export default {
       }
     }
   }
-}
-.el-table__body-wrapper {
-  overflow: scroll;
-}
-.scroll {
-  height: 20px !important;
 }
 </style>

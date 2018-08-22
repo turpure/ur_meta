@@ -88,7 +88,7 @@ export default {
       dateType: [{ id: 1, type: "发货时间" }, { id: 0, type: "交易时间" }],
       condition: {
         member: [],
-        dateType: 1,
+        dateType: 0,
         dateRange: []
       },
       pickerOptions2: {

@@ -80,7 +80,7 @@ export default {
       searchTable: [],
       searchValue: "",
       listLoading: false,
-      dateType: [{ id: 0, type: "发货时间" }, { id: 1, type: "交易时间" }],
+      dateType: [{ id: 1, type: "发货时间" }, { id: 0, type: "交易时间" }],
       condition: {
         member: [],
         dateType: 0,
