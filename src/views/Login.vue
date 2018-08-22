@@ -20,8 +20,8 @@ export default {
     return {
       logining: false,
       ruleForm2: {
-        username: "admin",
-        password: "admin123"
+        username: "",
+        password: ""
       },
       rules2: {
         username: [{ required: true, message: "请输入账号", trigger: "blur" }],
@@ -31,9 +31,6 @@ export default {
     };
   },
   methods: {
-    // handleReset2() {
-    //   this.$refs.ruleForm2.resetFields();
-    // },
     handleSubmit2() {
       this.$refs.ruleForm2.validate(valid => {
         if (valid) {

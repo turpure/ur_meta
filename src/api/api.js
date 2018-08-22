@@ -38,8 +38,6 @@ export function uploadImage(avatar) {
 export function uploadFile() {
   const baseUrl = process.env.BASE_API
   const url = '/upload/sales-dead-fee'
-  // const token = getMyToken()
-  // return baseUrl + url + '?token=' + token
   return baseUrl + url
 }
 
