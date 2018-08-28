@@ -118,7 +118,7 @@ export function getaccount(param) {
 }
 
 export function getSalesdeadfee(param) {
-    const data = { 'formdata': param }
+    const data = { 'condition': param }
     return request({
         url: '/upload/sales-dead-fee',
         method: 'post',
@@ -129,6 +129,88 @@ export function getUpdateexchange(param) {
     const data = { 'condition': param }
     return request({
         url: '/upload/exchange',
+        method: 'post',
+        data
+    })
+}
+export function getToolaccount(param) {
+    const data = { 'condition': param }
+    return request({
+        url: '/tool/account',
+        method: 'post',
+        data
+    })
+}
+export function getToolsite() {
+    return request({
+        url: '/tool/site',
+        method: 'post'
+    })
+}
+export function getToolsize() {
+    return request({
+        url: '/tool/size',
+        method: 'post'
+    })
+}
+export function getToolcolor() {
+    return request({
+        url: '/tool/account',
+        method: 'post'
+    })
+}
+export function geteBaytemplate(param) {
+    const data = { 'condition': param }
+    return request({
+        url: '/tool/ebay-template',
+        method: 'post',
+        data
+    })
+}
+export function geteBaysku(param) {
+    const data = { 'condition': param }
+    return request({
+        url: '/tool/ebaysku',
+        method: 'post',
+        data
+    })
+}
+export function geteBayskutemplate(param) {
+    const data = { 'condition': param }
+    return request({
+        url: '/tool/ebaysku-template',
+        method: 'post',
+        data
+    })
+}
+export function getsmtsku(param) {
+    const data = { 'condition': param }
+    return request({
+        url: '/tool/smtsku',
+        method: 'post',
+        data
+    })
+}
+export function getsmtskutemplate(param) {
+    const data = { 'condition': param }
+    return request({
+        url: '/tool/smtsku-template',
+        method: 'post',
+        data
+    })
+}
+export function getwishsku(param) {
+    const data = { 'condition': param }
+    return request({
+        url: '/tool/wishsku',
+        method: 'post',
+        data
+    })
+}
+export function getwishskutemplate(param) {
+    const data = { 'condition': param }
+    return request({
+        url: '/tool/wishsku-template',
         method: 'post',
         data
     })
