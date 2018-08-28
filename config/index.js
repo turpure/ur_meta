@@ -27,6 +27,7 @@ module.exports = {
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
+    proxyTable: {},
     // proxyTable: {
     //   '/api': {
     //     target: 'http://58.246.226.254:8089',
