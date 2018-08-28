@@ -1,18 +1,23 @@
 import Login from '../views/Login.vue'
 import NotFound from '../views/404.vue'
 import Home from '../views/Home.vue'
-import Main from '../views/Main.vue'
 
 import sell from '../views/reports/sell.vue'
 import develop from '../views/reports/develop.vue'
 import purchase from '../views/reports/purchase.vue'
 import artist from '../views/reports/artist.vue'
-import ebaysell from '../views/reports/ebaysell.vue'
+import account from '../views/reports/account.vue'
 import trending from '../views/reports/trending.vue'
 import fixed from '../views/reports/fixed.vue'
 import operate from '../views/reports/operate.vue'
 import dollar from '../views/reports/dollar.vue'
 import index from '../views/reports/index.vue'
+
+import ebay from '../views/tool/ebay.vue'
+import ebaysku from '../views/tool/ebaysku.vue'
+import wishsku from '../views/tool/wishsku.vue'
+import smtsku from '../views/tool/smtsku.vue'
+
 
 const routes = [{
     path: '/login',
@@ -28,7 +33,7 @@ const routes = [{
 {
     path: '/',
     component: Home,
-    name: '毛利率报表',
+    name: '毛利润报表',
     iconCls: 'el-icon-message',
     children: [{
         path: '/sell',
@@ -51,9 +56,9 @@ const routes = [{
         name: '美工毛利润报表'
     },
     {
-        path: '/ebaysell',
-        component: ebaysell,
-        name: 'ebay销售毛利润报表'
+        path: '/v1/report/account',
+        component: account,
+        name: '账号产品利润报表',
     },
     {
         path: '/trending',
@@ -79,6 +84,33 @@ const routes = [{
         path: '/index',
         component: index,
         hidden: true
+    }
+    ]
+},
+{
+    path: '/',
+    component: Home,
+    name: '销售工具',
+    iconCls: 'el-icon-message',
+    children: [{
+        path: '/v1/tool/ebay-template',
+        component: ebay,
+        name: 'eBay销售工具'
+    },
+    {
+        path: '/v1/tool/ebaysku-template',
+        component: ebaysku,
+        name: 'eBay工具'
+    },
+    {
+        path: '/v1/tool/wishsku-template',
+        component: wishsku,
+        name: 'Wish工具'
+    },
+    {
+        path: '/v1/tool/smtsku-template',
+        component: smtsku,
+        name: 'SMT工具'
     }
     ]
 },
