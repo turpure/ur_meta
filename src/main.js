@@ -8,12 +8,14 @@ import 'font-awesome/css/font-awesome.min.css'
 import router from './routes/router'
 import VModal from 'vue-js-modal'
 import Myecharts from './component/Myecharts'
+import toExcel from '@/excel/json2excel'
 
 
 Vue.use(Myecharts)
 Vue.use(VModal)
 Vue.use(ElementUI)
 Vue.use(Vuex)
+Vue.prototype.$toExcel = toExcel
 
 
 new Vue({

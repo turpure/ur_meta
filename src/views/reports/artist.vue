@@ -583,22 +583,110 @@ export default {
     },
     //导出
     exportExcel() {
+      const th = [
+        "责任人",
+        "时间段(0-6月)",
+        "销售额$(0-6月)",
+        "销售额￥(0-6月)",
+        "商品成本￥(0-6月)",
+        "交易费汇总$(0-6月)",
+        "交易费汇总￥(0-6月)",
+        "包装成本￥(0-6月)",
+        "运费成本￥(0-6月)",
+        "死库处理￥(0-6月)",
+        "运营杂费￥(0-6月)",
+        "毛利润￥(0-6月)",
+        "毛利率%(0-6月)",
+        "时间段(6-12月)",
+        "销售额$(6-12月)",
+        "销售额￥(6-12月)",
+        "商品成本￥(6-12月)",
+        "交易费汇总$(6-12月)",
+        "交易费汇总￥(6-12月)",
+        "包装成本￥(6-12月)",
+        "运费成本￥(6-12月)",
+        "死库处理￥(6-12月)",
+        "运营杂费￥(6-12月)",
+        "毛利润￥(6-12月)",
+        "毛利率%(6-12月)",
+        "时间段(12月以上)",
+        "销售额$(12月以上)",
+        "销售额￥(12月以上)",
+        "商品成本￥(12月以上)",
+        "交易费汇总$(12月以上)",
+        "交易费汇总￥(12月以上)",
+        "包装成本￥(12月以上)",
+        "运费成本￥(12月以上)",
+        "死库处理￥(12月以上)",
+        "运营杂费￥(12月以上)",
+        "毛利润￥(12月以上)",
+        "毛利率%(12月以上)",
+        "销售额￥(汇总)",
+        "毛利润￥(汇总)",
+        "毛利率%(汇总)"
+      ];
+      const filterVal = [
+        "possessman1Zero",
+        "timegroupZero",
+        "salemoneyrmbusZero",
+        "salemoneyrmbznZero",
+        "costmoneyrmbZero",
+        "ppebayusZero",
+        "ppebayznZero",
+        "inpackagefeermbZero",
+        "expressfarermbZero",
+        "possessofflinefeeZero",
+        "possessOpeFeeZero",
+        "netprofitZero",
+        "netrateZero",
+        "timegroupSix",
+        "salemoneyrmbusSix",
+        "salemoneyrmbznSix",
+        "costmoneyrmbSix",
+        "ppebayusSix",
+        "ppebayznSix",
+        "inpackagefeermbSix",
+        "expressfarermbSix",
+        "possessofflinefeeSix",
+        "possessOpeFeeSix",
+        "netprofitSix",
+        "netrateSix",
+        "timegroupTwe",
+        "salemoneyrmbusTwe",
+        "salemoneyrmbznTwe",
+        "costmoneyrmbTwe",
+        "ppebayusTwe",
+        "ppebayznTwe",
+        "inpackagefeermbTwe",
+        "expressfarermbTwe",
+        "possessofflinefeeTwe",
+        "possessOpeFeeTwe",
+        "netprofitTwe",
+        "netrateTwe",
+        "salemoneyrmbtotal",
+        "netprofittotal",
+        "netratetotal"
+      ];
+      const data = this.tableData.map(v => filterVal.map(k => v[k]));
+      const [fileName, fileType, sheetName] = ["美工毛利润报表", "xlsx"];
+
+      this.$toExcel({ th, data, fileName, fileType, sheetName });
       /* generate workbook object from table */
-      var wb = XLSX.utils.table_to_book(document.querySelector("#sale-table"));
-      /* get binary string as output */
-      var wbout = XLSX.write(wb, {
-        bookType: "xlsx",
-        bookSST: true,
-        type: "array"
-      });
-      try {
-        FileSaver.saveAs(
-          new Blob([wbout], { type: "application/octet-stream" }),
-          "sheetjs.xlsx"
-        );
-      } catch (e) {
-        if (typeof console !== "undefined") console.log(e, wbout);
-      }
+      // var wb = XLSX.utils.table_to_book(document.querySelector("#sale-table"));
+      // /* get binary string as output */
+      // var wbout = XLSX.write(wb, {
+      //   bookType: "xlsx",
+      //   bookSST: true,
+      //   type: "array"
+      // });
+      // try {
+      //   FileSaver.saveAs(
+      //     new Blob([wbout], { type: "application/octet-stream" }),
+      //     "sheetjs.xlsx"
+      //   );
+      // } catch (e) {
+      //   if (typeof console !== "undefined") console.log(e, wbout);
+      // }
       //  return wbout
     },
     handleSearch() {

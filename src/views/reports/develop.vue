@@ -588,7 +588,6 @@ export default {
             });
           }
         } else {
-          console.log("error submit!!");
           return false;
         }
       });
@@ -682,45 +681,138 @@ export default {
     },
     //导出
     exportExcel() {
-      /* generate workbook object from table */
+      const th = [
+        "业绩归属人",
+        "时间段(0-6月)",
+        "销售额$(0-6月)",
+        "销售额￥(0-6月)",
+        "商品成本￥(0-6月)",
+        "交易费汇总$(0-6月)",
+        "交易费汇总￥(0-6月)",
+        "包装成本￥(0-6月)",
+        "运费成本￥(0-6月)",
+        "死库处理￥(0-6月)",
+        "运营杂费￥(0-6月)",
+        "毛利润￥(0-6月)",
+        "毛利率%(0-6月)",
+        "时间段(6-12月)",
+        "销售额$(6-12月)",
+        "销售额￥(6-12月)",
+        "商品成本￥(6-12月)",
+        "交易费汇总$(6-12月)",
+        "交易费汇总￥(6-12月)",
+        "包装成本￥(6-12月)",
+        "运费成本￥(6-12月)",
+        "死库处理￥(6-12月)",
+        "运营杂费￥(6-12月)",
+        "毛利润￥(6-12月)",
+        "毛利率%(6-12月)",
+        "时间段(12月以上)",
+        "销售额$(12月以上)",
+        "销售额￥(12月以上)",
+        "商品成本￥(12月以上)",
+        "交易费汇总$(12月以上)",
+        "交易费汇总￥(12月以上)",
+        "包装成本￥(12月以上)",
+        "运费成本￥(12月以上)",
+        "死库处理￥(12月以上)",
+        "运营杂费￥(12月以上)",
+        "毛利润￥(12月以上)",
+        "毛利率%(12月以上)",
+        "销售额￥(汇总)",
+        "毛利润￥(汇总)",
+        "毛利率%(汇总)"
+      ];
+      const filterVal = [
+        "salernameZero",
+        "timegroupZero",
+        "salemoneyrmbusZero",
+        "salemoneyrmbznZero",
+        "costmoneyrmbZero",
+        "ppebayusZero",
+        "ppebayznZero",
+        "inpackagefeermbZero",
+        "expressfarermbZero",
+        "devofflinefeeZero",
+        "devOpeFeeZero",
+        "netprofitZero",
+        "netrateZero",
+        "timegroupSix",
+        "salemoneyrmbusSix",
+        "salemoneyrmbznSix",
+        "costmoneyrmbSix",
+        "ppebayusSix",
+        "ppebayznSix",
+        "inpackagefeermbSix",
+        "expressfarermbSix",
+        "devofflinefeeSix",
+        "devOpeFeeSix",
+        "netprofitSix",
+        "netrateSix",
+        "timegroupTwe",
+        "salemoneyrmbusTwe",
+        "salemoneyrmbznTwe",
+        "costmoneyrmbTwe",
+        "ppebayusTwe",
+        "ppebayznTwe",
+        "inpackagefeermbTwe",
+        "expressfarermbTwe",
+        "devofflinefeeTwe",
+        "devOpeFeeTwe",
+        "netprofitTwe",
+        "netrateTwe",
+        "salemoneyrmbtotal",
+        "netprofittotal",
+        "netratetotal"
+      ];
       if (this.activeName == "first") {
-        var wb = XLSX.utils.table_to_book(
-          document.querySelector("#sale-table01")
-        );
-        /* get binary string as output */
-        var wbout = XLSX.write(wb, {
-          bookType: "xlsx",
-          bookSST: true,
-          type: "array"
-        });
-        try {
-          FileSaver.saveAs(
-            new Blob([wbout], { type: "application/octet-stream" }),
-            "sheetjs.xlsx"
-          );
-        } catch (e) {
-          if (typeof console !== "undefined") console.log(e, wbout);
-        }
+        const data = this.tableData01.map(v => filterVal.map(k => v[k]));
+        const [fileName, fileType, sheetName] = ["开发毛利润报表", "xlsx"];
+        this.$toExcel({ th, data, fileName, fileType, sheetName });
       } else if (this.activeName == "second") {
-        var hb = XLSX.utils.table_to_book(
-          document.querySelector("#sale-table02")
-        );
-        /* get binary string as output */
-        var hbout = XLSX.write(hb, {
-          bookType: "xlsx",
-          bookSST: true,
-          type: "array"
-        });
-        try {
-          FileSaver.saveAs(
-            new Blob([hbout], { type: "application/octet-stream" }),
-            "sheetjs.xlsx"
-          );
-        } catch (e) {
-          if (typeof console !== "undefined") console.log(e, hbout);
-        }
+        const data = this.tableData02.map(v => filterVal.map(k => v[k]));
+        const [fileName, fileType, sheetName] = ["开发毛利润报表", "xlsx"];
+        this.$toExcel({ th, data, fileName, fileType, sheetName });
       }
-      //  return wbout
+      /* generate workbook object from table */
+      //   if (this.activeName == "first") {
+      //     var wb = XLSX.utils.table_to_book(
+      //       document.querySelector("#sale-table01")
+      //     );
+      //     /* get binary string as output */
+      //     var wbout = XLSX.write(wb, {
+      //       bookType: "xlsx",
+      //       bookSST: true,
+      //       type: "array"
+      //     });
+      //     try {
+      //       FileSaver.saveAs(
+      //         new Blob([wbout], { type: "application/octet-stream" }),
+      //         "sheetjs.xlsx"
+      //       );
+      //     } catch (e) {
+      //       if (typeof console !== "undefined") console.log(e, wbout);
+      //     }
+      //   } else if (this.activeName == "second") {
+      //     var hb = XLSX.utils.table_to_book(
+      //       document.querySelector("#sale-table02")
+      //     );
+      //     /* get binary string as output */
+      //     var hbout = XLSX.write(hb, {
+      //       bookType: "xlsx",
+      //       bookSST: true,
+      //       type: "array"
+      //     });
+      //     try {
+      //       FileSaver.saveAs(
+      //         new Blob([hbout], { type: "application/octet-stream" }),
+      //         "sheetjs.xlsx"
+      //       );
+      //     } catch (e) {
+      //       if (typeof console !== "undefined") console.log(e, hbout);
+      //     }
+      //   }
+      //   //  return wbout
     }
   },
   mounted() {
