@@ -774,45 +774,6 @@ export default {
         const [fileName, fileType, sheetName] = ["开发毛利润报表", "xlsx"];
         this.$toExcel({ th, data, fileName, fileType, sheetName });
       }
-      /* generate workbook object from table */
-      //   if (this.activeName == "first") {
-      //     var wb = XLSX.utils.table_to_book(
-      //       document.querySelector("#sale-table01")
-      //     );
-      //     /* get binary string as output */
-      //     var wbout = XLSX.write(wb, {
-      //       bookType: "xlsx",
-      //       bookSST: true,
-      //       type: "array"
-      //     });
-      //     try {
-      //       FileSaver.saveAs(
-      //         new Blob([wbout], { type: "application/octet-stream" }),
-      //         "sheetjs.xlsx"
-      //       );
-      //     } catch (e) {
-      //       if (typeof console !== "undefined") console.log(e, wbout);
-      //     }
-      //   } else if (this.activeName == "second") {
-      //     var hb = XLSX.utils.table_to_book(
-      //       document.querySelector("#sale-table02")
-      //     );
-      //     /* get binary string as output */
-      //     var hbout = XLSX.write(hb, {
-      //       bookType: "xlsx",
-      //       bookSST: true,
-      //       type: "array"
-      //     });
-      //     try {
-      //       FileSaver.saveAs(
-      //         new Blob([hbout], { type: "application/octet-stream" }),
-      //         "sheetjs.xlsx"
-      //       );
-      //     } catch (e) {
-      //       if (typeof console !== "undefined") console.log(e, hbout);
-      //     }
-      //   }
-      //   //  return wbout
     }
   },
   mounted() {
@@ -901,12 +862,10 @@ export default {
     }
   }
 }
-.el-popper[x-placement^="bottom"] {
-  margin-left: 80px;
-}
 .el-dropdown {
   font-size: 16px;
   margin-top: 8px;
+  cursor: pointer;
 }
 .el-dropdown-menu {
   max-height: 300px;

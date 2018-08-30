@@ -80,12 +80,12 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .el-form-item {
   margin-left: 30%;
-  .el-input {
-    width: 217px;
-  }
+}
+.el-input {
+  width: 217px;
 }
 </style>
 

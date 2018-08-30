@@ -10,7 +10,6 @@ import VModal from 'vue-js-modal'
 import Myecharts from './component/Myecharts'
 import toExcel from '@/excel/json2excel'
 
-
 Vue.use(Myecharts)
 Vue.use(VModal)
 Vue.use(ElementUI)
