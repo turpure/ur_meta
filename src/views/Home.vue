@@ -88,7 +88,7 @@ export default {
       imagecropperShow: false,
       imagecropperKey: 0,
       image: "",
-      sysName: "UR-META",
+      sysName: "UR管理中心",
       collapsed: false,
       sysUserName: "",
       sysUserAvatar: "",
@@ -192,6 +192,7 @@ export default {
       }
     }
     .logo {
+      text-align: center;
       //width:230px;
       height: 60px;
       font-size: 22px;

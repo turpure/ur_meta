@@ -19,7 +19,11 @@
     </el-form-item>
     <el-form-item>
       <el-button type="primary">确认信息</el-button>
-      <el-button type="primary">属性设置</el-button>
+      <router-link to="/wishskuEdit">
+        <el-button type="primary">属性设置
+          <i class="el-icon-caret-right"></i>
+        </el-button>
+      </router-link>
     </el-form-item>
   </el-form>
 </template>
