@@ -10,14 +10,21 @@ const service = axios.create({
   timeout: 500000, // request timeout
   //允许携带cookie
 })
-
+// const downloadUrl = url => {
+//   let iframe = document.createElement('iframe')
+//   iframe.style.display = 'none'
+//   iframe.src = url
+//   iframe.onload = function () {
+//     document.body.appendChild(iframe)
+//   }
+//   document.body.removeChild(iframe)
+// }
 
 // request interceptor
 service.interceptors.request.use(config => {
   // console.log(1)
   // console.log(store.getters.access_token)
   // Do something before request is sent
-
   if (store.getters.token) {
     // config.headers['Vue-Token'] = getToken() // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
     config.headers['Authorization'] = 'Bearer ' + getToken() // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
@@ -28,11 +35,14 @@ service.interceptors.request.use(config => {
   console.log(error) // for debug
   Promise.reject(error)
 })
-
 // respone interceptor
 service.interceptors.response.use(
   response => {
-    return response
+    // if (response.headers && (response.headers['content-type'] === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')) {
+    //   downloadUrl(response.request.responseURL)
+    //   return { data: { rCode: 'success' } }
+    // }
+    return response;
   },
   /**
   * 下面的注释为通过response自定义code来标示请求状态，当code返回如下情况为权限有问题，登出并返回到登录页
