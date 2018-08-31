@@ -49,16 +49,56 @@
         <div class="modal-body">
           <form>
             <el-table :data="tableData" class="table table-hover" id="tb">
-              <el-table-column prop="SKU" label="SKU"></el-table-column>
-              <el-table-column prop="quantity" label="数量"></el-table-column>
-              <el-table-column prop="property2" label="价格"></el-table-column>
-              <el-table-column prop="BmpFileName" label="图片路径"></el-table-column>
-              <el-table-column prop="pro1" label="Color"></el-table-column>
-              <el-table-column prop="pro2" label="Size"></el-table-column>
-              <el-table-column prop="UPC" label="UPC"></el-table-column>
-              <el-table-column prop="EAN" label="EAN"></el-table-column>
-              <el-table-column prop="property1" label="款式1"></el-table-column>
-              <el-table-column prop="pro2" label="款式2"></el-table-column>
+              <el-table-column prop="SKU" label="SKU">
+                <template slot-scope="scope">
+                  <el-input size=mini v-model="scope.row.SKU"></el-input>
+                </template>
+              </el-table-column>
+              <el-table-column prop="quantity" label="数量">
+                <template slot-scope="scope">
+                  <el-input size=mini v-model="scope.row.quantity"></el-input>
+                </template>
+              </el-table-column>
+              <el-table-column prop="property2" label="价格">
+                <template slot-scope="scope">
+                  <el-input size=mini v-model="scope.row.property2"></el-input>
+                </template>
+              </el-table-column>
+              <el-table-column prop="BmpFileName" label="图片路径" width="300">
+                <template slot-scope="scope">
+                  <el-input size=mini v-model="scope.row.BmpFileName"></el-input>
+                </template>
+              </el-table-column>
+              <el-table-column prop="pro1" label="Color">
+                <template slot-scope="scope">
+                  <el-input size=mini v-model="scope.row.pro1"></el-input>
+                </template>
+              </el-table-column>
+              <el-table-column prop="pro2" label="Size">
+                <template slot-scope="scope">
+                  <el-input size=mini v-model="scope.row.pro2"></el-input>
+                </template>
+              </el-table-column>
+              <el-table-column prop="UPC" label="UPC" width="140">
+                <template slot-scope="scope">
+                  <el-input size=mini v-model="scope.row.UPC"></el-input>
+                </template>
+              </el-table-column>
+              <el-table-column prop="EAN" label="EAN" width="140">
+                <template slot-scope="scope">
+                  <el-input size=mini v-model="scope.row.EAN"></el-input>
+                </template>
+              </el-table-column>
+              <el-table-column prop="property1" label="款式1">
+                <template slot-scope="scope">
+                  <el-input size=mini v-model="scope.row.property1"></el-input>
+                </template>
+              </el-table-column>
+              <el-table-column prop="pro2" label="款式2">
+                <template slot-scope="scope">
+                  <el-input size=mini v-model="scope.row.pro2"></el-input>
+                </template>
+              </el-table-column>
             </el-table>
           </form>
         </div>
@@ -152,12 +192,12 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .el-form-item {
   margin-left: 30%;
-}
-.el-input {
-  width: 106px;
+  .el-input {
+    width: 106px;
+  }
 }
 .modal-dialog {
   margin: 30px auto;
@@ -191,37 +231,22 @@ export default {
 .modal-body {
   position: relative;
   padding: 20px;
-}
-.table {
-  width: 100%;
-  margin-bottom: 20px;
-  border-collapse: collapse;
-  max-height: 500px;
-  overflow: auto;
-}
-.table > thead:first-child > tr:first-child > th {
-  border-top: 0;
-}
-.table > thead > tr > th {
-  vertical-align: bottom;
-  border-bottom: 2px solid #ddd;
-  padding: 8px;
-}
-th {
-  text-align: left;
+  .table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+    max-height: 500px;
+    overflow: auto;
+  }
 }
 .modal-footer {
   padding: 19px 20px 20px;
   margin-top: 15px;
   text-align: right;
   border-top: 1px solid #e5e5e5;
-}
-input[type="button"] {
-  cursor: pointer;
-  -webkit-appearance: button;
-}
-input {
-  line-height: inherit;
+  input[type="button"] {
+    cursor: pointer;
+  }
 }
 </style>
 

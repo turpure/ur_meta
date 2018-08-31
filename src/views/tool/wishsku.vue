@@ -41,17 +41,61 @@
         <div class="modal-body">
           <form>
             <el-table :data="tableData" class="table table-hover" id="tb">
-              <el-table-column prop="SKU" label="SKU"></el-table-column>
-              <el-table-column prop="variation2" label="颜色"></el-table-column>
-              <el-table-column prop="variation1" label="尺寸"></el-table-column>
-              <el-table-column prop="quantity" label="数量"></el-table-column>
-              <el-table-column prop="price" label="价格(USD)*"></el-table-column>
-              <el-table-column prop="shipping" label="运费(USD)*"></el-table-column>
-              <el-table-column prop="msrp" label="建议零售价(USD)*"></el-table-column>
-              <el-table-column prop="$shippingTime" label="运输时间"></el-table-column>
-              <el-table-column prop="pic_url" label="主图"></el-table-column>
-              <el-table-column prop="property1" label="款式1"></el-table-column>
-              <el-table-column prop="property2" label="款式2"></el-table-column>
+              <el-table-column prop="SKU" label="SKU*" width="95px">
+                <template slot-scope="scope">
+                  <el-input size=mini v-model="scope.row.SKU"></el-input>
+                </template>
+              </el-table-column>
+              <el-table-column prop="property1" label="颜色">
+                <template slot-scope="scope">
+                  <el-input size=mini v-model="scope.row.property1"></el-input>
+                </template>
+              </el-table-column>
+              <el-table-column prop="property2" label="尺寸">
+                <template slot-scope="scope">
+                  <el-input size=mini v-model="scope.row.property2"></el-input>
+                </template>
+              </el-table-column>
+              <el-table-column prop="quantity" label="数量*">
+                <template slot-scope="scope">
+                  <el-input size=mini v-model="scope.row.quantity"></el-input>
+                </template>
+              </el-table-column>
+              <el-table-column prop="price" label="价格(USD)*">
+                <template slot-scope="scope">
+                  <el-input size=mini v-model="scope.row.price"></el-input>
+                </template>
+              </el-table-column>
+              <el-table-column prop="shipping" label="运费(USD)*">
+                <template slot-scope="scope">
+                  <el-input size=mini v-model="scope.row.shipping"></el-input>
+                </template>
+              </el-table-column>
+              <el-table-column prop="msrp" label="建议零售价(USD)*">
+                <template slot-scope="scope">
+                  <el-input size=mini v-model="scope.row.msrp"></el-input>
+                </template>
+              </el-table-column>
+              <el-table-column prop="$shippingTime" label="运输时间">
+                <template slot-scope="scope">
+                  <el-input size=mini v-model="scope.row.$shippingTime"></el-input>
+                </template>
+              </el-table-column>
+              <el-table-column prop="pic_url" label="主图" width="280px">
+                <template slot-scope="scope">
+                  <el-input size=mini v-model="scope.row.pic_url"></el-input>
+                </template>
+              </el-table-column>
+              <el-table-column prop="variation1" label="款式1">
+                <template slot-scope="scope">
+                  <el-input size=mini v-model="scope.row.varition1"></el-input>
+                </template>
+              </el-table-column>
+              <el-table-column prop="variation2" label="款式2">
+                <template slot-scope="scope">
+                  <el-input size=mini v-model="scope.row.varition2"></el-input>
+                </template>
+              </el-table-column>
             </el-table>
           </form>
         </div>
@@ -66,7 +110,13 @@
 </template>
 
 <script>
-import { getToolaccount, getwishsku } from "../../api/profit";
+import {
+  getToolaccount,
+  getwishsku,
+  getwishskutemplate,
+  getToolcolor,
+  getToolsize
+} from "../../api/profit";
 export default {
   data() {
     return {
@@ -83,6 +133,25 @@ export default {
         price: "22",
         msrp: "22",
         shipping: "22"
+      },
+      condition1: {
+        contents: {
+          SKU: ["6C004601", "6C004602"],
+          variation1: [1, 2],
+          variation2: ["黄色", "粉色"],
+
+          pic_url: [
+            "http://121.196.233.153/images/6C004601.jpg",
+            "http://121.196.233.153/images/6C004602.jpg"
+          ],
+          property2: ["黄色", "粉色"],
+          property1: [1, 2],
+          quantity: [1000, 1000],
+          price: [222, 222],
+          msrp: [111, 111],
+          shipping: [333, 333],
+          shippingTime: ["7-21", "7-21"]
+        }
       }
     };
   },
@@ -94,7 +163,11 @@ export default {
         this.tableData = response.data.data;
       });
     },
-    btnSavekkk() {},
+    btnSavekkk() {
+      getwishskutemplate(this.condition1).then(response => {
+        console.log(response);
+      });
+    },
     back() {
       this.show = false;
       this.show1 = true;
@@ -108,12 +181,12 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .el-form-item {
   margin-left: 30%;
-}
-.el-input {
-  width: 217px;
+  .el-input {
+    width: 217px;
+  }
 }
 .modal-dialog {
   margin: 30px auto;
@@ -147,37 +220,22 @@ export default {
 .modal-body {
   position: relative;
   padding: 20px;
-}
-.table {
-  width: 100%;
-  margin-bottom: 20px;
-  border-collapse: collapse;
-  max-height: 500px;
-  overflow: auto;
-}
-.table > thead:first-child > tr:first-child > th {
-  border-top: 0;
-}
-.table > thead > tr > th {
-  vertical-align: bottom;
-  border-bottom: 2px solid #ddd;
-  padding: 8px;
-}
-th {
-  text-align: left;
+  .table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+    max-height: 500px;
+    overflow: auto;
+  }
 }
 .modal-footer {
   padding: 19px 20px 20px;
   margin-top: 15px;
   text-align: right;
   border-top: 1px solid #e5e5e5;
-}
-input[type="button"] {
-  cursor: pointer;
-  -webkit-appearance: button;
-}
-input {
-  line-height: inherit;
+  input[type="button"] {
+    cursor: pointer;
+  }
 }
 </style>
 

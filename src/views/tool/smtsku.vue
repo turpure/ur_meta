@@ -38,14 +38,51 @@
         <div class="modal-body">
           <form>
             <el-table :data="tableData" class="table table-hover" id="tb">
-              <el-table-column prop="SKU" label="SKU"></el-table-column>
-              <el-table-column prop="quantity" label="数量"></el-table-column>
-              <el-table-column prop="price" label="价格"></el-table-column>
-              <el-table-column prop="pic_url" label="关联图片地址"></el-table-column>
-              <el-table-column prop="property1" label="Color"></el-table-column>
-              <el-table-column prop="property2" label="Size"></el-table-column>
-              <el-table-column prop="varition1" label="款式1"></el-table-column>
-              <el-table-column prop="varition2" label="款式2"></el-table-column>
+              <el-table-column prop="SKU" label="SKU">
+                <template slot-scope="scope">
+                  <el-input size=mini v-model="scope.row.SKU"></el-input>
+                </template>
+              </el-table-column>
+              <el-table-column prop="quantity" label="数量">
+                <template slot-scope="scope">
+                  <el-input size=mini v-model="scope.row.quantity"></el-input>
+                </template>
+              </el-table-column>
+              <el-table-column prop="price" label="价格">
+                <template slot-scope="scope">
+                  <el-input size=mini v-model="scope.row.price"></el-input>
+                </template>
+              </el-table-column>
+              <el-table-column prop="pic_url" label="关联图片地址" width="300px">
+                <template slot-scope="scope">
+                  <el-input size=mini v-model="scope.row.pic_url"></el-input>
+                </template>
+              </el-table-column>
+              <el-table-column prop="property1" label="Color">
+                <template slot-scope="scope">
+                  <el-select size=mini v-model="scope.row.property1" clearable>
+                    <el-option v-for="item in color" :key="item" :value="item"></el-option>
+                  </el-select>
+                  <el-input size=mini placeholder="自定义"></el-input>
+                </template>
+              </el-table-column>
+              <el-table-column prop="property2" label="Size">
+                <template slot-scope="scope">
+                  <el-select size=mini v-model="scope.row.property2" clearable>
+                    <el-option v-for="item in color" :key="item" :value="item"></el-option>
+                  </el-select>
+                </template>
+              </el-table-column>
+              <el-table-column prop="varition1" label="款式1">
+                <template slot-scope="scope">
+                  <el-input size=mini v-model="scope.row.varition1"></el-input>
+                </template>
+              </el-table-column>
+              <el-table-column prop="varition2" label="款式2">
+                <template slot-scope="scope">
+                  <el-input size=mini v-model="scope.row.varition2"></el-input>
+                </template>
+              </el-table-column>
             </el-table>
           </form>
         </div>
@@ -59,10 +96,18 @@
 </template>
 
 <script>
-import { getToolaccount, getsmtsku } from "../../api/profit";
+import {
+  getToolaccount,
+  getsmtsku,
+  getsmtskutemplate,
+  getToolcolor,
+  getToolsize
+} from "../../api/profit";
 export default {
   data() {
     return {
+      size: [],
+      color: [],
       show: false,
       show1: true,
       tableData: [],
@@ -74,6 +119,22 @@ export default {
         suffix: "aliexpress_SMT-19",
         goodsCode: "6A0895",
         price: "22"
+      },
+      condition1: {
+        contents: {
+          SKU: ["6C004601", "6C004602"],
+          quantity: [20, 20],
+          price: [0, 0],
+          pic_url: [
+            "http://121.196.233.153/images/6C004601.jpg",
+            "http://121.196.233.153/images/6C004602.jpg"
+          ],
+          property1: ["红色", "粉色"],
+          property2: ["", ""],
+          varition1: ["Red", "Pink"],
+          varition2: ["", ""],
+          name1: ["Does not apply", "Does not apply"]
+        }
       }
     };
   },
@@ -85,7 +146,11 @@ export default {
         this.tableData = response.data.data;
       });
     },
-    btnSavekkk() {},
+    btnSavekkk() {
+      getsmtskutemplate(this.condition1).then(response => {
+        console.log(response);
+      });
+    },
     back() {
       this.show = false;
       this.show1 = true;
@@ -95,16 +160,22 @@ export default {
     getToolaccount({ type: "SMT" }).then(response => {
       this.type = response.data.data;
     });
+    getToolcolor().then(response => {
+      this.color = response.data.data;
+    });
+    getToolsize().then(response => {
+      this.size = response.data.data;
+    });
   }
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .el-form-item {
   margin-left: 30%;
-}
-.el-input {
-  width: 217px;
+  .el-input[data-v-e9c3cdf0] {
+    width: 217px;
+  }
 }
 .modal-dialog {
   margin: 30px auto;
@@ -138,36 +209,21 @@ export default {
 .modal-body {
   position: relative;
   padding: 20px;
-}
-.table {
-  width: 100%;
-  margin-bottom: 20px;
-  border-collapse: collapse;
-  max-height: 500px;
-  overflow: auto;
-}
-.table > thead:first-child > tr:first-child > th {
-  border-top: 0;
-}
-.table > thead > tr > th {
-  vertical-align: bottom;
-  border-bottom: 2px solid #ddd;
-  padding: 8px;
-}
-th {
-  text-align: left;
+  .table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+    max-height: 500px;
+    overflow: auto;
+  }
 }
 .modal-footer {
   padding: 19px 20px 20px;
   margin-top: 15px;
   text-align: right;
   border-top: 1px solid #e5e5e5;
-}
-input[type="button"] {
-  cursor: pointer;
-  -webkit-appearance: button;
-}
-input {
-  line-height: inherit;
+  input[type="button"] {
+    cursor: pointer;
+  }
 }
 </style>
