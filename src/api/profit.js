@@ -155,7 +155,7 @@ export function getToolsize() {
 }
 export function getToolcolor() {
     return request({
-        url: '/tool/account',
+        url: '/tool/color',
         method: 'post'
     })
 }

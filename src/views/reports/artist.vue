@@ -669,25 +669,7 @@ export default {
       ];
       const data = this.tableData.map(v => filterVal.map(k => v[k]));
       const [fileName, fileType, sheetName] = ["美工毛利润报表", "xlsx"];
-
       this.$toExcel({ th, data, fileName, fileType, sheetName });
-      /* generate workbook object from table */
-      // var wb = XLSX.utils.table_to_book(document.querySelector("#sale-table"));
-      // /* get binary string as output */
-      // var wbout = XLSX.write(wb, {
-      //   bookType: "xlsx",
-      //   bookSST: true,
-      //   type: "array"
-      // });
-      // try {
-      //   FileSaver.saveAs(
-      //     new Blob([wbout], { type: "application/octet-stream" }),
-      //     "sheetjs.xlsx"
-      //   );
-      // } catch (e) {
-      //   if (typeof console !== "undefined") console.log(e, wbout);
-      // }
-      //  return wbout
     },
     handleSearch() {
       let searchValue = this.searchValue && this.searchValue.toLowerCase();

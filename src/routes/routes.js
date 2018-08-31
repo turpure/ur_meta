@@ -17,8 +17,7 @@ import ebay from '../views/tool/ebay.vue'
 import ebaysku from '../views/tool/ebaysku.vue'
 import wishsku from '../views/tool/wishsku.vue'
 import smtsku from '../views/tool/smtsku.vue'
-import inlineEditTable from '../views/tool/inlineEditTable.vue'
-import wishskuEdit from '../views/tool/wishskuEdit.vue'
+
 
 
 const routes = [{
@@ -113,16 +112,6 @@ const routes = [{
         path: '/v1/tool/smtsku-template',
         component: smtsku,
         name: 'SMT工具'
-    },
-    {
-        path: '/inlineEditTable',
-        component: inlineEditTable,
-        hidden: true
-    },
-    {
-        path: '/wishskuEdit',
-        component: wishskuEdit,
-        hidden: true
     }
     ]
 },

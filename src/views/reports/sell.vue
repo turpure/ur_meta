@@ -110,7 +110,7 @@ import FileSaver from "file-saver";
 import XLSX from "xlsx";
 export default {
   data() {
-    let me = this
+    let me = this;
     return {
       tableHeight: 0,
       allMember: [],
@@ -160,8 +160,8 @@ export default {
                 sm = "0" + sm;
               }
               const sfirstday = sy + "-" + sm + "-" + sd;
-              vm.$emit("pick", [firstday, sfirstday])
-              me.condition.dateRangeType = 0
+              vm.$emit("pick", [firstday, sfirstday]);
+              me.condition.dateRangeType = 0;
             }
           },
           {
@@ -180,8 +180,8 @@ export default {
               const firstDay = [year, month, "01"].join("-");
               const myDate = new Date(year, month, 0);
               const lastDay = [year, month, myDate.getDate()].join("-");
-              picker.$emit("pick", [firstDay, lastDay])
-              me.condition.dateRangeType = 2
+              picker.$emit("pick", [firstDay, lastDay]);
+              me.condition.dateRangeType = 2;
             }
           },
           {
@@ -190,13 +190,13 @@ export default {
               const end = new Date();
               const start = new Date();
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-              picker.$emit("pick", [start, end])
-              me.condition.dateRangeType = 1
+              picker.$emit("pick", [start, end]);
+              me.condition.dateRangeType = 1;
             }
           }
         ]
       }
-    }
+    };
   },
   methods: {
     selectalls() {
@@ -281,7 +281,7 @@ export default {
     onSubmit(form) {
       let myform = JSON.parse(JSON.stringify(form));
       let height = document.getElementById("app").clientHeight;
-      this.tableHeight = height + 220 + "px";
+      this.tableHeight = height + 210 + "px";
       this.show2 = true;
       this.$refs.condition.validate(valid => {
         if (valid) {
