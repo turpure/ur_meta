@@ -10,14 +10,16 @@ const service = axios.create({
   timeout: 500000, // request timeout
   //允许携带cookie
 })
-// const downloadUrl = url => {
-//   let iframe = document.createElement('iframe')
-//   iframe.style.display = 'none'
-//   iframe.src = url
-//   iframe.onload = function () {
-//     document.body.appendChild(iframe)
-//   }
-//   document.body.removeChild(iframe)
+// function excelDown(response) {
+//   let blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+//   let downloadElement = document.createElement('a');
+//   let href = window.URL.createObjectURL(blob);
+//   downloadElement.href = response.request.responseURL;
+//   downloadElement.download = '列表.xlsx';
+//   document.body.appendChild(downloadElement);
+//   downloadElement.click();
+//   document.body.removeChild(downloadElement);
+//   window.URL.revokeObjectURL(href);
 // }
 
 // request interceptor
@@ -38,11 +40,12 @@ service.interceptors.request.use(config => {
 // respone interceptor
 service.interceptors.response.use(
   response => {
-    // if (response.headers && (response.headers['content-type'] === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')) {
-    //   downloadUrl(response.request.responseURL)
-    //   return { data: { rCode: 'success' } }
-    // }
+    // if (response.headers['content-type'] == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+    //   excelDown(response)
+    //   return { code: 0, status: 'success' }
+    // } else {
     return response;
+    // }
   },
   /**
   * 下面的注释为通过response自定义code来标示请求状态，当code返回如下情况为权限有问题，登出并返回到登录页

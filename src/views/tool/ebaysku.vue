@@ -41,10 +41,10 @@
           </div>
           <h4 class="modal-title" id="myModalLabel">多属性设置</h4>
           <br>
-          <h5>
+          <h5 v-if="this.tableData.length<1?true:false">
             <font color="red">找不到商品编码：</font>
           </h5>
-          <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总共：0条记录
+          <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总共：{{this.tableData.length}}条记录
         </div>
         <div class="modal-body">
           <form>
