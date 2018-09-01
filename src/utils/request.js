@@ -7,8 +7,8 @@ import router from '../routes/router'
 const service = axios.create({
   // baseURL: 'http://192.168.0.134:8089', // api的base_url
   baseURL: process.env.BASE_API, // api的base_url
-  timeout: 500000, // request timeout
-  //允许携带cookie
+  timeout: 500000 // request timeout
+  // 允许携带cookie
 })
 // function excelDown(response) {
 //   let blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
@@ -30,6 +30,7 @@ service.interceptors.request.use(config => {
   if (store.getters.token) {
     // config.headers['Vue-Token'] = getToken() // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
     config.headers['Authorization'] = 'Bearer ' + getToken() // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
+    config.headers['withCredentials'] = true
   }
   return config
 }, error => {

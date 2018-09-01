@@ -37,10 +37,10 @@ const routes = [{
     name: '毛利润报表',
     iconCls: 'el-icon-message',
     children: [{
-        path: '/sell',
+        path: '/v1/report/sales',
         component: sell,
         name: '销售毛利润报表'
-    },
+    },  
     {
         path: '/develop',
         component: develop,
@@ -62,7 +62,7 @@ const routes = [{
         name: '账号产品利润报表',
     },
     {
-        path: '/trending',
+        path: '/v1/report/sales-trend',
         component: trending,
         name: '销售额走势'
     },
