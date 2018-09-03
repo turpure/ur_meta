@@ -47,7 +47,7 @@
           <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总共：{{this.tableData.length}}条记录
         </div>
         <div class="modal-body">
-          <form>
+          <el-form :model='condition1'>
             <el-table :data="tableData" class="table table-hover" id="tb">
               <el-table-column prop="SKU" label="SKU">
                 <template slot-scope="scope">
@@ -94,18 +94,18 @@
                   <el-input size=mini v-model="scope.row.property1"></el-input>
                 </template>
               </el-table-column>
-              <el-table-column prop="pro2" label="款式2">
+              <el-table-column prop="property2" label="款式2">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.pro2"></el-input>
+                  <el-input size=mini v-model="scope.row.property2"></el-input>
                 </template>
               </el-table-column>
             </el-table>
-          </form>
+          </el-form>
         </div>
       </div>
       <div class="modal-footer">
         <input type="button" name="button1" value="返回上页" @click="back">
-        <input type="button" @click="btnSavekkk" id="btnSavekkk" value="导出多属性表">
+        <input type="button" @click="btnSavekkk(condition1)" id="btnSavekkk" value="导出多属性表">
       </div>
     </div>
   </div>
@@ -141,6 +141,16 @@ export default {
         shipping2: "5"
       },
       condition1: {
+        setting: {
+          suffix: "showtime688",
+          goodsCode: "6C0046",
+          Site: "美国",
+          Cat1: "女人世界",
+          Cat2: "内衣",
+          price: "22",
+          shipping1: "5",
+          shipping2: "5"
+        },
         contents: {
           remark: ["abc", "edf"],
           SKU: ["6C004601", "6C004602"],
@@ -165,12 +175,23 @@ export default {
       this.show1 = !this.show1;
       this.show = !this.show;
       geteBaysku(this.condition).then(response => {
-        this.tableData = response.data.data;
+        this.tableData = response.data.data.payload;
+        console.log(this.tableData);
       });
     },
     btnSavekkk() {
       geteBayskutemplate(this.condition1).then(response => {
-        console.log(response);
+        const blob = new Blob([response.data], {
+          type: "application/vnd.ms-excel;charset=UTF-8"
+        });
+        const downloadElement = document.createElement("a");
+        const objectUrl = window.URL.createObjectURL(blob);
+        downloadElement.href = objectUrl;
+        downloadElement.download = "eBay商品SKU模板.xlsx";
+        document.body.appendChild(downloadElement);
+        downloadElement.click();
+        document.body.removeChild(downloadElement);
+        window.URL.revokeObjectURL(href);
       });
     },
     back() {
@@ -193,10 +214,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.el-form-item {
-  margin-left: 30%;
-  .el-input {
-    width: 106px;
+.el-form {
+  margin-top: 2%;
+  .el-form-item {
+    margin-left: 30%;
+    margin-bottom: 2%;
+    .el-input {
+      width: 106px;
+    }
   }
 }
 .modal-dialog {

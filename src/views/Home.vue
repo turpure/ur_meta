@@ -9,6 +9,9 @@
           <i class="fa fa-align-justify"></i>
         </div>
       </el-col>
+      <!-- <el-col :span="4">
+        销售毛利报表
+      </el-col> -->
       <el-col :span="6" class="userinfo">
         <el-col :span="14">
           <screenfull class="screenfull right-menu-item"></screenfull>

@@ -293,7 +293,6 @@ export default {
             let res = [];
             res = this.allMember;
             let per = [];
-            this.member = [];
             for (let i = 0; i < val.length; i++) {
               per = res.filter(
                 ele => ele.department == val[i] && ele.position == "销售"

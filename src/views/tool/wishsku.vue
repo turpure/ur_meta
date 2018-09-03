@@ -165,7 +165,17 @@ export default {
     },
     btnSavekkk() {
       getwishskutemplate(this.condition1).then(response => {
-        console.log(response);
+        const blob = new Blob([response.data], {
+          type: "application/vnd.ms-excel;charset=UTF-8"
+        });
+        const downloadElement = document.createElement("a");
+        const objectUrl = window.URL.createObjectURL(blob);
+        downloadElement.href = objectUrl;
+        downloadElement.download = "Wish商品SKU模板.xlsx";
+        document.body.appendChild(downloadElement);
+        downloadElement.click();
+        document.body.removeChild(downloadElement);
+        window.URL.revokeObjectURL(href);
       });
     },
     back() {
@@ -182,10 +192,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.el-form-item {
-  margin-left: 30%;
-  .el-input {
-    width: 217px;
+.el-form {
+  margin-top: 2%;
+  .el-form-item {
+    margin-left: 30%;
+    margin-bottom: 2%;
+    .el-input {
+      width: 217px;
+    }
   }
 }
 .modal-dialog {

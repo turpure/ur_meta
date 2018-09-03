@@ -166,11 +166,6 @@ export function geteBaytemplate(param) {
     method: 'post',
     data,
     responseType: 'arraybuffer'
-  }).then(res => {
-    debugger
-    const blob = new Blob([res.data], { 'type': 'application/vnd.ms-excel;charset=UTF-8' })
-    const objectUrl = URL.createObjectURL(blob)
-    return objectUrl
   })
 }
 
@@ -188,7 +183,8 @@ export function geteBayskutemplate(param) {
   return request({
     url: '/tool/ebaysku-template',
     method: 'post',
-    data
+    data,
+    responseType: 'arraybuffer'
   })
 }
 export function getsmtsku(param) {
@@ -204,7 +200,8 @@ export function getsmtskutemplate(param) {
   return request({
     url: '/tool/smtsku-template',
     method: 'post',
-    data
+    data,
+    responseType: 'arraybuffer'
   })
 }
 export function getwishsku(param) {
@@ -220,6 +217,7 @@ export function getwishskutemplate(param) {
   return request({
     url: '/tool/wishsku-template',
     method: 'post',
-    data
+    data,
+    responseType: 'arraybuffer'
   })
 }
