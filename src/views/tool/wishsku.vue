@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form label-width="200px" v-show="show1">
+    <el-form label-width="150px" class="demo-ruleForm login-container" v-show="show1">
       <el-form-item label="卖家账号：">
         <el-select v-model="formInline.type" filterable clearable>
           <el-option v-for='(item,index) in type' :index='index' :key='item.ibaySuffix' :label='item.ibaySuffix' :value='item.ibaySuffix'></el-option>
@@ -99,7 +99,6 @@
             </el-table>
           </form>
         </div>
-
       </div>
       <div class="modal-footer">
         <input type="button" name="button1" value="返回上页" @click="back">
@@ -192,14 +191,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.el-form {
-  margin-top: 2%;
-  .el-form-item {
-    margin-left: 30%;
-    margin-bottom: 2%;
-    .el-input {
-      width: 217px;
-    }
+.login-container {
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  background-clip: padding-box;
+  margin: 100px auto;
+  width: 450px;
+  padding: 35px 35px 15px 35px;
+  background: #fff;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 0 25px #cac6c6;
+  .el-input {
+    width: 217px;
   }
 }
 .modal-dialog {
