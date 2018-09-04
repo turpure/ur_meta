@@ -104,10 +104,10 @@ import {
   getStore,
   getAccount,
   getSales
-} from '../../api/profit';
-import { compareUp, compareDown } from '../../api/tools';
-import FileSaver from 'file-saver';
-import XLSX from 'xlsx';
+} from '../../api/profit'
+import { compareUp, compareDown } from '../../api/tools'
+import FileSaver from 'file-saver'
+import XLSX from 'xlsx'
 export default {
   data() {
     const me = this
@@ -151,7 +151,7 @@ export default {
               if (m < 10) {
                 m = '0' + m
               }
-              const firstday = y + '-' + m + '-' + '01';
+              const firstday = y + '-' + m + '-' + '01'
               const start = new Date()
               const sy = start.getFullYear()
               let sm = start.getMonth() + 1
@@ -243,7 +243,7 @@ export default {
     },
     choosed() {
       let res = []
-      let val = this.condition.department
+      const val = this.condition.department
       res = this.allMember
       let per = []
       this.member = []
@@ -263,13 +263,13 @@ export default {
       this.show = !this.show
       this.isA = !this.isA
       if (this.show === false) {
-        this.text = '显示输入框';
+        this.text = '显示输入框'
         const height = document.getElementById('app').clientHeight
-        this.tableHeight = height + 408 + 'px';
+        this.tableHeight = height + 408 + 'px'
       } else if (this.show === true) {
-        this.text = '隐藏输入框';
+        this.text = '隐藏输入框'
         const height = document.getElementById('app').clientHeight
-        this.tableHeight = height + 200 + 'px';
+        this.tableHeight = height + 200 + 'px'
       }
     },
     changeActive() {
@@ -280,8 +280,8 @@ export default {
     },
     onSubmit(form) {
       const myform = JSON.parse(JSON.stringify(form))
-      let height = document.getElementById('app').clientHeight
-      this.tableHeight = height + 210 + 'px';
+      const height = document.getElementById('app').clientHeight
+      this.tableHeight = height + 210 + 'px'
       this.show2 = true
       this.$refs.condition.validate(valid => {
         if (valid) {
@@ -359,7 +359,7 @@ export default {
       row.insertionFee = Math.round(row.insertionFee * 100) / 100
       row.grossprofit = Math.round(row.grossprofit * 100) / 100
       row.saleOpeFeeZn = Math.round(row.saleOpeFeeZn * 100) / 100
-      return cellValue || "--";
+      return cellValue || '--'
     },
     // 导出
     exportExcel() {
@@ -388,7 +388,7 @@ export default {
       const fileds = columns.map(item => item.property)
       columns.forEach((column, index) => {
         if (index === 0) {
-          sums[index] = '合计';
+          sums[index] = '合计'
           return
         }
         const values = data.map(item =>
@@ -405,7 +405,7 @@ export default {
           }, 0)
           sums[index] = Math.round(sums[index] * 100) / 100
         } else {
-          sums[index] = 'N/A';
+          sums[index] = 'N/A'
         }
       })
       // 退款率和利润率核算
@@ -430,7 +430,7 @@ export default {
     showMenu(i, status) {
       this.$refs.menuCollapsed.getElementsByClassName(
         'submenu-hook-' + i
-      )[0].style.display = status ? 'block' : 'none';
+      )[0].style.display = status ? 'block' : 'none'
     }
   },
   mounted() {
