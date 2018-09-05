@@ -9,9 +9,17 @@
           <i class="fa fa-align-justify"></i>
         </div>
       </el-col>
-      <!-- <el-col :span="4">
-        销售毛利报表
-      </el-col> -->
+      <el-col :span="6">
+        <router-link to='/v1/report/sales' style="text-decoration:none;color:white;font-size:18px;font-weight:bold;">
+          销售毛利润报表
+        </router-link>&nbsp;&nbsp;
+        <router-link to='/develop' style="text-decoration:none;color:white;font-size:18px;font-weight:bold;">
+          开发毛利润报表
+        </router-link>&nbsp;&nbsp;
+        <router-link to='/artist' style="text-decoration:none;color:white;font-size:18px;font-weight:bold;">
+          美工毛利润报表
+        </router-link>
+      </el-col>
       <el-col :span="6" class="userinfo">
         <el-col :span="14">
           <screenfull class="screenfull right-menu-item"></screenfull>

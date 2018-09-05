@@ -40,7 +40,7 @@ const routes = [{
         path: '/v1/report/sales',
         component: sell,
         name: '销售毛利润报表'
-    },  
+    },
     {
         path: '/develop',
         component: develop,
