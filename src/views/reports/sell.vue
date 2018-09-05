@@ -285,7 +285,7 @@ export default {
       this.show2 = true
       this.$refs.condition.validate(valid => {
         if (valid) {
-          if (myform.department.length > 0 && myform.member.length === 0) {
+          if (myform.member.length === 0) {
             this.listLoading = true
             const val = form.department
             const res = this.allMember
@@ -298,18 +298,6 @@ export default {
             myform.member = this.member.map(m => {
               return m.username
             })
-            getSales(myform).then(response => {
-              this.listLoading = false
-              this.tableData = this.searchTable = response.data.data
-            })
-          } else if (this.condition.member !== '') {
-            this.listLoading = true
-            myform.member = this.condition.member
-            getSales(myform).then(response => {
-              this.listLoading = false
-              this.tableData = this.searchTable = response.data.data
-            })
-          } else {
             this.listLoading = true
             getSales(myform).then(response => {
               this.listLoading = false
