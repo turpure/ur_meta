@@ -869,7 +869,6 @@ export default {
 }
 .el-dropdown-menu {
   max-height: 300px;
-  overflow: auto;
   padding: 5px 5px;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 4px;
