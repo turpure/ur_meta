@@ -48,7 +48,7 @@
             <el-date-picker v-model='condition.dateRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2'>
             </el-date-picker>
           </el-form-item>
-          <el-form-item label="商品编码">
+          <el-form-item v-model="condition.account" label="商品编码">
             <el-input></el-input>
           </el-form-item>
           <el-form-item>
@@ -270,7 +270,7 @@ export default {
     onSubmit(form) {
       let myform = JSON.parse(JSON.stringify(form));
       let height = document.getElementById("app").clientHeight;
-      this.tableHeight = height + 215 + "px";
+      this.tableHeight = height + 200 + "px";
       this.show2 = true;
       this.$refs.condition.validate(valid => {
         if (valid) {

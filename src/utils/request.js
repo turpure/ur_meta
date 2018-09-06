@@ -37,7 +37,7 @@ service.interceptors.response.use(
       switch (error.response.status) {
         case 401:
           router.replace({
-            path: 'login'
+            path: '/login'
           })
       }
       console.log('err' + error)// for debug

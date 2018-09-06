@@ -221,3 +221,11 @@ export function getwishskutemplate(param) {
     responseType: 'arraybuffer'
   })
 }
+export function getIntroduce(param) {
+  const data = { 'condition': param }
+  return request({
+    url: '/report/introduce',
+    method: 'post',
+    data
+  })
+}
