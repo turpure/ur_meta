@@ -275,134 +275,52 @@ export default {
       this.$refs.condition.validate(valid => {
         if (valid) {
           this.listLoading = true
-          if (this.condition.department != '' && this.condition.member == '') {
-            const val = this.condition.department
-            let res = []
-            res = this.allMember
-            let per = []
-            this.member = []
-            for (let i = 0; i < val.length; i++) {
-              per = res.filter(
-                ele => ele.department == val[i] && ele.position == '销售'
-              )
-              this.member.concat(per)
+          if (this.condition.department.length === 0 &&
+           this.condition.member.length === 0 &&
+           this.condition.plat.length === 0 &&
+           this.condition.account.length === 0) {
+            if (this.department.length === 1) {
+              myform.department = this.department.map(m => {
+                return m.department
+              })
             }
-            myform.member = this.member.map(m => {
-              return m.username
-            })
-            getSalestrend(myform).then(response => {
-              this.listLoading = false
-              const ret = response.data.data
-              const lineName = []
-              const series = []
-              ret.forEach(element => {
-                if (lineName.indexOf(element.title) < 0) {
-                  lineName.push(element.title)
-                }
-              })
-              const date = []
-              lineName.forEach(name => {
-                const sery = {
-                  type: 'line',
-                  stack: '总量',
-                  areaStyle: { normal: {}}
-                }
-                const amt = []
-                ret.map(element => {
-                  if (element.title == name) {
-                    amt.push(Number(element.totalamt))
-                    if (date.indexOf(element.ordertime) < 0) {
-                      date.push(element.ordertime)
-                    }
-                  }
-                })
-                sery['data'] = amt
-                sery['name'] = name
-                series.push(sery)
-              })
-              this.options.legend.data = lineName
-              this.options.xAxis[0].data = date
-              this.options.series = series
-              const _this = this
-              _this.$refs.myecharts.drawAreaStack(this.options)
-            })
-          } else if (this.condition.member != '') {
-            this.listLoading = true
-            myform.member = this.condition.member
-            getSalestrend(myform).then(response => {
-              this.listLoading = false
-              const ret = response.data.data
-              const lineName = []
-              const series = []
-              ret.forEach(element => {
-                if (lineName.indexOf(element.title) < 0) {
-                  lineName.push(element.title)
-                }
-              })
-              const date = []
-              lineName.forEach(name => {
-                const sery = {
-                  type: 'line',
-                  stack: '总量',
-                  areaStyle: { normal: {}}
-                }
-                const amt = []
-                ret.map(element => {
-                  if (element.title == name) {
-                    amt.push(Number(element.totalamt))
-                    if (date.indexOf(element.ordertime) < 0) {
-                      date.push(element.ordertime)
-                    }
-                  }
-                })
-                sery['data'] = amt
-                sery['name'] = name
-                series.push(sery)
-              })
-              this.options.legend.data = lineName
-              this.options.xAxis[0].data = date
-              this.options.series = series
-              const _this = this
-              _this.$refs.myecharts.drawAreaStack(this.options)
-            })
-          } else {
-            getSalestrend(myform).then(response => {
-              this.listLoading = false
-              const ret = response.data.data
-              const lineName = []
-              const series = []
-              ret.forEach(element => {
-                if (lineName.indexOf(element.title) < 0) {
-                  lineName.push(element.title)
-                }
-              })
-              const date = []
-              lineName.forEach(name => {
-                const sery = {
-                  type: 'line',
-                  stack: '总量',
-                  areaStyle: { normal: {}}
-                }
-                const amt = []
-                ret.map(element => {
-                  if (element.title == name) {
-                    amt.push(Number(element.totalamt))
-                    if (date.indexOf(element.ordertime) < 0) {
-                      date.push(element.ordertime)
-                    }
-                  }
-                })
-                sery['data'] = amt
-                sery['name'] = name
-                series.push(sery)
-              })
-              this.options.legend.data = lineName
-              this.options.xAxis[0].data = date
-              this.options.series = series
-              const _this = this
-              _this.$refs.myecharts.drawAreaStack(this.options)
-            })
           }
+          getSalestrend(myform).then(response => {
+            this.listLoading = false
+            const ret = response.data.data
+            const lineName = []
+            const series = []
+            ret.forEach(element => {
+              if (lineName.indexOf(element.title) < 0) {
+                lineName.push(element.title)
+              }
+            })
+            const date = []
+            lineName.forEach(name => {
+              const sery = {
+                type: 'line',
+                stack: '总量',
+                areaStyle: { normal: {}}
+              }
+              const amt = []
+              ret.map(element => {
+                if (element.title === name) {
+                  amt.push(Number(element.totalamt))
+                  if (date.indexOf(element.ordertime) < 0) {
+                    date.push(element.ordertime)
+                  }
+                }
+              })
+              sery['data'] = amt
+              sery['name'] = name
+              series.push(sery)
+            })
+            this.options.legend.data = lineName
+            this.options.xAxis[0].data = date
+            this.options.series = series
+            const _this = this
+            _this.$refs.myecharts.drawAreaStack(this.options)
+          })
         } else {
           console.log('error submit!!')
           return false
@@ -413,7 +331,7 @@ export default {
   mounted() {
     getMember().then(response => {
       const res = response.data.data
-      this.allMember = this.member = res.filter(ele => ele.position == '销售')
+      this.allMember = this.member = res.filter(ele => ele.position === '销售')
     })
     getAccount().then(response => {
       this.account = response.data.data

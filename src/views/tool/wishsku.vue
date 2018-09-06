@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form label-width="200px" v-show="show1">
+    <el-form label-width="150px" class="demo-ruleForm login-container" v-show="show1">
       <el-form-item label="卖家账号：">
         <el-select v-model="formInline.type" filterable clearable>
           <el-option v-for='(item,index) in type' :index='index' :key='item.ibaySuffix' :label='item.ibaySuffix' :value='item.ibaySuffix'></el-option>
@@ -33,10 +33,10 @@
           </div>
           <h4 class="modal-title" id="myModalLabel">多属性设置</h4>
           <br>
-          <h5>
+          <h5 v-if="this.tableData.length<1?true:false">
             <font color="red">找不到商品编码：</font>
           </h5>
-          <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总共：0条记录
+          <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总共：{{this.tableData.length}}条记录
         </div>
         <div class="modal-body">
           <form>
@@ -99,7 +99,6 @@
             </el-table>
           </form>
         </div>
-
       </div>
       <div class="modal-footer">
         <input type="button" name="button1" value="返回上页" @click="back">
@@ -165,7 +164,17 @@ export default {
     },
     btnSavekkk() {
       getwishskutemplate(this.condition1).then(response => {
-        console.log(response);
+        const blob = new Blob([response.data], {
+          type: "application/vnd.ms-excel;charset=UTF-8"
+        });
+        const downloadElement = document.createElement("a");
+        const objectUrl = window.URL.createObjectURL(blob);
+        downloadElement.href = objectUrl;
+        downloadElement.download = "Wish商品SKU模板.xlsx";
+        document.body.appendChild(downloadElement);
+        downloadElement.click();
+        document.body.removeChild(downloadElement);
+        window.URL.revokeObjectURL(href);
       });
     },
     back() {
@@ -182,8 +191,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.el-form-item {
-  margin-left: 30%;
+.login-container {
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  background-clip: padding-box;
+  margin: 100px auto;
+  width: 450px;
+  padding: 35px 35px 15px 35px;
+  background: #fff;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 0 25px #cac6c6;
   .el-input {
     width: 217px;
   }

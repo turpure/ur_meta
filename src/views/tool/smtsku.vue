@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form label-width="200px" v-show="show1">
+    <el-form label-width="100px" class="demo-ruleForm login-container" v-show="show1">
       <el-form-item label="卖家账号：">
         <el-select v-model="formInline.type" filterable clearable>
           <el-option v-for='(item,index) in type' :index='index' :key='item.DictionaryName' :label='item.DictionaryName' :value='item.DictionaryName'></el-option>
@@ -30,13 +30,13 @@
           </div>
           <h4 class="modal-title" id="myModalLabel">多属性设置</h4>
           <br>
-          <h5>
+          <h5 v-if="this.tableData.length<1?true:false">
             <font color="red">找不到商品编码：</font>
           </h5>
-          <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总共：0条记录
+          <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总共：{{this.tableData.length}}条记录
         </div>
         <div class="modal-body">
-          <form>
+          <el-form :model="condition1" ref="condition1">
             <el-table :data="tableData" class="table table-hover" id="tb">
               <el-table-column prop="SKU" label="SKU">
                 <template slot-scope="scope">
@@ -84,12 +84,12 @@
                 </template>
               </el-table-column>
             </el-table>
-          </form>
+          </el-form>
         </div>
       </div>
       <div class="modal-footer">
         <input type="button" name="button1" value="返回上页" @click="back">
-        <input type="button" @click="btnSavekkk" id="btnSavekkk" value="导出多属性表">
+        <input type="button" @click="btnSavekkk(condition1)" id="btnSavekkk" value="导出多属性表">
       </div>
     </div>
   </div>
@@ -146,9 +146,19 @@ export default {
         this.tableData = response.data.data;
       });
     },
-    btnSavekkk() {
-      getsmtskutemplate(this.condition1).then(response => {
-        console.log(response);
+    btnSavekkk(condition1) {
+      getsmtskutemplate(condition1).then(response => {
+        const blob = new Blob([response.data], {
+          type: "application/vnd.ms-excel;charset=UTF-8"
+        });
+        const downloadElement = document.createElement("a");
+        const objectUrl = window.URL.createObjectURL(blob);
+        downloadElement.href = objectUrl;
+        downloadElement.download = "SMT商品SKU模板.xlsx";
+        document.body.appendChild(downloadElement);
+        downloadElement.click();
+        document.body.removeChild(downloadElement);
+        window.URL.revokeObjectURL(href);
       });
     },
     back() {
@@ -171,9 +181,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.el-form-item {
-  margin-left: 30%;
-  .el-input[data-v-e9c3cdf0] {
+.login-container {
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  background-clip: padding-box;
+  margin: 100px auto;
+  width: 350px;
+  padding: 35px 35px 15px 35px;
+  background: #fff;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 0 25px #cac6c6;
+  .el-input {
     width: 217px;
   }
 }

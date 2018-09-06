@@ -12,6 +12,7 @@ import fixed from '../views/reports/fixed.vue'
 import operate from '../views/reports/operate.vue'
 import dollar from '../views/reports/dollar.vue'
 import index from '../views/reports/index.vue'
+import introduce from '../views/reports/introduce.vue'
 
 import ebay from '../views/tool/ebay.vue'
 import ebaysku from '../views/tool/ebaysku.vue'
@@ -40,7 +41,7 @@ const routes = [{
         path: '/v1/report/sales',
         component: sell,
         name: '销售毛利润报表'
-    },  
+    },
     {
         path: '/develop',
         component: develop,
@@ -55,6 +56,11 @@ const routes = [{
         path: '/artist',
         component: artist,
         name: '美工毛利润报表'
+    },
+    {
+        path: '/v1/report/introduce',
+        component: introduce,
+        name: '推荐人毛利报表'
     },
     {
         path: '/v1/report/account',
