@@ -443,6 +443,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.el-form-item {
+  margin-bottom: 0px;
+}
 .el-select-dropdown {
   .el-button--info.is-plain {
     width: 50%;
