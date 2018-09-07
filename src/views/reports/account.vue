@@ -454,8 +454,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.el-form-item {
-  margin-bottom: 0px;
+.el-form {
+  margin-bottom: 20px;
+  .el-form-item {
+    margin-bottom: 0px;
+    .el-form-item__content {
+      .el-date-editor--daterange {
+        width: 217px;
+        .el-range-input {
+          width: 100%;
+        }
+      }
+    }
+  }
 }
 .el-select-dropdown {
   .el-button--info.is-plain {
