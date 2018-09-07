@@ -29,8 +29,8 @@
           </el-form-item>
           <el-form-item label="账号" class="input">
             <el-select v-model="condition.account" filterable multiple collapse-tags placeholder="账号">
-              <el-button plain type="info" @click="selectall">全选</el-button>
-              <el-button plain type="info" @click="noselect">取消</el-button>
+              <el-button plain type="info" @click='selectAll("account")'>全选</el-button>
+              <el-button plain type="info" @click='unselect("account")'>取消</el-button>
               <el-option v-for="(item,index) in account" :index="index" :key="item.store" :label="item.store" :value="item.store"></el-option>
             </el-select>
           </el-form-item>
@@ -47,13 +47,6 @@
           <el-form-item label="日期" class="input" prop="dateRange" :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
             <el-date-picker v-model="condition.dateRange" value-format="yyyy-MM-dd" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions2">
             </el-date-picker>
-          </el-form-item>
-          <el-form-item label="账号" class="input">
-            <el-select v-model="condition.account" filterable multiple collapse-tags placeholder="账号">
-             <el-button plain type="info" @click='selectAll("account")'>全选</el-button>
-              <el-button plain type="info" @click='unselect("account")'>取消</el-button>
-              <el-option v-for="(item,index) in account" :index="index" :key="item.store" :label="item.store" :value="item.store"></el-option>
-            </el-select>
           </el-form-item>
           <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
         </el-form>
@@ -73,32 +66,32 @@
 </template>
 
 <script>
-import { getMyToken } from '../../api/api'
+import { getMyToken } from "../../api/api";
 import {
   getSection,
   getPlatform,
   getMember,
   getAccount,
   getSalestrend
-} from '../../api/profit'
+} from "../../api/profit";
 
 export default {
   data() {
     return {
       allMember: [],
       isA: true,
-      text: '显示输入框',
-      id: 'test',
+      text: "显示输入框",
+      id: "test",
       options: {
         title: {
-          text: '销售额走势$'
+          text: "销售额走势$"
         },
         tooltip: {
-          trigger: 'axis',
+          trigger: "axis",
           axisPointer: {
-            type: 'cross',
+            type: "cross",
             label: {
-              backgroundColor: '#6a7985'
+              backgroundColor: "#6a7985"
             }
           }
         },
@@ -109,29 +102,29 @@ export default {
           show: true,
           feature: {
             dataView: { show: true, readOnly: false },
-            magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
+            magicType: { show: true, type: ["line", "bar", "stack", "tiled"] },
             restore: { show: true },
             saveAsImage: { show: true }
           }
         },
         grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
+          left: "3%",
+          right: "4%",
+          bottom: "3%",
           containLabel: true
         },
         xAxis: [
           {
-            type: 'category',
+            type: "category",
             boundaryGap: false,
             data: [String]
           }
         ],
         yAxis: [
           {
-            type: 'value',
+            type: "value",
             axisLabel: {
-              formatter: '{value} $'
+              formatter: "{value} $"
             }
           }
         ],
@@ -140,14 +133,14 @@ export default {
       show: true,
       show1: false,
       searchTable: [],
-      searchValue: '',
+      searchValue: "",
       listLoading: false,
       plat: [],
       member: [],
       account: [],
       department: [],
-      dateType: [{ id: 1, type: '发货时间' }, { id: 0, type: '交易时间' }],
-      flag: [{ id: 0, type: '按天' }, { id: 2, type: '按月' }],
+      dateType: [{ id: 1, type: "发货时间" }, { id: 0, type: "交易时间" }],
+      flag: [{ id: 0, type: "按天" }, { id: 2, type: "按月" }],
       dateRange: [],
       condition: {
         department: [],
@@ -162,35 +155,35 @@ export default {
       pickerOptions2: {
         shortcuts: [
           {
-            text: '本月',
+            text: "本月",
             onClick(picker) {
-              const end = new Date()
-              const y = end.getFullYear()
-              let m = end.getMonth() + 1
+              const end = new Date();
+              const y = end.getFullYear();
+              let m = end.getMonth() + 1;
               if (m < 10) {
-                m = '0' + m
+                m = "0" + m;
               }
-              const firstday = y + '-' + m + '-' + '01'
-              const start = new Date()
-              const sy = start.getFullYear()
-              let sm = start.getMonth() + 1
-              const sd = start.getDate()
+              const firstday = y + "-" + m + "-" + "01";
+              const start = new Date();
+              const sy = start.getFullYear();
+              let sm = start.getMonth() + 1;
+              const sd = start.getDate();
               if (sm < 10) {
-                sm = '0' + sm
+                sm = "0" + sm;
               }
-              const sfirstday = sy + '-' + sm + '-' + sd
-              picker.$emit('pick', [firstday, sfirstday])
+              const sfirstday = sy + "-" + sm + "-" + sd;
+              picker.$emit("pick", [firstday, sfirstday]);
             }
           },
           {
-            text: '上个月',
+            text: "上个月",
             onClick(picker) {
-              const end = new Date()
-              const start = new Date()
-              const y = start.getFullYear()
-              const m = start.getMonth()
-              let lastday
-              let firstday
+              const end = new Date();
+              const start = new Date();
+              const y = start.getFullYear();
+              const m = start.getMonth();
+              let lastday;
+              let firstday;
               if (
                 m == 1 ||
                 m == 3 ||
@@ -200,156 +193,158 @@ export default {
                 m == 10 ||
                 m == 12
               ) {
-                lastday = y + '-' + ('0' + m) + '-' + '31'
+                lastday = y + "-" + ("0" + m) + "-" + "31";
               } else if (m == 4 || m == 6 || m == 9 || m == 11) {
-                lastday = y + '-' + ('0' + m) + '-' + '30'
+                lastday = y + "-" + ("0" + m) + "-" + "30";
               } else if (y % 4 == 0 && (y % 100 != 0 || y % 400 == 0)) {
-                lastday = y + '-' + '02' + '-' + '29'
+                lastday = y + "-" + "02" + "-" + "29";
               } else {
-                lastday = y + '-' + '02' + '-' + '28'
+                lastday = y + "-" + "02" + "-" + "28";
               }
-              firstday = y + '-' + ('0' + m) + '-' + '01'
-              picker.$emit('pick', [firstday, lastday])
+              firstday = y + "-" + ("0" + m) + "-" + "01";
+              picker.$emit("pick", [firstday, lastday]);
             }
           },
           {
-            text: '最近一个月',
+            text: "最近一个月",
             onClick(picker) {
-              const end = new Date()
-              const start = new Date()
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-              picker.$emit('pick', [start, end])
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit("pick", [start, end]);
             }
           }
         ]
       }
-    }
+    };
   },
   methods: {
     selectAll(name) {
-      if (name === 'member') {
-        this.condition['member'] = (this['member']).map(ele => ele['username'])
-      } else if (name === 'account') {
-        this.condition['account'] = (this[name]).map(ele => ele['store'])
-      } else if (name === 'department') {
-        this.condition[name] = (this[name]).map(ele => ele[name])
-        this.member = this.allMember
+      if (name === "member") {
+        this.condition["member"] = this["member"].map(ele => ele["username"]);
+      } else if (name === "account") {
+        this.condition["account"] = this[name].map(ele => ele["store"]);
+      } else if (name === "department") {
+        this.condition[name] = this[name].map(ele => ele[name]);
+        this.member = this.allMember;
       } else {
-        this.condition[name] = (this[name]).map(ele => ele[name])
+        this.condition[name] = this[name].map(ele => ele[name]);
       }
     },
     unselect(name) {
-      if (name === 'department') {
-        this.member = this.allMember
+      if (name === "department") {
+        this.member = this.allMember;
       }
-      this['condition'][name] = []
+      this["condition"][name] = [];
     },
     choosed() {
-      let res = []
-      this.member = []
-      this.condition.member = []
-      const val = this.condition.department
-      res = this.allMember
-      let per = []
-      if (val != '') {
+      let res = [];
+      this.member = [];
+      this.condition.member = [];
+      const val = this.condition.department;
+      res = this.allMember;
+      let per = [];
+      if (val != "") {
         for (let i = 0; i < val.length; i++) {
           per = res.filter(
-            ele => ele.department == val[i] && ele.position == '销售'
-          )
-          this.member = this.member.concat(per)
+            ele => ele.department == val[i] && ele.position == "销售"
+          );
+          this.member = this.member.concat(per);
         }
       } else {
-        this.member = res
+        this.member = res;
       }
     },
     handleChange() {
-      this.show = !this.show
-      this.isA = !this.isA
+      this.show = !this.show;
+      this.isA = !this.isA;
       if (this.show == false) {
-        this.text = '显示输入框'
+        this.text = "显示输入框";
       } else if (this.show == true) {
-        this.text = '隐藏输入框'
+        this.text = "隐藏输入框";
       }
     },
     changeActive() {
-      this.show1 = true
+      this.show1 = true;
     },
     removeActive() {
-      this.show1 = false
+      this.show1 = false;
     },
     onSubmit(form) {
-      const myform = JSON.parse(JSON.stringify(form))
+      const myform = JSON.parse(JSON.stringify(form));
       this.$refs.condition.validate(valid => {
         if (valid) {
-          this.listLoading = true
-          if (this.condition.department.length === 0 &&
-           this.condition.member.length === 0 &&
-           this.condition.plat.length === 0 &&
-           this.condition.account.length === 0) {
+          this.listLoading = true;
+          if (
+            this.condition.department.length === 0 &&
+            this.condition.member.length === 0 &&
+            this.condition.plat.length === 0 &&
+            this.condition.account.length === 0
+          ) {
             if (this.department.length === 1) {
               myform.department = this.department.map(m => {
-                return m.department
-              })
+                return m.department;
+              });
             }
           }
           getSalestrend(myform).then(response => {
-            this.listLoading = false
-            const ret = response.data.data
-            const lineName = []
-            const series = []
+            this.listLoading = false;
+            const ret = response.data.data;
+            const lineName = [];
+            const series = [];
             ret.forEach(element => {
               if (lineName.indexOf(element.title) < 0) {
-                lineName.push(element.title)
+                lineName.push(element.title);
               }
-            })
-            const date = []
+            });
+            const date = [];
             lineName.forEach(name => {
               const sery = {
-                type: 'line',
-                stack: '总量',
-                areaStyle: { normal: {}}
-              }
-              const amt = []
+                type: "line",
+                stack: "总量",
+                areaStyle: { normal: {} }
+              };
+              const amt = [];
               ret.map(element => {
                 if (element.title === name) {
-                  amt.push(Number(element.totalamt))
+                  amt.push(Number(element.totalamt));
                   if (date.indexOf(element.ordertime) < 0) {
-                    date.push(element.ordertime)
+                    date.push(element.ordertime);
                   }
                 }
-              })
-              sery['data'] = amt
-              sery['name'] = name
-              series.push(sery)
-            })
-            this.options.legend.data = lineName
-            this.options.xAxis[0].data = date
-            this.options.series = series
-            const _this = this
-            _this.$refs.myecharts.drawAreaStack(this.options)
-          })
+              });
+              sery["data"] = amt;
+              sery["name"] = name;
+              series.push(sery);
+            });
+            this.options.legend.data = lineName;
+            this.options.xAxis[0].data = date;
+            this.options.series = series;
+            const _this = this;
+            _this.$refs.myecharts.drawAreaStack(this.options);
+          });
         } else {
-          return false
+          return false;
         }
-      })
+      });
     }
   },
   mounted() {
     getMember().then(response => {
-      const res = response.data.data
-      this.allMember = this.member = res.filter(ele => ele.position === '销售')
-    })
+      const res = response.data.data;
+      this.allMember = this.member = res.filter(ele => ele.position === "销售");
+    });
     getAccount().then(response => {
-      this.account = response.data.data
-    })
+      this.account = response.data.data;
+    });
     getSection().then(response => {
-      this.department = response.data.data
-    })
+      this.department = response.data.data;
+    });
     getPlatform().then(response => {
-      this.plat = response.data.data
-    })
+      this.plat = response.data.data;
+    });
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
