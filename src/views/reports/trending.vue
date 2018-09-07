@@ -454,6 +454,9 @@ export default {
     }
   }
 }
+.el-dropdowm {
+  line-height: 45px !important;
+}
 .el-select-dropdown {
   .el-button--info.is-plain {
     width: 50%;
