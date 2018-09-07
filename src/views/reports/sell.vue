@@ -354,6 +354,30 @@ export default {
       /* generate workbook object from table */
       var wb = XLSX.utils.table_to_book(document.querySelector('#sale-table'))
       /* get binary string as output */
+      const date = new Date()
+      let year = date.getFullYear()
+      let month = date.getMonth() + 1
+      let strDate = date.getDate()
+      let hour = date.getHours()
+      let minute = date.getMinutes()
+      let second = date.getSeconds()
+      if (month >= 1 && month <= 9) {
+        month = '0' + month
+      }
+      if (strDate >= 0 && strDate <= 9) {
+        strDate = '0' + strDate
+      }
+      if (hour >= 0 && hour <= 9) {
+        hour = '0' + hour
+      }
+      if (minute >= 0 && minute <= 9) {
+        minute = '0' + minute
+      }
+      if (second >= 0 && second <= 9) {
+        second = '0' + second
+      }
+      const filename =
+        'sheetjs' + year + month + strDate + hour + minute + second
       var wbout = XLSX.write(wb, {
         bookType: 'xlsx',
         bookSST: true,

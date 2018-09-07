@@ -667,8 +667,32 @@ export default {
         "netprofittotal",
         "netratetotal"
       ];
+      let date = new Date();
+      let year = date.getFullYear();
+      let month = date.getMonth() + 1;
+      let strDate = date.getDate();
+      let hour = date.getHours();
+      let minute = date.getMinutes();
+      let second = date.getSeconds();
+      if (month >= 1 && month <= 9) {
+        month = "0" + month;
+      }
+      if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+      }
+      if (hour >= 0 && hour <= 9) {
+        hour = "0" + hour;
+      }
+      if (minute >= 0 && minute <= 9) {
+        minute = "0" + minute;
+      }
+      if (second >= 0 && second <= 9) {
+        second = "0" + second;
+      }
+      let Filename =
+        "美工毛利润报表" + year + month + strDate + hour + minute + second;
       const data = this.tableData.map(v => filterVal.map(k => v[k]));
-      const [fileName, fileType, sheetName] = ["美工毛利润报表", "xlsx"];
+      const [fileName, fileType, sheetName] = [Filename, "xlsx"];
       this.$toExcel({ th, data, fileName, fileType, sheetName });
     },
     handleSearch() {
