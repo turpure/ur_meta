@@ -243,7 +243,7 @@ export default {
   -moz-border-radius: 5px;
   background-clip: padding-box;
   margin: 100px auto;
-  width: 400px;
+  width: 410px;
   padding: 35px 35px 15px 35px;
   background: #fff;
   border: 1px solid #eaeaea;

@@ -286,6 +286,16 @@ export default {
     line-height: 60px;
     background: $color-primary;
     color: #fff;
+    .el-col-7 {
+      .el-dropdown {
+        line-height: 0px;
+      }
+    }
+    .el-col-6 {
+      .el-dropdown {
+        line-height: 0px;
+      }
+    }
     .userinfo {
       text-align: right;
       padding-right: 35px;
