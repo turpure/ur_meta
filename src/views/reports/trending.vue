@@ -4,11 +4,6 @@
     <div class="demo-block demo-box demo-zh-CN demo-transition" @mouseover="changeActive" @mouseout="removeActive">
       <transition name="el-fade-in-linear">
         <el-form :model="condition" :inline="true" ref="condition" class="demo-form-inline" label-width="68px" v-show="show">
-          <el-form-item label="显示方式" class="input" prop="flag">
-            <el-radio-group v-model="condition.flag">
-              <el-radio border v-for="(item,index) in flag" :index="index" :key="item.id" :label="item.id" :value="item.id">{{item.type}}</el-radio>
-            </el-radio-group>
-          </el-form-item>
           <el-form-item label="部门" class="input">
             <el-select v-model="condition.department" multiple collapse-tags placeholder="部门" @change="choosed">
               <el-button plain type="info" @click="selectalld">全选</el-button>
@@ -30,21 +25,26 @@
               <el-option v-for='(item,index) in member' :index='index' :key='item.username' :label='item.username' :value='item.username'></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="时间类型" class="input" prop="dateType">
-            <el-radio-group v-model="condition.dateType">
-              <el-radio border v-for="(item,index) in dateType" :index="index" :key="item.id" :label="item.id" :value="item.id">{{item.type}}</el-radio>
-            </el-radio-group>
-          </el-form-item>
-          <el-form-item label="日期" class="input" prop="dateRange" :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
-            <el-date-picker v-model="condition.dateRange" value-format="yyyy-MM-dd" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions2">
-            </el-date-picker>
-          </el-form-item>
           <el-form-item label="账号" class="input">
             <el-select v-model="condition.account" filterable multiple collapse-tags placeholder="账号">
               <el-button plain type="info" @click="selectall">全选</el-button>
               <el-button plain type="info" @click="noselect">取消</el-button>
               <el-option v-for="(item,index) in account" :index="index" :key="item.store" :label="item.store" :value="item.store"></el-option>
             </el-select>
+          </el-form-item>
+          <el-form-item label="时间类型" class="input" prop="dateType">
+            <el-radio-group v-model="condition.dateType">
+              <el-radio border v-for="(item,index) in dateType" :index="index" :key="item.id" :label="item.id" :value="item.id">{{item.type}}</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="显示方式" class="input" prop="flag">
+            <el-radio-group style="width:218px;" v-model="condition.flag">
+              <el-radio style="padding-right:43px;" border v-for="(item,index) in flag" :index="index" :key="item.id" :label="item.id" :value="item.id">{{item.type}}</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="日期" class="input" prop="dateRange" :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
+            <el-date-picker v-model="condition.dateRange" value-format="yyyy-MM-dd" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions2">
+            </el-date-picker>
           </el-form-item>
           <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
         </el-form>
@@ -416,7 +416,6 @@ export default {
             });
           }
         } else {
-          console.log("error submit!!");
           return false;
         }
       });
@@ -441,6 +440,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.el-form-item {
+  margin-bottom: 0px;
+}
 .el-select-dropdown {
   .el-button--info.is-plain {
     width: 50%;

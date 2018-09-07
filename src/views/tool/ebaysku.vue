@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form label-width="100px" class="demo-ruleForm login-container" v-show="show1">
+    <el-form label-width="120px" class="demo-ruleForm login-container" v-show="show1">
       <el-form-item label="卖家账号：">
         <el-select v-model="formInline.type" filterable clearable>
           <el-option v-for='(item,index) in type' :index='index' :key='item.ebaySuffix' :label='item.ebaySuffix' :value='item.ebaySuffix'></el-option>

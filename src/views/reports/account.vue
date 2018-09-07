@@ -44,12 +44,12 @@
               <el-radio border v-for='(item,index) in dateType' :index='index' :key='item.id' :label='item.id' :value='item.id'>{{item.type}}</el-radio>
             </el-radio-group>
           </el-form-item>
+          <el-form-item v-model="condition.account" label="商品编码">
+            <el-input style="width:217px;"></el-input>
+          </el-form-item>
           <el-form-item label='日期' class='input' prop='dateRange' :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
             <el-date-picker v-model='condition.dateRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2'>
             </el-date-picker>
-          </el-form-item>
-          <el-form-item v-model="condition.account" label="商品编码">
-            <el-input></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type='primary' class='input' @click='onSubmit(condition)'>查询</el-button>
@@ -430,6 +430,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.el-form-item {
+  margin-bottom: 0px;
+}
 .el-select-dropdown {
   .el-button--info.is-plain {
     width: 50%;

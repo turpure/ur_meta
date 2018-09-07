@@ -9,20 +9,23 @@
           <i class="fa fa-align-justify"></i>
         </div>
       </el-col>
-      <el-col :span="8">
+      <el-col :span="10">
         <el-dropdown>
-          <span class="el-dropdown-link" style="text-decoration:none;color:white;font-size:16px;font-weight:bold;">产品中心</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <span class="el-dropdown-link" style="text-decoration:none;color:white;font-size:16px;font-weight:bold;">产品中心</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item></el-dropdown-item>
-            <el-dropdown-item></el-dropdown-item>
-            <el-dropdown-item></el-dropdown-item>
-            <el-dropdown-item></el-dropdown-item>
-            <el-dropdown-item></el-dropdown-item>
+            <el-dropdown-item>产品开发</el-dropdown-item>
+            <el-dropdown-item>产品审批</el-dropdown-item>
+            <el-dropdown-item>产品资料</el-dropdown-item>
+            <el-dropdown-item>权限管理</el-dropdown-item>
+            <el-dropdown-item>用户管理</el-dropdown-item>
+            <el-dropdown-item>基本信息</el-dropdown-item>
+            <el-dropdown-item>任务中心</el-dropdown-item>
+            <el-dropdown-item>供应链管理</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
         <el-dropdown>
-          <span @click="rm" style="text-decoration:none;color:white;font-size:16px;font-weight:bold;">毛利润报表</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <el-dropdown-menu slot="dropdown" style="left:21%;">
+          <span @click="rm" style="text-decoration:none;color:white;font-size:16px;font-weight:bold;">毛利润报表</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <el-dropdown-menu slot="dropdown">
             <router-link to="/v1/report/sales-trend" style="text-decoration:none;">
               <el-dropdown-item>
                 销售额走势
@@ -61,7 +64,7 @@
           </el-dropdown-menu>
         </el-dropdown>
         <el-dropdown>
-          <span style="text-decoration:none;color:white;font-size:16px;font-weight:bold;">数据中心</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <span style="text-decoration:none;color:white;font-size:16px;font-weight:bold;">数据中心</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>新品开发表现</el-dropdown-item>
             <el-dropdown-item>平台产品利润</el-dropdown-item>
@@ -72,8 +75,8 @@
           </el-dropdown-menu>
         </el-dropdown>
         <el-dropdown>
-          <span @click="ru" style="text-decoration:none;color:white;font-size:16px;font-weight:bold;">UR小工具</span>
-          <el-dropdown-menu slot="dropdown" style="left:33%;">
+          <span @click="ru" style="text-decoration:none;color:white;font-size:16px;font-weight:bold;">UR小工具</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>产品一览表</el-dropdown-item>
             <el-dropdown-item>品牌列表</el-dropdown-item>
             <el-dropdown-item>物流查询网址</el-dropdown-item>

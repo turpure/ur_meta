@@ -30,8 +30,8 @@ module.exports = merge(baseWebpackConfig, {
       filename: 'index.html',
       template: 'index.html',
       inject: true,
-      //去除favicon.ico报404错误
-      // favicon: path.resolve('favicon.ico')
+      //浏览器显示图片
+      favicon: './favicon.ico'
     }),
     new FriendlyErrorsPlugin()
   ]
