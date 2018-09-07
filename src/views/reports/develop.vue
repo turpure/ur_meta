@@ -195,11 +195,11 @@
 </template>
 
 <script>
-import { getMyToken } from '../../api/api'
-import { getSection, getMember, getDevelop } from '../../api/profit'
-import { compareUp, compareDown } from '../../api/tools'
-import FileSaver from 'file-saver'
-import XLSX from 'xlsx'
+import { getMyToken } from "../../api/api";
+import { getSection, getMember, getDevelop } from "../../api/profit";
+import { compareUp, compareDown } from "../../api/tools";
+import FileSaver from "file-saver";
+import XLSX from "xlsx";
 
 export default {
   data() {
@@ -247,21 +247,21 @@ export default {
       tableHeight: 0,
       allMember: [],
       isA: true,
-      text: '显示输入框',
+      text: "显示输入框",
       show: true,
       show1: false,
       show2: false,
-      activeName: 'first',
+      activeName: "first",
       tableData01: [],
       tableData02: [],
       searchTableFirst: [],
       searchTableSecond: [],
-      searchValue: '',
+      searchValue: "",
       listLoading: false,
       department: [],
       member: [],
       dateRange: [],
-      dateType: [{ id: 1, type: '发货时间' }, { id: 0, type: '交易时间' }],
+      dateType: [{ id: 1, type: "发货时间" }, { id: 0, type: "交易时间" }],
       formInline: {
         region: []
       },
@@ -272,46 +272,46 @@ export default {
       },
       tableMap: {
         first: {
-          tableData: 'tableData01',
-          searchTable: 'searchTableFirst'
+          tableData: "tableData01",
+          searchTable: "searchTableFirst"
         },
         second: {
-          tableData: 'tableData02',
-          searchTable: 'searchTableSecond'
+          tableData: "tableData02",
+          searchTable: "searchTableSecond"
         }
       },
       pickerOptions2: {
         shortcuts: [
           {
-            text: '本月',
+            text: "本月",
             onClick(picker) {
-              const end = new Date()
-              const y = end.getFullYear()
-              let m = end.getMonth() + 1
+              const end = new Date();
+              const y = end.getFullYear();
+              let m = end.getMonth() + 1;
               if (m < 10) {
-                m = '0' + m
+                m = "0" + m;
               }
-              const firstday = y + '-' + m + '-' + '01'
-              const start = new Date()
-              const sy = start.getFullYear()
-              let sm = start.getMonth() + 1
-              const sd = start.getDate()
+              const firstday = y + "-" + m + "-" + "01";
+              const start = new Date();
+              const sy = start.getFullYear();
+              let sm = start.getMonth() + 1;
+              const sd = start.getDate();
               if (sm < 10) {
-                sm = '0' + sm
+                sm = "0" + sm;
               }
-              const sfirstday = sy + '-' + sm + '-' + sd
-              picker.$emit('pick', [firstday, sfirstday])
+              const sfirstday = sy + "-" + sm + "-" + sd;
+              picker.$emit("pick", [firstday, sfirstday]);
             }
           },
           {
-            text: '上个月',
+            text: "上个月",
             onClick(picker) {
-              const end = new Date()
-              const start = new Date()
-              const y = start.getFullYear()
-              const m = start.getMonth()
-              let lastday
-              let firstday
+              const end = new Date();
+              const start = new Date();
+              const y = start.getFullYear();
+              const m = start.getMonth();
+              let lastday;
+              let firstday;
               if (
                 m == 1 ||
                 m == 3 ||
@@ -321,250 +321,250 @@ export default {
                 m == 10 ||
                 m == 12
               ) {
-                lastday = y + '-' + ('0' + m) + '-' + '31'
+                lastday = y + "-" + ("0" + m) + "-" + "31";
               } else if (m == 4 || m == 6 || m == 9 || m == 11) {
-                lastday = y + '-' + ('0' + m) + '-' + '30'
+                lastday = y + "-" + ("0" + m) + "-" + "30";
               } else if (y % 4 == 0 && (y % 100 != 0 || y % 400 == 0)) {
-                lastday = y + '-' + '02' + '-' + '29'
+                lastday = y + "-" + "02" + "-" + "29";
               } else {
-                lastday = y + '-' + '02' + '-' + '28'
+                lastday = y + "-" + "02" + "-" + "28";
               }
-              firstday = y + '-' + ('0' + m) + '-' + '01'
-              picker.$emit('pick', [firstday, lastday])
+              firstday = y + "-" + ("0" + m) + "-" + "01";
+              picker.$emit("pick", [firstday, lastday]);
             }
           },
           {
-            text: '最近一个月',
+            text: "最近一个月",
             onClick(picker) {
-              const end = new Date()
-              const start = new Date()
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-              picker.$emit('pick', [start, end])
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit("pick", [start, end]);
             }
           }
         ]
       }
-    }
+    };
   },
   methods: {
     handleCheck1() {
-      this.checked1 != this.checked1
+      this.checked1 != this.checked1;
     },
     handleCheck2() {
-      this.checked2 != this.checked2
+      this.checked2 != this.checked2;
     },
     handleCheck3() {
-      this.checked3 != this.checked3
+      this.checked3 != this.checked3;
     },
     handleCheck4() {
-      this.checked4 != this.checked4
+      this.checked4 != this.checked4;
     },
     handleCheck5() {
-      this.checked5 != this.checked5
+      this.checked5 != this.checked5;
     },
     handleCheck6() {
-      this.checked6 != this.checked6
+      this.checked6 != this.checked6;
     },
     handleCheck7() {
-      this.checked7 != this.checked7
+      this.checked7 != this.checked7;
     },
     handleCheck8() {
-      this.checked8 != this.checked8
+      this.checked8 != this.checked8;
     },
     handleCheck9() {
-      this.checked9 != this.checked9
+      this.checked9 != this.checked9;
     },
     handleCheck10() {
-      this.checked10 != this.checked10
+      this.checked10 != this.checked10;
     },
     handleCheck11() {
-      this.checked11 != this.checked11
+      this.checked11 != this.checked11;
     },
     handleCheck12() {
-      this.checked12 != this.checked12
+      this.checked12 != this.checked12;
     },
     handleCheck13() {
-      this.checked13 != this.checked13
+      this.checked13 != this.checked13;
     },
     handleCheck14() {
-      this.checked14 != this.checked14
+      this.checked14 != this.checked14;
     },
     handleCheck15() {
-      this.checked15 != this.checked15
+      this.checked15 != this.checked15;
     },
     handleCheck16() {
-      this.checked16 != this.checked16
+      this.checked16 != this.checked16;
     },
     handleCheck17() {
-      this.checked17 != this.checked17
+      this.checked17 != this.checked17;
     },
     handleCheck18() {
-      this.checked18 != this.checked18
+      this.checked18 != this.checked18;
     },
     handleCheck19() {
-      this.checked19 != this.checked19
+      this.checked19 != this.checked19;
     },
     handleCheck20() {
-      this.checked20 != this.checked20
+      this.checked20 != this.checked20;
     },
     handleCheck21() {
-      this.checked21 != this.checked21
+      this.checked21 != this.checked21;
     },
     handleCheck22() {
-      this.checked22 != this.checked22
+      this.checked22 != this.checked22;
     },
     handleCheck23() {
-      this.checked23 != this.checked23
+      this.checked23 != this.checked23;
     },
     handleCheck24() {
-      this.checked24 != this.checked24
+      this.checked24 != this.checked24;
     },
     handleCheck25() {
-      this.checked25 != this.checked25
+      this.checked25 != this.checked25;
     },
     handleCheck26() {
-      this.checked26 != this.checked26
+      this.checked26 != this.checked26;
     },
     handleCheck27() {
-      this.checked27 != this.checked27
+      this.checked27 != this.checked27;
     },
     handleCheck28() {
-      this.checked28 != this.checked28
+      this.checked28 != this.checked28;
     },
     handleCheck29() {
-      this.checked29 != this.checked29
+      this.checked29 != this.checked29;
     },
     handleCheck30() {
-      this.checked30 != this.checked30
+      this.checked30 != this.checked30;
     },
     handleCheck31() {
-      this.checked31 != this.checked31
+      this.checked31 != this.checked31;
     },
     handleCheck32() {
-      this.checked32 != this.checked32
+      this.checked32 != this.checked32;
     },
     handleCheck33() {
-      this.checked33 != this.checked33
+      this.checked33 != this.checked33;
     },
     handleCheck34() {
-      this.checked34 != this.checked34
+      this.checked34 != this.checked34;
     },
     handleCheck35() {
-      this.checked35 != this.checked35
+      this.checked35 != this.checked35;
     },
     handleCheck36() {
-      this.checked36 != this.checked36
+      this.checked36 != this.checked36;
     },
     handleCheck37() {
-      this.checked37 != this.checked37
+      this.checked37 != this.checked37;
     },
     handleCheck38() {
-      this.checked38 != this.checked38
+      this.checked38 != this.checked38;
     },
     handleCheck39() {
-      this.checked39 != this.checked39
+      this.checked39 != this.checked39;
     },
     handleCheck40() {
-      this.checked40 != this.checked40
+      this.checked40 != this.checked40;
     },
     selectalld() {
-      const allValues = []
+      const allValues = [];
       for (const item of this.department) {
-        allValues.push(item.department)
+        allValues.push(item.department);
       }
-      this.formInline.region = allValues
-      this.member = this.allMember
+      this.formInline.region = allValues;
+      this.member = this.allMember;
     },
     noselectd() {
-      this.formInline.region = []
-      this.member = this.allMember
+      this.formInline.region = [];
+      this.member = this.allMember;
     },
     selectallm() {
-      const allValues = []
+      const allValues = [];
       for (const item of this.member) {
-        allValues.push(item.username)
+        allValues.push(item.username);
       }
-      this.condition.member = allValues
+      this.condition.member = allValues;
     },
     noselectm() {
-      this.condition.member = []
+      this.condition.member = [];
     },
     choosed() {
-      let res = []
-      this.member = []
-      this.condition.member = []
-      const val = this.formInline.region
-      res = this.allMember
-      let per = []
-      if (val != '') {
+      let res = [];
+      this.member = [];
+      this.condition.member = [];
+      const val = this.formInline.region;
+      res = this.allMember;
+      let per = [];
+      if (val != "") {
         for (let i = 0; i < val.length; i++) {
           per = res.filter(
-            ele => ele.department == val[i] && ele.position == '开发'
-          )
-          this.member = this.member.concat(per)
+            ele => ele.department == val[i] && ele.position == "开发"
+          );
+          this.member = this.member.concat(per);
         }
       } else {
-        this.member = res
+        this.member = res;
       }
     },
     handleChange() {
-      this.show = !this.show
-      this.isA = !this.isA
+      this.show = !this.show;
+      this.isA = !this.isA;
       if (this.show == false) {
-        this.text = '显示输入框'
-        const height = document.getElementById('app').clientHeight
-        this.tableHeight = height + 315 + 'px'
+        this.text = "显示输入框";
+        const height = document.getElementById("app").clientHeight;
+        this.tableHeight = height + 315 + "px";
       } else if (this.show == true) {
-        this.text = '隐藏输入框'
-        const height = document.getElementById('app').clientHeight
-        this.tableHeight = height + 210 + 'px'
+        this.text = "隐藏输入框";
+        const height = document.getElementById("app").clientHeight;
+        this.tableHeight = height + 210 + "px";
       }
     },
     changeActive() {
-      this.show1 = true
+      this.show1 = true;
     },
     removeActive() {
-      this.show1 = false
+      this.show1 = false;
     },
     handleClick(tab, event) {
-      this.activeName = tab.name
+      this.activeName = tab.name;
     },
     onSubmit(form) {
-      const myform = JSON.parse(JSON.stringify(form))
-      const height = document.getElementById('app').clientHeight
-      this.tableHeight = height + 210 + 'px'
-      let posseman1Data
-      let posseman2Data
-      let ret
-      this.show2 = true
+      const myform = JSON.parse(JSON.stringify(form));
+      const height = document.getElementById("app").clientHeight;
+      this.tableHeight = height + 210 + "px";
+      let posseman1Data;
+      let posseman2Data;
+      let ret;
+      this.show2 = true;
       this.$refs.condition.validate(valid => {
         if (valid) {
-          this.listLoading = true
+          this.listLoading = true;
           if (this.condition.member.length === 0) {
             myform.member = this.allMember.map(m => {
-              return m.username
-            })
+              return m.username;
+            });
           }
-          this.listLoading = true
+          this.listLoading = true;
           getDevelop(myform).then(response => {
-            this.listLoading = false
-            ret = response.data.data
-            posseman1Data = ret.filter(ele => ele.tableType == '归属1人表')
-            posseman2Data = ret.filter(ele => ele.tableType == '归属2人表')
-            this.tableData01 = this.searchTableFirst = posseman1Data
-            this.tableData02 = this.searchTableSecond = posseman2Data
-          })
+            this.listLoading = false;
+            ret = response.data.data;
+            posseman1Data = ret.filter(ele => ele.tableType == "归属1人表");
+            posseman2Data = ret.filter(ele => ele.tableType == "归属2人表");
+            this.tableData01 = this.searchTableFirst = posseman1Data;
+            this.tableData02 = this.searchTableSecond = posseman2Data;
+          });
         } else {
-          return false
+          return false;
         }
-      })
+      });
     },
     handleSearch() {
-      const searchValue = this.searchValue && this.searchValue.toLowerCase()
-      const activeTable = this.activeName
-      const data = this[this.tableMap[activeTable]['searchTable']]
+      const searchValue = this.searchValue && this.searchValue.toLowerCase();
+      const activeTable = this.activeName;
+      const data = this[this.tableMap[activeTable]["searchTable"]];
       if (searchValue) {
-        this[this.tableMap[activeTable]['tableData']] = data.filter(function(
+        this[this.tableMap[activeTable]["tableData"]] = data.filter(function(
           row
         ) {
           return Object.keys(row).some(function(key) {
@@ -572,187 +572,211 @@ export default {
               String(row[key])
                 .toLowerCase()
                 .indexOf(searchValue) > -1
-            )
-          })
-        })
+            );
+          });
+        });
       } else {
-        this[this.tableMap[activeTable]['tableData']] = data
+        this[this.tableMap[activeTable]["tableData"]] = data;
       }
     },
     getSummaries(param) {
-      const { columns, data } = param
-      const sums = []
-      const fileds = columns.map(item => item.property)
+      const { columns, data } = param;
+      const sums = [];
+      const fileds = columns.map(item => item.property);
       columns.forEach((column, index) => {
         if (index === 0) {
-          sums[index] = '合计'
-          return
+          sums[index] = "合计";
+          return;
         }
         const values = data.map(item =>
-          Number(item[column.property] ? item[column.property] : 'unkonwn')
-        )
+          Number(item[column.property] ? item[column.property] : "unkonwn")
+        );
         if (!values.every(value => isNaN(value))) {
           sums[index] = values.reduce((prev, curr) => {
-            const value = Number(curr)
+            const value = Number(curr);
             if (!isNaN(value)) {
-              return prev + curr
+              return prev + curr;
             } else {
-              return prev
+              return prev;
             }
-          }, 0)
-          sums[index] = Math.round(sums[index] * 100) / 100
+          }, 0);
+          sums[index] = Math.round(sums[index] * 100) / 100;
         } else {
-          sums[index] = 'N/A'
+          sums[index] = "N/A";
         }
-      })
+      });
       // 退款率和利润率核算
-      sums[fileds.indexOf('netrateZero')] =
+      sums[fileds.indexOf("netrateZero")] =
         Math.round(
-          sums[fileds.indexOf('netprofitZero')] *
+          sums[fileds.indexOf("netprofitZero")] *
             10000 /
-            sums[fileds.indexOf('salemoneyrmbznZero')]
-        ) / 100
-      sums[fileds.indexOf('netrateSix')] =
+            sums[fileds.indexOf("salemoneyrmbznZero")]
+        ) / 100;
+      sums[fileds.indexOf("netrateSix")] =
         Math.round(
-          sums[fileds.indexOf('netprofitSix')] *
+          sums[fileds.indexOf("netprofitSix")] *
             10000 /
-            sums[fileds.indexOf('salemoneyrmbznSix')]
-        ) / 100
-      sums[fileds.indexOf('netrateTwe')] =
+            sums[fileds.indexOf("salemoneyrmbznSix")]
+        ) / 100;
+      sums[fileds.indexOf("netrateTwe")] =
         Math.round(
-          sums[fileds.indexOf('netprofitTwe')] *
+          sums[fileds.indexOf("netprofitTwe")] *
             10000 /
-            sums[fileds.indexOf('salemoneyrmbznTwe')]
-        ) / 100
-      sums[fileds.indexOf('netratetotal')] =
+            sums[fileds.indexOf("salemoneyrmbznTwe")]
+        ) / 100;
+      sums[fileds.indexOf("netratetotal")] =
         Math.round(
-          sums[fileds.indexOf('netprofittotal')] *
+          sums[fileds.indexOf("netprofittotal")] *
             10000 /
-            sums[fileds.indexOf('salemoneyrmbtotal')]
-        ) / 100
-      return sums
+            sums[fileds.indexOf("salemoneyrmbtotal")]
+        ) / 100;
+      return sums;
     },
     // 数字排序
     sortNumber(column, prop, order) {
-      const activeTable = this.activeName
-      const data = this[this.tableMap[activeTable]['tableData']]
-      if (column.order === 'descending') {
-        this.tableData = data.sort(compareDown(data, column.prop))
+      const activeTable = this.activeName;
+      const data = this[this.tableMap[activeTable]["tableData"]];
+      if (column.order === "descending") {
+        this.tableData = data.sort(compareDown(data, column.prop));
       } else {
-        this.tableData = data.sort(compareUp(data, column.prop))
+        this.tableData = data.sort(compareUp(data, column.prop));
       }
     },
     // 格式化数字
     empty(row, column, cellValue, index) {
-      return cellValue || '--'
+      return cellValue || "--";
     },
     // 导出
     exportExcel() {
       const th = [
-        '业绩归属人',
-        '时间段(0-6月)',
-        '销售额$(0-6月)',
-        '销售额￥(0-6月)',
-        '商品成本￥(0-6月)',
-        '交易费汇总$(0-6月)',
-        '交易费汇总￥(0-6月)',
-        '包装成本￥(0-6月)',
-        '运费成本￥(0-6月)',
-        '死库处理￥(0-6月)',
-        '运营杂费￥(0-6月)',
-        '毛利润￥(0-6月)',
-        '毛利率%(0-6月)',
-        '时间段(6-12月)',
-        '销售额$(6-12月)',
-        '销售额￥(6-12月)',
-        '商品成本￥(6-12月)',
-        '交易费汇总$(6-12月)',
-        '交易费汇总￥(6-12月)',
-        '包装成本￥(6-12月)',
-        '运费成本￥(6-12月)',
-        '死库处理￥(6-12月)',
-        '运营杂费￥(6-12月)',
-        '毛利润￥(6-12月)',
-        '毛利率%(6-12月)',
-        '时间段(12月以上)',
-        '销售额$(12月以上)',
-        '销售额￥(12月以上)',
-        '商品成本￥(12月以上)',
-        '交易费汇总$(12月以上)',
-        '交易费汇总￥(12月以上)',
-        '包装成本￥(12月以上)',
-        '运费成本￥(12月以上)',
-        '死库处理￥(12月以上)',
-        '运营杂费￥(12月以上)',
-        '毛利润￥(12月以上)',
-        '毛利率%(12月以上)',
-        '销售额￥(汇总)',
-        '毛利润￥(汇总)',
-        '毛利率%(汇总)'
-      ]
+        "业绩归属人",
+        "时间段(0-6月)",
+        "销售额$(0-6月)",
+        "销售额￥(0-6月)",
+        "商品成本￥(0-6月)",
+        "交易费汇总$(0-6月)",
+        "交易费汇总￥(0-6月)",
+        "包装成本￥(0-6月)",
+        "运费成本￥(0-6月)",
+        "死库处理￥(0-6月)",
+        "运营杂费￥(0-6月)",
+        "毛利润￥(0-6月)",
+        "毛利率%(0-6月)",
+        "时间段(6-12月)",
+        "销售额$(6-12月)",
+        "销售额￥(6-12月)",
+        "商品成本￥(6-12月)",
+        "交易费汇总$(6-12月)",
+        "交易费汇总￥(6-12月)",
+        "包装成本￥(6-12月)",
+        "运费成本￥(6-12月)",
+        "死库处理￥(6-12月)",
+        "运营杂费￥(6-12月)",
+        "毛利润￥(6-12月)",
+        "毛利率%(6-12月)",
+        "时间段(12月以上)",
+        "销售额$(12月以上)",
+        "销售额￥(12月以上)",
+        "商品成本￥(12月以上)",
+        "交易费汇总$(12月以上)",
+        "交易费汇总￥(12月以上)",
+        "包装成本￥(12月以上)",
+        "运费成本￥(12月以上)",
+        "死库处理￥(12月以上)",
+        "运营杂费￥(12月以上)",
+        "毛利润￥(12月以上)",
+        "毛利率%(12月以上)",
+        "销售额￥(汇总)",
+        "毛利润￥(汇总)",
+        "毛利率%(汇总)"
+      ];
       const filterVal = [
-        'salernameZero',
-        'timegroupZero',
-        'salemoneyrmbusZero',
-        'salemoneyrmbznZero',
-        'costmoneyrmbZero',
-        'ppebayusZero',
-        'ppebayznZero',
-        'inpackagefeermbZero',
-        'expressfarermbZero',
-        'devofflinefeeZero',
-        'devOpeFeeZero',
-        'netprofitZero',
-        'netrateZero',
-        'timegroupSix',
-        'salemoneyrmbusSix',
-        'salemoneyrmbznSix',
-        'costmoneyrmbSix',
-        'ppebayusSix',
-        'ppebayznSix',
-        'inpackagefeermbSix',
-        'expressfarermbSix',
-        'devofflinefeeSix',
-        'devOpeFeeSix',
-        'netprofitSix',
-        'netrateSix',
-        'timegroupTwe',
-        'salemoneyrmbusTwe',
-        'salemoneyrmbznTwe',
-        'costmoneyrmbTwe',
-        'ppebayusTwe',
-        'ppebayznTwe',
-        'inpackagefeermbTwe',
-        'expressfarermbTwe',
-        'devofflinefeeTwe',
-        'devOpeFeeTwe',
-        'netprofitTwe',
-        'netrateTwe',
-        'salemoneyrmbtotal',
-        'netprofittotal',
-        'netratetotal'
-      ]
-      if (this.activeName == 'first') {
-        const data = this.tableData01.map(v => filterVal.map(k => v[k]))
-        const [fileName, fileType, sheetName] = ['开发毛利润报表', 'xlsx']
-        this.$toExcel({ th, data, fileName, fileType, sheetName })
-      } else if (this.activeName == 'second') {
-        const data = this.tableData02.map(v => filterVal.map(k => v[k]))
-        const [fileName, fileType, sheetName] = ['开发毛利润报表', 'xlsx']
-        this.$toExcel({ th, data, fileName, fileType, sheetName })
+        "salernameZero",
+        "timegroupZero",
+        "salemoneyrmbusZero",
+        "salemoneyrmbznZero",
+        "costmoneyrmbZero",
+        "ppebayusZero",
+        "ppebayznZero",
+        "inpackagefeermbZero",
+        "expressfarermbZero",
+        "devofflinefeeZero",
+        "devOpeFeeZero",
+        "netprofitZero",
+        "netrateZero",
+        "timegroupSix",
+        "salemoneyrmbusSix",
+        "salemoneyrmbznSix",
+        "costmoneyrmbSix",
+        "ppebayusSix",
+        "ppebayznSix",
+        "inpackagefeermbSix",
+        "expressfarermbSix",
+        "devofflinefeeSix",
+        "devOpeFeeSix",
+        "netprofitSix",
+        "netrateSix",
+        "timegroupTwe",
+        "salemoneyrmbusTwe",
+        "salemoneyrmbznTwe",
+        "costmoneyrmbTwe",
+        "ppebayusTwe",
+        "ppebayznTwe",
+        "inpackagefeermbTwe",
+        "expressfarermbTwe",
+        "devofflinefeeTwe",
+        "devOpeFeeTwe",
+        "netprofitTwe",
+        "netrateTwe",
+        "salemoneyrmbtotal",
+        "netprofittotal",
+        "netratetotal"
+      ];
+      let date = new Date();
+      let year = date.getFullYear();
+      let month = date.getMonth() + 1;
+      let strDate = date.getDate();
+      let hour = date.getHours();
+      let minute = date.getMinutes();
+      let second = date.getSeconds();
+      if (month >= 1 && month <= 9) {
+        month = "0" + month;
+      }
+      if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+      }
+      if (hour >= 0 && hour <= 9) {
+        hour = "0" + hour;
+      }
+      if (minute >= 0 && minute <= 9) {
+        minute = "0" + minute;
+      }
+      if (second >= 0 && second <= 9) {
+        second = "0" + second;
+      }
+      const FileName =
+        "开发毛利润报表" + year + month + strDate + hour + minute + second;
+      if (this.activeName == "first") {
+        const data = this.tableData01.map(v => filterVal.map(k => v[k]));
+        const [fileName, fileType, sheetName] = [FileName, "xlsx"];
+        this.$toExcel({ th, data, fileName, fileType, sheetName });
+      } else if (this.activeName == "second") {
+        const data = this.tableData02.map(v => filterVal.map(k => v[k]));
+        const [fileName, fileType, sheetName] = [FileName, "xlsx"];
+        this.$toExcel({ th, data, fileName, fileType, sheetName });
       }
     }
   },
   mounted() {
     getSection().then(response => {
-      this.department = response.data.data
-    })
+      this.department = response.data.data;
+    });
     getMember().then(response => {
-      const res = response.data.data
-      this.allMember = this.member = res.filter(ele => ele.position == '开发')
-    })
+      const res = response.data.data;
+      this.allMember = this.member = res.filter(ele => ele.position == "开发");
+    });
   }
-}
+};
 </script>
 
 <style lang="scss">
