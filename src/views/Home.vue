@@ -9,9 +9,9 @@
           <i class="fa fa-align-justify"></i>
         </div>
       </el-col>
-      <el-col :span="10">
+      <el-col :span="7">
         <el-dropdown>
-          <span class="el-dropdown-link" style="text-decoration:none;color:white;font-size:16px;font-weight:bold;">产品中心</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <span class="el-dropdown-link" style="text-decoration:none;color:white;font-size:16px;font-weight:bold;">产品中心</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>产品开发</el-dropdown-item>
             <el-dropdown-item>产品审批</el-dropdown-item>
