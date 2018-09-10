@@ -78,7 +78,6 @@ export default {
             document.body.appendChild(downloadElement);
             downloadElement.click();
             document.body.removeChild(downloadElement);
-            window.URL.revokeObjectURL(href);
           });
         }
       });

@@ -3,7 +3,7 @@
   <div>
     <div class='demo-block demo-box demo-zh-CN demo-transition' @mouseover='changeActive' @mouseout='removeActive'>
       <transition name='el-fade-in-linear'>
-        <el-form :model='condition' :inline='true' ref='condition' label-width='68px' class='demo-form-inline' v-show='show'>
+        <el-form :model='condition' :inline='true' ref='condition' label-width='100px' class='demo-form-inline' v-show='show'>
           <el-form-item label='部门' class='input'>
             <el-select v-model='condition.department' multiple collapse-tags placeholder='部门' @change='choosed'>
               <el-button plain type="info" @click="selectalld">全选</el-button>
@@ -31,6 +31,7 @@
               </el-option>
             </el-select>
           </el-form-item>
+          <br>
           <el-form-item label="账号" class="input">
             <el-select v-model="condition.account" filterable multiple collapse-tags placeholder="账号">
               <el-button plain type="info" @click="selectall">全选</el-button>
