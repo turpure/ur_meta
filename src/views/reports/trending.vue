@@ -31,7 +31,7 @@
             <el-select v-model="condition.account" filterable multiple collapse-tags placeholder="账号">
               <el-button plain type="info" @click='selectAll("account")'>全选</el-button>
               <el-button plain type="info" @click='unselect("account")'>取消</el-button>
-              <el-option v-for="(item,index) in account" :index="index" :key="item.store" :label="item.store" :value="item.store"></el-option>
+              <el-option v-for="(item,index) in account" :index="index" :key="item.id" :label="item.store" :value="item.store"></el-option>
             </el-select>
           </el-form-item>
           <br>
@@ -368,23 +368,5 @@ export default {
 }
 .el-dropdowm {
   line-height: 45px !important;
-}
-.el-select-dropdown {
-  .el-button--info.is-plain {
-    width: 50%;
-    padding: 5px 10px;
-    font-size: 12px;
-    line-height: 1.5;
-    margin-left: 0;
-    float: left;
-    border-radius: 0 !important;
-    color: #333;
-    background-color: #fff;
-  }
-  .el-button:hover {
-    color: #333;
-    background-color: #ebebeb;
-    border-color: #adadad;
-  }
 }
 </style>

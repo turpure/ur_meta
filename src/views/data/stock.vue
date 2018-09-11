@@ -18,7 +18,7 @@
         <el-col :span='2' :offset='22'>
           <el-input clearable placeholder='search' v-model='searchValue' @change='handleSearch'></el-input>
         </el-col>
-        <el-table height="700" :data="tableData" @sort-change="sortNumber" style="width: 100%;">
+        <el-table :header-cell-style="thstyle" height="700" :data="tableData" @sort-change="sortNumber" style="width: 100%;">
           <el-table-column min-width="80px" prop="Season" label="季节" :formatter="empty" sortable></el-table-column>
           <el-table-column min-width="100px" prop="goodscode" label="商品编码" :formatter="empty" sortable></el-table-column>
           <el-table-column min-width="130px" prop="num" label="最大延迟天数" :formatter="empty" sortable></el-table-column>
@@ -58,6 +58,18 @@ export default {
     };
   },
   methods: {
+    thstyle({ row, column, rowIndex, columnIndex }) {
+      if (
+        (rowIndex === 0 && columnIndex === 2) ||
+        columnIndex === 13 ||
+        columnIndex === 15
+      ) {
+        //指定坐标
+        return "color:red";
+      } else {
+        return "";
+      }
+    },
     total() {
       return this.tableData.length;
     },
