@@ -10,62 +10,46 @@
         </div>
       </el-col>
       <el-col :span="12">
-        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
-          <el-submenu index="1" @click.native="rproduct" style="font-weight:bold;width:130px;">
-            <template slot="title">产品中心</template>
+        <el-menu :default-active="$route.path" class="el-menu-demo" mode="horizontal" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" router>
+          <el-submenu index="1" @click.native="rproduct">
+            <template slot="title">
+              <span :style="{color:rgb1}">产品中心</span>
+            </template>
           </el-submenu>
-          <el-submenu index="2" @click.native="rm" style="font-weight:bold;width:150px;">
-            <template slot="title">毛利润报表</template>
-            <router-link to="/v1/report/sales-trend" style="text-decoration:none;">
-              <el-menu-item index="2-1">销售额走势</el-menu-item>
-            </router-link>
-            <router-link to="/v1/report/sales" style="text-decoration:none;">
-              <el-menu-item index="2-2">销售毛利润报表</el-menu-item>
-            </router-link>
-            <router-link to="/develop" style="text-decoration:none;">
-              <el-menu-item index="2-3">开发毛利润报表</el-menu-item>
-            </router-link>
-            <router-link to="/purchase" style="text-decoration:none;">
-              <el-menu-item index="2-4">采购毛利润报表</el-menu-item>
-            </router-link>
-            <router-link to="/artist" style="text-decoration:none;">
-              <el-menu-item index="2-5">美工毛利润报表</el-menu-item>
-            </router-link>
-            <router-link to="/v1/report/introduce" style="text-decoration:none;">
-              <el-menu-item index="2-6">推荐人毛利报表</el-menu-item>
-            </router-link>
-            <router-link to="/v1/report/account" style="text-decoration:none;">
-              <el-menu-item index="2-7">账号产品利润表</el-menu-item>
-            </router-link>
+          <el-submenu index="2" @click.native="rm" style="margin-left:20px;">
+            <template slot="title">
+              <span :style="{color:rgb2}">毛利润报表</span>
+            </template>
+            <el-menu-item index="/v1/report/sales-trend">销售额走势</el-menu-item>
+            <el-menu-item index="/v1/report/sales">销售毛利润报表</el-menu-item>
+            <el-menu-item index="/develop">开发毛利润报表</el-menu-item>
+            <el-menu-item index="/purchase">采购毛利润报表</el-menu-item>
+            <el-menu-item index="/artist">美工毛利润报表</el-menu-item>
+            <el-menu-item index="/v1/report/introduce">推荐人毛利报表</el-menu-item>
+            <el-menu-item index="/v1/report/account">账号产品利润表</el-menu-item>
           </el-submenu>
-          <el-submenu index="3" @click.native="rdata" style="font-weight:bold;width:130px;">
-            <template slot="title">数据中心</template>
-            <router-link to="/v1/data-center/out-of-stock-info" style="text-decoration:none;">
-              <el-menu-item index="3-1">缺货产品分析</el-menu-item>
-            </router-link>
+          <el-submenu index="3" @click.native="rdata" style="margin-left:20px;">
+            <template slot="title">
+              <span :style="{color:rgb3}">数据中心</span>
+            </template>
+            <el-menu-item index="/v1/data-center/out-of-stock-info">缺货产品分析</el-menu-item>
           </el-submenu>
-          <el-submenu index="4" @click.native="rsale" style="font-weight:bold;width:130px;">
-            <template slot="title">销售工具</template>
-            <router-link to="/v1/tool/ebay-template" style="text-decoration:none;">
-              <el-menu-item index="4-1">eBay销售工具</el-menu-item>
-            </router-link>
-            <router-link to="/v1/tool/ebaysku-template" style="text-decoration:none;">
-              <el-menu-item index="4-2">eBay工具</el-menu-item>
-            </router-link>
-            <router-link to="/v1/tool/wishsku-template" style="text-decoration:none;">
-              <el-menu-item index="4-3">Wish工具</el-menu-item>
-            </router-link>
-            <router-link to="/v1/tool/smtsku-template" style="text-decoration:none;">
-              <el-menu-item index="4-4">SMT工具</el-menu-item>
-            </router-link>
+          <el-submenu index="4" @click.native="rsale" style="margin-left:20px;">
+            <template slot="title">
+              <span :style="{color:rgb4}">销售工具</span>
+            </template>
+            <el-menu-item index="/v1/tool/ebay-template">eBay销售工具</el-menu-item>
+            <el-menu-item index="/v1/tool/ebaysku-template">eBay工具</el-menu-item>
+            <el-menu-item index="/v1/tool/wishsku-template">Wish工具</el-menu-item>
+            <el-menu-item index="/v1/tool/smtsku-template">SMT工具</el-menu-item>
           </el-submenu>
-          <el-submenu index="5" @click.native="ru" style="font-weight:bold;width:130px;">
-            <template slot="title">UR小工具</template>
-            <!-- <el-menu-item index="5-1">产品一览表</el-menu-item>
-            <el-menu-item index="5-2">品牌列表</el-menu-item> -->
-            <router-link to="/v1/tiny-tool/express" style="text-decoration:none;">
-              <el-menu-item index="5-1">物流查询网址</el-menu-item>
-            </router-link>
+          <el-submenu index="5" @click.native="ru" style="margin-left:20px;">
+            <template slot="title">
+              <span :style="{color:rgb5}">UR小工具</span>
+            </template>
+            <!-- <el-menu-item index="5-1">产品一览表</el-menu-item> -->
+            <el-menu-item index="/v1/tiny-tool/express">物流查询网址</el-menu-item>
+            <el-menu-item index="/v1/tiny-tool/brand">品牌列表</el-menu-item>
             <!-- <el-menu-item index="5-4">ibay工具</el-menu-item> -->
           </el-submenu>
         </el-menu>
@@ -193,7 +177,11 @@ export default {
   components: { ImageCropper, Screenfull },
   data() {
     return {
-      activeIndex: "",
+      rgb1: "",
+      rgb2: "",
+      rgb3: "",
+      rgb4: "",
+      rgb5: "",
       show1: true,
       show2: false,
       show3: false,
@@ -239,22 +227,31 @@ export default {
     });
   },
   methods: {
+    rproduct() {
+      this.rgb1 = "#ffd04b";
+      this.rgb2 = "";
+      this.rgb3 = "";
+      this.rgb4 = "";
+      this.rgb5 = "";
+    },
     rm() {
+      this.rgb2 = "#ffd04b";
+      this.rgb1 = "";
+      this.rgb3 = "";
+      this.rgb4 = "";
+      this.rgb5 = "";
       this.show1 = false;
       this.show2 = true;
       this.show3 = false;
       this.show4 = false;
       this.show5 = false;
     },
-    ru() {
-      this.show1 = false;
-      this.show2 = false;
-      this.show3 = false;
-      this.show4 = false;
-      this.show5 = true;
-    },
-    rproduct() {},
     rdata() {
+      this.rgb3 = "#ffd04b";
+      this.rgb1 = "";
+      this.rgb2 = "";
+      this.rgb4 = "";
+      this.rgb5 = "";
       this.show1 = false;
       this.show2 = false;
       this.show3 = false;
@@ -262,11 +259,28 @@ export default {
       this.show5 = false;
     },
     rsale() {
+      this.rgb4 = "#ffd04b";
+      this.rgb1 = "";
+      this.rgb3 = "";
+      this.rgb2 = "";
+      this.rgb5 = "";
       this.show1 = false;
       this.show2 = false;
       this.show3 = true;
       this.show4 = false;
       this.show5 = false;
+    },
+    ru() {
+      this.rgb5 = "#ffd04b";
+      this.rgb1 = "";
+      this.rgb3 = "";
+      this.rgb4 = "";
+      this.rgb2 = "";
+      this.show1 = false;
+      this.show2 = false;
+      this.show3 = false;
+      this.show4 = false;
+      this.show5 = true;
     },
     cropSuccess(resData) {
       this.imagecropperShow = false;

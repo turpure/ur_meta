@@ -22,6 +22,7 @@ import wishsku from '../views/tool/wishsku.vue'
 import smtsku from '../views/tool/smtsku.vue'
 
 import express from '../views/tinytool/express.vue'
+import brand from '../views/tinytool/brand.vue'
 
 
 
@@ -148,7 +149,12 @@ const routes = [{
             path: '/v1/tiny-tool/express',
             component: express,
             name: '物流查询网址'
-        }
+        },
+        {
+            path: '/v1/tiny-tool/brand',
+            component: brand,
+            name: '品牌列表'
+        },
     ]
 },
 {
