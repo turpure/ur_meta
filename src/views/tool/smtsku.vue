@@ -1,16 +1,16 @@
 <template>
   <div>
-    <el-form label-width="100px" class="demo-ruleForm login-container" v-show="show1">
+    <el-form v-model="condition" label-width="100px" class="demo-ruleForm login-container" v-show="show1">
       <el-form-item label="卖家账号：">
-        <el-select v-model="formInline.type" filterable clearable>
-          <el-option v-for='(item,index) in type' :index='index' :key='item.DictionaryName' :label='item.DictionaryName' :value='item.DictionaryName'></el-option>
+        <el-select v-model="condition.suffix" filterable clearable>
+          <el-option v-for='(item,index) in suffix' :index='index' :key='item.DictionaryName' :label='item.DictionaryName' :value='item.DictionaryName'></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="商品编码：">
-        <el-input></el-input>
+        <el-input v-model="condition.goodsCode"></el-input>
       </el-form-item>
       <el-form-item label="商品价格：">
-        <el-input></el-input>
+        <el-input v-model="condition.price"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary">确认信息</el-button><br>
@@ -111,29 +111,23 @@ export default {
       show: false,
       show1: true,
       tableData: [],
-      type: [],
-      formInline: {
-        type: ""
-      },
+      suffix: [],
       condition: {
-        suffix: "aliexpress_SMT-19",
-        goodsCode: "6A0895",
-        price: "22"
+        suffix: "",
+        goodsCode: "",
+        price: ""
       },
       condition1: {
         contents: {
-          SKU: ["6C004601", "6C004602"],
-          quantity: [20, 20],
-          price: [0, 0],
-          pic_url: [
-            "http://121.196.233.153/images/6C004601.jpg",
-            "http://121.196.233.153/images/6C004602.jpg"
-          ],
-          property1: ["红色", "粉色"],
-          property2: ["", ""],
-          varition1: ["Red", "Pink"],
-          varition2: ["", ""],
-          name1: ["Does not apply", "Does not apply"]
+          SKU: [],
+          quantity: [],
+          price: [],
+          pic_url: [],
+          property1: [],
+          property2: [],
+          varition1: [],
+          varition2: [],
+          name1: []
         }
       }
     };
@@ -146,8 +140,16 @@ export default {
         this.tableData = response.data.data;
       });
     },
-    btnSavekkk(condition1) {
-      getsmtskutemplate(condition1).then(response => {
+    btnSavekkk() {
+      this.condition1.contents.SKU = this.tableData.map(e => e.SKU);
+      this.condition1.contents.varition1 = this.tableData.map(e => e.varition1);
+      this.condition1.contents.varition2 = this.tableData.map(e => e.varition2);
+      this.condition1.contents.pic_url = this.tableData.map(e => e.pic_url);
+      this.condition1.contents.property2 = this.tableData.map(e => e.property2);
+      this.condition1.contents.property1 = this.tableData.map(e => e.property1);
+      this.condition1.contents.quantity = this.tableData.map(e => e.quantity);
+      this.condition1.contents.price = this.tableData.map(e => e.price);
+      getsmtskutemplate(this.condition1).then(response => {
         const blob = new Blob([response.data], {
           type: "application/vnd.ms-excel;charset=UTF-8"
         });
@@ -182,7 +184,6 @@ export default {
         document.body.appendChild(downloadElement);
         downloadElement.click();
         document.body.removeChild(downloadElement);
-        window.URL.revokeObjectURL(href);
       });
     },
     back() {
@@ -192,7 +193,7 @@ export default {
   },
   mounted() {
     getToolaccount({ type: "SMT" }).then(response => {
-      this.type = response.data.data;
+      this.suffix = response.data.data;
     });
     getToolcolor().then(response => {
       this.color = response.data.data;

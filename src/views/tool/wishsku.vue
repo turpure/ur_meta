@@ -1,22 +1,22 @@
 <template>
   <div>
-    <el-form label-width="150px" class="demo-ruleForm login-container" v-show="show1">
+    <el-form :model="condition" label-width="150px" class="demo-ruleForm login-container" v-show="show1">
       <el-form-item label="卖家账号：">
-        <el-select v-model="formInline.type" filterable clearable>
+        <el-select v-model="condition.suffix" filterable clearable>
           <el-option v-for='(item,index) in type' :index='index' :key='item.ibaySuffix' :label='item.ibaySuffix' :value='item.ibaySuffix'></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="商品编码：">
-        <el-input></el-input>
+        <el-input v-model="condition.goodsCode"></el-input>
       </el-form-item>
       <el-form-item label="保留价(msrp$)：">
-        <el-input></el-input>
+        <el-input v-model="condition.msrp"></el-input>
       </el-form-item>
       <el-form-item label="商品售价(Price$)：">
-        <el-input></el-input>
+        <el-input v-model="condition.price"></el-input>
       </el-form-item>
       <el-form-item label="运费(Shipping$)：">
-        <el-input></el-input>
+        <el-input v-model="condition.shipping"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary">确认信息</el-button>
@@ -39,7 +39,7 @@
           <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总共：{{this.tableData.length}}条记录
         </div>
         <div class="modal-body">
-          <form>
+          <el-form :model="condition1">
             <el-table :data="tableData" class="table table-hover" id="tb">
               <el-table-column prop="SKU" label="SKU*" width="95px">
                 <template slot-scope="scope">
@@ -97,7 +97,7 @@
                 </template>
               </el-table-column>
             </el-table>
-          </form>
+          </el-form>
         </div>
       </div>
       <div class="modal-footer">
@@ -123,15 +123,12 @@ export default {
       show1: true,
       show: false,
       type: [],
-      formInline: {
-        type: ""
-      },
       condition: {
-        suffix: "wish_01-eshop",
-        goodsCode: "S161",
-        price: "22",
-        msrp: "22",
-        shipping: "22"
+        suffix: "",
+        goodsCode: "",
+        price: "",
+        msrp: "",
+        shipping: ""
       },
       condition1: {
         contents: {
@@ -163,7 +160,25 @@ export default {
       });
     },
     btnSavekkk() {
+      this.condition1.contents.SKU = this.tableData.map(e => e.SKU);
+      this.condition1.contents.variation1 = this.tableData.map(
+        e => e.variation1
+      );
+      this.condition1.contents.variation2 = this.tableData.map(
+        e => e.variation2
+      );
+      this.condition1.contents.pic_url = this.tableData.map(e => e.pic_url);
+      this.condition1.contents.property2 = this.tableData.map(e => e.property2);
+      this.condition1.contents.property1 = this.tableData.map(e => e.property1);
+      this.condition1.contents.quantity = this.tableData.map(e => e.quantity);
+      this.condition1.contents.price = this.tableData.map(e => e.price);
+      this.condition1.contents.msrp = this.tableData.map(e => e.msrp);
+      this.condition1.contents.shipping = this.tableData.map(e => e.shipping);
+      this.condition1.contents.shippingTime = this.tableData.map(
+        e => e.$shippingTime
+      );
       getwishskutemplate(this.condition1).then(response => {
+        debugger;
         const blob = new Blob([response.data], {
           type: "application/vnd.ms-excel;charset=UTF-8"
         });
@@ -198,7 +213,6 @@ export default {
         document.body.appendChild(downloadElement);
         downloadElement.click();
         document.body.removeChild(downloadElement);
-        window.URL.revokeObjectURL(href);
       });
     },
     back() {

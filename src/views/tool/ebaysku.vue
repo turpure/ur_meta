@@ -1,29 +1,29 @@
 <template>
   <div>
-    <el-form label-width="120px" class="demo-ruleForm login-container" v-show="show1">
+    <el-form v-model="condition" label-width="120px" class="demo-ruleForm login-container" v-show="show1">
       <el-form-item label="卖家账号：">
-        <el-select v-model="formInline.type" filterable clearable>
-          <el-option v-for='(item,index) in type' :index='index' :key='item.ebaySuffix' :label='item.ebaySuffix' :value='item.ebaySuffix'></el-option>
+        <el-select v-model="condition.suffix" filterable clearable>
+          <el-option v-for='(item,index) in suffix' :index='index' :key='item.ebaySuffix' :label='item.ebaySuffix' :value='item.ebaySuffix'></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="站 点：">
-        <el-select v-model="formInline.site" filterable clearable>
+        <el-select v-model="condition.site" filterable clearable>
           <el-option v-for='item in site' :key='item' :value='item'></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="产品类别：">
-        <el-input placeholder="Category1"></el-input>
-        <el-input placeholder="Category2"></el-input>
+        <el-input v-model="condition.Cat1" placeholder="Category1"></el-input>
+        <el-input v-model="condition.Cat2" placeholder="Category2"></el-input>
       </el-form-item>
       <el-form-item label="商品编码：">
-        <el-input style="width:217px;"></el-input>
+        <el-input v-model="condition.goodsCode" style="width:217px;"></el-input>
       </el-form-item>
       <el-form-item label="售 价：">
-        <el-input style="width:217px;"></el-input>
+        <el-input v-model="condition.price" style="width:217px;"></el-input>
       </el-form-item>
       <el-form-item label="运 费：">
-        <el-input placeholder="首件运费"></el-input>
-        <el-input placeholder="续件运费"></el-input>
+        <el-input v-model="condition.shipping1" placeholder="首件运费"></el-input>
+        <el-input v-model="condition.shipping2" placeholder="续件运费"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary">确认信息</el-button>
@@ -125,47 +125,40 @@ export default {
       show1: true,
       tableData: [],
       site: [],
-      type: [],
-      formInline: {
-        site: "",
-        type: ""
-      },
+      suffix: [],
       condition: {
-        suffix: "showtime688",
-        goodsCode: "6C0046",
-        Site: "美国",
-        Cat1: "女人世界",
-        Cat2: "内衣",
-        price: "22",
-        shipping1: "5",
-        shipping2: "5"
+        suffix: "",
+        goodsCode: "",
+        Site: "",
+        Cat1: "",
+        Cat2: "",
+        price: "",
+        shipping1: "",
+        shipping2: ""
       },
       condition1: {
         setting: {
-          suffix: "showtime688",
-          goodsCode: "6C0046",
-          Site: "美国",
-          Cat1: "女人世界",
-          Cat2: "内衣",
-          price: "22",
-          shipping1: "5",
-          shipping2: "5"
+          suffix: "",
+          goodsCode: "",
+          Site: "",
+          Cat1: "",
+          Cat2: "",
+          price: "",
+          shipping1: "",
+          shipping2: ""
         },
         contents: {
-          remark: ["abc", "edf"],
-          SKU: ["6C004601", "6C004602"],
-          Quantity: [20, 20],
-          StartPrice: [0, 0],
-          PictureURL: [
-            "http://121.196.233.153/images/6C004601.jpg",
-            "http://121.196.233.153/images/6C004602.jpg"
-          ],
-          Color: ["红色", "粉色"],
-          Size: ["", ""],
-          pro1: ["Red", "Pink"],
-          pro2: ["", ""],
-          EAN: ["Does not apply", "Does not apply"],
-          UPC: ["Does not apply", "Does not apply"]
+          remark: [],
+          SKU: [],
+          Quantity: [],
+          StartPrice: [],
+          PictureURL: [],
+          Color: [],
+          Size: [],
+          pro1: [],
+          pro2: [],
+          EAN: [],
+          UPC: []
         }
       }
     };
@@ -214,7 +207,6 @@ export default {
         document.body.appendChild(downloadElement);
         downloadElement.click();
         document.body.removeChild(downloadElement);
-        window.URL.revokeObjectURL(href);
       });
     },
     back() {
@@ -224,7 +216,7 @@ export default {
   },
   mounted() {
     getToolaccount({ type: "eBay" }).then(response => {
-      this.type = response.data.data;
+      this.suffix = response.data.data;
     });
     getToolsite().then(response => {
       let s = response.data.data;

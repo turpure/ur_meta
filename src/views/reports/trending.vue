@@ -3,7 +3,7 @@
   <div>
     <div class="demo-block demo-box demo-zh-CN demo-transition" @mouseover="changeActive" @mouseout="removeActive">
       <transition name="el-fade-in-linear">
-        <el-form :model="condition" :inline="true" ref="condition" class="demo-form-inline" label-width="68px" v-show="show">
+        <el-form :model="condition" :inline="true" ref="condition" class="demo-form-inline" label-width="100px" v-show="show">
           <el-form-item label="部门" class="input">
             <el-select v-model="condition.department" multiple collapse-tags placeholder="部门" @change="choosed">
               <el-button plain type="info" @click='selectAll("department")'>全选</el-button>
@@ -31,16 +31,17 @@
             <el-select v-model="condition.account" filterable multiple collapse-tags placeholder="账号">
               <el-button plain type="info" @click='selectAll("account")'>全选</el-button>
               <el-button plain type="info" @click='unselect("account")'>取消</el-button>
-              <el-option v-for="(item,index) in account" :index="index" :key="item.store" :label="item.store" :value="item.store"></el-option>
+              <el-option v-for="(item,index) in account" :index="index" :key="item.id" :label="item.store" :value="item.store"></el-option>
             </el-select>
           </el-form-item>
+          <br>
           <el-form-item label="时间类型" class="input" prop="dateType">
             <el-radio-group v-model="condition.dateType">
               <el-radio border v-for="(item,index) in dateType" :index="index" :key="item.id" :label="item.id" :value="item.id">{{item.type}}</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="显示方式" class="input" prop="flag">
-            <el-radio-group style="width:218px;" v-model="condition.flag">
+            <el-radio-group style="width:217px;" v-model="condition.flag">
               <el-radio style="padding-right:43px;" border v-for="(item,index) in flag" :index="index" :key="item.id" :label="item.id" :value="item.id">{{item.type}}</el-radio>
             </el-radio-group>
           </el-form-item>
@@ -48,7 +49,10 @@
             <el-date-picker v-model="condition.dateRange" value-format="yyyy-MM-dd" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions2">
             </el-date-picker>
           </el-form-item>
-          <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <el-form-item>
+            <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
+          </el-form-item>
         </el-form>
       </transition>
       <div class="demo-block-control" @click="handleChange" style="left:0px;">
@@ -364,23 +368,5 @@ export default {
 }
 .el-dropdowm {
   line-height: 45px !important;
-}
-.el-select-dropdown {
-  .el-button--info.is-plain {
-    width: 50%;
-    padding: 5px 10px;
-    font-size: 12px;
-    line-height: 1.5;
-    margin-left: 0;
-    float: left;
-    border-radius: 0 !important;
-    color: #333;
-    background-color: #fff;
-  }
-  .el-button:hover {
-    color: #333;
-    background-color: #ebebeb;
-    border-color: #adadad;
-  }
 }
 </style>

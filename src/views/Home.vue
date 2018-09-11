@@ -9,80 +9,66 @@
           <i class="fa fa-align-justify"></i>
         </div>
       </el-col>
-      <el-col :span="7">
-        <el-dropdown>
-          <span class="el-dropdown-link" style="text-decoration:none;color:white;font-size:16px;font-weight:bold;">产品中心</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>产品开发</el-dropdown-item>
-            <el-dropdown-item>产品审批</el-dropdown-item>
-            <el-dropdown-item>产品资料</el-dropdown-item>
-            <el-dropdown-item>权限管理</el-dropdown-item>
-            <el-dropdown-item>用户管理</el-dropdown-item>
-            <el-dropdown-item>基本信息</el-dropdown-item>
-            <el-dropdown-item>任务中心</el-dropdown-item>
-            <el-dropdown-item>供应链管理</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-        <el-dropdown>
-          <span @click="rm" style="text-decoration:none;color:white;font-size:16px;font-weight:bold;">毛利润报表</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <el-dropdown-menu slot="dropdown">
+      <el-col :span="12">
+        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
+          <el-submenu index="1" @click.native="rproduct" style="font-weight:bold;width:130px;">
+            <template slot="title">产品中心</template>
+          </el-submenu>
+          <el-submenu index="2" @click.native="rm" style="font-weight:bold;width:150px;">
+            <template slot="title">毛利润报表</template>
             <router-link to="/v1/report/sales-trend" style="text-decoration:none;">
-              <el-dropdown-item>
-                销售额走势
-              </el-dropdown-item>
+              <el-menu-item index="2-1">销售额走势</el-menu-item>
             </router-link>
             <router-link to="/v1/report/sales" style="text-decoration:none;">
-              <el-dropdown-item>
-                销售毛利润报表
-              </el-dropdown-item>
+              <el-menu-item index="2-2">销售毛利润报表</el-menu-item>
             </router-link>
             <router-link to="/develop" style="text-decoration:none;">
-              <el-dropdown-item>
-                开发毛利润报表
-              </el-dropdown-item>
+              <el-menu-item index="2-3">开发毛利润报表</el-menu-item>
             </router-link>
             <router-link to="/purchase" style="text-decoration:none;">
-              <el-dropdown-item>
-                采购毛利润报表
-              </el-dropdown-item>
+              <el-menu-item index="2-4">采购毛利润报表</el-menu-item>
             </router-link>
             <router-link to="/artist" style="text-decoration:none;">
-              <el-dropdown-item>
-                美工毛利润报表
-              </el-dropdown-item>
+              <el-menu-item index="2-5">美工毛利润报表</el-menu-item>
             </router-link>
             <router-link to="/v1/report/introduce" style="text-decoration:none;">
-              <el-dropdown-item>
-                推荐人毛利报表
-              </el-dropdown-item>
+              <el-menu-item index="2-6">推荐人毛利报表</el-menu-item>
             </router-link>
             <router-link to="/v1/report/account" style="text-decoration:none;">
-              <el-dropdown-item>
-                账号产品利润表
-              </el-dropdown-item>
+              <el-menu-item index="2-7">账号产品利润表</el-menu-item>
             </router-link>
-          </el-dropdown-menu>
-        </el-dropdown>
-        <el-dropdown>
-          <span style="text-decoration:none;color:white;font-size:16px;font-weight:bold;">数据中心</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>新品开发表现</el-dropdown-item>
-            <el-dropdown-item>平台产品利润</el-dropdown-item>
-            <el-dropdown-item>类别表现</el-dropdown-item>
-            <el-dropdown-item>销售变化表</el-dropdown-item>
-            <el-dropdown-item>平台物流费用</el-dropdown-item>
-            <el-dropdown-item>缺货产品分析</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-        <el-dropdown>
-          <span @click="ru" style="text-decoration:none;color:white;font-size:16px;font-weight:bold;">UR小工具</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>产品一览表</el-dropdown-item>
-            <el-dropdown-item>品牌列表</el-dropdown-item>
-            <el-dropdown-item>物流查询网址</el-dropdown-item>
-            <el-dropdown-item>ibay工具</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
+          </el-submenu>
+          <el-submenu index="3" @click.native="rdata" style="font-weight:bold;width:130px;">
+            <template slot="title">数据中心</template>
+            <router-link to="/v1/data-center/out-of-stock-info" style="text-decoration:none;">
+              <el-menu-item index="3-1">缺货产品分析</el-menu-item>
+            </router-link>
+          </el-submenu>
+          <el-submenu index="4" @click.native="rsale" style="font-weight:bold;width:130px;">
+            <template slot="title">销售工具</template>
+            <router-link to="/v1/tool/ebay-template" style="text-decoration:none;">
+              <el-menu-item index="4-1">eBay销售工具</el-menu-item>
+            </router-link>
+            <router-link to="/v1/tool/ebaysku-template" style="text-decoration:none;">
+              <el-menu-item index="4-2">eBay工具</el-menu-item>
+            </router-link>
+            <router-link to="/v1/tool/wishsku-template" style="text-decoration:none;">
+              <el-menu-item index="4-3">Wish工具</el-menu-item>
+            </router-link>
+            <router-link to="/v1/tool/smtsku-template" style="text-decoration:none;">
+              <el-menu-item index="4-4">SMT工具</el-menu-item>
+            </router-link>
+          </el-submenu>
+          <el-submenu index="5" @click.native="ru" style="font-weight:bold;width:130px;">
+            <template slot="title">UR小工具</template>
+            <!-- <el-menu-item index="5-1">产品一览表</el-menu-item>
+            <el-menu-item index="5-2">品牌列表</el-menu-item> -->
+            <router-link to="/v1/tiny-tool/express" style="text-decoration:none;">
+              <el-menu-item index="5-1">物流查询网址</el-menu-item>
+            </router-link>
+            <!-- <el-menu-item index="5-4">ibay工具</el-menu-item> -->
+          </el-submenu>
+        </el-menu>
       </el-col>
       <el-col :span="6" class="userinfo">
         <el-col :span="14">
@@ -143,6 +129,30 @@
             </el-submenu>
           </template>
         </el-menu>
+        <el-menu :default-active="$route.path" class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="!collapsed" v-if="this.show4">
+          <template v-for="(item,index) in lsidedata" v-if="!item.hidden">
+            <el-submenu :index="index+''">
+              <template slot="title">
+                <i class="el-icon-message"></i>{{item.name}}
+              </template>
+              <el-menu-item v-for="child in item.children" :index="child.route" :key="child.route" v-if="!child.hidden">
+                {{child.name}}
+              </el-menu-item>
+            </el-submenu>
+          </template>
+        </el-menu>
+        <el-menu :default-active="$route.path" class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="!collapsed" v-if="this.show5">
+          <template v-for="(item,index) in lsideur" v-if="!item.hidden">
+            <el-submenu :index="index+''">
+              <template slot="title">
+                <i class="el-icon-message"></i>{{item.name}}
+              </template>
+              <el-menu-item v-for="child in item.children" :index="child.route" :key="child.route" v-if="!child.hidden">
+                {{child.name}}
+              </el-menu-item>
+            </el-submenu>
+          </template>
+        </el-menu>
         <!--导航菜单-折叠后-->
         <ul class="el-menu el-menu-vertical-demo collapsed" v-show="collapsed" ref="menuCollapsed">
           <li v-for="(item,index) in lside" v-if="!item.hidden" class="el-submenu item">
@@ -183,9 +193,12 @@ export default {
   components: { ImageCropper, Screenfull },
   data() {
     return {
+      activeIndex: "",
       show1: true,
       show2: false,
       show3: false,
+      show4: false,
+      show5: false,
       url: getAvatarUrl(),
       imagecropperShow: false,
       imagecropperKey: 0,
@@ -197,6 +210,8 @@ export default {
       lside: [],
       lsidem: [],
       lsides: [],
+      lsidedata: [],
+      lsideur: [],
       form: {
         name: "",
         region: "",
@@ -219,6 +234,8 @@ export default {
       this.lside = l;
       this.lsidem = l.filter(e => e.name == "毛利润报表");
       this.lsides = l.filter(e => e.name == "销售工具");
+      this.lsidedata = l.filter(e => e.name == "数据中心");
+      this.lsideur = l.filter(e => e.name == "UR小工具");
     });
   },
   methods: {
@@ -226,11 +243,30 @@ export default {
       this.show1 = false;
       this.show2 = true;
       this.show3 = false;
+      this.show4 = false;
+      this.show5 = false;
     },
     ru() {
       this.show1 = false;
       this.show2 = false;
+      this.show3 = false;
+      this.show4 = false;
+      this.show5 = true;
+    },
+    rproduct() {},
+    rdata() {
+      this.show1 = false;
+      this.show2 = false;
+      this.show3 = false;
+      this.show4 = true;
+      this.show5 = false;
+    },
+    rsale() {
+      this.show1 = false;
+      this.show2 = false;
       this.show3 = true;
+      this.show4 = false;
+      this.show5 = false;
     },
     cropSuccess(resData) {
       this.imagecropperShow = false;
@@ -284,7 +320,8 @@ export default {
   .header {
     height: 60px;
     line-height: 60px;
-    background: $color-primary;
+    //background: $color-primary;
+    background-color: #545c64;
     color: #fff;
     .el-col-7 {
       .el-dropdown {

@@ -47,6 +47,18 @@ export function getExchange() {
     method: 'get'
   })
 }
+export function getExpress() {
+  return request({
+    url: '/tiny-tool/express',
+    method: 'get'
+  })
+}
+export function getStock() {
+  return request({
+    url: '/data-center/out-of-stock-info',
+    method: 'get'
+  })
+}
 // name:sales method:post url:http://192.168.0.134:8089/v1/report/sales
 
 export function getSales(param) {

@@ -14,10 +14,14 @@ import dollar from '../views/reports/dollar.vue'
 import index from '../views/reports/index.vue'
 import introduce from '../views/reports/introduce.vue'
 
+import stock from '../views/data/stock.vue'
+
 import ebay from '../views/tool/ebay.vue'
 import ebaysku from '../views/tool/ebaysku.vue'
 import wishsku from '../views/tool/wishsku.vue'
 import smtsku from '../views/tool/smtsku.vue'
+
+import express from '../views/tinytool/express.vue'
 
 
 
@@ -33,7 +37,7 @@ const routes = [{
     name: '主页'
 },
 {
-    path: '/',
+    path: '/site/index',
     component: Home,
     name: '毛利润报表',
     iconCls: 'el-icon-message',
@@ -95,7 +99,20 @@ const routes = [{
     ]
 },
 {
-    path: '/',
+    path: '/v1/data-center/options',
+    component: Home,
+    name: '数据中心',
+    iconCls: 'el-icon-message',
+    children: [
+        {
+            path: '/v1/data-center/out-of-stock-info',
+            component: stock,
+            name: '缺货产品分析'
+        }
+    ]
+},
+{
+    path: '/site/index',
     component: Home,
     name: '销售工具',
     iconCls: 'el-icon-message',
@@ -119,6 +136,19 @@ const routes = [{
         component: smtsku,
         name: 'SMT工具'
     }
+    ]
+},
+{
+    path: '/v1/tiny-tool/options',
+    component: Home,
+    name: 'UR小工具',
+    iconCls: 'el-icon-message',
+    children: [
+        {
+            path: '/v1/tiny-tool/express',
+            component: express,
+            name: '物流查询网址'
+        }
     ]
 },
 {
