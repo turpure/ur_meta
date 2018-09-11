@@ -818,7 +818,6 @@ export default {
       }
       [class^="el-icon-"] {
         font-family: element-icons !important;
-
         font-style: normal;
         font-weight: 400;
         font-variant: normal;

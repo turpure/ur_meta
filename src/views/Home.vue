@@ -9,8 +9,8 @@
           <i class="fa fa-align-justify"></i>
         </div>
       </el-col>
-      <el-col :span="12">
-        <el-menu :default-active="$route.path" class="el-menu-demo" mode="horizontal" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" router>
+      <el-col :span="13">
+        <el-menu :default-active="$route.path" class="el-menu-demo" mode="horizontal" background-color="#545c64" text-color="#fff" active-text-color="#fff" router>
           <el-submenu index="1" @click.native="rproduct">
             <template slot="title">
               <span :style="{color:rgb1}">产品中心</span>
@@ -318,6 +318,9 @@ export default {
 
 <style lang="scss" scoped >
 @import "~scss_vars";
+.el-submenu__title * {
+  font-size: 18px;
+}
 .el-dropdown-menu {
   top: 40px !important;
 }
