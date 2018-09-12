@@ -1,8 +1,8 @@
 <template>
   <el-row class="container">
     <el-col :span="24" class="header">
-      <el-col :span="10" class="logo" :class="collapsed?'logo-collapse-width':'logo-width'">
-        {{collapsed?'':sysName}}
+      <el-col class="logo" :class="!collapsed?'logo-collapse-width':'logo-width'">
+        {{!collapsed?'':sysName}}
       </el-col>
       <el-col :span="1">
         <div class="tools" @click.prevent="collapse">
@@ -77,7 +77,7 @@
     <el-col :span="24" class="main">
       <aside :class="collapsed?'menu-collapsed':'menu-expanded'">
         <!--导航菜单-->
-        <el-menu :default-active="$route.path" class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="!collapsed" v-if="this.show1">
+        <el-menu :default-active="$route.path" class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="collapsed" v-if="this.show1">
           <template v-for="(item,index) in lside" v-if="!item.hidden">
             <el-submenu :index="index+''">
               <template slot="title">
@@ -89,7 +89,7 @@
             </el-submenu>
           </template>
         </el-menu>
-        <el-menu :default-active="$route.path" class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="!collapsed" v-if="this.show2">
+        <el-menu :default-active="$route.path" class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="collapsed" v-if="this.show2">
           <template v-for="(item,index) in lsidem" v-if="!item.hidden">
             <el-submenu :index="index+''">
               <template slot="title">
@@ -101,7 +101,7 @@
             </el-submenu>
           </template>
         </el-menu>
-        <el-menu :default-active="$route.path" class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="!collapsed" v-if="this.show3">
+        <el-menu :default-active="$route.path" class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="collapsed" v-if="this.show3">
           <template v-for="(item,index) in lsides" v-if="!item.hidden">
             <el-submenu :index="index+''">
               <template slot="title">
@@ -113,7 +113,7 @@
             </el-submenu>
           </template>
         </el-menu>
-        <el-menu :default-active="$route.path" class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="!collapsed" v-if="this.show4">
+        <el-menu :default-active="$route.path" class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="collapsed" v-if="this.show4">
           <template v-for="(item,index) in lsidedata" v-if="!item.hidden">
             <el-submenu :index="index+''">
               <template slot="title">
@@ -125,7 +125,7 @@
             </el-submenu>
           </template>
         </el-menu>
-        <el-menu :default-active="$route.path" class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="!collapsed" v-if="this.show5">
+        <el-menu :default-active="$route.path" class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="collapsed" v-if="this.show5">
           <template v-for="(item,index) in lsideur" v-if="!item.hidden">
             <el-submenu :index="index+''">
               <template slot="title">
@@ -137,22 +137,8 @@
             </el-submenu>
           </template>
         </el-menu>
-        <!--导航菜单-折叠后-->
-        <ul class="el-menu el-menu-vertical-demo collapsed" v-show="collapsed" ref="menuCollapsed">
-          <li v-for="(item,index) in lside" v-if="!item.hidden" class="el-submenu item">
-            <template>
-              <div class="el-submenu__title" style="padding-left: 10px;" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
-                <i class="el-icon-message"></i>
-              </div>
-              <ul class="el-menu submenu" :class="'submenu-hook-'+index" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
-                <li v-for="child in item.children" v-if="!child.hidden" :key="child.route" class="el-menu-item" :class="$route.path==child.route?'is-active':''" @click="$router.push(child.route)">{{child.name}}
-                </li>
-              </ul>
-            </template>
-          </li>
-        </ul>
       </aside>
-      <section class="content-container" :class="collapsed?'content-container2':'content-container1'">
+      <section class="content-container" :class="!collapsed?'content-container2':'content-container1'">
         <div class="grid-content bg-purple-light">
           <el-col :span="24" class="content-wrapper">
             <transition name="fade" mode="out-in">
@@ -182,7 +168,7 @@ export default {
       rgb3: "",
       rgb4: "",
       rgb5: "",
-      show1: true,
+      show1: false,
       show2: false,
       show3: false,
       show4: false,
@@ -337,7 +323,6 @@ export default {
   .header {
     height: 60px;
     line-height: 60px;
-    //background: $color-primary;
     background-color: #545c64;
     color: #fff;
     .el-col-7 {
@@ -374,11 +359,8 @@ export default {
     }
     .logo {
       text-align: center;
-      //width:230px;
       height: 60px;
       font-size: 22px;
-      padding-left: 20px;
-      padding-right: 20px;
       border-color: rgba(238, 241, 146, 0.3);
       border-right-width: 1px;
       border-right-style: solid;
@@ -395,7 +377,7 @@ export default {
       width: 230px;
     }
     .logo-collapse-width {
-      width: 60px;
+      width: 0px;
     }
     .tools {
       padding: 0px 23px;
@@ -425,23 +407,17 @@ export default {
         width: 230px;
       }
       .collapsed {
-        width: 60px;
         .item {
           position: relative;
         }
         .submenu {
           position: absolute;
           top: 0px;
-          left: 60px;
           z-index: 99999;
           height: auto;
           display: none;
         }
       }
-    }
-    .menu-collapsed {
-      flex: 0 0 60px;
-      width: 60px;
     }
     .menu-expanded {
       flex: 0 0 230px;
@@ -470,7 +446,7 @@ export default {
       right: 0px;
       top: 0px;
       bottom: 0px;
-      left: 60px;
+      left: 0px;
       //overflow-y: scroll;
       padding: 10px; //二次修改
       .grid-content .bg-purple-light {
