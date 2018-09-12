@@ -20,36 +20,36 @@
             <template slot="title">
               <span :style="{color:rgb2}">毛利润报表</span>
             </template>
-            <el-menu-item index="/v1/report/sales-trend">销售额走势</el-menu-item>
-            <el-menu-item index="/v1/report/sales">销售毛利润报表</el-menu-item>
-            <el-menu-item index="/develop">开发毛利润报表</el-menu-item>
-            <el-menu-item index="/purchase">采购毛利润报表</el-menu-item>
-            <el-menu-item index="/artist">美工毛利润报表</el-menu-item>
-            <el-menu-item index="/v1/report/introduce">推荐人毛利报表</el-menu-item>
-            <el-menu-item index="/v1/report/account">账号产品利润表</el-menu-item>
+            <el-menu-item index="/v1/report/sales-trend" @click="rm">销售额走势</el-menu-item>
+            <el-menu-item index="/v1/report/sales" @click="rm">销售毛利润报表</el-menu-item>
+            <el-menu-item index="/develop" @click="rm">开发毛利润报表</el-menu-item>
+            <el-menu-item index="/purchase" @click="rm">采购毛利润报表</el-menu-item>
+            <el-menu-item index="/artist" @click="rm">美工毛利润报表</el-menu-item>
+            <el-menu-item index="/v1/report/introduce" @click="rm">推荐人毛利报表</el-menu-item>
+            <el-menu-item index="/v1/report/account" @click="rm">账号产品利润表</el-menu-item>
           </el-submenu>
           <el-submenu index="3" @click.native="rdata" style="margin-left:20px;">
             <template slot="title">
               <span :style="{color:rgb3}">数据中心</span>
             </template>
-            <el-menu-item index="/v1/data-center/out-of-stock-info">缺货产品分析</el-menu-item>
+            <el-menu-item index="/v1/data-center/out-of-stock-info" @click="rdata">缺货产品分析</el-menu-item>
           </el-submenu>
           <el-submenu index="4" @click.native="rsale" style="margin-left:20px;">
             <template slot="title">
               <span :style="{color:rgb4}">销售工具</span>
             </template>
-            <el-menu-item index="/v1/tool/ebay-template">eBay销售工具</el-menu-item>
-            <el-menu-item index="/v1/tool/ebaysku-template">eBay工具</el-menu-item>
-            <el-menu-item index="/v1/tool/wishsku-template">Wish工具</el-menu-item>
-            <el-menu-item index="/v1/tool/smtsku-template">SMT工具</el-menu-item>
+            <el-menu-item index="/v1/tool/ebay-template" @click="rsale">eBay销售工具</el-menu-item>
+            <el-menu-item index="/v1/tool/ebaysku-template" @click="rsale">eBay工具</el-menu-item>
+            <el-menu-item index="/v1/tool/wishsku-template" @click="rsale">Wish工具</el-menu-item>
+            <el-menu-item index="/v1/tool/smtsku-template" @click="rsale">SMT工具</el-menu-item>
           </el-submenu>
           <el-submenu index="5" @click.native="ru" style="margin-left:20px;">
             <template slot="title">
               <span :style="{color:rgb5}">UR小工具</span>
             </template>
             <!-- <el-menu-item index="5-1">产品一览表</el-menu-item> -->
-            <el-menu-item index="/v1/tiny-tool/express">物流查询网址</el-menu-item>
-            <el-menu-item index="/v1/tiny-tool/brand">品牌列表</el-menu-item>
+            <el-menu-item index="/v1/tiny-tool/express" @click="ru">物流查询网址</el-menu-item>
+            <el-menu-item index="/v1/tiny-tool/brand" @click="ru">品牌列表</el-menu-item>
             <!-- <el-menu-item index="5-4">ibay工具</el-menu-item> -->
           </el-submenu>
         </el-menu>
@@ -219,6 +219,7 @@ export default {
       this.rgb3 = "";
       this.rgb4 = "";
       this.rgb5 = "";
+      this.collapsed = true;
     },
     rm() {
       this.rgb2 = "#ffd04b";
@@ -231,6 +232,7 @@ export default {
       this.show3 = false;
       this.show4 = false;
       this.show5 = false;
+      this.collapsed = true;
     },
     rdata() {
       this.rgb3 = "#ffd04b";
@@ -243,6 +245,7 @@ export default {
       this.show3 = false;
       this.show4 = true;
       this.show5 = false;
+      this.collapsed = true;
     },
     rsale() {
       this.rgb4 = "#ffd04b";
@@ -255,6 +258,7 @@ export default {
       this.show3 = true;
       this.show4 = false;
       this.show5 = false;
+      this.collapsed = true;
     },
     ru() {
       this.rgb5 = "#ffd04b";
@@ -267,6 +271,7 @@ export default {
       this.show3 = false;
       this.show4 = false;
       this.show5 = true;
+      this.collapsed = true;
     },
     cropSuccess(resData) {
       this.imagecropperShow = false;
