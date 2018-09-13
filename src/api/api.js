@@ -53,8 +53,9 @@ export function getAvatarUrl() {
   const token = getMyToken()
   return baseUrl + url + '?token=' + token
 }
-// export function geturl() {
-//   const baseUrl = process.env.BASE_API
-//   const url = '/tool/ebay-template'
-//   return baseUrl + url
-// }
+
+export function fyndiqz() {
+  const baseUrl = process.env.BASE_API
+  const url = '/tiny-tool/fyndiqz-upload'
+  return baseUrl + url
+}
