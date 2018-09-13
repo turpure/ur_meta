@@ -58,7 +58,11 @@ export default {
     display: inline-block;
     margin-left:500px;
     width: 700px;
-    max-height: 500px;
+    height: 500px;
+}
+
+.hljs {
+     max-height: 500px;
 }
 
 </style>
