@@ -32,7 +32,10 @@
             <template slot="title">
               <span :style="{color:rgb3}">数据中心</span>
             </template>
+            <el-menu-item index="/v1/perform/cost" @click="rdata">平台物流费用</el-menu-item>
             <el-menu-item index="/v1/data-center/out-of-stock-info" @click="rdata">缺货产品分析</el-menu-item>
+            <el-menu-item index="/v1/perform/perform" @click="rdata">新品开发表现</el-menu-item>
+            <el-menu-item index="/v1/perform/sales" @click="rdata">销售变化表</el-menu-item>
           </el-submenu>
           <el-submenu index="4" @click.native="rsale" style="margin-left:20px;">
             <template slot="title">
@@ -50,7 +53,7 @@
             <!-- <el-menu-item index="5-1">产品一览表</el-menu-item> -->
             <el-menu-item index="/v1/tiny-tool/express" @click="ru">物流查询网址</el-menu-item>
             <el-menu-item index="/v1/tiny-tool/brand" @click="ru">品牌列表</el-menu-item>
-            <!-- <el-menu-item index="5-4">ibay工具</el-menu-item> -->
+            <el-menu-item index="/v1/tiny-tool/goods-picture" @click="ru">产品一览</el-menu-item>
           </el-submenu>
         </el-menu>
       </el-col>
@@ -77,18 +80,6 @@
     <el-col :span="24" class="main">
       <aside :class="collapsed?'menu-collapsed':'menu-expanded'">
         <!--导航菜单-->
-        <el-menu :default-active="$route.path" class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="collapsed" v-if="this.show1">
-          <template v-for="(item,index) in lside" v-if="!item.hidden">
-            <el-submenu :index="index+''">
-              <template slot="title">
-                <i class="el-icon-message"></i>{{item.name}}
-              </template>
-              <el-menu-item v-for="child in item.children" :index="child.route" :key="child.route" v-if="!child.hidden">
-                {{child.name}}
-              </el-menu-item>
-            </el-submenu>
-          </template>
-        </el-menu>
         <el-menu :default-active="$route.path" class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="collapsed" v-if="this.show2">
           <template v-for="(item,index) in lsidem" v-if="!item.hidden">
             <el-submenu :index="index+''">
@@ -168,7 +159,6 @@ export default {
       rgb3: "",
       rgb4: "",
       rgb5: "",
-      show1: false,
       show2: false,
       show3: false,
       show4: false,
@@ -205,7 +195,6 @@ export default {
     });
     getMenu().then(response => {
       let l = response.data.data;
-      this.lside = l;
       this.lsidem = l.filter(e => e.name == "毛利润报表");
       this.lsides = l.filter(e => e.name == "销售工具");
       this.lsidedata = l.filter(e => e.name == "数据中心");
@@ -227,7 +216,6 @@ export default {
       this.rgb3 = "";
       this.rgb4 = "";
       this.rgb5 = "";
-      this.show1 = false;
       this.show2 = true;
       this.show3 = false;
       this.show4 = false;
@@ -240,7 +228,6 @@ export default {
       this.rgb2 = "";
       this.rgb4 = "";
       this.rgb5 = "";
-      this.show1 = false;
       this.show2 = false;
       this.show3 = false;
       this.show4 = true;
@@ -253,7 +240,6 @@ export default {
       this.rgb3 = "";
       this.rgb2 = "";
       this.rgb5 = "";
-      this.show1 = false;
       this.show2 = false;
       this.show3 = true;
       this.show4 = false;
@@ -266,7 +252,6 @@ export default {
       this.rgb3 = "";
       this.rgb4 = "";
       this.rgb2 = "";
-      this.show1 = false;
       this.show2 = false;
       this.show3 = false;
       this.show4 = false;
@@ -297,11 +282,6 @@ export default {
     //折叠导航栏
     collapse: function() {
       this.collapsed = !this.collapsed;
-    },
-    showMenu(i, status) {
-      this.$refs.menuCollapsed.getElementsByClassName(
-        "submenu-hook-" + i
-      )[0].style.display = status ? "block" : "none";
     }
   }
 };
@@ -420,7 +400,6 @@ export default {
           top: 0px;
           z-index: 99999;
           height: auto;
-          display: none;
         }
       }
     }

@@ -15,6 +15,9 @@ import index from '../views/reports/index.vue'
 import introduce from '../views/reports/introduce.vue'
 
 import stock from '../views/data/stock.vue'
+import pcost from '../views/data/pcost.vue'
+import perform from '../views/data/perform.vue'
+import psales from '../views/data/psales.vue'
 
 import ebay from '../views/tool/ebay.vue'
 import ebaysku from '../views/tool/ebaysku.vue'
@@ -23,6 +26,7 @@ import smtsku from '../views/tool/smtsku.vue'
 
 import express from '../views/tinytool/express.vue'
 import brand from '../views/tinytool/brand.vue'
+import goods from '../views/tinytool/goods.vue'
 
 
 
@@ -109,6 +113,21 @@ const routes = [{
             path: '/v1/data-center/out-of-stock-info',
             component: stock,
             name: '缺货产品分析'
+        },
+        {
+            path: '/v1/perform/cost',
+            component: pcost,
+            name: '平台物流费用'
+        },
+        {
+            path: '/v1/perform/perform',
+            component: perform,
+            name: '新品开发表现'
+        },
+        {
+            path: '/v1/perform/sales',
+            component: psales,
+            name: '销售变化表'
         }
     ]
 },
@@ -155,6 +174,11 @@ const routes = [{
             component: brand,
             name: '品牌列表'
         },
+        {
+            path: '/v1/tiny-tool/goods-picture',
+            component: goods,
+            name: '产品一览表'
+        }
     ]
 },
 {

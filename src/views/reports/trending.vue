@@ -354,6 +354,7 @@ export default {
 <style lang="scss" scoped>
 .el-form {
   margin-bottom: 20px;
+  margin-top: 15px;
   .el-form-item {
     margin-bottom: 0px;
     .el-form-item__content {
