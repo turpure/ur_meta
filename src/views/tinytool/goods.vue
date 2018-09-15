@@ -67,9 +67,9 @@
             <a align="center" class="mix-link" :href="item.LinkUrl" target="_blank">
               <i class="fa fa-link"></i>
             </a>
-            <a align="center" class="mix-preview" :href="item.BmpFileName" title=" Project Name " data-rel="fancybox-button ">
+            <!-- <a align="center" class="mix-preview" :href="item.BmpFileName" title=" Project Name " data-rel="fancybox-button ">
               <i class="fa fa-search "></i>
-            </a>
+            </a> -->
           </div>
         </div>
       </el-col>
@@ -182,7 +182,7 @@ export default {
           margin-bottom: 10px;
         }
         a.mix-link {
-          right: 50%;
+          right: 40%;
           margin-right: 5px;
           color: #555;
           display: block;

@@ -26,58 +26,58 @@
       <el-col :span="6" class="mix" v-for="item in tableData" :key="item.rowId">
         <img :src=item.imgUrl :alt="item.imgName">
         <p>
-          <font color="white" size="3">
+          <font color="black" size="3">
             <strong>{{item.brand}}</strong>
           </font>
         </p>
-        <font color="white">
+        <font color="black">
           {{item.country}}<br>{{item.category}}
         </font>
         <div class="mix-details">
           <a align="center" class="mix-link" :href="item.url" target="_blank">
             <i class="fa fa-link"></i>
           </a>
-          <span align="center" class="mix-preview" @click="dialogVisible=true">
+          <!-- <span align="center" class="mix-preview" @click="dialogVisible=true">
             <i class="fa fa-search"></i>
-          </span>
+          </span> -->
         </div>
       </el-col>
     </el-row>
-    <el-dialog width="20%" :visible.sync="dialogVisible" :before-close="handleClose">
+    <!-- <el-dialog width="20%" :visible.sync="dialogVisible" :before-close="handleClose">
       <swiper :options="swiperOption" ref="mySwiper">
         <swiper-slide v-for="(item,index) in tableData" :key="index" style="text-align:center;"><img :src="item.imgUrl"></swiper-slide>
         <div class="swiper-button-prev" slot="button-prev"></div>
         <div class="swiper-button-next" slot="button-next"></div>
       </swiper>
-    </el-dialog>
+    </el-dialog> -->
   </div>
 </template>
 
 <script>
 import { getBrandcountry, getBrandcategory, getBrand } from "../../api/profit";
-import { swiper, swiperSlide } from "vue-awesome-swiper";
+// import { swiper, swiperSlide } from "vue-awesome-swiper";
 
 export default {
-  name: "myswiper",
-  components: {
-    swiper,
-    swiperSlide
-  },
+  // name: "myswiper",
+  // components: {
+  //   swiper,
+  //   swiperSlide
+  // },
   data() {
     return {
-      dialogVisible: false,
-      swiperOption: {
-        centeredSlides: true,
-        slidesPreView: 1,
-        loop: true,
-        direction: "horizontal",
-        paginationClickable: true,
-        navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev"
-        },
-        observeParents: true
-      },
+      // dialogVisible: false,
+      // swiperOption: {
+      //   centeredSlides: true,
+      //   slidesPreView: 1,
+      //   loop: true,
+      //   direction: "horizontal",
+      //   paginationClickable: true,
+      //   navigation: {
+      //     nextEl: ".swiper-button-next",
+      //     prevEl: ".swiper-button-prev"
+      //   },
+      //   observeParents: true
+      // },
       listLoading: false,
       tableData: [],
       country: [],
@@ -91,11 +91,11 @@ export default {
       }
     };
   },
-  computed: {
-    swiper() {
-      return this.$refs.mySwiper.swiper;
-    }
-  },
+  // computed: {
+  //   swiper() {
+  //     return this.$refs.mySwiper.swiper;
+  //   }
+  // },
   methods: {
     onSubmit() {
       this.listLoading = true;
@@ -103,10 +103,10 @@ export default {
         this.listLoading = false;
         this.tableData = response.data.data;
       });
-    },
-    handleClose(done) {
-      done();
     }
+    // handleClose(done) {
+    //   done();
+    // }
   },
   mounted() {
     getBrandcountry().then(response => {
@@ -124,7 +124,6 @@ export default {
   margin-top: 10px;
 }
 .el-row {
-  background-color: black;
   height: 840px;
   .mix {
     margin-top: 15px;
@@ -156,7 +155,7 @@ export default {
       text-align: center;
       position: absolute;
       a.mix-link {
-        right: 50%;
+        right: 40%;
         margin-right: 5px;
         color: #555;
         display: block;

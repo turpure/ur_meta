@@ -28,7 +28,7 @@
         <el-button style='float:left' type='default' @click='exportExcel'>导出Excel</el-button>
       </el-col>
     </el-row>
-    <el-table v-loading="listLoading" height="760" :data="tableData" @sort-change="sortNumber" style="width: 100%;">
+    <el-table v-loading="listLoading" height="760" :data="tableData" @sort-change="sortNumber" v-show="show" style="width: 100%;">
       <el-table-column min-width="100px" prop="GoodsCode" label="商品编码" :formatter="empty" sortable></el-table-column>
       <el-table-column min-width="100px" prop="GoodsName" label="商品名称" :formatter="empty" sortable></el-table-column>
       <el-table-column min-width="100px" prop="GoodsSKUStatus" label="商品状态" :formatter="empty" sortable></el-table-column>
@@ -47,7 +47,7 @@
       <el-table-column min-width="130px" prop="changeTenDay" label="10天销量变化" :formatter="empty" sortable></el-table-column>
 
     </el-table>
-    <div class="block" align="right">
+    <div class="block" align="right" v-show="show">
       <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 30, 40]" :page-size="10" layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
@@ -64,6 +64,7 @@ import {
 export default {
   data() {
     return {
+      show: false,
       listLoading: false,
       currentPage: 0,
       tableData: [],
@@ -81,6 +82,7 @@ export default {
     handleCurrentChange() {},
     onSubmit() {
       this.listLoading = true;
+      this.show = true;
       getPsales(this.condition).then(response => {
         this.listLoading = false;
         this.tableData = response.data.data;
