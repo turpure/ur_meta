@@ -1,9 +1,9 @@
 <template>
   <div>
-    <el-col :span="24" style="background-color:red;text-indent:4px;line-height:20px;font-size:18px;color:white;">
+    <!-- <el-col :span="24" style="background-color:red;text-indent:4px;line-height:20px;font-size:18px;color:white;">
       <i class="fa fa-globe">查询条件</i>
       <el-button type="text" style="margin-left:80%;line-height:5px;">导入excel文件</el-button>
-    </el-col>
+    </el-col> -->
     <el-form :model='condition' :inline='true' ref='condition' label-width='100px' class='demo-form-inline'>
       <el-form-item label="品牌" prop="brand">
         <el-input v-model="condition.brand"></el-input>
@@ -37,20 +37,47 @@
           <a align="center" class="mix-link" :href="item.url" target="_blank">
             <i class="fa fa-link"></i>
           </a>
-          <a align="center" class="mix-preview" :href="item.imgUrl" data-rel="fancybox-button">
+          <span align="center" class="mix-preview" @click="dialogVisible=true">
             <i class="fa fa-search"></i>
-          </a>
+          </span>
         </div>
       </el-col>
     </el-row>
+    <el-dialog width="20%" :visible.sync="dialogVisible" :before-close="handleClose">
+      <swiper :options="swiperOption" ref="mySwiper">
+        <swiper-slide v-for="(item,index) in tableData" :key="index" style="text-align:center;"><img :src="item.imgUrl"></swiper-slide>
+        <div class="swiper-button-prev" slot="button-prev"></div>
+        <div class="swiper-button-next" slot="button-next"></div>
+      </swiper>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { getBrandcountry, getBrandcategory, getBrand } from "../../api/profit";
+import { swiper, swiperSlide } from "vue-awesome-swiper";
+
 export default {
+  name: "myswiper",
+  components: {
+    swiper,
+    swiperSlide
+  },
   data() {
     return {
+      dialogVisible: false,
+      swiperOption: {
+        centeredSlides: true,
+        slidesPreView: 1,
+        loop: true,
+        direction: "horizontal",
+        paginationClickable: true,
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev"
+        },
+        observeParents: true
+      },
       listLoading: false,
       tableData: [],
       country: [],
@@ -64,13 +91,21 @@ export default {
       }
     };
   },
+  computed: {
+    swiper() {
+      return this.$refs.mySwiper.swiper;
+    }
+  },
   methods: {
     onSubmit() {
       this.listLoading = true;
       getBrand(this.condition).then(response => {
+        this.listLoading = false;
         this.tableData = response.data.data;
       });
-      this.listLoading = false;
+    },
+    handleClose(done) {
+      done();
     }
   },
   mounted() {
@@ -86,11 +121,11 @@ export default {
 
 <style lang="scss" scoped>
 .el-form-item {
-  margin-top: 2px;
+  margin-top: 10px;
 }
 .el-row {
   background-color: black;
-  height: 820px;
+  height: 840px;
   .mix {
     margin-top: 15px;
     margin-left: 150px;
@@ -131,7 +166,7 @@ export default {
         padding: 10px 15px;
         background: #16b2f4;
       }
-      a.mix-preview {
+      span.mix-preview {
         left: 50%;
         margin-left: 5px;
         color: #555;
@@ -143,7 +178,7 @@ export default {
         background: #16b2f4;
       }
       a.mix-link:hover,
-      a.mix-preview:hover {
+      span.mix-preview:hover {
         color: #fff;
         padding: 9px 14px;
         text-decoration: none;

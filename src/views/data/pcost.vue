@@ -24,7 +24,7 @@
         <el-button style='float:left' type='default' @click='exportExcel'>导出Excel</el-button>
       </el-col>
     </el-row>
-    <el-table id="sale-table" v-loading="listLoading" height="800" :data="tableData" @sort-change="sortNumber" style="width: 100%;">
+    <el-table id="sale-table" :row-style="row" :header-row-style="rowheader" v-loading="listLoading" height="800" :data="tableData" @sort-change="sortNumber" style="width: 100%;" v-show="show">
       <el-table-column prop="wlCompany" label="物流公司" :formatter="empty" sortable></el-table-column>
       <el-table-column prop="eBay" label="eBay￥" :formatter="empty" sortable></el-table-column>
       <el-table-column prop="Wish" label="Wish￥" :formatter="empty" sortable></el-table-column>
@@ -44,9 +44,10 @@ import XLSX from "xlsx";
 export default {
   data() {
     return {
+      show: false,
       listLoading: false,
-      tableData: {},
-      searchTable: {},
+      tableData: [],
+      searchTable: [],
       searchValue: "",
       wlCompany: [],
       condition: {
@@ -60,22 +61,31 @@ export default {
     onSubmit() {
       this.$refs.condition.validate(valid => {
         if (valid) {
+          this.show = true;
           this.listLoading = true;
           getPerformcost(this.condition).then(response => {
             this.listLoading = false;
             let obj = response.data.data;
             let arr = [];
             for (let i in obj) {
-              let o = {};
-              o[i] = obj[i];
-              arr.push(o);
+              arr.push(obj[i]);
             }
-            console.log(arr);
-            this.tableData = this.searchTable = response.data.data;
+            this.tableData = this.searchTable = arr;
             // console.log(this.tableData);
           });
         }
       });
+    },
+    row({ row, rowIndex }) {
+      if (rowIndex === 17) {
+        //指定坐标
+        return "color:red";
+      } else if (rowIndex === 16) {
+        return "font-weight: 600;color:black";
+      }
+    },
+    rowheader({ row, rowIndex }) {
+      return "font-weight:600;color:black";
     },
     // 导出
     exportExcel() {

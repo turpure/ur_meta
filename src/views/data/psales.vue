@@ -20,10 +20,15 @@
         <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
       </el-form-item>
     </el-form>
-    <el-col :span='2' :offset='22'>
-      <el-input clearable placeholder='search' v-model='searchValue' @change='handleSearch'></el-input>
-    </el-col>
-    <el-table v-loading="listLoading" height="700" :data="tableData" @sort-change="sortNumber" style="width: 100%;">
+    <el-row :gutter='10'>
+      <el-col :span='2' :offset='20'>
+        <el-input clearable placeholder='search' v-model='searchValue' @change='handleSearch'></el-input>
+      </el-col>
+      <el-col :span='2'>
+        <el-button style='float:left' type='default' @click='exportExcel'>导出Excel</el-button>
+      </el-col>
+    </el-row>
+    <el-table v-loading="listLoading" height="760" :data="tableData" @sort-change="sortNumber" style="width: 100%;">
       <el-table-column min-width="100px" prop="GoodsCode" label="商品编码" :formatter="empty" sortable></el-table-column>
       <el-table-column min-width="100px" prop="GoodsName" label="商品名称" :formatter="empty" sortable></el-table-column>
       <el-table-column min-width="100px" prop="GoodsSKUStatus" label="商品状态" :formatter="empty" sortable></el-table-column>
@@ -82,6 +87,50 @@ export default {
         this.total = this.tableData.length;
       });
     },
+    // 导出
+    exportExcel() {
+      /* generate workbook object from table */
+      var wb = XLSX.utils.table_to_book(document.querySelector("#sale-table"));
+      /* get binary string as output */
+      let date = new Date();
+      let year = date.getFullYear();
+      let month = date.getMonth() + 1;
+      let strDate = date.getDate();
+      let hour = date.getHours();
+      let minute = date.getMinutes();
+      let second = date.getSeconds();
+      if (month >= 1 && month <= 9) {
+        month = "0" + month;
+      }
+      if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+      }
+      if (hour >= 0 && hour <= 9) {
+        hour = "0" + hour;
+      }
+      if (minute >= 0 && minute <= 9) {
+        minute = "0" + minute;
+      }
+      if (second >= 0 && second <= 9) {
+        second = "0" + second;
+      }
+      const filename =
+        "物流费用" + year + month + strDate + hour + minute + second;
+      var wbout = XLSX.write(wb, {
+        bookType: "xlsx",
+        bookSST: true,
+        type: "array"
+      });
+      try {
+        FileSaver.saveAs(
+          new Blob([wbout], { type: "application/octet-stream" }),
+          filename + ".xlsx"
+        );
+      } catch (e) {
+        if (typeof console !== "undefined") console.log(e, wbout);
+      }
+      //  return wbout
+    },
     handleSearch() {
       const searchValue = this.searchValue && this.searchValue.toLowerCase();
       const data = this.searchTable;
@@ -127,4 +176,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.el-form {
+  margin-top: 10px;
+}
 </style>

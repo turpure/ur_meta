@@ -1,27 +1,27 @@
 <template>
   <div>
-    <el-form :model='condition' :inline='true' ref='condition' label-width='100px' class='demo-form-inline'>
-      <el-form-item label="开始时间" :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]" prop="beginDate">
+    <el-form :model='condition' :inline='true' ref='condition' label-width='120px' class='demo-form-inline'>
+      <el-form-item label="交易开始时间" :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]" prop="beginDate">
         <el-date-picker v-model='condition.beginDate' type='date' value-format='yyyy-MM-dd' placeholder='选择日期'></el-date-picker>
       </el-form-item>
-      <el-form-item label="结束时间" :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]" prop="endDate">
+      <el-form-item label="交易结束时间" :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]" prop="endDate">
         <el-date-picker v-model='condition.endDate' type='date' value-format='yyyy-MM-dd' placeholder='选择日期'></el-date-picker>
       </el-form-item>
-      <el-form-item label="开始创建时间">
+      <el-form-item label="新品创建时间">
         <el-date-picker v-model='condition.createBeginDate' type='date' value-format='yyyy-MM-dd' placeholder='选择日期'></el-date-picker>
       </el-form-item>
-      <el-form-item label="结束创建时间">
+      <el-form-item label="新品结束时间">
         <el-date-picker v-model='condition.createEndDate' type='date' value-format='yyyy-MM-dd' placeholder='选择日期'></el-date-picker>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
       </el-form-item>
     </el-form>
-    <div class="tab">
+    <div class="tab" v-show="show">
       <el-col :span="24" style="background-color:#e02222;color:white;font-size:18px;line-height:30px;">
         &nbsp;
         <i class="fa fa-cogs"></i>----所有状态</el-col>
-      <el-table v-loading="listLoading" height="400" :data="tableData1" style="width: 100%;">
+      <el-table v-loading="listLoading" :header-row-style="rowheader" height="630" :data="tableData1" style="width: 100%;">
         <el-table-column min-width="100px" prop="salername" label="业绩归属人1" :formatter="empty"></el-table-column>
         <el-table-column min-width="80px" prop="goodsNum" label="商品总数" :formatter="empty"></el-table-column>
         <el-table-column min-width="90px" prop="SoldNum" label="出单商品数" :formatter="empty"></el-table-column>
@@ -42,7 +42,7 @@
       <el-col :span="24" style="background-color:#e02222;color:white;font-size:18px;line-height:30px;">
         &nbsp;
         <i class="fa fa-cogs"></i>----爆款</el-col>
-      <el-table v-loading="listLoading" height="400" :data="tableData2" style="width: 100%;">
+      <el-table v-loading="listLoading" :header-row-style="rowheader" height="630" :data="tableData2" style="width: 100%;">
         <el-table-column min-width="100px" prop="salername" label="业绩归属人1" :formatter="empty"></el-table-column>
         <el-table-column min-width="80px" prop="goodsNum" label="商品总数" :formatter="empty"></el-table-column>
         <el-table-column min-width="80px" prop="SoldNum" label="爆款总数" :formatter="empty"></el-table-column>
@@ -63,7 +63,7 @@
       <el-col :span="24" style="background-color:#4b8df8;color:white;font-size:18px;line-height:30px;">
         &nbsp;
         <i class="fa fa-cogs"></i>----旺款</el-col>
-      <el-table v-loading="listLoading" height="400" :data="tableData3" style="width: 100%;">
+      <el-table :header-row-style="rowheader" v-loading="listLoading" height="630" :data="tableData3" style="width: 100%;">
         <el-table-column min-width="100px" prop="salername" label="业绩归属人1" :formatter="empty"></el-table-column>
         <el-table-column min-width="80px" prop="goodsNum" label="商品总数" :formatter="empty"></el-table-column>
         <el-table-column min-width="80px" prop="SoldNum" label="旺款总数" :formatter="empty"></el-table-column>
@@ -81,6 +81,16 @@
         <el-table-column min-width="120px" prop="amaSoldNum" label="Amazon旺款数" :formatter="empty"></el-table-column>
         <el-table-column min-width="160px" prop="amaRate" label="Amazon旺款贡献率%" :formatter="empty"></el-table-column>
       </el-table>
+      <el-col :span="24" style="background-color:#000;color:#999999;padding: 8px 20px 5px 20px;">
+        <font color="red" size="5">
+          <big>注意：以上所有数据都不包含缺货订单！！！</big>
+        </font>
+        <br>
+        <big>所有商品:</big>
+        各开发名下的所有商品<br>
+        <big>新 品:</big>
+        所选创建时间内开发的商品
+      </el-col>
     </div>
   </div>
 </template>
@@ -90,6 +100,7 @@ import { getPerform } from "../../api/profit";
 export default {
   data() {
     return {
+      show: false,
       listLoading: false,
       options: {
         title: {
@@ -148,6 +159,7 @@ export default {
     onSubmit() {
       this.$refs.condition.validate(valid => {
         if (valid) {
+          this.show = true;
           this.listLoading = true;
           getPerform(this.condition).then(response => {
             this.listLoading = false;
@@ -158,6 +170,9 @@ export default {
           });
         }
       });
+    },
+    rowheader({ row, rowIndex }) {
+      return "color:black";
     },
     empty(row, column, cellValue, index) {
       return cellValue || "--";
