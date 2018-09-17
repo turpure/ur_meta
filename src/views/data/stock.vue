@@ -1,24 +1,24 @@
 <template>
   <el-row class="container">
-    <el-col :span="24" class="header">
-      <span>导出数据</span>
-    </el-col>
-    <el-col :span="22">
-      <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;备注：报表中商品的销量和库存指的是对应
-        <font color="red">
-          <big>缺货SKU</big>
-        </font>的销量和库存之和
-      </span>
-    </el-col>
-    <el-col :span='23'>
+    <span>备注：报表中商品的销量和库存指的是对应
+      <font color="red">
+        <big>缺货SKU</big>
+      </font>的销量和库存之和
+    </span>
+    <el-col :span='24'>
       <div class="portlet">
         <div class="portlet-title">
           <big>缺货产品表</big>
         </div>
-        <el-col :span='2' :offset='22'>
-          <el-input clearable placeholder='search' v-model='searchValue' @change='handleSearch'></el-input>
-        </el-col>
-        <el-table :header-cell-style="thstyle" height="700" :data="tableData" @sort-change="sortNumber" style="width: 100%;">
+        <el-row :gutter='10'>
+          <el-col :span='2' :offset='20'>
+            <el-input clearable placeholder='search' v-model='searchValue' @change='handleSearch'></el-input>
+          </el-col>
+          <el-col :span='2'>
+            <el-button style='float:left' type='default' @click='exportExcel'>导出Excel</el-button>
+          </el-col>
+        </el-row>
+        <el-table :header-cell-style="thstyle" height="770" :data="tableData" @sort-change="sortNumber" style="width: 100%;">
           <el-table-column min-width="80px" prop="Season" label="季节" :formatter="empty" sortable></el-table-column>
           <el-table-column min-width="100px" prop="goodscode" label="商品编码" :formatter="empty" sortable></el-table-column>
           <el-table-column min-width="130px" prop="num" label="最大延迟天数" :formatter="empty" sortable></el-table-column>
@@ -70,6 +70,50 @@ export default {
         return "";
       }
     },
+    // 导出
+    exportExcel() {
+      /* generate workbook object from table */
+      var wb = XLSX.utils.table_to_book(document.querySelector("#sale-table"));
+      /* get binary string as output */
+      let date = new Date();
+      let year = date.getFullYear();
+      let month = date.getMonth() + 1;
+      let strDate = date.getDate();
+      let hour = date.getHours();
+      let minute = date.getMinutes();
+      let second = date.getSeconds();
+      if (month >= 1 && month <= 9) {
+        month = "0" + month;
+      }
+      if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+      }
+      if (hour >= 0 && hour <= 9) {
+        hour = "0" + hour;
+      }
+      if (minute >= 0 && minute <= 9) {
+        minute = "0" + minute;
+      }
+      if (second >= 0 && second <= 9) {
+        second = "0" + second;
+      }
+      const filename =
+        "物流费用" + year + month + strDate + hour + minute + second;
+      var wbout = XLSX.write(wb, {
+        bookType: "xlsx",
+        bookSST: true,
+        type: "array"
+      });
+      try {
+        FileSaver.saveAs(
+          new Blob([wbout], { type: "application/octet-stream" }),
+          filename + ".xlsx"
+        );
+      } catch (e) {
+        if (typeof console !== "undefined") console.log(e, wbout);
+      }
+      //  return wbout
+    },
     total() {
       return this.tableData.length;
     },
@@ -114,30 +158,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.header {
-  width: 100%;
-  margin: 0;
-  border: 0px;
-  padding: 0px;
-  box-shadow: none;
-  height: 42px;
-  min-height: 42px;
-  background-color: #212121;
-  span {
-    color: white;
-    display: inline-block;
-    margin-top: -1px;
-    margin-right: 0;
-    padding: 10px;
-    font-size: 18px;
-  }
+span {
+  color: black;
 }
-.el-col-22 {
-  margin-top: 20px;
-  margin-bottom: 0;
-}
-.el-col-23 {
-  padding-left: 20px;
+.el-col-24 {
   .portlet {
     .portlet-title {
       background-color: #4b8df8;

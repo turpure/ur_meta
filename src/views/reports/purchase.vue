@@ -178,7 +178,7 @@ export default {
       } else if (this.show == true) {
         this.text = "隐藏输入框";
         let height = document.getElementById("app").clientHeight;
-        this.tableHeight = height - 200 + "px";
+        this.tableHeight = height - 220 + "px";
       }
     },
     changeActive() {
@@ -189,7 +189,7 @@ export default {
     },
     onSubmit(form) {
       let height = document.getElementById("app").clientHeight;
-      this.tableHeight = height - 200 + "px";
+      this.tableHeight = height - 220 + "px";
       this.show2 = true;
       this.$refs.condition.validate(valid => {
         if (valid) {

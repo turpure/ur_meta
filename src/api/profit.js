@@ -59,6 +59,36 @@ export function getStock() {
     method: 'get'
   })
 }
+export function getBrandcountry() {
+  return request({
+    url: '/condition/brand-country',
+    method: 'get'
+  })
+}
+export function getBrandcategory() {
+  return request({
+    url: '/condition/brand-category',
+    method: 'get'
+  })
+}
+export function getGoodsstatus() {
+  return request({
+    url: '/condition/goods-status',
+    method: 'get'
+  })
+}
+export function getGoodscats() {
+  return request({
+    url: '/condition/goods-cats',
+    method: 'get'
+  })
+}
+export function getPerformlogistics() {
+  return request({
+    url: '/perform/logistics',
+    method: 'get'
+  })
+}
 // name:sales method:post url:http://192.168.0.134:8089/v1/report/sales
 
 export function getSales(param) {
@@ -241,3 +271,44 @@ export function getIntroduce(param) {
     data
   })
 }
+export function getBrand(param) {
+  const data = { 'condition': param }
+  return request({
+    url: '/tiny-tool/brand',
+    method: 'post',
+    data
+  })
+}
+export function getGoodspicture(param) {
+  const data = { 'condition': param }
+  return request({
+    url: '/tiny-tool/goods-picture',
+    method: 'post',
+    data
+  })
+}
+export function getPerform(param) {
+  const data = { 'condition': param }
+  return request({
+    url: '/perform/perform',
+    method: 'post',
+    data
+  })
+}
+export function getPsales(param) {
+  const data = { 'condition': param }
+  return request({
+    url: '/perform/sales',
+    method: 'post',
+    data
+  })
+}
+export function getPerformcost(param) {
+  const data = { 'condition': param }
+  return request({
+    url: '/perform/cost',
+    method: 'post',
+    data
+  })
+}
+

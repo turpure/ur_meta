@@ -11,55 +11,46 @@
       </el-col>
       <el-col :span="13">
         <el-menu :default-active="$route.path" class="el-menu-demo" mode="horizontal" background-color="#545c64" text-color="#fff" active-text-color="#fff" router>
-          <el-submenu index="1" @click.native="rproduct">
-            <template slot="title">
-              <span :style="{color:rgb1}">产品中心</span>
-            </template>
-          </el-submenu>
-          <el-submenu index="2" @click.native="rm" style="margin-left:20px;">
-            <template slot="title">
-              <span :style="{color:rgb2}">毛利润报表</span>
-            </template>
-            <el-menu-item index="/v1/report/sales-trend" @click="rm">销售额走势</el-menu-item>
-            <el-menu-item index="/v1/report/sales" @click="rm">销售毛利润报表</el-menu-item>
-            <el-menu-item index="/develop" @click="rm">开发毛利润报表</el-menu-item>
-            <el-menu-item index="/purchase" @click="rm">采购毛利润报表</el-menu-item>
-            <el-menu-item index="/artist" @click="rm">美工毛利润报表</el-menu-item>
-            <el-menu-item index="/v1/report/introduce" @click="rm">推荐人毛利报表</el-menu-item>
-            <el-menu-item index="/v1/report/account" @click="rm">账号产品利润表</el-menu-item>
-          </el-submenu>
-          <el-submenu index="3" @click.native="rdata" style="margin-left:20px;">
-            <template slot="title">
-              <span :style="{color:rgb3}">数据中心</span>
-            </template>
-            <el-menu-item index="/v1/data-center/out-of-stock-info" @click="rdata">缺货产品分析</el-menu-item>
-          </el-submenu>
-          <el-submenu index="4" @click.native="rsale" style="margin-left:20px;">
-            <template slot="title">
-              <span :style="{color:rgb4}">销售工具</span>
-            </template>
-            <el-menu-item index="/v1/tool/ebay-template" @click="rsale">eBay销售工具</el-menu-item>
-            <el-menu-item index="/v1/tool/ebaysku-template" @click="rsale">eBay工具</el-menu-item>
-            <el-menu-item index="/v1/tool/wishsku-template" @click="rsale">Wish工具</el-menu-item>
-            <el-menu-item index="/v1/tool/smtsku-template" @click="rsale">SMT工具</el-menu-item>
-          </el-submenu>
-          <el-submenu index="5" @click.native="ru" style="margin-left:20px;">
-            <template slot="title">
-              <span :style="{color:rgb5}">UR小工具</span>
-            </template>
-            <!-- <el-menu-item index="5-1">产品一览表</el-menu-item> -->
-            <el-menu-item index="/v1/tiny-tool/express" @click="ru">物流查询网址</el-menu-item>
-            <el-menu-item index="/v1/tiny-tool/brand" @click="ru">品牌列表</el-menu-item>
-            <!-- <el-menu-item index="5-4">ibay工具</el-menu-item> -->
-          </el-submenu>
-          <el-submenu index="5" @click.native="" style="margin-left:20px;">
-            <template slot="title">
-              <span :style="{color:rgb5}">反馈中心</span>
-            </template>
-            <!-- <el-menu-item index="5-1">产品一览表</el-menu-item> -->
-            <el-menu-item index="/v1/feebback/index" @click="">反馈中心</el-menu-item>
-            <!-- <el-menu-item index="5-4">ibay工具</el-menu-item> -->
-          </el-submenu>
+          <template v-for="item in lsidem" v-if="!item.hidden">
+            <el-submenu index="item" @click.native="rm" style="margin-left:20px;">
+              <template slot="title">
+                <span :style="{color:rgb1}">{{item.name}}</span>
+              </template>
+              <el-menu-item v-for="child in item.children" :index="child.route" :key="child.route" v-if="!child.hidden" @click.native="rm">
+                {{child.name}}
+              </el-menu-item>
+            </el-submenu>
+          </template>
+          <template v-for="item in lsides" v-if="!item.hidden">
+            <el-submenu :index="item" @click.native="rsale" style="margin-left:20px;">
+              <template slot="title">
+                <span :style="{color:rgb2}">{{item.name}}</span>
+              </template>
+              <el-menu-item v-for="child in item.children" :index="child.route" :key="child.route" v-if="!child.hidden" @click.native="rsale">
+                {{child.name}}
+              </el-menu-item>
+            </el-submenu>
+          </template>
+          <template v-for="item in lsidedata" v-if="!item.hidden">
+            <el-submenu :index="item" @click.native="rdata" style="margin-left:20px;">
+              <template slot="title">
+                <span :style="{color:rgb3}">{{item.name}}</span>
+              </template>
+              <el-menu-item v-for="child in item.children" :index="child.route" :key="child.route" v-if="!child.hidden" @click.native="rdata">
+                {{child.name}}
+              </el-menu-item>
+            </el-submenu>
+          </template>
+          <template v-for="item in lsideur" v-if="!item.hidden">
+            <el-submenu :index="item" @click.native="ru" style="margin-left:20px;">
+              <template slot="title">
+                <span :style="{color:rgb4}">{{item.name}}</span>
+              </template>
+              <el-menu-item v-for="child in item.children" :index="child.route" :key="child.route" v-if="!child.hidden" @click.native="ru">
+                {{child.name}}
+              </el-menu-item>
+            </el-submenu>
+          </template>
         </el-menu>
       </el-col>
       <el-col :span="6" class="userinfo">
@@ -86,18 +77,6 @@
       <aside :class="collapsed?'menu-collapsed':'menu-expanded'">
         <!--导航菜单-->
         <el-menu :default-active="$route.path" class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="collapsed" v-if="this.show1">
-          <template v-for="(item,index) in lside" v-if="!item.hidden">
-            <el-submenu :index="index+''">
-              <template slot="title">
-                <i class="el-icon-message"></i>{{item.name}}
-              </template>
-              <el-menu-item v-for="child in item.children" :index="child.route" :key="child.route" v-if="!child.hidden">
-                {{child.name}}
-              </el-menu-item>
-            </el-submenu>
-          </template>
-        </el-menu>
-        <el-menu :default-active="$route.path" class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="collapsed" v-if="this.show2">
           <template v-for="(item,index) in lsidem" v-if="!item.hidden">
             <el-submenu :index="index+''">
               <template slot="title">
@@ -109,7 +88,7 @@
             </el-submenu>
           </template>
         </el-menu>
-        <el-menu :default-active="$route.path" class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="collapsed" v-if="this.show3">
+        <el-menu :default-active="$route.path" class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="collapsed" v-if="this.show2">
           <template v-for="(item,index) in lsides" v-if="!item.hidden">
             <el-submenu :index="index+''">
               <template slot="title">
@@ -121,7 +100,7 @@
             </el-submenu>
           </template>
         </el-menu>
-        <el-menu :default-active="$route.path" class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="collapsed" v-if="this.show4">
+        <el-menu :default-active="$route.path" class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="collapsed" v-if="this.show3">
           <template v-for="(item,index) in lsidedata" v-if="!item.hidden">
             <el-submenu :index="index+''">
               <template slot="title">
@@ -133,7 +112,7 @@
             </el-submenu>
           </template>
         </el-menu>
-        <el-menu :default-active="$route.path" class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="collapsed" v-if="this.show5">
+        <el-menu :default-active="$route.path" class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="collapsed" v-if="this.show4">
           <template v-for="(item,index) in lsideur" v-if="!item.hidden">
             <el-submenu :index="index+''">
               <template slot="title">
@@ -175,12 +154,10 @@ export default {
       rgb2: '',
       rgb3: '',
       rgb4: '',
-      rgb5: '',
       show1: false,
       show2: false,
       show3: false,
       show4: false,
-      show5: false,
       url: getAvatarUrl(),
       imagecropperShow: false,
       imagecropperKey: 0,
@@ -213,7 +190,6 @@ export default {
     })
     getMenu().then(response => {
       const l = response.data.data
-      this.lside = l
       this.lsidem = l.filter(e => e.name == '毛利润报表')
       this.lsides = l.filter(e => e.name == '销售工具')
       this.lsidedata = l.filter(e => e.name == '数据中心')
@@ -221,64 +197,48 @@ export default {
     })
   },
   methods: {
-    rproduct() {
-      this.rgb1 = '#ffd04b'
-      this.rgb2 = ''
-      this.rgb3 = ''
-      this.rgb4 = ''
-      this.rgb5 = ''
+    rm() {
+      this.rgb1 = '#ffd04b';
+      this.rgb2 = '';
+      this.rgb3 = '';
+      this.rgb4 = '';
+      this.show1 = true
+      this.show2 = false
+      this.show3 = false
+      this.show4 = false
       this.collapsed = true
     },
-    rm() {
-      this.rgb2 = '#ffd04b'
-      this.rgb1 = ''
-      this.rgb3 = ''
-      this.rgb4 = ''
-      this.rgb5 = ''
+    rsale() {
+      this.rgb2 = '#ffd04b';
+      this.rgb1 = '';
+      this.rgb3 = '';
+      this.rgb4 = '';
       this.show1 = false
       this.show2 = true
       this.show3 = false
       this.show4 = false
-      this.show5 = false
       this.collapsed = true
     },
     rdata() {
-      this.rgb3 = '#ffd04b'
-      this.rgb1 = ''
-      this.rgb2 = ''
-      this.rgb4 = ''
-      this.rgb5 = ''
-      this.show1 = false
-      this.show2 = false
-      this.show3 = false
-      this.show4 = true
-      this.show5 = false
-      this.collapsed = true
-    },
-    rsale() {
-      this.rgb4 = '#ffd04b'
-      this.rgb1 = ''
-      this.rgb3 = ''
-      this.rgb2 = ''
-      this.rgb5 = ''
+      this.rgb3 = '#ffd04b';
+      this.rgb1 = '';
+      this.rgb2 = '';
+      this.rgb4 = '';
       this.show1 = false
       this.show2 = false
       this.show3 = true
       this.show4 = false
-      this.show5 = false
       this.collapsed = true
     },
     ru() {
-      this.rgb5 = '#ffd04b'
-      this.rgb1 = ''
-      this.rgb3 = ''
-      this.rgb4 = ''
-      this.rgb2 = ''
+      this.rgb4 = '#ffd04b';
+      this.rgb1 = '';
+      this.rgb2 = '';
+      this.rgb3 = '';
       this.show1 = false
       this.show2 = false
       this.show3 = false
-      this.show4 = false
-      this.show5 = true
+      this.show4 = true
       this.collapsed = true
     },
     cropSuccess(resData) {
@@ -305,11 +265,6 @@ export default {
     // 折叠导航栏
     collapse: function() {
       this.collapsed = !this.collapsed
-    },
-    showMenu(i, status) {
-      this.$refs.menuCollapsed.getElementsByClassName(
-        'submenu-hook-' + i
-      )[0].style.display = status ? 'block' : 'none'
     }
   }
 }
@@ -428,7 +383,6 @@ export default {
           top: 0px;
           z-index: 99999;
           height: auto;
-          display: none;
         }
       }
     }

@@ -513,11 +513,11 @@ export default {
       if (this.show == false) {
         this.text = "显示输入框";
         const height = document.getElementById("app").clientHeight;
-        this.tableHeight = height + 315 + "px";
+        this.tableHeight = height + 310 + "px";
       } else if (this.show == true) {
         this.text = "隐藏输入框";
         const height = document.getElementById("app").clientHeight;
-        this.tableHeight = height + 210 + "px";
+        this.tableHeight = height + 185 + "px";
       }
     },
     changeActive() {
@@ -532,7 +532,7 @@ export default {
     onSubmit(form) {
       const myform = JSON.parse(JSON.stringify(form));
       const height = document.getElementById("app").clientHeight;
-      this.tableHeight = height + 210 + "px";
+      this.tableHeight = height + 185 + "px";
       let posseman1Data;
       let posseman2Data;
       let ret;
@@ -837,6 +837,7 @@ export default {
       }
     }
     form {
+      margin-top: 15px;
       margin-left: 5px;
       background-color: #fafafa;
       transition: 0.2s 0.2s;

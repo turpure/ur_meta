@@ -15,6 +15,9 @@ import index from '../views/reports/index.vue'
 import introduce from '../views/reports/introduce.vue'
 
 import stock from '../views/data/stock.vue'
+import pcost from '../views/data/pcost.vue'
+import perform from '../views/data/perform.vue'
+import psales from '../views/data/psales.vue'
 
 import ebay from '../views/tool/ebay.vue'
 import ebaysku from '../views/tool/ebaysku.vue'
@@ -25,6 +28,7 @@ import express from '../views/tinytool/express.vue'
 import brand from '../views/tinytool/brand.vue'
 import fyndiqzUpload from '../views/tinytool/fyndiqzUpload.vue'
 import requirements from '../views/feedback/requirements.vue'
+import goods from '../views/tinytool/goods.vue'
 
 const routes = [{
   path: '/login',
@@ -139,6 +143,20 @@ const routes = [{
   }
   ]
 },
+
+{
+  path: '/v1/feedback/index',
+  component: Home,
+  name: '反馈中心',
+  iconCls: 'el-icon-message',
+  children: [
+    {
+      path: '/v1/requirements/index',
+      component: requirements,
+      name: '需求管理'
+    }
+  ]
+},
 {
   path: '/v1/tiny-tool/options',
   component: Home,
@@ -156,22 +174,14 @@ const routes = [{
       name: '品牌列表'
     },
     {
+      path: '/v1/tiny-tool/goods-picture',
+      component: goods,
+      name: '产品一览表'
+    },
+    {
       path: '/v1/tiny-tool/fyndiqz-upload',
       component: fyndiqzUpload,
       name: '产品上传'
-    }
-  ]
-},
-{
-  path: '/v1/feedback/index',
-  component: Home,
-  name: '反馈中心',
-  iconCls: 'el-icon-message',
-  children: [
-    {
-      path: '/v1/requirements/index',
-      component: requirements,
-      name: '需求管理'
     }
   ]
 },

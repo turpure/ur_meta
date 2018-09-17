@@ -1,5 +1,5 @@
 <template>
-  <el-form :inline="true" :model="condition" class="demo-form-inline">
+  <el-form :inline="true" :model="condition" class="demo-form-inline" label-width="90px">
     <el-form-item label="销售汇率">
       <el-input v-model="sell.mun" :placeholder="placeholders"></el-input>
     </el-form-item>
@@ -64,4 +64,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.el-form {
+  margin-top: 10px;
+}
 </style>
