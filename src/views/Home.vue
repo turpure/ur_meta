@@ -9,7 +9,7 @@
           <i class="fa fa-align-justify"></i>
         </div>
       </el-col>
-      <el-col :span="13">
+      <el-col :span="11">
         <el-menu :default-active="$route.path" class="el-menu-demo" mode="horizontal" background-color="#545c64" text-color="#fff" active-text-color="#fff" router>
           <template v-for="item in lsidem" v-if="!item.hidden">
             <el-submenu index="item" @click.native="rm" style="margin-left:20px;">
@@ -47,6 +47,16 @@
                 <span :style="{color:rgb4}">{{item.name}}</span>
               </template>
               <el-menu-item v-for="child in item.children" :index="child.route" :key="child.route" v-if="!child.hidden" @click.native="ru">
+                {{child.name}}
+              </el-menu-item>
+            </el-submenu>
+          </template>
+          <template v-for="item in lsiderequirements" v-if="!item.hidden">
+            <el-submenu :index="item" @click.native="requirements" style="margin-left:20px;">
+              <template slot="title">
+                <span :style="{color:rgb5}">{{item.name}}</span>
+              </template>
+              <el-menu-item v-for="child in item.children" :index="child.route" :key="child.route" v-if="!child.hidden" @click.native="requirements">
                 {{child.name}}
               </el-menu-item>
             </el-submenu>
@@ -124,6 +134,18 @@
             </el-submenu>
           </template>
         </el-menu>
+        <el-menu :default-active="$route.path" default-openeds=[1] class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="collapsed" v-if="this.show5">
+          <template v-for="item in lsiderequirements" v-if="!item.hidden">
+            <el-submenu index="1">
+              <template slot="title">
+                <i class="el-icon-message"></i>{{item.name}}
+              </template>
+              <el-menu-item v-for="child in item.children" :index="child.route" :key="child.route" v-if="!child.hidden">
+                {{child.name}}
+              </el-menu-item>
+            </el-submenu>
+          </template>
+        </el-menu>
       </aside>
       <section class="content-container" :class="!collapsed?'content-container2':'content-container1'">
         <div class="grid-content bg-purple-light">
@@ -139,135 +161,160 @@
 </template>
 
 <script>
-import { removeToken, getToken } from '../utils/auth'
-import { getMenu } from '../api/login'
-import { getAvatarUrl } from '../api/api'
-import ImageCropper from '@/components/ImageCropper'
-import Screenfull from '@/components/Screenfull'
-import avatar from '@/components/ImageCropper'
+import { removeToken, getToken } from "../utils/auth";
+import { getMenu } from "../api/login";
+import { getAvatarUrl } from "../api/api";
+import ImageCropper from "@/components/ImageCropper";
+import Screenfull from "@/components/Screenfull";
+import avatar from "@/components/ImageCropper";
 export default {
-  name: 'avatarUpload-demo',
+  name: "avatarUpload-demo",
   components: { ImageCropper, Screenfull },
   data() {
     return {
-      rgb1: '',
-      rgb2: '',
-      rgb3: '',
-      rgb4: '',
+      rgb1: "",
+      rgb2: "",
+      rgb3: "",
+      rgb4: "",
+      rgb5: "",
       show1: false,
       show2: false,
       show3: false,
       show4: false,
+      show5: false,
       url: getAvatarUrl(),
       imagecropperShow: false,
       imagecropperKey: 0,
-      image: '',
-      sysName: 'UR管理中心',
+      image: "",
+      sysName: "UR管理中心",
       collapsed: false,
-      sysUserName: '',
-      sysUserAvatar: '',
+      sysUserName: "",
+      sysUserAvatar: "",
       lside: [],
       lsidem: [],
       lsides: [],
       lsidedata: [],
       lsideur: [],
+      lsiderequirements: [],
       form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
+        name: "",
+        region: "",
+        date1: "",
+        date2: "",
         delivery: false,
         type: [],
-        resource: '',
-        desc: ''
+        resource: "",
+        desc: ""
       }
-    }
+    };
   },
   mounted() {
-    this.$store.dispatch('GetUserInfo').then(() => {
-      this.sysUserName = this.$store.getters.name
-      this.image = this.$store.getters.avatar
-    })
+    this.$store.dispatch("GetUserInfo").then(() => {
+      this.sysUserName = this.$store.getters.name;
+      this.image = this.$store.getters.avatar;
+    });
     getMenu().then(response => {
-      const l = response.data.data
-      this.lsidem = l.filter(e => e.name == '毛利润报表')
-      this.lsides = l.filter(e => e.name == '销售工具')
-      this.lsidedata = l.filter(e => e.name == '数据中心')
-      this.lsideur = l.filter(e => e.name == 'UR小工具')
-    })
+      const l = response.data.data;
+      this.lsidem = l.filter(e => e.name == "毛利润报表");
+      this.lsides = l.filter(e => e.name == "销售工具");
+      this.lsidedata = l.filter(e => e.name == "数据中心");
+      this.lsideur = l.filter(e => e.name == "UR小工具");
+      this.lsiderequirements = l.filter(e => e.name == "反馈中心");
+    });
   },
   methods: {
     rm() {
-      this.rgb1 = '#ffd04b';
-      this.rgb2 = '';
-      this.rgb3 = '';
-      this.rgb4 = '';
-      this.show1 = true
-      this.show2 = false
-      this.show3 = false
-      this.show4 = false
-      this.collapsed = true
+      this.rgb1 = "#ffd04b";
+      this.rgb2 = "";
+      this.rgb3 = "";
+      this.rgb4 = "";
+      this.rgb5 = "";
+      this.show1 = true;
+      this.show2 = false;
+      this.show3 = false;
+      this.show4 = false;
+      this.show5 = false;
+      this.collapsed = true;
     },
     rsale() {
-      this.rgb2 = '#ffd04b';
-      this.rgb1 = '';
-      this.rgb3 = '';
-      this.rgb4 = '';
-      this.show1 = false
-      this.show2 = true
-      this.show3 = false
-      this.show4 = false
-      this.collapsed = true
+      this.rgb2 = "#ffd04b";
+      this.rgb1 = "";
+      this.rgb3 = "";
+      this.rgb4 = "";
+      this.rgb5 = "";
+      this.show1 = false;
+      this.show2 = true;
+      this.show3 = false;
+      this.show4 = false;
+      this.show5 = false;
+      this.collapsed = true;
     },
     rdata() {
-      this.rgb3 = '#ffd04b';
-      this.rgb1 = '';
-      this.rgb2 = '';
-      this.rgb4 = '';
-      this.show1 = false
-      this.show2 = false
-      this.show3 = true
-      this.show4 = false
-      this.collapsed = true
+      this.rgb3 = "#ffd04b";
+      this.rgb1 = "";
+      this.rgb2 = "";
+      this.rgb4 = "";
+      this.rgb5 = "";
+      this.show1 = false;
+      this.show2 = false;
+      this.show3 = true;
+      this.show4 = false;
+      this.show5 = false;
+      this.collapsed = true;
     },
     ru() {
-      this.rgb4 = '#ffd04b';
-      this.rgb1 = '';
-      this.rgb2 = '';
-      this.rgb3 = '';
-      this.show1 = false
-      this.show2 = false
-      this.show3 = false
-      this.show4 = true
-      this.collapsed = true
+      this.rgb4 = "#ffd04b";
+      this.rgb1 = "";
+      this.rgb2 = "";
+      this.rgb3 = "";
+      this.rgb5 = "";
+      this.show1 = false;
+      this.show2 = false;
+      this.show3 = false;
+      this.show4 = true;
+      this.show5 = false;
+      this.collapsed = true;
+    },
+    requirements() {
+      this.rgb5 = "#ffd04b";
+      this.rgb1 = "";
+      this.rgb2 = "";
+      this.rgb3 = "";
+      this.rgb4 = "";
+      this.show1 = false;
+      this.show2 = false;
+      this.show3 = false;
+      this.show4 = false;
+      this.show5 = true;
+      this.collapsed = true;
     },
     cropSuccess(resData) {
-      this.imagecropperShow = false
-      this.imagecropperKey = this.imagecropperKey + 1
-      const image = resData.data[0]
-      this.image = image
+      this.imagecropperShow = false;
+      this.imagecropperKey = this.imagecropperKey + 1;
+      const image = resData.data[0];
+      this.image = image;
     },
     close() {
-      this.imagecropperShow = false
+      this.imagecropperShow = false;
     },
     logout: function() {
-      var _this = this
-      this.$confirm('确认退出吗?', '提示', {
+      var _this = this;
+      this.$confirm("确认退出吗?", "提示", {
         // type: 'warning'
       })
         .then(() => {
-          sessionStorage.removeItem('user')
-          removeToken()
-          _this.$router.push('/login')
+          sessionStorage.removeItem("user");
+          removeToken();
+          _this.$router.push("/login");
         })
-        .catch(() => {})
+        .catch(() => {});
     },
     // 折叠导航栏
     collapse: function() {
-      this.collapsed = !this.collapsed
+      this.collapsed = !this.collapsed;
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped >

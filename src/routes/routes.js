@@ -110,9 +110,24 @@ const routes = [{
   iconCls: 'el-icon-message',
   children: [
     {
+      path: '/v1/perform/cost',
+      component: pcost,
+      name: '平台物流费用'
+    },
+    {
       path: '/v1/data-center/out-of-stock-info',
       component: stock,
       name: '缺货产品分析'
+    },
+    {
+      path: '/v1/perform/perform',
+      component: perform,
+      name: '新品开发表现'
+    },
+    {
+      path: '/v1/perform/sales',
+      component: psales,
+      name: '销售变化表'
     }
   ]
 },
