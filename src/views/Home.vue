@@ -76,9 +76,9 @@
     <el-col :span="24" class="main">
       <aside :class="collapsed?'menu-collapsed':'menu-expanded'">
         <!--导航菜单-->
-        <el-menu :default-active="$route.path" class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="collapsed" v-if="this.show1">
-          <template v-for="(item,index) in lsidem" v-if="!item.hidden">
-            <el-submenu :index="index+''">
+        <el-menu :default-active="$route.path" default-openeds=[1] class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="collapsed" v-if="this.show1">
+          <template v-for="item in lsidem" v-if="!item.hidden">
+            <el-submenu index="1">
               <template slot="title">
                 <i class="el-icon-message"></i>{{item.name}}
               </template>
@@ -88,9 +88,9 @@
             </el-submenu>
           </template>
         </el-menu>
-        <el-menu :default-active="$route.path" class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="collapsed" v-if="this.show2">
-          <template v-for="(item,index) in lsides" v-if="!item.hidden">
-            <el-submenu :index="index+''">
+        <el-menu :default-active="$route.path" default-openeds=[1] class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="collapsed" v-if="this.show2">
+          <template v-for="item in lsides" v-if="!item.hidden">
+            <el-submenu index="1">
               <template slot="title">
                 <i class="el-icon-message"></i>{{item.name}}
               </template>
@@ -100,9 +100,9 @@
             </el-submenu>
           </template>
         </el-menu>
-        <el-menu :default-active="$route.path" class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="collapsed" v-if="this.show3">
-          <template v-for="(item,index) in lsidedata" v-if="!item.hidden">
-            <el-submenu :index="index+''">
+        <el-menu :default-active="$route.path" default-openeds=[1] class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="collapsed" v-if="this.show3">
+          <template v-for="item in lsidedata" v-if="!item.hidden">
+            <el-submenu index="1">
               <template slot="title">
                 <i class="el-icon-message"></i>{{item.name}}
               </template>
@@ -112,9 +112,9 @@
             </el-submenu>
           </template>
         </el-menu>
-        <el-menu :default-active="$route.path" class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="collapsed" v-if="this.show4">
-          <template v-for="(item,index) in lsideur" v-if="!item.hidden">
-            <el-submenu :index="index+''">
+        <el-menu :default-active="$route.path" default-openeds=[1] class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="collapsed" v-if="this.show4">
+          <template v-for="item in lsideur" v-if="!item.hidden">
+            <el-submenu index="1">
               <template slot="title">
                 <i class="el-icon-message"></i>{{item.name}}
               </template>

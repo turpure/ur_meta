@@ -8,11 +8,16 @@ import 'font-awesome/css/font-awesome.min.css'
 import router from './routes/router'
 import VModal from 'vue-js-modal'
 import Myecharts from './component/Myecharts'
+import Myechart from './component/Myechart'
+import Myechartlre from './component/Myechartlre'
 import toExcel from '@/excel/json2excel'
 import VueHighlightJS from 'vue-highlight.js'
 import 'highlight.js/styles/atom-one-dark.css'
 
 Vue.use(VueHighlightJS)
+// Vue.use(VueAwesomeSwiper)
+Vue.use(Myechart)
+Vue.use(Myechartlre)
 Vue.use(Myecharts)
 Vue.use(VModal)
 Vue.use(ElementUI)

@@ -124,7 +124,8 @@ export default {
   margin-top: 10px;
 }
 .el-row {
-  height: 840px;
+  max-height: 840px;
+  overflow: auto;
   .mix {
     margin-top: 15px;
     margin-left: 150px;
