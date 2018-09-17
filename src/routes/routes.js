@@ -24,6 +24,7 @@ import smtsku from '../views/tool/smtsku.vue'
 import express from '../views/tinytool/express.vue'
 import brand from '../views/tinytool/brand.vue'
 import fyndiqzUpload from '../views/tinytool/fyndiqzUpload.vue'
+import requirements from '../views/feedback/requirements.vue'
 
 const routes = [{
   path: '/login',
@@ -158,6 +159,19 @@ const routes = [{
       path: '/v1/tiny-tool/fyndiqz-upload',
       component: fyndiqzUpload,
       name: '产品上传'
+    }
+  ]
+},
+{
+  path: '/v1/feedback/index',
+  component: Home,
+  name: '反馈中心',
+  iconCls: 'el-icon-message',
+  children: [
+    {
+      path: '/v1/requirements/index',
+      component: requirements,
+      name: '需求管理'
     }
   ]
 },

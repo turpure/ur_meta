@@ -52,6 +52,14 @@
             <el-menu-item index="/v1/tiny-tool/brand" @click="ru">品牌列表</el-menu-item>
             <!-- <el-menu-item index="5-4">ibay工具</el-menu-item> -->
           </el-submenu>
+          <el-submenu index="5" @click.native="" style="margin-left:20px;">
+            <template slot="title">
+              <span :style="{color:rgb5}">反馈中心</span>
+            </template>
+            <!-- <el-menu-item index="5-1">产品一览表</el-menu-item> -->
+            <el-menu-item index="/v1/feebback/index" @click="">反馈中心</el-menu-item>
+            <!-- <el-menu-item index="5-4">ibay工具</el-menu-item> -->
+          </el-submenu>
         </el-menu>
       </el-col>
       <el-col :span="6" class="userinfo">
@@ -152,22 +160,22 @@
 </template>
 
 <script>
-import { removeToken, getToken } from "../utils/auth";
-import { getMenu } from "../api/login";
-import { getAvatarUrl } from "../api/api";
-import ImageCropper from "@/components/ImageCropper";
-import Screenfull from "@/components/Screenfull";
-import avatar from "@/components/ImageCropper";
+import { removeToken, getToken } from '../utils/auth'
+import { getMenu } from '../api/login'
+import { getAvatarUrl } from '../api/api'
+import ImageCropper from '@/components/ImageCropper'
+import Screenfull from '@/components/Screenfull'
+import avatar from '@/components/ImageCropper'
 export default {
-  name: "avatarUpload-demo",
+  name: 'avatarUpload-demo',
   components: { ImageCropper, Screenfull },
   data() {
     return {
-      rgb1: "",
-      rgb2: "",
-      rgb3: "",
-      rgb4: "",
-      rgb5: "",
+      rgb1: '',
+      rgb2: '',
+      rgb3: '',
+      rgb4: '',
+      rgb5: '',
       show1: false,
       show2: false,
       show3: false,
@@ -176,135 +184,135 @@ export default {
       url: getAvatarUrl(),
       imagecropperShow: false,
       imagecropperKey: 0,
-      image: "",
-      sysName: "UR管理中心",
+      image: '',
+      sysName: 'UR管理中心',
       collapsed: false,
-      sysUserName: "",
-      sysUserAvatar: "",
+      sysUserName: '',
+      sysUserAvatar: '',
       lside: [],
       lsidem: [],
       lsides: [],
       lsidedata: [],
       lsideur: [],
       form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
+        name: '',
+        region: '',
+        date1: '',
+        date2: '',
         delivery: false,
         type: [],
-        resource: "",
-        desc: ""
+        resource: '',
+        desc: ''
       }
-    };
+    }
   },
   mounted() {
-    this.$store.dispatch("GetUserInfo").then(() => {
-      this.sysUserName = this.$store.getters.name;
-      this.image = this.$store.getters.avatar;
-    });
+    this.$store.dispatch('GetUserInfo').then(() => {
+      this.sysUserName = this.$store.getters.name
+      this.image = this.$store.getters.avatar
+    })
     getMenu().then(response => {
-      let l = response.data.data;
-      this.lside = l;
-      this.lsidem = l.filter(e => e.name == "毛利润报表");
-      this.lsides = l.filter(e => e.name == "销售工具");
-      this.lsidedata = l.filter(e => e.name == "数据中心");
-      this.lsideur = l.filter(e => e.name == "UR小工具");
-    });
+      const l = response.data.data
+      this.lside = l
+      this.lsidem = l.filter(e => e.name == '毛利润报表')
+      this.lsides = l.filter(e => e.name == '销售工具')
+      this.lsidedata = l.filter(e => e.name == '数据中心')
+      this.lsideur = l.filter(e => e.name == 'UR小工具')
+    })
   },
   methods: {
     rproduct() {
-      this.rgb1 = "#ffd04b";
-      this.rgb2 = "";
-      this.rgb3 = "";
-      this.rgb4 = "";
-      this.rgb5 = "";
-      this.collapsed = true;
+      this.rgb1 = '#ffd04b'
+      this.rgb2 = ''
+      this.rgb3 = ''
+      this.rgb4 = ''
+      this.rgb5 = ''
+      this.collapsed = true
     },
     rm() {
-      this.rgb2 = "#ffd04b";
-      this.rgb1 = "";
-      this.rgb3 = "";
-      this.rgb4 = "";
-      this.rgb5 = "";
-      this.show1 = false;
-      this.show2 = true;
-      this.show3 = false;
-      this.show4 = false;
-      this.show5 = false;
-      this.collapsed = true;
+      this.rgb2 = '#ffd04b'
+      this.rgb1 = ''
+      this.rgb3 = ''
+      this.rgb4 = ''
+      this.rgb5 = ''
+      this.show1 = false
+      this.show2 = true
+      this.show3 = false
+      this.show4 = false
+      this.show5 = false
+      this.collapsed = true
     },
     rdata() {
-      this.rgb3 = "#ffd04b";
-      this.rgb1 = "";
-      this.rgb2 = "";
-      this.rgb4 = "";
-      this.rgb5 = "";
-      this.show1 = false;
-      this.show2 = false;
-      this.show3 = false;
-      this.show4 = true;
-      this.show5 = false;
-      this.collapsed = true;
+      this.rgb3 = '#ffd04b'
+      this.rgb1 = ''
+      this.rgb2 = ''
+      this.rgb4 = ''
+      this.rgb5 = ''
+      this.show1 = false
+      this.show2 = false
+      this.show3 = false
+      this.show4 = true
+      this.show5 = false
+      this.collapsed = true
     },
     rsale() {
-      this.rgb4 = "#ffd04b";
-      this.rgb1 = "";
-      this.rgb3 = "";
-      this.rgb2 = "";
-      this.rgb5 = "";
-      this.show1 = false;
-      this.show2 = false;
-      this.show3 = true;
-      this.show4 = false;
-      this.show5 = false;
-      this.collapsed = true;
+      this.rgb4 = '#ffd04b'
+      this.rgb1 = ''
+      this.rgb3 = ''
+      this.rgb2 = ''
+      this.rgb5 = ''
+      this.show1 = false
+      this.show2 = false
+      this.show3 = true
+      this.show4 = false
+      this.show5 = false
+      this.collapsed = true
     },
     ru() {
-      this.rgb5 = "#ffd04b";
-      this.rgb1 = "";
-      this.rgb3 = "";
-      this.rgb4 = "";
-      this.rgb2 = "";
-      this.show1 = false;
-      this.show2 = false;
-      this.show3 = false;
-      this.show4 = false;
-      this.show5 = true;
-      this.collapsed = true;
+      this.rgb5 = '#ffd04b'
+      this.rgb1 = ''
+      this.rgb3 = ''
+      this.rgb4 = ''
+      this.rgb2 = ''
+      this.show1 = false
+      this.show2 = false
+      this.show3 = false
+      this.show4 = false
+      this.show5 = true
+      this.collapsed = true
     },
     cropSuccess(resData) {
-      this.imagecropperShow = false;
-      this.imagecropperKey = this.imagecropperKey + 1;
-      const image = resData.data[0];
-      this.image = image;
+      this.imagecropperShow = false
+      this.imagecropperKey = this.imagecropperKey + 1
+      const image = resData.data[0]
+      this.image = image
     },
     close() {
-      this.imagecropperShow = false;
+      this.imagecropperShow = false
     },
     logout: function() {
-      var _this = this;
-      this.$confirm("确认退出吗?", "提示", {
-        //type: 'warning'
+      var _this = this
+      this.$confirm('确认退出吗?', '提示', {
+        // type: 'warning'
       })
         .then(() => {
-          sessionStorage.removeItem("user");
-          removeToken();
-          _this.$router.push("/login");
+          sessionStorage.removeItem('user')
+          removeToken()
+          _this.$router.push('/login')
         })
-        .catch(() => {});
+        .catch(() => {})
     },
-    //折叠导航栏
+    // 折叠导航栏
     collapse: function() {
-      this.collapsed = !this.collapsed;
+      this.collapsed = !this.collapsed
     },
     showMenu(i, status) {
       this.$refs.menuCollapsed.getElementsByClassName(
-        "submenu-hook-" + i
-      )[0].style.display = status ? "block" : "none";
+        'submenu-hook-' + i
+      )[0].style.display = status ? 'block' : 'none'
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped >
