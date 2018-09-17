@@ -17,11 +17,20 @@
         <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
       </el-form-item>
     </el-form>
-    <div class="tab" v-show="show">
+
+    <div class="tab" v-show="show" v-loading="listLoading">
+      <el-row>
+        <el-col :span="12">
+          <Myecharts :options="options" ref="myecharts"></Myecharts>
+        </el-col>
+        <el-col :span="12">
+          <Myecharts :options="options" ref="myecharts"></Myecharts>
+        </el-col>
+      </el-row>
       <el-col :span="24" style="background-color:#e02222;color:white;font-size:18px;line-height:30px;">
         &nbsp;
         <i class="fa fa-cogs"></i>----所有状态</el-col>
-      <el-table v-loading="listLoading" :header-row-style="rowheader" height="630" :data="tableData1" style="width: 100%;">
+      <el-table :header-row-style="rowheader" height="630" :data="tableData1" style="width: 100%;">
         <el-table-column min-width="100px" prop="salername" label="业绩归属人1" :formatter="empty"></el-table-column>
         <el-table-column min-width="80px" prop="goodsNum" label="商品总数" :formatter="empty"></el-table-column>
         <el-table-column min-width="90px" prop="SoldNum" label="出单商品数" :formatter="empty"></el-table-column>
@@ -42,7 +51,7 @@
       <el-col :span="24" style="background-color:#e02222;color:white;font-size:18px;line-height:30px;">
         &nbsp;
         <i class="fa fa-cogs"></i>----爆款</el-col>
-      <el-table v-loading="listLoading" :header-row-style="rowheader" height="630" :data="tableData2" style="width: 100%;">
+      <el-table :header-row-style="rowheader" height="630" :data="tableData2" style="width: 100%;">
         <el-table-column min-width="100px" prop="salername" label="业绩归属人1" :formatter="empty"></el-table-column>
         <el-table-column min-width="80px" prop="goodsNum" label="商品总数" :formatter="empty"></el-table-column>
         <el-table-column min-width="80px" prop="SoldNum" label="爆款总数" :formatter="empty"></el-table-column>
@@ -63,7 +72,7 @@
       <el-col :span="24" style="background-color:#4b8df8;color:white;font-size:18px;line-height:30px;">
         &nbsp;
         <i class="fa fa-cogs"></i>----旺款</el-col>
-      <el-table :header-row-style="rowheader" v-loading="listLoading" height="630" :data="tableData3" style="width: 100%;">
+      <el-table :header-row-style="rowheader" height="630" :data="tableData3" style="width: 100%;">
         <el-table-column min-width="100px" prop="salername" label="业绩归属人1" :formatter="empty"></el-table-column>
         <el-table-column min-width="80px" prop="goodsNum" label="商品总数" :formatter="empty"></el-table-column>
         <el-table-column min-width="80px" prop="SoldNum" label="旺款总数" :formatter="empty"></el-table-column>
@@ -109,7 +118,7 @@ export default {
         tooltip: {
           trigger: "axis",
           axisPointer: {
-            type: "bar",
+            type: "cross",
             label: {
               backgroundColor: "#6a7985"
             }
@@ -119,7 +128,13 @@ export default {
           data: [String]
         },
         toolbox: {
-          show: true
+          show: true,
+          feature: {
+            dataView: { show: true, readOnly: false },
+            magicType: { show: true, type: ["line", "bar", "stack", "tiled"] },
+            restore: { show: true },
+            saveAsImage: { show: true }
+          }
         },
         grid: {
           left: "3%",
@@ -138,7 +153,7 @@ export default {
           {
             type: "value",
             axisLabel: {
-              formatter: "{value} ￥"
+              formatter: "{value}"
             }
           }
         ],
@@ -163,11 +178,47 @@ export default {
           this.listLoading = true;
           getPerform(this.condition).then(response => {
             this.listLoading = false;
+            debugger;
             let tableData = response.data.data;
             this.tableData1 = tableData.AllReport;
             this.tableData2 = tableData.HotReport;
             this.tableData3 = tableData.PopReport;
+            const ret = this.tableData1;
+            const lineName = [];
+            const series = [];
+            ret.forEach(element => {
+              if (lineName.indexOf(element.title) < 0) {
+                lineName.push("销售额");
+              }
+            });
+            const date = [];
+            lineName.forEach(name => {
+              const sery = {
+                type: "line",
+                stack: "总量",
+                areaStyle: { normal: {} }
+              };
+              const amt = [];
+              ret.map(element => {
+                if (element.title === name) {
+                  amt.push(Number(element.saleMoneyRmb));
+                  if (date.indexOf(element.salername) < 0) {
+                    date.push(element.salername);
+                  }
+                }
+              });
+              sery["data"] = amt;
+              sery["name"] = name;
+              series.push(sery);
+            });
+            this.options.legend.data = lineName;
+            this.options.xAxis[0].data = date;
+            this.options.series = series;
+            const _this = this;
+            _this.$refs.myecharts.drawAreaStack(this.options);
           });
+        } else {
+          return false;
         }
       });
     },
