@@ -59,3 +59,19 @@ export function fyndiqz() {
   const url = '/tiny-tool/fyndiqz-upload'
   return baseUrl + url
 }
+
+export function getRequirements() {
+  return request({
+    url: '/requirements',
+    method: 'get'
+  })
+}
+
+export function createRequirements(data) {
+  return request({
+    url: '/requirements',
+    method: 'post',
+    data
+  })
+}
+
