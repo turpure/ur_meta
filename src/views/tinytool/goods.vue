@@ -54,10 +54,12 @@
     <el-row>
       <el-col :span="4" class="mix" v-for="item in tableData" :key="item.rowId">
         <div class="mix-inner">
-          <img :src=item.BmpFileName :alt='item.GoodsName+item.GoodsSKUStatus'>
-          <p>&nbsp;&nbsp;{{item.GoodsCode}}&nbsp;&nbsp;{{item.CategoryParentName}}&nbsp;&nbsp;{{item.CategoryName}}<br>{{item.possessman1}}
+          <div style="height:220px;width:200px">
+            <img :src=item.BmpFileName :alt='item.GoodsName+item.GoodsSKUStatus'>
+          </div>
+          <p>&nbsp;{{item.GoodsCode}}&nbsp;{{item.CategoryParentName}}&nbsp;{{item.CategoryName}}<br>&nbsp;{{item.possessman1}}
           </p>
-          <p>&nbsp;&nbsp;{{item.GoodsName}}&nbsp;&nbsp;&nbsp;{{item.GoodsSKUStatus}}</p>
+          <p>&nbsp;{{item.GoodsName}}&nbsp;&nbsp;&nbsp;{{item.GoodsSKUStatus}}</p>
           <div class="mix-details">
             <h4>{{item.GoodsCode}}{{item.possessman1}}</h4>
             <h5>{{item.CategoryParentName}}</h5>
@@ -99,7 +101,7 @@ export default {
       categoryParentName: [],
       categoryName: [],
       condition: {
-        salerName: "尚显贝",
+        salerName: "",
         possessMan1: "",
         possessMan2: "",
         beginDate: "",
@@ -141,6 +143,8 @@ export default {
 
 <style lang="scss" scoped>
 .el-row {
+  max-height: 800px;
+  overflow: auto;
   .mix {
     position: relative;
     overflow: hidden;
@@ -151,8 +155,6 @@ export default {
       position: relative;
       width: 100%;
       img {
-        height: 220px;
-        width: 200px;
         display: block;
         height: auto;
         max-width: 100%;
@@ -167,7 +169,7 @@ export default {
         position: absolute;
         h4 {
           color: #fff;
-          margin-top: 270px;
+          margin-top: 300px;
           font-size: 18px;
           margin-bottom: 10px;
         }
