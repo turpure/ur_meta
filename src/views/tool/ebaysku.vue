@@ -3,11 +3,11 @@
     <el-form v-model="condition" label-width="120px" class="demo-ruleForm login-container" v-show="show1">
       <el-form-item label="卖家账号：">
         <el-select v-model="condition.suffix" filterable clearable>
-          <el-option v-for='(item,index) in suffix' :index='index' :key='item.ebaySuffix' :label='item.ebaySuffix' :value='item.ebaySuffix'></el-option>
+          <el-option v-for='(item,index) in suffix' :index='index' :key='item.ebaySuffix' :label='item.ebayName' :value='item.ebayName'></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="站 点：">
-        <el-select v-model="condition.site" filterable clearable>
+        <el-select v-model="condition.Site" filterable clearable>
           <el-option v-for='item in site' :key='item' :value='item'></el-option>
         </el-select>
       </el-form-item>
@@ -59,9 +59,9 @@
                   <el-input size=mini v-model="scope.row.quantity"></el-input>
                 </template>
               </el-table-column>
-              <el-table-column prop="property2" label="价格">
+              <el-table-column prop="StartPrice" label="价格">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.property2"></el-input>
+                  <el-input size=mini v-model="scope.row.price"></el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="BmpFileName" label="图片路径" width="300">
@@ -124,6 +124,7 @@ export default {
       show: false,
       show1: true,
       tableData: [],
+      tableData1: [],
       site: [],
       suffix: [],
       condition: {
@@ -169,9 +170,32 @@ export default {
       this.show = !this.show;
       geteBaysku(this.condition).then(response => {
         this.tableData = response.data.data.payload;
+        this.tableData1 = response.data.data.setting;
       });
     },
     btnSavekkk() {
+      this.condition1.setting.suffix = this.tableData1.suffix;
+      this.condition1.setting.goodsCode = this.tableData1.goodsCode;
+      this.condition1.setting.Site = this.tableData1.Site;
+      this.condition1.setting.Cat1 = this.tableData1.Cat1;
+      this.condition1.setting.Cat2 = this.tableData1.Cat2;
+      this.condition1.setting.price = this.tableData1.price;
+      this.condition1.setting.shipping1 = this.tableData1.shipping1;
+      this.condition1.setting.shipping2 = this.tableData1.shipping2;
+
+      this.condition1.contents.remark = this.tableData.map(e => e.remark);
+      this.condition1.contents.SKU = this.tableData.map(e => e.SKU);
+      this.condition1.contents.Quantity = this.tableData.map(e => e.quantity);
+      this.condition1.contents.StartPrice = this.tableData1.price;
+      this.condition1.contents.PictureURL = this.tableData.map(
+        e => e.BmpFileName
+      );
+      this.condition1.contents.Color = this.tableData.map(e => e.pro1);
+      this.condition1.contents.Size = this.tableData.map(e => e.pro2);
+      this.condition1.contents.pro1 = this.tableData.map(e => e.property1);
+      this.condition1.contents.pro2 = this.tableData.map(e => e.property2);
+      this.condition1.contents.EAN = this.tableData.map(e => e.EAN);
+      this.condition1.contents.UPC = this.tableData.map(e => e.UPC);
       geteBayskutemplate(this.condition1).then(response => {
         const blob = new Blob([response.data], {
           type: "application/vnd.ms-excel;charset=UTF-8"
@@ -242,6 +266,9 @@ export default {
   box-shadow: 0 0 25px #cac6c6;
   .el-input {
     width: 106px;
+  }
+  .el-button {
+    margin-left: 0px;
   }
 }
 .modal-dialog {

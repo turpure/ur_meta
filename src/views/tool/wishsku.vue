@@ -131,22 +131,25 @@ export default {
         shipping: ""
       },
       condition1: {
+        setting: {
+          suffix: "",
+          goodsCode: "",
+          price: "",
+          msrp: "",
+          shipping: ""
+        },
         contents: {
-          SKU: ["6C004601", "6C004602"],
-          variation1: [1, 2],
-          variation2: ["黄色", "粉色"],
-
-          pic_url: [
-            "http://121.196.233.153/images/6C004601.jpg",
-            "http://121.196.233.153/images/6C004602.jpg"
-          ],
-          property2: ["黄色", "粉色"],
-          property1: [1, 2],
-          quantity: [1000, 1000],
-          price: [222, 222],
-          msrp: [111, 111],
-          shipping: [333, 333],
-          shippingTime: ["7-21", "7-21"]
+          SKU: [],
+          variation1: [],
+          variation2: [],
+          pic_url: [],
+          property2: [],
+          property1: [],
+          quantity: [],
+          price: [],
+          msrp: [],
+          shipping: [],
+          shippingTime: []
         }
       }
     };
@@ -178,7 +181,6 @@ export default {
         e => e.$shippingTime
       );
       getwishskutemplate(this.condition1).then(response => {
-        debugger;
         const blob = new Blob([response.data], {
           type: "application/vnd.ms-excel;charset=UTF-8"
         });
@@ -242,6 +244,9 @@ export default {
   box-shadow: 0 0 25px #cac6c6;
   .el-input {
     width: 217px;
+  }
+  .el-button {
+    margin-left: 0px;
   }
 }
 .modal-dialog {

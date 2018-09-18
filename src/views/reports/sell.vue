@@ -288,7 +288,6 @@ export default {
       this.$refs.condition.validate(valid => {
         if (valid) {
           if (myform.member.length === 0) {
-            this.listLoading = true;
             const val = form.department;
             const res = this.allMember;
             for (let i = 0; i < val.length; i++) {

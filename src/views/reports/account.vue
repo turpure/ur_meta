@@ -276,7 +276,15 @@ export default {
       this.$refs.condition.validate(valid => {
         if (valid) {
           if (myform.member.length === 0) {
-            myform.member = this.allMember.map(m => {
+            const val = form.department;
+            const res = this.allMember;
+            for (let i = 0; i < val.length; i++) {
+              const per = res.filter(
+                ele => ele.department === val[i] && ele.position === "销售"
+              );
+              this.member.concat(per);
+            }
+            myform.member = this.member.map(m => {
               return m.username;
             });
           }

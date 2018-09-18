@@ -859,6 +859,7 @@ export default {
   cursor: pointer;
 }
 .el-dropdown-menu {
+  overflow: auto;
   max-height: 300px;
   padding: 5px 5px;
   border: 1px solid rgba(0, 0, 0, 0.15);

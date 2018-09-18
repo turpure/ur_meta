@@ -9,10 +9,10 @@
           <i class="fa fa-align-justify"></i>
         </div>
       </el-col>
-      <el-col :span="11">
+      <el-col :span="10">
         <el-menu :default-active="$route.path" class="el-menu-demo" mode="horizontal" background-color="#545c64" text-color="#fff" active-text-color="#fff" router>
           <template v-for="item in lsidem" v-if="!item.hidden">
-            <el-submenu index="item" @click.native="rm" style="margin-left:20px;">
+            <el-submenu index="1" @click.native="rm" style="margin-left:20px;">
               <template slot="title">
                 <span :style="{color:rgb1}">{{item.name}}</span>
               </template>
@@ -22,7 +22,7 @@
             </el-submenu>
           </template>
           <template v-for="item in lsides" v-if="!item.hidden">
-            <el-submenu :index="item" @click.native="rsale" style="margin-left:20px;">
+            <el-submenu index="2" @click.native="rsale" style="margin-left:20px;">
               <template slot="title">
                 <span :style="{color:rgb2}">{{item.name}}</span>
               </template>
@@ -32,7 +32,7 @@
             </el-submenu>
           </template>
           <template v-for="item in lsidedata" v-if="!item.hidden">
-            <el-submenu :index="item" @click.native="rdata" style="margin-left:20px;">
+            <el-submenu index="3" @click.native="rdata" style="margin-left:20px;">
               <template slot="title">
                 <span :style="{color:rgb3}">{{item.name}}</span>
               </template>
@@ -42,7 +42,7 @@
             </el-submenu>
           </template>
           <template v-for="item in lsideur" v-if="!item.hidden">
-            <el-submenu :index="item" @click.native="ru" style="margin-left:20px;">
+            <el-submenu index="4" @click.native="ru" style="margin-left:20px;">
               <template slot="title">
                 <span :style="{color:rgb4}">{{item.name}}</span>
               </template>
@@ -52,7 +52,7 @@
             </el-submenu>
           </template>
           <template v-for="item in lsiderequirements" v-if="!item.hidden">
-            <el-submenu :index="item" @click.native="requirements" style="margin-left:20px;">
+            <el-submenu index="5" @click.native="requirements" style="margin-left:20px;">
               <template slot="title">
                 <span :style="{color:rgb5}">{{item.name}}</span>
               </template>
@@ -86,56 +86,8 @@
     <el-col :span="24" class="main">
       <aside :class="collapsed?'menu-collapsed':'menu-expanded'">
         <!--导航菜单-->
-        <el-menu :default-active="$route.path" default-openeds=[1] class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="collapsed" v-if="this.show1">
-          <template v-for="item in lsidem" v-if="!item.hidden">
-            <el-submenu index="1">
-              <template slot="title">
-                <i class="el-icon-message"></i>{{item.name}}
-              </template>
-              <el-menu-item v-for="child in item.children" :index="child.route" :key="child.route" v-if="!child.hidden">
-                {{child.name}}
-              </el-menu-item>
-            </el-submenu>
-          </template>
-        </el-menu>
-        <el-menu :default-active="$route.path" default-openeds=[1] class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="collapsed" v-if="this.show2">
-          <template v-for="item in lsides" v-if="!item.hidden">
-            <el-submenu index="1">
-              <template slot="title">
-                <i class="el-icon-message"></i>{{item.name}}
-              </template>
-              <el-menu-item v-for="child in item.children" :index="child.route" :key="child.route" v-if="!child.hidden">
-                {{child.name}}
-              </el-menu-item>
-            </el-submenu>
-          </template>
-        </el-menu>
-        <el-menu :default-active="$route.path" default-openeds=[1] class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="collapsed" v-if="this.show3">
-          <template v-for="item in lsidedata" v-if="!item.hidden">
-            <el-submenu index="1">
-              <template slot="title">
-                <i class="el-icon-message"></i>{{item.name}}
-              </template>
-              <el-menu-item v-for="child in item.children" :index="child.route" :key="child.route" v-if="!child.hidden">
-                {{child.name}}
-              </el-menu-item>
-            </el-submenu>
-          </template>
-        </el-menu>
-        <el-menu :default-active="$route.path" default-openeds=[1] class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="collapsed" v-if="this.show4">
-          <template v-for="item in lsideur" v-if="!item.hidden">
-            <el-submenu index="1">
-              <template slot="title">
-                <i class="el-icon-message"></i>{{item.name}}
-              </template>
-              <el-menu-item v-for="child in item.children" :index="child.route" :key="child.route" v-if="!child.hidden">
-                {{child.name}}
-              </el-menu-item>
-            </el-submenu>
-          </template>
-        </el-menu>
-        <el-menu :default-active="$route.path" default-openeds=[1] class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="collapsed" v-if="this.show5">
-          <template v-for="item in lsiderequirements" v-if="!item.hidden">
+        <el-menu :default-active="$route.path" :default-openeds="openeds" class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="collapsed" v-if="this.show1">
+          <template v-for="item in lside" v-if="!item.hidden">
             <el-submenu index="1">
               <template slot="title">
                 <i class="el-icon-message"></i>{{item.name}}
@@ -172,16 +124,13 @@ export default {
   components: { ImageCropper, Screenfull },
   data() {
     return {
+      openeds: ["1"],
       rgb1: "",
       rgb2: "",
       rgb3: "",
       rgb4: "",
       rgb5: "",
       show1: false,
-      show2: false,
-      show3: false,
-      show4: false,
-      show5: false,
       url: getAvatarUrl(),
       imagecropperShow: false,
       imagecropperKey: 0,
@@ -230,11 +179,8 @@ export default {
       this.rgb4 = "";
       this.rgb5 = "";
       this.show1 = true;
-      this.show2 = false;
-      this.show3 = false;
-      this.show4 = false;
-      this.show5 = false;
       this.collapsed = true;
+      this.lside = this.lsidem;
     },
     rsale() {
       this.rgb2 = "#ffd04b";
@@ -242,12 +188,9 @@ export default {
       this.rgb3 = "";
       this.rgb4 = "";
       this.rgb5 = "";
-      this.show1 = false;
-      this.show2 = true;
-      this.show3 = false;
-      this.show4 = false;
-      this.show5 = false;
+      this.show1 = true;
       this.collapsed = true;
+      this.lside = this.lsides;
     },
     rdata() {
       this.rgb3 = "#ffd04b";
@@ -255,12 +198,9 @@ export default {
       this.rgb2 = "";
       this.rgb4 = "";
       this.rgb5 = "";
-      this.show1 = false;
-      this.show2 = false;
-      this.show3 = true;
-      this.show4 = false;
-      this.show5 = false;
+      this.show1 = true;
       this.collapsed = true;
+      this.lside = this.lsidedata;
     },
     ru() {
       this.rgb4 = "#ffd04b";
@@ -268,12 +208,9 @@ export default {
       this.rgb2 = "";
       this.rgb3 = "";
       this.rgb5 = "";
-      this.show1 = false;
-      this.show2 = false;
-      this.show3 = false;
-      this.show4 = true;
-      this.show5 = false;
+      this.show1 = true;
       this.collapsed = true;
+      this.lside = this.lsideur;
     },
     requirements() {
       this.rgb5 = "#ffd04b";
@@ -281,12 +218,9 @@ export default {
       this.rgb2 = "";
       this.rgb3 = "";
       this.rgb4 = "";
-      this.show1 = false;
-      this.show2 = false;
-      this.show3 = false;
-      this.show4 = false;
-      this.show5 = true;
+      this.show1 = true;
       this.collapsed = true;
+      this.lside = this.lsiderequirements;
     },
     cropSuccess(resData) {
       this.imagecropperShow = false;

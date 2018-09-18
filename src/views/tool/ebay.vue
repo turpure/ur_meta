@@ -4,7 +4,7 @@
       <el-select v-model="condition.suffix" filterable multiple collapse-tags>
         <el-button plain type="info" @click="selectall">全选</el-button>
         <el-button plain type="info" @click="noselect">取消</el-button>
-        <el-option v-for="item in suffix" :key="item.ebayName" :value="item.ebaySuffix"></el-option>
+        <el-option v-for="item in suffix" :key="item.ebaySuffix" :value="item.ebayName"></el-option>
       </el-select>
     </el-form-item>
     <el-form-item label="商品编码：" prop="goodsCode" :rules="[{required: true, message: '请填写字段', trigger: 'blur'}]">
@@ -99,12 +99,18 @@ export default {
   background-clip: padding-box;
   margin: 100px auto;
   width: 350px;
-  padding: 35px 35px 15px 35px;
+  padding: 60px 35px 20px 40px;
   background: #fff;
   border: 1px solid #eaeaea;
   box-shadow: 0 0 25px #cac6c6;
-  .el-input {
-    width: 217px;
+  .el-form-item {
+    margin-bottom: 40px;
+    .el-input {
+      width: 217px;
+    }
+    .el-button {
+      margin-left: 30px;
+    }
   }
 }
 </style>

@@ -142,6 +142,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.el-form {
+  margin-top: 10px;
+}
 .el-row {
   max-height: 800px;
   overflow: auto;

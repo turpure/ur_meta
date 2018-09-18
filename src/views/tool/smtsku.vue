@@ -149,6 +149,7 @@ export default {
       this.condition1.contents.property1 = this.tableData.map(e => e.property1);
       this.condition1.contents.quantity = this.tableData.map(e => e.quantity);
       this.condition1.contents.price = this.tableData.map(e => e.price);
+      this.condition1.contents.name1 = this.tableData.map(e => e.name1);
       getsmtskutemplate(this.condition1).then(response => {
         const blob = new Blob([response.data], {
           type: "application/vnd.ms-excel;charset=UTF-8"
@@ -213,12 +214,15 @@ export default {
   background-clip: padding-box;
   margin: 100px auto;
   width: 350px;
-  padding: 35px 35px 15px 35px;
+  padding: 40px 35px 15px 35px;
   background: #fff;
   border: 1px solid #eaeaea;
   box-shadow: 0 0 25px #cac6c6;
-  .el-input {
-    width: 217px;
+  .el-form-item {
+    margin-bottom: 30px;
+    .el-input {
+      width: 217px;
+    }
   }
 }
 .modal-dialog {
