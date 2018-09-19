@@ -40,7 +40,7 @@
         </div>
         <div class="modal-body">
           <el-form :model="condition1">
-            <el-table :data="tableData" class="table table-hover" id="tb">
+            <el-table :data="tableData" height="500" class="table table-hover" id="tb">
               <el-table-column prop="SKU" label="SKU*" width="95px">
                 <template slot-scope="scope">
                   <el-input size=mini v-model="scope.row.SKU"></el-input>
@@ -120,6 +120,7 @@ export default {
   data() {
     return {
       tableData: [],
+      tableData1: [],
       show1: true,
       show: false,
       type: [],
@@ -159,10 +160,16 @@ export default {
       this.show = !this.show;
       this.show1 = !this.show1;
       getwishsku(this.condition).then(response => {
-        this.tableData = response.data.data;
+        this.tableData = response.data.data.payload;
+        this.tableData1 = response.data.data.setting;
       });
     },
     btnSavekkk() {
+      this.condition1.setting.suffix = this.tableData1.suffix;
+      this.condition1.setting.goodsCode = this.tableData1.goodsCode;
+      this.condition1.setting.price = this.tableData1.price;
+      this.condition1.setting.msrp = this.tableData1.msrp;
+      this.condition1.setting.shipping = this.tableData1.shipping;
       this.condition1.contents.SKU = this.tableData.map(e => e.SKU);
       this.condition1.contents.variation1 = this.tableData.map(
         e => e.variation1
@@ -285,7 +292,6 @@ export default {
     width: 100%;
     margin-bottom: 20px;
     border-collapse: collapse;
-    max-height: 500px;
     overflow: auto;
   }
 }
