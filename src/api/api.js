@@ -75,3 +75,18 @@ export function createRequirements(data) {
   })
 }
 
+export function editRequirements(data) {
+  return request({
+    url: 'requirements/' + data.id,
+    method: 'put',
+    data
+  })
+}
+
+export function deleteRequirements(id) {
+  return request({
+    url: 'requirements/' + id,
+    method: 'delete'
+  })
+}
+
