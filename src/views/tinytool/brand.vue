@@ -1,9 +1,5 @@
 <template>
   <div>
-    <!-- <el-col :span="24" style="background-color:red;text-indent:4px;line-height:20px;font-size:18px;color:white;">
-      <i class="fa fa-globe">查询条件</i>
-      <el-button type="text" style="margin-left:80%;line-height:5px;">导入excel文件</el-button>
-    </el-col> -->
     <el-form :model='condition' :inline='true' ref='condition' label-width='100px' class='demo-form-inline'>
       <el-form-item label="品牌" prop="brand">
         <el-input v-model="condition.brand"></el-input>
@@ -22,8 +18,8 @@
         <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
       </el-form-item>
     </el-form>
-    <el-row>
-      <el-col :span="6" class="mix" v-for="item in tableData" :key="item.rowId">
+    <el-row v-loading="listLoading">
+      <el-col :span="6" class="mix" v-for="item in tableData.slice((condition.start-1)*pageSize,condition.start*pageSize)" :key="item.rowId">
         <img :src=item.imgUrl :alt="item.imgName">
         <p>
           <font color="black" size="3">
@@ -37,48 +33,25 @@
           <a align="center" class="mix-link" :href="item.url" target="_blank">
             <i class="fa fa-link"></i>
           </a>
-          <!-- <span align="center" class="mix-preview" @click="dialogVisible=true">
-            <i class="fa fa-search"></i>
-          </span> -->
         </div>
       </el-col>
     </el-row>
-    <!-- <el-dialog width="20%" :visible.sync="dialogVisible" :before-close="handleClose">
-      <swiper :options="swiperOption" ref="mySwiper">
-        <swiper-slide v-for="(item,index) in tableData" :key="index" style="text-align:center;"><img :src="item.imgUrl"></swiper-slide>
-        <div class="swiper-button-prev" slot="button-prev"></div>
-        <div class="swiper-button-next" slot="button-next"></div>
-      </swiper>
-    </el-dialog> -->
+    <div class="block" align="right" v-show="show">
+      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="condition.start" :page-sizes="[10, 20, 30, 50]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
+      </el-pagination>
+    </div>
   </div>
 </template>
 
 <script>
 import { getBrandcountry, getBrandcategory, getBrand } from "../../api/profit";
-// import { swiper, swiperSlide } from "vue-awesome-swiper";
-
 export default {
-  // name: "myswiper",
-  // components: {
-  //   swiper,
-  //   swiperSlide
-  // },
   data() {
     return {
-      // dialogVisible: false,
-      // swiperOption: {
-      //   centeredSlides: true,
-      //   slidesPreView: 1,
-      //   loop: true,
-      //   direction: "horizontal",
-      //   paginationClickable: true,
-      //   navigation: {
-      //     nextEl: ".swiper-button-next",
-      //     prevEl: ".swiper-button-prev"
-      //   },
-      //   observeParents: true
-      // },
+      pageSize: 10,
+      total: null,
       listLoading: false,
+      show: false,
       tableData: [],
       country: [],
       category: [],
@@ -87,26 +60,28 @@ export default {
         country: "",
         category: "",
         start: 1,
-        limit: 10
+        limit: 1000
       }
     };
   },
-  // computed: {
-  //   swiper() {
-  //     return this.$refs.mySwiper.swiper;
-  //   }
-  // },
   methods: {
     onSubmit() {
       this.listLoading = true;
+      this.show = true;
       getBrand(this.condition).then(response => {
         this.listLoading = false;
         this.tableData = response.data.data;
+        this.total = this.tableData.length;
       });
+    },
+    handleSizeChange(val) {
+      this.pageSize = val;
+      this.onSubmit();
+    },
+    handleCurrentChange(val) {
+      this.condition.start = val;
+      this.onSubmit();
     }
-    // handleClose(done) {
-    //   done();
-    // }
   },
   mounted() {
     getBrandcountry().then(response => {
@@ -124,7 +99,7 @@ export default {
   margin-top: 10px;
 }
 .el-row {
-  max-height: 840px;
+  height: 800px;
   overflow: auto;
   .mix {
     margin-top: 15px;

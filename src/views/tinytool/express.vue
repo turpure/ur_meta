@@ -1,9 +1,9 @@
 <template>
   <el-table border :data="tableData" :header-row-style="thClass">
-    <el-table-column width="60" prop="NID" label="ID" :formatter="empty"></el-table-column>
-    <el-table-column width="260" prop="DefaultExpress" label="物流公司" :formatter="empty"></el-table-column>
-    <el-table-column width="450" prop="name" label="物流方式" :formatter="empty"></el-table-column>
-    <el-table-column width="900" prop="URL" label="查询网址" :formatter="empty">
+    <el-table-column min-width="120" prop="NID" label="ID" :formatter="empty"></el-table-column>
+    <el-table-column min-width="260" prop="DefaultExpress" label="物流公司" :formatter="empty"></el-table-column>
+    <el-table-column min-width="450" prop="name" label="物流方式" :formatter="empty"></el-table-column>
+    <el-table-column min-width="840" prop="URL" label="查询网址" :formatter="empty">
       <template slot-scope="scope">
         <a :href=scope.row.URL>{{scope.row.URL}}</a>
       </template>

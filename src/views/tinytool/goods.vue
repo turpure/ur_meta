@@ -6,12 +6,12 @@
           <el-option v-for='item in possessMan1' :key='item.username' :value='item.username'></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label='创建时间' class='input'>
+      <el-form-item label='开始时间' class='input'>
         <el-date-picker v-model='condition.beginDate' type='date' value-format='yyyy-MM-dd' placeholder='选择日期'>
         </el-date-picker>
       </el-form-item>
       <el-form-item label='关键字' class='input'>
-        <el-input v-model='condition.goodsName'>
+        <el-input v-model='condition.goodsName' placeholder="商品名称关键字">
         </el-input>
       </el-form-item>
       <el-form-item label='产品状态' class='input'>
@@ -20,7 +20,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label='产品分类1' class='input'>
-        <el-select v-model='condition.categoryParentName' clearable>
+        <el-select v-model='condition.categoryParentName' clearable @change="productcategory">
           <el-option v-for='item in categoryParentName' :key='item.CategoryName' :value='item.CategoryName'></el-option>
         </el-select>
       </el-form-item>
@@ -29,17 +29,17 @@
           <el-option v-for='item in possessMan2' :key='item.username' :value='item.username'></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label='创建时间' class='input'>
+      <el-form-item label='结束时间' class='input'>
         <el-date-picker v-model='condition.endDate' type='date' value-format='yyyy-MM-dd' placeholder='选择日期'>
         </el-date-picker>
       </el-form-item>
       <el-form-item label='关键字' class='input'>
-        <el-input v-model='condition.supplierName'>
+        <el-input v-model='condition.supplierName' placeholder="供应商名称关键字">
         </el-input>
       </el-form-item>
       <el-form-item label='产品分类2' class='input'>
-        <el-select v-model='condition.categoryName' clearable disabled>
-          <el-option v-for='item in categoryName' :key='item.username' :value='item.username'></el-option>
+        <el-select v-model='condition.categoryName' clearable :disabled="disabled">
+          <el-option v-for='item in categoryName' :key='item.CategoryName' :value='item.CategoryName'></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label='责任人' class='input'>
@@ -51,8 +51,8 @@
         <el-button type="primary" @click="onSubmit(condition)">搜索</el-button>
       </el-form-item>
     </el-form>
-    <el-row>
-      <el-col :span="4" class="mix" v-for="item in tableData" :key="item.rowId">
+    <el-row v-loading="listLoading">
+      <el-col :span="4" class="mix" v-for="item in tableData.slice((condition.start-1)*pageSize,condition.start*pageSize)" :key="item.rowId">
         <div class="mix-inner">
           <div style="height:220px;width:200px">
             <img :src=item.BmpFileName :alt='item.GoodsName+item.GoodsSKUStatus'>
@@ -69,13 +69,14 @@
             <a align="center" class="mix-link" :href="item.LinkUrl" target="_blank">
               <i class="fa fa-link"></i>
             </a>
-            <!-- <a align="center" class="mix-preview" :href="item.BmpFileName" title=" Project Name " data-rel="fancybox-button ">
-              <i class="fa fa-search "></i>
-            </a> -->
           </div>
         </div>
       </el-col>
     </el-row>
+    <div class="block" align="right" v-show="show">
+      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="condition.start" :page-sizes="[10, 20, 30, 50]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
+      </el-pagination>
+    </div>
   </div>
 </template>
 
@@ -89,6 +90,12 @@ import {
 export default {
   data() {
     return {
+      category: [],
+      show: false,
+      pageSize: 10,
+      total: null,
+      disabled: true,
+      listLoading: false,
       tableData: [],
       salerName: [],
       possessMan1: [],
@@ -112,15 +119,37 @@ export default {
         categoryParentName: "",
         categoryName: "",
         start: 1,
-        limit: 10
+        limit: 100000
       }
     };
   },
   methods: {
     onSubmit() {
+      this.listLoading = true;
+      this.show = true;
       getGoodspicture(this.condition).then(response => {
+        this.listLoading = false;
         this.tableData = response.data.data;
+        this.total = this.tableData.length;
       });
+    },
+    handleSizeChange(val) {
+      this.pageSize = val;
+      this.onSubmit();
+    },
+    handleCurrentChange(val) {
+      this.condition.start = val;
+      this.onSubmit();
+    },
+    productcategory() {
+      if (this.condition.categoryParentName != "") {
+        this.disabled = false;
+        const val = this.condition.categoryParentName;
+        const res = this.category;
+        this.categoryName = res.filter(e => e.CategoryParentName === val);
+      } else if (this.condition.categoryParentName == "") {
+        this.disabled = true;
+      }
     }
   },
   mounted() {
@@ -128,7 +157,7 @@ export default {
       this.goodsSkuStatus = response.data.data;
     });
     getGoodscats().then(response => {
-      this.categoryParentName = response.data.data;
+      this.category = this.categoryParentName = response.data.data;
     });
     getMember().then(response => {
       let possessMan = response.data.data;
@@ -146,7 +175,7 @@ export default {
   margin-top: 10px;
 }
 .el-row {
-  max-height: 800px;
+  height: 740px;
   overflow: auto;
   .mix {
     position: relative;
