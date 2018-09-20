@@ -109,11 +109,11 @@ export default {
     return {
       total: 10,
       tags: {
-        0: { name: '无关紧要', type: '' },
-        1: { name: '次要', type: 'success' },
-        2: { name: '一般', type: 'info' },
-        3: { name: '严重', type: 'warning' },
-        4: { name: '紧急', type: 'danger' }
+        1: { name: '无关紧要', type: '' },
+        2: { name: '次要', type: 'success' },
+        3: { name: '一般', type: 'info' },
+        4: { name: '严重', type: 'warning' },
+        5: { name: '紧急', type: 'danger' }
       },
 
       dialogVisible: false,
