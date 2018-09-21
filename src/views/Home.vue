@@ -9,58 +9,21 @@
           <i class="fa fa-align-justify"></i>
         </div>
       </el-col>
-      <el-col :span="10">
-        <el-menu :default-active="$route.path" class="el-menu-demo" mode="horizontal" background-color="#545c64" text-color="#fff" active-text-color="#fff" router>
-          <template v-for="item in lsidem" v-if="!item.hidden">
-            <el-submenu index="1" @click.native="rm" style="margin-left:20px;">
-              <template slot="title">
-                <span :style="{color:rgb1}">{{item.name}}</span>
-              </template>
-              <el-menu-item v-for="child in item.children" :index="child.route" :key="child.route" v-if="!child.hidden" @click.native="rm">
-                {{child.name}}
-              </el-menu-item>
-            </el-submenu>
-          </template>
-          <template v-for="item in lsides" v-if="!item.hidden">
-            <el-submenu index="2" @click.native="rsale" style="margin-left:20px;">
-              <template slot="title">
-                <span :style="{color:rgb2}">{{item.name}}</span>
-              </template>
-              <el-menu-item v-for="child in item.children" :index="child.route" :key="child.route" v-if="!child.hidden" @click.native="rsale">
-                {{child.name}}
-              </el-menu-item>
-            </el-submenu>
-          </template>
-          <template v-for="item in lsidedata" v-if="!item.hidden">
-            <el-submenu index="3" @click.native="rdata" style="margin-left:20px;">
-              <template slot="title">
-                <span :style="{color:rgb3}">{{item.name}}</span>
-              </template>
-              <el-menu-item v-for="child in item.children" :index="child.route" :key="child.route" v-if="!child.hidden" @click.native="rdata">
-                {{child.name}}
-              </el-menu-item>
-            </el-submenu>
-          </template>
-          <template v-for="item in lsideur" v-if="!item.hidden">
-            <el-submenu index="4" @click.native="ru" style="margin-left:20px;">
-              <template slot="title">
-                <span :style="{color:rgb4}">{{item.name}}</span>
-              </template>
-              <el-menu-item v-for="child in item.children" :index="child.route" :key="child.route" v-if="!child.hidden" @click.native="ru">
-                {{child.name}}
-              </el-menu-item>
-            </el-submenu>
-          </template>
-          <template v-for="item in lsiderequirements" v-if="!item.hidden">
-            <el-submenu index="5" @click.native="requirements" style="margin-left:20px;">
-              <template slot="title">
-                <span :style="{color:rgb5}">{{item.name}}</span>
-              </template>
-              <el-menu-item v-for="child in item.children" :index="child.route" :key="child.route" v-if="!child.hidden" @click.native="requirements">
-                {{child.name}}
-              </el-menu-item>
-            </el-submenu>
-          </template>
+      <el-col :span="14">
+        <el-menu 
+        :default-active="activeIndex"
+        @select="handleSelect" 
+        class="el-menu-demo" 
+        mode="horizontal" 
+        background-color="#545c64" 
+        text-color= "#fff" 
+        active-text-color="#ffd04b"
+        router
+        >
+          <el-submenu v-for="(item,position) in allMenu" :index="generateIndex(-1,position)" :key="generateIndex(-1,position)">
+            <template slot="title" font-size="28px">{{item.name}}</template>
+              <el-menu-item v-for="(child,index) in item.children" :index="child.route" :key="generateIndex(position,index)">{{child.name}}</el-menu-item>
+          </el-submenu>
         </el-menu>
       </el-col>
       <el-col :span="6" class="userinfo">
@@ -84,19 +47,13 @@
       <image-cropper ref="cropper" :width="300" :height="300" :url="url" @close='close' @crop-upload-success="cropSuccess" langType="en" :key="imagecropperKey" v-show="imagecropperShow"></image-cropper>
     </el-col>
     <el-col :span="24" class="main">
-      <aside :class="collapsed?'menu-collapsed':'menu-expanded'">
+      <aside :class="collapsed?'menu-collapsed':'menu-expanded'" v-show="collapsed">
         <!--导航菜单-->
-        <el-menu :default-active="$route.path" :default-openeds="openeds" class="el-menu-vertical-demo data-scroll-width" unique-opened router v-show="collapsed" v-if="this.show1">
-          <template v-for="item in lside" v-if="!item.hidden">
-            <el-submenu index="1">
-              <template slot="title">
-                <i class="el-icon-message"></i>{{item.name}}
-              </template>
-              <el-menu-item v-for="child in item.children" :index="child.route" :key="child.route" v-if="!child.hidden">
-                {{child.name}}
-              </el-menu-item>
-            </el-submenu>
-          </template>
+        <el-menu :default-active="activeIndex"  class="el-menu-vertical-demo" router>
+          <el-submenu v-for="item in asideMenu.menu" :index="generateIndex(-1, asideMenu.position)" :key="generateIndex(-1, asideMenu.position)">
+            <template slot="title">{{item.name}}  </template>
+              <el-menu-item v-for="(child,index) in item.children" :index="child.route" :key="generateIndex(asideMenu.position,index)">{{child.name}}</el-menu-item>
+          </el-submenu>
         </el-menu>
       </aside>
       <section class="content-container" :class="!collapsed?'content-container2':'content-container1'">
@@ -113,142 +70,91 @@
 </template>
 
 <script>
-import { removeToken, getToken } from "../utils/auth";
-import { getMenu } from "../api/login";
-import { getAvatarUrl } from "../api/api";
-import ImageCropper from "@/components/ImageCropper";
-import Screenfull from "@/components/Screenfull";
-import avatar from "@/components/ImageCropper";
+import { removeToken, getToken } from '../utils/auth'
+import { getMenu } from '../api/login'
+import { getAvatarUrl } from '../api/api'
+import ImageCropper from '@/components/ImageCropper'
+import Screenfull from '@/components/Screenfull'
+import avatar from '@/components/ImageCropper'
 export default {
-  name: "avatarUpload-demo",
+  name: 'avatarUpload-demo',
   components: { ImageCropper, Screenfull },
   data() {
     return {
-      openeds: ["1"],
-      rgb1: "",
-      rgb2: "",
-      rgb3: "",
-      rgb4: "",
-      rgb5: "",
-      show1: false,
+      activeIndex: '',
+      allMenu: [],
+      asideMenu: { position: 0, menu: [{ name: '', children: [] }] },
+      openeds: ['1'],
       url: getAvatarUrl(),
       imagecropperShow: false,
       imagecropperKey: 0,
-      image: "",
-      sysName: "UR管理中心",
+      image: '',
+      sysName: 'UR管理中心',
       collapsed: false,
-      sysUserName: "",
-      sysUserAvatar: "",
-      lside: [],
-      lsidem: [],
-      lsides: [],
-      lsidedata: [],
-      lsideur: [],
-      lsiderequirements: [],
+      sysUserName: '',
+      sysUserAvatar: '',
       form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
+        name: '',
+        region: '',
+        date1: '',
+        date2: '',
         delivery: false,
         type: [],
-        resource: "",
-        desc: ""
+        resource: '',
+        desc: ''
       }
-    };
+    }
   },
   mounted() {
-    this.$store.dispatch("GetUserInfo").then(() => {
-      this.sysUserName = this.$store.getters.name;
-      this.image = this.$store.getters.avatar;
-    });
+    this.$store.dispatch('GetUserInfo').then(() => {
+      this.sysUserName = this.$store.getters.name
+      this.image = this.$store.getters.avatar
+    })
     getMenu().then(response => {
-      const l = response.data.data;
-      this.lsidem = l.filter(e => e.name == "毛利润报表");
-      this.lsides = l.filter(e => e.name == "销售工具");
-      this.lsidedata = l.filter(e => e.name == "数据中心");
-      this.lsideur = l.filter(e => e.name == "UR小工具");
-      this.lsiderequirements = l.filter(e => e.name == "反馈中心");
-    });
+      this.allMenu = response.data.data
+    })
   },
   methods: {
-    rm() {
-      this.rgb1 = "#ffd04b";
-      this.rgb2 = "";
-      this.rgb3 = "";
-      this.rgb4 = "";
-      this.rgb5 = "";
-      this.show1 = true;
-      this.collapsed = true;
-      this.lside = this.lsidem;
+    generateIndex(head, tail) {
+      if (head < 0) {
+        return String(tail + 1)
+      }
+      return String(head + 1) + '-' + String(tail + 1)
     },
-    rsale() {
-      this.rgb2 = "#ffd04b";
-      this.rgb1 = "";
-      this.rgb3 = "";
-      this.rgb4 = "";
-      this.rgb5 = "";
-      this.show1 = true;
-      this.collapsed = true;
-      this.lside = this.lsides;
-    },
-    rdata() {
-      this.rgb3 = "#ffd04b";
-      this.rgb1 = "";
-      this.rgb2 = "";
-      this.rgb4 = "";
-      this.rgb5 = "";
-      this.show1 = true;
-      this.collapsed = true;
-      this.lside = this.lsidedata;
-    },
-    ru() {
-      this.rgb4 = "#ffd04b";
-      this.rgb1 = "";
-      this.rgb2 = "";
-      this.rgb3 = "";
-      this.rgb5 = "";
-      this.show1 = true;
-      this.collapsed = true;
-      this.lside = this.lsideur;
-    },
-    requirements() {
-      this.rgb5 = "#ffd04b";
-      this.rgb1 = "";
-      this.rgb2 = "";
-      this.rgb3 = "";
-      this.rgb4 = "";
-      this.show1 = true;
-      this.collapsed = true;
-      this.lside = this.lsiderequirements;
+    handleSelect(index, indexPath) {
+      this.activeIndex = index
+      this.collapsed = true
+      var asideIndex = parseInt(indexPath[0]) - 1
+      const allMenu = this.allMenu
+      this.asideMenu = { position: asideIndex, menu: [allMenu[asideIndex]] }
     },
     cropSuccess(resData) {
-      this.imagecropperShow = false;
-      this.imagecropperKey = this.imagecropperKey + 1;
-      const image = resData.data[0];
-      this.image = image;
+      this.imagecropperShow = false
+      this.imagecropperKey = this.imagecropperKey + 1
+      const image = resData.data[0]
+      this.image = image
     },
     close() {
-      this.imagecropperShow = false;
+      this.imagecropperShow = false
     },
     logout: function() {
-      var _this = this;
-      this.$confirm("确认退出吗?", "提示", {
+      var _this = this
+      this.$confirm('确认退出吗?', '提示', {
         // type: 'warning'
       })
         .then(() => {
-          sessionStorage.removeItem("user");
-          removeToken();
-          _this.$router.push("/login");
+          sessionStorage.removeItem('user')
+          removeToken()
+          _this.$router.push('/login')
         })
-        .catch(() => {});
+        .catch(() => {})
     },
     // 折叠导航栏
     collapse: function() {
-      this.collapsed = !this.collapsed;
+      this.collapsed = !this.collapsed
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped >

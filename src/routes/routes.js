@@ -8,9 +8,6 @@ import purchase from '../views/reports/purchase.vue'
 import artist from '../views/reports/artist.vue'
 import account from '../views/reports/account.vue'
 import trending from '../views/reports/trending.vue'
-import fixed from '../views/reports/fixed.vue'
-import operate from '../views/reports/operate.vue'
-import dollar from '../views/reports/dollar.vue'
 import index from '../views/reports/index.vue'
 import introduce from '../views/reports/introduce.vue'
 
@@ -29,6 +26,10 @@ import brand from '../views/tinytool/brand.vue'
 import fyndiqzUpload from '../views/tinytool/fyndiqzUpload.vue'
 import requirements from '../views/feedback/requirements.vue'
 import goods from '../views/tinytool/goods.vue'
+
+import deadFee from '../views/settings/deadFee.vue'
+import operationFee from '../views/settings/operationFee.vue'
+import exchange from '../views/settings/exchange.vue'
 
 const routes = [{
   path: '/login',
@@ -80,21 +81,6 @@ const routes = [{
     path: '/v1/report/sales-trend',
     component: trending,
     name: '销售额走势'
-  },
-  {
-    path: '/fixed',
-    component: fixed,
-    name: '死库费用'
-  },
-  {
-    path: '/operate',
-    component: operate,
-    name: '运营杂费'
-  },
-  {
-    path: '/dollar',
-    component: dollar,
-    name: '美元汇率'
   },
   {
     path: '/index',
@@ -158,7 +144,29 @@ const routes = [{
   }
   ]
 },
-
+{
+  path: '/v1/settings/options',
+  component: Home,
+  name: '设置中心',
+  iconCls: 'el-icon-message',
+  children: [
+    {
+      path: '/v1/settings/dev-dead-fee',
+      component: deadFee,
+      name: '死库费用'
+    },
+    {
+      path: '/v1/settings/dev-operate-fee',
+      component: operationFee,
+      name: '运营杂费'
+    },
+    {
+      path: '/v1/settings/exchange',
+      component: exchange,
+      name: '美元设置'
+    }
+  ]
+},
 {
   path: '/v1/feedback/index',
   component: Home,
