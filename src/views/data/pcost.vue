@@ -24,15 +24,63 @@
         <el-button style='float:left' type='default' @click='exportExcel'>导出Excel</el-button>
       </el-col>
     </el-row>
-    <el-table id="sale-table" :row-style="row" :header-row-style="rowheader" v-loading="listLoading" height="800" :data="tableData" @sort-change="sortNumber" style="width: 100%;" v-show="show">
-      <el-table-column prop="wlCompany" label="物流公司" :formatter="empty" sortable></el-table-column>
-      <el-table-column prop="eBay" label="eBay￥" :formatter="empty" sortable></el-table-column>
-      <el-table-column prop="Wish" label="Wish￥" :formatter="empty" sortable></el-table-column>
-      <el-table-column prop="Amazon" label="Amazon￥" :formatter="empty" sortable></el-table-column>
-      <el-table-column prop="SMT" label="SMT$" :formatter="empty" sortable></el-table-column>
-      <el-table-column prop="Shopee" label="Shopee￥" :formatter="empty" sortable></el-table-column>
-      <el-table-column prop="total" label="合计￥" :formatter="empty" sortable></el-table-column>
-      <el-table-column prop="fare" label="实际费用￥" :formatter="empty" sortable></el-table-column>
+    <el-table id="sale-table" :header-row-style="rowheader" v-loading="listLoading" height="800" :data="tableData" @sort-change="sortNumber" style="width: 100%;" v-show="show">
+      <el-table-column prop="wlCompany" label="物流公司" :formatter="empty" sortable>
+        <template slot-scope="scope">
+          <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.wlCompany}}</span>
+          <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.wlCompany}}</span>
+          <span v-else>{{scope.row.wlCompany}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="eBay" label="eBay￥" :formatter="empty" sortable>
+        <template slot-scope="scope">
+          <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.eBay}}</span>
+          <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.eBay}}</span>
+          <span v-else>{{scope.row.eBay}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="Wish" label="Wish￥" :formatter="empty" sortable>
+        <template slot-scope="scope">
+          <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.Wish}}</span>
+          <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.Wish}}</span>
+          <span v-else>{{scope.row.Wish}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="Amazon" label="Amazon￥" :formatter="empty" sortable>
+        <template slot-scope="scope">
+          <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.Amazon}}</span>
+          <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.Amazon}}</span>
+          <span v-else>{{scope.row.Amazon}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="SMT" label="SMT$" :formatter="empty" sortable>
+        <template slot-scope="scope">
+          <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.SMT}}</span>
+          <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.SMT}}</span>
+          <span v-else>{{scope.row.SMT}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="Shopee" label="Shopee￥" :formatter="empty" sortable>
+        <template slot-scope="scope">
+          <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.Shopee}}</span>
+          <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.Shopee}}</span>
+          <span v-else>{{scope.row.Shopee}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="total" label="合计￥" :formatter="empty" sortable>
+        <template slot-scope="scope">
+          <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.total}}</span>
+          <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.total}}</span>
+          <span v-else>{{scope.row.total}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="fare" label="实际费用￥" :formatter="empty" sortable>
+        <template slot-scope="scope">
+          <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.fare}}</span>
+          <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.fare}}</span>
+          <span v-else>{{scope.row.fare}}</span>
+        </template>
+      </el-table-column>
     </el-table>
   </div>
 </template>
@@ -41,6 +89,7 @@
 import { getPerformlogistics, getPerformcost } from "../../api/profit";
 import FileSaver from "file-saver";
 import XLSX from "xlsx";
+import { compareUp, compareDown } from "../../api/tools";
 export default {
   data() {
     return {
@@ -71,18 +120,9 @@ export default {
               arr.push(obj[i]);
             }
             this.tableData = this.searchTable = arr;
-            // console.log(this.tableData);
           });
         }
       });
-    },
-    row({ row, rowIndex }) {
-      if (rowIndex === 17) {
-        //指定坐标
-        return "color:red";
-      } else if (rowIndex === 16) {
-        return "font-weight: 600;color:black";
-      }
     },
     rowheader({ row, rowIndex }) {
       return "font-weight:600;color:black";
