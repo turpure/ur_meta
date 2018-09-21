@@ -20,13 +20,30 @@
 			<el-table-column type="selection" width="55"></el-table-column>
 			<el-table-column type="index" width="60"></el-table-column>
 			<el-table-column prop="createdDate" label="创建时间" :formatter="formatter" width="140"></el-table-column>
+			<el-table-column prop="creator" label="创建人" sortable></el-table-column>
 			<el-table-column prop="name" label="名称" sortable>
 				<template slot-scope="scope">
 					<span class="link-type">{{ scope.row.name }}</span>
 					<el-tag :type="tags[scope.row.priority]['type']">{{ tags[scope.row.priority]['name']}}</el-tag>
 				</template>
 			</el-table-column>
+			<el-table-column prop="type" label="类别" min-width="100" sortable>
+        <template slot-scope="scope">
+          <span>{{types[scope.row.type]}}</span>
+        </template>
+      </el-table-column>
 			<el-table-column prop="detail" label="详情" min-width="180" sortable></el-table-column>
+			<el-table-column prop="processingPerson" label="处理人" min-width="80" sortable></el-table-column>
+      <el-table-column prop="status" label="状态" min-width="100" sortable>
+        <template slot-scope="scope">
+          <el-popover trigger="hover" placement="top">
+          <p>说明: {{status[scope.row.status]['hints']}}</p>
+          <div slot="reference" class="name-wrapper">
+            <el-tag size="medium">{{status[scope.row.status]['name']}}</el-tag>
+          </div>
+        </el-popover>
+        </template>
+      </el-table-column>
 			<el-table-column label="操作" width="150">
 				<template slot-scope="scope">
 					<el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -79,9 +96,25 @@
 						<el-radio class="radio" :label="3">改进建议</el-radio>
 					</el-radio-group>
 				</el-form-item>
+        <el-form-item label="状态">
+					<el-radio-group v-model="editForm.status">
+						<el-radio class="radio" :label="0">Open</el-radio>
+						<el-radio class="radio" :label="1">In Progress</el-radio>
+						<el-radio class="radio" :label="2">Resovled</el-radio>
+						<el-radio class="radio" :label="3">Reopened</el-radio>
+						<el-radio class="radio" :label="4">Closed</el-radio>
+					</el-radio-group>
+				</el-form-item>
 				<el-form-item label="优先级">
 					<el-rate v-model="editForm.priority" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="5" style="margin-top:8px;" />
 				</el-form-item>
+        <el-form-item label="处理人">
+          <el-checkbox-group v-model="editForm.processingPerson">
+            <el-checkbox label="周朋许" name="processingPerson"></el-checkbox>
+            <el-checkbox label="叶先钱" name="processingPerson"></el-checkbox>
+            <el-checkbox label="朱洪涛" name="processingPerson"></el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
 				<el-form-item label="详情">
 					<el-input type="textarea" v-model="editForm.detail"></el-input>
 				</el-form-item>
@@ -95,7 +128,7 @@
 		<el-col :span="24" class="toolbar">
 			<!-- <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button> -->
 			<div class="pagination-container">
-				<el-pagination v-show="total>0" :current-page="page" :page-sizes=[10,20,30,50] :page-size="size" :total="10" background layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" />
+        <el-pagination v-show="total>0" :current-page="page" :page-sizes=[10,20,30,50] :page-size="size" :total="total" background layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" />
 			</div>
 		</el-col>
 	</section>
@@ -108,7 +141,7 @@ import {
   createRequirements,
   editRequirements,
   deleteRequirements
-} from '../../api/api';
+} from '../../api/api'
 export default {
   data() {
     return {
@@ -121,6 +154,19 @@ export default {
         3: { name: '一般', type: 'info' },
         4: { name: '严重', type: 'warning' },
         5: { name: '紧急', type: 'danger' }
+      },
+      types: {
+        0: 'BUG',
+        1: '新需求',
+        2: '任务',
+        3: '改进建议'
+      },
+      status: {
+        0: { name: 'Open', hints: '问题被提交,等待处理' },
+        1: { name: 'In Progress', hints: '问题在处理当中，尚未完成' },
+        2: { name: 'Resovled', hints: '问题曾解决，但结论尚未被认可需重新分配解决' },
+        3: { name: 'Reopened', hints: '问题解决，等待确认结果，确认的结果是Reopend或Closed' },
+        4: { name: 'Closed', hints: '问题处理结果得到确认，处于关闭状态' }
       },
 
       dialogVisible: false,
@@ -144,16 +190,20 @@ export default {
         name: '',
         detail: '',
         type: 0,
-        priority: 0
+        status: 0,
+        priority: 0,
+        processingPerson: []
       }
     }
   },
   methods: {
     handleCurrentChange(val) {
+      debugger
       this.page = val
+      this.getRequire()
     },
     formatter(row, column) {
-      return row.createdDate ? row.createdDate.substring(0, 16) : '';
+      return row.createdDate ? row.createdDate.substring(0, 16) : ''
     },
     searchRequirements() {
       getRequirements().then(response => {
@@ -187,6 +237,7 @@ export default {
     },
     handleEdit(index, row) {
       this.editFormVisible = true
+      row.processingPerson = []
       this.editForm = Object.assign({}, row)
     },
     handleDel(index, row) {
@@ -200,12 +251,21 @@ export default {
           })
         }
       )
+    },
+    getRequire() {
+      const page = this.page
+      getRequirements(page).then(response => {
+        const res = response.data.data
+        this.requirements = res.items
+        this.total = res._meta.totalCount
+        this.page = res._meta.currentPage
+        this.size = res._meta.perPage
+      })
     }
   },
+
   mounted() {
-    getRequirements().then(response => {
-      this.requirements = response.data.data
-    })
+    this.getRequire()
   }
 }
 </script>

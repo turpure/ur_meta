@@ -60,9 +60,9 @@ export function fyndiqz() {
   return baseUrl + url
 }
 
-export function getRequirements() {
+export function getRequirements(page) {
   return request({
-    url: '/requirements',
+    url: '/requirements?page=' + page,
     method: 'get'
   })
 }
