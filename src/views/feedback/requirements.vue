@@ -7,7 +7,7 @@
 					<el-input v-model="filters.name" placeholder="名称"></el-input>
 				</el-form-item>
 				<el-form-item>
-					<el-button type="default" v-on:click="searchRequirements">查询</el-button>
+					<el-button type="default" @click="searchRequirements">查询</el-button>
 				</el-form-item>
 				<el-form-item>
 					<el-button type="default" @click="handleAdd">新增</el-button>
@@ -144,7 +144,7 @@
 		<el-col :span="24" class="toolbar">
 			<!-- <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button> -->
 			<div class="pagination-container">
-        <el-pagination v-show="total>0" :current-page="page" :page-sizes=[10,20,30,50] :page-size="size" :total="total" background layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" />
+        <el-pagination v-show="filters.total>0" :current-page="filters.page" :page-sizes=[10,20,30,50] :page-size="filters.pageSize" :total="filters.total" background layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" />
 			</div>
 		</el-col>
 	</section>
@@ -161,9 +161,7 @@ import {
 export default {
   data() {
     return {
-      page: 1,
-      size: 2,
-      total: 10,
+      filters: { name: '', page: 1, pageSize: 10, total: 10 },
       tags: {
         1: { name: '无关紧要', type: '' },
         2: { name: '次要', type: 'success' },
@@ -187,7 +185,6 @@ export default {
 
       dialogVisible: false,
       requirements: [],
-      filters: { name: '' },
       addFormVisible: false, // 新增界面是否显示
       editFormVisible: false, // 编辑界面是否显示
       listLoading: false,
@@ -200,7 +197,7 @@ export default {
         detail: '',
         type: 0,
         status: 0,
-        priority: 0,
+        priority: 1,
         processingPerson: []
       },
       // 新增界面数据
@@ -210,28 +207,26 @@ export default {
         detail: '',
         type: 0,
         status: 0,
-        priority: 0,
+        priority: 1,
         processingPerson: []
       }
     }
   },
   methods: {
     handleCurrentChange(val) {
-      debugger
-      this.page = val
+      this.filters.page = val
       this.getRequire()
     },
     formatter(row, column) {
       return row.createdDate ? row.createdDate.substring(0, 16) : ''
     },
     searchRequirements() {
-      getRequirements().then(response => {
-        this.requirements = response.data.data
-      })
+      this.getRequire()
     },
     addSubmit() {
       this.addFormVisible = false
       this.addForm.creator = this.$store.getters.name
+      this.addForm.processingPerson = this.addForm.processingPerson.join(',')
       createRequirements(this.addForm).then(response => {
         this.requirements.push(response.data.data)
       })
@@ -275,17 +270,15 @@ export default {
       )
     },
     getRequire() {
-      const page = this.page
-      getRequirements(page).then(response => {
+      getRequirements(this.filters).then(response => {
         const res = response.data.data
         this.requirements = res.items
-        this.total = res._meta.totalCount
-        this.page = res._meta.currentPage
-        this.size = res._meta.perPage
+        this.filters.total = res._meta.totalCount
+        this.filters.page = res._meta.currentPage
+        this.filters.pageSize = res._meta.perPage
       })
     }
   },
-
   mounted() {
     this.getRequire()
   }
