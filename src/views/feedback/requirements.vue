@@ -66,9 +66,25 @@
 						<el-radio class="radio" :label="3">改进建议</el-radio>
 					</el-radio-group>
 				</el-form-item>
+        <el-form-item label="状态">
+					<el-radio-group v-model="addForm.status">
+						<el-radio class="radio" :label="0">Open</el-radio>
+						<el-radio class="radio" :label="1">In Progress</el-radio>
+						<el-radio class="radio" :label="2">Resovled</el-radio>
+						<el-radio class="radio" :label="3">Reopened</el-radio>
+						<el-radio class="radio" :label="4">Closed</el-radio>
+					</el-radio-group>
+				</el-form-item>
 				<el-form-item label="优先级">
 					<el-rate v-model="addForm.priority" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="5" style="margin-top:8px;" />
 				</el-form-item>
+        <el-form-item label="处理人">
+          <el-checkbox-group v-model="addForm.processingPerson">
+            <el-checkbox label="周朋许" name="processingPerson"></el-checkbox>
+            <el-checkbox label="叶先钱" name="processingPerson"></el-checkbox>
+            <el-checkbox label="朱洪涛" name="processingPerson"></el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
 				<el-form-item label="详情">
 					<el-input type="textarea" v-model="addForm.detail"></el-input>
 				</el-form-item>
@@ -179,10 +195,13 @@ export default {
       editLoading: false,
       // 新增界面数据
       addForm: {
+        id: 0,
         name: '',
         detail: '',
         type: 0,
-        priority: 0
+        status: 0,
+        priority: 0,
+        processingPerson: []
       },
       // 新增界面数据
       editForm: {
@@ -212,13 +231,16 @@ export default {
     },
     addSubmit() {
       this.addFormVisible = false
+      this.addForm.creator = this.$store.getters.name
       createRequirements(this.addForm).then(response => {
         this.requirements.push(response.data.data)
       })
+      this.getRequire()
     },
     editSubmit() {
       this.$confirm('确认提交吗？', '提示', {}).then(() => {
         this.editLoading = true
+        this.editForm.processingPerson = this.editForm.processingPerson.join(',')
         editRequirements(this.editForm).then(response => {
           this.editFormVisible = false
           const req = response.data.data
@@ -237,8 +259,8 @@ export default {
     },
     handleEdit(index, row) {
       this.editFormVisible = true
-      row.processingPerson = []
       this.editForm = Object.assign({}, row)
+      this.editForm.processingPerson = this.editForm.processingPerson.split(',')
     },
     handleDel(index, row) {
       console.log(index)
