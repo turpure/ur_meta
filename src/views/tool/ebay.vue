@@ -1,5 +1,5 @@
 <template>
-  <el-form :model='condition' label-width="100px" class="demo-ruleForm login-container" ref="condition">
+  <el-form :model='condition' label-width="120px" class="demo-ruleForm login-container" ref="condition">
     <el-form-item label="卖家账号：" prop="suffix" :rules="[{required: true, message: '请填写字段', trigger: 'blur'}]">
       <el-select v-model="condition.suffix" filterable multiple collapse-tags>
         <el-button plain type="info" @click="selectall">全选</el-button>
@@ -44,40 +44,50 @@ export default {
       this.$refs.condition.validate(valid => {
         if (valid) {
           geteBaytemplate(form).then(response => {
-            const blob = new Blob([response.data], {
-              type: "application/vnd.ms-excel;charset=UTF-8"
-            });
-            const downloadElement = document.createElement("a");
-            const objectUrl = window.URL.createObjectURL(blob);
-            downloadElement.href = objectUrl;
-            let date = new Date();
-            let year = date.getFullYear();
-            let month = date.getMonth() + 1;
-            let strDate = date.getDate();
-            let hour = date.getHours();
-            let minute = date.getMinutes();
-            let second = date.getSeconds();
-            if (month >= 1 && month <= 9) {
-              month = "0" + month;
+            if (response.data.byteLength > 42) {
+              const blob = new Blob([response.data], {
+                type: "application/vnd.ms-excel;charset=UTF-8"
+              });
+              const downloadElement = document.createElement("a");
+              const objectUrl = window.URL.createObjectURL(blob);
+              downloadElement.href = objectUrl;
+              let date = new Date();
+              let year = date.getFullYear();
+              let month = date.getMonth() + 1;
+              let strDate = date.getDate();
+              let hour = date.getHours();
+              let minute = date.getMinutes();
+              let second = date.getSeconds();
+              if (month >= 1 && month <= 9) {
+                month = "0" + month;
+              }
+              if (strDate >= 0 && strDate <= 9) {
+                strDate = "0" + strDate;
+              }
+              if (hour >= 0 && hour <= 9) {
+                hour = "0" + hour;
+              }
+              if (minute >= 0 && minute <= 9) {
+                minute = "0" + minute;
+              }
+              if (second >= 0 && second <= 9) {
+                second = "0" + second;
+              }
+              let filename =
+                "eBay商品模板" +
+                year +
+                month +
+                strDate +
+                hour +
+                minute +
+                second;
+              downloadElement.download = filename + ".xlsx";
+              document.body.appendChild(downloadElement);
+              downloadElement.click();
+              document.body.removeChild(downloadElement);
+            } else {
+              alert("商品编码不匹配！");
             }
-            if (strDate >= 0 && strDate <= 9) {
-              strDate = "0" + strDate;
-            }
-            if (hour >= 0 && hour <= 9) {
-              hour = "0" + hour;
-            }
-            if (minute >= 0 && minute <= 9) {
-              minute = "0" + minute;
-            }
-            if (second >= 0 && second <= 9) {
-              second = "0" + second;
-            }
-            let filename =
-              "eBay商品模板" + year + month + strDate + hour + minute + second;
-            downloadElement.download = filename + ".xlsx";
-            document.body.appendChild(downloadElement);
-            downloadElement.click();
-            document.body.removeChild(downloadElement);
           });
         }
       });
@@ -98,7 +108,7 @@ export default {
   -moz-border-radius: 5px;
   background-clip: padding-box;
   margin: 100px auto;
-  width: 350px;
+  width: 400px;
   padding: 60px 35px 20px 40px;
   background: #fff;
   border: 1px solid #eaeaea;

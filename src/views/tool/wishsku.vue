@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :model="condition" label-width="150px" class="demo-ruleForm login-container" v-show="show1">
+    <el-form :model="condition" label-width="200px" class="demo-form-inline" :inline='true'>
       <el-form-item label="卖家账号：">
         <el-select v-model="condition.suffix" filterable clearable>
           <el-option v-for='(item,index) in type' :index='index' :key='item.ibaySuffix' :label='item.ibaySuffix' :value='item.ibaySuffix'></el-option>
@@ -12,48 +12,40 @@
       <el-form-item label="保留价(msrp$)：">
         <el-input v-model="condition.msrp"></el-input>
       </el-form-item>
+      <br>
       <el-form-item label="商品售价(Price$)：">
-        <el-input v-model="condition.price"></el-input>
+        <el-input v-model="condition.price" style="width:217px"></el-input>
       </el-form-item>
       <el-form-item label="运费(Shipping$)：">
         <el-input v-model="condition.shipping"></el-input>
       </el-form-item>
-      <el-form-item>
-        <el-button type="primary">确认信息</el-button>
+      <el-form-item style="margin-left:290px">
         <el-button type="primary" @click="onSubmit()">属性设置
           <i class="el-icon-caret-right"></i>
         </el-button>
       </el-form-item>
     </el-form>
-    <div v-show="show" class="modal-dialog" style="width:1300px;">
+    <div v-show="this.tableData.length>0?true:false" class="modal-dialog" style="width:1650px;">
       <div class="modal-content">
         <div class="modal-header">
-          <div align="right">
-            <input type="button" name="button" id="button" value="x" @click="back">
-          </div>
           <h4 class="modal-title" id="myModalLabel">多属性设置</h4>
-          <br>
-          <h5 v-if="this.tableData.length<1?true:false">
-            <font color="red">找不到商品编码：</font>
-          </h5>
-          <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总共：{{this.tableData.length}}条记录
         </div>
         <div class="modal-body">
           <el-form :model="condition1">
-            <el-table :data="tableData" height="500" class="table table-hover" id="tb">
+            <el-table :data="tableData" max-height="500" class="table table-hover" id="tb">
               <el-table-column prop="SKU" label="SKU*" width="95px">
                 <template slot-scope="scope">
                   <el-input size=mini v-model="scope.row.SKU"></el-input>
                 </template>
               </el-table-column>
-              <el-table-column prop="property1" label="颜色">
+              <el-table-column prop="variation1" label="颜色">
                 <template slot-scope="scope">
                   <el-input size=mini v-model="scope.row.property1"></el-input>
                 </template>
               </el-table-column>
-              <el-table-column prop="property2" label="尺寸">
+              <el-table-column prop="variation2" label="尺寸">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.property2"></el-input>
+                  <el-input size=mini v-model="scope.row.property2" ref="var2"></el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="quantity" label="数量*">
@@ -86,12 +78,12 @@
                   <el-input size=mini v-model="scope.row.pic_url"></el-input>
                 </template>
               </el-table-column>
-              <el-table-column prop="variation1" label="款式1">
+              <el-table-column prop="property1" label="款式1">
                 <template slot-scope="scope">
                   <el-input size=mini v-model="scope.row.varition1"></el-input>
                 </template>
               </el-table-column>
-              <el-table-column prop="variation2" label="款式2">
+              <el-table-column prop="property2" label="款式2">
                 <template slot-scope="scope">
                   <el-input size=mini v-model="scope.row.varition2"></el-input>
                 </template>
@@ -101,7 +93,6 @@
         </div>
       </div>
       <div class="modal-footer">
-        <input type="button" name="button1" value="返回上页" @click="back">
         <input type="button" @click="btnSavekkk" id="btnSavekkk" value="导出多属性表">
       </div>
     </div>
@@ -121,8 +112,6 @@ export default {
     return {
       tableData: [],
       tableData1: [],
-      show1: true,
-      show: false,
       type: [],
       condition: {
         suffix: "",
@@ -157,11 +146,14 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.show = !this.show;
-      this.show1 = !this.show1;
       getwishsku(this.condition).then(response => {
-        this.tableData = response.data.data.payload;
-        this.tableData1 = response.data.data.setting;
+        if (response.data.data != "") {
+          this.tableData = response.data.data.payload;
+          this.tableData1 = response.data.data.setting;
+        } else {
+          alert("商品编码不匹配！");
+          this.tableData = [];
+        }
       });
     },
     btnSavekkk() {
@@ -174,9 +166,7 @@ export default {
       this.condition1.contents.variation1 = this.tableData.map(
         e => e.variation1
       );
-      this.condition1.contents.variation2 = this.tableData.map(
-        e => e.variation2
-      );
+      this.condition1.contents.variation2 = this.$refs.var2.value;
       this.condition1.contents.pic_url = this.tableData.map(e => e.pic_url);
       this.condition1.contents.property2 = this.tableData.map(e => e.property2);
       this.condition1.contents.property1 = this.tableData.map(e => e.property1);
@@ -223,10 +213,6 @@ export default {
         downloadElement.click();
         document.body.removeChild(downloadElement);
       });
-    },
-    back() {
-      this.show = false;
-      this.show1 = true;
     }
   },
   mounted() {
@@ -238,22 +224,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.login-container {
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-  -moz-border-radius: 5px;
-  background-clip: padding-box;
-  margin: 100px auto;
-  width: 450px;
-  padding: 35px 35px 15px 35px;
-  background: #fff;
-  border: 1px solid #eaeaea;
-  box-shadow: 0 0 25px #cac6c6;
-  .el-input {
-    width: 217px;
-  }
-  .el-button {
-    margin-left: 0px;
+.el-form {
+  .el-form-item {
+    margin: 5px;
   }
 }
 .modal-dialog {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form v-model="condition" label-width="100px" class="demo-ruleForm login-container" v-show="show1">
+    <el-form v-model="condition" label-width="200px" class="demo-form-inline" :inline='true'>
       <el-form-item label="卖家账号：">
         <el-select v-model="condition.suffix" filterable clearable>
           <el-option v-for='(item,index) in suffix' :index='index' :key='item.DictionaryName' :label='item.DictionaryName' :value='item.DictionaryName'></el-option>
@@ -13,27 +13,15 @@
         <el-input v-model="condition.price"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary">确认信息</el-button><br>
-        <el-button type="text">下载单属性
-          <i class="el-icon-caret-bottom"></i>
-        </el-button>
-        <el-button type="text" @click="onSubmit()">多属性设置
+        <el-button type="primary" @click="onSubmit()">属性设置
           <i class="el-icon-caret-right"></i>
         </el-button>
       </el-form-item>
     </el-form>
-    <div v-show="show" class="modal-dialog" style="width:1300px;">
+    <div v-show="this.tableData.length>0?true:false" class="modal-dialog" style="width:1680px;">
       <div class="modal-content">
         <div class="modal-header">
-          <div align="right">
-            <input type="button" name="button" id="button" value="x" @click="back">
-          </div>
           <h4 class="modal-title" id="myModalLabel">多属性设置</h4>
-          <br>
-          <h5 v-if="this.tableData.length<1?true:false">
-            <font color="red">找不到商品编码：</font>
-          </h5>
-          <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总共：{{this.tableData.length}}条记录
         </div>
         <div class="modal-body">
           <el-form :model="condition1" ref="condition1">
@@ -88,7 +76,6 @@
         </div>
       </div>
       <div class="modal-footer">
-        <input type="button" name="button1" value="返回上页" @click="back">
         <input type="button" @click="btnSavekkk(condition1)" id="btnSavekkk" value="导出多属性表">
       </div>
     </div>
@@ -108,8 +95,6 @@ export default {
     return {
       size: [],
       color: [],
-      show: false,
-      show1: true,
       tableData: [],
       suffix: [],
       condition: {
@@ -134,10 +119,13 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.show = !this.show;
-      this.show1 = !this.show1;
       getsmtsku(this.condition).then(response => {
-        this.tableData = response.data.data;
+        if (response.data.data != "") {
+          this.tableData = response.data.data;
+        } else {
+          alert("商品编码不匹配！");
+          this.tableData = [];
+        }
       });
     },
     btnSavekkk() {
@@ -186,10 +174,6 @@ export default {
         downloadElement.click();
         document.body.removeChild(downloadElement);
       });
-    },
-    back() {
-      this.show = false;
-      this.show1 = true;
     }
   },
   mounted() {
@@ -207,26 +191,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.login-container {
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-  -moz-border-radius: 5px;
-  background-clip: padding-box;
-  margin: 100px auto;
-  width: 350px;
-  padding: 40px 35px 15px 35px;
-  background: #fff;
-  border: 1px solid #eaeaea;
-  box-shadow: 0 0 25px #cac6c6;
+.el-form {
   .el-form-item {
-    margin-bottom: 30px;
-    .el-input {
-      width: 217px;
-    }
+    margin: 8px;
   }
 }
 .modal-dialog {
-  margin: 30px auto;
+  margin: 20px auto;
   position: relative;
   z-index: 1050;
 }
@@ -240,7 +211,7 @@ export default {
 }
 .modal-header {
   min-height: 16.428571429px;
-  padding: 15px;
+  padding: 10px;
   border-bottom: 1px solid #e5e5e5;
 }
 .h4 {
@@ -249,8 +220,6 @@ export default {
 }
 .h5 {
   font-size: 14px;
-  margin-top: 10px;
-  margin-bottom: 10px;
   font-weight: 500;
   line-height: 1.1;
 }
@@ -261,7 +230,7 @@ export default {
     width: 100%;
     margin-bottom: 20px;
     border-collapse: collapse;
-    max-height: 500px;
+    max-height: 600px;
     overflow: auto;
   }
 }

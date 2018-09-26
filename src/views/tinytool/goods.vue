@@ -73,8 +73,8 @@
         </div>
       </el-col>
     </el-row>
-    <div class="block" align="right" v-show="show">
-      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="condition.start" :page-sizes="[10, 20, 30, 50]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
+    <div class="pagination-container" align="right">
+      <el-pagination v-show="total>0" background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="condition.start" :page-sizes="[12, 20, 30, 50]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
   </div>
@@ -91,8 +91,7 @@ export default {
   data() {
     return {
       category: [],
-      show: false,
-      pageSize: 10,
+      pageSize: 12,
       total: null,
       disabled: true,
       listLoading: false,
@@ -119,14 +118,36 @@ export default {
         categoryParentName: "",
         categoryName: "",
         start: 1,
-        limit: 100000
+        limit: 1000
       }
     };
+  },
+  beforeRouteLeave(to, from, next) {
+    if (to.name != "goods") {
+      let condition = JSON.stringify(this.condition);
+      sessionStorage.setItem("condition", condition);
+    } else {
+      sessionStorage.removeItem("condition");
+    }
+    next();
+  },
+  created() {
+    let condition = sessionStorage.getItem("condition");
+    if (condition != null) {
+      this.condition = JSON.parse(condition);
+      getGoodspicture(this.condition)
+        .then(response => {
+          this.tableData = response.data.data;
+          this.total = this.tableData.length;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
   },
   methods: {
     onSubmit() {
       this.listLoading = true;
-      this.show = true;
       getGoodspicture(this.condition).then(response => {
         this.listLoading = false;
         this.tableData = response.data.data;
@@ -135,11 +156,9 @@ export default {
     },
     handleSizeChange(val) {
       this.pageSize = val;
-      this.onSubmit();
     },
     handleCurrentChange(val) {
       this.condition.start = val;
-      this.onSubmit();
     },
     productcategory() {
       if (this.condition.categoryParentName != "") {
@@ -175,7 +194,7 @@ export default {
   margin-top: 10px;
 }
 .el-row {
-  height: 740px;
+  max-height: 740px;
   overflow: auto;
   .mix {
     position: relative;

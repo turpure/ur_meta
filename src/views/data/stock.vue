@@ -1,17 +1,16 @@
 <template>
   <el-row class="container">
-    <span>备注：报表中商品的销量和库存指的是对应
-      <font color="red">
-        <big>缺货SKU</big>
-      </font>的销量和库存之和
-    </span>
     <el-col :span='24'>
       <div class="portlet">
-        <div class="portlet-title">
-          <big>缺货产品表</big>
-        </div>
-        <el-row :gutter='10'>
-          <el-col :span='2' :offset='20'>
+        <el-row :gutter='10' class="toolbar" style="margin-top:0px;margin-bottom:0px;padding-bottom:2px;padding-top:2px">
+          <el-col :span="8">
+            <span>备注：报表中商品的销量和库存指的是对应
+              <font color="red">
+                <big>缺货SKU</big>
+              </font>的销量和库存之和
+            </span>
+          </el-col>
+          <el-col :span='2' :offset='12'>
             <el-input clearable placeholder='search' v-model='searchValue' @change='handleSearch'></el-input>
           </el-col>
           <el-col :span='2'>
@@ -36,8 +35,8 @@
           <el-table-column min-width="120px" prop="NotInStore" label="采购未入库" :formatter="empty" sortable></el-table-column>
           <el-table-column min-width="130px" prop="hopeUseNum" label="预计可用库存" :formatter="empty" sortable></el-table-column>
         </el-table>
-        <div class="block" align="right">
-          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 30, 40]" :page-size="10" layout="total, sizes, prev, pager, next, jumper" :total="total">
+        <div class="pagination-container">
+          <el-pagination v-show="total>0" background @current-change="handleCurrentChange" :current-page="page" :page-sizes="[10, 20, 30, 40]" :page-size="size" layout="total, sizes, prev, pager, next, jumper" :total="total">
           </el-pagination>
         </div>
       </div>
@@ -50,11 +49,12 @@ import { getStock } from "../../api/profit";
 export default {
   data() {
     return {
+      page: 1,
+      size: 2,
+      total: 10,
       tableData: [],
       searchTable: [],
-      searchValue: "",
-      total: null
-      //currentPage: 5
+      searchValue: ""
     };
   },
   methods: {
@@ -114,9 +114,6 @@ export default {
       }
       //  return wbout
     },
-    total() {
-      return this.tableData.length;
-    },
     handleSearch() {
       const searchValue = this.searchValue && this.searchValue.toLowerCase();
       const data = this.searchTable;
@@ -145,13 +142,13 @@ export default {
         this.tableData = data.sort(compareUp(data, column.prop));
       }
     },
-    handleSizeChange(val) {},
-    handleCurrentChange(val) {}
+    handleCurrentChange(val) {
+      this.page = val;
+    }
   },
   mounted() {
     getStock().then(response => {
       this.tableData = this.searchTable = response.data.data;
-      this.total = this.tableData.length;
     });
   }
 };

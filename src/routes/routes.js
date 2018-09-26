@@ -85,6 +85,7 @@ const routes = [{
   {
     path: '/index',
     component: index,
+    name: '首页',
     hidden: true
   }
   ]
