@@ -202,13 +202,6 @@ export default {
       },
       // 新增界面数据
       editForm: {
-        // id: 0,
-        // name: '',
-        // detail: '',
-        // type: 0,
-        // status: 0,
-        // priority: 1,
-        // processingPerson: []
       }
     }
   },
@@ -243,7 +236,7 @@ export default {
           const req = response.data.data
           this.editLoading = false
           this.requirements = this.requirements.map(ele => {
-            if (ele.id === req.id) {
+            if (parseInt(ele.id) === req.id) {
               return req
             }
             return ele
@@ -252,6 +245,16 @@ export default {
       })
     },
     handleAdd() {
+      const form = {
+        id: 0,
+        name: '',
+        detail: '',
+        type: 0,
+        status: 0,
+        priority: 1,
+        processingPerson: []
+      }
+      this.addFrom = form
       this.addFormVisible = true
     },
     handleEdit(index, row) {
