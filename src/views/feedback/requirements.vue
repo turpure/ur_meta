@@ -225,9 +225,12 @@ export default {
     },
     addSubmit() {
       this.addFormVisible = false
-      this.addForm.creator = this.$store.getters.name
-      this.addForm.processingPerson = this.addForm.processingPerson.join(',')
-      createRequirements(this.addForm).then(response => {
+      const addContent = Object.assign({}, this.addForm)
+      debugger
+      addContent.creator = this.$store.getters.name
+      addContent.processingPerson = this.addForm.processingPerson.join(',')
+      this.addForm.processingPerson = []
+      createRequirements(addContent).then(response => {
         this.requirements.push(response.data.data)
       })
       this.getRequire()
