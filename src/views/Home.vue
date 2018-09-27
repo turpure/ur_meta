@@ -49,7 +49,7 @@
     <el-col :span="24" class="main">
       <aside :class="collapsed?'menu-collapsed':'menu-expanded'" v-show="collapsed">
         <!--导航菜单-->
-        <el-menu :default-active="activeIndex"  class="el-menu-vertical-demo" router>
+        <el-menu :default-active="activeIndex" @select="handleSelect" class="el-menu-vertical-demo" router>
           <el-submenu v-for="item in asideMenu.menu" :index="generateIndex(-1, asideMenu.position)" :key="generateIndex(-1, asideMenu.position)">
             <template slot="title">{{item.name}}  </template>
               <el-menu-item v-for="(child,index) in item.children" :index="child.route" :key="generateIndex(asideMenu.position,index)">{{child.name}}</el-menu-item>
@@ -70,12 +70,11 @@
 </template>
 
 <script>
-import { removeToken, getToken } from '../utils/auth'
+import { removeToken } from '../utils/auth'
 import { getMenu } from '../api/login'
 import { getAvatarUrl } from '../api/api'
 import ImageCropper from '@/components/ImageCropper'
 import Screenfull from '@/components/Screenfull'
-import avatar from '@/components/ImageCropper'
 export default {
   name: 'avatarUpload-demo',
   components: { ImageCropper, Screenfull },
@@ -123,6 +122,7 @@ export default {
     },
     handleSelect(index, indexPath) {
       this.activeIndex = index
+      debugger
       this.collapsed = true
       var asideIndex = parseInt(indexPath[0]) - 1
       const allMenu = this.allMenu
@@ -140,7 +140,7 @@ export default {
     logout: function() {
       var _this = this
       this.$confirm('确认退出吗?', '提示', {
-        // type: 'warning'
+        type: 'warning'
       })
         .then(() => {
           sessionStorage.removeItem('user')
