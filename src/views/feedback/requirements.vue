@@ -254,7 +254,7 @@ export default {
         priority: 1,
         processingPerson: []
       }
-      this.addFrom = form
+      this.addForm = Object.assign({}, form)
       this.addFormVisible = true
     },
     handleEdit(index, row) {
