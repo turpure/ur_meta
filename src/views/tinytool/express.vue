@@ -5,7 +5,7 @@
         <el-input clearable placeholder='search' v-model='searchValue' @change='handleSearch'></el-input>
       </el-col>
     </el-row>
-    <el-table border max-height=860 :data="tableData" :header-row-style="thClass">
+    <el-table border max-height=840 :data="tableData" :header-row-style="thClass">
       <el-table-column min-width="120" prop="NID" label="ID" :formatter="empty"></el-table-column>
       <el-table-column min-width="260" prop="DefaultExpress" label="物流公司" :formatter="empty"></el-table-column>
       <el-table-column min-width="450" prop="name" label="物流方式" :formatter="empty"></el-table-column>

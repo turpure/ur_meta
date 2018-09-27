@@ -60,9 +60,9 @@ export function fyndiqz() {
   return baseUrl + url
 }
 
-export function getRequirements() {
+export function getRequirements(filter) {
   return request({
-    url: '/requirements',
+    url: 'requirements/search-requirements?name=' + filter.name + '&page=' + filter.page + '&pageSize=' + filter.pageSize,
     method: 'get'
   })
 }
@@ -89,4 +89,3 @@ export function deleteRequirements(id) {
     method: 'delete'
   })
 }
-

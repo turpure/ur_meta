@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :model='condition' :inline='true' label-width='90px' class='demo-form-inline'>
+    <el-form :model='condition' :inline='true' label-width='150px' class='demo-form-inline'>
       <el-form-item label='业绩归属人' class='input'>
         <el-select v-model='condition.possessMan1' clearable>
           <el-option v-for='item in possessMan1' :key='item.username' :value='item.username'></el-option>
@@ -19,11 +19,8 @@
           <el-option v-for='item in goodsSkuStatus' :key='item' :value='item'></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label='产品分类1' class='input'>
-        <el-select v-model='condition.categoryParentName' clearable @change="productcategory">
-          <el-option v-for='item in categoryParentName' :key='item.CategoryName' :value='item.CategoryName'></el-option>
-        </el-select>
-      </el-form-item>
+      <br>
+
       <el-form-item label='业绩归属人2' class='input'>
         <el-select v-model='condition.possessMan2' clearable>
           <el-option v-for='item in possessMan2' :key='item.username' :value='item.username'></el-option>
@@ -37,6 +34,12 @@
         <el-input v-model='condition.supplierName' placeholder="供应商名称关键字">
         </el-input>
       </el-form-item>
+      <el-form-item label='产品分类1' class='input'>
+        <el-select v-model='condition.categoryParentName' clearable @change="productcategory">
+          <el-option v-for='item in categoryParentName' :key='item.CategoryName' :value='item.CategoryName'></el-option>
+        </el-select>
+      </el-form-item>
+      <br>
       <el-form-item label='产品分类2' class='input'>
         <el-select v-model='condition.categoryName' clearable :disabled="disabled">
           <el-option v-for='item in categoryName' :key='item.CategoryName' :value='item.CategoryName'></el-option>
@@ -47,7 +50,7 @@
           <el-option v-for='item in salerName' :key='item.username' :value='item.username'></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item class='input'>
+      <el-form-item class='input' style="margin-left:665px">
         <el-button type="primary" @click="onSubmit(condition)">搜索</el-button>
       </el-form-item>
     </el-form>
@@ -57,26 +60,28 @@
           <div style="height:220px;width:200px">
             <img :src=item.BmpFileName :alt='item.GoodsName+item.GoodsSKUStatus'>
           </div>
-          <p>&nbsp;{{item.GoodsCode}}&nbsp;{{item.CategoryParentName}}&nbsp;{{item.CategoryName}}<br>&nbsp;{{item.possessman1}}
+            <p>&nbsp;{{item.GoodsCode}}&nbsp;{{item.CategoryParentName}}&nbsp;{{item.CategoryName}}<br>&nbsp;{{item.possessman1}}
           </p>
-          <p>&nbsp;{{item.GoodsName}}&nbsp;&nbsp;&nbsp;{{item.GoodsSKUStatus}}</p>
-          <div class="mix-details">
-            <h4>{{item.GoodsCode}}{{item.possessman1}}</h4>
-            <h5>{{item.CategoryParentName}}</h5>
-            <h6>{{item.CategoryName}}</h6>
-            <h5>{{item.GoodsName}}</h5>
-            <h6>{{item.GoodsSKUStatus}}</h6>
-            <a align="center" class="mix-link" :href="item.LinkUrl" target="_blank">
-              <i class="fa fa-link"></i>
-            </a>
+              <p>&nbsp;{{item.GoodsName}}&nbsp;&nbsp;&nbsp;{{item.GoodsSKUStatus}}</p>
+              <div class="mix-details">
+                <h4>{{item.GoodsCode}}{{item.possessman1}}</h4>
+                <h5>{{item.CategoryParentName}}</h5>
+                <h6>{{item.CategoryName}}</h6>
+                <h5>{{item.GoodsName}}</h5>
+                <h6>{{item.GoodsSKUStatus}}</h6>
+                <a align="center" class="mix-link" :href="item.LinkUrl" target="_blank">
+                  <i class="fa fa-link"></i>
+                </a>
+              </div>
           </div>
-        </div>
       </el-col>
     </el-row>
-    <div class="pagination-container" align="right">
-      <el-pagination v-show="total>0" background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="condition.start" :page-sizes="[12, 20, 30, 50]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
-      </el-pagination>
-    </div>
+    <el-col :span="24" class="toolbar" v-show="total>0">
+      <div class="pagination-container" align="right">
+        <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="condition.start" :page-sizes="[12, 20, 30, 50]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
+        </el-pagination>
+      </div>
+    </el-col>
   </div>
 </template>
 
@@ -118,7 +123,7 @@ export default {
         categoryParentName: "",
         categoryName: "",
         start: 1,
-        limit: 1000
+        limit: 100
       }
     };
   },
@@ -194,7 +199,7 @@ export default {
   margin-top: 10px;
 }
 .el-row {
-  max-height: 740px;
+  max-height: 640px;
   overflow: auto;
   .mix {
     position: relative;

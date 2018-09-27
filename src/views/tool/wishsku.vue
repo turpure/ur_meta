@@ -35,57 +35,57 @@
             <el-table :data="tableData" max-height="500" class="table table-hover" id="tb">
               <el-table-column prop="SKU" label="SKU*" width="95px">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.SKU"></el-input>
+                  <el-input size=mini @keyup.native="SKUChange(scope.$index,scope.row.SKU,'0')" v-model="scope.row.SKU"></el-input>
                 </template>
               </el-table-column>
-              <el-table-column prop="variation1" label="颜色">
+              <el-table-column prop="property1" label="颜色">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.property1"></el-input>
+                  <el-input size=mini @keyup.native="variation1Change(scope.$index,scope.row.property1,'1')" v-model="scope.row.property1"></el-input>
                 </template>
               </el-table-column>
-              <el-table-column prop="variation2" label="尺寸">
+              <el-table-column prop="property2" label="尺寸">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.property2" ref="var2"></el-input>
+                  <el-input size=mini @keyup.native="property2Change(scope.$index,scope.row.property2,'2')" v-model="scope.row.property2"></el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="quantity" label="数量*">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.quantity"></el-input>
+                  <el-input size=mini @keyup.native="quantityChange(scope.$index,scope.row.quantity,'3')" v-model="scope.row.quantity"></el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="price" label="价格(USD)*">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.price"></el-input>
+                  <el-input size=mini @keyup.native="priceChange(scope.$index,scope.row.price,'4')" v-model="scope.row.price"></el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="shipping" label="运费(USD)*">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.shipping"></el-input>
+                  <el-input size=mini @keyup.native="shippingChange(scope.$index,scope.row.shipping,'5')" v-model="scope.row.shipping"></el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="msrp" label="建议零售价(USD)*">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.msrp"></el-input>
+                  <el-input size=mini @keyup.native="msrpChange(scope.$index,scope.row.msrp,'6')" v-model="scope.row.msrp"></el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="$shippingTime" label="运输时间">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.$shippingTime"></el-input>
+                  <el-input size=mini @keyup.native="shippingTimeChange(scope.$index,scope.row.$shippingTime,'7')" v-model="scope.row.$shippingTime"></el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="pic_url" label="主图" width="280px">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.pic_url"></el-input>
+                  <el-input size=mini @keyup.native="picChange(scope.$index,scope.row.pic_url,'8')" v-model="scope.row.pic_url"></el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="property1" label="款式1">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.varition1"></el-input>
+                  <el-input size=mini @keyup.native="property1Change(scope.$index,scope.row.variation1,'9')" v-model="scope.row.varition1"></el-input>
                 </template>
               </el-table-column>
-              <el-table-column prop="property2" label="款式2">
+              <el-table-column prop="varition2" label="款式2">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.varition2"></el-input>
+                  <el-input size=mini @keyup.native="varition2Change(scope.$index,scope.row.variation2,'10')" v-model="scope.row.varition2"></el-input>
                 </template>
               </el-table-column>
             </el-table>
@@ -95,8 +95,8 @@
       <div class="modal-footer">
         <input type="button" @click="btnSavekkk" id="btnSavekkk" value="导出多属性表">
       </div>
+      </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -145,6 +145,17 @@ export default {
     };
   },
   methods: {
+    SKUChange(row, index) {},
+    variation1Change(row, index) {},
+    property2Change(row, index) {},
+    quantityChange(row, index) {},
+    priceChange(row, index) {},
+    shippingChange(row, index) {},
+    msrpChange(row, index) {},
+    shippingTimeChange(row, index) {},
+    picChange(row, index) {},
+    property1Change(row, index) {},
+    varition2Change(row, index) {},
     onSubmit() {
       getwishsku(this.condition).then(response => {
         if (response.data.data != "") {
@@ -166,7 +177,9 @@ export default {
       this.condition1.contents.variation1 = this.tableData.map(
         e => e.variation1
       );
-      this.condition1.contents.variation2 = this.$refs.var2.value;
+      this.condition1.contents.variation2 = this.tableData.map(
+        e => e.variation2
+      );
       this.condition1.contents.pic_url = this.tableData.map(e => e.pic_url);
       this.condition1.contents.property2 = this.tableData.map(e => e.property2);
       this.condition1.contents.property1 = this.tableData.map(e => e.property1);

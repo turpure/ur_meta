@@ -43,52 +43,52 @@
             <el-table :data="tableData" class="table table-hover" id="tb">
               <el-table-column prop="SKU" label="SKU">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.SKU"></el-input>
+                  <el-input size=mini @keyup.native="SKUChange(scope.$index,scope.row.SKU,'0')" v-model="scope.row.SKU"></el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="quantity" label="数量">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.quantity"></el-input>
+                  <el-input size=mini @keyup.native="quantityChange(scope.$index,scope.row.quantity,'1')" v-model="scope.row.quantity"></el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="StartPrice" label="价格">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.price"></el-input>
+                  <el-input size=mini @keyup.native="priceChange(scope.$index,scope.row.StartPrice,'2')" v-model="scope.row.StartPrice"></el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="BmpFileName" label="图片路径" width="300">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.BmpFileName"></el-input>
+                  <el-input size=mini @keyup.native="BmpFileNameChange(scope.$index,scope.row.BmpFileName,'3')" v-model="scope.row.BmpFileName"></el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="pro1" label="Color">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.pro1"></el-input>
+                  <el-input size=mini @keyup.native="pro1Change(scope.$index,scope.row.pro1,'4')" v-model="scope.row.pro1"></el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="pro2" label="Size">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.pro2"></el-input>
+                  <el-input size=mini @keyup.native="pro2Change(scope.$index,scope.row.pro2,'5')" v-model="scope.row.pro2"></el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="UPC" label="UPC" width="140">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.UPC"></el-input>
+                  <el-input size=mini @keyup.native="priceChange(scope.$index,scope.row.UPC,'6')" v-model="scope.row.UPC"></el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="EAN" label="EAN" width="140">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.EAN"></el-input>
+                  <el-input size=mini @keyup.native="EANChange(scope.$index,scope.row.EAN,'7')" v-model="scope.row.EAN"></el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="property1" label="款式1">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.property1"></el-input>
+                  <el-input size=mini @keyup.native="property1Change(scope.$index,scope.row.property1,'8')" v-model="scope.row.property1"></el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="property2" label="款式2">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.property2"></el-input>
+                  <el-input size=mini @keyup.native="property2Change(scope.$index,scope.row.property2,'9')" v-model="scope.row.property2"></el-input>
                 </template>
               </el-table-column>
             </el-table>
@@ -98,8 +98,8 @@
       <div class="modal-footer">
         <input type="button" @click="btnSavekkk(condition1)" id="btnSavekkk" value="导出多属性表">
       </div>
+      </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -154,6 +154,16 @@ export default {
     };
   },
   methods: {
+    SKUChange(row, index) {},
+    quantityChange(row, index) {},
+    priceChange(row, index) {},
+    BmpFileNameChange(row, index) {},
+    pro1Change(row, index) {},
+    pro2Change(row, index) {},
+    priceChange(row, index) {},
+    EANChange(row, index) {},
+    property1Change(row, index) {},
+    property2Change(row, index) {},
     onSubmit() {
       geteBaysku(this.condition).then(response => {
         if (response.data.data != "") {

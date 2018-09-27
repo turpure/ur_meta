@@ -12,7 +12,7 @@
       <el-col :span="14">
         <el-menu :default-active="activeIndex" @select="handleSelect" class="el-menu-demo" mode="horizontal" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" router>
           <el-submenu v-for="(item,position) in allMenu" :index="generateIndex(-1,position)" :key="generateIndex(-1,position)">
-            <template slot="title" font-size="28px">{{item.name}}</template>
+            <template slot="title">{{item.name}}</template>
             <el-menu-item v-for="(child,index) in item.children" :index="child.route" :key="generateIndex(position,index)">{{child.name}}</el-menu-item>
           </el-submenu>
         </el-menu>

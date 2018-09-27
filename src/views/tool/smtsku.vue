@@ -28,47 +28,47 @@
             <el-table :data="tableData" class="table table-hover" id="tb">
               <el-table-column prop="SKU" label="SKU">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.SKU"></el-input>
+                  <el-input size=mini @keyup.native="SKUChange(scope.$index,scope.row.SKU,'0')" v-model="scope.row.SKU"></el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="quantity" label="数量">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.quantity"></el-input>
+                  <el-input size=mini @keyup.native="quantityChange(scope.$index,scope.row.quantity,'1')" v-model="scope.row.quantity"></el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="price" label="价格">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.price"></el-input>
+                  <el-input size=mini @keyup.native="priceChange(scope.$index,scope.row.price,'2')" v-model="scope.row.price"></el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="pic_url" label="关联图片地址" width="300px">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.pic_url"></el-input>
+                  <el-input size=mini @keyup.native="picChange(scope.$index,scope.row.pic_url,'3')" v-model="scope.row.pic_url"></el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="property1" label="Color">
                 <template slot-scope="scope">
-                  <el-select size=mini v-model="scope.row.property1" clearable>
+                  <el-select size=mini @keyup.native="property1Change(scope.$index,scope.row.property1,'4')" v-model="scope.row.property1" clearable>
                     <el-option v-for="item in color" :key="item" :value="item"></el-option>
                   </el-select>
-                  <el-input size=mini placeholder="自定义"></el-input>
+                  <el-input size=mini @keyup.native="name1Change(scope.$index,scope.row.name1,'4')" v-model="scope.row.name1" placeholder="自定义"></el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="property2" label="Size">
                 <template slot-scope="scope">
-                  <el-select size=mini v-model="scope.row.property2" clearable>
+                  <el-select size=mini @keyup.native="property2Change(scope.$index,scope.row.property2,'5')" v-model="scope.row.property2" clearable>
                     <el-option v-for="item in color" :key="item" :value="item"></el-option>
                   </el-select>
                 </template>
               </el-table-column>
               <el-table-column prop="varition1" label="款式1">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.varition1"></el-input>
+                  <el-input size=mini @keyup.native="varition1Change(scope.$index,scope.row.varition1,'6')" v-model="scope.row.varition1"></el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="varition2" label="款式2">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.varition2"></el-input>
+                  <el-input size=mini @keyup.native="varition2Change(scope.$index,scope.row.varition2,'7')" v-model="scope.row.varition2"></el-input>
                 </template>
               </el-table-column>
             </el-table>
@@ -78,8 +78,8 @@
       <div class="modal-footer">
         <input type="button" @click="btnSavekkk(condition1)" id="btnSavekkk" value="导出多属性表">
       </div>
+      </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -93,6 +93,7 @@ import {
 export default {
   data() {
     return {
+      value: "",
       size: [],
       color: [],
       tableData: [],
@@ -118,6 +119,15 @@ export default {
     };
   },
   methods: {
+    SKUChange(row, index) {},
+    quantityChange(row, index) {},
+    priceChange(row, index) {},
+    picChange(row, index) {},
+    property1Change(row, index) {},
+    name1Change(row, index) {},
+    property2Change(row, index) {},
+    varition1Change(row, index) {},
+    varition2Change(row, index) {},
     onSubmit() {
       getsmtsku(this.condition).then(response => {
         if (response.data.data != "") {

@@ -29,17 +29,19 @@
         <font color="black">
           {{item.country}}<br>{{item.category}}
         </font>
-        <div class="mix-details">
-          <a align="center" class="mix-link" :href="item.url" target="_blank">
-            <i class="fa fa-link"></i>
-          </a>
-        </div>
+          <div class="mix-details">
+            <a align="center" class="mix-link" :href="item.url" target="_blank">
+              <i class="fa fa-link"></i>
+            </a>
+          </div>
       </el-col>
     </el-row>
-    <div class="pagination-container" align="right">
-      <el-pagination v-show="total>0" background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="condition.start" :page-sizes="[12, 20, 30, 50]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
-      </el-pagination>
-    </div>
+    <el-col :span="24" class="toolbar" v-show="total>0">
+      <div class="pagination-container" align="right">
+        <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="condition.start" :page-sizes="[15, 20, 30, 50]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
+        </el-pagination>
+      </div>
+    </el-col>
   </div>
 </template>
 
@@ -48,7 +50,7 @@ import { getBrandcountry, getBrandcategory, getBrand } from "../../api/profit";
 export default {
   data() {
     return {
-      pageSize: 12,
+      pageSize: 15,
       total: null,
       listLoading: false,
       tableData: [],
@@ -120,11 +122,11 @@ export default {
   margin-top: 10px;
 }
 .el-row {
-  max-height: 800px;
+  max-height: 760px;
   overflow: auto;
   .mix {
     margin-top: 15px;
-    margin-left: 150px;
+    //margin-left: 150px;
     text-align: center;
     position: relative;
     overflow: hidden;

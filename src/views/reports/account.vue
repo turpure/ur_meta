@@ -87,6 +87,11 @@
       <el-table-column min-width="90px" prop="ProfitRmb" label="利润￥" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="90px" prop="rate" label="利润率%" :formatter="empty" sortable="custom"></el-table-column>
     </el-table>
+    <el-col :span="24" class="toolbar" style="margin-top:0px">
+      <div class="pagination-container">
+        <el-pagination v-show="total>0" :current-page="page" :page-sizes="[10,20,30,50]" :page-size="pageSize" :total="total" background layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" />
+      </div>
+    </el-col>
   </div>
 </template>
 
@@ -105,6 +110,9 @@ import XLSX from "xlsx";
 export default {
   data() {
     return {
+      page: 1,
+      pageSize: 10,
+      total: 10,
       tableHeight: 0,
       allMember: [],
       isA: true,
@@ -189,6 +197,7 @@ export default {
     };
   },
   methods: {
+    handleCurrentChange() {},
     selectalls() {
       const allValues = [];
       for (const item of this.store) {
@@ -255,11 +264,11 @@ export default {
       if (this.show === false) {
         this.text = "显示输入框";
         const height = document.getElementById("app").clientHeight;
-        this.tableHeight = height + 408 + "px";
+        this.tableHeight = height + 200 + "px";
       } else if (this.show === true) {
         this.text = "隐藏输入框";
         const height = document.getElementById("app").clientHeight;
-        this.tableHeight = height + 200 + "px";
+        this.tableHeight = height + 100 + "px";
       }
     },
     changeActive() {
@@ -271,7 +280,7 @@ export default {
     onSubmit(form) {
       const myform = JSON.parse(JSON.stringify(form));
       const height = document.getElementById("app").clientHeight;
-      this.tableHeight = height + 215 + "px";
+      this.tableHeight = height + 100 + "px";
       this.show2 = true;
       this.$refs.condition.validate(valid => {
         if (valid) {
@@ -407,8 +416,7 @@ export default {
       // 退款率和利润率核算
       sums[fileds.indexOf("rate")] =
         Math.round(
-          sums[fileds.indexOf("ProfitRmb")] *
-            10000 /
+          (sums[fileds.indexOf("ProfitRmb")] * 10000) /
             sums[fileds.indexOf("SaleMoneyRmb")]
         ) / 100;
       return sums;
