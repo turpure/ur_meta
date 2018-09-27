@@ -106,19 +106,19 @@
 				</el-form-item>
 				<el-form-item label="类别">
 					<el-radio-group v-model="editForm.type">
-						<el-radio class="radio" :label="0">BUG</el-radio>
-						<el-radio class="radio" :label="1">新需求</el-radio>
-						<el-radio class="radio" :label="2">任务</el-radio>
-						<el-radio class="radio" :label="3">改进建议</el-radio>
+						<el-radio class="radio" label="0">BUG</el-radio>
+						<el-radio class="radio" label="1">新需求</el-radio>
+						<el-radio class="radio" label="2">任务</el-radio>
+						<el-radio class="radio" label="3">改进建议</el-radio>
 					</el-radio-group>
 				</el-form-item>
         <el-form-item label="状态">
 					<el-radio-group v-model="editForm.status">
-						<el-radio class="radio" :label="0">Open</el-radio>
-						<el-radio class="radio" :label="1">In Progress</el-radio>
-						<el-radio class="radio" :label="2">Resovled</el-radio>
-						<el-radio class="radio" :label="3">Reopened</el-radio>
-						<el-radio class="radio" :label="4">Closed</el-radio>
+						<el-radio class="radio" label="0">Open</el-radio>
+						<el-radio class="radio" label="1">In Progress</el-radio>
+						<el-radio class="radio" label="2">Resovled</el-radio>
+						<el-radio class="radio" label="3">Reopened</el-radio>
+						<el-radio class="radio" label="4">Closed</el-radio>
 					</el-radio-group>
 				</el-form-item>
 				<el-form-item label="优先级">
@@ -202,13 +202,13 @@ export default {
       },
       // 新增界面数据
       editForm: {
-        id: 0,
-        name: '',
-        detail: '',
-        type: 0,
-        status: 0,
-        priority: 1,
-        processingPerson: []
+        // id: 0,
+        // name: '',
+        // detail: '',
+        // type: 0,
+        // status: 0,
+        // priority: 1,
+        // processingPerson: []
       }
     }
   },
@@ -226,7 +226,6 @@ export default {
     addSubmit() {
       this.addFormVisible = false
       const addContent = Object.assign({}, this.addForm)
-      debugger
       addContent.creator = this.$store.getters.name
       addContent.processingPerson = this.addForm.processingPerson.join(',')
       this.addForm.processingPerson = []
@@ -257,6 +256,7 @@ export default {
     },
     handleEdit(index, row) {
       this.editFormVisible = true
+      row.priority = parseInt(row.priority)
       this.editForm = Object.assign({}, row)
       this.editForm.processingPerson = this.editForm.processingPerson.split(',')
     },
