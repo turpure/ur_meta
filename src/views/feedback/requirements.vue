@@ -95,7 +95,6 @@
       </div>
     </el-dialog>
 
-<<<<<<< HEAD
     <!--编辑界面-->
     <el-dialog title="编辑" :visible.sync="editFormVisible" :close-on-click-modal="false">
       <el-form :model="editForm" label-width="80px" ref="editForm">
@@ -107,55 +106,24 @@
         </el-form-item>
         <el-form-item label="类别">
           <el-radio-group v-model="editForm.type">
-            <el-radio class="radio" :label="0">BUG</el-radio>
-            <el-radio class="radio" :label="1">新需求</el-radio>
-            <el-radio class="radio" :label="2">任务</el-radio>
-            <el-radio class="radio" :label="3">改进建议</el-radio>
+            <el-radio class="radio" label="0">BUG</el-radio>
+            <el-radio class="radio" label="1">新需求</el-radio>
+            <el-radio class="radio" label="2">任务</el-radio>
+            <el-radio class="radio" label="3">改进建议</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="状态">
           <el-radio-group v-model="editForm.status">
-            <el-radio class="radio" :label="0">Open</el-radio>
-            <el-radio class="radio" :label="1">In Progress</el-radio>
-            <el-radio class="radio" :label="2">Resovled</el-radio>
-            <el-radio class="radio" :label="3">Reopened</el-radio>
-            <el-radio class="radio" :label="4">Closed</el-radio>
+            <el-radio class="radio" label="0">Open</el-radio>
+            <el-radio class="radio" label="1">In Progress</el-radio>
+            <el-radio class="radio" label="2">Resovled</el-radio>
+            <el-radio class="radio" label="3">Reopened</el-radio>
+            <el-radio class="radio" label="4">Closed</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="优先级">
           <el-rate v-model="editForm.priority" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="5" style="margin-top:8px;" />
         </el-form-item>
-=======
-		<!--编辑界面-->
-		<el-dialog title="编辑" :visible.sync="editFormVisible" :close-on-click-modal="false">
-			<el-form :model="editForm" label-width="80px" ref="editForm">
-				<el-form-item label="id" prop="id" v-if="false">
-					<el-input v-model="editForm.id" auto-complete="off"></el-input>
-				</el-form-item>
-				<el-form-item label="名称" prop="name">
-					<el-input v-model="editForm.name" auto-complete="off"></el-input>
-				</el-form-item>
-				<el-form-item label="类别">
-					<el-radio-group v-model="editForm.type">
-						<el-radio class="radio" label="0">BUG</el-radio>
-						<el-radio class="radio" label="1">新需求</el-radio>
-						<el-radio class="radio" label="2">任务</el-radio>
-						<el-radio class="radio" label="3">改进建议</el-radio>
-					</el-radio-group>
-				</el-form-item>
-        <el-form-item label="状态">
-					<el-radio-group v-model="editForm.status">
-						<el-radio class="radio" label="0">Open</el-radio>
-						<el-radio class="radio" label="1">In Progress</el-radio>
-						<el-radio class="radio" label="2">Resovled</el-radio>
-						<el-radio class="radio" label="3">Reopened</el-radio>
-						<el-radio class="radio" label="4">Closed</el-radio>
-					</el-radio-group>
-				</el-form-item>
-				<el-form-item label="优先级">
-					<el-rate v-model="editForm.priority" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="5" style="margin-top:8px;" />
-				</el-form-item>
->>>>>>> d608f4535254520a920cace549788746fe7f3fde
         <el-form-item label="处理人">
           <el-checkbox-group v-model="editForm.processingPerson">
             <el-checkbox label="周朋许" name="processingPerson"></el-checkbox>
@@ -239,18 +207,7 @@ export default {
         processingPerson: []
       },
       // 新增界面数据
-      editForm: {
-<<<<<<< HEAD
-        id: 0,
-        name: "",
-        detail: "",
-        type: 0,
-        status: 0,
-        priority: 1,
-        processingPerson: []
-=======
->>>>>>> d608f4535254520a920cace549788746fe7f3fde
-      }
+      editForm: {}
     };
   },
   methods: {
@@ -265,25 +222,15 @@ export default {
       this.getRequire();
     },
     addSubmit() {
-<<<<<<< HEAD
       this.addFormVisible = false;
-      this.addForm.creator = this.$store.getters.name;
-      this.addForm.processingPerson = this.addForm.processingPerson.join(",");
-      createRequirements(this.addForm).then(response => {
+      const addContent = Object.assign({}, this.addForm);
+      addContent.creator = this.$store.getters.name;
+      addContent.processingPerson = this.addForm.processingPerson.join(",");
+      this.addForm.processingPerson = [];
+      createRequirements(addContent).then(response => {
         this.requirements.push(response.data.data);
       });
       this.getRequire();
-=======
-      this.addFormVisible = false
-      const addContent = Object.assign({}, this.addForm)
-      addContent.creator = this.$store.getters.name
-      addContent.processingPerson = this.addForm.processingPerson.join(',')
-      this.addForm.processingPerson = []
-      createRequirements(addContent).then(response => {
-        this.requirements.push(response.data.data)
-      })
-      this.getRequire()
->>>>>>> d608f4535254520a920cace549788746fe7f3fde
     },
     editSubmit() {
       this.$confirm("确认提交吗？", "提示", {}).then(() => {
@@ -296,13 +243,8 @@ export default {
           const req = response.data.data;
           this.editLoading = false;
           this.requirements = this.requirements.map(ele => {
-<<<<<<< HEAD
-            if (ele.id === req.id) {
-              return req;
-=======
             if (parseInt(ele.id) === req.id) {
-              return req
->>>>>>> d608f4535254520a920cace549788746fe7f3fde
+              return req;
             }
             return ele;
           });
@@ -310,34 +252,25 @@ export default {
       });
     },
     handleAdd() {
-<<<<<<< HEAD
-      this.addFormVisible = true;
-    },
-    handleEdit(index, row) {
-      this.editFormVisible = true;
-      this.editForm = Object.assign({}, row);
-      this.editForm.processingPerson = this.editForm.processingPerson.split(
-        ","
-      );
-=======
       const form = {
         id: 0,
-        name: '',
-        detail: '',
+        name: "",
+        detail: "",
         type: 0,
         status: 0,
         priority: 1,
         processingPerson: []
-      }
-      this.addForm = Object.assign({}, form)
-      this.addFormVisible = true
+      };
+      this.addForm = Object.assign({}, form);
+      this.addFormVisible = true;
     },
     handleEdit(index, row) {
-      this.editFormVisible = true
-      row.priority = parseInt(row.priority)
-      this.editForm = Object.assign({}, row)
-      this.editForm.processingPerson = this.editForm.processingPerson.split(',')
->>>>>>> d608f4535254520a920cace549788746fe7f3fde
+      this.editFormVisible = true;
+      row.priority = parseInt(row.priority);
+      this.editForm = Object.assign({}, row);
+      this.editForm.processingPerson = this.editForm.processingPerson.split(
+        ","
+      );
     },
     handleDel(index, row) {
       console.log(index);
