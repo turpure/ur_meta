@@ -157,36 +157,36 @@ import {
   createRequirements,
   editRequirements,
   deleteRequirements
-} from "../../api/api";
+} from '../../api/api'
 export default {
   data() {
     return {
-      filters: { name: "", page: 1, pageSize: 10, total: 10 },
+      filters: { name: '', page: 1, pageSize: 10, total: 10 },
       tags: {
-        1: { name: "无关紧要", type: "" },
-        2: { name: "次要", type: "success" },
-        3: { name: "一般", type: "info" },
-        4: { name: "严重", type: "warning" },
-        5: { name: "紧急", type: "danger" }
+        1: { name: '无关紧要', type: '' },
+        2: { name: '次要', type: 'success' },
+        3: { name: '一般', type: 'info' },
+        4: { name: '严重', type: 'warning' },
+        5: { name: '紧急', type: 'danger' }
       },
       types: {
-        0: "BUG",
-        1: "新需求",
-        2: "任务",
-        3: "改进建议"
+        0: 'BUG',
+        1: '新需求',
+        2: '任务',
+        3: '改进建议'
       },
       status: {
-        0: { name: "Open", hints: "问题被提交,等待处理" },
-        1: { name: "In Progress", hints: "问题在处理当中，尚未完成" },
+        0: { name: 'Open', hints: '问题被提交,等待处理' },
+        1: { name: 'In Progress', hints: '问题在处理当中，尚未完成' },
         2: {
-          name: "Resovled",
-          hints: "问题曾解决，但结论尚未被认可需重新分配解决"
+          name: 'Resovled',
+          hints: '问题曾解决，但结论尚未被认可需重新分配解决'
         },
         3: {
-          name: "Reopened",
-          hints: "问题解决，等待确认结果，确认的结果是Reopend或Closed"
+          name: 'Reopened',
+          hints: '问题解决，等待确认结果，确认的结果是Reopend或Closed'
         },
-        4: { name: "Closed", hints: "问题处理结果得到确认，处于关闭状态" }
+        4: { name: 'Closed', hints: '问题处理结果得到确认，处于关闭状态' }
       },
 
       dialogVisible: false,
@@ -199,8 +199,8 @@ export default {
       // 新增界面数据
       addForm: {
         id: 0,
-        name: "",
-        detail: "",
+        name: '',
+        detail: '',
         type: 0,
         status: 0,
         priority: 1,
@@ -208,96 +208,96 @@ export default {
       },
       // 新增界面数据
       editForm: {}
-    };
+    }
   },
   methods: {
     handleCurrentChange(val) {
-      this.filters.page = val;
-      this.getRequire();
+      this.filters.page = val
+      this.getRequire()
     },
     formatter(row, column) {
-      return row.createdDate ? row.createdDate.substring(0, 16) : "";
+      return row.createdDate ? row.createdDate.substring(0, 16) : ''
     },
     searchRequirements() {
-      this.getRequire();
+      this.getRequire()
     },
     addSubmit() {
-      this.addFormVisible = false;
-      const addContent = Object.assign({}, this.addForm);
-      addContent.creator = this.$store.getters.name;
-      addContent.processingPerson = this.addForm.processingPerson.join(",");
-      this.addForm.processingPerson = [];
+      this.addFormVisible = false
+      const addContent = Object.assign({}, this.addForm)
+      addContent.creator = this.$store.getters.name
+      addContent.processingPerson = this.addForm.processingPerson.join(',')
+      this.addForm.processingPerson = []
       createRequirements(addContent).then(response => {
-        this.requirements.push(response.data.data);
-      });
-      this.getRequire();
+        this.requirements.push(response.data.data)
+      })
+      this.getRequire()
     },
     editSubmit() {
-      this.$confirm("确认提交吗？", "提示", {}).then(() => {
-        this.editLoading = true;
+      this.$confirm('确认提交吗？', '提示', {}).then(() => {
+        this.editLoading = true
         this.editForm.processingPerson = this.editForm.processingPerson.join(
-          ","
-        );
+          ','
+        )
         editRequirements(this.editForm).then(response => {
-          this.editFormVisible = false;
-          const req = response.data.data;
-          this.editLoading = false;
+          this.editFormVisible = false
+          const req = response.data.data
+          this.editLoading = false
           this.requirements = this.requirements.map(ele => {
             if (parseInt(ele.id) === req.id) {
-              return req;
+              return req
             }
-            return ele;
-          });
-        });
-      });
+            return ele
+          })
+        })
+      })
     },
     handleAdd() {
       const form = {
         id: 0,
-        name: "",
-        detail: "",
+        name: '',
+        detail: '',
         type: 0,
         status: 0,
         priority: 1,
         processingPerson: []
-      };
-      this.addForm = Object.assign({}, form);
-      this.addFormVisible = true;
+      }
+      this.addForm = Object.assign({}, form)
+      this.addFormVisible = true
     },
     handleEdit(index, row) {
-      this.editFormVisible = true;
-      row.priority = parseInt(row.priority);
-      this.editForm = Object.assign({}, row);
+      this.editFormVisible = true
+      row.priority = parseInt(row.priority)
+      this.editForm = Object.assign({}, row)
       this.editForm.processingPerson = this.editForm.processingPerson.split(
-        ","
-      );
+        ','
+      )
     },
     handleDel(index, row) {
-      console.log(index);
-      this.$confirm("确定删除该条记录？", "提示", { type: "warning" }).then(
+      console.log(index)
+      this.$confirm('确定删除该条记录？', '提示', { type: 'warning' }).then(
         () => {
-          this.listLoading = true;
+          this.listLoading = true
           deleteRequirements(row.id).then(res => {
-            this.listLoading = false;
-            this.requirements.splice(index, 1);
-          });
+            this.listLoading = false
+            this.requirements.splice(index, 1)
+          })
         }
-      );
+      )
     },
     getRequire() {
       getRequirements(this.filters).then(response => {
-        const res = response.data.data;
-        this.requirements = res.items;
-        this.filters.total = res._meta.totalCount;
-        this.filters.page = res._meta.currentPage;
-        this.filters.pageSize = res._meta.perPage;
-      });
+        const res = response.data.data
+        this.requirements = res.items
+        this.filters.total = res._meta.totalCount
+        this.filters.page = res._meta.currentPage
+        this.filters.pageSize = res._meta.perPage
+      })
     }
   },
   mounted() {
-    this.getRequire();
+    this.getRequire()
   }
-};
+}
 </script>
 
 <style scoped>

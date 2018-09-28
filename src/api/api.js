@@ -89,3 +89,10 @@ export function deleteRequirements(id) {
     method: 'delete'
   })
 }
+
+export function ShangHaiTarget() {
+  return request({
+    url: 'site/index',
+    method: 'get'
+  })
+}

@@ -8,7 +8,7 @@ import purchase from '../views/reports/purchase.vue'
 import artist from '../views/reports/artist.vue'
 import account from '../views/reports/account.vue'
 import trending from '../views/reports/trending.vue'
-import index from '../views/reports/index.vue'
+import index from '../views/index.vue'
 import introduce from '../views/reports/introduce.vue'
 
 import stock from '../views/data/stock.vue'
