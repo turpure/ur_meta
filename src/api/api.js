@@ -96,3 +96,24 @@ export function ShangHaiTarget() {
     method: 'get'
   })
 }
+
+export function ZhengZhouTarget() {
+  return request({
+    url: 'site/sales',
+    method: 'get'
+  })
+}
+
+export function DepartTarget() {
+  return request({
+    url: 'site/depart',
+    method: 'get'
+  })
+}
+
+export function DeveloperTarget() {
+  return request({
+    url: 'site/develop',
+    method: 'get'
+  })
+}
