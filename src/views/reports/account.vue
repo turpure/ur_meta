@@ -346,7 +346,11 @@ export default {
       row.SaleMoneyRmb = Math.round(row.SaleMoneyRmb * 100) / 100;
       row.ProfitRmb = Math.round(row.ProfitRmb * 100) / 100;
       row.rate = Math.round(row.rate * 100) / 100;
-      return cellValue || "--";
+      if (cellValue == "0") {
+        return cellValue;
+      } else {
+        return cellValue || "--";
+      }
     },
     // 导出
     exportExcel() {
