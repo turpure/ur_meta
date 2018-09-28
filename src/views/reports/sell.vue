@@ -49,8 +49,7 @@
             <el-date-picker v-model='condition.dateRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2'>
             </el-date-picker>
           </el-form-item>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <el-form-item>
+          <el-form-item style="margin-left:245px">
             <el-button type='primary' class='input' @click='onSubmit(condition)'>查询</el-button>
           </el-form-item>
         </el-form>
@@ -287,7 +286,7 @@ export default {
       this.show2 = true;
       this.$refs.condition.validate(valid => {
         if (valid) {
-          if (myform.member.length === 0) {
+          if (myform.department.length !== 0) {
             const val = form.department;
             const res = this.allMember;
             for (let i = 0; i < val.length; i++) {
@@ -299,6 +298,12 @@ export default {
             myform.member = this.member.map(m => {
               return m.username;
             });
+            this.listLoading = true;
+            getSales(myform).then(response => {
+              this.listLoading = false;
+              this.tableData = this.searchTable = response.data.data;
+            });
+          } else {
             this.listLoading = true;
             getSales(myform).then(response => {
               this.listLoading = false;

@@ -28,7 +28,7 @@
         <el-button style='float:left' type='default' @click='exportExcel'>导出Excel</el-button>
       </el-col>
     </el-row>
-    <el-table v-loading="listLoading" height="760" :data="tableData" @sort-change="sortNumber" v-show="show" style="width: 100%;">
+    <el-table v-loading="listLoading" max-height="730" :data="tableData" @sort-change="sortNumber" v-show="show" style="width: 100%;">
       <el-table-column min-width="100px" prop="GoodsCode" label="商品编码" :formatter="empty" sortable></el-table-column>
       <el-table-column min-width="100px" prop="GoodsName" label="商品名称" :formatter="empty" sortable></el-table-column>
       <el-table-column min-width="100px" prop="GoodsSKUStatus" label="商品状态" :formatter="empty" sortable></el-table-column>
@@ -47,10 +47,12 @@
       <el-table-column min-width="130px" prop="changeTenDay" label="10天销量变化" :formatter="empty" sortable></el-table-column>
 
     </el-table>
-    <div class="block" align="right" v-show="show">
-      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 30, 40]" :page-size="10" layout="total, sizes, prev, pager, next, jumper" :total="total">
-      </el-pagination>
-    </div>
+    <el-col :span="24" class="toolbar" v-show="total>0" style="margin-top:0px">
+      <div class="pagination-container" align="right">
+        <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 30, 40]" :page-size="10" layout="total, sizes, prev, pager, next, jumper" :total="total">
+        </el-pagination>
+      </div>
+    </el-col>
   </div>
 </template>
 

@@ -39,6 +39,9 @@ import { getStock } from '../../api/profit'
 export default {
   data() {
     return {
+      page: 1,
+      size: 2,
+      total: 10,
       tableData: [],
       searchTable: [],
       searchValue: '',

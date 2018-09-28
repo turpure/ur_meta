@@ -10,19 +10,10 @@
         </div>
       </el-col>
       <el-col :span="14">
-        <el-menu 
-        :default-active="activeIndex"
-        @select="handleSelect" 
-        class="el-menu-demo" 
-        mode="horizontal" 
-        background-color="#545c64" 
-        text-color= "#fff" 
-        active-text-color="#ffd04b"
-        router
-        >
+        <el-menu :default-active="activeIndex" @select="handleSelect" class="el-menu-demo" mode="horizontal" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" router>
           <el-submenu v-for="(item,position) in allMenu" :index="generateIndex(-1,position)" :key="generateIndex(-1,position)">
             <template slot="title">{{item.name}}</template>
-              <el-menu-item v-for="(child,index) in item.children" :index="child.route" :key="generateIndex(position,index)">{{child.name}}</el-menu-item>
+            <el-menu-item v-for="(child,index) in item.children" :index="child.route" :key="generateIndex(position,index)">{{child.name}}</el-menu-item>
           </el-submenu>
         </el-menu>
       </el-col>
@@ -51,8 +42,8 @@
         <!--导航菜单-->
         <el-menu :default-active="activeIndex" @select="handleSelect" class="el-menu-vertical-demo" router>
           <el-submenu v-for="item in asideMenu.menu" :index="generateIndex(-1, asideMenu.position)" :key="generateIndex(-1, asideMenu.position)">
-            <template slot="title">{{item.name}}  </template>
-              <el-menu-item v-for="(child,index) in item.children" :index="child.route" :key="generateIndex(asideMenu.position,index)">{{child.name}}</el-menu-item>
+            <template slot="title">{{item.name}} </template>
+            <el-menu-item v-for="(child,index) in item.children" :index="child.route" :key="generateIndex(asideMenu.position,index)">{{child.name}}</el-menu-item>
           </el-submenu>
         </el-menu>
       </aside>
@@ -112,6 +103,22 @@ export default {
     getMenu().then(response => {
       this.allMenu = response.data.data
     })
+  },
+  beforeRouteLeave(to, from, next) {
+    if (to.name == '首页') {
+      const collapsed = JSON.stringify(this.collapsed)
+      sessionStorage.setItem('collapsed', collapsed)
+    } else {
+      sessionStorage.removeItem('collapsed')
+    }
+    next()
+  },
+  created() {
+    // 从localStorage中读取条件并赋值给查询表单
+    const collapsed = sessionStorage.getItem('collapsed')
+    if (collapsed != null) {
+      this.collapsed = JSON.parse(collapsed)
+    }
   },
   methods: {
     generateIndex(head, tail) {

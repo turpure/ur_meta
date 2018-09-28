@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form v-model="condition" label-width="120px" class="demo-ruleForm login-container" v-show="show1">
+    <el-form v-model="condition" label-width="180px" class="demo-form-inline" :inline='true'>
       <el-form-item label="卖家账号：">
         <el-select v-model="condition.suffix" filterable clearable>
           <el-option v-for='(item,index) in suffix' :index='index' :key='item.ebaySuffix' :label='item.ebayName' :value='item.ebayName'></el-option>
@@ -12,9 +12,10 @@
         </el-select>
       </el-form-item>
       <el-form-item label="产品类别：">
-        <el-input v-model="condition.Cat1" placeholder="Category1"></el-input>
-        <el-input v-model="condition.Cat2" placeholder="Category2"></el-input>
+        <el-input v-model="condition.Cat1" style="width:108px;" placeholder="Category1"></el-input>
+        <el-input v-model="condition.Cat2" style="width:108px;" placeholder="Category2"></el-input>
       </el-form-item>
+      <br>
       <el-form-item label="商品编码：">
         <el-input v-model="condition.goodsCode" style="width:217px;"></el-input>
       </el-form-item>
@@ -22,81 +23,72 @@
         <el-input v-model="condition.price" style="width:217px;"></el-input>
       </el-form-item>
       <el-form-item label="运 费：">
-        <el-input v-model="condition.shipping1" placeholder="首件运费"></el-input>
-        <el-input v-model="condition.shipping2" placeholder="续件运费"></el-input>
+        <el-input v-model="condition.shipping1" style="width:107px;" placeholder="首件运费"></el-input>
+        <el-input v-model="condition.shipping2" style="width:107px;" placeholder="续件运费"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary">确认信息</el-button>
         <el-button type="primary" @click="onSubmit(condition)">
           属性设置
           <i class="el-icon-caret-right"></i>
         </el-button>
       </el-form-item>
     </el-form>
-    <div v-show="show" class="modal-dialog" style="width:1300px;">
+    <div class="modal-dialog" style="width:1680px;" v-show="this.tableData.length>0?true:false">
       <div class="modal-content">
         <div class="modal-header">
-          <div align="right">
-            <input type="button" name="button" id="button" value="x" @click="back">
-          </div>
           <h4 class="modal-title" id="myModalLabel">多属性设置</h4>
-          <br>
-          <h5 v-if="this.tableData.length<1?true:false">
-            <font color="red">找不到商品编码：</font>
-          </h5>
-          <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总共：{{this.tableData.length}}条记录
         </div>
         <div class="modal-body">
           <el-form :model='condition1'>
             <el-table :data="tableData" class="table table-hover" id="tb">
               <el-table-column prop="SKU" label="SKU">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.SKU"></el-input>
+                  <el-input size=mini @keyup.native="SKUChange(scope.$index,scope.row.SKU,'0')" v-model="scope.row.SKU"></el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="quantity" label="数量">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.quantity"></el-input>
+                  <el-input size=mini @keyup.native="quantityChange(scope.$index,scope.row.quantity,'1')" v-model="scope.row.quantity"></el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="StartPrice" label="价格">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.price"></el-input>
+                  <el-input size=mini @keyup.native="priceChange(scope.$index,scope.row.StartPrice,'2')" v-model="scope.row.StartPrice"></el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="BmpFileName" label="图片路径" width="300">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.BmpFileName"></el-input>
+                  <el-input size=mini @keyup.native="BmpFileNameChange(scope.$index,scope.row.BmpFileName,'3')" v-model="scope.row.BmpFileName"></el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="pro1" label="Color">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.pro1"></el-input>
+                  <el-input size=mini @keyup.native="pro1Change(scope.$index,scope.row.pro1,'4')" v-model="scope.row.pro1"></el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="pro2" label="Size">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.pro2"></el-input>
+                  <el-input size=mini @keyup.native="pro2Change(scope.$index,scope.row.pro2,'5')" v-model="scope.row.pro2"></el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="UPC" label="UPC" width="140">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.UPC"></el-input>
+                  <el-input size=mini @keyup.native="priceChange(scope.$index,scope.row.UPC,'6')" v-model="scope.row.UPC"></el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="EAN" label="EAN" width="140">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.EAN"></el-input>
+                  <el-input size=mini @keyup.native="EANChange(scope.$index,scope.row.EAN,'7')" v-model="scope.row.EAN"></el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="property1" label="款式1">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.property1"></el-input>
+                  <el-input size=mini @keyup.native="property1Change(scope.$index,scope.row.property1,'8')" v-model="scope.row.property1"></el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="property2" label="款式2">
                 <template slot-scope="scope">
-                  <el-input size=mini v-model="scope.row.property2"></el-input>
+                  <el-input size=mini @keyup.native="property2Change(scope.$index,scope.row.property2,'9')" v-model="scope.row.property2"></el-input>
                 </template>
               </el-table-column>
             </el-table>
@@ -104,11 +96,10 @@
         </div>
       </div>
       <div class="modal-footer">
-        <input type="button" name="button1" value="返回上页" @click="back">
         <input type="button" @click="btnSavekkk(condition1)" id="btnSavekkk" value="导出多属性表">
       </div>
+      </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -121,8 +112,6 @@ import {
 export default {
   data() {
     return {
-      show: false,
-      show1: true,
       tableData: [],
       tableData1: [],
       site: [],
@@ -165,12 +154,25 @@ export default {
     };
   },
   methods: {
+    SKUChange(row, index) {},
+    quantityChange(row, index) {},
+    priceChange(row, index) {},
+    BmpFileNameChange(row, index) {},
+    pro1Change(row, index) {},
+    pro2Change(row, index) {},
+    priceChange(row, index) {},
+    EANChange(row, index) {},
+    property1Change(row, index) {},
+    property2Change(row, index) {},
     onSubmit() {
-      this.show1 = !this.show1;
-      this.show = !this.show;
       geteBaysku(this.condition).then(response => {
-        this.tableData = response.data.data.payload;
-        this.tableData1 = response.data.data.setting;
+        if (response.data.data != "") {
+          this.tableData = response.data.data.payload;
+          this.tableData1 = response.data.data.setting;
+        } else {
+          alert("商品编码不匹配！");
+          this.tableData = [];
+        }
       });
     },
     btnSavekkk() {
@@ -232,10 +234,6 @@ export default {
         downloadElement.click();
         document.body.removeChild(downloadElement);
       });
-    },
-    back() {
-      this.show = false;
-      this.show1 = true;
     }
   },
   mounted() {
@@ -253,22 +251,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.login-container {
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-  -moz-border-radius: 5px;
-  background-clip: padding-box;
-  margin: 100px auto;
-  width: 410px;
-  padding: 35px 35px 15px 35px;
-  background: #fff;
-  border: 1px solid #eaeaea;
-  box-shadow: 0 0 25px #cac6c6;
-  .el-input {
-    width: 106px;
-  }
-  .el-button {
-    margin-left: 0px;
+.el-form {
+  .el-form-item {
+    margin: 8px;
   }
 }
 .modal-dialog {
@@ -277,7 +262,6 @@ export default {
   z-index: 1050;
 }
 .modal-content {
-  position: relative;
   background-color: #fff;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 6px;
@@ -285,8 +269,7 @@ export default {
   background-clip: padding-box;
 }
 .modal-header {
-  min-height: 16.428571429px;
-  padding: 15px;
+  padding: 10px;
   border-bottom: 1px solid #e5e5e5;
 }
 .h4 {
@@ -295,8 +278,6 @@ export default {
 }
 .h5 {
   font-size: 14px;
-  margin-top: 10px;
-  margin-bottom: 10px;
   font-weight: 500;
   line-height: 1.1;
 }
@@ -307,7 +288,7 @@ export default {
     width: 100%;
     margin-bottom: 20px;
     border-collapse: collapse;
-    max-height: 500px;
+    max-height: 450px;
     overflow: auto;
   }
 }

@@ -29,17 +29,19 @@
         <font color="black">
           {{item.country}}<br>{{item.category}}
         </font>
-        <div class="mix-details">
-          <a align="center" class="mix-link" :href="item.url" target="_blank">
-            <i class="fa fa-link"></i>
-          </a>
-        </div>
+          <div class="mix-details">
+            <a align="center" class="mix-link" :href="item.url" target="_blank">
+              <i class="fa fa-link"></i>
+            </a>
+          </div>
       </el-col>
     </el-row>
-    <div class="block" align="right" v-show="show">
-      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="condition.start" :page-sizes="[10, 20, 30, 50]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
-      </el-pagination>
-    </div>
+    <el-col :span="24" class="toolbar" v-show="total>0">
+      <div class="pagination-container" align="right">
+        <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="condition.start" :page-sizes="[15, 20, 30, 50]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
+        </el-pagination>
+      </div>
+    </el-col>
   </div>
 </template>
 
@@ -48,10 +50,9 @@ import { getBrandcountry, getBrandcategory, getBrand } from "../../api/profit";
 export default {
   data() {
     return {
-      pageSize: 10,
+      pageSize: 15,
       total: null,
       listLoading: false,
-      show: false,
       tableData: [],
       country: [],
       category: [],
@@ -64,10 +65,34 @@ export default {
       }
     };
   },
+  beforeRouteLeave(to, from, next) {
+    if (from.name == "品牌列表") {
+      let condition = JSON.stringify(this.condition);
+      sessionStorage.setItem("condition", condition);
+    } else {
+      sessionStorage.removeItem("condition");
+    }
+    next();
+  },
+  created() {
+    let condition = sessionStorage.getItem("condition");
+    if (condition != null) {
+      this.condition = JSON.parse(condition);
+      this.listLoading = true;
+      getBrand(this.condition)
+        .then(response => {
+          this.listLoading = false;
+          this.tableData = response.data.data;
+          this.total = this.tableData.length;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  },
   methods: {
     onSubmit() {
       this.listLoading = true;
-      this.show = true;
       getBrand(this.condition).then(response => {
         this.listLoading = false;
         this.tableData = response.data.data;
@@ -76,11 +101,9 @@ export default {
     },
     handleSizeChange(val) {
       this.pageSize = val;
-      this.onSubmit();
     },
     handleCurrentChange(val) {
       this.condition.start = val;
-      this.onSubmit();
     }
   },
   mounted() {
@@ -99,11 +122,11 @@ export default {
   margin-top: 10px;
 }
 .el-row {
-  height: 800px;
+  max-height: 760px;
   overflow: auto;
   .mix {
     margin-top: 15px;
-    margin-left: 150px;
+    //margin-left: 150px;
     text-align: center;
     position: relative;
     overflow: hidden;
