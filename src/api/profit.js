@@ -53,9 +53,9 @@ export function getExpress() {
     method: 'get'
   })
 }
-export function getStock() {
+export function getStock(filters) {
   return request({
-    url: '/data-center/out-of-stock-info',
+    url: '/data-center/out-of-stock-info?page=' + filters.page + '&pageSize=' + filters.pageSize,
     method: 'get'
   })
 }

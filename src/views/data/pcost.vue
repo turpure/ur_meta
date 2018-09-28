@@ -1,11 +1,9 @@
 <template>
   <div>
-    <el-form :model='condition' :inline='true' ref='condition' label-width='150px' class='demo-form-inline'>
-      <el-form-item label="发货开始时间" :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]" prop="beginDate">
-        <el-date-picker v-model='condition.beginDate' type='date' value-format='yyyy-MM-dd' placeholder='开始日期'></el-date-picker>
-      </el-form-item>
-      <el-form-item label="发货结束时间" :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]" prop="endDate">
-        <el-date-picker v-model='condition.endDate' type='date' value-format='yyyy-MM-dd' placeholder='结束日期'></el-date-picker>
+    <el-form :model='form' :inline='true' ref='condition' label-width='150px' class='demo-form-inline'>
+      <el-form-item label='日期' class='input' prop="dateRange" :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
+        <el-date-picker v-model='form.dateRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2'>
+        </el-date-picker>
       </el-form-item>
       <el-form-item label="物流公司">
         <el-select v-model="condition.wlCompany" clearable>
@@ -24,64 +22,66 @@
         <el-button style='float:left' type='default' @click='exportExcel'>导出Excel</el-button>
       </el-col>
     </el-row>
-    <el-table id="sale-table" :header-row-style="rowheader" v-loading="listLoading" height="800" :data="tableData" @sort-change="sortNumber" style="width: 100%;" v-show="show">
-      <el-table-column prop="wlCompany" label="物流公司" :formatter="empty" sortable>
-        <template slot-scope="scope">
-          <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.wlCompany}}</span>
-          <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.wlCompany}}</span>
-          <span v-else>{{scope.row.wlCompany}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="eBay" label="eBay￥" :formatter="empty" sortable>
-        <template slot-scope="scope">
-          <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.eBay}}</span>
-          <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.eBay}}</span>
-          <span v-else>{{scope.row.eBay}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="Wish" label="Wish￥" :formatter="empty" sortable>
-        <template slot-scope="scope">
-          <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.Wish}}</span>
-          <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.Wish}}</span>
-          <span v-else>{{scope.row.Wish}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="Amazon" label="Amazon￥" :formatter="empty" sortable>
-        <template slot-scope="scope">
-          <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.Amazon}}</span>
-          <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.Amazon}}</span>
-          <span v-else>{{scope.row.Amazon}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="SMT" label="SMT$" :formatter="empty" sortable>
-        <template slot-scope="scope">
-          <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.SMT}}</span>
-          <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.SMT}}</span>
-          <span v-else>{{scope.row.SMT}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="Shopee" label="Shopee￥" :formatter="empty" sortable>
-        <template slot-scope="scope">
-          <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.Shopee}}</span>
-          <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.Shopee}}</span>
-          <span v-else>{{scope.row.Shopee}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="total" label="合计￥" :formatter="empty" sortable>
-        <template slot-scope="scope">
-          <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.total}}</span>
-          <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.total}}</span>
-          <span v-else>{{scope.row.total}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="fare" label="实际费用￥" :formatter="empty" sortable>
-        <template slot-scope="scope">
-          <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.fare}}</span>
-          <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.fare}}</span>
-          <span v-else>{{scope.row.fare}}</span>
-        </template>
-      </el-table-column>
-    </el-table>
+    <div v-loading="listLoading">
+      <el-table id="sale-table" :header-row-style="rowheader" height="800" :data="tableData" @sort-change="sortNumber" style="width: 100%;" v-show="this.tableData.length>0?true:false">
+        <el-table-column prop="wlCompany" label="物流公司" :formatter="empty" sortable>
+          <template slot-scope="scope">
+            <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.wlCompany}}</span>
+            <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.wlCompany}}</span>
+            <span v-else>{{scope.row.wlCompany}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="eBay" label="eBay￥" :formatter="empty" sortable>
+          <template slot-scope="scope">
+            <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.eBay}}</span>
+            <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.eBay}}</span>
+            <span v-else>{{scope.row.eBay}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="Wish" label="Wish￥" :formatter="empty" sortable>
+          <template slot-scope="scope">
+            <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.Wish}}</span>
+            <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.Wish}}</span>
+            <span v-else>{{scope.row.Wish}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="Amazon" label="Amazon￥" :formatter="empty" sortable>
+          <template slot-scope="scope">
+            <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.Amazon}}</span>
+            <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.Amazon}}</span>
+            <span v-else>{{scope.row.Amazon}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="SMT" label="SMT$" :formatter="empty" sortable>
+          <template slot-scope="scope">
+            <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.SMT}}</span>
+            <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.SMT}}</span>
+            <span v-else>{{scope.row.SMT}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="Shopee" label="Shopee￥" :formatter="empty" sortable>
+          <template slot-scope="scope">
+            <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.Shopee}}</span>
+            <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.Shopee}}</span>
+            <span v-else>{{scope.row.Shopee}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="total" label="合计￥" :formatter="empty" sortable>
+          <template slot-scope="scope">
+            <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.total}}</span>
+            <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.total}}</span>
+            <span v-else>{{scope.row.total}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="fare" label="实际费用￥" :formatter="empty" sortable>
+          <template slot-scope="scope">
+            <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.fare}}</span>
+            <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.fare}}</span>
+            <span v-else>{{scope.row.fare}}</span>
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
   </div>
 </template>
 
@@ -93,6 +93,9 @@ import { compareUp, compareDown } from "../../api/tools";
 export default {
   data() {
     return {
+      form: {
+        dateRange: []
+      },
       show: false,
       listLoading: false,
       tableData: [],
@@ -103,6 +106,59 @@ export default {
         beginDate: "",
         endDate: "",
         wlCompany: ""
+      },
+      pickerOptions2: {
+        shortcuts: [
+          {
+            text: "本月",
+            onClick(picker) {
+              const end = new Date();
+              const y = end.getFullYear();
+              let m = end.getMonth() + 1;
+              if (m < 10) {
+                m = "0" + m;
+              }
+              const firstday = y + "-" + m + "-" + "01";
+              const start = new Date();
+              const sy = start.getFullYear();
+              let sm = start.getMonth() + 1;
+              const sd = start.getDate();
+              if (sm < 10) {
+                sm = "0" + sm;
+              }
+              const sfirstday = sy + "-" + sm + "-" + sd;
+              picker.$emit("pick", [firstday, sfirstday]);
+            }
+          },
+          {
+            text: "上个月",
+            onClick(picker) {
+              const nowdays = new Date();
+              let year = nowdays.getFullYear();
+              let month = nowdays.getMonth();
+              if (month === 0) {
+                month = 12;
+                year = year - 1;
+              }
+              if (month < 10) {
+                month = "0" + month;
+              }
+              const firstDay = [year, month, "01"].join("-");
+              const myDate = new Date(year, month, 0);
+              const lastDay = [year, month, myDate.getDate()].join("-");
+              picker.$emit("pick", [firstDay, lastDay]);
+            }
+          },
+          {
+            text: "最近一个月",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit("pick", [start, end]);
+            }
+          }
+        ]
       }
     };
   },
@@ -112,6 +168,8 @@ export default {
         if (valid) {
           this.show = true;
           this.listLoading = true;
+          this.condition.beginDate = this.form.dateRange[0];
+          this.condition.endDate = this.form.dateRange[1];
           getPerformcost(this.condition).then(response => {
             this.listLoading = false;
             let obj = response.data.data;

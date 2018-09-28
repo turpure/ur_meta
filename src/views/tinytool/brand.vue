@@ -38,7 +38,7 @@
     </el-row>
     <el-col :span="24" class="toolbar" v-show="total>0">
       <div class="pagination-container" align="right">
-        <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="condition.start" :page-sizes="[15, 20, 30, 50]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
+        <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="condition.start" :page-sizes="[20, 30, 40, 50]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
         </el-pagination>
       </div>
     </el-col>
@@ -50,7 +50,7 @@ import { getBrandcountry, getBrandcategory, getBrand } from "../../api/profit";
 export default {
   data() {
     return {
-      pageSize: 15,
+      pageSize: 20,
       total: null,
       listLoading: false,
       tableData: [],
@@ -65,31 +65,31 @@ export default {
       }
     };
   },
-  beforeRouteLeave(to, from, next) {
-    if (from.name == "品牌列表") {
-      let condition = JSON.stringify(this.condition);
-      sessionStorage.setItem("condition", condition);
-    } else {
-      sessionStorage.removeItem("condition");
-    }
-    next();
-  },
-  created() {
-    let condition = sessionStorage.getItem("condition");
-    if (condition != null) {
-      this.condition = JSON.parse(condition);
-      this.listLoading = true;
-      getBrand(this.condition)
-        .then(response => {
-          this.listLoading = false;
-          this.tableData = response.data.data;
-          this.total = this.tableData.length;
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
-  },
+  // beforeRouteLeave(to, from, next) {
+  //   if (from.name == "品牌列表") {
+  //     let condition = JSON.stringify(this.condition);
+  //     sessionStorage.setItem("condition", condition);
+  //   } else {
+  //     sessionStorage.removeItem("condition");
+  //   }
+  //   next();
+  // },
+  // created() {
+  //   let condition = sessionStorage.getItem("condition");
+  //   if (condition != null) {
+  //     this.condition = JSON.parse(condition);
+  //     this.listLoading = true;
+  //     getBrand(this.condition)
+  //       .then(response => {
+  //         this.listLoading = false;
+  //         this.tableData = response.data.data;
+  //         this.total = this.tableData.length;
+  //       })
+  //       .catch(error => {
+  //         console.log(error);
+  //       });
+  //   }
+  // },
   methods: {
     onSubmit() {
       this.listLoading = true;
@@ -125,19 +125,21 @@ export default {
   max-height: 760px;
   overflow: auto;
   .mix {
-    margin-top: 15px;
-    //margin-left: 150px;
-    text-align: center;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    display: inline-block;
+    height: 150px;
+    margin: 1rem;
     position: relative;
+    transition: all 0.2s ease-in-out;
+    width: 215px;
+    margin-top: 15px;
+    text-align: center;
     overflow: hidden;
-    margin-bottom: 15px;
     width: 300px;
-    display: block;
-    opacity: 1;
     img {
       max-width: 100%;
-      width: 200px;
-      height: 90px;
     }
     p {
       margin: 0 0 10px;

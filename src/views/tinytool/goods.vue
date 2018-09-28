@@ -6,38 +6,29 @@
           <el-option v-for='item in possessMan1' :key='item.username' :value='item.username'></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label='开始时间' class='input'>
-        <el-date-picker v-model='condition.beginDate' type='date' value-format='yyyy-MM-dd' placeholder='选择日期'>
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label='关键字' class='input'>
-        <el-input v-model='condition.goodsName' placeholder="商品名称关键字">
-        </el-input>
-      </el-form-item>
       <el-form-item label='产品状态' class='input'>
         <el-select v-model='condition.goodsSkuStatus' clearable>
           <el-option v-for='item in goodsSkuStatus' :key='item' :value='item'></el-option>
         </el-select>
       </el-form-item>
+      <el-form-item label='关键字' class='input'>
+        <el-input v-model='condition.goodsName' placeholder="商品名称关键字">
+        </el-input>
+      </el-form-item>
       <br>
-
       <el-form-item label='业绩归属人2' class='input'>
         <el-select v-model='condition.possessMan2' clearable>
           <el-option v-for='item in possessMan2' :key='item.username' :value='item.username'></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label='结束时间' class='input'>
-        <el-date-picker v-model='condition.endDate' type='date' value-format='yyyy-MM-dd' placeholder='选择日期'>
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label='关键字' class='input'>
-        <el-input v-model='condition.supplierName' placeholder="供应商名称关键字">
-        </el-input>
-      </el-form-item>
       <el-form-item label='产品分类1' class='input'>
         <el-select v-model='condition.categoryParentName' clearable @change="productcategory">
           <el-option v-for='item in categoryParentName' :key='item.CategoryName' :value='item.CategoryName'></el-option>
         </el-select>
+      </el-form-item>
+      <el-form-item label='关键字' class='input'>
+        <el-input v-model='condition.supplierName' placeholder="供应商名称关键字">
+        </el-input>
       </el-form-item>
       <br>
       <el-form-item label='产品分类2' class='input'>
@@ -50,30 +41,32 @@
           <el-option v-for='item in salerName' :key='item.username' :value='item.username'></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item class='input' style="margin-left:665px">
+      <el-form-item label='日期' class='input'>
+        <el-date-picker style="width:203px" v-model='form.newRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2'>
+        </el-date-picker>
+      </el-form-item>
+      <el-form-item class='input' style="margin-left:65px">
         <el-button type="primary" @click="onSubmit(condition)">搜索</el-button>
       </el-form-item>
     </el-form>
     <el-row v-loading="listLoading">
       <el-col :span="4" class="mix" v-for="item in tableData.slice((condition.start-1)*pageSize,condition.start*pageSize)" :key="item.rowId">
         <div class="mix-inner">
-          <div style="height:220px;width:200px">
-            <img :src=item.BmpFileName :alt='item.GoodsName+item.GoodsSKUStatus'>
-          </div>
-            <p>&nbsp;{{item.GoodsCode}}&nbsp;{{item.CategoryParentName}}&nbsp;{{item.CategoryName}}<br>&nbsp;{{item.possessman1}}
+          <img :src=item.BmpFileName :alt='item.GoodsName+item.GoodsSKUStatus'>
+          <p>&nbsp;{{item.GoodsCode}}&nbsp;{{item.CategoryParentName}}&nbsp;{{item.CategoryName}}<br>&nbsp;{{item.possessman1}}
           </p>
-              <p>&nbsp;{{item.GoodsName}}&nbsp;&nbsp;&nbsp;{{item.GoodsSKUStatus}}</p>
-              <div class="mix-details">
-                <h4>{{item.GoodsCode}}{{item.possessman1}}</h4>
-                <h5>{{item.CategoryParentName}}</h5>
-                <h6>{{item.CategoryName}}</h6>
-                <h5>{{item.GoodsName}}</h5>
-                <h6>{{item.GoodsSKUStatus}}</h6>
-                <a align="center" class="mix-link" :href="item.LinkUrl" target="_blank">
-                  <i class="fa fa-link"></i>
-                </a>
-              </div>
-          </div>
+            <p>&nbsp;{{item.GoodsName}}&nbsp;&nbsp;&nbsp;{{item.GoodsSKUStatus}}</p>
+            <div class="mix-details">
+              <h4>{{item.GoodsCode}}{{item.possessman1}}</h4>
+              <h5>{{item.CategoryParentName}}</h5>
+              <h6>{{item.CategoryName}}</h6>
+              <h5>{{item.GoodsName}}</h5>
+              <h6>{{item.GoodsSKUStatus}}</h6>
+              <a align="center" class="mix-link" :href="item.LinkUrl" target="_blank">
+                <i class="fa fa-link"></i>
+              </a>
+            </div>
+        </div>
       </el-col>
     </el-row>
     <el-col :span="24" class="toolbar" v-show="total>0">
@@ -95,6 +88,9 @@ import {
 export default {
   data() {
     return {
+      form: {
+        dateRange: ["", ""]
+      },
       category: [],
       pageSize: 12,
       total: null,
@@ -123,36 +119,91 @@ export default {
         categoryParentName: "",
         categoryName: "",
         start: 1,
-        limit: 100
+        limit: 1000
+      },
+      pickerOptions2: {
+        shortcuts: [
+          {
+            text: "本月",
+            onClick(picker) {
+              const end = new Date();
+              const y = end.getFullYear();
+              let m = end.getMonth() + 1;
+              if (m < 10) {
+                m = "0" + m;
+              }
+              const firstday = y + "-" + m + "-" + "01";
+              const start = new Date();
+              const sy = start.getFullYear();
+              let sm = start.getMonth() + 1;
+              const sd = start.getDate();
+              if (sm < 10) {
+                sm = "0" + sm;
+              }
+              const sfirstday = sy + "-" + sm + "-" + sd;
+              picker.$emit("pick", [firstday, sfirstday]);
+            }
+          },
+          {
+            text: "上个月",
+            onClick(picker) {
+              const nowdays = new Date();
+              let year = nowdays.getFullYear();
+              let month = nowdays.getMonth();
+              if (month === 0) {
+                month = 12;
+                year = year - 1;
+              }
+              if (month < 10) {
+                month = "0" + month;
+              }
+              const firstDay = [year, month, "01"].join("-");
+              const myDate = new Date(year, month, 0);
+              const lastDay = [year, month, myDate.getDate()].join("-");
+              picker.$emit("pick", [firstDay, lastDay]);
+            }
+          },
+          {
+            text: "最近一个月",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit("pick", [start, end]);
+            }
+          }
+        ]
       }
     };
   },
-  beforeRouteLeave(to, from, next) {
-    if (to.name != "goods") {
-      let condition = JSON.stringify(this.condition);
-      sessionStorage.setItem("condition", condition);
-    } else {
-      sessionStorage.removeItem("condition");
-    }
-    next();
-  },
-  created() {
-    let condition = sessionStorage.getItem("condition");
-    if (condition != null) {
-      this.condition = JSON.parse(condition);
-      getGoodspicture(this.condition)
-        .then(response => {
-          this.tableData = response.data.data;
-          this.total = this.tableData.length;
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
-  },
+  // beforeRouteLeave(to, from, next) {
+  //   if (to.name != "goods") {
+  //     let condition = JSON.stringify(this.condition);
+  //     sessionStorage.setItem("condition", condition);
+  //   } else {
+  //     sessionStorage.removeItem("condition");
+  //   }
+  //   next();
+  // },
+  // created() {
+  //   let condition = sessionStorage.getItem("condition");
+  //   if (condition != null) {
+  //     this.condition = JSON.parse(condition);
+  //     getGoodspicture(this.condition)
+  //       .then(response => {
+  //         this.tableData = response.data.data;
+  //         this.total = this.tableData.length;
+  //       })
+  //       .catch(error => {
+  //         console.log(error);
+  //       });
+  //   }
+  // },
   methods: {
     onSubmit() {
       this.listLoading = true;
+      this.condition.beginDate = this.form.dateRange[0];
+      this.condition.endDate = this.form.dateRange[1];
       getGoodspicture(this.condition).then(response => {
         this.listLoading = false;
         this.tableData = response.data.data;
@@ -196,27 +247,37 @@ export default {
 
 <style lang="scss" scoped>
 .el-form {
-  margin-top: 10px;
+  margin-bottom: 20px;
+  .el-form-item {
+    margin: 5px;
+  }
 }
 .el-row {
   max-height: 640px;
   overflow: auto;
   .mix {
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    display: inline-block;
+    height: 320px;
+    margin: 1rem;
     position: relative;
+    transition: all 0.2s ease-in-out;
+    width: 215px;
+    margin-top: 15px;
+    text-align: center;
     overflow: hidden;
-    margin-bottom: 15px;
-    display: block;
-    opacity: 1;
+    width: 240px;
     .mix-inner {
       position: relative;
       width: 100%;
       img {
-        display: block;
-        height: auto;
         max-width: 100%;
+        height: 220px;
       }
       .mix-details {
-        margin-left: -45px;
+        //margin-left: -45px;
         color: #fff;
         width: 100%;
         height: 200%;
@@ -225,7 +286,7 @@ export default {
         position: absolute;
         h4 {
           color: #fff;
-          margin-top: 300px;
+          margin-top: 320px;
           font-size: 18px;
           margin-bottom: 10px;
         }

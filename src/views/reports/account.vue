@@ -75,7 +75,7 @@
         <el-button style='float:left' type='default' @click='exportExcel'>导出Excel</el-button>
       </el-col>
     </el-row>
-    <el-table :data="tableData" id="sale-table" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" :height="tableHeight" :max-height="tableHeight" v-show="show2" style="width: 100%;zoom:0.6;">
+    <el-table :data="tableData.slice((condition.start-1)*pageSize,condition.start*pageSize)" id="sale-table" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" :height="tableHeight" :max-height="tableHeight" v-show="show2" style="width: 100%;zoom:0.6;">
       <el-table-column min-width="50px" prop="suffix" label="账号" :formatter="empty" sortable></el-table-column>
       <el-table-column min-width="55px" prop="pingtai" label="平台" :formatter="empty" sortable></el-table-column>
       <el-table-column min-width="70px" prop="salesman" label="销售员" :formatter="empty" sortable></el-table-column>
@@ -87,9 +87,9 @@
       <el-table-column min-width="90px" prop="ProfitRmb" label="利润￥" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="90px" prop="rate" label="利润率%" :formatter="empty" sortable="custom"></el-table-column>
     </el-table>
-    <el-col :span="24" class="toolbar" style="margin-top:0px">
+    <el-col :span="24" class="toolbar" style="margin-top:0px" v-show="total>0">
       <div class="pagination-container">
-        <el-pagination v-show="total>0" :current-page="page" :page-sizes="[10,20,30,50]" :page-size="pageSize" :total="total" background layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" />
+        <el-pagination :current-page="condition.start" :page-sizes="[25,30,40,50]" :page-size="pageSize" :total="total" background layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
       </div>
     </el-col>
   </div>
@@ -110,9 +110,8 @@ import XLSX from "xlsx";
 export default {
   data() {
     return {
-      page: 1,
-      pageSize: 10,
-      total: 10,
+      pageSize: 25,
+      total: null,
       tableHeight: 0,
       allMember: [],
       isA: true,
@@ -139,7 +138,9 @@ export default {
         sku: "",
         dateType: 1,
         dateRange: [],
-        account: []
+        account: [],
+        start: 1,
+        limit: 1000
       },
       pickerOptions2: {
         shortcuts: [
@@ -197,7 +198,12 @@ export default {
     };
   },
   methods: {
-    handleCurrentChange() {},
+    handleCurrentChange(val) {
+      this.condition.start = val;
+    },
+    handleSizeChange(val) {
+      this.pageSize = val;
+    },
     selectalls() {
       const allValues = [];
       for (const item of this.store) {
@@ -301,7 +307,7 @@ export default {
           getaccount(myform).then(response => {
             this.listLoading = false;
             this.tableData = this.searchTable = response.data.data;
-            console.log(this.tableData.length);
+            this.total = this.tableData.length;
           });
         } else {
           return false;
