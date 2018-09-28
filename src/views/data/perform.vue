@@ -1,17 +1,13 @@
 <template>
   <div>
-    <el-form :model='condition' :inline='true' ref='condition' label-width='120px' class='demo-form-inline'>
-      <el-form-item label="交易开始时间" :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]" prop="beginDate">
-        <el-date-picker v-model='condition.beginDate' type='date' value-format='yyyy-MM-dd' placeholder='选择日期'></el-date-picker>
+    <el-form :model='form' :inline='true' ref='condition' label-width='120px' class='demo-form-inline'>
+      <el-form-item label='交易日期' class='input' prop="dateRange" :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
+        <el-date-picker v-model='form.dateRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2'>
+        </el-date-picker>
       </el-form-item>
-      <el-form-item label="交易结束时间" :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]" prop="endDate">
-        <el-date-picker v-model='condition.endDate' type='date' value-format='yyyy-MM-dd' placeholder='选择日期'></el-date-picker>
-      </el-form-item>
-      <el-form-item label="新品创建时间">
-        <el-date-picker v-model='condition.createBeginDate' type='date' value-format='yyyy-MM-dd' placeholder='选择日期'></el-date-picker>
-      </el-form-item>
-      <el-form-item label="新品结束时间">
-        <el-date-picker v-model='condition.createEndDate' type='date' value-format='yyyy-MM-dd' placeholder='选择日期'></el-date-picker>
+      <el-form-item label='新品日期' class='input'>
+        <el-date-picker v-model='form.newRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2'>
+        </el-date-picker>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
@@ -26,7 +22,7 @@
           <Myechartlre :options="options" ref="myechartlre"></Myechartlre>
         </el-col>
       </el-row>
-      <el-tabs v-model="activeName" @tab-click="handleClick">
+      <el-tabs v-model="activeName" @tab-click="handleClick" v-show="this.tableData1.length>0?true:false">
         <el-tab-pane label="所有状态" name="first">
           <el-table :header-row-style="rowheader" height="630" :data="tableData1" style="width: 100%;">
             <el-table-column min-width="100px" prop="salername" label="业绩归属人1" :formatter="empty"></el-table-column>
@@ -97,6 +93,10 @@ import { getPerform } from "../../api/profit";
 export default {
   data() {
     return {
+      form: {
+        dateRange: [],
+        newRange: ["", ""]
+      },
       activeName: "first",
       show: false,
       listLoading: false,
@@ -194,6 +194,59 @@ export default {
         endDate: "",
         createBeginDate: "",
         createEndDate: ""
+      },
+      pickerOptions2: {
+        shortcuts: [
+          {
+            text: "本月",
+            onClick(vm) {
+              const end = new Date();
+              const y = end.getFullYear();
+              let m = end.getMonth() + 1;
+              if (m < 10) {
+                m = "0" + m;
+              }
+              const firstday = y + "-" + m + "-" + "01";
+              const start = new Date();
+              const sy = start.getFullYear();
+              let sm = start.getMonth() + 1;
+              const sd = start.getDate();
+              if (sm < 10) {
+                sm = "0" + sm;
+              }
+              const sfirstday = sy + "-" + sm + "-" + sd;
+              vm.$emit("pick", [firstday, sfirstday]);
+            }
+          },
+          {
+            text: "上个月",
+            onClick(picker) {
+              const nowdays = new Date();
+              let year = nowdays.getFullYear();
+              let month = nowdays.getMonth();
+              if (month === 0) {
+                month = 12;
+                year = year - 1;
+              }
+              if (month < 10) {
+                month = "0" + month;
+              }
+              const firstDay = [year, month, "01"].join("-");
+              const myDate = new Date(year, month, 0);
+              const lastDay = [year, month, myDate.getDate()].join("-");
+              picker.$emit("pick", [firstDay, lastDay]);
+            }
+          },
+          {
+            text: "最近一个月",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit("pick", [start, end]);
+            }
+          }
+        ]
       }
     };
   },
@@ -206,6 +259,10 @@ export default {
         if (valid) {
           this.show = true;
           this.listLoading = true;
+          this.condition.beginDate = this.form.dateRange[0];
+          this.condition.endDate = this.form.dateRange[1];
+          this.condition.createBeginDate = this.form.newRange[0];
+          this.condition.createEndDate = this.form.newRange[1];
           getPerform(this.condition).then(response => {
             this.listLoading = false;
             let tableData = response.data.data;

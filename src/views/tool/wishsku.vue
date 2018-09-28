@@ -38,14 +38,14 @@
                   <el-input size=mini @keyup.native="SKUChange(scope.$index,scope.row.SKU,'0')" v-model="scope.row.SKU"></el-input>
                 </template>
               </el-table-column>
-              <el-table-column prop="property1" label="颜色">
+              <el-table-column prop="property2" label="颜色">
                 <template slot-scope="scope">
-                  <el-input size=mini @keyup.native="variation1Change(scope.$index,scope.row.property1,'1')" v-model="scope.row.property1"></el-input>
+                  <el-input size=mini @keyup.native="variation1Change(scope.$index,scope.row.property2,'1')" v-model="scope.row.property2"></el-input>
                 </template>
               </el-table-column>
-              <el-table-column prop="property2" label="尺寸">
+              <el-table-column prop="property1" label="尺寸">
                 <template slot-scope="scope">
-                  <el-input size=mini @keyup.native="property2Change(scope.$index,scope.row.property2,'2')" v-model="scope.row.property2"></el-input>
+                  <el-input size=mini @keyup.native="property2Change(scope.$index,scope.row.property1,'2')" v-model="scope.row.property1"></el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="quantity" label="数量*">
@@ -78,14 +78,14 @@
                   <el-input size=mini @keyup.native="picChange(scope.$index,scope.row.pic_url,'8')" v-model="scope.row.pic_url"></el-input>
                 </template>
               </el-table-column>
-              <el-table-column prop="property1" label="款式1">
+              <el-table-column prop="variation1" label="款式1">
                 <template slot-scope="scope">
-                  <el-input size=mini @keyup.native="property1Change(scope.$index,scope.row.variation1,'9')" v-model="scope.row.varition1"></el-input>
+                  <el-input size=mini @keyup.native="property1Change(scope.$index,scope.row.variation1,'9')" v-model="scope.row.variation1"></el-input>
                 </template>
               </el-table-column>
-              <el-table-column prop="varition2" label="款式2">
+              <el-table-column prop="variation2" label="款式2">
                 <template slot-scope="scope">
-                  <el-input size=mini @keyup.native="varition2Change(scope.$index,scope.row.variation2,'10')" v-model="scope.row.varition2"></el-input>
+                  <el-input size=mini @keyup.native="varition2Change(scope.$index,scope.row.variation2,'10')" v-model="scope.row.variation2"></el-input>
                 </template>
               </el-table-column>
             </el-table>

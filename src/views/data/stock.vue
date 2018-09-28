@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { getStock } from '../../api/profit'
+import { getStock } from '../../api/profit';
 export default {
   data() {
     return {
@@ -60,9 +60,9 @@ export default {
         columnIndex === 15
       ) {
         // 指定坐标
-        return 'color:red'
+        return 'color:red';
       } else {
-        return ''
+        return '';
       }
     },
     // 导出
@@ -131,7 +131,7 @@ export default {
       }
     },
     empty(row, column, cellValue, index) {
-      return cellValue || '--'
+      return cellValue || '--';
     },
     sortNumber(column, prop, order) {
       const data = this.tableData
@@ -158,18 +158,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-span {
-  color: black;
-}
-.el-col-24 {
-  .portlet {
-    .portlet-title {
-      background-color: #4b8df8;
-      //margin-bottom: 0px;
-      padding: 8px 10px 4px 10px;
-      border-bottom: 1px solid #eee;
-      color: #fff !important;
-    }
+.toolbar {
+  margin-top: 0px;
+  .el-col-2 {
+    margin-bottom: 5px;
   }
 }
 </style>
