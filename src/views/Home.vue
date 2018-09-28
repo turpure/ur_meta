@@ -12,7 +12,9 @@
       <el-col :span="14">
         <el-menu :default-active="activeIndex" @select="handleSelect" class="el-menu-demo" mode="horizontal" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" router>
           <el-submenu v-for="(item,position) in allMenu" :index="generateIndex(-1,position)" :key="generateIndex(-1,position)">
-            <template slot="title">{{item.name}}</template>
+            <template slot="title">
+              <font size="4">{{item.name}}</font>
+            </template>
             <el-menu-item v-for="(child,index) in item.children" :index="child.route" :key="generateIndex(position,index)">{{child.name}}</el-menu-item>
           </el-submenu>
         </el-menu>
@@ -129,7 +131,6 @@ export default {
     },
     handleSelect(index, indexPath) {
       this.activeIndex = index;
-      debugger;
       this.collapsed = true;
       var asideIndex = parseInt(indexPath[0]) - 1;
       const allMenu = this.allMenu;
@@ -166,9 +167,7 @@ export default {
 
 <style lang="scss" scoped >
 @import "~scss_vars";
-.el-submenu__title * {
-  font-size: 18px;
-}
+
 .el-dropdown-menu {
   top: 40px !important;
 }
