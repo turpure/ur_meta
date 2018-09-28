@@ -24,7 +24,7 @@
       </el-row>
       <el-tabs v-model="activeName" @tab-click="handleClick" v-show="this.tableData1.length>0?true:false">
         <el-tab-pane label="所有状态" name="first">
-          <el-table :header-row-style="rowheader" height="630" :data="tableData1" style="width: 100%;">
+          <el-table :header-row-style="rowheader" show-summary :summary-method="getSummaries" height="630" :data="tableData1" style="width: 100%;">
             <el-table-column min-width="100px" prop="salername" label="业绩归属人1" :formatter="empty"></el-table-column>
             <el-table-column min-width="80px" prop="goodsNum" label="商品总数" :formatter="empty"></el-table-column>
             <el-table-column min-width="90px" prop="SoldNum" label="出单商品数" :formatter="empty"></el-table-column>
@@ -44,7 +44,7 @@
           </el-table>
         </el-tab-pane>
         <el-tab-pane label="爆款" name="second">
-          <el-table :header-row-style="rowheader" height="630" :data="tableData2" style="width: 100%;">
+          <el-table :header-row-style="rowheader" show-summary :summary-method="getSummaries" height="630" :data="tableData2" style="width: 100%;">
             <el-table-column min-width="100px" prop="salername" label="业绩归属人1" :formatter="empty"></el-table-column>
             <el-table-column min-width="80px" prop="goodsNum" label="商品总数" :formatter="empty"></el-table-column>
             <el-table-column min-width="80px" prop="SoldNum" label="爆款总数" :formatter="empty"></el-table-column>
@@ -64,7 +64,7 @@
           </el-table>
         </el-tab-pane>
         <el-tab-pane label="旺款" name="third">
-          <el-table :header-row-style="rowheader" height="630" :data="tableData3" style="width: 100%;">
+          <el-table :header-row-style="rowheader" show-summary :summary-method="getSummaries" height="630" :data="tableData3" style="width: 100%;">
             <el-table-column min-width="100px" prop="salername" label="业绩归属人1" :formatter="empty"></el-table-column>
             <el-table-column min-width="80px" prop="goodsNum" label="商品总数" :formatter="empty"></el-table-column>
             <el-table-column min-width="80px" prop="SoldNum" label="旺款总数" :formatter="empty"></el-table-column>
@@ -251,6 +251,66 @@ export default {
     };
   },
   methods: {
+    //合计
+    getSummaries(param) {
+      const { columns, data } = param;
+      const sums = [];
+      const fileds = columns.map(item => item.property);
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = "合计";
+          return;
+        }
+        const values = data.map(item =>
+          Number(item[column.property] ? item[column.property] : "unkonwn")
+        );
+        if (!values.every(value => isNaN(value))) {
+          sums[index] = values.reduce((prev, curr) => {
+            const value = Number(curr);
+            if (!isNaN(value)) {
+              return prev + curr;
+            } else {
+              return prev;
+            }
+          }, 0);
+          sums[index] = Math.round(sums[index] * 100) / 100;
+        } else {
+          sums[index] = "N/A";
+        }
+      });
+      // 退款率和利润率核算
+      sums[fileds.indexOf("SoldRate")] =
+        Math.round(
+          (sums[fileds.indexOf("SoldNum")] * 10000) /
+            sums[fileds.indexOf("goodsNum")]
+        ) / 100;
+      sums[fileds.indexOf("ProfitRate")] =
+        Math.round(
+          (sums[fileds.indexOf("profitRmb")] * 10000) /
+            sums[fileds.indexOf("saleMoneyRmb")]
+        ) / 100;
+      sums[fileds.indexOf("wishRate")] =
+        Math.round(
+          (sums[fileds.indexOf("wishSoldNum")] * 10000) /
+            sums[fileds.indexOf("goodsNum")]
+        ) / 100;
+      sums[fileds.indexOf("eBayRate")] =
+        Math.round(
+          (sums[fileds.indexOf("eabySoldNum")] * 10000) /
+            sums[fileds.indexOf("goodsNum")]
+        ) / 100;
+      sums[fileds.indexOf("SMTRate")] =
+        Math.round(
+          (sums[fileds.indexOf("SMTSoldNum")] * 10000) /
+            sums[fileds.indexOf("goodsNum")]
+        ) / 100;
+      sums[fileds.indexOf("amaRate")] =
+        Math.round(
+          (sums[fileds.indexOf("amaSoldNum")] * 10000) /
+            sums[fileds.indexOf("goodsNum")]
+        ) / 100;
+      return sums;
+    },
     handleClick(tab, event) {
       this.activeName = tab.name;
     },
@@ -282,7 +342,7 @@ export default {
               const sery = {
                 type: "bar",
                 stack: "总量",
-                itemStyle: { normal: { color: "gray" } }
+                itemStyle: { normal: { color: "#84C1FF" } }
               };
               const amt = [];
               ret.map(element => {
@@ -299,7 +359,7 @@ export default {
               const sery = {
                 type: "bar",
                 stack: "总量",
-                itemStyle: { normal: { color: "gray" } }
+                itemStyle: { normal: { color: "#84C1FF" } }
               };
               const amt = [];
               ret.map(element => {
