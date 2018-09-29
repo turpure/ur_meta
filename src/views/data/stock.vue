@@ -17,21 +17,21 @@
     </el-row>
     <el-table :data="tableData" :header-cell-style="thstyle">
       <el-table-column prop="Season" label="季节" :formatter="empty" sortable></el-table-column>
-      <el-table-column min-width="100px" prop="goodscode" label="商品编码" :formatter="empty" sortable></el-table-column>
-      <el-table-column min-width="130px" prop="num" label="最大延迟天数" :formatter="empty" sortable></el-table-column>
-      <el-table-column min-width="100px" prop="delay_days" label="SKU数" :formatter="empty" sortable></el-table-column>
-      <el-table-column min-width="100px" prop="goodsname" label="商品名" :formatter="empty" sortable></el-table-column>
-      <el-table-column min-width="100px" prop="GoodsCodeStat" label="商品状态" :formatter="empty" sortable></el-table-column>
-      <el-table-column min-width="100px" prop="Purchaser" label="采购人" :formatter="empty" sortable></el-table-column>
-      <el-table-column min-width="130px" prop="SalerName" label="业绩归属人1" :formatter="empty" sortable></el-table-column>
-      <el-table-column min-width="130px" prop="StockDays" label="采购到货天数" :formatter="empty" sortable></el-table-column>
-      <el-table-column min-width="130px" prop="sellDays" label="预警销售天数" :formatter="empty" sortable></el-table-column>
-      <el-table-column min-width="100px" prop="SellCount1" label="5天销量" :formatter="empty" sortable></el-table-column>
-      <el-table-column min-width="110px" prop="SellCount2" label="10天销量" :formatter="empty" sortable></el-table-column>
-      <el-table-column min-width="110px" prop="SellCount3" label="20天销量" :formatter="empty" sortable></el-table-column>
-      <el-table-column min-width="120px" prop="factStockNum" label="实际库存量" :formatter="empty" sortable></el-table-column>
-      <el-table-column min-width="120px" prop="NotInStore" label="采购未入库" :formatter="empty" sortable></el-table-column>
-      <el-table-column min-width="130px" prop="hopeUseNum" label="预计可用库存" :formatter="empty" sortable></el-table-column>
+      <el-table-column min-width="100" prop="goodscode" label="商品编码" :formatter="empty" sortable></el-table-column>
+      <el-table-column min-width="130" prop="num" label="最大延迟天数" :formatter="empty" sortable></el-table-column>
+      <el-table-column min-width="100" prop="delay_days" label="SKU数" :formatter="empty" sortable></el-table-column>
+      <el-table-column min-width="100" prop="goodsname" label="商品名" :formatter="empty" sortable></el-table-column>
+      <el-table-column min-width="100" prop="GoodsCodeStat" label="商品状态" :formatter="empty" sortable></el-table-column>
+      <el-table-column min-width="100" prop="Purchaser" label="采购人" :formatter="empty" sortable></el-table-column>
+      <el-table-column min-width="130" prop="SalerName" label="业绩归属人1" :formatter="empty" sortable></el-table-column>
+      <el-table-column min-width="130" prop="StockDays" label="采购到货天数" :formatter="empty" sortable></el-table-column>
+      <el-table-column min-width="130" prop="sellDays" label="预警销售天数" :formatter="empty" sortable></el-table-column>
+      <el-table-column min-width="100" prop="SellCount1" label="5天销量" :formatter="empty" sortable></el-table-column>
+      <el-table-column min-width="110" prop="SellCount2" label="10天销量" :formatter="empty" sortable></el-table-column>
+      <el-table-column min-width="110" prop="SellCount3" label="20天销量" :formatter="empty" sortable></el-table-column>
+      <el-table-column min-width="120" prop="factStockNum" label="实际库存量" :formatter="empty" sortable></el-table-column>
+      <el-table-column min-width="120" prop="NotInStore" label="采购未入库" :formatter="empty" sortable></el-table-column>
+      <el-table-column min-width="130" prop="hopeUseNum" label="预计可用库存" :formatter="empty" sortable></el-table-column>
     </el-table>
     <el-col :span="24" class="toolbar">
       <div class="pagination-container">
@@ -166,9 +166,9 @@ export default {
 
 <style lang="scss" scoped>
 .toolbar {
-  margin-top: 0px;
+  margin-top: 0rem;
   .el-col-2 {
-    margin-bottom: 5px;
+    margin-bottom: 0.5rem;
   }
 }
 </style>

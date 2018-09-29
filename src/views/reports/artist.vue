@@ -3,7 +3,7 @@
   <div>
     <div class="demo-block demo-box demo-zh-CN demo-transition" @mouseover="changeActive" @mouseout="removeActive">
       <transition name="el-fade-in-linear">
-        <el-form :model="condition" :inline="true" ref="condition" label-width="68px" class="demo-form-inline" v-show="show">
+        <el-form :model="condition" :inline="true" ref="condition" label-width="6.8rem" class="demo-form-inline" v-show="show">
           <el-form-item label="部门" class="input">
             <el-select v-model="formInline.region" multiple collapse-tags placeholder="部门" @change="choosed">
               <el-button plain type="info" @click="selectalld">全选</el-button>
@@ -35,7 +35,7 @@
           </el-form-item>
         </el-form>
       </transition>
-      <div class="demo-block-control" @click="handleChange" style="left:0px;">
+      <div class="demo-block-control" @click="handleChange" style="left:0rem;">
         <transition>
           <i :class="{'el-icon-caret-bottom':isA,'el-icon-caret-top':!isA}" class="transition-i">
           </i>
@@ -104,46 +104,46 @@
       </el-col>
     </el-row>
     <el-table ref="table" :data="tableData" id="sale-table" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show2" :height="tableHeight" :max-height="tableHeight" :highlight-current-row="true" style="width: 100%;zoom:0.9;">
-      <el-table-column v-if="this.checked1" min-width="100px" prop="possessman1Zero" label="责任人表" :formatter="empty" sortable></el-table-column>
-      <el-table-column v-if="this.checked2" min-width="130px" prop="timegroupZero" label="时间段（0-6月）"></el-table-column>
-      <el-table-column v-if="this.checked3" min-width="160px" prop="salemoneyrmbusZero" label="销售额$（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked4" min-width="170px" prop="salemoneyrmbznZero" label="销售额￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked5" min-width="180px" prop="costmoneyrmbZero" label="商品成本￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked6" min-width="190px" prop="ppebayusZero" label="交易费汇总$（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked7" min-width="200px" prop="ppebayznZero" label="交易费汇总￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked8" min-width="180px" prop="inpackagefeermbZero" label="包装成本￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked9" min-width="180px" prop="expressfarermbZero" label="运费成本￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked10" min-width="180px" prop="devofflinefeeZero" label="死库处理￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked11" min-width="180px" prop="devOpeFeeZero" label="运营杂费￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked12" min-width="170px" prop="netprofitZero" label="毛利润￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked13" min-width="170px" prop="netrateZero" label="毛利率%（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked14" min-width="140px" prop="timegroupSix" label="时间段（6-12月）"></el-table-column>
-      <el-table-column v-if="this.checked15" min-width="170px" prop="salemoneyrmbusSix" label="销售额$（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked16" min-width="170px" prop="salemoneyrmbznSix" label="销售额￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked17" min-width="190px" prop="costmoneyrmbSix" label="商品成本￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked18" min-width="200px" prop="ppebayusSix" label="交易费汇总$（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked19" min-width="200px" prop="ppebayznSix" label="交易费汇总￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked20" min-width="190px" prop="inpackagefeermbSix" label="包装成本￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked21" min-width="190px" prop="expressfarermbSix" label="运费成本￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked22" min-width="190px" prop="devofflinefeeSix" label="死库处理￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked23" min-width="190px" prop="devOpeFeeSix" label="运营杂费￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked24" min-width="170px" prop="netprofitSix" label="毛利润￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked25" min-width="170px" prop="netrateSix" label="毛利率%（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked26" min-width="150px" prop="timegroupTwe" label="时间段（12月以上）"></el-table-column>
-      <el-table-column v-if="this.checked27" min-width="180px" prop="salemoneyrmbusTwe" label="销售额$（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked28" min-width="190px" prop="salemoneyrmbznTwe" label="销售额￥（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked29" min-width="200px" prop="costmoneyrmbTwe" label="商品成本￥（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked30" min-width="210px" prop="ppebayusTwe" label="交易费汇总$（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked31" min-width="220px" prop="ppebayznTwe" label="交易费汇总￥（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked32" min-width="200px" prop="inpackagefeermbTwe" label="包装成本￥（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked33" min-width="210px" prop="expressfarermbTwe" label="运费成本￥（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked34" min-width="210px" prop="devofflinefeeTwe" label="死库处理￥（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked35" min-width="200px" prop="devOpeFeeTwe" label="运营杂费￥（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked36" min-width="190px" prop="netprofitTwe" label="毛利润￥（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked37" min-width="190px" prop="netrateTwe" label="毛利率%（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked38" min-width="160px" prop="salemoneyrmbtotal" label="销售额￥（汇总）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked39" min-width="160px" prop="netprofittotal" label="毛利润￥（汇总）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked40" min-width="160px" prop="netratetotal" label="毛利率%（汇总）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked1" min-width="100" prop="possessman1Zero" label="责任人表" :formatter="empty" sortable></el-table-column>
+      <el-table-column v-if="this.checked2" min-width="130" prop="timegroupZero" label="时间段（0-6月）"></el-table-column>
+      <el-table-column v-if="this.checked3" min-width="160" prop="salemoneyrmbusZero" label="销售额$（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked4" min-width="170" prop="salemoneyrmbznZero" label="销售额￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked5" min-width="180" prop="costmoneyrmbZero" label="商品成本￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked6" min-width="190" prop="ppebayusZero" label="交易费汇总$（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked7" min-width="200" prop="ppebayznZero" label="交易费汇总￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked8" min-width="180" prop="inpackagefeermbZero" label="包装成本￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked9" min-width="180" prop="expressfarermbZero" label="运费成本￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked10" min-width="180" prop="devofflinefeeZero" label="死库处理￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked11" min-width="180" prop="devOpeFeeZero" label="运营杂费￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked12" min-width="170" prop="netprofitZero" label="毛利润￥（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked13" min-width="170" prop="netrateZero" label="毛利率%（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked14" min-width="140" prop="timegroupSix" label="时间段（6-12月）"></el-table-column>
+      <el-table-column v-if="this.checked15" min-width="170" prop="salemoneyrmbusSix" label="销售额$（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked16" min-width="170" prop="salemoneyrmbznSix" label="销售额￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked17" min-width="190" prop="costmoneyrmbSix" label="商品成本￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked18" min-width="200" prop="ppebayusSix" label="交易费汇总$（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked19" min-width="200" prop="ppebayznSix" label="交易费汇总￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked20" min-width="190" prop="inpackagefeermbSix" label="包装成本￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked21" min-width="190" prop="expressfarermbSix" label="运费成本￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked22" min-width="190" prop="devofflinefeeSix" label="死库处理￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked23" min-width="190" prop="devOpeFeeSix" label="运营杂费￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked24" min-width="170" prop="netprofitSix" label="毛利润￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked25" min-width="170" prop="netrateSix" label="毛利率%（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked26" min-width="150" prop="timegroupTwe" label="时间段（12月以上）"></el-table-column>
+      <el-table-column v-if="this.checked27" min-width="180" prop="salemoneyrmbusTwe" label="销售额$（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked28" min-width="190" prop="salemoneyrmbznTwe" label="销售额￥（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked29" min-width="200" prop="costmoneyrmbTwe" label="商品成本￥（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked30" min-width="210" prop="ppebayusTwe" label="交易费汇总$（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked31" min-width="220" prop="ppebayznTwe" label="交易费汇总￥（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked32" min-width="200" prop="inpackagefeermbTwe" label="包装成本￥（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked33" min-width="210" prop="expressfarermbTwe" label="运费成本￥（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked34" min-width="210" prop="devofflinefeeTwe" label="死库处理￥（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked35" min-width="200" prop="devOpeFeeTwe" label="运营杂费￥（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked36" min-width="190" prop="netprofitTwe" label="毛利润￥（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked37" min-width="190" prop="netrateTwe" label="毛利率%（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked38" min-width="160" prop="salemoneyrmbtotal" label="销售额￥（汇总）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked39" min-width="160" prop="netprofittotal" label="毛利润￥（汇总）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked40" min-width="160" prop="netratetotal" label="毛利率%（汇总）" :formatter="empty" sortable="custom"></el-table-column>
     </el-table>
   </div>
 </template>
@@ -548,26 +548,22 @@ export default {
       //退款率和利润率核算
       sums[fileds.indexOf("netrateZero")] =
         Math.round(
-          sums[fileds.indexOf("netprofitZero")] *
-            10000 /
+          (sums[fileds.indexOf("netprofitZero")] * 10000) /
             sums[fileds.indexOf("salemoneyrmbznZero")]
         ) / 100;
       sums[fileds.indexOf("netrateSix")] =
         Math.round(
-          sums[fileds.indexOf("netprofitSix")] *
-            10000 /
+          (sums[fileds.indexOf("netprofitSix")] * 10000) /
             sums[fileds.indexOf("salemoneyrmbznSix")]
         ) / 100;
       sums[fileds.indexOf("netrateTwe")] =
         Math.round(
-          sums[fileds.indexOf("netprofitTwe")] *
-            10000 /
+          (sums[fileds.indexOf("netprofitTwe")] * 10000) /
             sums[fileds.indexOf("salemoneyrmbznTwe")]
         ) / 100;
       sums[fileds.indexOf("netratetotal")] =
         Math.round(
-          sums[fileds.indexOf("netprofittotal")] *
-            10000 /
+          (sums[fileds.indexOf("netprofittotal")] * 10000) /
             sums[fileds.indexOf("salemoneyrmbtotal")]
         ) / 100;
       return sums;
@@ -667,30 +663,7 @@ export default {
         "netprofittotal",
         "netratetotal"
       ];
-      let date = new Date();
-      let year = date.getFullYear();
-      let month = date.getMonth() + 1;
-      let strDate = date.getDate();
-      let hour = date.getHours();
-      let minute = date.getMinutes();
-      let second = date.getSeconds();
-      if (month >= 1 && month <= 9) {
-        month = "0" + month;
-      }
-      if (strDate >= 0 && strDate <= 9) {
-        strDate = "0" + strDate;
-      }
-      if (hour >= 0 && hour <= 9) {
-        hour = "0" + hour;
-      }
-      if (minute >= 0 && minute <= 9) {
-        minute = "0" + minute;
-      }
-      if (second >= 0 && second <= 9) {
-        second = "0" + second;
-      }
-      let Filename =
-        "美工毛利润报表" + year + month + strDate + hour + minute + second;
+      let Filename = "美工毛利润报表";
       const data = this.tableData.map(v => filterVal.map(k => v[k]));
       const [fileName, fileType, sheetName] = [Filename, "xlsx"];
       this.$toExcel({ th, data, fileName, fileType, sheetName });
@@ -729,7 +702,7 @@ export default {
 .el-select-dropdown {
   .el-button--info.is-plain {
     width: 50%;
-    padding: 5px 10px;
+    padding: 0.5rem 1rem;
     font-size: 12px;
     line-height: 1.5;
     margin-left: 0;
@@ -746,7 +719,7 @@ export default {
 }
 .el-table__body {
   td {
-    padding: 5px 0;
+    padding: 0.5rem 0;
     .cell {
       line-height: normal;
     }
@@ -760,7 +733,7 @@ export default {
   }
 }
 .el-radio.is-bordered {
-  padding: 6px 16px 0 6px;
-  height: 30px;
+  padding: 0.6rem 1.6rem 0 0.6rem;
+  height: 3rem;
 }
 </style>

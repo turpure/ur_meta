@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form v-model="condition" label-width="180px" class="demo-form-inline" :inline='true'>
+    <el-form v-model="condition" label-width="18rem" class="demo-form-inline" :inline='true'>
       <el-form-item label="卖家账号：">
         <el-select v-model="condition.suffix" filterable clearable>
           <el-option v-for='(item,index) in suffix' :index='index' :key='item.ebaySuffix' :label='item.ebayName' :value='item.ebayName'></el-option>
@@ -12,19 +12,19 @@
         </el-select>
       </el-form-item>
       <el-form-item label="产品类别：">
-        <el-input v-model="condition.Cat1" style="width:108px;" placeholder="Category1"></el-input>
-        <el-input v-model="condition.Cat2" style="width:108px;" placeholder="Category2"></el-input>
+        <el-input v-model="condition.Cat1" style="width:8.9rem;" placeholder="Category1"></el-input>
+        <el-input v-model="condition.Cat2" style="width:8.9rem;" placeholder="Category2"></el-input>
       </el-form-item>
       <br>
       <el-form-item label="商品编码：">
-        <el-input v-model="condition.goodsCode" style="width:217px;"></el-input>
+        <el-input v-model="condition.goodsCode" style="width:18.1rem;"></el-input>
       </el-form-item>
       <el-form-item label="售 价：">
-        <el-input v-model="condition.price" style="width:217px;"></el-input>
+        <el-input v-model="condition.price" style="width:18.1rem;"></el-input>
       </el-form-item>
       <el-form-item label="运 费：">
-        <el-input v-model="condition.shipping1" style="width:107px;" placeholder="首件运费"></el-input>
-        <el-input v-model="condition.shipping2" style="width:107px;" placeholder="续件运费"></el-input>
+        <el-input v-model="condition.shipping1" style="width:8.9rem;" placeholder="首件运费"></el-input>
+        <el-input v-model="condition.shipping2" style="width:8.9rem;" placeholder="续件运费"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit(condition)">
@@ -33,7 +33,7 @@
         </el-button>
       </el-form-item>
     </el-form>
-    <div class="modal-dialog" style="width:1680px;" v-show="this.tableData.length>0?true:false">
+    <div class="modal-dialog" style="width:100%;" v-show="this.tableData.length>0?true:false">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title" id="myModalLabel">多属性设置</h4>
@@ -253,13 +253,8 @@ export default {
 <style lang="scss" scoped>
 .el-form {
   .el-form-item {
-    margin: 8px;
+    margin: 0.8rem;
   }
-}
-.modal-dialog {
-  margin: 30px auto;
-  position: relative;
-  z-index: 1050;
 }
 .modal-content {
   background-color: #fff;
@@ -269,8 +264,8 @@ export default {
   background-clip: padding-box;
 }
 .modal-header {
-  padding: 10px;
-  border-bottom: 1px solid #e5e5e5;
+  padding: 1rem;
+  border-bottom: 0.1rem solid #e5e5e5;
 }
 .h4 {
   font-size: 18px;
@@ -283,18 +278,18 @@ export default {
 }
 .modal-body {
   position: relative;
-  padding: 20px;
+  padding: 2rem;
   .table {
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
     border-collapse: collapse;
-    max-height: 450px;
+    max-height: 45rem;
     overflow: auto;
   }
 }
 .modal-footer {
-  padding: 19px 20px 20px;
-  margin-top: 15px;
+  padding: 1.9rem 2rem 2rem;
+  margin-top: 1.5rem;
   text-align: right;
   border-top: 1px solid #e5e5e5;
   input[type="button"] {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :model='condition' :inline='true' ref='condition' label-width='100px' class='demo-form-inline'>
+    <el-form :model='condition' :inline='true' ref='condition' label-width='10rem' class='demo-form-inline'>
       <el-form-item label="品牌" prop="brand">
         <el-input v-model="condition.brand"></el-input>
       </el-form-item>
@@ -38,7 +38,7 @@
     </el-row>
     <el-col :span="24" class="toolbar" v-show="total>0">
       <div class="pagination-container" align="right">
-        <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="condition.start" :page-sizes="[20, 30, 40, 50]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
+        <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="condition.start" :page-sizes="[16, 30, 40, 50]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
         </el-pagination>
       </div>
     </el-col>
@@ -50,7 +50,7 @@ import { getBrandcountry, getBrandcategory, getBrand } from "../../api/profit";
 export default {
   data() {
     return {
-      pageSize: 20,
+      pageSize: 16,
       total: null,
       listLoading: false,
       tableData: [],
@@ -119,30 +119,29 @@ export default {
 
 <style lang="scss" scoped>
 .el-form-item {
-  margin-top: 10px;
+  margin-top: 1rem;
 }
 .el-row {
-  max-height: 760px;
+  max-height: 76rem;
   overflow: auto;
   .mix {
     background: #fff;
     border-radius: 2px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     display: inline-block;
-    height: 150px;
+    height: 13rem;
     margin: 1rem;
     position: relative;
     transition: all 0.2s ease-in-out;
-    width: 215px;
-    margin-top: 15px;
+    margin-top: 1.5rem;
     text-align: center;
     overflow: hidden;
-    width: 300px;
+    width: 30rem;
     img {
       max-width: 100%;
     }
     p {
-      margin: 0 0 10px;
+      margin: 0 0 1rem;
     }
     .mix-details:hover {
       bottom: 0;
@@ -157,32 +156,32 @@ export default {
       position: absolute;
       a.mix-link {
         right: 40%;
-        margin-right: 5px;
+        margin-right: 0.5rem;
         color: #555;
         display: block;
         cursor: pointer;
-        margin-top: 170px;
+        margin-top: 17rem;
         position: absolute;
-        padding: 10px 15px;
+        padding: 1rem 1.5rem;
         background: #16b2f4;
       }
       span.mix-preview {
         left: 50%;
-        margin-left: 5px;
+        margin-left: 0.5rem;
         color: #555;
         display: block;
         cursor: pointer;
-        margin-top: 170px;
+        margin-top: 17rem;
         position: absolute;
-        padding: 10px 15px;
+        padding: 1rem 1.5rem;
         background: #16b2f4;
       }
       a.mix-link:hover,
       span.mix-preview:hover {
         color: #fff;
-        padding: 9px 14px;
+        padding: 0.9rem 1.4rem;
         text-decoration: none;
-        border: solid 1px #eee;
+        border: solid 0.1rem #eee;
       }
     }
   }

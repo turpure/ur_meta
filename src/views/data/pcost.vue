@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :model='form' :inline='true' ref='condition' label-width='150px' class='demo-form-inline'>
+    <el-form :model='form' :inline='true' ref='condition' label-width='15rem' class='demo-form-inline'>
       <el-form-item label='日期' class='input' prop="dateRange" :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
         <el-date-picker v-model='form.dateRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2'>
         </el-date-picker>
@@ -23,7 +23,7 @@
       </el-col>
     </el-row>
     <div v-loading="listLoading">
-      <el-table id="sale-table" :header-row-style="rowheader" height="800" :data="tableData" @sort-change="sortNumber" style="width: 100%;" v-show="this.tableData.length>0?true:false">
+      <el-table id="sale-table" :header-row-style="rowheader" max-height="800" :data="tableData" @sort-change="sortNumber" style="width: 100%;" v-show="this.tableData.length>0?true:false">
         <el-table-column prop="wlCompany" label="物流公司" :formatter="empty" sortable>
           <template slot-scope="scope">
             <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.wlCompany}}</span>
@@ -268,6 +268,6 @@ export default {
 
 <style lang="scss" scoped>
 .el-form {
-  margin-top: 10px;
+  margin-top: 1rem;
 }
 </style>

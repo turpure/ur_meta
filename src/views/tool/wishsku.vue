@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :model="condition" label-width="200px" class="demo-form-inline" :inline='true'>
+    <el-form :model="condition" label-width="20rem" class="demo-form-inline" :inline='true'>
       <el-form-item label="卖家账号：">
         <el-select v-model="condition.suffix" filterable clearable>
           <el-option v-for='(item,index) in type' :index='index' :key='item.ibaySuffix' :label='item.ibaySuffix' :value='item.ibaySuffix'></el-option>
@@ -14,18 +14,18 @@
       </el-form-item>
       <br>
       <el-form-item label="商品售价(Price$)：">
-        <el-input v-model="condition.price" style="width:217px"></el-input>
+        <el-input v-model="condition.price" style="width:18rem"></el-input>
       </el-form-item>
       <el-form-item label="运费(Shipping$)：">
         <el-input v-model="condition.shipping"></el-input>
       </el-form-item>
-      <el-form-item style="margin-left:290px">
+      <el-form-item style="margin-left:27.5rem">
         <el-button type="primary" @click="onSubmit()">属性设置
           <i class="el-icon-caret-right"></i>
         </el-button>
       </el-form-item>
     </el-form>
-    <div v-show="this.tableData.length>0?true:false" class="modal-dialog" style="width:1650px;">
+    <div v-show="this.tableData.length>0?true:false" class="modal-dialog" style="100%;">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title" id="myModalLabel">多属性设置</h4>
@@ -33,7 +33,7 @@
         <div class="modal-body">
           <el-form :model="condition1">
             <el-table :data="tableData" max-height="500" class="table table-hover" id="tb">
-              <el-table-column prop="SKU" label="SKU*" width="95px">
+              <el-table-column prop="SKU" label="SKU*" width="95">
                 <template slot-scope="scope">
                   <el-input size=mini @keyup.native="SKUChange(scope.$index,scope.row.SKU,'0')" v-model="scope.row.SKU"></el-input>
                 </template>
@@ -73,7 +73,7 @@
                   <el-input size=mini @keyup.native="shippingTimeChange(scope.$index,scope.row.$shippingTime,'7')" v-model="scope.row.$shippingTime"></el-input>
                 </template>
               </el-table-column>
-              <el-table-column prop="pic_url" label="主图" width="280px">
+              <el-table-column prop="pic_url" label="主图" width="280">
                 <template slot-scope="scope">
                   <el-input size=mini @keyup.native="picChange(scope.$index,scope.row.pic_url,'8')" v-model="scope.row.pic_url"></el-input>
                 </template>
@@ -239,13 +239,8 @@ export default {
 <style lang="scss" scoped>
 .el-form {
   .el-form-item {
-    margin: 5px;
+    margin: 0.5rem;
   }
-}
-.modal-dialog {
-  margin: 30px auto;
-  position: relative;
-  z-index: 1050;
 }
 .modal-content {
   position: relative;
@@ -256,36 +251,25 @@ export default {
   background-clip: padding-box;
 }
 .modal-header {
-  min-height: 16.428571429px;
-  padding: 15px;
-  border-bottom: 1px solid #e5e5e5;
-}
-.h4 {
-  font-size: 18px;
-  font-weight: 500;
-}
-.h5 {
-  font-size: 14px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  font-weight: 500;
-  line-height: 1.1;
+  min-height: 1.6rem;
+  padding: 1.5rem;
+  border-bottom: 0.1rem solid #e5e5e5;
 }
 .modal-body {
   position: relative;
-  padding: 20px;
+  padding: 2rem;
   .table {
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
     border-collapse: collapse;
     overflow: auto;
   }
 }
 .modal-footer {
-  padding: 19px 20px 20px;
-  margin-top: 15px;
+  padding: 1.9rem 2rem 2rem;
+  margin-top: 1.5rem;
   text-align: right;
-  border-top: 1px solid #e5e5e5;
+  border-top: 0.1rem solid #e5e5e5;
   input[type="button"] {
     cursor: pointer;
   }

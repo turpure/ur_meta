@@ -3,7 +3,7 @@
   <div>
     <div class="demo-block demo-box demo-zh-CN demo-transition" @mouseover="changeActive" @mouseout="removeActive">
       <transition name="el-fade-in-linear">
-        <el-form :model="condition" :inline="true" ref="condition" label-width="68px" class="demo-form-inline" v-show="show">
+        <el-form :model="condition" :inline="true" ref="condition" label-width="6.8rem" class="demo-form-inline" v-show="show">
           <el-form-item label="采购员" class="input">
             <el-select v-model="condition.member" multiple collapse-tags placeholder="采购员">
               <el-button plain type="info" @click="selectallm">全选</el-button>
@@ -28,7 +28,7 @@
           </el-form-item>
         </el-form>
       </transition>
-      <div class="demo-block-control" @click="handleChange" style="left:0px;">
+      <div class="demo-block-control" @click="handleChange" style="left:0rem;">
         <transition>
           <i :class="{'el-icon-caret-bottom':isA,'el-icon-caret-top':!isA}" class="transition-i">
           </i>
@@ -47,19 +47,19 @@
       </el-col>
     </el-row>
     <el-table :data="tableData" id="sale-table" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show2" :height="tableHeight" :max-height="tableHeight" :highlight-current-row="true" style="width: 100%">
-      <el-table-column min-width="90px" prop="purchaser" label="采购员" :formatter="empty" sortable></el-table-column>
-      <el-table-column min-width="100px" prop="salemoneyrmbus" label="成交价$" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="100px" prop="salemoneyrmbzn" label="成交价￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="130px" prop="ppebayus" label="交易费汇总$" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="130px" prop="ppebayzn" label="交易费汇总￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="115px" prop="costmoneyrmb" label="商品成本￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="115px" prop="expressfarermb" label="运费成本￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="115px" prop="inpackagefeermb" label="包装成本￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="115px" prop="devofflinefee" label="死库处理￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="120px" prop="devopefee" label="运营杂费￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="90px" prop="netprofit" label="毛利￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="100px" prop="netrate" label="毛利率%" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="120px" prop="totalamount" label="采购差额￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="90" prop="purchaser" label="采购员" :formatter="empty" sortable></el-table-column>
+      <el-table-column min-width="100" prop="salemoneyrmbus" label="成交价$" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="100" prop="salemoneyrmbzn" label="成交价￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="130" prop="ppebayus" label="交易费汇总$" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="130" prop="ppebayzn" label="交易费汇总￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="115" prop="costmoneyrmb" label="商品成本￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="115" prop="expressfarermb" label="运费成本￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="115" prop="inpackagefeermb" label="包装成本￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="115" prop="devofflinefee" label="死库处理￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="120" prop="devopefee" label="运营杂费￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="90" prop="netprofit" label="毛利￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="100" prop="netrate" label="毛利率%" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="120" prop="totalamount" label="采购差额￥" :formatter="empty" sortable="custom"></el-table-column>
     </el-table>
   </div>
 </template>
@@ -254,8 +254,7 @@ export default {
       // 退款率和利润率核算
       sums[fileds.indexOf("netrate")] =
         Math.round(
-          sums[fileds.indexOf("netprofit")] *
-            10000 /
+          (sums[fileds.indexOf("netprofit")] * 10000) /
             sums[fileds.indexOf("salemoneyrmbzn")]
         ) / 100;
       return sums;
@@ -274,30 +273,7 @@ export default {
       /* generate workbook object from table */
       var wb = XLSX.utils.table_to_book(document.querySelector("#sale-table"));
       /* get binary string as output */
-      const date = new Date();
-      const year = date.getFullYear();
-      let month = date.getMonth() + 1;
-      let strDate = date.getDate();
-      let hour = date.getHours();
-      let minute = date.getMinutes();
-      let second = date.getSeconds();
-      if (month >= 1 && month <= 9) {
-        month = "0" + month;
-      }
-      if (strDate >= 0 && strDate <= 9) {
-        strDate = "0" + strDate;
-      }
-      if (hour >= 0 && hour <= 9) {
-        hour = "0" + hour;
-      }
-      if (minute >= 0 && minute <= 9) {
-        minute = "0" + minute;
-      }
-      if (second >= 0 && second <= 9) {
-        second = "0" + second;
-      }
-      const filename =
-        "采购毛利润报表" + year + month + strDate + hour + minute + second;
+      const filename = "采购毛利润报表";
       var wbout = XLSX.write(wb, {
         bookType: "xlsx",
         bookSST: true,

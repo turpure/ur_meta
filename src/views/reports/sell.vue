@@ -3,7 +3,7 @@
   <div>
     <div class='demo-block demo-box demo-zh-CN demo-transition' @mouseover='changeActive' @mouseout='removeActive'>
       <transition name='el-fade-in-linear'>
-        <el-form :model='condition' :inline='true' ref='condition' label-width='100px' class='demo-form-inline' v-show='show'>
+        <el-form :model='condition' :inline='true' ref='condition' label-width='10rem' class='demo-form-inline' v-show='show'>
           <el-form-item label='部门' class='input'>
             <el-select v-model='condition.department' multiple collapse-tags placeholder='部门' @change='choosed'>
               <el-button plain type="info" @click="selectalld">全选</el-button>
@@ -31,7 +31,6 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <br>
           <el-form-item label="账号" class="input">
             <el-select v-model="condition.account" filterable multiple collapse-tags placeholder="账号">
               <el-button plain type="info" @click="selectall">全选</el-button>
@@ -42,19 +41,19 @@
           </el-form-item>
           <el-form-item label='时间类型' class='input' prop='dateType'>
             <el-radio-group v-model='condition.dateType'>
-              <el-radio border v-for='(item,index) in dateType' :index='index' :key='item.id' :label='item.id' :value='item.id'>{{item.type}}</el-radio>
+              <el-radio border v-for='(item,index) in dateType' :index='index' :key='item.id' :label='item.id' :value='item.id' style="width:8.63rem">{{item.type}}</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label='日期' class='input' prop='dateRange' :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
             <el-date-picker v-model='condition.dateRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2'>
             </el-date-picker>
           </el-form-item>
-          <el-form-item style="margin-left:245px">
+          <el-form-item style="margin-left:22.3rem">
             <el-button type='primary' class='input' @click='onSubmit(condition)'>查询</el-button>
           </el-form-item>
         </el-form>
       </transition>
-      <div class='demo-block-control' @click='handleChange' style='left:0px'>
+      <div class='demo-block-control' @click='handleChange' style='left:0rem'>
         <transition>
           <i :class="{'el-icon-caret-bottom':isA,'el-icon-caret-top':!isA}" class='transition-i'>
           </i>
@@ -73,26 +72,26 @@
       </el-col>
     </el-row>
     <el-table :data="tableData" id="sale-table" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" :height="tableHeight" :max-height="tableHeight" :highlight-current-row="true" v-show="show2" style="width: 100%;zoom:0.6;">
-      <el-table-column min-width="50px" prop="pingtai" label="平台" :formatter="empty" sortable></el-table-column>
-      <el-table-column min-width="55px" prop="suffix" label="账号" :formatter="empty" sortable></el-table-column>
-      <el-table-column min-width="70px" prop="salesman" label="销售员" :formatter="empty" sortable></el-table-column>
-      <el-table-column min-width="80px" prop="salemoney" label="成交价$" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="80px" prop="salemoneyzn" label="成交价￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="100px" prop="ebayFeeebay" label="eBay成交费$" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="102px" prop="ebayfeeznebay" label="eBay成交费￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="90px" prop="ppFee" label="PP成交费$" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="90px" prop="ppFeezn" label="PP成交费￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="90px" prop="costmoney" label="商品成本￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="90px" prop="expressFare" label="运费成本￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="90px" prop="inpackagemoney" label="包装成本￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="80px" prop="storename" label="发货仓库" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="90px" prop="refund" label="退款金额￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="85px" prop="refundrate" label="退款率%" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="90px" prop="diefeeZn" label="死库处理￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="90px" prop="insertionFee" label="店铺杂费￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="90px" prop="saleOpeFeeZn" label="运营杂费￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="70px" prop="grossprofit" label="毛利￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="75px" prop="grossprofitRate" label="毛利率%" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="60" prop="pingtai" label="平台" :formatter="empty" sortable></el-table-column>
+      <el-table-column min-width="65" prop="suffix" label="账号" :formatter="empty" sortable></el-table-column>
+      <el-table-column min-width="80" prop="salesman" label="销售员" :formatter="empty" sortable></el-table-column>
+      <el-table-column min-width="90" prop="salemoney" label="成交价$" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="110" prop="salemoneyzn" label="成交价￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="125" prop="ebayFeeebay" label="eBay成交费$" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="130" prop="ebayfeeznebay" label="eBay成交费￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="110" prop="ppFee" label="PP成交费$" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="115" prop="ppFeezn" label="PP成交费￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="110" prop="costmoney" label="商品成本￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="110" prop="expressFare" label="运费成本￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="110" prop="inpackagemoney" label="包装成本￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="95" prop="storename" label="发货仓库" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="110" prop="refund" label="退款金额￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="95" prop="refundrate" label="退款率%" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="110" prop="diefeeZn" label="死库处理￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="110" prop="insertionFee" label="店铺杂费￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="110" prop="saleOpeFeeZn" label="运营杂费￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="100" prop="grossprofit" label="毛利￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="95" prop="grossprofitRate" label="毛利率%" :formatter="empty" sortable="custom"></el-table-column>
     </el-table>
   </div>
 </template>
@@ -359,30 +358,7 @@ export default {
       /* generate workbook object from table */
       var wb = XLSX.utils.table_to_book(document.querySelector("#sale-table"));
       /* get binary string as output */
-      let date = new Date();
-      let year = date.getFullYear();
-      let month = date.getMonth() + 1;
-      let strDate = date.getDate();
-      let hour = date.getHours();
-      let minute = date.getMinutes();
-      let second = date.getSeconds();
-      if (month >= 1 && month <= 9) {
-        month = "0" + month;
-      }
-      if (strDate >= 0 && strDate <= 9) {
-        strDate = "0" + strDate;
-      }
-      if (hour >= 0 && hour <= 9) {
-        hour = "0" + hour;
-      }
-      if (minute >= 0 && minute <= 9) {
-        minute = "0" + minute;
-      }
-      if (second >= 0 && second <= 9) {
-        second = "0" + second;
-      }
-      const filename =
-        "销售毛利润报表" + year + month + strDate + hour + minute + second;
+      const filename = "销售毛利润报表";
       var wbout = XLSX.write(wb, {
         bookType: "xlsx",
         bookSST: true,
@@ -428,14 +404,12 @@ export default {
       // 退款率和利润率核算
       sums[fileds.indexOf("refundrate")] =
         Math.round(
-          sums[fileds.indexOf("refund")] *
-            10000 /
+          (sums[fileds.indexOf("refund")] * 10000) /
             sums[fileds.indexOf("salemoneyzn")]
         ) / 100;
       sums[fileds.indexOf("grossprofitRate")] =
         Math.round(
-          sums[fileds.indexOf("grossprofit")] *
-            10000 /
+          (sums[fileds.indexOf("grossprofit")] * 10000) /
             sums[fileds.indexOf("salemoneyzn")]
         ) / 100;
       return sums;
@@ -473,13 +447,13 @@ export default {
 
 <style lang="scss" scoped>
 .el-form {
-  margin-bottom: 20px;
-  margin-top: 15px;
+  margin-bottom: 1.7rem;
+  margin-top: 1.5rem;
   .el-form-item {
-    margin-bottom: 0px;
+    margin-bottom: 0rem;
     .el-form-item__content {
       .el-date-editor--daterange {
-        width: 217px;
+        width: 18rem;
         .el-range-input {
           width: 100%;
         }
@@ -490,7 +464,7 @@ export default {
 .el-select-dropdown {
   .el-button--info.is-plain {
     width: 50%;
-    padding: 5px 10px;
+    padding: 0.5rem 1rem;
     font-size: 12px;
     line-height: 1.5;
     margin-left: 0;

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form v-model="condition" label-width="200px" class="demo-form-inline" :inline='true'>
+    <el-form v-model="condition" label-width="20rem" class="demo-form-inline" :inline='true'>
       <el-form-item label="卖家账号：">
         <el-select v-model="condition.suffix" filterable clearable>
           <el-option v-for='(item,index) in suffix' :index='index' :key='item.DictionaryName' :label='item.DictionaryName' :value='item.DictionaryName'></el-option>
@@ -18,7 +18,7 @@
         </el-button>
       </el-form-item>
     </el-form>
-    <div v-show="this.tableData.length>0?true:false" class="modal-dialog" style="width:1680px;">
+    <div v-show="this.tableData.length>0?true:false" class="modal-dialog" style="width:100%;">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title" id="myModalLabel">多属性设置</h4>
@@ -203,13 +203,8 @@ export default {
 <style lang="scss" scoped>
 .el-form {
   .el-form-item {
-    margin: 8px;
+    margin: 0.8rem;
   }
-}
-.modal-dialog {
-  margin: 20px auto;
-  position: relative;
-  z-index: 1050;
 }
 .modal-content {
   position: relative;
@@ -220,9 +215,9 @@ export default {
   background-clip: padding-box;
 }
 .modal-header {
-  min-height: 16.428571429px;
-  padding: 10px;
-  border-bottom: 1px solid #e5e5e5;
+  min-height: 1.6rem;
+  padding: 1rem;
+  border-bottom: 0.1rem solid #e5e5e5;
 }
 .h4 {
   font-size: 18px;
@@ -235,20 +230,20 @@ export default {
 }
 .modal-body {
   position: relative;
-  padding: 20px;
+  padding: 2rem;
   .table {
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
     border-collapse: collapse;
-    max-height: 600px;
+    max-height: 50rem;
     overflow: auto;
   }
 }
 .modal-footer {
-  padding: 19px 20px 20px;
-  margin-top: 15px;
+  padding: 1.9rem 2rem 2rem;
+  margin-top: 1.5rem;
   text-align: right;
-  border-top: 1px solid #e5e5e5;
+  border-top: 0.1rem solid #e5e5e5;
   input[type="button"] {
     cursor: pointer;
   }
