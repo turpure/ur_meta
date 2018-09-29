@@ -1,6 +1,6 @@
 <template>
   <!-- <div>销售额走势</div>     -->
-  <div>
+  <div style="overflow-y: auto;">
     <div class="demo-block demo-box demo-zh-CN demo-transition" @mouseover="changeActive" @mouseout="removeActive">
       <transition name="el-fade-in-linear">
         <el-form :model="condition" :inline="true" ref="condition" class="demo-form-inline" label-width="10rem" v-show="show">
