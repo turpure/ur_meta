@@ -6,59 +6,11 @@
     show-icon
     type="info">
   </el-alert>
-  <el-row :gutter="40" class="panel-group">
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('newVisitis')">
-        <div class="card-panel-icon-wrapper icon-people">
-          <svg-icon icon-class="peoples" class-name="card-panel-icon" />
-        </div>
-        <div class="card-panel-description">
-          <div class="card-panel-text">New Visits</div>
-          <count-to :start-val="0" :end-val="102400" :duration="2600" class="card-panel-num"/>
-        </div>
-      </div>
-    </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('messages')">
-        <div class="card-panel-icon-wrapper icon-message">
-          <svg-icon icon-class="message" class-name="card-panel-icon" />
-        </div>
-        <div class="card-panel-description">
-          <div class="card-panel-text">Messages</div>
-          <count-to :start-val="0" :end-val="81212" :duration="3000" class="card-panel-num"/>
-        </div>
-      </div>
-    </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('purchases')">
-        <div class="card-panel-icon-wrapper icon-money">
-          <svg-icon icon-class="money" class-name="card-panel-icon" />
-        </div>
-        <div class="card-panel-description">
-          <div class="card-panel-text">Purchases</div>
-          <count-to :start-val="0" :end-val="9280" :duration="3200" class="card-panel-num"/>
-        </div>
-      </div>
-    </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('shoppings')">
-        <div class="card-panel-icon-wrapper icon-shopping">
-          <svg-icon icon-class="shopping" class-name="card-panel-icon" />
-        </div>
-        <div class="card-panel-description">
-          <div class="card-panel-text">Shoppings</div>
-          <count-to :start-val="0" :end-val="13600" :duration="3600" class="card-panel-num"/>
-        </div>
-      </div>
-    </el-col>
-  </el-row>
+  
   <div class="tabs-container">
- <el-tabs v-model="activeName" @tab-click="handleClick" style="margin-top:2%">
-    <el-tab-pane label="上海销售" name="shanghai"></el-tab-pane>
-    <el-tab-pane label="郑州销售" name="zhengzhou"></el-tab-pane>
-    <el-tab-pane label="所有部门" name="depart"></el-tab-pane>
-    <el-tab-pane label="所有开发" name="developer"></el-tab-pane>
-  </el-tabs>
+ <el-tabs v-model="activeName"  @tab-click="handleClick" style="margin-top:2%">
+    <el-tab-pane v-for="(item,index) in permission" :key="index" :label="item.label" :name="item.name"></el-tab-pane>
+ </el-tabs>
   </div>
   <div class='table-container'>
   <el-table
@@ -204,19 +156,20 @@
 
 
 <script>
-import { ShangHaiTarget, ZhengZhouTarget, DepartTarget, DeveloperTarget } from '../api/api'
+import { IndexPermission, ShangHaiTarget, ZhengZhouTarget, DepartTarget, DeveloperTarget } from '../api/api'
 import { compareUp, compareDown } from '../api/tools'
 
 export default {
   data() {
     return {
+      permission: [],
       shanghaiTable: [],
       zhengzhouTable: [],
       departTable: [],
       developerTable: [],
-      activeName: 'shanghai',
+      activeName: '',
       show: {
-        shanghai: true,
+        shanghai: false,
         zhengzhou: false,
         depart: false,
         developer: false
@@ -268,6 +221,12 @@ export default {
     DeveloperTarget().then((res) => {
       this.developerTable = res.data.data
     })
+    IndexPermission().then((res) => {
+      const ret = res.data.data
+      this.permission = ret
+      this.activeName = ret[0].name
+      this.show[this.activeName] = true
+    })
   }
 }
 </script>
@@ -297,11 +256,9 @@ export default {
 }
 .tabs-container {
   background-color:#FFFFFF;
-  // margin-left:300px;
-  // margin-right:300px;
 }
 .el-table--fit {
-  padding: 30px
+  margin: 30px;
 }
 .el-table__body{
     table-layout:auto !important;

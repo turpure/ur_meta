@@ -117,3 +117,10 @@ export function DeveloperTarget() {
     method: 'get'
   })
 }
+
+export function IndexPermission() {
+  return request({
+    url: 'site/permission',
+    method: 'get'
+  })
+}
