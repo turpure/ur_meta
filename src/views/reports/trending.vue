@@ -1,9 +1,9 @@
 <template>
   <!-- <div>销售额走势</div>     -->
-  <div>
+  <div style="overflow-y: auto;">
     <div class="demo-block demo-box demo-zh-CN demo-transition" @mouseover="changeActive" @mouseout="removeActive">
       <transition name="el-fade-in-linear">
-        <el-form :model="condition" :inline="true" ref="condition" class="demo-form-inline" label-width="100px" v-show="show">
+        <el-form :model="condition" :inline="true" ref="condition" class="demo-form-inline" label-width="10rem" v-show="show">
           <el-form-item label="部门" class="input">
             <el-select v-model="condition.department" multiple collapse-tags placeholder="部门" @change="choosed">
               <el-button plain type="info" @click='selectAll("department")'>全选</el-button>
@@ -13,7 +13,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="平台" class="input">
-            <el-select v-model="condition.plat" multiple collapse-tags placeholder="平台" style="height: 40px;">
+            <el-select v-model="condition.plat" multiple collapse-tags placeholder="平台" style="height: 3rem;">
               <el-button plain type="info" @click='selectAll("plat")'>全选</el-button>
               <el-button plain type="info" @click='unselect("plat")'>取消</el-button>
               <el-option v-for="(item,index) in plat" :index="index" :key="item.plat" :label="item.plat" :value="item.plat">
@@ -34,27 +34,26 @@
               <el-option v-for="(item,index) in account" :index="index" :key="item.id" :label="item.store" :value="item.store"></el-option>
             </el-select>
           </el-form-item>
-          <br>
           <el-form-item label="时间类型" class="input" prop="dateType">
             <el-radio-group v-model="condition.dateType">
-              <el-radio border v-for="(item,index) in dateType" :index="index" :key="item.id" :label="item.id" :value="item.id">{{item.type}}</el-radio>
+              <el-radio border v-for="(item,index) in dateType" :index="index" :key="item.id" :label="item.id" :value="item.id" style="width:8.6rem">{{item.type}}</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="显示方式" class="input" prop="flag">
-            <el-radio-group style="width:217px;" v-model="condition.flag">
-              <el-radio style="padding-right:43px;" border v-for="(item,index) in flag" :index="index" :key="item.id" :label="item.id" :value="item.id">{{item.type}}</el-radio>
+            <el-radio-group v-model="condition.flag">
+              <el-radio style="width:8.6rem;" border v-for="(item,index) in flag" :index="index" :key="item.id" :label="item.id" :value="item.id">{{item.type}}</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="日期" class="input" prop="dateRange" :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
             <el-date-picker v-model="condition.dateRange" value-format="yyyy-MM-dd" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions2">
             </el-date-picker>
           </el-form-item>
-          <el-form-item style="margin-left:245px">
+          <el-form-item style="margin-left:22.4rem">
             <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
           </el-form-item>
         </el-form>
       </transition>
-      <div class="demo-block-control" @click="handleChange" style="left:0px;">
+      <div class="demo-block-control" @click="handleChange" style="left:0rem;">
         <transition>
           <i :class="{'el-icon-caret-bottom':isA,'el-icon-caret-top':!isA}" class="transition-i">
           </i>
@@ -352,21 +351,18 @@ export default {
 
 <style lang="scss" scoped>
 .el-form {
-  margin-bottom: 20px;
-  margin-top: 15px;
+  margin-bottom: 1.7rem;
+  margin-top: 1.5rem;
   .el-form-item {
-    margin-bottom: 0px;
+    margin-bottom: 0rem;
     .el-form-item__content {
       .el-date-editor--daterange {
-        width: 217px;
+        width: 18rem;
         .el-range-input {
           width: 100%;
         }
       }
     }
   }
-}
-.el-dropdowm {
-  line-height: 45px !important;
 }
 </style>

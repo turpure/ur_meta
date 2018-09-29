@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :model='condition' :inline='true' label-width='150px' class='demo-form-inline'>
+    <el-form :model='condition' :inline='true' label-width='15rem' class='demo-form-inline'>
       <el-form-item label='业绩归属人' class='input'>
         <el-select v-model='condition.possessMan1' clearable>
           <el-option v-for='item in possessMan1' :key='item.username' :value='item.username'></el-option>
@@ -42,10 +42,10 @@
         </el-select>
       </el-form-item>
       <el-form-item label='日期' class='input'>
-        <el-date-picker style="width:203px" v-model='form.newRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2'>
+        <el-date-picker style="width:17rem" v-model='form.newRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2'>
         </el-date-picker>
       </el-form-item>
-      <el-form-item class='input' style="margin-left:65px">
+      <el-form-item class='input' style="margin-left:6.5rem">
         <el-button type="primary" @click="onSubmit(condition)">搜索</el-button>
       </el-form-item>
     </el-form>
@@ -247,34 +247,32 @@ export default {
 
 <style lang="scss" scoped>
 .el-form {
-  margin-bottom: 20px;
   .el-form-item {
-    margin: 5px;
+    margin: 0.2rem;
   }
 }
 .el-row {
-  max-height: 640px;
+  max-height: 64rem;
   overflow: auto;
   .mix {
     background: #fff;
     border-radius: 2px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     display: inline-block;
-    height: 320px;
+    height: 26rem;
     margin: 1rem;
     position: relative;
     transition: all 0.2s ease-in-out;
-    width: 215px;
-    margin-top: 15px;
+    margin-top: 1.5rem;
     text-align: center;
     overflow: hidden;
-    width: 240px;
+    width: 20rem;
     .mix-inner {
       position: relative;
       width: 100%;
       img {
         max-width: 100%;
-        height: 220px;
+        height: 17rem;
       }
       .mix-details {
         //margin-left: -45px;
@@ -286,48 +284,48 @@ export default {
         position: absolute;
         h4 {
           color: #fff;
-          margin-top: 320px;
+          margin-top: 24rem;
           font-size: 18px;
-          margin-bottom: 10px;
+          margin-bottom: 1rem;
         }
         h5 {
-          margin-top: 10px;
-          margin-bottom: 10px;
+          margin-top: 1rem;
+          margin-bottom: 1rem;
           font-size: 14px;
         }
         h6 {
           font-size: 12px;
-          margin-top: 10px;
-          margin-bottom: 10px;
+          margin-top: 1rem;
+          margin-bottom: 1rem;
         }
         a.mix-link {
-          right: 40%;
-          margin-right: 5px;
+          right: 35%;
+          margin-right: 0.5rem;
           color: #555;
           display: block;
           cursor: pointer;
-          margin-top: 10px;
+          margin-top: 1rem;
           position: absolute;
-          padding: 10px 15px;
+          padding: 1rem 1.5rem;
           background: #16b2f4;
         }
         a.mix-preview {
           left: 50%;
-          margin-left: 5px;
+          margin-left: 0.5rem;
           color: #555;
           display: block;
           cursor: pointer;
-          margin-top: 10px;
+          margin-top: 1rem;
           position: absolute;
-          padding: 10px 15px;
+          padding: 1rem 1.5rem;
           background: #16b2f4;
         }
         a.mix-link:hover,
         a.mix-preview:hover {
           color: #fff;
-          padding: 9px 14px;
+          padding: 0.9rem 1.4rem;
           text-decoration: none;
-          border: solid 1px #eee;
+          border: solid 0.1rem #eee;
         }
       }
       .mix-details:hover {

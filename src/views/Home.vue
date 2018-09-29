@@ -9,7 +9,7 @@
           <i class="fa fa-align-justify"></i>
         </div>
       </el-col>
-      <el-col :span="14">
+      <el-col :span="13">
         <el-menu :default-active="activeIndex" @select="handleSelect" class="el-menu-demo" mode="horizontal" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" router>
           <el-menu-item index="/index" key="index"><font size="4"> 主页</font></el-menu-item>
           <el-submenu v-for="(item,position) in allMenu" :index="generateIndex(-1,position)" :key="generateIndex(-1,position)">
@@ -174,48 +174,44 @@ export default {
 @import "~scss_vars";
 
 .el-dropdown-menu {
-  top: 40px !important;
+  top: 4rem !important;
 }
 .avatar {
-  width: 200px;
-  height: 200px;
+  width: 20rem;
+  height: 20rem;
   border-radius: 50%;
 }
 .container {
   position: absolute;
-  top: 0px;
-  bottom: 0px;
+  top: 0rem;
+  bottom: 0rem;
   width: 100%;
   .header {
-    height: 60px;
-    line-height: 60px;
+    height: 5rem;
+    line-height: 5rem;
     background-color: #545c64;
     color: #fff;
-    .el-col-7 {
-      .el-dropdown {
-        line-height: 0px;
-      }
-    }
     .el-col-6 {
+      height: 5rem;
       .el-dropdown {
-        line-height: 0px;
+        line-height: 0rem;
       }
     }
     .userinfo {
       text-align: right;
-      padding-right: 35px;
+      padding-right: 3.5rem;
       float: right;
       .screenfull {
-        padding-top: 14px;
+        padding-top: 1.4rem;
       }
       .userinfo-inner {
         cursor: pointer;
         color: #fff;
         img {
-          width: 40px;
-          height: 40px;
-          border-radius: 20px;
-          margin: 10px 0px 10px 10px;
+          width: 4rem;
+          height: 4rem;
+          border-radius: 2rem;
+          margin: 0.5rem 0rem 1rem 1rem;
           float: right;
         }
         .hiddenInput {
@@ -225,52 +221,52 @@ export default {
     }
     .logo {
       text-align: center;
-      height: 60px;
+      height: 5rem;
       font-size: 22px;
       border-color: rgba(238, 241, 146, 0.3);
-      border-right-width: 1px;
+      border-right-width: 0.1rem;
       border-right-style: solid;
       img {
-        width: 40px;
+        width: 4rem;
         float: left;
-        margin: 10px 10px 10px 18px;
+        margin: 1rem 1rem 1rem 1.8rem;
       }
       .txt {
         color: #fff;
       }
     }
     .logo-width {
-      width: 230px;
+      width: 23rem;
     }
     .logo-collapse-width {
-      width: 0px;
+      width: 0rem;
     }
     .tools {
-      padding: 0px 23px;
-      width: 14px;
-      height: 60px;
-      line-height: 60px;
+      padding: 0rem 2.3rem;
+      width: 1.4rem;
+      height: 5rem;
+      line-height: 5rem;
       cursor: pointer;
     }
   }
   .main {
     display: flex;
     position: absolute;
-    top: 60px;
-    bottom: 0px;
+    top: 5rem;
+    bottom: 0rem;
     overflow: hidden;
     aside {
-      flex: 0 0 230px;
-      width: 230px;
+      flex: 0 0 23rem;
+      width: 23rem;
       .el-menu {
         height: 100%;
       }
       .el-menu-item {
-        min-width: 230px;
-        padding-left: 60px !important;
+        min-width: 23rem;
+        padding-left: 5rem !important;
       }
       .data-scroll-width {
-        width: 230px;
+        width: 23rem;
       }
       .collapsed {
         .item {
@@ -278,27 +274,27 @@ export default {
         }
         .submenu {
           position: absolute;
-          top: 0px;
+          top: 0rem;
           z-index: 99999;
           height: auto;
         }
       }
     }
     .menu-expanded {
-      flex: 0 0 230px;
-      width: 230px;
+      flex: 0 0 23rem;
+      width: 23rem;
     }
     .content-container1 {
       flex: 1;
       position: absolute;
-      right: 0px;
-      top: 0px;
-      bottom: 0px;
-      left: 230px;
-      //overflow-y: scroll;
-      padding: 10px; //二次修改
+      right: 0rem;
+      top: 0rem;
+      bottom: 0rem;
+      left: 23rem;
+      //overflow: auto;
+      padding: 1rem; //二次修改
       .grid-content .bg-purple-light {
-        overflow-x: scroll;
+        overflow: auto;
       }
       .content-wrapper {
         background-color: #fff;
@@ -308,14 +304,14 @@ export default {
     .content-container2 {
       flex: 1;
       position: absolute;
-      right: 0px;
-      top: 0px;
-      bottom: 0px;
-      left: 0px;
-      //overflow-y: scroll;
-      padding: 10px; //二次修改
+      right: 0rem;
+      top: 0rem;
+      bottom: 0rem;
+      left: 0rem;
+      //overflow: auto;
+      padding: 1rem; //二次修改
       .grid-content .bg-purple-light {
-        overflow-x: scroll;
+        overflow: auto;
       }
       .content-wrapper {
         background-color: #fff;

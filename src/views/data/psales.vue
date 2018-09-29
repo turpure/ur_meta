@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :model='condition' :inline='true' ref='condition' label-width='100px' class='demo-form-inline'>
+    <el-form :model='condition' :inline='true' ref='condition' label-width='10rem' class='demo-form-inline'>
       <el-form-item label="平台">
         <el-select v-model="condition.plat" clearable>
           <el-option v-for="item in plat" :key="item.plat" :value="item.plat"></el-option>
@@ -30,26 +30,26 @@
     </el-row>
     <div v-loading="listLoading">
       <el-table max-height="730" :data="tableData.slice((condition.start-1)*pagesize,condition.start*pagesize)" @sort-change=" sortNumber" v-show="this.tableData.length>0?true:false" style="width: 100%;">
-        <el-table-column min-width="100px" prop="GoodsCode" label="商品编码" :formatter="empty" sortable></el-table-column>
-        <el-table-column min-width="100px" prop="GoodsName" label="商品名称" :formatter="empty" sortable></el-table-column>
-        <el-table-column min-width="100px" prop="GoodsSKUStatus" label="商品状态" :formatter="empty" sortable></el-table-column>
-        <el-table-column min-width="80px" prop="CategoryName" label="类目" :formatter="empty" sortable></el-table-column>
-        <el-table-column min-width="80px" prop="SalerName" label="归属1" :formatter="empty" sortable></el-table-column>
-        <el-table-column min-width="80px" prop="SalerName2" label="归属2" :formatter="empty" sortable></el-table-column>
-        <el-table-column min-width="100px" prop="CreateDate" label="创建日期" :formatter="empty" sortable></el-table-column>
-        <el-table-column min-width="110px" prop="jinyitian" label="近1天销量" :formatter="empty" sortable></el-table-column>
-        <el-table-column min-width="110px" prop="shangyitian" label="上1天销量" :formatter="empty" sortable></el-table-column>
-        <el-table-column min-width="130px" prop="changeOneDay" label="1天销量变化" :formatter="empty" sortable></el-table-column>
-        <el-table-column min-width="110px" prop="jinwutian" label="近5天销量" :formatter="empty" sortable></el-table-column>
-        <el-table-column min-width="110px" prop="shangwutian" label="上5天销量" :formatter="empty" sortable></el-table-column>
-        <el-table-column min-width="130px" prop="changeFiveDay" label="5天销量变化" :formatter="empty" sortable></el-table-column>
-        <el-table-column min-width="120px" prop="jinshitian" label="近10天销量" :formatter="empty" sortable></el-table-column>
-        <el-table-column min-width="120px" prop="shangshitian" label="上10天销量" :formatter="empty" sortable></el-table-column>
-        <el-table-column min-width="130px" prop="changeTenDay" label="10天销量变化" :formatter="empty" sortable></el-table-column>
+        <el-table-column min-width="100" prop="GoodsCode" label="商品编码" :formatter="empty" sortable></el-table-column>
+        <el-table-column min-width="100" prop="GoodsName" label="商品名称" :formatter="empty" sortable></el-table-column>
+        <el-table-column min-width="100" prop="GoodsSKUStatus" label="商品状态" :formatter="empty" sortable></el-table-column>
+        <el-table-column min-width="80" prop="CategoryName" label="类目" :formatter="empty" sortable></el-table-column>
+        <el-table-column min-width="80" prop="SalerName" label="归属1" :formatter="empty" sortable></el-table-column>
+        <el-table-column min-width="80" prop="SalerName2" label="归属2" :formatter="empty" sortable></el-table-column>
+        <el-table-column min-width="100" prop="CreateDate" label="创建日期" :formatter="empty" sortable></el-table-column>
+        <el-table-column min-width="110" prop="jinyitian" label="近1天销量" :formatter="empty" sortable></el-table-column>
+        <el-table-column min-width="110" prop="shangyitian" label="上1天销量" :formatter="empty" sortable></el-table-column>
+        <el-table-column min-width="130" prop="changeOneDay" label="1天销量变化" :formatter="empty" sortable></el-table-column>
+        <el-table-column min-width="110" prop="jinwutian" label="近5天销量" :formatter="empty" sortable></el-table-column>
+        <el-table-column min-width="110" prop="shangwutian" label="上5天销量" :formatter="empty" sortable></el-table-column>
+        <el-table-column min-width="130" prop="changeFiveDay" label="5天销量变化" :formatter="empty" sortable></el-table-column>
+        <el-table-column min-width="120" prop="jinshitian" label="近10天销量" :formatter="empty" sortable></el-table-column>
+        <el-table-column min-width="120" prop="shangshitian" label="上10天销量" :formatter="empty" sortable></el-table-column>
+        <el-table-column min-width="130" prop="changeTenDay" label="10天销量变化" :formatter="empty" sortable></el-table-column>
 
       </el-table>
     </div>
-    <el-col :span="24" class="toolbar" v-show="total>0" style="margin-top:0px">
+    <el-col :span="24" class="toolbar" v-show="total>0" style="margin-top:0rem">
       <div class="pagination-container" align="right">
         <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="condition.start" :page-sizes="[10, 20, 30, 40]" :page-size="pagesize" layout="total, sizes, prev, pager, next, jumper" :total="total">
         </el-pagination>
@@ -187,6 +187,6 @@ export default {
 
 <style lang="scss" scoped>
 .el-form {
-  margin-top: 10px;
+  margin-top: 1rem;
 }
 </style>

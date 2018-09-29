@@ -3,7 +3,7 @@
   <div>
     <div class='demo-block demo-box demo-zh-CN demo-transition' @mouseover='changeActive' @mouseout='removeActive'>
       <transition name='el-fade-in-linear'>
-        <el-form :model='condition' :inline='true' ref='condition' label-width='100px' class='demo-form-inline' v-show='show'>
+        <el-form :model='condition' :inline='true' ref='condition' label-width='10rem' class='demo-form-inline' v-show='show'>
           <el-form-item label='部门' class='input'>
             <el-select v-model='condition.department' multiple collapse-tags placeholder='部门' @change='choosed'>
               <el-button plain type="info" @click="selectalld">全选</el-button>
@@ -42,11 +42,11 @@
           </el-form-item>
           <el-form-item label='时间类型' class='input' prop='dateType'>
             <el-radio-group v-model='condition.dateType'>
-              <el-radio border v-for='(item,index) in dateType' :index='index' :key='item.id' :label='item.id' :value='item.id'>{{item.type}}</el-radio>
+              <el-radio border v-for='(item,index) in dateType' :index='index' :key='item.id' :label='item.id' :value='item.id' style="width:8.65rem">{{item.type}}</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item v-model="condition.sku" label="商品编码">
-            <el-input style="width:217px;"></el-input>
+            <el-input style="width:18.1rem;"></el-input>
           </el-form-item>
           <el-form-item label='日期' class='input' prop='dateRange' :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
             <el-date-picker v-model='condition.dateRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2'>
@@ -57,7 +57,7 @@
           </el-form-item>
         </el-form>
       </transition>
-      <div class='demo-block-control' @click='handleChange' style='left:0px'>
+      <div class='demo-block-control' @click='handleChange' style='left:0rem'>
         <transition>
           <i :class="{'el-icon-caret-bottom':isA,'el-icon-caret-top':!isA}" class='transition-i'>
           </i>
@@ -76,18 +76,18 @@
       </el-col>
     </el-row>
     <el-table :data="tableData.slice((condition.start-1)*pageSize,condition.start*pageSize)" id="sale-table" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" :height="tableHeight" :max-height="tableHeight" v-show="show2" style="width: 100%;zoom:0.6;">
-      <el-table-column min-width="50px" prop="suffix" label="账号" :formatter="empty" sortable></el-table-column>
-      <el-table-column min-width="55px" prop="pingtai" label="平台" :formatter="empty" sortable></el-table-column>
-      <el-table-column min-width="70px" prop="salesman" label="销售员" :formatter="empty" sortable></el-table-column>
-      <el-table-column min-width="80px" prop="GoodsCode" label="商品编码" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="80px" prop="GoodsName" label="商品名称" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="100px" prop="SalerName" label="开发员" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="102px" prop="SKUQty" label="销量" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="90px" prop="SaleMoneyRmb" label="销售额" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="90px" prop="ProfitRmb" label="利润￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="90px" prop="rate" label="利润率%" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="50" prop="suffix" label="账号" :formatter="empty" sortable></el-table-column>
+      <el-table-column min-width="55" prop="pingtai" label="平台" :formatter="empty" sortable></el-table-column>
+      <el-table-column min-width="70" prop="salesman" label="销售员" :formatter="empty" sortable></el-table-column>
+      <el-table-column min-width="80" prop="GoodsCode" label="商品编码" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="80" prop="GoodsName" label="商品名称" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="100" prop="SalerName" label="开发员" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="102" prop="SKUQty" label="销量" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="90" prop="SaleMoneyRmb" label="销售额" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="90" prop="ProfitRmb" label="利润￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="90" prop="rate" label="利润率%" :formatter="empty" sortable="custom"></el-table-column>
     </el-table>
-    <el-col :span="24" class="toolbar" style="margin-top:0px" v-show="total>0">
+    <el-col :span="24" class="toolbar" style="margin-top:0rem" v-show="total>0">
       <div class="pagination-container">
         <el-pagination :current-page="condition.start" :page-sizes="[25,30,40,50]" :page-size="pageSize" :total="total" background layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
       </div>
@@ -357,30 +357,7 @@ export default {
       /* generate workbook object from table */
       var wb = XLSX.utils.table_to_book(document.querySelector("#sale-table"));
       /* get binary string as output */
-      let date = new Date();
-      let year = date.getFullYear();
-      let month = date.getMonth() + 1;
-      let strDate = date.getDate();
-      let hour = date.getHours();
-      let minute = date.getMinutes();
-      let second = date.getSeconds();
-      if (month >= 1 && month <= 9) {
-        month = "0" + month;
-      }
-      if (strDate >= 0 && strDate <= 9) {
-        strDate = "0" + strDate;
-      }
-      if (hour >= 0 && hour <= 9) {
-        hour = "0" + hour;
-      }
-      if (minute >= 0 && minute <= 9) {
-        minute = "0" + minute;
-      }
-      if (second >= 0 && second <= 9) {
-        second = "0" + second;
-      }
-      const Filename =
-        "账号产品利润表" + year + month + strDate + hour + minute + second;
+      const Filename = "账号产品利润表";
       var wbout = XLSX.write(wb, {
         bookType: "xlsx",
         bookSST: true,
@@ -455,12 +432,12 @@ export default {
 
 <style lang="scss" scoped>
 .el-form {
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
   .el-form-item {
-    margin-bottom: 0px;
+    margin-bottom: 0rem;
     .el-form-item__content {
       .el-date-editor--daterange {
-        width: 217px;
+        width: 18rem;
         .el-range-input {
           width: 100%;
         }
@@ -471,7 +448,7 @@ export default {
 .el-select-dropdown {
   .el-button--info.is-plain {
     width: 50%;
-    padding: 5px 10px;
+    padding: 0.5rem 1rem;
     font-size: 12px;
     line-height: 1.5;
     margin-left: 0;
