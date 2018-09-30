@@ -65,11 +65,11 @@
 </template>
 
 <script>
-import { getMyToken } from '../../api/api';
-import { getMember, getPurchase } from '../../api/profit';
-import { compareUp, compareDown } from '../../api/tools';
-import FileSaver from 'file-saver';
-import XLSX from 'xlsx';
+import { getMyToken } from '../../api/api'
+import { getMember, getPurchase } from '../../api/profit'
+import { compareUp, compareDown } from '../../api/tools'
+import FileSaver from 'file-saver'
+import XLSX from 'xlsx'
 
 export default {
   data() {
@@ -102,7 +102,7 @@ export default {
               if (m < 10) {
                 m = '0' + m
               }
-              const firstday = y + '-' + m + '-' + '01';
+              const firstday = y + '-' + m + '-' + '01'
               const start = new Date()
               const sy = start.getFullYear()
               let sm = start.getMonth() + 1
@@ -132,15 +132,15 @@ export default {
                 m == 10 ||
                 m == 12
               ) {
-                lastday = y + '-' + ('0' + m) + '-' + '31';
+                lastday = y + '-' + ('0' + m) + '-' + '31'
               } else if (m == 4 || m == 6 || m == 9 || m == 11) {
-                lastday = y + '-' + ('0' + m) + '-' + '30';
+                lastday = y + '-' + ('0' + m) + '-' + '30'
               } else if (y % 4 == 0 && (y % 100 != 0 || y % 400 == 0)) {
-                lastday = y + '-' + '02' + '-' + '29';
+                lastday = y + '-' + '02' + '-' + '29'
               } else {
-                lastday = y + '-' + '02' + '-' + '28';
+                lastday = y + '-' + '02' + '-' + '28'
               }
-              firstday = y + '-' + ('0' + m) + '-' + '01';
+              firstday = y + '-' + ('0' + m) + '-' + '01'
               picker.$emit('pick', [firstday, lastday])
             }
           },
@@ -172,13 +172,13 @@ export default {
       this.show = !this.show
       this.isA = !this.isA
       if (this.show == false) {
-        this.text = '显示输入框';
+        this.text = '显示输入框'
         const height = document.getElementById('app').clientHeight
-        this.tableHeight = height - 140 + 'px';
+        this.tableHeight = height - 140 + 'px'
       } else if (this.show == true) {
-        this.text = '隐藏输入框';
+        this.text = '隐藏输入框'
         const height = document.getElementById('app').clientHeight
-        this.tableHeight = height - 220 + 'px';
+        this.tableHeight = height - 220 + 'px'
       }
     },
     changeActive() {
@@ -189,7 +189,7 @@ export default {
     },
     onSubmit(form) {
       const height = document.getElementById('app').clientHeight
-      this.tableHeight = height - 220 + 'px';
+      this.tableHeight = height - 220 + 'px'
       this.show2 = true
       this.$refs.condition.validate(valid => {
         if (valid) {
@@ -223,7 +223,10 @@ export default {
     },
     empty(row, column, cellValue, index) {
       row.totalamount = Math.round(row.totalamount * 100) / 100
-      return cellValue || '--';
+      if (!isNaN(cellValue)) {
+        return Number(cellValue)
+      }
+      return cellValue
     },
     getSummaries(param) {
       const { columns, data } = param
@@ -231,7 +234,7 @@ export default {
       const fileds = columns.map(item => item.property)
       columns.forEach((column, index) => {
         if (index === 0) {
-          sums[index] = '合计';
+          sums[index] = '合计'
           return
         }
         const values = data.map(item =>
@@ -248,7 +251,7 @@ export default {
           }, 0)
           sums[index] = Math.round(sums[index] * 100) / 100
         } else {
-          sums[index] = 'N/A';
+          sums[index] = 'N/A'
         }
       })
       // 退款率和利润率核算
@@ -272,17 +275,34 @@ export default {
     exportExcel() {
       /* generate workbook object from table */
       var wb = XLSX.utils.table_to_book(document.querySelector('#sale-table'), { raw: true })
+      var lastRow = wb.Sheets.Sheet1['!ref'].match(/\d+$/)[0]
+      for (var ele in wb.Sheets.Sheet1) {
+        var rowNumber = ele.replace(/[^0-9]+/g, '')
+        if (rowNumber === lastRow) {
+          delete wb.Sheets.Sheet1[ele]
+          continue
+        }
+        const row = wb.Sheets.Sheet1[ele]
+        try {
+          if (!isNaN(row['v'])) {
+            row['t'] = 'n'
+            row['v'] = Number(row['v'])
+          }
+        } catch (err) {
+          console.log(err)
+        }
+      }
       /* get binary string as output */
-      const filename = '采购毛利润报表';
+      const filename = '采购毛利润报表'
       var wbout = XLSX.write(wb, {
-        bookType: 'xlsx',
+        bookType: 'xls',
         bookSST: true,
         type: 'array'
       })
       try {
         FileSaver.saveAs(
           new Blob([wbout], { type: 'application/octet-stream' }),
-          filename + '.xlsx'
+          filename + '.xls'
         )
       } catch (e) {
         if (typeof console !== 'undefined') console.log(e, wbout)

@@ -351,23 +351,43 @@ export default {
       row.insertionFee = Math.round(row.insertionFee * 100) / 100
       row.grossprofit = Math.round(row.grossprofit * 100) / 100
       row.saleOpeFeeZn = Math.round(row.saleOpeFeeZn * 100) / 100
-      return cellValue || '--'
+      if (!isNaN(cellValue)) {
+        return Number(cellValue)
+      }
+      return cellValue
     },
     // 导出
     exportExcel() {
       /* generate workbook object from table */
       var wb = XLSX.utils.table_to_book(document.querySelector('#sale-table'), { raw: true })
+      var lastRow = wb.Sheets.Sheet1['!ref'].match(/\d+$/)[0]
+      for (var ele in wb.Sheets.Sheet1) {
+        var rowNumber = ele.replace(/[^0-9]+/g, '')
+        if (rowNumber === lastRow) {
+          delete wb.Sheets.Sheet1[ele]
+          continue
+        }
+        const row = wb.Sheets.Sheet1[ele]
+        try {
+          if (!isNaN(row['v'])) {
+            row['t'] = 'n'
+            row['v'] = Number(row['v'])
+          }
+        } catch (err) {
+          console.log(err)
+        }
+      }
       /* get binary string as output */
       const filename = '销售毛利润报表'
       var wbout = XLSX.write(wb, {
-        bookType: 'xlsx',
+        bookType: 'xls',
         bookSST: true,
         type: 'array'
       })
       try {
         FileSaver.saveAs(
           new Blob([wbout], { type: 'application/octet-stream' }),
-          filename + '.xlsx'
+          filename + '.xls'
         )
       } catch (e) {
         if (typeof console !== 'undefined') console.log(e, wbout)
