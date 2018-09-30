@@ -104,35 +104,35 @@ import {
   getStore,
   getAccount,
   getSales
-} from "../../api/profit";
-import { compareUp, compareDown } from "../../api/tools";
-import FileSaver from "file-saver";
-import XLSX from "xlsx";
+} from '../../api/profit'
+import { compareUp, compareDown } from '../../api/tools'
+import FileSaver from 'file-saver'
+import XLSX from 'xlsx'
 export default {
   data() {
-    const me = this;
+    const me = this
     return {
       tableHeight: 0,
       allMember: [],
       isA: true,
-      text: "显示输入框",
+      text: '显示输入框',
       show: true,
       show1: false,
       show2: false,
       tableData: [],
       searchTable: [],
-      searchValue: "",
+      searchValue: '',
       listLoading: false,
       department: [],
-      plat: "",
+      plat: '',
       member: [],
       store: [],
-      dateType: [{ id: 1, type: "发货时间" }, { id: 0, type: "交易时间" }],
+      dateType: [{ id: 1, type: '发货时间' }, { id: 0, type: '交易时间' }],
       dateRange: [],
       account: [],
       condition: {
         department: [],
-        plat: "",
+        plat: '',
         member: [],
         store: [],
         dateType: 1,
@@ -143,181 +143,181 @@ export default {
       pickerOptions2: {
         shortcuts: [
           {
-            text: "本月",
+            text: '本月',
             onClick(vm) {
-              const end = new Date();
-              const y = end.getFullYear();
-              let m = end.getMonth() + 1;
+              const end = new Date()
+              const y = end.getFullYear()
+              let m = end.getMonth() + 1
               if (m < 10) {
-                m = "0" + m;
+                m = '0' + m
               }
-              const firstday = y + "-" + m + "-" + "01";
-              const start = new Date();
-              const sy = start.getFullYear();
-              let sm = start.getMonth() + 1;
-              const sd = start.getDate();
+              const firstday = y + '-' + m + '-' + '01'
+              const start = new Date()
+              const sy = start.getFullYear()
+              let sm = start.getMonth() + 1
+              const sd = start.getDate()
               if (sm < 10) {
-                sm = "0" + sm;
+                sm = '0' + sm
               }
-              const sfirstday = sy + "-" + sm + "-" + sd;
-              vm.$emit("pick", [firstday, sfirstday]);
-              me.condition.dateRangeType = 0;
+              const sfirstday = sy + '-' + sm + '-' + sd
+              vm.$emit('pick', [firstday, sfirstday])
+              me.condition.dateRangeType = 0
             }
           },
           {
-            text: "上个月",
+            text: '上个月',
             onClick(picker) {
-              const nowdays = new Date();
-              let year = nowdays.getFullYear();
-              let month = nowdays.getMonth();
+              const nowdays = new Date()
+              let year = nowdays.getFullYear()
+              let month = nowdays.getMonth()
               if (month === 0) {
-                month = 12;
-                year = year - 1;
+                month = 12
+                year = year - 1
               }
               if (month < 10) {
-                month = "0" + month;
+                month = '0' + month
               }
-              const firstDay = [year, month, "01"].join("-");
-              const myDate = new Date(year, month, 0);
-              const lastDay = [year, month, myDate.getDate()].join("-");
-              picker.$emit("pick", [firstDay, lastDay]);
-              me.condition.dateRangeType = 2;
+              const firstDay = [year, month, '01'].join('-')
+              const myDate = new Date(year, month, 0)
+              const lastDay = [year, month, myDate.getDate()].join('-')
+              picker.$emit('pick', [firstDay, lastDay])
+              me.condition.dateRangeType = 2
             }
           },
           {
-            text: "最近一个月",
+            text: '最近一个月',
             onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-              picker.$emit("pick", [start, end]);
-              me.condition.dateRangeType = 1;
+              const end = new Date()
+              const start = new Date()
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+              picker.$emit('pick', [start, end])
+              me.condition.dateRangeType = 1
             }
           }
         ]
       }
-    };
+    }
   },
   methods: {
     selectalls() {
-      const allValues = [];
+      const allValues = []
       for (const item of this.store) {
-        allValues.push(item);
+        allValues.push(item)
       }
-      this.condition.store = allValues;
+      this.condition.store = allValues
     },
     noselects() {
-      this.condition.store = [];
+      this.condition.store = []
     },
     selectallm() {
-      const allValues = [];
+      const allValues = []
       for (const item of this.member) {
-        allValues.push(item.username);
+        allValues.push(item.username)
       }
-      this.condition.member = allValues;
+      this.condition.member = allValues
     },
     noselectm() {
-      this.condition.member = [];
+      this.condition.member = []
     },
     selectalld() {
-      const allValues = [];
+      const allValues = []
       for (const item of this.department) {
-        allValues.push(item.department);
+        allValues.push(item.department)
       }
-      this.condition.department = allValues;
-      this.member = this.allMember;
+      this.condition.department = allValues
+      this.member = this.allMember
     },
     noselectd() {
-      this.condition.department = [];
-      this.member = this.allMember;
+      this.condition.department = []
+      this.member = this.allMember
     },
     selectall() {
-      const allValues = [];
+      const allValues = []
       for (const item of this.account) {
-        allValues.push(item.id);
+        allValues.push(item.id)
       }
-      this.condition.account = allValues;
+      this.condition.account = allValues
     },
     noselect() {
-      this.condition.account = [];
+      this.condition.account = []
     },
     choosed() {
-      let res = [];
-      const val = this.condition.department;
-      res = this.allMember;
-      let per = [];
-      this.member = [];
-      this.condition.member = [];
-      if (val != "") {
+      let res = []
+      const val = this.condition.department
+      res = this.allMember
+      let per = []
+      this.member = []
+      this.condition.member = []
+      if (val != '') {
         for (let i = 0; i < val.length; i++) {
           per = res.filter(
-            ele => ele.department == val[i] && ele.position == "销售"
-          );
-          this.member = this.member.concat(per);
+            ele => ele.department == val[i] && ele.position == '销售'
+          )
+          this.member = this.member.concat(per)
         }
       } else {
-        this.member = res;
+        this.member = res
       }
     },
     handleChange() {
-      this.show = !this.show;
-      this.isA = !this.isA;
+      this.show = !this.show
+      this.isA = !this.isA
       if (this.show === false) {
-        this.text = "显示输入框";
-        const height = document.getElementById("app").clientHeight;
-        this.tableHeight = height + 408 + "px";
+        this.text = '显示输入框'
+        const height = document.getElementById('app').clientHeight
+        this.tableHeight = height + 408 + 'px'
       } else if (this.show === true) {
-        this.text = "隐藏输入框";
-        const height = document.getElementById("app").clientHeight;
-        this.tableHeight = height + 200 + "px";
+        this.text = '隐藏输入框'
+        const height = document.getElementById('app').clientHeight
+        this.tableHeight = height + 200 + 'px'
       }
     },
     changeActive() {
-      this.show1 = true;
+      this.show1 = true
     },
     removeActive() {
-      this.show1 = false;
+      this.show1 = false
     },
     onSubmit(form) {
-      const myform = JSON.parse(JSON.stringify(form));
-      const height = document.getElementById("app").clientHeight;
-      this.tableHeight = height + 210 + "px";
-      this.show2 = true;
+      const myform = JSON.parse(JSON.stringify(form))
+      const height = document.getElementById('app').clientHeight
+      this.tableHeight = height + 210 + 'px'
+      this.show2 = true
       this.$refs.condition.validate(valid => {
         if (valid) {
           if (myform.department.length !== 0) {
-            const val = form.department;
-            const res = this.allMember;
+            const val = form.department
+            const res = this.allMember
             for (let i = 0; i < val.length; i++) {
               const per = res.filter(
-                ele => ele.department === val[i] && ele.position === "销售"
-              );
-              this.member.concat(per);
+                ele => ele.department === val[i] && ele.position === '销售'
+              )
+              this.member.concat(per)
             }
             myform.member = this.member.map(m => {
-              return m.username;
-            });
-            this.listLoading = true;
+              return m.username
+            })
+            this.listLoading = true
             getSales(myform).then(response => {
-              this.listLoading = false;
-              this.tableData = this.searchTable = response.data.data;
-            });
+              this.listLoading = false
+              this.tableData = this.searchTable = response.data.data
+            })
           } else {
-            this.listLoading = true;
+            this.listLoading = true
             getSales(myform).then(response => {
-              this.listLoading = false;
-              this.tableData = this.searchTable = response.data.data;
-            });
+              this.listLoading = false
+              this.tableData = this.searchTable = response.data.data
+            })
           }
         } else {
-          return false;
+          return false
         }
-      });
+      })
     },
     // 搜索
     handleSearch() {
-      const searchValue = this.searchValue && this.searchValue.toLowerCase();
-      const data = this.searchTable;
+      const searchValue = this.searchValue && this.searchValue.toLowerCase()
+      const data = this.searchTable
       if (searchValue) {
         this.tableData = data.filter(function(row) {
           return Object.keys(row).some(function(key) {
@@ -325,124 +325,124 @@ export default {
               String(row[key])
                 .toLowerCase()
                 .indexOf(searchValue) > -1
-            );
-          });
-        });
+            )
+          })
+        })
       } else {
-        this.tableData = data;
+        this.tableData = data
       }
     },
     // 数字排序
     sortNumber(column, prop, order) {
-      const data = this.tableData;
-      if (column.order === "descending") {
-        this.tableData = data.sort(compareDown(data, column.prop));
+      const data = this.tableData
+      if (column.order === 'descending') {
+        this.tableData = data.sort(compareDown(data, column.prop))
       } else {
-        this.tableData = data.sort(compareUp(data, column.prop));
+        this.tableData = data.sort(compareUp(data, column.prop))
       }
     },
     // 小数和空值格式化
     empty(row, column, cellValue, index) {
-      row.grossprofitRate = Math.round(row.grossprofitRate * 100) / 100;
-      row.expressFare = Math.round(row.expressFare * 100) / 100;
-      row.refund = Math.round(row.refund * 100) / 100;
-      row.refundrate = Math.round(row.refundrate * 100) / 100;
-      row.diefeeZn = Math.round(row.diefeeZn * 100) / 100;
-      row.insertionFee = Math.round(row.insertionFee * 100) / 100;
-      row.grossprofit = Math.round(row.grossprofit * 100) / 100;
-      row.saleOpeFeeZn = Math.round(row.saleOpeFeeZn * 100) / 100;
-      return cellValue || "--";
+      row.grossprofitRate = Math.round(row.grossprofitRate * 100) / 100
+      row.expressFare = Math.round(row.expressFare * 100) / 100
+      row.refund = Math.round(row.refund * 100) / 100
+      row.refundrate = Math.round(row.refundrate * 100) / 100
+      row.diefeeZn = Math.round(row.diefeeZn * 100) / 100
+      row.insertionFee = Math.round(row.insertionFee * 100) / 100
+      row.grossprofit = Math.round(row.grossprofit * 100) / 100
+      row.saleOpeFeeZn = Math.round(row.saleOpeFeeZn * 100) / 100
+      return cellValue || '--'
     },
     // 导出
     exportExcel() {
       /* generate workbook object from table */
-      var wb = XLSX.utils.table_to_book(document.querySelector("#sale-table"));
+      var wb = XLSX.utils.table_to_book(document.querySelector('#sale-table'), { raw: true })
       /* get binary string as output */
-      const filename = "销售毛利润报表";
+      const filename = '销售毛利润报表'
       var wbout = XLSX.write(wb, {
-        bookType: "xlsx",
+        bookType: 'xlsx',
         bookSST: true,
-        type: "array"
-      });
+        type: 'array'
+      })
       try {
         FileSaver.saveAs(
-          new Blob([wbout], { type: "application/octet-stream" }),
-          filename + ".xlsx"
-        );
+          new Blob([wbout], { type: 'application/octet-stream' }),
+          filename + '.xlsx'
+        )
       } catch (e) {
-        if (typeof console !== "undefined") console.log(e, wbout);
+        if (typeof console !== 'undefined') console.log(e, wbout)
       }
       //  return wbout
     },
     // 合计
     getSummaries(param) {
-      const { columns, data } = param;
-      const sums = [];
-      const fileds = columns.map(item => item.property);
+      const { columns, data } = param
+      const sums = []
+      const fileds = columns.map(item => item.property)
       columns.forEach((column, index) => {
         if (index === 0) {
-          sums[index] = "合计";
-          return;
+          sums[index] = '合计'
+          return
         }
         const values = data.map(item =>
-          Number(item[column.property] ? item[column.property] : "unkonwn")
-        );
+          Number(item[column.property] ? item[column.property] : 'unkonwn')
+        )
         if (!values.every(value => isNaN(value))) {
           sums[index] = values.reduce((prev, curr) => {
-            const value = Number(curr);
+            const value = Number(curr)
             if (!isNaN(value)) {
-              return prev + curr;
+              return prev + curr
             } else {
-              return prev;
+              return prev
             }
-          }, 0);
-          sums[index] = Math.round(sums[index] * 100) / 100;
+          }, 0)
+          sums[index] = Math.round(sums[index] * 100) / 100
         } else {
-          sums[index] = "N/A";
+          sums[index] = 'N/A'
         }
-      });
+      })
       // 退款率和利润率核算
-      sums[fileds.indexOf("refundrate")] =
+      sums[fileds.indexOf('refundrate')] =
         Math.round(
-          (sums[fileds.indexOf("refund")] * 10000) /
-            sums[fileds.indexOf("salemoneyzn")]
-        ) / 100;
-      sums[fileds.indexOf("grossprofitRate")] =
+          (sums[fileds.indexOf('refund')] * 10000) /
+            sums[fileds.indexOf('salemoneyzn')]
+        ) / 100
+      sums[fileds.indexOf('grossprofitRate')] =
         Math.round(
-          (sums[fileds.indexOf("grossprofit")] * 10000) /
-            sums[fileds.indexOf("salemoneyzn")]
-        ) / 100;
-      return sums;
+          (sums[fileds.indexOf('grossprofit')] * 10000) /
+            sums[fileds.indexOf('salemoneyzn')]
+        ) / 100
+      return sums
     },
     // 折叠导航栏
     collapse: function() {
-      this.collapsed = !this.collapsed;
+      this.collapsed = !this.collapsed
     },
     showMenu(i, status) {
       this.$refs.menuCollapsed.getElementsByClassName(
-        "submenu-hook-" + i
-      )[0].style.display = status ? "block" : "none";
+        'submenu-hook-' + i
+      )[0].style.display = status ? 'block' : 'none'
     }
   },
   mounted() {
     getSection().then(response => {
-      this.department = response.data.data;
-    });
+      this.department = response.data.data
+    })
     getPlatform().then(response => {
-      this.plat = response.data.data;
-    });
+      this.plat = response.data.data
+    })
     getMember().then(response => {
-      const res = response.data.data;
-      this.allMember = this.member = res.filter(ele => ele.position === "销售");
-    });
+      const res = response.data.data
+      this.allMember = this.member = res.filter(ele => ele.position === '销售')
+    })
     getStore().then(response => {
-      this.store = response.data.data;
-    });
+      this.store = response.data.data
+    })
     getAccount().then(response => {
-      this.account = response.data.data;
-    });
+      this.account = response.data.data
+    })
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
