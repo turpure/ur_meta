@@ -108,7 +108,7 @@ export default {
     })
   },
   beforeRouteLeave(to, from, next) {
-    if (to.name == '首页') {
+    if (to.name === '首页') {
       const collapsed = JSON.stringify(this.collapsed)
       sessionStorage.setItem('collapsed', collapsed)
     } else {
@@ -132,7 +132,7 @@ export default {
     },
     handleSelect(index, indexPath) {
       if (index === '/index') {
-        this.asideMenu = []
+        this.collapsed = false
         return
       }
       this.activeIndex = index

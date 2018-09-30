@@ -16,7 +16,7 @@
   <el-table
     :data="shanghaiTable"
     size="small"
-    height="500"
+    height="530"
     v-if="show.shanghai"
     v-scrollBar:slim
     @sort-change="sortNumber"
@@ -54,7 +54,7 @@
     :data="zhengzhouTable"
     @sort-change="sortNumber"
     size="small"
-    height="500"
+    height="530"
     v-show="show.zhengzhou"
     >
     <el-table-column type="index" ></el-table-column>
@@ -82,7 +82,7 @@
   <el-table
     :data="departTable"
     size="small"
-    height="500"
+    height="530"
     v-show="show.depart"
     @sort-change="sortNumber"
     style="width:100%">
@@ -117,7 +117,7 @@
   <el-table
     :data="developerTable"
     size="small"
-    height="500"
+    height="530"
     v-show="show.developer"
     style="width:100%">
     <el-table-column type="index"></el-table-column>
