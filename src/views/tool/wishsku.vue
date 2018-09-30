@@ -7,32 +7,31 @@
         </el-select>
       </el-form-item>
       <el-form-item label="商品编码：">
-        <el-input v-model="condition.goodsCode"></el-input>
+        <el-input v-model="condition.goodsCode" style="width:20.4rem"></el-input>
       </el-form-item>
       <el-form-item label="保留价(msrp$)：">
-        <el-input v-model="condition.msrp"></el-input>
+        <el-input v-model="condition.msrp" style="width:20.4rem"></el-input>
       </el-form-item>
-      <br>
       <el-form-item label="商品售价(Price$)：">
-        <el-input v-model="condition.price" style="width:18rem"></el-input>
+        <el-input v-model="condition.price" style="width:20.4rem"></el-input>
       </el-form-item>
       <el-form-item label="运费(Shipping$)：">
-        <el-input v-model="condition.shipping"></el-input>
+        <el-input v-model="condition.shipping" style="width:20.4rem"></el-input>
       </el-form-item>
-      <el-form-item style="margin-left:27.5rem">
+      <el-form-item style="margin-left:30rem">
         <el-button type="primary" @click="onSubmit()">属性设置
           <i class="el-icon-caret-right"></i>
         </el-button>
       </el-form-item>
     </el-form>
-    <div v-show="this.tableData.length>0?true:false" class="modal-dialog" style="100%;">
+    <div v-show="this.tableData.length>0?true:false" class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title" id="myModalLabel">多属性设置</h4>
         </div>
         <div class="modal-body">
           <el-form :model="condition1">
-            <el-table :data="tableData" max-height="500" class="table table-hover" id="tb">
+            <el-table :data="tableData" class="table table-hover" id="tb">
               <el-table-column prop="SKU" label="SKU*" width="95">
                 <template slot-scope="scope">
                   <el-input size=mini @keyup.native="SKUChange(scope.$index,scope.row.SKU,'0')" v-model="scope.row.SKU"></el-input>
@@ -259,9 +258,9 @@ export default {
   position: relative;
   padding: 2rem;
   .table {
-    width: 100%;
     margin-bottom: 2rem;
     border-collapse: collapse;
+    max-height: 30rem;
     overflow: auto;
   }
 }

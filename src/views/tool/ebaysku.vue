@@ -12,19 +12,18 @@
         </el-select>
       </el-form-item>
       <el-form-item label="产品类别：">
-        <el-input v-model="condition.Cat1" style="width:8.9rem;" placeholder="Category1"></el-input>
-        <el-input v-model="condition.Cat2" style="width:8.9rem;" placeholder="Category2"></el-input>
+        <el-input v-model="condition.Cat1" style="width:10rem;" placeholder="Category1"></el-input>
+        <el-input v-model="condition.Cat2" style="width:10rem;" placeholder="Category2"></el-input>
       </el-form-item>
-      <br>
       <el-form-item label="商品编码：">
-        <el-input v-model="condition.goodsCode" style="width:18.1rem;"></el-input>
+        <el-input v-model="condition.goodsCode" style="width:20.4rem;"></el-input>
       </el-form-item>
       <el-form-item label="售 价：">
-        <el-input v-model="condition.price" style="width:18.1rem;"></el-input>
+        <el-input v-model="condition.price" style="width:20.4rem;"></el-input>
       </el-form-item>
       <el-form-item label="运 费：">
-        <el-input v-model="condition.shipping1" style="width:8.9rem;" placeholder="首件运费"></el-input>
-        <el-input v-model="condition.shipping2" style="width:8.9rem;" placeholder="续件运费"></el-input>
+        <el-input v-model="condition.shipping1" style="width:10rem;" placeholder="首件运费"></el-input>
+        <el-input v-model="condition.shipping2" style="width:10rem;" placeholder="续件运费"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit(condition)">
@@ -33,7 +32,7 @@
         </el-button>
       </el-form-item>
     </el-form>
-    <div class="modal-dialog" style="width:100%;" v-show="this.tableData.length>0?true:false">
+    <div class="modal-dialog" v-show="this.tableData.length>0?true:false">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title" id="myModalLabel">多属性设置</h4>
@@ -280,10 +279,9 @@ export default {
   position: relative;
   padding: 2rem;
   .table {
-    width: 100%;
     margin-bottom: 2rem;
     border-collapse: collapse;
-    max-height: 45rem;
+    max-height: 30rem;
     overflow: auto;
   }
 }

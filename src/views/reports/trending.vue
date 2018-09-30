@@ -1,6 +1,6 @@
 <template>
   <!-- <div>销售额走势</div>     -->
-  <div style="overflow-y: auto;">
+  <div>
     <div class="demo-block demo-box demo-zh-CN demo-transition" @mouseover="changeActive" @mouseout="removeActive">
       <transition name="el-fade-in-linear">
         <el-form :model="condition" :inline="true" ref="condition" class="demo-form-inline" label-width="10rem" v-show="show">
@@ -36,16 +36,16 @@
           </el-form-item>
           <el-form-item label="时间类型" class="input" prop="dateType">
             <el-radio-group v-model="condition.dateType">
-              <el-radio border v-for="(item,index) in dateType" :index="index" :key="item.id" :label="item.id" :value="item.id" style="width:8.6rem">{{item.type}}</el-radio>
+              <el-radio border v-for="(item,index) in dateType" :index="index" :key="item.id" :label="item.id" :value="item.id" style="width:9.8rem">{{item.type}}</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="显示方式" class="input" prop="flag">
             <el-radio-group v-model="condition.flag">
-              <el-radio style="width:8.6rem;" border v-for="(item,index) in flag" :index="index" :key="item.id" :label="item.id" :value="item.id">{{item.type}}</el-radio>
+              <el-radio style="width:9.7rem;" border v-for="(item,index) in flag" :index="index" :key="item.id" :label="item.id" :value="item.id">{{item.type}}</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="日期" class="input" prop="dateRange" :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
-            <el-date-picker v-model="condition.dateRange" value-format="yyyy-MM-dd" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions2">
+            <el-date-picker v-model="condition.dateRange" value-format="yyyy-MM-dd" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions2" style="width:20.4rem;">
             </el-date-picker>
           </el-form-item>
           <el-form-item style="margin-left:22.4rem">
@@ -63,7 +63,7 @@
         </transition>
       </div>
     </div>
-    <Myecharts :options="options" v-loading="listLoading" ref="myecharts"></Myecharts>
+    <Myecharts style="max-height:800px;overflow:auto" :options="options" v-loading="listLoading" ref="myecharts"></Myecharts>
   </div>
 </template>
 
