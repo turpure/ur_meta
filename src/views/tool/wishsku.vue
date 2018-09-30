@@ -7,16 +7,16 @@
         </el-select>
       </el-form-item>
       <el-form-item label="商品编码：">
-        <el-input v-model="condition.goodsCode" style="width:20.4rem"></el-input>
+        <el-input v-model="condition.goodsCode" style="width:18.1rem"></el-input>
       </el-form-item>
       <el-form-item label="保留价(msrp$)：">
-        <el-input v-model="condition.msrp" style="width:20.4rem"></el-input>
+        <el-input v-model="condition.msrp" style="width:18.1rem"></el-input>
       </el-form-item>
       <el-form-item label="商品售价(Price$)：">
-        <el-input v-model="condition.price" style="width:20.4rem"></el-input>
+        <el-input v-model="condition.price" style="width:18.1rem"></el-input>
       </el-form-item>
       <el-form-item label="运费(Shipping$)：">
-        <el-input v-model="condition.shipping" style="width:20.4rem"></el-input>
+        <el-input v-model="condition.shipping" style="width:18.1rem"></el-input>
       </el-form-item>
       <el-form-item style="margin-left:30rem">
         <el-button type="primary" @click="onSubmit()">属性设置
@@ -219,8 +219,15 @@ export default {
           second = "0" + second;
         }
         let filename =
-          "Wish商品SKU模板" + year + month + strDate + hour + minute + second;
-        downloadElement.download = filename + ".xlsx";
+          this.condition1.setting.goodsCode +
+          "_" +
+          year +
+          month +
+          strDate +
+          hour +
+          minute +
+          second;
+        downloadElement.download = filename + ".xls";
         document.body.appendChild(downloadElement);
         downloadElement.click();
         document.body.removeChild(downloadElement);

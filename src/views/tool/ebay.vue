@@ -74,14 +74,8 @@ export default {
                 second = "0" + second;
               }
               let filename =
-                "eBay商品模板" +
-                year +
-                month +
-                strDate +
-                hour +
-                minute +
-                second;
-              downloadElement.download = filename + ".xlsx";
+                "ebay_" + year + month + strDate + hour + minute + second;
+              downloadElement.download = filename + ".xls";
               document.body.appendChild(downloadElement);
               downloadElement.click();
               document.body.removeChild(downloadElement);

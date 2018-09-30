@@ -41,14 +41,14 @@
           </el-form-item>
           <el-form-item label='时间类型' class='input' prop='dateType'>
             <el-radio-group v-model='condition.dateType'>
-              <el-radio border v-for='(item,index) in dateType' :index='index' :key='item.id' :label='item.id' :value='item.id' style="width:9.7rem">{{item.type}}</el-radio>
+              <el-radio border v-for='(item,index) in dateType' :index='index' :key='item.id' :label='item.id' :value='item.id' style="width:8.6rem">{{item.type}}</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item v-model="condition.sku" label="商品编码">
-            <el-input style="width:20.4rem;"></el-input>
+            <el-input style="width:18.1rem;"></el-input>
           </el-form-item>
           <el-form-item label='日期' class='input' prop='dateRange' :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
-            <el-date-picker v-model='condition.dateRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2' style="width:20.4rem;">
+            <el-date-picker v-model='condition.dateRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2' style="width:18.1rem;">
             </el-date-picker>
           </el-form-item>
           <el-form-item>
@@ -102,10 +102,10 @@ import {
   getStore,
   getAccount,
   getaccount
-} from '../../api/profit';
-import { compareUp, compareDown } from '../../api/tools';
-import FileSaver from 'file-saver';
-import XLSX from 'xlsx';
+} from '../../api/profit'
+import { compareUp, compareDown } from '../../api/tools'
+import FileSaver from 'file-saver'
+import XLSX from 'xlsx'
 export default {
   data() {
     return {
@@ -152,7 +152,7 @@ export default {
               if (m < 10) {
                 m = '0' + m
               }
-              const firstday = y + '-' + m + '-' + '01';
+              const firstday = y + '-' + m + '-' + '01'
               const start = new Date()
               const sy = start.getFullYear()
               let sm = start.getMonth() + 1
@@ -267,13 +267,13 @@ export default {
       this.show = !this.show
       this.isA = !this.isA
       if (this.show === false) {
-        this.text = '显示输入框';
+        this.text = '显示输入框'
         const height = document.getElementById('app').clientHeight
-        this.tableHeight = height + 200 + 'px';
+        this.tableHeight = height + 200 + 'px'
       } else if (this.show === true) {
-        this.text = '隐藏输入框';
+        this.text = '隐藏输入框'
         const height = document.getElementById('app').clientHeight
-        this.tableHeight = height + 100 + 'px';
+        this.tableHeight = height + 100 + 'px'
       }
     },
     changeActive() {
@@ -285,7 +285,7 @@ export default {
     onSubmit(form) {
       const myform = JSON.parse(JSON.stringify(form))
       const height = document.getElementById('app').clientHeight
-      this.tableHeight = height + 100 + 'px';
+      this.tableHeight = height + 100 + 'px'
       this.show2 = true
       this.$refs.condition.validate(valid => {
         if (valid) {
@@ -348,29 +348,40 @@ export default {
       if (cellValue == '0') {
         return cellValue
       } else {
-        return cellValue || '--';
+        return cellValue || '--'
       }
     },
     // 导出
     exportExcel() {
-      /* generate workbook object from table */
-      var wb = XLSX.utils.table_to_book(document.querySelector('#sale-table'), { raw: true })
-      /* get binary string as output */
+      const th = [
+        '卖家简称',
+        '平台',
+        '销售员',
+        '商品编码',
+        '商品名称',
+        '开发员',
+        '销量',
+        '销售额￥',
+        '利润￥',
+        '利润率%',
+        ''
+      ]
+      const filterVal = [
+        'rowId',
+        'pingtai',
+        'salesman',
+        'GoodsCode',
+        'GoodsName',
+        'SalerName',
+        'SKUQty',
+        'SaleMoneyRmb',
+        'ProfitRmb',
+        'rate'
+      ]
       const Filename = '账号产品利润表';
-      var wbout = XLSX.write(wb, {
-        bookType: 'xlsx',
-        bookSST: true,
-        type: 'array'
-      })
-      try {
-        FileSaver.saveAs(
-          new Blob([wbout], { type: 'application/octet-stream' }),
-          Filename + '.xlsx'
-        )
-      } catch (e) {
-        if (typeof console !== 'undefined') console.log(e, wbout)
-      }
-      //  return wbout
+      const data = this.tableData.map(v => filterVal.map(k => v[k]))
+      const [fileName, fileType, sheetName] = [Filename, 'xls']
+      this.$toExcel({ th, data, fileName, fileType, sheetName })
     },
     // 合计
     getSummaries(param) {
@@ -379,7 +390,7 @@ export default {
       const fileds = columns.map(item => item.property)
       columns.forEach((column, index) => {
         if (index === 0) {
-          sums[index] = '合计';
+          sums[index] = '合计'
           return
         }
         const values = data.map(item =>
@@ -396,7 +407,7 @@ export default {
           }, 0)
           sums[index] = Math.round(sums[index] * 100) / 100
         } else {
-          sums[index] = 'N/A';
+          sums[index] = 'N/A'
         }
       })
       // 退款率和利润率核算

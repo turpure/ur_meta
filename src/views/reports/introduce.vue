@@ -663,7 +663,7 @@ export default {
       ];
       let Filename = "推荐人毛利润报表";
       const data = this.tableData.map(v => filterVal.map(k => v[k]));
-      const [fileName, fileType, sheetName] = [Filename, "xlsx"];
+      const [fileName, fileType, sheetName] = [Filename, "xls"];
       this.$toExcel({ th, data, fileName, fileType, sheetName });
     },
     handleSearch() {

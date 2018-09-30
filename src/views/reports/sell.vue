@@ -41,11 +41,11 @@
           </el-form-item>
           <el-form-item label='时间类型' class='input' prop='dateType'>
             <el-radio-group v-model='condition.dateType'>
-              <el-radio border v-for='(item,index) in dateType' :index='index' :key='item.id' :label='item.id' :value='item.id' style="width:9.7rem">{{item.type}}</el-radio>
+              <el-radio border v-for='(item,index) in dateType' :index='index' :key='item.id' :label='item.id' :value='item.id' style="width:8.64rem">{{item.type}}</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label='日期' class='input' prop='dateRange' :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
-            <el-date-picker v-model='condition.dateRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2' style="width:20.4rem;">
+            <el-date-picker v-model='condition.dateRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2' style="width:18rem;">
             </el-date-picker>
           </el-form-item>
           <el-form-item style="margin-left:22.3rem">
@@ -263,13 +263,13 @@ export default {
       this.show = !this.show
       this.isA = !this.isA
       if (this.show === false) {
-        this.text = '显示输入框'
+        this.text = '显示输入框';
         const height = document.getElementById('app').clientHeight
-        this.tableHeight = height + 408 + 'px'
+        this.tableHeight = height + 360 + 'px';
       } else if (this.show === true) {
-        this.text = '隐藏输入框'
+        this.text = '隐藏输入框';
         const height = document.getElementById('app').clientHeight
-        this.tableHeight = height + 200 + 'px'
+        this.tableHeight = height + 170 + 'px';
       }
     },
     changeActive() {
@@ -281,7 +281,7 @@ export default {
     onSubmit(form) {
       const myform = JSON.parse(JSON.stringify(form))
       const height = document.getElementById('app').clientHeight
-      this.tableHeight = height + 210 + 'px'
+      this.tableHeight = height + 170 + 'px';
       this.show2 = true
       this.$refs.condition.validate(valid => {
         if (valid) {

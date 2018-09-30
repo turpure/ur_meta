@@ -735,11 +735,11 @@ export default {
       const FileName = "开发毛利润报表";
       if (this.activeName == "first") {
         const data = this.tableData01.map(v => filterVal.map(k => v[k]));
-        const [fileName, fileType, sheetName] = [FileName, "xlsx"];
+        const [fileName, fileType, sheetName] = [FileName, "xls"];
         this.$toExcel({ th, data, fileName, fileType, sheetName });
       } else if (this.activeName == "second") {
         const data = this.tableData02.map(v => filterVal.map(k => v[k]));
-        const [fileName, fileType, sheetName] = [FileName, "xlsx"];
+        const [fileName, fileType, sheetName] = [FileName, "xls"];
         this.$toExcel({ th, data, fileName, fileType, sheetName });
       }
     }

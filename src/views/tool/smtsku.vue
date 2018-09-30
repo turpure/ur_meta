@@ -178,8 +178,15 @@ export default {
           second = "0" + second;
         }
         let filename =
-          "SMT商品SKU模板" + year + month + strDate + hour + minute + second;
-        downloadElement.download = filename + ".xlsx";
+          this.condition.goodsCode +
+          "_" +
+          year +
+          month +
+          strDate +
+          hour +
+          minute +
+          second;
+        downloadElement.download = filename + ".xls";
         document.body.appendChild(downloadElement);
         downloadElement.click();
         document.body.removeChild(downloadElement);

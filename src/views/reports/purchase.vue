@@ -308,7 +308,6 @@ export default {
         if (typeof console !== 'undefined') console.log(e, wbout)
       }
     }
-    //  return wbout
   },
   mounted() {
     getMember().then(response => {
