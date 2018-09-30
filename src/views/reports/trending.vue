@@ -5,7 +5,7 @@
       <transition name="el-fade-in-linear">
         <el-form :model="condition" :inline="true" ref="condition" class="demo-form-inline" label-width="10rem" v-show="show">
           <el-form-item label="部门" class="input">
-            <el-select size="small" v-model="condition.department" multiple collapse-tags placeholder="部门" @change="choosed">
+            <el-select v-model="condition.department" multiple collapse-tags placeholder="部门" @change="choosed">
               <el-button plain type="info" @click='selectAll("department")'>全选</el-button>
               <el-button plain type="info" @click='unselect("department")'>取消</el-button>
               <el-option v-for="(item,index) in department" :index="index" :key="item.department" :label="item.department" :value="item.department">
@@ -13,7 +13,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="平台" class="input">
-            <el-select size="small" v-model="condition.plat" multiple collapse-tags placeholder="平台" style="height: 3rem;">
+            <el-select v-model="condition.plat" multiple collapse-tags placeholder="平台" style="height: 3rem;">
               <el-button plain type="info" @click='selectAll("plat")'>全选</el-button>
               <el-button plain type="info" @click='unselect("plat")'>取消</el-button>
               <el-option v-for="(item,index) in plat" :index="index" :key="item.plat" :label="item.plat" :value="item.plat">
@@ -21,14 +21,14 @@
             </el-select>
           </el-form-item>
           <el-form-item label='销售员' class='input'>
-            <el-select size="small" v-model='condition.member' filterable multiple collapse-tags placeholder='销售员'>
+            <el-select v-model='condition.member' filterable multiple collapse-tags placeholder='销售员'>
               <el-button plain type="info" @click='selectAll("member")'>全选</el-button>
               <el-button plain type="info" @click='unselect("member")'>取消</el-button>
               <el-option v-for='(item,index) in member' :index='index' :key='item.username' :label='item.username' :value='item.username'></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="账号" class="input">
-            <el-select size="small" v-model="condition.account" filterable multiple collapse-tags placeholder="账号">
+            <el-select v-model="condition.account" filterable multiple collapse-tags placeholder="账号">
               <el-button plain type="info" @click='selectAll("account")'>全选</el-button>
               <el-button plain type="info" @click='unselect("account")'>取消</el-button>
               <el-option v-for="(item,index) in account" :index="index" :key="item.id" :label="item.store" :value="item.store"></el-option>
@@ -36,19 +36,19 @@
           </el-form-item>
           <el-form-item label="时间类型" class="input" prop="dateType">
             <el-radio-group v-model="condition.dateType">
-              <el-radio border v-for="(item,index) in dateType" :index="index" :key="item.id" :label="item.id" :value="item.id" style="width:8.8rem">{{item.type}}</el-radio>
+              <el-radio border v-for="(item,index) in dateType" :index="index" :key="item.id" :label="item.id" :value="item.id" style="width:8.6rem">{{item.type}}</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="显示方式" class="input" prop="flag">
             <el-radio-group v-model="condition.flag">
-              <el-radio border v-for="(item,index) in flag" :index="index" :key="item.id" :label="item.id" :value="item.id" style="width:8.8rem;">{{item.type}}</el-radio>
+              <el-radio border v-for="(item,index) in flag" :index="index" :key="item.id" :label="item.id" :value="item.id" style="width:8.65rem;">{{item.type}}</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="日期" class="input" prop="dateRange" :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
-            <el-date-picker v-model="condition.dateRange" value-format="yyyy-MM-dd" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions2" style="width:18.7rem;">
+            <el-date-picker v-model="condition.dateRange" value-format="yyyy-MM-dd" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions2" style="width:18.2rem;">
             </el-date-picker>
           </el-form-item>
-          <el-form-item style="margin-left:22.4rem">
+          <el-form-item style="margin-left:22.2rem">
             <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
           </el-form-item>
         </el-form>

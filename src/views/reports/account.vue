@@ -41,14 +41,14 @@
           </el-form-item>
           <el-form-item label='时间类型' class='input' prop='dateType'>
             <el-radio-group v-model='condition.dateType'>
-              <el-radio border v-for='(item,index) in dateType' :index='index' :key='item.id' :label='item.id' :value='item.id' style="width:9.7rem">{{item.type}}</el-radio>
+              <el-radio border v-for='(item,index) in dateType' :index='index' :key='item.id' :label='item.id' :value='item.id' style="width:8.6rem">{{item.type}}</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item v-model="condition.sku" label="商品编码">
-            <el-input style="width:20.4rem;"></el-input>
+            <el-input style="width:18.1rem;"></el-input>
           </el-form-item>
           <el-form-item label='日期' class='input' prop='dateRange' :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
-            <el-date-picker v-model='condition.dateRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2' style="width:20.4rem;">
+            <el-date-picker v-model='condition.dateRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2' style="width:18.1rem;">
             </el-date-picker>
           </el-form-item>
           <el-form-item>
@@ -353,24 +353,35 @@ export default {
     },
     // 导出
     exportExcel() {
-      /* generate workbook object from table */
-      var wb = XLSX.utils.table_to_book(document.querySelector("#sale-table"));
-      /* get binary string as output */
+      const th = [
+        "卖家简称",
+        "平台",
+        "销售员",
+        "商品编码",
+        "商品名称",
+        "开发员",
+        "销量",
+        "销售额￥",
+        "利润￥",
+        "利润率%",
+        ""
+      ];
+      const filterVal = [
+        "rowId",
+        "pingtai",
+        "salesman",
+        "GoodsCode",
+        "GoodsName",
+        "SalerName",
+        "SKUQty",
+        "SaleMoneyRmb",
+        "ProfitRmb",
+        "rate"
+      ];
       const Filename = "账号产品利润表";
-      var wbout = XLSX.write(wb, {
-        bookType: "xlsx",
-        bookSST: true,
-        type: "array"
-      });
-      try {
-        FileSaver.saveAs(
-          new Blob([wbout], { type: "application/octet-stream" }),
-          Filename + ".xlsx"
-        );
-      } catch (e) {
-        if (typeof console !== "undefined") console.log(e, wbout);
-      }
-      //  return wbout
+      const data = this.tableData.map(v => filterVal.map(k => v[k]));
+      const [fileName, fileType, sheetName] = [Filename, "xls"];
+      this.$toExcel({ th, data, fileName, fileType, sheetName });
     },
     // 合计
     getSummaries(param) {

@@ -270,25 +270,41 @@ export default {
     },
     // 导出
     exportExcel() {
-      /* generate workbook object from table */
-      var wb = XLSX.utils.table_to_book(document.querySelector("#sale-table"));
-      /* get binary string as output */
+      const th = [
+        "采购员",
+        "成交价$",
+        "成交价￥",
+        "交易费汇总$",
+        "交易费汇总￥",
+        "商品成本￥",
+        "运费成本￥",
+        "包装成本￥",
+        "死库处理￥",
+        "运营杂费￥",
+        "毛利￥",
+        "毛利率%",
+        "采购差额￥"
+      ];
+      const filterVal = [
+        "purchaser",
+        "salemoneyrmbus",
+        "salemoneyrmbzn",
+        "ppebayus",
+        "ppebayzn",
+        "costmoneyrmb",
+        "expressfarermb",
+        "inpackagefeermb",
+        "devofflinefee",
+        "devopefee",
+        "netprofit",
+        "netrate",
+        "totalamount"
+      ];
       const filename = "采购毛利润报表";
-      var wbout = XLSX.write(wb, {
-        bookType: "xlsx",
-        bookSST: true,
-        type: "array"
-      });
-      try {
-        FileSaver.saveAs(
-          new Blob([wbout], { type: "application/octet-stream" }),
-          filename + ".xlsx"
-        );
-      } catch (e) {
-        if (typeof console !== "undefined") console.log(e, wbout);
-      }
+      const data = this.tableData.map(v => filterVal.map(k => v[k]));
+      const [fileName, fileType, sheetName] = [filename, "xls"];
+      this.$toExcel({ th, data, fileName, fileType, sheetName });
     }
-    //  return wbout
   },
   mounted() {
     getMember().then(response => {
