@@ -219,8 +219,15 @@ export default {
           second = "0" + second;
         }
         let filename =
-          "Wish商品SKU模板" + year + month + strDate + hour + minute + second;
-        downloadElement.download = filename + ".xlsx";
+          this.condition1.setting.goodsCode +
+          "_" +
+          year +
+          month +
+          strDate +
+          hour +
+          minute +
+          second;
+        downloadElement.download = filename + ".xls";
         document.body.appendChild(downloadElement);
         downloadElement.click();
         document.body.removeChild(downloadElement);
