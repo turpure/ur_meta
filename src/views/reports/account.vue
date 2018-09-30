@@ -31,7 +31,6 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <br>
           <el-form-item label="账号" class="input">
             <el-select v-model="condition.account" filterable multiple collapse-tags placeholder="账号">
               <el-button plain type="info" @click="selectall">全选</el-button>
@@ -42,14 +41,14 @@
           </el-form-item>
           <el-form-item label='时间类型' class='input' prop='dateType'>
             <el-radio-group v-model='condition.dateType'>
-              <el-radio border v-for='(item,index) in dateType' :index='index' :key='item.id' :label='item.id' :value='item.id' style="width:8.65rem">{{item.type}}</el-radio>
+              <el-radio border v-for='(item,index) in dateType' :index='index' :key='item.id' :label='item.id' :value='item.id' style="width:9.7rem">{{item.type}}</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item v-model="condition.sku" label="商品编码">
-            <el-input style="width:18.1rem;"></el-input>
+            <el-input style="width:20.4rem;"></el-input>
           </el-form-item>
           <el-form-item label='日期' class='input' prop='dateRange' :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
-            <el-date-picker v-model='condition.dateRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2'>
+            <el-date-picker v-model='condition.dateRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2' style="width:20.4rem;">
             </el-date-picker>
           </el-form-item>
           <el-form-item>

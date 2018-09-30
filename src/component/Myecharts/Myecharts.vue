@@ -2,14 +2,14 @@
   <section class="chart-container">
     <el-row>
       <el-col :span="24">
-        <div id="areaStack" style="width:100%; height:500px;"></div>
+        <div id="areaStack" style="width:100%; height:50rem;"></div>
       </el-col>
     </el-row>
   </section>
 </template>
 
 <script>
-import echarts from 'echarts'
+import echarts from "echarts";
 
 export default {
   props: {
@@ -18,13 +18,13 @@ export default {
   data() {
     return {
       areaStack: null
-    }
+    };
   },
 
   methods: {
     drawAreaStack(opt) {
-      this.areaStack = echarts.init(document.getElementById('areaStack'))
-      this.areaStack.setOption(opt, true)
+      this.areaStack = echarts.init(document.getElementById("areaStack"));
+      this.areaStack.setOption(opt, true);
     },
     drawCharts() {
       //   this.drawAreaStack();
@@ -32,12 +32,12 @@ export default {
   },
 
   mounted: function() {
-    this.drawCharts()
+    this.drawCharts();
   },
   updated: function() {
-    this.drawCharts()
+    this.drawCharts();
   }
-}
+};
 </script>
 
 <style scoped>
@@ -51,7 +51,7 @@ export default {
     }*/
 
 .el-col {
-  padding: 30px 20px;
+  padding: 3rem 2rem;
 }
 </style>
 

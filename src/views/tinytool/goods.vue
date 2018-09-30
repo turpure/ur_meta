@@ -12,10 +12,9 @@
         </el-select>
       </el-form-item>
       <el-form-item label='关键字' class='input'>
-        <el-input v-model='condition.goodsName' placeholder="商品名称关键字">
+        <el-input v-model='condition.goodsName' placeholder="商品名称关键字" style="width:20.4rem">
         </el-input>
       </el-form-item>
-      <br>
       <el-form-item label='业绩归属人2' class='input'>
         <el-select v-model='condition.possessMan2' clearable>
           <el-option v-for='item in possessMan2' :key='item.username' :value='item.username'></el-option>
@@ -27,10 +26,9 @@
         </el-select>
       </el-form-item>
       <el-form-item label='关键字' class='input'>
-        <el-input v-model='condition.supplierName' placeholder="供应商名称关键字">
+        <el-input v-model='condition.supplierName' placeholder="供应商名称关键字" style="width:20.4rem">
         </el-input>
       </el-form-item>
-      <br>
       <el-form-item label='产品分类2' class='input'>
         <el-select v-model='condition.categoryName' clearable :disabled="disabled">
           <el-option v-for='item in categoryName' :key='item.CategoryName' :value='item.CategoryName'></el-option>
@@ -42,7 +40,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label='日期' class='input'>
-        <el-date-picker style="width:17rem" v-model='form.newRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2'>
+        <el-date-picker style="width:20.4rem" v-model='form.newRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2'>
         </el-date-picker>
       </el-form-item>
       <el-form-item class='input' style="margin-left:6.5rem">
@@ -51,22 +49,21 @@
     </el-form>
     <el-row v-loading="listLoading">
       <el-col :span="4" class="mix" v-for="item in tableData.slice((condition.start-1)*pageSize,condition.start*pageSize)" :key="item.rowId">
-        <div class="mix-inner">
-          <img :src=item.BmpFileName :alt='item.GoodsName+item.GoodsSKUStatus'>
-          <p>&nbsp;{{item.GoodsCode}}&nbsp;{{item.CategoryParentName}}&nbsp;{{item.CategoryName}}<br>&nbsp;{{item.possessman1}}
-          </p>
-            <p>&nbsp;{{item.GoodsName}}&nbsp;&nbsp;&nbsp;{{item.GoodsSKUStatus}}</p>
-            <div class="mix-details">
-              <h4>{{item.GoodsCode}}{{item.possessman1}}</h4>
-              <h5>{{item.CategoryParentName}}</h5>
-              <h6>{{item.CategoryName}}</h6>
-              <h5>{{item.GoodsName}}</h5>
-              <h6>{{item.GoodsSKUStatus}}</h6>
-              <a align="center" class="mix-link" :href="item.LinkUrl" target="_blank">
-                <i class="fa fa-link"></i>
-              </a>
-            </div>
-        </div>
+        <a :href="item.LinkUrl" style="text-decoration:none;">
+          <div class="mix-inner">
+            <img :src=item.BmpFileName :alt='item.GoodsName+item.GoodsSKUStatus'>
+            <p>
+              <font color="black">
+                &nbsp;{{item.GoodsCode}}&nbsp;{{item.CategoryParentName}}&nbsp;{{item.CategoryName}}
+              </font>
+              <br>
+              <font color="black">
+                &nbsp;{{item.possessman1}}
+              </font>
+            </p>
+            <font color="black">&nbsp;{{item.GoodsName}}&nbsp;&nbsp;&nbsp;{{item.GoodsSKUStatus}}</font>
+          </div>
+        </a>
       </el-col>
     </el-row>
     <el-col :span="24" class="toolbar" v-show="total>0">
@@ -176,29 +173,29 @@ export default {
       }
     };
   },
-  // beforeRouteLeave(to, from, next) {
-  //   if (to.name != "goods") {
-  //     let condition = JSON.stringify(this.condition);
-  //     sessionStorage.setItem("condition", condition);
-  //   } else {
-  //     sessionStorage.removeItem("condition");
-  //   }
-  //   next();
-  // },
-  // created() {
-  //   let condition = sessionStorage.getItem("condition");
-  //   if (condition != null) {
-  //     this.condition = JSON.parse(condition);
-  //     getGoodspicture(this.condition)
-  //       .then(response => {
-  //         this.tableData = response.data.data;
-  //         this.total = this.tableData.length;
-  //       })
-  //       .catch(error => {
-  //         console.log(error);
-  //       });
-  //   }
-  // },
+  beforeRouteLeave(to, from, next) {
+    if (from.name === "产品一览表") {
+      let condition = JSON.stringify(this.condition);
+      sessionStorage.setItem("condition", condition);
+    } else {
+      sessionStorage.removeItem("condition");
+    }
+    next();
+  },
+  created() {
+    let condition = sessionStorage.getItem("condition");
+    if (condition != null) {
+      this.condition = JSON.parse(condition);
+      getGoodspicture(this.condition)
+        .then(response => {
+          this.tableData = response.data.data;
+          this.total = this.tableData.length;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  },
   methods: {
     onSubmit() {
       this.listLoading = true;
@@ -254,6 +251,10 @@ export default {
 .el-row {
   max-height: 64rem;
   overflow: auto;
+  .mix:hover {
+    border-radius: 1rem;
+    border: 0.2rem solid #03c4eb;
+  }
   .mix {
     background: #fff;
     border-radius: 2px;
@@ -273,64 +274,6 @@ export default {
       img {
         max-width: 100%;
         height: 17rem;
-      }
-      .mix-details {
-        //margin-left: -45px;
-        color: #fff;
-        width: 100%;
-        height: 200%;
-        bottom: -100%;
-        text-align: center;
-        position: absolute;
-        h4 {
-          color: #fff;
-          margin-top: 24rem;
-          font-size: 18px;
-          margin-bottom: 1rem;
-        }
-        h5 {
-          margin-top: 1rem;
-          margin-bottom: 1rem;
-          font-size: 14px;
-        }
-        h6 {
-          font-size: 12px;
-          margin-top: 1rem;
-          margin-bottom: 1rem;
-        }
-        a.mix-link {
-          right: 35%;
-          margin-right: 0.5rem;
-          color: #555;
-          display: block;
-          cursor: pointer;
-          margin-top: 1rem;
-          position: absolute;
-          padding: 1rem 1.5rem;
-          background: #16b2f4;
-        }
-        a.mix-preview {
-          left: 50%;
-          margin-left: 0.5rem;
-          color: #555;
-          display: block;
-          cursor: pointer;
-          margin-top: 1rem;
-          position: absolute;
-          padding: 1rem 1.5rem;
-          background: #16b2f4;
-        }
-        a.mix-link:hover,
-        a.mix-preview:hover {
-          color: #fff;
-          padding: 0.9rem 1.4rem;
-          text-decoration: none;
-          border: solid 0.1rem #eee;
-        }
-      }
-      .mix-details:hover {
-        bottom: 0;
-        transition: all 0.5s ease;
       }
     }
   }
