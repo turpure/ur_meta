@@ -35,7 +35,7 @@
             <el-select v-model="condition.account" filterable multiple collapse-tags placeholder="账号">
               <el-button plain type="info" @click="selectall">全选</el-button>
               <el-button plain type="info" @click="noselect">取消</el-button>
-              <el-option v-for="(item,index) in account" :index="item[index]" :key="item.id" :label="item.store" :value="item.id">
+              <el-option v-for="(item,index) in account" :index="item[index]" :key="item.id" :label="item.store" :value="item.store">
               </el-option>
             </el-select>
           </el-form-item>

@@ -18,7 +18,7 @@
       <el-form-item label="运费(Shipping$)：">
         <el-input v-model="condition.shipping" style="width:18.1rem"></el-input>
       </el-form-item>
-      <el-form-item style="margin-left:30rem">
+      <el-form-item style="margin-left:29rem">
         <el-button type="primary" @click="onSubmit()">属性设置
           <i class="el-icon-caret-right"></i>
         </el-button>
