@@ -363,8 +363,7 @@ export default {
         "销量",
         "销售额￥",
         "利润￥",
-        "利润率%",
-        ""
+        "利润率%"
       ];
       const filterVal = [
         "rowId",
