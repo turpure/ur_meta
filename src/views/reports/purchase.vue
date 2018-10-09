@@ -65,27 +65,27 @@
 </template>
 
 <script>
-import { getMyToken } from "../../api/api";
-import { getMember, getPurchase } from "../../api/profit";
-import { compareUp, compareDown } from "../../api/tools";
-import FileSaver from "file-saver";
-import XLSX from "xlsx";
+import { getMyToken } from '../../api/api'
+import { getMember, getPurchase } from '../../api/profit'
+import { compareUp, compareDown } from '../../api/tools'
+import FileSaver from 'file-saver'
+import XLSX from 'xlsx'
 
 export default {
   data() {
     return {
       tableHeight: 0,
       isA: true,
-      text: "显示输入框",
+      text: '显示输入框',
       show: true,
       show1: false,
       show2: false,
       tableData: [],
       searchTable: [],
-      searchValue: "",
+      searchValue: '',
       listLoading: false,
       member: [],
-      dateType: [{ id: 1, type: "发货时间" }, { id: 0, type: "交易时间" }],
+      dateType: [{ id: 1, type: '发货时间' }, { id: 0, type: '交易时间' }],
       condition: {
         member: [],
         dateType: 1,
@@ -94,35 +94,35 @@ export default {
       pickerOptions2: {
         shortcuts: [
           {
-            text: "本月",
+            text: '本月',
             onClick(picker) {
-              const end = new Date();
-              const y = end.getFullYear();
-              let m = end.getMonth() + 1;
+              const end = new Date()
+              const y = end.getFullYear()
+              let m = end.getMonth() + 1
               if (m < 10) {
-                m = "0" + m;
+                m = '0' + m
               }
-              const firstday = y + "-" + m + "-" + "01";
-              const start = new Date();
-              const sy = start.getFullYear();
-              let sm = start.getMonth() + 1;
-              const sd = start.getDate();
+              const firstday = y + '-' + m + '-' + '01'
+              const start = new Date()
+              const sy = start.getFullYear()
+              let sm = start.getMonth() + 1
+              const sd = start.getDate()
               if (sm < 10) {
-                sm = "0" + sm;
+                sm = '0' + sm
               }
-              const sfirstday = sy + "-" + sm + "-" + sd;
-              picker.$emit("pick", [firstday, sfirstday]);
+              const sfirstday = sy + '-' + sm + '-' + sd
+              picker.$emit('pick', [firstday, sfirstday])
             }
           },
           {
-            text: "上个月",
+            text: '上个月',
             onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              const y = start.getFullYear();
-              const m = start.getMonth();
-              let lastday;
-              let firstday;
+              const end = new Date()
+              const start = new Date()
+              const y = start.getFullYear()
+              const m = start.getMonth()
+              let lastday
+              let firstday
               if (
                 m == 1 ||
                 m == 3 ||
@@ -132,81 +132,81 @@ export default {
                 m == 10 ||
                 m == 12
               ) {
-                lastday = y + "-" + ("0" + m) + "-" + "31";
+                lastday = y + '-' + ('0' + m) + '-' + '31'
               } else if (m == 4 || m == 6 || m == 9 || m == 11) {
-                lastday = y + "-" + ("0" + m) + "-" + "30";
+                lastday = y + '-' + ('0' + m) + '-' + '30'
               } else if (y % 4 == 0 && (y % 100 != 0 || y % 400 == 0)) {
-                lastday = y + "-" + "02" + "-" + "29";
+                lastday = y + '-' + '02' + '-' + '29'
               } else {
-                lastday = y + "-" + "02" + "-" + "28";
+                lastday = y + '-' + '02' + '-' + '28'
               }
-              firstday = y + "-" + ("0" + m) + "-" + "01";
-              picker.$emit("pick", [firstday, lastday]);
+              firstday = y + '-' + ('0' + m) + '-' + '01'
+              picker.$emit('pick', [firstday, lastday])
             }
           },
           {
-            text: "最近一个月",
+            text: '最近一个月',
             onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-              picker.$emit("pick", [start, end]);
+              const end = new Date()
+              const start = new Date()
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+              picker.$emit('pick', [start, end])
             }
           }
         ]
       }
-    };
+    }
   },
   methods: {
     selectallm() {
-      const allValues = [];
+      const allValues = []
       for (const item of this.member) {
-        allValues.push(item.username);
+        allValues.push(item.username)
       }
-      this.condition.member = allValues;
+      this.condition.member = allValues
     },
     noselectm() {
-      this.condition.member = [];
+      this.condition.member = []
     },
     handleChange() {
-      this.show = !this.show;
-      this.isA = !this.isA;
+      this.show = !this.show
+      this.isA = !this.isA
       if (this.show == false) {
-        this.text = "显示输入框";
-        const height = document.getElementById("app").clientHeight;
-        this.tableHeight = height - 140 + "px";
+        this.text = '显示输入框'
+        const height = document.getElementById('app').clientHeight
+        this.tableHeight = height - 140 + 'px'
       } else if (this.show == true) {
-        this.text = "隐藏输入框";
-        const height = document.getElementById("app").clientHeight;
-        this.tableHeight = height - 220 + "px";
+        this.text = '隐藏输入框'
+        const height = document.getElementById('app').clientHeight
+        this.tableHeight = height - 220 + 'px'
       }
     },
     changeActive() {
-      this.show1 = true;
+      this.show1 = true
     },
     removeActive() {
-      this.show1 = false;
+      this.show1 = false
     },
     onSubmit(form) {
-      const height = document.getElementById("app").clientHeight;
-      this.tableHeight = height - 220 + "px";
-      this.show2 = true;
+      const height = document.getElementById('app').clientHeight
+      this.tableHeight = height - 220 + 'px'
+      this.show2 = true
       this.$refs.condition.validate(valid => {
         if (valid) {
-          this.listLoading = true;
+          this.listLoading = true
           getPurchase(form).then(response => {
-            this.listLoading = false;
-            this.tableData = this.searchTable = response.data.data;
-          });
+            this.listLoading = false
+            this.tableData = this.searchTable = response.data.data
+          })
         } else {
-          console.log("error submit!!");
-          return false;
+          console.log('error submit!!')
+          return false
         }
-      });
+      })
     },
     handleSearch() {
-      const searchValue = this.searchValue && this.searchValue.toLowerCase();
-      const data = this.searchTable;
+      const searchValue = this.searchValue && this.searchValue.toLowerCase()
+      const data = this.searchTable
       if (searchValue) {
         this.tableData = data.filter(function(row) {
           return Object.keys(row).some(function(key) {
@@ -214,105 +214,108 @@ export default {
               String(row[key])
                 .toLowerCase()
                 .indexOf(searchValue) > -1
-            );
-          });
-        });
+            )
+          })
+        })
       } else {
-        this.tableData = data;
+        this.tableData = data
       }
     },
     empty(row, column, cellValue, index) {
-      row.totalamount = Math.round(row.totalamount * 100) / 100;
-      return cellValue || "--";
+      row.totalamount = Math.round(row.totalamount * 100) / 100
+      if (!isNaN(cellValue)) {
+        return Number(cellValue)
+      }
+      return cellValue
     },
     getSummaries(param) {
-      const { columns, data } = param;
-      const sums = [];
-      const fileds = columns.map(item => item.property);
+      const { columns, data } = param
+      const sums = []
+      const fileds = columns.map(item => item.property)
       columns.forEach((column, index) => {
         if (index === 0) {
-          sums[index] = "合计";
-          return;
+          sums[index] = '合计'
+          return
         }
         const values = data.map(item =>
-          Number(item[column.property] ? item[column.property] : "unkonwn")
-        );
+          Number(item[column.property] ? item[column.property] : 'unkonwn')
+        )
         if (!values.every(value => isNaN(value))) {
           sums[index] = values.reduce((prev, curr) => {
-            const value = Number(curr);
+            const value = Number(curr)
             if (!isNaN(value)) {
-              return prev + curr;
+              return prev + curr
             } else {
-              return prev;
+              return prev
             }
-          }, 0);
-          sums[index] = Math.round(sums[index] * 100) / 100;
+          }, 0)
+          sums[index] = Math.round(sums[index] * 100) / 100
         } else {
-          sums[index] = "N/A";
+          sums[index] = 'N/A'
         }
-      });
+      })
       // 退款率和利润率核算
-      sums[fileds.indexOf("netrate")] =
+      sums[fileds.indexOf('netrate')] =
         Math.round(
-          (sums[fileds.indexOf("netprofit")] * 10000) /
-            sums[fileds.indexOf("salemoneyrmbzn")]
-        ) / 100;
-      return sums;
+          (sums[fileds.indexOf('netprofit')] * 10000) /
+            sums[fileds.indexOf('salemoneyrmbzn')]
+        ) / 100
+      return sums
     },
     // 数字排序
     sortNumber(column, prop, order) {
-      const data = this.tableData;
-      if (column.order === "descending") {
-        this.tableData = data.sort(compareDown(data, column.prop));
+      const data = this.tableData
+      if (column.order === 'descending') {
+        this.tableData = data.sort(compareDown(data, column.prop))
       } else {
-        this.tableData = data.sort(compareUp(data, column.prop));
+        this.tableData = data.sort(compareUp(data, column.prop))
       }
     },
     // 导出
     exportExcel() {
-      const th = [
-        "采购员",
-        "成交价$",
-        "成交价￥",
-        "交易费汇总$",
-        "交易费汇总￥",
-        "商品成本￥",
-        "运费成本￥",
-        "包装成本￥",
-        "死库处理￥",
-        "运营杂费￥",
-        "毛利￥",
-        "毛利率%",
-        "采购差额￥"
-      ];
-      const filterVal = [
-        "purchaser",
-        "salemoneyrmbus",
-        "salemoneyrmbzn",
-        "ppebayus",
-        "ppebayzn",
-        "costmoneyrmb",
-        "expressfarermb",
-        "inpackagefeermb",
-        "devofflinefee",
-        "devopefee",
-        "netprofit",
-        "netrate",
-        "totalamount"
-      ];
-      const filename = "采购毛利润报表";
-      const data = this.tableData.map(v => filterVal.map(k => v[k]));
-      const [fileName, fileType, sheetName] = [filename, "xls"];
-      this.$toExcel({ th, data, fileName, fileType, sheetName });
+      /* generate workbook object from table */
+      var wb = XLSX.utils.table_to_book(document.querySelector('#sale-table'), { raw: true })
+      var lastRow = wb.Sheets.Sheet1['!ref'].match(/\d+$/)[0]
+      for (var ele in wb.Sheets.Sheet1) {
+        var rowNumber = ele.replace(/[^0-9]+/g, '')
+        if (rowNumber === lastRow) {
+          delete wb.Sheets.Sheet1[ele]
+          continue
+        }
+        const row = wb.Sheets.Sheet1[ele]
+        try {
+          if (!isNaN(row['v'])) {
+            row['t'] = 'n'
+            row['v'] = Number(row['v'])
+          }
+        } catch (err) {
+          console.log(err)
+        }
+      }
+      /* get binary string as output */
+      const filename = '采购毛利润报表'
+      var wbout = XLSX.write(wb, {
+        bookType: 'xls',
+        bookSST: true,
+        type: 'array'
+      })
+      try {
+        FileSaver.saveAs(
+          new Blob([wbout], { type: 'application/octet-stream' }),
+          filename + '.xls'
+        )
+      } catch (e) {
+        if (typeof console !== 'undefined') console.log(e, wbout)
+      }
     }
   },
   mounted() {
     getMember().then(response => {
-      const res = response.data.data;
-      this.member = res.filter(ele => ele.position == "采购");
-    });
+      const res = response.data.data
+      this.member = res.filter(ele => ele.position == '采购')
+    })
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

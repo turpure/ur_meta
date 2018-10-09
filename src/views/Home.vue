@@ -11,6 +11,7 @@
       </el-col>
       <el-col :span="13">
         <el-menu :default-active="activeIndex" @select="handleSelect" class="el-menu-demo" mode="horizontal" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" router>
+          <el-menu-item index="/index" key="index"><font size="4"> 主页</font></el-menu-item>
           <el-submenu v-for="(item,position) in allMenu" :index="generateIndex(-1,position)" :key="generateIndex(-1,position)">
             <template slot="title">
               <font size="4">{{item.name}}</font>
@@ -63,106 +64,110 @@
 </template>
 
 <script>
-import { removeToken } from "../utils/auth";
-import { getMenu } from "../api/login";
-import { getAvatarUrl } from "../api/api";
-import ImageCropper from "@/components/ImageCropper";
-import Screenfull from "@/components/Screenfull";
+import { removeToken } from '../utils/auth'
+import { getMenu } from '../api/login'
+import { getAvatarUrl } from '../api/api'
+import ImageCropper from '@/components/ImageCropper'
+import Screenfull from '@/components/Screenfull'
 export default {
-  name: "avatarUpload-demo",
+  name: 'avatarUpload-demo',
   components: { ImageCropper, Screenfull },
   data() {
     return {
-      activeIndex: "",
+      activeIndex: '',
       allMenu: [],
-      asideMenu: { position: 0, menu: [{ name: "", children: [] }] },
-      openeds: ["1"],
+      asideMenu: { position: 0, menu: [{ name: '', children: [] }] },
+      openeds: ['1'],
       url: getAvatarUrl(),
       imagecropperShow: false,
       imagecropperKey: 0,
-      image: "",
-      sysName: "UR管理中心",
+      image: '',
+      sysName: 'UR管理中心',
       collapsed: false,
-      sysUserName: "",
-      sysUserAvatar: "",
+      sysUserName: '',
+      sysUserAvatar: '',
       form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
+        name: '',
+        region: '',
+        date1: '',
+        date2: '',
         delivery: false,
         type: [],
-        resource: "",
-        desc: ""
+        resource: '',
+        desc: ''
       }
-    };
+    }
   },
   mounted() {
-    this.$store.dispatch("GetUserInfo").then(() => {
-      this.sysUserName = this.$store.getters.name;
-      this.image = this.$store.getters.avatar;
-    });
+    this.$store.dispatch('GetUserInfo').then(() => {
+      this.sysUserName = this.$store.getters.name
+      this.image = this.$store.getters.avatar
+    })
     getMenu().then(response => {
-      this.allMenu = response.data.data;
-    });
+      this.allMenu = response.data.data
+    })
   },
   beforeRouteLeave(to, from, next) {
-    if (to.name == "首页") {
-      let collapsed = JSON.stringify(this.collapsed);
-      sessionStorage.setItem("collapsed", collapsed);
+    if (to.name === '首页') {
+      const collapsed = JSON.stringify(this.collapsed)
+      sessionStorage.setItem('collapsed', collapsed)
     } else {
-      sessionStorage.removeItem("collapsed");
+      sessionStorage.removeItem('collapsed')
     }
-    next();
+    next()
   },
   created() {
-    //从localStorage中读取条件并赋值给查询表单
-    let collapsed = sessionStorage.getItem("collapsed");
+    // 从localStorage中读取条件并赋值给查询表单
+    const collapsed = sessionStorage.getItem('collapsed')
     if (collapsed != null) {
-      this.collapsed = JSON.parse(collapsed);
+      this.collapsed = JSON.parse(collapsed)
     }
   },
   methods: {
     generateIndex(head, tail) {
       if (head < 0) {
-        return String(tail + 1);
+        return String(tail + 1)
       }
-      return String(head + 1) + "-" + String(tail + 1);
+      return String(head + 1) + '-' + String(tail + 1)
     },
     handleSelect(index, indexPath) {
-      this.activeIndex = index;
-      this.collapsed = true;
-      var asideIndex = parseInt(indexPath[0]) - 1;
-      const allMenu = this.allMenu;
-      this.asideMenu = { position: asideIndex, menu: [allMenu[asideIndex]] };
+      if (index === '/index') {
+        this.collapsed = false
+        return
+      }
+      this.activeIndex = index
+      this.collapsed = true
+      var asideIndex = parseInt(indexPath[0]) - 1
+      const allMenu = this.allMenu
+      this.asideMenu = { position: asideIndex, menu: [allMenu[asideIndex]] }
     },
     cropSuccess(resData) {
-      this.imagecropperShow = false;
-      this.imagecropperKey = this.imagecropperKey + 1;
-      const image = resData.data[0];
-      this.image = image;
+      this.imagecropperShow = false
+      this.imagecropperKey = this.imagecropperKey + 1
+      const image = resData.data[0]
+      this.image = image
     },
     close() {
-      this.imagecropperShow = false;
+      this.imagecropperShow = false
     },
     logout: function() {
-      var _this = this;
-      this.$confirm("确认退出吗?", "提示", {
-        type: "warning"
+      var _this = this
+      this.$confirm('确认退出吗?', '提示', {
+        type: 'warning'
       })
         .then(() => {
-          sessionStorage.removeItem("user");
-          removeToken();
-          _this.$router.push("/login");
+          sessionStorage.removeItem('user')
+          removeToken()
+          _this.$router.push('/login')
         })
-        .catch(() => {});
+        .catch(() => {})
     },
     // 折叠导航栏
     collapse: function() {
-      this.collapsed = !this.collapsed;
+      this.collapsed = !this.collapsed
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped >

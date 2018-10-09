@@ -265,11 +265,11 @@ export default {
       if (this.show === false) {
         this.text = "显示输入框";
         const height = document.getElementById("app").clientHeight;
-        this.tableHeight = height + 360 + "px";
+        this.tableHeight = height + 390 + "px";
       } else if (this.show === true) {
         this.text = "隐藏输入框";
         const height = document.getElementById("app").clientHeight;
-        this.tableHeight = height + 170 + "px";
+        this.tableHeight = height + 200 + "px";
       }
     },
     changeActive() {
@@ -281,7 +281,7 @@ export default {
     onSubmit(form) {
       const myform = JSON.parse(JSON.stringify(form));
       const height = document.getElementById("app").clientHeight;
-      this.tableHeight = height + 170 + "px";
+      this.tableHeight = height + 220 + "px";
       this.show2 = true;
       this.$refs.condition.validate(valid => {
         if (valid) {
@@ -351,58 +351,51 @@ export default {
       row.insertionFee = Math.round(row.insertionFee * 100) / 100;
       row.grossprofit = Math.round(row.grossprofit * 100) / 100;
       row.saleOpeFeeZn = Math.round(row.saleOpeFeeZn * 100) / 100;
-      return cellValue || "--";
+      if (!isNaN(cellValue)) {
+        return Number(cellValue);
+      }
+      return cellValue;
     },
     // 导出
     exportExcel() {
-      const th = [
-        "平台",
-        "账号",
-        "销售员",
-        "成交价$",
-        "成交价￥",
-        "eBay成交费$",
-        "eBay成交费￥",
-        "Paypal成交费$",
-        "Paypal成交费￥",
-        "商品成本￥",
-        "运费成本￥",
-        "包装成本￥",
-        "发货仓库",
-        "退款金额￥",
-        "退款率%",
-        "死库处理￥",
-        "店铺杂费￥",
-        "运营杂费￥",
-        "毛利￥",
-        "毛利率%"
-      ];
-      const filterVal = [
-        "pingtai",
-        "suffix",
-        "salesman",
-        "salemoney",
-        "salemoneyzn",
-        "ebayFeeebay",
-        "ebayfeeznebay",
-        "ppFee",
-        "ppFeezn",
-        "costmoney",
-        "expressFare",
-        "inpackagemoney",
-        "storename",
-        "refund",
-        "refundrate",
-        "diefeeZn",
-        "insertionFee",
-        "saleOpeFeeZn",
-        "grossprofit",
-        "grossprofitRate"
-      ];
+      debugger;
+      /* generate workbook object from table */
+      var wb = XLSX.utils.table_to_book(document.querySelector("#sale-table"), {
+        raw: true
+      });
+      var lastRow = wb.Sheets.Sheet1["!ref"].match(/\d+$/)[0];
+      for (var ele in wb.Sheets.Sheet1) {
+        var rowNumber = ele.replace(/[^0-9]+/g, "");
+        if (rowNumber === lastRow) {
+          delete wb.Sheets.Sheet1[ele];
+          continue;
+        }
+        const row = wb.Sheets.Sheet1[ele];
+        try {
+          if (!isNaN(row["v"]) && row["v"] != "") {
+            row["t"] = "n";
+            row["v"] = Number(row["v"]);
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      }
+      /* get binary string as output */
       const filename = "销售毛利润报表";
-      const data = this.tableData.map(v => filterVal.map(k => v[k]));
-      const [fileName, fileType, sheetName] = [filename, "xls"];
-      this.$toExcel({ th, data, fileName, fileType, sheetName });
+      var wbout = XLSX.write(wb, {
+        bookType: "xls",
+        bookSST: true,
+        type: "array"
+      });
+      try {
+        FileSaver.saveAs(
+          new Blob([wbout], { type: "application/octet-stream" }),
+          filename + ".xls"
+        );
+      } catch (e) {
+        if (typeof console !== "undefined") console.log(e, wbout);
+      }
+      //  return wbout
     },
     // 合计
     getSummaries(param) {
