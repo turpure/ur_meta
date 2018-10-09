@@ -406,7 +406,7 @@ export default {
   margin-bottom: 1rem;
 }
 .tab {
-  max-height: 83.5rem;
+  max-height: 69rem;
   overflow: auto;
 }
 </style>

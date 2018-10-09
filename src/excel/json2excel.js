@@ -25,6 +25,8 @@ function data2ws(data) {
         cell.t = 'n'
         cell.z = XLSX.SSF._table[14]
         cell.v = datenum(cell.v)
+      } else if (!isNaN(cell.v) && cell.v != "") {
+        cell.t = 'n'
       }
       else cell.t = 's'
 
