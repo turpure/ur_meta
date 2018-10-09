@@ -1,5 +1,5 @@
 <template>
-  <el-row class="container">
+  <el-row class="toolbar">
     <el-row :gutter='10'>
       <el-col :span="8">
         <span>备注：报表中商品的销量和库存指的是对应

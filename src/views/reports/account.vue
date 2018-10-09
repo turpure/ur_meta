@@ -74,7 +74,7 @@
         <el-button style='float:left' type='default' @click='exportExcel'>导出Excel</el-button>
       </el-col>
     </el-row>
-    <el-table :data="tableData.slice((condition.start-1)*pageSize,condition.start*pageSize)" id="sale-table" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" :height="tableHeight" :max-height="tableHeight" v-show="show2" style="width: 100%;zoom:0.6;">
+    <el-table :data="this.tableData" id="sale-table" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" :height="tableHeight" :max-height="tableHeight" v-show="show2" style="width: 100%;zoom:0.6;">
       <el-table-column min-width="50" prop="suffix" label="账号" :formatter="empty" sortable></el-table-column>
       <el-table-column min-width="55" prop="pingtai" label="平台" :formatter="empty" sortable></el-table-column>
       <el-table-column min-width="70" prop="salesman" label="销售员" :formatter="empty" sortable></el-table-column>
@@ -306,7 +306,9 @@ export default {
           getaccount(myform).then(response => {
             this.listLoading = false;
             this.tableData = this.searchTable = response.data.data;
-            this.total = this.tableData.length;
+            // this.total = this.tableData.items.map(m => {
+            //   return m.totalNum;
+            // });
           });
         } else {
           return false;
@@ -392,7 +394,7 @@ export default {
           sums[index] = "合计";
           return;
         }
-        const values = data.map(item =>
+        const values = data.items.map(item =>
           Number(item[column.property] ? item[column.property] : "unkonwn")
         );
         if (!values.every(value => isNaN(value))) {
