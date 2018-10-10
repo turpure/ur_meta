@@ -29,7 +29,7 @@
       </el-col>
     </el-row>
     <div v-loading="listLoading">
-      <el-table max-height="730" :data="tableData.slice((condition.start-1)*pagesize,condition.start*pagesize)" @sort-change=" sortNumber" v-show="this.tableData.length>0?true:false" style="width: 100%;">
+      <el-table max-height="730" :data="this.tableData" @sort-change=" sortNumber" v-show="this.total>0?true:false" style="width: 100%;">
         <el-table-column min-width="100" prop="GoodsCode" label="商品编码" :formatter="empty" sortable></el-table-column>
         <el-table-column min-width="100" prop="GoodsName" label="商品名称" :formatter="empty" sortable></el-table-column>
         <el-table-column min-width="100" prop="GoodsSKUStatus" label="商品状态" :formatter="empty" sortable></el-table-column>
@@ -51,7 +51,7 @@
     </div>
     <el-col :span="24" class="toolbar" v-show="total>0" style="margin-top:0rem">
       <div class="pagination-container" align="right">
-        <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="condition.start" :page-sizes="[10, 20, 30, 40]" :page-size="pagesize" layout="total, sizes, prev, pager, next, jumper" :total="total">
+        <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[100, 200, 500,1000,this.total]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
         </el-pagination>
       </div>
     </el-col>
@@ -68,8 +68,8 @@ import {
 export default {
   data() {
     return {
-      pagesize: 10,
-      show: false,
+      currentPage: 1,
+      pageSize: 100,
       listLoading: false,
       tableData: [],
       searchTable: [],
@@ -78,23 +78,43 @@ export default {
       plat: [],
       suffix: [],
       saler: [],
-      condition: { plat: "", suffix: "", saler: "", start: 1, limit: 100 }
+      condition: {
+        plat: "",
+        suffix: "",
+        saler: "",
+        start: 1,
+        limit: 100
+      }
     };
   },
   methods: {
     handleSizeChange(val) {
-      this.pagesize = val;
+      this.pageSize = val;
+      this.condition.limit = this.pageSize * this.currentPage;
+      this.listLoading = true;
+      getPsales(this.condition).then(response => {
+        this.listLoading = false;
+        this.tableData = response.data.data.items;
+        this.total = Number(response.data.data.totalCount);
+      });
     },
     handleCurrentChange(val) {
-      this.condition.start = val;
+      this.currentPage = val;
+      this.condition.start = (this.currentPage - 1) * this.pageSize + 1;
+      this.condition.limit = this.pageSize * this.currentPage;
+      this.listLoading = true;
+      getPsales(this.condition).then(response => {
+        this.listLoading = false;
+        this.tableData = response.data.data.items;
+        this.total = Number(response.data.data.totalCount);
+      });
     },
     onSubmit() {
       this.listLoading = true;
-      this.show = true;
       getPsales(this.condition).then(response => {
         this.listLoading = false;
-        this.tableData = response.data.data;
-        this.total = this.tableData.length;
+        this.tableData = response.data.data.items;
+        this.total = Number(response.data.data.totalCount);
       });
     },
     // 导出

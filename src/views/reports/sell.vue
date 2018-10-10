@@ -23,19 +23,20 @@
               <el-option v-for='(item,index) in member' :index='index' :key='item.username' :label='item.username' :value='item.username'></el-option>
             </el-select>
           </el-form-item>
+
+          <el-form-item label="账号" class="input">
+            <el-select v-model="condition.account" filterable multiple collapse-tags placeholder="账号">
+              <el-button plain type="info" @click="selectall">全选</el-button>
+              <el-button plain type="info" @click="noselect">取消</el-button>
+              <el-option v-for="(item,index) in account" :index="index" :key="item.id" :label="item.store" :value="item.store">
+              </el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label='出货仓库' class='input'>
             <el-select v-model='condition.store' filterable multiple collapse-tags placeholder='请选择'>
               <el-button plain type="info" @click="selectalls">全选</el-button>
               <el-button plain type="info" @click="noselects">取消</el-button>
               <el-option v-for='item in store' :key='item' :value='item'>
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="账号" class="input">
-            <el-select v-model="condition.account" filterable multiple collapse-tags placeholder="账号">
-              <el-button plain type="info" @click="selectall">全选</el-button>
-              <el-button plain type="info" @click="noselect">取消</el-button>
-              <el-option v-for="(item,index) in account" :index="item[index]" :key="item.id" :label="item.store" :value="item.store">
               </el-option>
             </el-select>
           </el-form-item>
@@ -234,7 +235,7 @@ export default {
     selectall() {
       const allValues = [];
       for (const item of this.account) {
-        allValues.push(item.id);
+        allValues.push(item.store);
       }
       this.condition.account = allValues;
     },
