@@ -68,7 +68,7 @@
     </el-row>
     <el-col :span="24" class="toolbar" v-show="total>0">
       <div class="pagination-container" align="right">
-        <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="condition.start" :page-sizes="[50, 100, 500,1000,this.total]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
+        <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[50, 100, 500,1000,this.total]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
         </el-pagination>
       </div>
     </el-col>
@@ -89,7 +89,8 @@ export default {
         dateRange: ["", ""]
       },
       category: [],
-      pageSize: null,
+      currentPage: 1,
+      pageSize: 50,
       total: null,
       disabled: true,
       listLoading: false,
@@ -188,8 +189,8 @@ export default {
       this.condition = JSON.parse(condition);
       getGoodspicture(this.condition)
         .then(response => {
-          this.tableData = response.data.data;
-          this.total = this.tableData.length;
+          this.tableData = response.data.data.items;
+          this.total = Number(response.data.data.totalCount);
         })
         .catch(error => {
           console.log(error);
@@ -208,7 +209,8 @@ export default {
       });
     },
     handleSizeChange(val) {
-      this.condition.limit = val;
+      this.pageSize = val;
+      this.condition.limit = this.pageSize * this.currentPage;
       this.listLoading = true;
       getGoodspicture(this.condition).then(response => {
         this.listLoading = false;
@@ -217,7 +219,9 @@ export default {
       });
     },
     handleCurrentChange(val) {
-      this.condition.start = val;
+      this.currentPage = val;
+      this.condition.start = (this.currentPage - 1) * this.pageSize + 1;
+      this.condition.limit = this.pageSize * this.currentPage;
       this.listLoading = true;
       getGoodspicture(this.condition).then(response => {
         this.listLoading = false;

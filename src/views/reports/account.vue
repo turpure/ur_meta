@@ -90,7 +90,7 @@
     </el-table>
     <el-col :span="24" class="toolbar" style="margin-top:0rem" v-show="total>0">
       <div class="pagination-container">
-        <el-pagination :current-page="condition.start" :page-sizes="[this.total,100,200,500,1000,this.total]" :page-size="pageSize" :total="total" background layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
+        <el-pagination :current-page="currentPage" :page-sizes="[100,200,500,1000,this.total]" :page-size="pageSize" :total="total" background layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
       </div>
     </el-col>
   </div>
@@ -111,7 +111,8 @@ import XLSX from "xlsx";
 export default {
   data() {
     return {
-      pageSize: null,
+      currentPage: 1,
+      pageSize: 100,
       total: null,
       tableHeight: 0,
       allMember: [],
@@ -141,7 +142,7 @@ export default {
         dateRange: [],
         account: [],
         start: 1,
-        limit: 100000
+        limit: 100
       },
       pickerOptions2: {
         shortcuts: [
@@ -200,7 +201,9 @@ export default {
   },
   methods: {
     handleCurrentChange(val) {
-      this.condition.start = val;
+      this.currentPage = val;
+      this.condition.start = (this.currentPage - 1) * this.pageSize + 1;
+      this.condition.limit = this.pageSize * this.currentPage;
       this.listLoading = true;
       getaccount(this.condition).then(response => {
         this.listLoading = false;
@@ -209,7 +212,8 @@ export default {
       });
     },
     handleSizeChange(val) {
-      this.condition.limit = val;
+      this.pageSize = val;
+      this.condition.limit = this.pageSize * this.currentPage;
       this.listLoading = true;
       getaccount(this.condition).then(response => {
         this.listLoading = false;
@@ -252,7 +256,7 @@ export default {
     selectall() {
       const allValues = [];
       for (const item of this.account) {
-        allValues.push(item.id);
+        allValues.push(item.store);
       }
       this.condition.account = allValues;
     },

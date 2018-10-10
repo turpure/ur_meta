@@ -35,7 +35,7 @@
     </el-row>
     <el-col :span="24" class="toolbar" v-show="total>0">
       <div class="pagination-container" align="right">
-        <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="condition.start" :page-sizes="[20, 50,100,this.total]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
+        <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes=[20,50,100,this.total] :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
         </el-pagination>
       </div>
     </el-col>
@@ -47,7 +47,8 @@ import { getBrandcountry, getBrandcategory, getBrand } from "../../api/profit";
 export default {
   data() {
     return {
-      pageSize: null,
+      currentPage: 1,
+      pageSize: 20,
       total: null,
       listLoading: false,
       tableData: [],
@@ -79,8 +80,8 @@ export default {
       getBrand(this.condition)
         .then(response => {
           this.listLoading = false;
-          this.tableData = response.data.data;
-          this.total = this.tableData.length;
+          this.tableData = response.data.data.items;
+          this.total = Number(response.data.data.totalCount);
         })
         .catch(error => {
           console.log(error);
@@ -97,7 +98,8 @@ export default {
       });
     },
     handleSizeChange(val) {
-      this.condition.limit = val;
+      this.pageSize = val;
+      this.condition.limit = this.pageSize * this.currentPage;
       this.listLoading = true;
       getBrand(this.condition).then(response => {
         this.listLoading = false;
@@ -106,7 +108,9 @@ export default {
       });
     },
     handleCurrentChange(val) {
-      this.condition.start = val;
+      this.currentPage = val;
+      this.condition.start = (this.currentPage - 1) * this.pageSize + 1;
+      this.condition.limit = this.pageSize * this.currentPage;
       this.listLoading = true;
       getBrand(this.condition).then(response => {
         this.listLoading = false;

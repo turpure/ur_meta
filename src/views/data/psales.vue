@@ -51,7 +51,7 @@
     </div>
     <el-col :span="24" class="toolbar" v-show="total>0" style="margin-top:0rem">
       <div class="pagination-container" align="right">
-        <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="condition.start" :page-sizes="[100, 200, 500,1000,this.total]" :page-size="pagesize" layout="total, sizes, prev, pager, next, jumper" :total="total">
+        <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[100, 200, 500,1000,this.total]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
         </el-pagination>
       </div>
     </el-col>
@@ -68,7 +68,8 @@ import {
 export default {
   data() {
     return {
-      pagesize: null,
+      currentPage: 1,
+      pageSize: 100,
       listLoading: false,
       tableData: [],
       searchTable: [],
@@ -82,13 +83,14 @@ export default {
         suffix: "",
         saler: "",
         start: 1,
-        limit: 10
+        limit: 100
       }
     };
   },
   methods: {
     handleSizeChange(val) {
-      this.condition.limit = val;
+      this.pageSize = val;
+      this.condition.limit = this.pageSize * this.currentPage;
       this.listLoading = true;
       getPsales(this.condition).then(response => {
         this.listLoading = false;
@@ -97,7 +99,9 @@ export default {
       });
     },
     handleCurrentChange(val) {
-      this.condition.start = val;
+      this.currentPage = val;
+      this.condition.start = (this.currentPage - 1) * this.pageSize + 1;
+      this.condition.limit = this.pageSize * this.currentPage;
       this.listLoading = true;
       getPsales(this.condition).then(response => {
         this.listLoading = false;
