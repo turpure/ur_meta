@@ -24,6 +24,10 @@ export function getMyToken() {
   return store.getters.token
 }
 
+export function isAdmini() {
+  return store.getters.isAdmin
+}
+
 export function uploadImage(avatar) {
   const data = {
     avatar

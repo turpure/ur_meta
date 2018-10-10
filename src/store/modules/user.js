@@ -1,5 +1,5 @@
-import { loginByUsername, logout, getUserInfo } from '@/api/login'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { loginByUsername, getUserInfo } from '@/api/login'
+import { getToken, setToken } from '@/utils/auth'
 
 const user = {
   state: {
@@ -9,6 +9,7 @@ const user = {
     token: getToken(),
     name: '',
     avatar: '',
+    isAdmin: '',
     introduction: '',
     roles: [],
     setting: {
@@ -37,6 +38,9 @@ const user = {
     },
     SET_AVATAR: (state, avatar) => {
       state.avatar = avatar
+    },
+    SET_isAdmin: (state, isAdmin) => {
+      state.isAdmin = isAdmin
     },
     SET_ROLES: (state, roles) => {
       state.roles = roles
@@ -73,12 +77,13 @@ const user = {
           const data = response.data.data
           commit('SET_NAME', data.username)
           commit('SET_AVATAR', data.avatar)
+          commit('SET_isAdmin', data.isAdmin)
           resolve(response)
         }).catch(error => {
           reject(error)
         })
       })
-    },
+    }
   }
 }
 
