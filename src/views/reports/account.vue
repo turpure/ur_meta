@@ -321,6 +321,10 @@ export default {
             });
           }
           this.listLoading = true;
+          this.pageSize = 100;
+          this.currentPage = 1;
+          this.condition.start = 1;
+          this.condition.limit = 100;
           getaccount(myform).then(response => {
             this.listLoading = false;
             this.tableData = this.searchTable = response.data.data.items;

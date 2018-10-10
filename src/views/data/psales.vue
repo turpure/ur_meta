@@ -111,6 +111,10 @@ export default {
     },
     onSubmit() {
       this.listLoading = true;
+      this.pageSize = 100;
+      this.currentPage = 1;
+      this.condition.start = 1;
+      this.condition.limit = 100;
       getPsales(this.condition).then(response => {
         this.listLoading = false;
         this.tableData = response.data.data.items;
