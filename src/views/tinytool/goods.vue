@@ -199,6 +199,10 @@ export default {
   },
   methods: {
     onSubmit() {
+      this.pageSize = 50;
+      this.currentPage = 1;
+      this.condition.start = 1;
+      this.condition.limit = 50;
       this.listLoading = true;
       this.condition.beginDate = this.form.dateRange[0];
       this.condition.endDate = this.form.dateRange[1];

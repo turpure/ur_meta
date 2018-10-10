@@ -90,6 +90,10 @@ export default {
   },
   methods: {
     onSubmit() {
+      this.pageSize = 20;
+      this.currentPage = 1;
+      this.condition.start = 1;
+      this.condition.limit = 20;
       this.listLoading = true;
       getBrand(this.condition).then(response => {
         this.listLoading = false;
