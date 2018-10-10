@@ -48,7 +48,7 @@
       </el-form-item>
     </el-form>
     <el-row v-loading="listLoading">
-      <el-col :span="4" class="mix" v-for="item in tableData.slice((condition.start-1)*pageSize,condition.start*pageSize)" :key="item.rowId">
+      <el-col :span="4" class="mix" v-for="item in this.tableData" :key="item.rowId">
         <a :href="item.LinkUrl" style="text-decoration:none;">
           <div class="mix-inner">
             <img :src=item.BmpFileName :alt='item.GoodsName+item.GoodsSKUStatus'>
@@ -68,7 +68,7 @@
     </el-row>
     <el-col :span="24" class="toolbar" v-show="total>0">
       <div class="pagination-container" align="right">
-        <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="condition.start" :page-sizes="[12, 20, 30, 50]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
+        <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="condition.start" :page-sizes="[50, 100, 500,1000,this.total]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
         </el-pagination>
       </div>
     </el-col>
@@ -89,7 +89,7 @@ export default {
         dateRange: ["", ""]
       },
       category: [],
-      pageSize: 12,
+      pageSize: null,
       total: null,
       disabled: true,
       listLoading: false,
@@ -116,7 +116,7 @@ export default {
         categoryParentName: "",
         categoryName: "",
         start: 1,
-        limit: 1000
+        limit: 50
       },
       pickerOptions2: {
         shortcuts: [
@@ -203,15 +203,27 @@ export default {
       this.condition.endDate = this.form.dateRange[1];
       getGoodspicture(this.condition).then(response => {
         this.listLoading = false;
-        this.tableData = response.data.data;
-        this.total = this.tableData.length;
+        this.tableData = response.data.data.items;
+        this.total = Number(response.data.data.totalCount);
       });
     },
     handleSizeChange(val) {
-      this.pageSize = val;
+      this.condition.limit = val;
+      this.listLoading = true;
+      getGoodspicture(this.condition).then(response => {
+        this.listLoading = false;
+        this.tableData = response.data.data.items;
+        this.total = Number(response.data.data.totalCount);
+      });
     },
     handleCurrentChange(val) {
       this.condition.start = val;
+      this.listLoading = true;
+      getGoodspicture(this.condition).then(response => {
+        this.listLoading = false;
+        this.tableData = response.data.data.items;
+        this.total = Number(response.data.data.totalCount);
+      });
     },
     productcategory() {
       if (this.condition.categoryParentName != "") {
@@ -249,7 +261,7 @@ export default {
   }
 }
 .el-row {
-  max-height: 64rem;
+  max-height: 57rem;
   overflow: auto;
   .mix:hover {
     border-radius: 1rem;

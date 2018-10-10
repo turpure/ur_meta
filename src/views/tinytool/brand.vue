@@ -19,7 +19,7 @@
       </el-form-item>
     </el-form>
     <el-row v-loading="listLoading">
-      <el-col :span="6" class="mix" v-for="item in tableData.slice((condition.start-1)*pageSize,condition.start*pageSize)" :key="item.rowId">
+      <el-col :span="6" class="mix" v-for="item in this.tableData" :key="item.rowId">
         <a :href="item.url" style="text-decoration:none;">
           <img :src=item.imgUrl :alt="item.imgName">
           <p>
@@ -29,13 +29,13 @@
           </p>
           <font color="black">
             {{item.country}}<br>{{item.category}}
-        </font>
+          </font>
         </a>
       </el-col>
     </el-row>
     <el-col :span="24" class="toolbar" v-show="total>0">
       <div class="pagination-container" align="right">
-        <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="condition.start" :page-sizes="[20, 30, 40, 50]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
+        <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="condition.start" :page-sizes="[20, 50,100,this.total]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
         </el-pagination>
       </div>
     </el-col>
@@ -47,7 +47,7 @@ import { getBrandcountry, getBrandcategory, getBrand } from "../../api/profit";
 export default {
   data() {
     return {
-      pageSize: 20,
+      pageSize: null,
       total: null,
       listLoading: false,
       tableData: [],
@@ -58,7 +58,7 @@ export default {
         country: "",
         category: "",
         start: 1,
-        limit: 1000
+        limit: 20
       }
     };
   },
@@ -92,15 +92,27 @@ export default {
       this.listLoading = true;
       getBrand(this.condition).then(response => {
         this.listLoading = false;
-        this.tableData = response.data.data;
-        this.total = this.tableData.length;
+        this.tableData = response.data.data.items;
+        this.total = Number(response.data.data.totalCount);
       });
     },
     handleSizeChange(val) {
-      this.pageSize = val;
+      this.condition.limit = val;
+      this.listLoading = true;
+      getBrand(this.condition).then(response => {
+        this.listLoading = false;
+        this.tableData = response.data.data.items;
+        this.total = Number(response.data.data.totalCount);
+      });
     },
     handleCurrentChange(val) {
       this.condition.start = val;
+      this.listLoading = true;
+      getBrand(this.condition).then(response => {
+        this.listLoading = false;
+        this.tableData = response.data.data.items;
+        this.total = Number(response.data.data.totalCount);
+      });
     }
   },
   mounted() {

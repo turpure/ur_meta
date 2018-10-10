@@ -23,14 +23,7 @@
               <el-option v-for='(item,index) in member' :index='index' :key='item.username' :label='item.username' :value='item.username'></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label='出货仓库' class='input'>
-            <el-select v-model='condition.store' filterable multiple collapse-tags placeholder='请选择'>
-              <el-button plain type="info" @click="selectalls">全选</el-button>
-              <el-button plain type="info" @click="noselects">取消</el-button>
-              <el-option v-for='item in store' :key='item' :value='item'>
-              </el-option>
-            </el-select>
-          </el-form-item>
+
           <el-form-item label="账号" class="input">
             <el-select v-model="condition.account" filterable multiple collapse-tags placeholder="账号">
               <el-button plain type="info" @click="selectall">全选</el-button>
@@ -39,13 +32,22 @@
               </el-option>
             </el-select>
           </el-form-item>
+          <el-form-item label='出货仓库' class='input'>
+            <el-select v-model='condition.store' filterable multiple collapse-tags placeholder='请选择'>
+              <el-button plain type="info" @click="selectalls">全选</el-button>
+              <el-button plain type="info" @click="noselects">取消</el-button>
+              <el-option v-for='item in store' :key='item' :value='item'>
+              </el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item v-model="condition.sku" label="商品编码">
+            <el-input style="width:18.1rem;"></el-input>
+          </el-form-item>
           <el-form-item label='时间类型' class='input' prop='dateType'>
             <el-radio-group v-model='condition.dateType'>
               <el-radio border v-for='(item,index) in dateType' :index='index' :key='item.id' :label='item.id' :value='item.id' style="width:8.6rem">{{item.type}}</el-radio>
             </el-radio-group>
-          </el-form-item>
-          <el-form-item v-model="condition.sku" label="商品编码">
-            <el-input style="width:18.1rem;"></el-input>
           </el-form-item>
           <el-form-item label='日期' class='input' prop='dateRange' :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
             <el-date-picker v-model='condition.dateRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2' style="width:18.1rem;">
@@ -88,7 +90,7 @@
     </el-table>
     <el-col :span="24" class="toolbar" style="margin-top:0rem" v-show="total>0">
       <div class="pagination-container">
-        <el-pagination :current-page="condition.start" :page-sizes="[25,30,40,50]" :page-size="pageSize" :total="total" background layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
+        <el-pagination :current-page="condition.start" :page-sizes="[this.total,100,200,500,1000,this.total]" :page-size="pageSize" :total="total" background layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
       </div>
     </el-col>
   </div>
@@ -109,7 +111,7 @@ import XLSX from "xlsx";
 export default {
   data() {
     return {
-      pageSize: 25,
+      pageSize: null,
       total: null,
       tableHeight: 0,
       allMember: [],
@@ -139,7 +141,7 @@ export default {
         dateRange: [],
         account: [],
         start: 1,
-        limit: 1000
+        limit: 100000
       },
       pickerOptions2: {
         shortcuts: [
@@ -199,9 +201,21 @@ export default {
   methods: {
     handleCurrentChange(val) {
       this.condition.start = val;
+      this.listLoading = true;
+      getaccount(this.condition).then(response => {
+        this.listLoading = false;
+        this.tableData = this.searchTable = response.data.data.items;
+        this.total = Number(response.data.data.totalCount);
+      });
     },
     handleSizeChange(val) {
-      this.pageSize = val;
+      this.condition.limit = val;
+      this.listLoading = true;
+      getaccount(this.condition).then(response => {
+        this.listLoading = false;
+        this.tableData = this.searchTable = response.data.data.items;
+        this.total = Number(response.data.data.totalCount);
+      });
     },
     selectalls() {
       const allValues = [];
@@ -305,10 +319,8 @@ export default {
           this.listLoading = true;
           getaccount(myform).then(response => {
             this.listLoading = false;
-            this.tableData = this.searchTable = response.data.data;
-            // this.total = this.tableData.items.map(m => {
-            //   return m.totalNum;
-            // });
+            this.tableData = this.searchTable = response.data.data.items;
+            this.total = Number(response.data.data.totalCount);
           });
         } else {
           return false;
@@ -394,7 +406,7 @@ export default {
           sums[index] = "合计";
           return;
         }
-        const values = data.items.map(item =>
+        const values = data.map(item =>
           Number(item[column.property] ? item[column.property] : "unkonwn")
         );
         if (!values.every(value => isNaN(value))) {
