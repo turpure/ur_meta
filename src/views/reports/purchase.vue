@@ -65,7 +65,6 @@
 </template>
 
 <script>
-import { getMyToken } from '../../api/api'
 import { getMember, getPurchase } from '../../api/profit'
 import { compareUp, compareDown } from '../../api/tools'
 import FileSaver from 'file-saver'
@@ -117,30 +116,28 @@ export default {
           {
             text: '上个月',
             onClick(picker) {
-              const end = new Date()
               const start = new Date()
               const y = start.getFullYear()
               const m = start.getMonth()
               let lastday
-              let firstday
               if (
-                m == 1 ||
-                m == 3 ||
-                m == 5 ||
-                m == 7 ||
-                m == 8 ||
-                m == 10 ||
-                m == 12
+                m === 1 ||
+                m === 3 ||
+                m === 5 ||
+                m === 7 ||
+                m === 8 ||
+                m === 10 ||
+                m === 12
               ) {
                 lastday = y + '-' + ('0' + m) + '-' + '31'
-              } else if (m == 4 || m == 6 || m == 9 || m == 11) {
+              } else if (m === 4 || m === 6 || m === 9 || m === 11) {
                 lastday = y + '-' + ('0' + m) + '-' + '30'
-              } else if (y % 4 == 0 && (y % 100 != 0 || y % 400 == 0)) {
+              } else if (y % 4 === 0 && (y % 100 !== 0 || y % 400 === 0)) {
                 lastday = y + '-' + '02' + '-' + '29'
               } else {
                 lastday = y + '-' + '02' + '-' + '28'
               }
-              firstday = y + '-' + ('0' + m) + '-' + '01'
+              const firstday = y + '-' + ('0' + m) + '-' + '01'
               picker.$emit('pick', [firstday, lastday])
             }
           },
@@ -171,11 +168,11 @@ export default {
     handleChange() {
       this.show = !this.show
       this.isA = !this.isA
-      if (this.show == false) {
+      if (this.show === false) {
         this.text = '显示输入框'
         const height = document.getElementById('app').clientHeight
         this.tableHeight = height - 140 + 'px'
-      } else if (this.show == true) {
+      } else if (this.show === true) {
         this.text = '隐藏输入框'
         const height = document.getElementById('app').clientHeight
         this.tableHeight = height - 220 + 'px'
@@ -312,7 +309,7 @@ export default {
   mounted() {
     getMember().then(response => {
       const res = response.data.data
-      this.member = res.filter(ele => ele.position == '采购')
+      this.member = res.filter(ele => ele.position === '采购')
     })
   }
 }

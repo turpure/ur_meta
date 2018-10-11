@@ -250,10 +250,10 @@ export default {
       let per = []
       this.member = []
       this.condition.member = []
-      if (val != '') {
+      if (val !== '') {
         for (let i = 0; i < val.length; i++) {
           per = res.filter(
-            ele => ele.department == val[i] && ele.position == '销售'
+            ele => ele.department === val[i] && ele.position === '销售'
           )
           this.member = this.member.concat(per)
         }

@@ -64,7 +64,10 @@ import {
   getMember,
   getPlatform,
   getAccount
-} from "../../api/profit";
+} from '../../api/profit'
+import FileSaver from 'file-saver'
+import XLSX from 'xlsx'
+import { compareUp, compareDown } from '../../api/tools'
 export default {
   data() {
     return {
@@ -73,101 +76,101 @@ export default {
       listLoading: false,
       tableData: [],
       searchTable: [],
-      searchValue: "",
+      searchValue: '',
       total: null,
       plat: [],
       suffix: [],
       saler: [],
       condition: {
-        plat: "",
-        suffix: "",
-        saler: "",
+        plat: '',
+        suffix: '',
+        saler: '',
         start: 1,
         limit: 100
       }
-    };
+    }
   },
   methods: {
     handleSizeChange(val) {
-      this.pageSize = val;
-      this.condition.limit = this.pageSize * this.currentPage;
-      this.listLoading = true;
+      this.pageSize = val
+      this.condition.limit = this.pageSize * this.currentPage
+      this.listLoading = true
       getPsales(this.condition).then(response => {
-        this.listLoading = false;
-        this.tableData = response.data.data.items;
-        this.total = Number(response.data.data.totalCount);
-      });
+        this.listLoading = false
+        this.tableData = response.data.data.items
+        this.total = Number(response.data.data.totalCount)
+      })
     },
     handleCurrentChange(val) {
-      this.currentPage = val;
-      this.condition.start = (this.currentPage - 1) * this.pageSize + 1;
-      this.condition.limit = this.pageSize * this.currentPage;
-      this.listLoading = true;
+      this.currentPage = val
+      this.condition.start = (this.currentPage - 1) * this.pageSize + 1
+      this.condition.limit = this.pageSize * this.currentPage
+      this.listLoading = true
       getPsales(this.condition).then(response => {
-        this.listLoading = false;
-        this.tableData = response.data.data.items;
-        this.total = Number(response.data.data.totalCount);
-      });
+        this.listLoading = false
+        this.tableData = response.data.data.items
+        this.total = Number(response.data.data.totalCount)
+      })
     },
     onSubmit() {
-      this.listLoading = true;
-      this.pageSize = 100;
-      this.currentPage = 1;
-      this.condition.start = 1;
-      this.condition.limit = 100;
+      this.listLoading = true
+      this.pageSize = 100
+      this.currentPage = 1
+      this.condition.start = 1
+      this.condition.limit = 100
       getPsales(this.condition).then(response => {
-        this.listLoading = false;
-        this.tableData = response.data.data.items;
-        this.total = Number(response.data.data.totalCount);
-      });
+        this.listLoading = false
+        this.tableData = response.data.data.items
+        this.total = Number(response.data.data.totalCount)
+      })
     },
     // 导出
     exportExcel() {
       /* generate workbook object from table */
-      var wb = XLSX.utils.table_to_book(document.querySelector("#sale-table"));
+      var wb = XLSX.utils.table_to_book(document.querySelector('#sale-table'))
       /* get binary string as output */
-      let date = new Date();
-      let year = date.getFullYear();
-      let month = date.getMonth() + 1;
-      let strDate = date.getDate();
-      let hour = date.getHours();
-      let minute = date.getMinutes();
-      let second = date.getSeconds();
+      const date = new Date()
+      const year = date.getFullYear()
+      let month = date.getMonth() + 1
+      let strDate = date.getDate()
+      let hour = date.getHours()
+      let minute = date.getMinutes()
+      let second = date.getSeconds()
       if (month >= 1 && month <= 9) {
-        month = "0" + month;
+        month = '0' + month
       }
       if (strDate >= 0 && strDate <= 9) {
-        strDate = "0" + strDate;
+        strDate = '0' + strDate
       }
       if (hour >= 0 && hour <= 9) {
-        hour = "0" + hour;
+        hour = '0' + hour
       }
       if (minute >= 0 && minute <= 9) {
-        minute = "0" + minute;
+        minute = '0' + minute
       }
       if (second >= 0 && second <= 9) {
-        second = "0" + second;
+        second = '0' + second
       }
       const filename =
-        "物流费用" + year + month + strDate + hour + minute + second;
+        '物流费用' + year + month + strDate + hour + minute + second
       var wbout = XLSX.write(wb, {
-        bookType: "xlsx",
+        bookType: 'xlsx',
         bookSST: true,
-        type: "array"
-      });
+        type: 'array'
+      })
       try {
         FileSaver.saveAs(
-          new Blob([wbout], { type: "application/octet-stream" }),
-          filename + ".xlsx"
-        );
+          new Blob([wbout], { type: 'application/octet-stream' }),
+          filename + '.xlsx'
+        )
       } catch (e) {
-        if (typeof console !== "undefined") console.log(e, wbout);
+        if (typeof console !== 'undefined') console.log(e, wbout)
       }
       //  return wbout
     },
     handleSearch() {
-      const searchValue = this.searchValue && this.searchValue.toLowerCase();
-      const data = this.searchTable;
+      const searchValue = this.searchValue && this.searchValue.toLowerCase()
+      const data = this.searchTable
       if (searchValue) {
         this.tableData = data.filter(function(row) {
           return Object.keys(row).some(function(key) {
@@ -175,38 +178,38 @@ export default {
               String(row[key])
                 .toLowerCase()
                 .indexOf(searchValue) > -1
-            );
-          });
-        });
+            )
+          })
+        })
       } else {
-        this.tableData = data;
+        this.tableData = data
       }
     },
     empty(row, column, cellValue, index) {
-      return cellValue ? cellValue : "--";
+      return cellValue || '--'
     },
     sortNumber(column, prop, order) {
-      const data = this.tableData;
-      if (column.order === "descending") {
-        this.tableData = data.sort(compareDown(data, column.prop));
+      const data = this.tableData
+      if (column.order === 'descending') {
+        this.tableData = data.sort(compareDown(data, column.prop))
       } else {
-        this.tableData = data.sort(compareUp(data, column.prop));
+        this.tableData = data.sort(compareUp(data, column.prop))
       }
     }
   },
   mounted() {
     getMember().then(response => {
-      let s = response.data.data;
-      this.saler = s.filter(e => e.position == "开发");
-    });
+      const s = response.data.data
+      this.saler = s.filter(e => e.position === '开发')
+    })
     getPlatform().then(response => {
-      this.plat = response.data.data;
-    });
+      this.plat = response.data.data
+    })
     getAccount().then(response => {
-      this.suffix = response.data.data;
-    });
+      this.suffix = response.data.data
+    })
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

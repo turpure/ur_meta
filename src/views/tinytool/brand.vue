@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { getBrandcountry, getBrandcategory, getBrand } from "../../api/profit";
+import { getBrandcountry, getBrandcategory, getBrand } from '../../api/profit'
 export default {
   data() {
     return {
@@ -55,83 +55,83 @@ export default {
       country: [],
       category: [],
       condition: {
-        brand: "",
-        country: "",
-        category: "",
+        brand: '',
+        country: '',
+        category: '',
         start: 1,
         limit: 20
       }
-    };
+    }
   },
   beforeRouteLeave(to, from, next) {
-    if (from.name === "品牌列表") {
-      let condition = JSON.stringify(this.condition);
-      sessionStorage.setItem("condition", condition);
+    if (from.name === '品牌列表') {
+      const condition = JSON.stringify(this.condition)
+      sessionStorage.setItem('condition', condition)
     } else {
-      sessionStorage.removeItem("condition");
+      sessionStorage.removeItem('condition')
     }
-    next();
+    next()
   },
   created() {
-    let condition = sessionStorage.getItem("condition");
+    const condition = sessionStorage.getItem('condition')
     if (condition != null) {
-      this.condition = JSON.parse(condition);
-      this.listLoading = true;
+      this.condition = JSON.parse(condition)
+      this.listLoading = true
       getBrand(this.condition)
         .then(response => {
-          this.listLoading = false;
-          this.tableData = response.data.data.items;
-          this.total = Number(response.data.data.totalCount);
+          this.listLoading = false
+          this.tableData = response.data.data.items
+          this.total = Number(response.data.data.totalCount)
         })
         .catch(error => {
-          console.log(error);
-        });
+          console.log(error)
+        })
     }
   },
   methods: {
     onSubmit() {
-      this.pageSize = 20;
-      this.currentPage = 1;
-      this.condition.start = 1;
-      this.condition.limit = 20;
-      this.listLoading = true;
+      this.pageSize = 20
+      this.currentPage = 1
+      this.condition.start = 1
+      this.condition.limit = 20
+      this.listLoading = true
       getBrand(this.condition).then(response => {
-        this.listLoading = false;
-        this.tableData = response.data.data.items;
-        this.total = Number(response.data.data.totalCount);
-      });
+        this.listLoading = false
+        this.tableData = response.data.data.items
+        this.total = Number(response.data.data.totalCount)
+      })
     },
     handleSizeChange(val) {
-      this.pageSize = val;
-      this.condition.limit = this.pageSize * this.currentPage;
-      this.listLoading = true;
+      this.pageSize = val
+      this.condition.limit = this.pageSize * this.currentPage
+      this.listLoading = true
       getBrand(this.condition).then(response => {
-        this.listLoading = false;
-        this.tableData = response.data.data.items;
-        this.total = Number(response.data.data.totalCount);
-      });
+        this.listLoading = false
+        this.tableData = response.data.data.items
+        this.total = Number(response.data.data.totalCount)
+      })
     },
     handleCurrentChange(val) {
-      this.currentPage = val;
-      this.condition.start = (this.currentPage - 1) * this.pageSize + 1;
-      this.condition.limit = this.pageSize * this.currentPage;
-      this.listLoading = true;
+      this.currentPage = val
+      this.condition.start = (this.currentPage - 1) * this.pageSize + 1
+      this.condition.limit = this.pageSize * this.currentPage
+      this.listLoading = true
       getBrand(this.condition).then(response => {
-        this.listLoading = false;
-        this.tableData = response.data.data.items;
-        this.total = Number(response.data.data.totalCount);
-      });
+        this.listLoading = false
+        this.tableData = response.data.data.items
+        this.total = Number(response.data.data.totalCount)
+      })
     }
   },
   mounted() {
     getBrandcountry().then(response => {
-      this.country = response.data.data;
-    });
+      this.country = response.data.data
+    })
     getBrandcategory().then(response => {
-      this.category = response.data.data;
-    });
+      this.category = response.data.data
+    })
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

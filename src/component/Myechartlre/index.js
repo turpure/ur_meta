@@ -1,7 +1,7 @@
 import MyechartlreComponent from './Myechartlre.vue'
 
 const Myechartlre = {
-  install: function (Vue) {
+  install: function(Vue) {
     Vue.component('Myechartlre', MyechartlreComponent)
   }
 }

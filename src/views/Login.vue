@@ -20,40 +20,40 @@ export default {
     return {
       logining: false,
       ruleForm2: {
-        username: "",
-        password: ""
+        username: '',
+        password: ''
       },
       rules2: {
-        username: [{ required: true, message: "请输入账号", trigger: "blur" }],
-        password: [{ required: true, message: "请输入密码", trigger: "blur" }]
+        username: [{ required: true, message: '请输入账号', trigger: 'blur' }],
+        password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
       },
       checked: true
-    };
+    }
   },
   methods: {
     handleSubmit2() {
       this.$refs.ruleForm2.validate(valid => {
         if (valid) {
-          this.loading = true;
+          this.loading = true
           this.$store
-            .dispatch("LoginByUsername", this.ruleForm2)
+            .dispatch('LoginByUsername', this.ruleForm2)
             .then(() => {
-              this.loading = false;
-              sessionStorage.setItem("user", "fefawefaewfawfaw");
-              this.$router.push({ path: "/index" });
+              this.loading = false
+              sessionStorage.setItem('user', 'fefawefaewfawfaw')
+              this.$router.push({ path: '/index' })
             })
             .catch(err => {
-              this.$message.error(err);
-              this.loading = false;
-            });
+              this.$message.error(err)
+              this.loading = false
+            })
         } else {
-          console.log("error submit!!");
-          return false;
+          console.log('error submit!!')
+          return false
         }
-      });
+      })
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

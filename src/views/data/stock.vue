@@ -42,7 +42,10 @@
 </template>
 
 <script>
-import { getStock } from "../../api/profit";
+import { getStock } from '../../api/profit'
+import FileSaver from 'file-saver'
+import XLSX from 'xlsx'
+import { compareUp, compareDown } from '../../api/tools'
 export default {
   data() {
     return {
@@ -51,13 +54,13 @@ export default {
       total: 10,
       tableData: [],
       searchTable: [],
-      searchValue: "",
+      searchValue: '',
       filters: {
         page: 1,
         pageSize: 10,
         total: 10
       }
-    };
+    }
   },
   methods: {
     thstyle({ row, column, rowIndex, columnIndex }) {
@@ -67,62 +70,62 @@ export default {
         columnIndex === 15
       ) {
         // 指定坐标
-        return "color:red";
+        return 'color:red'
       } else {
-        return "";
+        return ''
       }
     },
     // 导出
     exportExcel() {
       /* generate workbook object from table */
-      var wb = XLSX.utils.table_to_book(document.querySelector("#sale-table"));
+      var wb = XLSX.utils.table_to_book(document.querySelector('#sale-table'))
       /* get binary string as output */
-      const date = new Date();
-      const year = date.getFullYear();
-      let month = date.getMonth() + 1;
-      let strDate = date.getDate();
-      let hour = date.getHours();
-      let minute = date.getMinutes();
-      let second = date.getSeconds();
+      const date = new Date()
+      const year = date.getFullYear()
+      let month = date.getMonth() + 1
+      let strDate = date.getDate()
+      let hour = date.getHours()
+      let minute = date.getMinutes()
+      let second = date.getSeconds()
       if (month >= 1 && month <= 9) {
-        month = "0" + month;
+        month = '0' + month
       }
       if (strDate >= 0 && strDate <= 9) {
-        strDate = "0" + strDate;
+        strDate = '0' + strDate
       }
       if (hour >= 0 && hour <= 9) {
-        hour = "0" + hour;
+        hour = '0' + hour
       }
       if (minute >= 0 && minute <= 9) {
-        minute = "0" + minute;
+        minute = '0' + minute
       }
       if (second >= 0 && second <= 9) {
-        second = "0" + second;
+        second = '0' + second
       }
       const filename =
-        "物流费用" + year + month + strDate + hour + minute + second;
+        '物流费用' + year + month + strDate + hour + minute + second
       var wbout = XLSX.write(wb, {
-        bookType: "xlsx",
+        bookType: 'xlsx',
         bookSST: true,
-        type: "array"
-      });
+        type: 'array'
+      })
       try {
         FileSaver.saveAs(
-          new Blob([wbout], { type: "application/octet-stream" }),
-          filename + ".xlsx"
-        );
+          new Blob([wbout], { type: 'application/octet-stream' }),
+          filename + '.xlsx'
+        )
       } catch (e) {
-        if (typeof console !== "undefined") console.log(e, wbout);
+        if (typeof console !== 'undefined') console.log(e, wbout)
       }
       //  return wbout
     },
     handleCurrentChange(val) {
-      this.filters.page = val;
-      this.getData();
+      this.filters.page = val
+      this.getData()
     },
     handleSearch() {
-      const searchValue = this.searchValue && this.searchValue.toLowerCase();
-      const data = this.searchTable;
+      const searchValue = this.searchValue && this.searchValue.toLowerCase()
+      const data = this.searchTable
       if (searchValue) {
         this.tableData = data.filter(function(row) {
           return Object.keys(row).some(function(key) {
@@ -130,38 +133,38 @@ export default {
               String(row[key])
                 .toLowerCase()
                 .indexOf(searchValue) > -1
-            );
-          });
-        });
+            )
+          })
+        })
       } else {
-        this.tableData = data;
+        this.tableData = data
       }
     },
     empty(row, column, cellValue, index) {
-      return cellValue || "--";
+      return cellValue || '--'
     },
     sortNumber(column, prop, order) {
-      const data = this.tableData;
-      if (column.order === "descending") {
-        this.tableData = data.sort(compareDown(data, column.prop));
+      const data = this.tableData
+      if (column.order === 'descending') {
+        this.tableData = data.sort(compareDown(data, column.prop))
       } else {
-        this.tableData = data.sort(compareUp(data, column.prop));
+        this.tableData = data.sort(compareUp(data, column.prop))
       }
     },
     getData() {
       getStock(this.filters).then(response => {
-        const res = response.data.data;
-        this.tableData = res.items;
-        this.filters.total = res._meta.totalCount;
-        this.filters.page = res._meta.currentPage;
-        this.filters.pageSize = res._meta.perPage;
-      });
+        const res = response.data.data
+        this.tableData = res.items
+        this.filters.total = res._meta.totalCount
+        this.filters.page = res._meta.currentPage
+        this.filters.pageSize = res._meta.perPage
+      })
     }
   },
   mounted() {
-    this.getData();
+    this.getData()
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

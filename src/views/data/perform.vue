@@ -89,27 +89,27 @@
 </template>
 
 <script>
-import { getPerform } from "../../api/profit";
+import { getPerform } from '../../api/profit'
 export default {
   data() {
     return {
       form: {
         dateRange: [],
-        newRange: ["", ""]
+        newRange: ['', '']
       },
-      activeName: "first",
+      activeName: 'first',
       show: false,
       listLoading: false,
       option: {
         title: {
-          text: "销售额(RMB)"
+          text: '销售额(RMB)'
         },
         tooltip: {
-          trigger: "axis",
+          trigger: 'axis',
           axisPointer: {
-            type: "cross",
+            type: 'cross',
             label: {
-              backgroundColor: "#6a7985"
+              backgroundColor: '#6a7985'
             }
           }
         },
@@ -122,23 +122,23 @@ export default {
           feature: {}
         },
         grid: {
-          left: "3%",
-          right: "4%",
-          bottom: "3%",
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
           containLabel: true
         },
         xAxis: [
           {
-            type: "category",
+            type: 'category',
             boundaryGap: true,
             data: [String]
           }
         ],
         yAxis: [
           {
-            type: "value",
+            type: 'value',
             axisLabel: {
-              formatter: "{value}"
+              formatter: '{value}'
             }
           }
         ],
@@ -146,14 +146,14 @@ export default {
       },
       options: {
         title: {
-          text: "利润额(RMB)"
+          text: '利润额(RMB)'
         },
         tooltip: {
-          trigger: "axis",
+          trigger: 'axis',
           axisPointer: {
-            type: "cross",
+            type: 'cross',
             label: {
-              backgroundColor: "#6a7985"
+              backgroundColor: '#6a7985'
             }
           }
         },
@@ -164,23 +164,23 @@ export default {
           show: true
         },
         grid: {
-          left: "3%",
-          right: "4%",
-          bottom: "3%",
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
           containLabel: true
         },
         xAxis: [
           {
-            type: "category",
+            type: 'category',
             boundaryGap: true,
             data: [String]
           }
         ],
         yAxis: [
           {
-            type: "value",
+            type: 'value',
             axisLabel: {
-              formatter: "{value}"
+              formatter: '{value}'
             }
           }
         ],
@@ -190,211 +190,211 @@ export default {
       tableData2: [],
       tableData3: [],
       condition: {
-        beginDate: "",
-        endDate: "",
-        createBeginDate: "",
-        createEndDate: ""
+        beginDate: '',
+        endDate: '',
+        createBeginDate: '',
+        createEndDate: ''
       },
       pickerOptions2: {
         shortcuts: [
           {
-            text: "本月",
+            text: '本月',
             onClick(vm) {
-              const end = new Date();
-              const y = end.getFullYear();
-              let m = end.getMonth() + 1;
+              const end = new Date()
+              const y = end.getFullYear()
+              let m = end.getMonth() + 1
               if (m < 10) {
-                m = "0" + m;
+                m = '0' + m
               }
-              const firstday = y + "-" + m + "-" + "01";
-              const start = new Date();
-              const sy = start.getFullYear();
-              let sm = start.getMonth() + 1;
-              const sd = start.getDate();
+              const firstday = y + '-' + m + '-' + '01'
+              const start = new Date()
+              const sy = start.getFullYear()
+              let sm = start.getMonth() + 1
+              const sd = start.getDate()
               if (sm < 10) {
-                sm = "0" + sm;
+                sm = '0' + sm
               }
-              const sfirstday = sy + "-" + sm + "-" + sd;
-              vm.$emit("pick", [firstday, sfirstday]);
+              const sfirstday = sy + '-' + sm + '-' + sd
+              vm.$emit('pick', [firstday, sfirstday])
             }
           },
           {
-            text: "上个月",
+            text: '上个月',
             onClick(picker) {
-              const nowdays = new Date();
-              let year = nowdays.getFullYear();
-              let month = nowdays.getMonth();
+              const nowdays = new Date()
+              let year = nowdays.getFullYear()
+              let month = nowdays.getMonth()
               if (month === 0) {
-                month = 12;
-                year = year - 1;
+                month = 12
+                year = year - 1
               }
               if (month < 10) {
-                month = "0" + month;
+                month = '0' + month
               }
-              const firstDay = [year, month, "01"].join("-");
-              const myDate = new Date(year, month, 0);
-              const lastDay = [year, month, myDate.getDate()].join("-");
-              picker.$emit("pick", [firstDay, lastDay]);
+              const firstDay = [year, month, '01'].join('-')
+              const myDate = new Date(year, month, 0)
+              const lastDay = [year, month, myDate.getDate()].join('-')
+              picker.$emit('pick', [firstDay, lastDay])
             }
           },
           {
-            text: "最近一个月",
+            text: '最近一个月',
             onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-              picker.$emit("pick", [start, end]);
+              const end = new Date()
+              const start = new Date()
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+              picker.$emit('pick', [start, end])
             }
           }
         ]
       }
-    };
+    }
   },
   methods: {
-    //合计
+    // 合计
     getSummaries(param) {
-      const { columns, data } = param;
-      const sums = [];
-      const fileds = columns.map(item => item.property);
+      const { columns, data } = param
+      const sums = []
+      const fileds = columns.map(item => item.property)
       columns.forEach((column, index) => {
         if (index === 0) {
-          sums[index] = "合计";
-          return;
+          sums[index] = '合计'
+          return
         }
         const values = data.map(item =>
-          Number(item[column.property] ? item[column.property] : "unkonwn")
-        );
+          Number(item[column.property] ? item[column.property] : 'unkonwn')
+        )
         if (!values.every(value => isNaN(value))) {
           sums[index] = values.reduce((prev, curr) => {
-            const value = Number(curr);
+            const value = Number(curr)
             if (!isNaN(value)) {
-              return prev + curr;
+              return prev + curr
             } else {
-              return prev;
+              return prev
             }
-          }, 0);
-          sums[index] = Math.round(sums[index] * 100) / 100;
+          }, 0)
+          sums[index] = Math.round(sums[index] * 100) / 100
         } else {
-          sums[index] = "N/A";
+          sums[index] = 'N/A'
         }
-      });
+      })
       // 退款率和利润率核算
-      sums[fileds.indexOf("SoldRate")] =
+      sums[fileds.indexOf('SoldRate')] =
         Math.round(
-          (sums[fileds.indexOf("SoldNum")] * 10000) /
-            sums[fileds.indexOf("goodsNum")]
-        ) / 100;
-      sums[fileds.indexOf("ProfitRate")] =
+          (sums[fileds.indexOf('SoldNum')] * 10000) /
+            sums[fileds.indexOf('goodsNum')]
+        ) / 100
+      sums[fileds.indexOf('ProfitRate')] =
         Math.round(
-          (sums[fileds.indexOf("profitRmb")] * 10000) /
-            sums[fileds.indexOf("saleMoneyRmb")]
-        ) / 100;
-      sums[fileds.indexOf("wishRate")] =
+          (sums[fileds.indexOf('profitRmb')] * 10000) /
+            sums[fileds.indexOf('saleMoneyRmb')]
+        ) / 100
+      sums[fileds.indexOf('wishRate')] =
         Math.round(
-          (sums[fileds.indexOf("wishSoldNum")] * 10000) /
-            sums[fileds.indexOf("goodsNum")]
-        ) / 100;
-      sums[fileds.indexOf("eBayRate")] =
+          (sums[fileds.indexOf('wishSoldNum')] * 10000) /
+            sums[fileds.indexOf('goodsNum')]
+        ) / 100
+      sums[fileds.indexOf('eBayRate')] =
         Math.round(
-          (sums[fileds.indexOf("eabySoldNum")] * 10000) /
-            sums[fileds.indexOf("goodsNum")]
-        ) / 100;
-      sums[fileds.indexOf("SMTRate")] =
+          (sums[fileds.indexOf('eabySoldNum')] * 10000) /
+            sums[fileds.indexOf('goodsNum')]
+        ) / 100
+      sums[fileds.indexOf('SMTRate')] =
         Math.round(
-          (sums[fileds.indexOf("SMTSoldNum")] * 10000) /
-            sums[fileds.indexOf("goodsNum")]
-        ) / 100;
-      sums[fileds.indexOf("amaRate")] =
+          (sums[fileds.indexOf('SMTSoldNum')] * 10000) /
+            sums[fileds.indexOf('goodsNum')]
+        ) / 100
+      sums[fileds.indexOf('amaRate')] =
         Math.round(
-          (sums[fileds.indexOf("amaSoldNum")] * 10000) /
-            sums[fileds.indexOf("goodsNum")]
-        ) / 100;
-      return sums;
+          (sums[fileds.indexOf('amaSoldNum')] * 10000) /
+            sums[fileds.indexOf('goodsNum')]
+        ) / 100
+      return sums
     },
     handleClick(tab, event) {
-      this.activeName = tab.name;
+      this.activeName = tab.name
     },
     onSubmit() {
       this.$refs.condition.validate(valid => {
         if (valid) {
-          this.show = true;
-          this.listLoading = true;
-          this.condition.beginDate = this.form.dateRange[0];
-          this.condition.endDate = this.form.dateRange[1];
-          this.condition.createBeginDate = this.form.newRange[0];
-          this.condition.createEndDate = this.form.newRange[1];
+          this.show = true
+          this.listLoading = true
+          this.condition.beginDate = this.form.dateRange[0]
+          this.condition.endDate = this.form.dateRange[1]
+          this.condition.createBeginDate = this.form.newRange[0]
+          this.condition.createEndDate = this.form.newRange[1]
           getPerform(this.condition).then(response => {
-            this.listLoading = false;
-            let tableData = response.data.data;
-            this.tableData1 = tableData.AllReport;
-            this.tableData2 = tableData.HotReport;
-            this.tableData3 = tableData.PopReport;
-            const ret = this.tableData1;
-            const lineName = [];
-            const lineNames = [];
-            const serie = [];
-            const series = [];
-            const date = [];
-            const dates = [];
-            lineName.push("销售额");
-            lineNames.push("利润额");
+            this.listLoading = false
+            const tableData = response.data.data
+            this.tableData1 = tableData.AllReport
+            this.tableData2 = tableData.HotReport
+            this.tableData3 = tableData.PopReport
+            const ret = this.tableData1
+            const lineName = []
+            const lineNames = []
+            const serie = []
+            const series = []
+            const date = []
+            const dates = []
+            lineName.push('销售额')
+            lineNames.push('利润额')
             lineName.forEach(name => {
               const sery = {
-                type: "bar",
-                stack: "总量",
-                itemStyle: { normal: { color: "#84C1FF" } }
-              };
-              const amt = [];
+                type: 'bar',
+                stack: '总量',
+                itemStyle: { normal: { color: '#84C1FF' }}
+              }
+              const amt = []
               ret.map(element => {
-                amt.push(Number(element.saleMoneyRmb));
+                amt.push(Number(element.saleMoneyRmb))
                 if (date.indexOf(element.salername) < 0) {
-                  date.push(element.salername);
+                  date.push(element.salername)
                 }
-              });
-              sery["data"] = amt;
-              sery["name"] = name;
-              serie.push(sery);
-            });
+              })
+              sery['data'] = amt
+              sery['name'] = name
+              serie.push(sery)
+            })
             lineNames.forEach(name => {
               const sery = {
-                type: "bar",
-                stack: "总量",
-                itemStyle: { normal: { color: "#84C1FF" } }
-              };
-              const amt = [];
+                type: 'bar',
+                stack: '总量',
+                itemStyle: { normal: { color: '#84C1FF' }}
+              }
+              const amt = []
               ret.map(element => {
-                amt.push(Number(element.profitRmb));
+                amt.push(Number(element.profitRmb))
                 if (dates.indexOf(element.salername) < 0) {
-                  dates.push(element.salername);
+                  dates.push(element.salername)
                 }
-              });
-              sery["data"] = amt;
-              sery["name"] = name;
-              series.push(sery);
-            });
-            this.option.legend.data = lineName;
-            this.option.xAxis[0].data = date;
-            this.option.series = serie;
-            this.options.legend.data = lineNames;
-            this.options.xAxis[0].data = dates;
-            this.options.series = series;
-            const _this = this;
-            _this.$refs.myechart.drawAreaStack(this.option);
-            _this.$refs.myechartlre.drawareaStack(this.options);
-          });
+              })
+              sery['data'] = amt
+              sery['name'] = name
+              series.push(sery)
+            })
+            this.option.legend.data = lineName
+            this.option.xAxis[0].data = date
+            this.option.series = serie
+            this.options.legend.data = lineNames
+            this.options.xAxis[0].data = dates
+            this.options.series = series
+            const _this = this
+            _this.$refs.myechart.drawAreaStack(this.option)
+            _this.$refs.myechartlre.drawareaStack(this.options)
+          })
         } else {
-          return false;
+          return false
         }
-      });
+      })
     },
     rowheader({ row, rowIndex }) {
-      return "color:black";
+      return 'color:black'
     },
     empty(row, column, cellValue, index) {
-      return cellValue || "--";
+      return cellValue || '--'
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

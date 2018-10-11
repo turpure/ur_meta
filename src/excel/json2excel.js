@@ -1,16 +1,16 @@
-import FileSaver from "file-saver";
-import XLSX from "xlsx";
+import FileSaver from 'file-saver'
+import XLSX from 'xlsx'
 function datenum(v, date1904) {
   if (date1904) v += 1462
-  let epoch = Date.parse(v)
+  const epoch = Date.parse(v)
   return (epoch - new Date(Date.UTC(1899, 11, 30))) / (24 * 60 * 60 * 1000)
 }
 
 function data2ws(data) {
   const ws = {}
-  const range = { s: { c: 10000000, r: 10000000 }, e: { c: 0, r: 0 } }
-  for (let R = 0; R != data.length; ++R) {
-    for (let C = 0; C != data[R].length; ++C) {
+  const range = { s: { c: 10000000, r: 10000000 }, e: { c: 0, r: 0 }}
+  for (let R = 0; R !== data.length; ++R) {
+    for (let C = 0; C !== data[R].length; ++C) {
       if (range.s.r > R) range.s.r = R
       if (range.s.c > C) range.s.c = C
       if (range.e.r < R) range.e.r = R
@@ -25,10 +25,9 @@ function data2ws(data) {
         cell.t = 'n'
         cell.z = XLSX.SSF._table[14]
         cell.v = datenum(cell.v)
-      } else if (!isNaN(cell.v) && cell.v != "") {
+      } else if (!isNaN(cell.v) && cell.v !== '') {
         cell.t = 'n'
-      }
-      else cell.t = 's'
+      } else cell.t = 's'
 
       ws[cell_ref] = cell
     }
@@ -45,7 +44,7 @@ function Workbook() {
 function s2ab(s) {
   const buf = new ArrayBuffer(s.length)
   const view = new Uint8Array(buf)
-  for (let i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF
+  for (let i = 0; i !== s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF
   return buf
 }
 
@@ -58,12 +57,12 @@ function s2ab(s) {
 */
 export default function toExcel({ th, data, fileName, fileType, sheetName }) {
   data.unshift(th)
-  const wb = new Workbook(), ws = data2ws(data)
+  const wb = new Workbook(); const ws = data2ws(data)
   sheetName = sheetName || 'sheet1'
   wb.SheetNames.push(sheetName)
   wb.Sheets[sheetName] = ws
   fileType = fileType || 'xlsx'
   var wbout = XLSX.write(wb, { bookType: fileType, bookSST: false, type: 'binary' })
   fileName = fileName || '列表'
-  FileSaver.saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), `${fileName}.${fileType}`)
+  FileSaver.saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), `${fileName}.${fileType}`)
 }

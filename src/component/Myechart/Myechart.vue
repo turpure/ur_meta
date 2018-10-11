@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import echarts from "echarts";
+import echarts from 'echarts'
 
 export default {
   props: {
@@ -18,13 +18,13 @@ export default {
   data() {
     return {
       areaStack: null
-    };
+    }
   },
 
   methods: {
     drawAreaStack(opt) {
-      this.areaStack = echarts.init(document.getElementById("AreaStack"));
-      this.areaStack.setOption(opt, true);
+      this.areaStack = echarts.init(document.getElementById('AreaStack'))
+      this.areaStack.setOption(opt, true)
     },
     drawCharts() {
       //   this.drawAreaStack();
@@ -32,12 +32,12 @@ export default {
   },
 
   mounted: function() {
-    this.drawCharts();
+    this.drawCharts()
   },
   updated: function() {
-    this.drawCharts();
+    this.drawCharts()
   }
-};
+}
 </script>
 
 <style scoped>
