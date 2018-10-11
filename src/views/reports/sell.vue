@@ -106,13 +106,12 @@ import {
   getAccount,
   getSales
 } from '../../api/profit'
-import { isAdmini } from '../../api/api'
+import { isAdmin } from '../../api/api'
 import { compareUp, compareDown, getMonthDate, getDateType } from '../../api/tools'
 import FileSaver from 'file-saver'
 import XLSX from 'xlsx'
 export default {
   data() {
-    const me = this
     return {
       tableHeight: 0,
       allMember: [],
@@ -259,7 +258,7 @@ export default {
       this.$refs.condition.validate(valid => {
         if (valid) {
           if (myform.member.length === 0) {
-            if (!isAdmini()) {
+            if (isAdmin() === false) {
               myform.member = members.map(m => {
                 return m.username
               })
