@@ -17,32 +17,32 @@
 </template>
 
 <script>
-import { fyndiqz, getHeaders } from "../../api/api";
+import { fyndiqz, getHeaders } from '../../api/api'
 
 export default {
   data() {
     return {
       headers: {},
-      action: "",
-      code: "",
+      action: '',
+      code: '',
       show: false
-    };
+    }
   },
   methods: {
     uploadSuccess(response, file, fileList) {
-      const code = response.data;
-      this.code = JSON.stringify(code, null, 4);
-      this.show = true;
+      const code = response.data
+      this.code = JSON.stringify(code, null, 4)
+      this.show = true
     },
     uploadError(err, file, fileList) {
-      this.code = err;
+      this.code = err
     }
   },
   mounted() {
-    this.headers = getHeaders();
-    this.action = fyndiqz();
+    this.headers = getHeaders()
+    this.action = fyndiqz()
   }
-};
+}
 </script>
 
 <style scoped lang='scss'>

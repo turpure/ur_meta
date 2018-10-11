@@ -149,11 +149,8 @@
 </template>
 
 <script>
-import { getMyToken } from "../../api/api";
-import { getSection, getMember, getPossess } from "../../api/profit";
-import { compareUp, compareDown } from "../../api/tools";
-import FileSaver from "file-saver";
-import XLSX from "xlsx";
+import { getSection, getMember, getPossess } from '../../api/profit'
+import { compareUp, compareDown } from '../../api/tools'
 
 export default {
   data() {
@@ -201,16 +198,16 @@ export default {
       tableHeight: 0,
       allMember: [],
       isA: true,
-      text: "显示输入框",
+      text: '显示输入框',
       show: true,
       show1: false,
       show2: false,
       tableData: [],
       searchTable: [],
-      searchValue: "",
+      searchValue: '',
       listLoading: false,
       section: [],
-      dateType: [{ id: 1, type: "发货时间" }, { id: 0, type: "交易时间" }],
+      dateType: [{ id: 1, type: '发货时间' }, { id: 0, type: '交易时间' }],
       member: [],
       formInline: {
         region: []
@@ -223,456 +220,454 @@ export default {
       pickerOptions2: {
         shortcuts: [
           {
-            text: "本月",
+            text: '本月',
             onClick(picker) {
-              const end = new Date();
-              const y = end.getFullYear();
-              let m = end.getMonth() + 1;
+              const end = new Date()
+              const y = end.getFullYear()
+              let m = end.getMonth() + 1
               if (m < 10) {
-                m = "0" + m;
+                m = '0' + m
               }
-              const firstday = y + "-" + m + "-" + "01";
-              const start = new Date();
-              const sy = start.getFullYear();
-              let sm = start.getMonth() + 1;
-              const sd = start.getDate();
+              const firstday = y + '-' + m + '-' + '01'
+              const start = new Date()
+              const sy = start.getFullYear()
+              let sm = start.getMonth() + 1
+              const sd = start.getDate()
               if (sm < 10) {
-                sm = "0" + sm;
+                sm = '0' + sm
               }
-              const sfirstday = sy + "-" + sm + "-" + sd;
-              picker.$emit("pick", [firstday, sfirstday]);
+              const sfirstday = sy + '-' + sm + '-' + sd
+              picker.$emit('pick', [firstday, sfirstday])
             }
           },
           {
-            text: "上个月",
+            text: '上个月',
             onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              const y = start.getFullYear();
-              let m = start.getMonth();
-              let lastday;
-              let firstday;
+              const start = new Date()
+              const y = start.getFullYear()
+              const m = start.getMonth()
+              let lastday
               if (
-                m == 1 ||
-                m == 3 ||
-                m == 5 ||
-                m == 7 ||
-                m == 8 ||
-                m == 10 ||
-                m == 12
+                m === 1 ||
+                m === 3 ||
+                m === 5 ||
+                m === 7 ||
+                m === 8 ||
+                m === 10 ||
+                m === 12
               ) {
-                lastday = y + "-" + ("0" + m) + "-" + "31";
-              } else if (m == 4 || m == 6 || m == 9 || m == 11) {
-                lastday = y + "-" + ("0" + m) + "-" + "30";
-              } else if (y % 4 == 0 && (y % 100 != 0 || y % 400 == 0)) {
-                lastday = y + "-" + "02" + "-" + "29";
+                lastday = y + '-' + ('0' + m) + '-' + '31'
+              } else if (m === 4 || m === 6 || m === 9 || m === 11) {
+                lastday = y + '-' + ('0' + m) + '-' + '30'
+              } else if (y % 4 === 0 && (y % 100 !== 0 || y % 400 === 0)) {
+                lastday = y + '-' + '02' + '-' + '29'
               } else {
-                lastday = y + "-" + "02" + "-" + "28";
+                lastday = y + '-' + '02' + '-' + '28'
               }
-              firstday = y + "-" + ("0" + m) + "-" + "01";
-              picker.$emit("pick", [firstday, lastday]);
+              const firstday = y + '-' + ('0' + m) + '-' + '01'
+              picker.$emit('pick', [firstday, lastday])
             }
           },
           {
-            text: "最近一个月",
+            text: '最近一个月',
             onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-              picker.$emit("pick", [start, end]);
+              const end = new Date()
+              const start = new Date()
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+              picker.$emit('pick', [start, end])
             }
           }
         ]
       }
-    };
+    }
   },
   methods: {
     handleCheck1() {
-      this.checked1 != this.checked1;
+      !this.checked1
     },
     handleCheck2() {
-      this.checked2 != this.checked2;
+      !this.checked2
     },
     handleCheck3() {
-      this.checked3 != this.checked3;
+      !this.checked3
     },
     handleCheck4() {
-      this.checked4 != this.checked4;
+      !this.checked4
     },
     handleCheck5() {
-      this.checked5 != this.checked5;
+      !this.checked5
     },
     handleCheck6() {
-      this.checked6 != this.checked6;
+      !this.checked6
     },
     handleCheck7() {
-      this.checked7 != this.checked7;
+      !this.checked7
     },
     handleCheck8() {
-      this.checked8 != this.checked8;
+      !this.checked8
     },
     handleCheck9() {
-      this.checked9 != this.checked9;
+      !this.checked9
     },
     handleCheck10() {
-      this.checked10 != this.checked10;
+      !this.checked10
     },
     handleCheck11() {
-      this.checked11 != this.checked11;
+      !this.checked11
     },
     handleCheck12() {
-      this.checked12 != this.checked12;
+      !this.checked12
     },
     handleCheck13() {
-      this.checked13 != this.checked13;
+      !this.checked13
     },
     handleCheck14() {
-      this.checked14 != this.checked14;
+      !this.checked14
     },
     handleCheck15() {
-      this.checked15 != this.checked15;
+      !this.checked15
     },
     handleCheck16() {
-      this.checked16 != this.checked16;
+      !this.checked16
     },
     handleCheck17() {
-      this.checked17 != this.checked17;
+      !this.checked17
     },
     handleCheck18() {
-      this.checked18 != this.checked18;
+      !this.checked18
     },
     handleCheck19() {
-      this.checked19 != this.checked19;
+      !this.checked19
     },
     handleCheck20() {
-      this.checked20 != this.checked20;
+      !this.checked20
     },
     handleCheck21() {
-      this.checked21 != this.checked21;
+      !this.checked21
     },
     handleCheck22() {
-      this.checked22 != this.checked22;
+      !this.checked22
     },
     handleCheck23() {
-      this.checked23 != this.checked23;
+      !this.checked23
     },
     handleCheck24() {
-      this.checked24 != this.checked24;
+      !this.checked24
     },
     handleCheck25() {
-      this.checked25 != this.checked25;
+      !this.checked25
     },
     handleCheck26() {
-      this.checked26 != this.checked26;
+      !this.checked26
     },
     handleCheck27() {
-      this.checked27 != this.checked27;
+      !this.checked27
     },
     handleCheck28() {
-      this.checked28 != this.checked28;
+      !this.checked28
     },
     handleCheck29() {
-      this.checked29 != this.checked29;
+      !this.checked29
     },
     handleCheck30() {
-      this.checked30 != this.checked30;
+      !this.checked30
     },
     handleCheck31() {
-      this.checked31 != this.checked31;
+      !this.checked31
     },
     handleCheck32() {
-      this.checked32 != this.checked32;
+      !this.checked32
     },
     handleCheck33() {
-      this.checked33 != this.checked33;
+      !this.checked33
     },
     handleCheck34() {
-      this.checked34 != this.checked34;
+      !this.checked34
     },
     handleCheck35() {
-      this.checked35 != this.checked35;
+      !this.checked35
     },
     handleCheck36() {
-      this.checked36 != this.checked36;
+      !this.checked36
     },
     handleCheck37() {
-      this.checked37 != this.checked37;
+      !this.checked37
     },
     handleCheck38() {
-      this.checked38 != this.checked38;
+      !this.checked38
     },
     handleCheck39() {
-      this.checked39 != this.checked39;
+      !this.checked39
     },
     handleCheck40() {
-      this.checked40 != this.checked40;
+      !this.checked40
     },
     selectalld() {
-      const allValues = [];
+      const allValues = []
       for (const item of this.section) {
-        allValues.push(item.department);
+        allValues.push(item.department)
       }
-      this.formInline.region = allValues;
-      this.member = this.allMember;
+      this.formInline.region = allValues
+      this.member = this.allMember
     },
     noselectd() {
-      this.formInline.region = [];
-      this.member = this.allMember;
+      this.formInline.region = []
+      this.member = this.allMember
     },
     selectallm() {
-      const allValues = [];
+      const allValues = []
       for (const item of this.member) {
-        allValues.push(item.username);
+        allValues.push(item.username)
       }
-      this.condition.member = allValues;
+      this.condition.member = allValues
     },
     noselectm() {
-      this.condition.member = [];
+      this.condition.member = []
     },
     choosed() {
-      let res = [];
-      this.member = [];
-      this.condition.member = [];
-      let val = this.formInline.region;
-      res = this.allMember;
-      let per = [];
-      if (val != "") {
+      let res = []
+      this.member = []
+      this.condition.member = []
+      const val = this.formInline.region
+      res = this.allMember
+      let per = []
+      if (val !== '') {
         for (let i = 0; i < val.length; i++) {
           per = res.filter(
-            ele => ele.department == val[i] && ele.position == "美工"
-          );
-          this.member = this.member.concat(per);
+            ele => ele.department === val[i] && ele.position === '美工'
+          )
+          this.member = this.member.concat(per)
         }
       } else {
-        this.member = res;
+        this.member = res
       }
     },
     handleChange() {
-      this.show = !this.show;
-      this.isA = !this.isA;
-      if (this.show == false) {
-        this.text = "显示输入框";
-        let height = document.getElementById("app").clientHeight;
-        this.tableHeight = height - 58 + "px";
-      } else if (this.show == true) {
-        this.text = "隐藏输入框";
-        let height = document.getElementById("app").clientHeight;
-        this.tableHeight = height - 135 + "px";
+      this.show = !this.show
+      this.isA = !this.isA
+      if (this.show === false) {
+        this.text = '显示输入框'
+        const height = document.getElementById('app').clientHeight
+        this.tableHeight = height - 58 + 'px'
+      } else if (this.show === true) {
+        this.text = '隐藏输入框'
+        const height = document.getElementById('app').clientHeight
+        this.tableHeight = height - 135 + 'px'
       }
     },
     changeActive() {
-      this.show1 = true;
+      this.show1 = true
     },
     removeActive() {
-      this.show1 = false;
+      this.show1 = false
     },
     onSubmit(form) {
-      let myform = JSON.parse(JSON.stringify(form));
-      let height = document.getElementById("app").clientHeight;
-      this.tableHeight = height - 135 + "px";
-      this.show2 = true;
+      const myform = JSON.parse(JSON.stringify(form))
+      const height = document.getElementById('app').clientHeight
+      this.tableHeight = height - 135 + 'px'
+      this.show2 = true
       this.$refs.condition.validate(valid => {
         if (valid) {
-          this.listLoading = true;
+          this.listLoading = true
           if (
             this.formInline.region.length !== 0 &&
             this.condition.member.length === 0
           ) {
-            let val = this.formInline.region;
-            let res = [];
-            let person = [];
-            res = this.allMember;
+            const val = this.formInline.region
+            let res = []
+            let person = []
+            res = this.allMember
             for (let i = 0; i < val.length; i++) {
               person = res.filter(
-                ele => ele.department == val[i] && ele.position == "美工"
-              );
-              this.member.concat(person);
+                ele => ele.department === val[i] && ele.position === '美工'
+              )
+              this.member.concat(person)
             }
             myform.member = this.member.map(m => {
-              return m.username;
-            });
+              return m.username
+            })
             getPossess(myform).then(response => {
-              this.listLoading = false;
-              this.tableData = this.searchTable = response.data.data;
-            });
+              this.listLoading = false
+              this.tableData = this.searchTable = response.data.data
+            })
           } else if (this.condition.member.length !== 0) {
-            this.listLoading = true;
-            myform.member = this.condition.member;
+            this.listLoading = true
+            myform.member = this.condition.member
             getPossess(myform).then(response => {
-              this.listLoading = false;
-              this.tableData = this.searchTable = response.data.data;
-            });
+              this.listLoading = false
+              this.tableData = this.searchTable = response.data.data
+            })
           } else {
-            this.listLoading = true;
+            this.listLoading = true
             getPossess(myform).then(response => {
-              this.listLoading = false;
-              this.tableData = this.searchTable = response.data.data;
-            });
+              this.listLoading = false
+              this.tableData = this.searchTable = response.data.data
+            })
           }
         } else {
-          console.log("error submit!!");
-          return false;
+          console.log('error submit!!')
+          return false
         }
-      });
+      })
     },
-    //空值显示“--”
+    // 空值显示“--”
     empty(row, column, cellValue, index) {
-      return cellValue ? cellValue : "--";
+      return cellValue || '--'
     },
     getSummaries(param) {
-      const { columns, data } = param;
-      const sums = [];
-      const fileds = columns.map(item => item.property);
+      const { columns, data } = param
+      const sums = []
+      const fileds = columns.map(item => item.property)
       columns.forEach((column, index) => {
         if (index === 0) {
-          sums[index] = "合计";
-          return;
+          sums[index] = '合计'
+          return
         }
         const values = data.map(item =>
-          Number(item[column.property] ? item[column.property] : "unkonwn")
-        );
+          Number(item[column.property] ? item[column.property] : 'unkonwn')
+        )
         if (!values.every(value => isNaN(value))) {
           sums[index] = values.reduce((prev, curr) => {
-            const value = Number(curr);
+            const value = Number(curr)
             if (!isNaN(value)) {
-              return prev + curr;
+              return prev + curr
             } else {
-              return prev;
+              return prev
             }
-          }, 0);
-          sums[index] = Math.round(sums[index] * 100) / 100;
+          }, 0)
+          sums[index] = Math.round(sums[index] * 100) / 100
         } else {
-          sums[index] = "N/A";
+          sums[index] = 'N/A'
         }
-      });
-      //退款率和利润率核算
-      sums[fileds.indexOf("netrateZero")] =
+      })
+      // 退款率和利润率核算
+      sums[fileds.indexOf('netrateZero')] =
         Math.round(
-          (sums[fileds.indexOf("netprofitZero")] * 10000) /
-            sums[fileds.indexOf("salemoneyrmbznZero")]
-        ) / 100;
-      sums[fileds.indexOf("netrateSix")] =
+          (sums[fileds.indexOf('netprofitZero')] * 10000) /
+            sums[fileds.indexOf('salemoneyrmbznZero')]
+        ) / 100
+      sums[fileds.indexOf('netrateSix')] =
         Math.round(
-          (sums[fileds.indexOf("netprofitSix")] * 10000) /
-            sums[fileds.indexOf("salemoneyrmbznSix")]
-        ) / 100;
-      sums[fileds.indexOf("netrateTwe")] =
+          (sums[fileds.indexOf('netprofitSix')] * 10000) /
+            sums[fileds.indexOf('salemoneyrmbznSix')]
+        ) / 100
+      sums[fileds.indexOf('netrateTwe')] =
         Math.round(
-          (sums[fileds.indexOf("netprofitTwe")] * 10000) /
-            sums[fileds.indexOf("salemoneyrmbznTwe")]
-        ) / 100;
-      sums[fileds.indexOf("netratetotal")] =
+          (sums[fileds.indexOf('netprofitTwe')] * 10000) /
+            sums[fileds.indexOf('salemoneyrmbznTwe')]
+        ) / 100
+      sums[fileds.indexOf('netratetotal')] =
         Math.round(
-          (sums[fileds.indexOf("netprofittotal")] * 10000) /
-            sums[fileds.indexOf("salemoneyrmbtotal")]
-        ) / 100;
-      return sums;
+          (sums[fileds.indexOf('netprofittotal')] * 10000) /
+            sums[fileds.indexOf('salemoneyrmbtotal')]
+        ) / 100
+      return sums
     },
-    //数字排序
+    // 数字排序
     sortNumber(column, prop, order) {
-      let data = this.tableData;
-      if (column.order === "descending") {
-        this.tableData = data.sort(compareDown(data, column.prop));
+      const data = this.tableData
+      if (column.order === 'descending') {
+        this.tableData = data.sort(compareDown(data, column.prop))
       } else {
-        this.tableData = data.sort(compareUp(data, column.prop));
+        this.tableData = data.sort(compareUp(data, column.prop))
       }
     },
-    //导出
+    // 导出
     exportExcel() {
       const th = [
-        "表类型",
-        "时间分组",
-        "业绩归属人",
-        "销售额$(0-6月)",
-        "销售额￥(0-6月)",
-        "商品成本￥(0-6月)",
-        "交易费汇总$(0-6月)",
-        "交易费汇总￥(0-6月)",
-        "内包装成本￥(0-6月)",
-        "运费成本(0-6月)",
-        "死库费用￥(0-6月)",
-        "运营杂费(0-6月)",
-        "毛利润￥(0-6月)",
-        "毛利润率%(0-6月)",
-        "时间分组",
-        "销售额$(6-12月)",
-        "销售额￥(6-12月)",
-        "商品成本￥(6-12月)",
-        "交易费汇总$(6-12月)",
-        "交易费汇总￥(6-12月)",
-        "内包装成本￥(6-12月)",
-        "运费成本￥(6-12月)",
-        "死库费用￥(6-12月)",
-        "运营杂费(6-12月)",
-        "毛利润￥(6-12月)",
-        "毛利润率%(6-12月)",
-        "时间分组",
-        "销售额$(12月以上)",
-        "销售额￥(12月以上)",
-        "商品成本￥(12月以上)",
-        "交易费汇总$(12月以上)",
-        "交易费汇总￥(12月以上)",
-        "内包装成本￥(12月以上)",
-        "运费成本￥(12月以上)",
-        "死库费用￥(12月以上)",
-        "运营杂费(12月以上)",
-        "毛利润￥(12月以上)",
-        "毛利润率%(12月以上)",
-        "销售额￥(汇总)",
-        "毛利润￥(汇总)",
-        "毛利润率%(汇总)"
-      ];
+        '表类型',
+        '时间分组',
+        '业绩归属人',
+        '销售额$(0-6月)',
+        '销售额￥(0-6月)',
+        '商品成本￥(0-6月)',
+        '交易费汇总$(0-6月)',
+        '交易费汇总￥(0-6月)',
+        '内包装成本￥(0-6月)',
+        '运费成本(0-6月)',
+        '死库费用￥(0-6月)',
+        '运营杂费(0-6月)',
+        '毛利润￥(0-6月)',
+        '毛利润率%(0-6月)',
+        '时间分组',
+        '销售额$(6-12月)',
+        '销售额￥(6-12月)',
+        '商品成本￥(6-12月)',
+        '交易费汇总$(6-12月)',
+        '交易费汇总￥(6-12月)',
+        '内包装成本￥(6-12月)',
+        '运费成本￥(6-12月)',
+        '死库费用￥(6-12月)',
+        '运营杂费(6-12月)',
+        '毛利润￥(6-12月)',
+        '毛利润率%(6-12月)',
+        '时间分组',
+        '销售额$(12月以上)',
+        '销售额￥(12月以上)',
+        '商品成本￥(12月以上)',
+        '交易费汇总$(12月以上)',
+        '交易费汇总￥(12月以上)',
+        '内包装成本￥(12月以上)',
+        '运费成本￥(12月以上)',
+        '死库费用￥(12月以上)',
+        '运营杂费(12月以上)',
+        '毛利润￥(12月以上)',
+        '毛利润率%(12月以上)',
+        '销售额￥(汇总)',
+        '毛利润￥(汇总)',
+        '毛利润率%(汇总)'
+      ]
       const filterVal = [
-        "tableType",
-        "timegroupZero",
-        "possessman1Zero",
-        "salemoneyrmbusZero",
-        "salemoneyrmbznZero",
-        "costmoneyrmbZero",
-        "ppebayusZero",
-        "ppebayznZero",
-        "inpackagefeermbZero",
-        "expressfarermbZero",
-        "possessofflinefeeZero",
-        "possessOpeFeeZero",
-        "netprofitZero",
-        "netrateZero",
-        "timegroupSix",
-        "salemoneyrmbusSix",
-        "salemoneyrmbznSix",
-        "costmoneyrmbSix",
-        "ppebayusSix",
-        "ppebayznSix",
-        "inpackagefeermbSix",
-        "expressfarermbSix",
-        "possessofflinefeeSix",
-        "possessOpeFeeSix",
-        "netprofitSix",
-        "netrateSix",
-        "timegroupTwe",
-        "salemoneyrmbusTwe",
-        "salemoneyrmbznTwe",
-        "costmoneyrmbTwe",
-        "ppebayusTwe",
-        "ppebayznTwe",
-        "inpackagefeermbTwe",
-        "expressfarermbTwe",
-        "possessofflinefeeTwe",
-        "possessOpeFeeTwe",
-        "netprofitTwe",
-        "netrateTwe",
-        "salemoneyrmbtotal",
-        "netprofittotal",
-        "netratetotal"
-      ];
-      let Filename = "美工毛利润报表";
-      const data = this.tableData.map(v => filterVal.map(k => v[k]));
-      const [fileName, fileType, sheetName] = [Filename, "xls"];
-      this.$toExcel({ th, data, fileName, fileType, sheetName });
+        'tableType',
+        'timegroupZero',
+        'possessman1Zero',
+        'salemoneyrmbusZero',
+        'salemoneyrmbznZero',
+        'costmoneyrmbZero',
+        'ppebayusZero',
+        'ppebayznZero',
+        'inpackagefeermbZero',
+        'expressfarermbZero',
+        'possessofflinefeeZero',
+        'possessOpeFeeZero',
+        'netprofitZero',
+        'netrateZero',
+        'timegroupSix',
+        'salemoneyrmbusSix',
+        'salemoneyrmbznSix',
+        'costmoneyrmbSix',
+        'ppebayusSix',
+        'ppebayznSix',
+        'inpackagefeermbSix',
+        'expressfarermbSix',
+        'possessofflinefeeSix',
+        'possessOpeFeeSix',
+        'netprofitSix',
+        'netrateSix',
+        'timegroupTwe',
+        'salemoneyrmbusTwe',
+        'salemoneyrmbznTwe',
+        'costmoneyrmbTwe',
+        'ppebayusTwe',
+        'ppebayznTwe',
+        'inpackagefeermbTwe',
+        'expressfarermbTwe',
+        'possessofflinefeeTwe',
+        'possessOpeFeeTwe',
+        'netprofitTwe',
+        'netrateTwe',
+        'salemoneyrmbtotal',
+        'netprofittotal',
+        'netratetotal'
+      ]
+      const Filename = '美工毛利润报表'
+      const data = this.tableData.map(v => filterVal.map(k => v[k]))
+      const [fileName, fileType, sheetName] = [Filename, 'xls']
+      this.$toExcel({ th, data, fileName, fileType, sheetName })
     },
     handleSearch() {
-      let searchValue = this.searchValue && this.searchValue.toLowerCase();
-      let data = this.searchTable;
+      const searchValue = this.searchValue && this.searchValue.toLowerCase()
+      const data = this.searchTable
       if (searchValue) {
         this.tableData = data.filter(function(row) {
           return Object.keys(row).some(function(key) {
@@ -680,24 +675,24 @@ export default {
               String(row[key])
                 .toLowerCase()
                 .indexOf(searchValue) > -1
-            );
-          });
-        });
+            )
+          })
+        })
       } else {
-        this.tableData = data;
+        this.tableData = data
       }
     }
   },
   mounted() {
     getSection().then(response => {
-      this.section = response.data.data;
-    });
+      this.section = response.data.data
+    })
     getMember().then(response => {
-      let res = response.data.data;
-      this.allMember = this.member = res.filter(ele => ele.position == "美工");
-    });
+      const res = response.data.data
+      this.allMember = this.member = res.filter(ele => ele.position === '美工')
+    })
   }
-};
+}
 </script>
 
 <style lang="scss">

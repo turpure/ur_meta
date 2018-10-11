@@ -1,7 +1,7 @@
 import MyechartsComponent from './Myecharts.vue'
 
 const Myecharts = {
-  install: function (Vue) {
+  install: function(Vue) {
     Vue.component('Myecharts', MyechartsComponent)
   }
 }

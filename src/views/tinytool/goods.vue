@@ -81,12 +81,12 @@ import {
   getGoodsstatus,
   getGoodscats,
   getMember
-} from "../../api/profit";
+} from '../../api/profit'
 export default {
   data() {
     return {
       form: {
-        dateRange: ["", ""]
+        dateRange: ['', '']
       },
       category: [],
       currentPage: 1,
@@ -98,168 +98,168 @@ export default {
       salerName: [],
       possessMan1: [],
       possessMan2: [],
-      beginDate: "",
-      endDate: "",
-      goodsName: "",
-      supplierName: "",
+      beginDate: '',
+      endDate: '',
+      goodsName: '',
+      supplierName: '',
       goodsSkuStatus: [],
       categoryParentName: [],
       categoryName: [],
       condition: {
-        salerName: "",
-        possessMan1: "",
-        possessMan2: "",
-        beginDate: "",
-        endDate: "",
-        goodsName: "",
-        supplierName: "",
-        goodsSkuStatus: "",
-        categoryParentName: "",
-        categoryName: "",
+        salerName: '',
+        possessMan1: '',
+        possessMan2: '',
+        beginDate: '',
+        endDate: '',
+        goodsName: '',
+        supplierName: '',
+        goodsSkuStatus: '',
+        categoryParentName: '',
+        categoryName: '',
         start: 1,
         limit: 50
       },
       pickerOptions2: {
         shortcuts: [
           {
-            text: "本月",
+            text: '本月',
             onClick(picker) {
-              const end = new Date();
-              const y = end.getFullYear();
-              let m = end.getMonth() + 1;
+              const end = new Date()
+              const y = end.getFullYear()
+              let m = end.getMonth() + 1
               if (m < 10) {
-                m = "0" + m;
+                m = '0' + m
               }
-              const firstday = y + "-" + m + "-" + "01";
-              const start = new Date();
-              const sy = start.getFullYear();
-              let sm = start.getMonth() + 1;
-              const sd = start.getDate();
+              const firstday = y + '-' + m + '-' + '01'
+              const start = new Date()
+              const sy = start.getFullYear()
+              let sm = start.getMonth() + 1
+              const sd = start.getDate()
               if (sm < 10) {
-                sm = "0" + sm;
+                sm = '0' + sm
               }
-              const sfirstday = sy + "-" + sm + "-" + sd;
-              picker.$emit("pick", [firstday, sfirstday]);
+              const sfirstday = sy + '-' + sm + '-' + sd
+              picker.$emit('pick', [firstday, sfirstday])
             }
           },
           {
-            text: "上个月",
+            text: '上个月',
             onClick(picker) {
-              const nowdays = new Date();
-              let year = nowdays.getFullYear();
-              let month = nowdays.getMonth();
+              const nowdays = new Date()
+              let year = nowdays.getFullYear()
+              let month = nowdays.getMonth()
               if (month === 0) {
-                month = 12;
-                year = year - 1;
+                month = 12
+                year = year - 1
               }
               if (month < 10) {
-                month = "0" + month;
+                month = '0' + month
               }
-              const firstDay = [year, month, "01"].join("-");
-              const myDate = new Date(year, month, 0);
-              const lastDay = [year, month, myDate.getDate()].join("-");
-              picker.$emit("pick", [firstDay, lastDay]);
+              const firstDay = [year, month, '01'].join('-')
+              const myDate = new Date(year, month, 0)
+              const lastDay = [year, month, myDate.getDate()].join('-')
+              picker.$emit('pick', [firstDay, lastDay])
             }
           },
           {
-            text: "最近一个月",
+            text: '最近一个月',
             onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-              picker.$emit("pick", [start, end]);
+              const end = new Date()
+              const start = new Date()
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+              picker.$emit('pick', [start, end])
             }
           }
         ]
       }
-    };
+    }
   },
   beforeRouteLeave(to, from, next) {
-    if (from.name === "产品一览表") {
-      let condition = JSON.stringify(this.condition);
-      sessionStorage.setItem("condition", condition);
+    if (from.name === '产品一览表') {
+      const condition = JSON.stringify(this.condition)
+      sessionStorage.setItem('condition', condition)
     } else {
-      sessionStorage.removeItem("condition");
+      sessionStorage.removeItem('condition')
     }
-    next();
+    next()
   },
   created() {
-    let condition = sessionStorage.getItem("condition");
+    const condition = sessionStorage.getItem('condition')
     if (condition != null) {
-      this.condition = JSON.parse(condition);
+      this.condition = JSON.parse(condition)
       getGoodspicture(this.condition)
         .then(response => {
-          this.tableData = response.data.data.items;
-          this.total = Number(response.data.data.totalCount);
+          this.tableData = response.data.data.items
+          this.total = Number(response.data.data.totalCount)
         })
         .catch(error => {
-          console.log(error);
-        });
+          console.log(error)
+        })
     }
   },
   methods: {
     onSubmit() {
-      this.pageSize = 50;
-      this.currentPage = 1;
-      this.condition.start = 1;
-      this.condition.limit = 50;
-      this.listLoading = true;
-      this.condition.beginDate = this.form.dateRange[0];
-      this.condition.endDate = this.form.dateRange[1];
+      this.pageSize = 50
+      this.currentPage = 1
+      this.condition.start = 1
+      this.condition.limit = 50
+      this.listLoading = true
+      this.condition.beginDate = this.form.dateRange[0]
+      this.condition.endDate = this.form.dateRange[1]
       getGoodspicture(this.condition).then(response => {
-        this.listLoading = false;
-        this.tableData = response.data.data.items;
-        this.total = Number(response.data.data.totalCount);
-      });
+        this.listLoading = false
+        this.tableData = response.data.data.items
+        this.total = Number(response.data.data.totalCount)
+      })
     },
     handleSizeChange(val) {
-      this.pageSize = val;
-      this.condition.limit = this.pageSize * this.currentPage;
-      this.listLoading = true;
+      this.pageSize = val
+      this.condition.limit = this.pageSize * this.currentPage
+      this.listLoading = true
       getGoodspicture(this.condition).then(response => {
-        this.listLoading = false;
-        this.tableData = response.data.data.items;
-        this.total = Number(response.data.data.totalCount);
-      });
+        this.listLoading = false
+        this.tableData = response.data.data.items
+        this.total = Number(response.data.data.totalCount)
+      })
     },
     handleCurrentChange(val) {
-      this.currentPage = val;
-      this.condition.start = (this.currentPage - 1) * this.pageSize + 1;
-      this.condition.limit = this.pageSize * this.currentPage;
-      this.listLoading = true;
+      this.currentPage = val
+      this.condition.start = (this.currentPage - 1) * this.pageSize + 1
+      this.condition.limit = this.pageSize * this.currentPage
+      this.listLoading = true
       getGoodspicture(this.condition).then(response => {
-        this.listLoading = false;
-        this.tableData = response.data.data.items;
-        this.total = Number(response.data.data.totalCount);
-      });
+        this.listLoading = false
+        this.tableData = response.data.data.items
+        this.total = Number(response.data.data.totalCount)
+      })
     },
     productcategory() {
-      if (this.condition.categoryParentName != "") {
-        this.disabled = false;
-        const val = this.condition.categoryParentName;
-        const res = this.category;
-        this.categoryName = res.filter(e => e.CategoryParentName === val);
-      } else if (this.condition.categoryParentName == "") {
-        this.disabled = true;
+      if (this.condition.categoryParentName !== '') {
+        this.disabled = false
+        const val = this.condition.categoryParentName
+        const res = this.category
+        this.categoryName = res.filter(e => e.CategoryParentName === val)
+      } else if (this.condition.categoryParentName === '') {
+        this.disabled = true
       }
     }
   },
   mounted() {
     getGoodsstatus().then(response => {
-      this.goodsSkuStatus = response.data.data;
-    });
+      this.goodsSkuStatus = response.data.data
+    })
     getGoodscats().then(response => {
-      this.category = this.categoryParentName = response.data.data;
-    });
+      this.category = this.categoryParentName = response.data.data
+    })
     getMember().then(response => {
-      let possessMan = response.data.data;
+      const possessMan = response.data.data
       this.possessMan1 = this.possessMan2 = possessMan.filter(
-        e => e.position == "开发"
-      );
-      this.salerName = possessMan.filter(e => e.position == "美工");
-    });
+        e => e.position === '开发'
+      )
+      this.salerName = possessMan.filter(e => e.position === '美工')
+    })
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

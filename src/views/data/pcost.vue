@@ -86,10 +86,10 @@
 </template>
 
 <script>
-import { getPerformlogistics, getPerformcost } from "../../api/profit";
-import FileSaver from "file-saver";
-import XLSX from "xlsx";
-import { compareUp, compareDown } from "../../api/tools";
+import { getPerformlogistics, getPerformcost } from '../../api/profit'
+import FileSaver from 'file-saver'
+import XLSX from 'xlsx'
+import { compareUp, compareDown } from '../../api/tools'
 export default {
   data() {
     return {
@@ -100,138 +100,138 @@ export default {
       listLoading: false,
       tableData: [],
       searchTable: [],
-      searchValue: "",
+      searchValue: '',
       wlCompany: [],
       condition: {
-        beginDate: "",
-        endDate: "",
-        wlCompany: ""
+        beginDate: '',
+        endDate: '',
+        wlCompany: ''
       },
       pickerOptions2: {
         shortcuts: [
           {
-            text: "本月",
+            text: '本月',
             onClick(picker) {
-              const end = new Date();
-              const y = end.getFullYear();
-              let m = end.getMonth() + 1;
+              const end = new Date()
+              const y = end.getFullYear()
+              let m = end.getMonth() + 1
               if (m < 10) {
-                m = "0" + m;
+                m = '0' + m
               }
-              const firstday = y + "-" + m + "-" + "01";
-              const start = new Date();
-              const sy = start.getFullYear();
-              let sm = start.getMonth() + 1;
-              const sd = start.getDate();
+              const firstday = y + '-' + m + '-' + '01'
+              const start = new Date()
+              const sy = start.getFullYear()
+              let sm = start.getMonth() + 1
+              const sd = start.getDate()
               if (sm < 10) {
-                sm = "0" + sm;
+                sm = '0' + sm
               }
-              const sfirstday = sy + "-" + sm + "-" + sd;
-              picker.$emit("pick", [firstday, sfirstday]);
+              const sfirstday = sy + '-' + sm + '-' + sd
+              picker.$emit('pick', [firstday, sfirstday])
             }
           },
           {
-            text: "上个月",
+            text: '上个月',
             onClick(picker) {
-              const nowdays = new Date();
-              let year = nowdays.getFullYear();
-              let month = nowdays.getMonth();
+              const nowdays = new Date()
+              let year = nowdays.getFullYear()
+              let month = nowdays.getMonth()
               if (month === 0) {
-                month = 12;
-                year = year - 1;
+                month = 12
+                year = year - 1
               }
               if (month < 10) {
-                month = "0" + month;
+                month = '0' + month
               }
-              const firstDay = [year, month, "01"].join("-");
-              const myDate = new Date(year, month, 0);
-              const lastDay = [year, month, myDate.getDate()].join("-");
-              picker.$emit("pick", [firstDay, lastDay]);
+              const firstDay = [year, month, '01'].join('-')
+              const myDate = new Date(year, month, 0)
+              const lastDay = [year, month, myDate.getDate()].join('-')
+              picker.$emit('pick', [firstDay, lastDay])
             }
           },
           {
-            text: "最近一个月",
+            text: '最近一个月',
             onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-              picker.$emit("pick", [start, end]);
+              const end = new Date()
+              const start = new Date()
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+              picker.$emit('pick', [start, end])
             }
           }
         ]
       }
-    };
+    }
   },
   methods: {
     onSubmit() {
       this.$refs.condition.validate(valid => {
         if (valid) {
-          this.show = true;
-          this.listLoading = true;
-          this.condition.beginDate = this.form.dateRange[0];
-          this.condition.endDate = this.form.dateRange[1];
+          this.show = true
+          this.listLoading = true
+          this.condition.beginDate = this.form.dateRange[0]
+          this.condition.endDate = this.form.dateRange[1]
           getPerformcost(this.condition).then(response => {
-            this.listLoading = false;
-            let obj = response.data.data;
-            let arr = [];
-            for (let i in obj) {
-              arr.push(obj[i]);
+            this.listLoading = false
+            const obj = response.data.data
+            const arr = []
+            for (const i in obj) {
+              arr.push(obj[i])
             }
-            this.tableData = this.searchTable = arr;
-          });
+            this.tableData = this.searchTable = arr
+          })
         }
-      });
+      })
     },
     rowheader({ row, rowIndex }) {
-      return "font-weight:600;color:black";
+      return 'font-weight:600;color:black'
     },
     // 导出
     exportExcel() {
       /* generate workbook object from table */
-      var wb = XLSX.utils.table_to_book(document.querySelector("#sale-table"));
+      var wb = XLSX.utils.table_to_book(document.querySelector('#sale-table'))
       /* get binary string as output */
-      let date = new Date();
-      let year = date.getFullYear();
-      let month = date.getMonth() + 1;
-      let strDate = date.getDate();
-      let hour = date.getHours();
-      let minute = date.getMinutes();
-      let second = date.getSeconds();
+      const date = new Date()
+      const year = date.getFullYear()
+      let month = date.getMonth() + 1
+      let strDate = date.getDate()
+      let hour = date.getHours()
+      let minute = date.getMinutes()
+      let second = date.getSeconds()
       if (month >= 1 && month <= 9) {
-        month = "0" + month;
+        month = '0' + month
       }
       if (strDate >= 0 && strDate <= 9) {
-        strDate = "0" + strDate;
+        strDate = '0' + strDate
       }
       if (hour >= 0 && hour <= 9) {
-        hour = "0" + hour;
+        hour = '0' + hour
       }
       if (minute >= 0 && minute <= 9) {
-        minute = "0" + minute;
+        minute = '0' + minute
       }
       if (second >= 0 && second <= 9) {
-        second = "0" + second;
+        second = '0' + second
       }
       const filename =
-        "物流费用" + year + month + strDate + hour + minute + second;
+        '物流费用' + year + month + strDate + hour + minute + second
       var wbout = XLSX.write(wb, {
-        bookType: "xlsx",
+        bookType: 'xlsx',
         bookSST: true,
-        type: "array"
-      });
+        type: 'array'
+      })
       try {
         FileSaver.saveAs(
-          new Blob([wbout], { type: "application/octet-stream" }),
-          filename + ".xlsx"
-        );
+          new Blob([wbout], { type: 'application/octet-stream' }),
+          filename + '.xlsx'
+        )
       } catch (e) {
-        if (typeof console !== "undefined") console.log(e, wbout);
+        if (typeof console !== 'undefined') console.log(e, wbout)
       }
       //  return wbout
     },
     handleSearch() {
-      const searchValue = this.searchValue && this.searchValue.toLowerCase();
-      const data = this.searchTable;
+      const searchValue = this.searchValue && this.searchValue.toLowerCase()
+      const data = this.searchTable
       if (searchValue) {
         this.tableData = data.filter(function(row) {
           return Object.keys(row).some(function(key) {
@@ -239,31 +239,31 @@ export default {
               String(row[key])
                 .toLowerCase()
                 .indexOf(searchValue) > -1
-            );
-          });
-        });
+            )
+          })
+        })
       } else {
-        this.tableData = data;
+        this.tableData = data
       }
     },
     empty(row, column, cellValue, index) {
-      return cellValue || "--";
+      return cellValue || '--'
     },
     sortNumber(column, prop, order) {
-      const data = this.tableData;
-      if (column.order === "descending") {
-        this.tableData = data.sort(compareDown(data, column.prop));
+      const data = this.tableData
+      if (column.order === 'descending') {
+        this.tableData = data.sort(compareDown(data, column.prop))
       } else {
-        this.tableData = data.sort(compareUp(data, column.prop));
+        this.tableData = data.sort(compareUp(data, column.prop))
       }
     }
   },
   mounted() {
     getPerformlogistics().then(response => {
-      this.wlCompany = response.data.data;
-    });
+      this.wlCompany = response.data.data
+    })
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

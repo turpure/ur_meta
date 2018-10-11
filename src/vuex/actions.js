@@ -1,8 +1,8 @@
-//test
+// test
 export const increment = ({ commit }) => {
-    commit('INCREMENT')
+  commit('INCREMENT')
 }
 export const decrement = ({ commit }) => {
-    commit('DECREMENT')
+  commit('DECREMENT')
 }
 

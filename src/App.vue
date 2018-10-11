@@ -8,9 +8,9 @@
 
 <script>
 export default {
-  name: "app",
+  name: 'app',
   components: {}
-};
+}
 </script>
 
 <style lang="scss">

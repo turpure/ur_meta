@@ -16,51 +16,51 @@
   </el-form>
 </template>
 <script>
-import { getUpdateexchange, getExchange } from "../../api/profit";
+import { getUpdateexchange, getExchange } from '../../api/profit'
 export default {
   data() {
     return {
-      placeholderd: "",
-      placeholders: "",
+      placeholderd: '',
+      placeholders: '',
       sell: {
-        mun: ""
+        mun: ''
       },
       oper: {
-        mun: ""
+        mun: ''
       },
       condition: {
-        devRate: "",
-        saleRate: ""
+        devRate: '',
+        saleRate: ''
       }
-    };
+    }
   },
   methods: {
     onSubmit(form) {
-      form.saleRate = this.sell.mun;
-      form.devRate = this.oper.mun;
+      form.saleRate = this.sell.mun
+      form.devRate = this.oper.mun
       getUpdateexchange(form).then(response => {
-        alert("更新销售汇率成功！");
-      });
+        alert('更新销售汇率成功！')
+      })
     },
     onSubmit2(form) {
-      form.saleRate = this.sell.mun;
-      form.devRate = this.oper.mun;
+      form.saleRate = this.sell.mun
+      form.devRate = this.oper.mun
       getUpdateexchange(form).then(response => {
-        alert("更新开发汇率成功！");
-      });
+        alert('更新开发汇率成功！')
+      })
     }
   },
   mounted() {
     getExchange().then(response => {
-      let saler = response.data.data;
-      this.placeholders = saler.salerRate;
-    });
+      const saler = response.data.data
+      this.placeholders = saler.salerRate
+    })
     getExchange().then(response => {
-      let dev = response.data.data;
-      this.placeholderd = dev.devRate;
-    });
+      const dev = response.data.data
+      this.placeholderd = dev.devRate
+    })
   }
-};
+}
 </script>
 
 <style scoped lang="scss">

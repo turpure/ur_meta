@@ -19,25 +19,25 @@
 </template>
 
 <script>
-import { getExpress } from "../../api/profit";
+import { getExpress } from '../../api/profit'
 export default {
   data() {
     return {
       tableData: [],
       searchTable: [],
-      searchValue: ""
-    };
+      searchValue: ''
+    }
   },
   methods: {
     empty(row, column, cellValue, index) {
-      return cellValue || "--";
+      return cellValue || '--'
     },
     thClass({ row, rowIndex }) {
-      return "color:#e42c4e";
+      return 'color:#e42c4e'
     },
     handleSearch() {
-      const searchValue = this.searchValue && this.searchValue.toLowerCase();
-      const data = this.searchTable;
+      const searchValue = this.searchValue && this.searchValue.toLowerCase()
+      const data = this.searchTable
       if (searchValue) {
         this.tableData = data.filter(function(row) {
           return Object.keys(row).some(function(key) {
@@ -45,20 +45,20 @@ export default {
               String(row[key])
                 .toLowerCase()
                 .indexOf(searchValue) > -1
-            );
-          });
-        });
+            )
+          })
+        })
       } else {
-        this.tableData = data;
+        this.tableData = data
       }
     }
   },
   mounted() {
     getExpress().then(response => {
-      this.tableData = this.searchTable = response.data.data;
-    });
+      this.tableData = this.searchTable = response.data.data
+    })
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
