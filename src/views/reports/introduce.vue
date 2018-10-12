@@ -16,7 +16,7 @@
             <el-select size="small" v-model="condition.member" filterable multiple collapse-tags placeholder="推荐人">
               <el-button plain type="info" @click="selectallm">全选</el-button>
               <el-button plain type="info" @click="noselectm">取消</el-button>
-              <el-option v-for="(item,index) in member" :index="item[index]" :key="item.index" :label="item.username" :value="item.username"></el-option>
+              <el-option v-for="item in repeat" :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
 
@@ -155,6 +155,7 @@ import { compareUp, compareDown } from '../../api/tools'
 export default {
   data() {
     return {
+      repeat: [],
       checked1: true,
       checked2: false,
       checked3: false,
@@ -415,11 +416,7 @@ export default {
       this.member = this.allMember
     },
     selectallm() {
-      const allValues = []
-      for (const item of this.member) {
-        allValues.push(item.username)
-      }
-      this.condition.member = allValues
+      this.condition.member = this.repeat
     },
     noselectm() {
       this.condition.member = []
@@ -684,9 +681,16 @@ export default {
       this.section = response.data.data
     })
     getMember().then(response => {
-      const res = response.data.data
-      this.allMember = this.member = res
+      const res = response.data.data.map(m => { return m.username })
+      this.repeat = [res[0]]
+      for (let j = 1; j < res.length; j++) {
+        if (res.indexOf(res[j]) === j) {
+          this.repeat.push(res[j])
+        }
+      }
+      return this.repeat
     })
+    this.allMember = this.member = this.repeat
   }
 }
 </script>

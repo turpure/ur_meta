@@ -106,13 +106,12 @@ import {
   getAccount,
   getSales
 } from '../../api/profit'
-import { isAdmini } from '../../api/api'
-import { compareUp, compareDown } from '../../api/tools'
+import { isAdmin } from '../../api/api'
+import { compareUp, compareDown, getMonthDate } from '../../api/tools'
 import FileSaver from 'file-saver'
 import XLSX from 'xlsx'
 export default {
   data() {
-    const me = this
     return {
       tableHeight: 0,
       allMember: [],
@@ -147,53 +146,22 @@ export default {
           {
             text: '本月',
             onClick(vm) {
-              const end = new Date()
-              const y = end.getFullYear()
-              let m = end.getMonth() + 1
-              if (m < 10) {
-                m = '0' + m
-              }
-              const firstday = y + '-' + m + '-' + '01'
-              const start = new Date()
-              const sy = start.getFullYear()
-              let sm = start.getMonth() + 1
-              const sd = start.getDate()
-              if (sm < 10) {
-                sm = '0' + sm
-              }
-              const sfirstday = sy + '-' + sm + '-' + sd
-              vm.$emit('pick', [firstday, sfirstday])
-              me.condition.dateRangeType = 0
+              const date = getMonthDate('thisMonth')
+              vm.$emit('pick', [date['start'], date['end']])
             }
           },
           {
             text: '上个月',
             onClick(picker) {
-              const nowdays = new Date()
-              let year = nowdays.getFullYear()
-              let month = nowdays.getMonth()
-              if (month === 0) {
-                month = 12
-                year = year - 1
-              }
-              if (month < 10) {
-                month = '0' + month
-              }
-              const firstDay = [year, month, '01'].join('-')
-              const myDate = new Date(year, month, 0)
-              const lastDay = [year, month, myDate.getDate()].join('-')
-              picker.$emit('pick', [firstDay, lastDay])
-              me.condition.dateRangeType = 2
+              const date = getMonthDate('previousMonth')
+              picker.$emit('pick', [date['start'], date['end']])
             }
           },
           {
             text: '最近一个月',
             onClick(picker) {
-              const end = new Date()
-              const start = new Date()
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-              picker.$emit('pick', [start, end])
-              me.condition.dateRangeType = 1
+              const date = getMonthDate('lastMonth')
+              picker.$emit('pick', [date['start'], date['end']])
             }
           }
         ]
@@ -289,7 +257,7 @@ export default {
       this.$refs.condition.validate(valid => {
         if (valid) {
           if (myform.member.length === 0) {
-            if (!isAdmini()) {
+            if (isAdmin() === false) {
               myform.member = members.map(m => {
                 return m.username
               })

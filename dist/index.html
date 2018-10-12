@@ -1,11 +1,13 @@
-<!DOCTYPE html><html><head><meta charset=utf-8><link rel="shortcut icon" type=image/x-icon href=./favicon.ico rel="external nofollow"><title>UR管理中心</title><script>var fun = function (doc, win) {
-      var docEl = doc.documentElement, resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
-        recalc = function () {
-          var clientWidth = docEl.clientWidth; if (!clientWidth) return; //这里是假设在640px宽度设计稿的情况下，1rem = 20px； //可以根据实际需要修改 
-          docEl.style.fontSize = 10 * (clientWidth / 1920) + 'px';
-        };
-      if (!doc.addEventListener) return;
-      win.addEventListener(resizeEvt, recalc, false);
-      doc.addEventListener('DOMContentLoaded', recalc, false);
+<!DOCTYPE html><html><head><meta charset=utf-8><link rel="shortcut icon" type=image/x-icon href=./favicon.ico rel="external nofollow"><title>UR管理中心</title><script>var fun = function(doc, win) {
+      var docEl = doc.documentElement
+      var resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize'
+      var recalc = function() {
+        var clientWidth = docEl.clientWidth
+        if (!clientWidth) return
+        docEl.style.fontSize = 10 * (clientWidth / 1920) + 'px'
+      }
+      if (!doc.addEventListener) return
+      win.addEventListener(resizeEvt, recalc, false)
+      doc.addEventListener('DOMContentLoaded', recalc, false)
     }
-    fun(document, window);</script><link rel="shortcut icon" href=/favicon.ico><link href=/static/css/app.fbae035e49ea26224bb7508f69c11c76.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript src=/static/js/manifest.5669da8b5ce8e386f082.js></script><script type=text/javascript src=/static/js/vendor.2e09ec9f8af52dfd1228.js></script><script type=text/javascript src=/static/js/app.6d5e9f12bd929b40bc9e.js></script></body></html>
+    fun(document, window)</script><link rel="shortcut icon" href=/favicon.ico><link href=/static/css/app.41d7ec8d3b8d20baa914e7d4708218e9.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript src=/static/js/manifest.f356203f298b512b4c89.js></script><script type=text/javascript src=/static/js/vendor.1298eee5e9ce6c965555.js></script><script type=text/javascript src=/static/js/app.0d566d8c63b12b571afa.js></script></body></html>

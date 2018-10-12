@@ -9,7 +9,7 @@ const user = {
     token: getToken(),
     name: '',
     avatar: '',
-    isAdmin: '',
+    admin: '',
     introduction: '',
     roles: [],
     setting: {
@@ -39,8 +39,8 @@ const user = {
     SET_AVATAR: (state, avatar) => {
       state.avatar = avatar
     },
-    SET_isAdmin: (state, isAdmin) => {
-      state.isAdmin = isAdmin
+    SET_ADMIN: (state, admin) => {
+      state.admin = admin
     },
     SET_ROLES: (state, roles) => {
       state.roles = roles
@@ -77,7 +77,7 @@ const user = {
           const data = response.data.data
           commit('SET_NAME', data.username)
           commit('SET_AVATAR', data.avatar)
-          commit('SET_isAdmin', data.isAdmin)
+          commit('SET_ADMIN', data.isAdmin)
           resolve(response)
         }).catch(error => {
           reject(error)
