@@ -2,15 +2,15 @@
   <div>
     <el-form :model='condition' :inline='true' ref='condition' label-width='10rem' class='demo-form-inline'>
       <el-form-item label="品牌" prop="brand">
-        <el-input v-model="condition.brand" style="width:20.4rem"></el-input>
+        <el-input size="small" v-model="condition.brand" style="width:18rem"></el-input>
       </el-form-item>
       <el-form-item label="国家" prop="country">
-        <el-select v-model="condition.country" clearable>
+        <el-select size="small" v-model="condition.country" clearable>
           <el-option v-for="item in country" :key="item" :value="item"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="类别" prop="category">
-        <el-select v-model="condition.category" clearable>
+        <el-select size="small" v-model="condition.category" clearable>
           <el-option v-for="item in category" :key="item" :value="item"></el-option>
         </el-select>
       </el-form-item>
@@ -18,7 +18,7 @@
         <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
       </el-form-item>
     </el-form>
-    <el-row v-loading="listLoading">
+    <el-row v-loading="listLoading" style="height:780px;">
       <el-col :span="6" class="mix" v-for="item in this.tableData" :key="item.rowId">
         <a :href="item.url" style="text-decoration:none;">
           <img :src=item.imgUrl :alt="item.imgName">
@@ -92,7 +92,7 @@ export default {
     onSubmit() {
       this.pageSize = 20
       this.currentPage = 1
-      this.condition.start = 1
+      this.condition.start = 0
       this.condition.limit = 20
       this.listLoading = true
       getBrand(this.condition).then(response => {
@@ -103,7 +103,8 @@ export default {
     },
     handleSizeChange(val) {
       this.pageSize = val
-      this.condition.limit = this.pageSize * this.currentPage
+      this.currentPage = 1
+      this.condition.limit = this.pageSize * this.currentPage - 1
       this.listLoading = true
       getBrand(this.condition).then(response => {
         this.listLoading = false
@@ -114,7 +115,7 @@ export default {
     handleCurrentChange(val) {
       this.currentPage = val
       this.condition.start = (this.currentPage - 1) * this.pageSize + 1
-      this.condition.limit = this.pageSize * this.currentPage
+      this.condition.limit = this.pageSize - 1
       this.listLoading = true
       getBrand(this.condition).then(response => {
         this.listLoading = false

@@ -2,15 +2,15 @@
   <div>
     <el-form v-model="condition" label-width="15rem" class="demo-form-inline" :inline='true'>
       <el-form-item label="卖家账号：">
-        <el-select v-model="condition.suffix" filterable clearable>
+        <el-select size="small" v-model="condition.suffix" filterable clearable>
           <el-option v-for='(item,index) in suffix' :index='index' :key='item.DictionaryName' :label='item.DictionaryName' :value='item.DictionaryName'></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="商品编码：">
-        <el-input v-model="condition.goodsCode" style="width:20.4rem"></el-input>
+        <el-input size="small" v-model="condition.goodsCode" style="width:18rem"></el-input>
       </el-form-item>
       <el-form-item label="商品价格：">
-        <el-input v-model="condition.price" style="width:20.4rem"></el-input>
+        <el-input size="small" v-model="condition.price" style="width:18rem"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit()">属性设置
@@ -89,19 +89,19 @@ import {
   getsmtskutemplate,
   getToolcolor,
   getToolsize
-} from "../../api/profit";
+} from '../../api/profit'
 export default {
   data() {
     return {
-      value: "",
+      value: '',
       size: [],
       color: [],
       tableData: [],
       suffix: [],
       condition: {
-        suffix: "",
-        goodsCode: "",
-        price: ""
+        suffix: '',
+        goodsCode: '',
+        price: ''
       },
       condition1: {
         contents: {
@@ -116,7 +116,7 @@ export default {
           name1: []
         }
       }
-    };
+    }
   },
   methods: {
     SKUChange(row, index) {},
@@ -130,81 +130,81 @@ export default {
     varition2Change(row, index) {},
     onSubmit() {
       getsmtsku(this.condition).then(response => {
-        if (response.data.data != "") {
-          this.tableData = response.data.data;
+        if (response.data.data != '') {
+          this.tableData = response.data.data
         } else {
-          alert("商品编码不匹配！");
-          this.tableData = [];
+          alert('商品编码不匹配！')
+          this.tableData = []
         }
-      });
+      })
     },
     btnSavekkk() {
-      this.condition1.contents.SKU = this.tableData.map(e => e.SKU);
-      this.condition1.contents.varition1 = this.tableData.map(e => e.varition1);
-      this.condition1.contents.varition2 = this.tableData.map(e => e.varition2);
-      this.condition1.contents.pic_url = this.tableData.map(e => e.pic_url);
-      this.condition1.contents.property2 = this.tableData.map(e => e.property2);
-      this.condition1.contents.property1 = this.tableData.map(e => e.property1);
-      this.condition1.contents.quantity = this.tableData.map(e => e.quantity);
-      this.condition1.contents.price = this.tableData.map(e => e.price);
-      this.condition1.contents.name1 = this.tableData.map(e => e.name1);
+      this.condition1.contents.SKU = this.tableData.map(e => e.SKU)
+      this.condition1.contents.varition1 = this.tableData.map(e => e.varition1)
+      this.condition1.contents.varition2 = this.tableData.map(e => e.varition2)
+      this.condition1.contents.pic_url = this.tableData.map(e => e.pic_url)
+      this.condition1.contents.property2 = this.tableData.map(e => e.property2)
+      this.condition1.contents.property1 = this.tableData.map(e => e.property1)
+      this.condition1.contents.quantity = this.tableData.map(e => e.quantity)
+      this.condition1.contents.price = this.tableData.map(e => e.price)
+      this.condition1.contents.name1 = this.tableData.map(e => e.name1)
       getsmtskutemplate(this.condition1).then(response => {
         const blob = new Blob([response.data], {
-          type: "application/vnd.ms-excel;charset=UTF-8"
-        });
-        const downloadElement = document.createElement("a");
-        const objectUrl = window.URL.createObjectURL(blob);
-        downloadElement.href = objectUrl;
-        let date = new Date();
-        let year = date.getFullYear();
-        let month = date.getMonth() + 1;
-        let strDate = date.getDate();
-        let hour = date.getHours();
-        let minute = date.getMinutes();
-        let second = date.getSeconds();
+          type: 'application/vnd.ms-excel;charset=UTF-8'
+        })
+        const downloadElement = document.createElement('a')
+        const objectUrl = window.URL.createObjectURL(blob)
+        downloadElement.href = objectUrl
+        const date = new Date()
+        const year = date.getFullYear()
+        let month = date.getMonth() + 1
+        let strDate = date.getDate()
+        let hour = date.getHours()
+        let minute = date.getMinutes()
+        let second = date.getSeconds()
         if (month >= 1 && month <= 9) {
-          month = "0" + month;
+          month = '0' + month
         }
         if (strDate >= 0 && strDate <= 9) {
-          strDate = "0" + strDate;
+          strDate = '0' + strDate
         }
         if (hour >= 0 && hour <= 9) {
-          hour = "0" + hour;
+          hour = '0' + hour
         }
         if (minute >= 0 && minute <= 9) {
-          minute = "0" + minute;
+          minute = '0' + minute
         }
         if (second >= 0 && second <= 9) {
-          second = "0" + second;
+          second = '0' + second
         }
-        let filename =
+        const filename =
           this.condition.goodsCode +
-          "_" +
+          '_' +
           year +
           month +
           strDate +
           hour +
           minute +
-          second;
-        downloadElement.download = filename + ".xls";
-        document.body.appendChild(downloadElement);
-        downloadElement.click();
-        document.body.removeChild(downloadElement);
-      });
+          second
+        downloadElement.download = filename + '.xls'
+        document.body.appendChild(downloadElement)
+        downloadElement.click()
+        document.body.removeChild(downloadElement)
+      })
     }
   },
   mounted() {
-    getToolaccount({ type: "SMT" }).then(response => {
-      this.suffix = response.data.data;
-    });
+    getToolaccount({ type: 'SMT' }).then(response => {
+      this.suffix = response.data.data
+    })
     getToolcolor().then(response => {
-      this.color = response.data.data;
-    });
+      this.color = response.data.data
+    })
     getToolsize().then(response => {
-      this.size = response.data.data;
-    });
+      this.size = response.data.data
+    })
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

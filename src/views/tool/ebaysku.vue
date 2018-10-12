@@ -2,28 +2,28 @@
   <div>
     <el-form v-model="condition" label-width="18rem" class="demo-form-inline" :inline='true'>
       <el-form-item label="卖家账号：">
-        <el-select v-model="condition.suffix" filterable clearable>
+        <el-select size="small" v-model="condition.suffix" filterable clearable>
           <el-option v-for='(item,index) in suffix' :index='index' :key='item.ebaySuffix' :label='item.ebayName' :value='item.ebayName'></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="站 点：">
-        <el-select v-model="condition.Site" filterable clearable>
+        <el-select size="small" v-model="condition.Site" filterable clearable>
           <el-option v-for='item in site' :key='item' :value='item'></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="产品类别：">
-        <el-input v-model="condition.Cat1" style="width:9rem;" placeholder="Category1"></el-input>
-        <el-input v-model="condition.Cat2" style="width:9rem;" placeholder="Category2"></el-input>
+        <el-input size="small" v-model="condition.Cat1" style="width:8.8rem;" placeholder="Category1"></el-input>
+        <el-input size="small" v-model="condition.Cat2" style="width:8.8rem;" placeholder="Category2"></el-input>
       </el-form-item>
       <el-form-item label="商品编码：">
-        <el-input v-model="condition.goodsCode" style="width:18.1rem;"></el-input>
+        <el-input size="small" v-model="condition.goodsCode" style="width:18rem;"></el-input>
       </el-form-item>
       <el-form-item label="售 价：">
-        <el-input v-model="condition.price" style="width:18.1rem;"></el-input>
+        <el-input size="small" v-model="condition.price" style="width:18rem;"></el-input>
       </el-form-item>
       <el-form-item label="运 费：">
-        <el-input v-model="condition.shipping1" style="width:9rem;" placeholder="首件运费"></el-input>
-        <el-input v-model="condition.shipping2" style="width:9rem;" placeholder="续件运费"></el-input>
+        <el-input size="small" v-model="condition.shipping1" style="width:8.8rem;" placeholder="首件运费"></el-input>
+        <el-input size="small" v-model="condition.shipping2" style="width:8.8rem;" placeholder="续件运费"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit(condition)">
@@ -107,7 +107,7 @@ import {
   getToolsite,
   geteBaysku,
   geteBayskutemplate
-} from "../../api/profit";
+} from '../../api/profit'
 export default {
   data() {
     return {
@@ -116,25 +116,25 @@ export default {
       site: [],
       suffix: [],
       condition: {
-        suffix: "",
-        goodsCode: "",
-        Site: "",
-        Cat1: "",
-        Cat2: "",
-        price: "",
-        shipping1: "",
-        shipping2: ""
+        suffix: '',
+        goodsCode: '',
+        Site: '',
+        Cat1: '',
+        Cat2: '',
+        price: '',
+        shipping1: '',
+        shipping2: ''
       },
       condition1: {
         setting: {
-          suffix: "",
-          goodsCode: "",
-          Site: "",
-          Cat1: "",
-          Cat2: "",
-          price: "",
-          shipping1: "",
-          shipping2: ""
+          suffix: '',
+          goodsCode: '',
+          Site: '',
+          Cat1: '',
+          Cat2: '',
+          price: '',
+          shipping1: '',
+          shipping2: ''
         },
         contents: {
           remark: [],
@@ -150,7 +150,7 @@ export default {
           UPC: []
         }
       }
-    };
+    }
   },
   methods: {
     SKUChange(row, index) {},
@@ -165,95 +165,95 @@ export default {
     property2Change(row, index) {},
     onSubmit() {
       geteBaysku(this.condition).then(response => {
-        if (response.data.data != "") {
-          this.tableData = response.data.data.payload;
-          this.tableData1 = response.data.data.setting;
+        if (response.data.data != '') {
+          this.tableData = response.data.data.payload
+          this.tableData1 = response.data.data.setting
         } else {
-          alert("商品编码不匹配！");
-          this.tableData = [];
+          alert('商品编码不匹配！')
+          this.tableData = []
         }
-      });
+      })
     },
     btnSavekkk() {
-      this.condition1.setting.suffix = this.tableData1.suffix;
-      this.condition1.setting.goodsCode = this.tableData1.goodsCode;
-      this.condition1.setting.Site = this.tableData1.Site;
-      this.condition1.setting.Cat1 = this.tableData1.Cat1;
-      this.condition1.setting.Cat2 = this.tableData1.Cat2;
-      this.condition1.setting.price = this.tableData1.price;
-      this.condition1.setting.shipping1 = this.tableData1.shipping1;
-      this.condition1.setting.shipping2 = this.tableData1.shipping2;
+      this.condition1.setting.suffix = this.tableData1.suffix
+      this.condition1.setting.goodsCode = this.tableData1.goodsCode
+      this.condition1.setting.Site = this.tableData1.Site
+      this.condition1.setting.Cat1 = this.tableData1.Cat1
+      this.condition1.setting.Cat2 = this.tableData1.Cat2
+      this.condition1.setting.price = this.tableData1.price
+      this.condition1.setting.shipping1 = this.tableData1.shipping1
+      this.condition1.setting.shipping2 = this.tableData1.shipping2
 
-      this.condition1.contents.remark = this.tableData.map(e => e.remark);
-      this.condition1.contents.SKU = this.tableData.map(e => e.SKU);
-      this.condition1.contents.Quantity = this.tableData.map(e => e.quantity);
-      this.condition1.contents.StartPrice = this.tableData1.price;
+      this.condition1.contents.remark = this.tableData.map(e => e.remark)
+      this.condition1.contents.SKU = this.tableData.map(e => e.SKU)
+      this.condition1.contents.Quantity = this.tableData.map(e => e.quantity)
+      this.condition1.contents.StartPrice = this.tableData1.price
       this.condition1.contents.PictureURL = this.tableData.map(
         e => e.BmpFileName
-      );
-      this.condition1.contents.Color = this.tableData.map(e => e.pro1);
-      this.condition1.contents.Size = this.tableData.map(e => e.pro2);
-      this.condition1.contents.pro1 = this.tableData.map(e => e.property1);
-      this.condition1.contents.pro2 = this.tableData.map(e => e.property2);
-      this.condition1.contents.EAN = this.tableData.map(e => e.EAN);
-      this.condition1.contents.UPC = this.tableData.map(e => e.UPC);
+      )
+      this.condition1.contents.Color = this.tableData.map(e => e.pro1)
+      this.condition1.contents.Size = this.tableData.map(e => e.pro2)
+      this.condition1.contents.pro1 = this.tableData.map(e => e.property1)
+      this.condition1.contents.pro2 = this.tableData.map(e => e.property2)
+      this.condition1.contents.EAN = this.tableData.map(e => e.EAN)
+      this.condition1.contents.UPC = this.tableData.map(e => e.UPC)
       geteBayskutemplate(this.condition1).then(response => {
         const blob = new Blob([response.data], {
-          type: "application/vnd.ms-excel;charset=UTF-8"
-        });
-        const downloadElement = document.createElement("a");
-        const objectUrl = window.URL.createObjectURL(blob);
-        downloadElement.href = objectUrl;
-        let date = new Date();
-        let year = date.getFullYear();
-        let month = date.getMonth() + 1;
-        let strDate = date.getDate();
-        let hour = date.getHours();
-        let minute = date.getMinutes();
-        let second = date.getSeconds();
+          type: 'application/vnd.ms-excel;charset=UTF-8'
+        })
+        const downloadElement = document.createElement('a')
+        const objectUrl = window.URL.createObjectURL(blob)
+        downloadElement.href = objectUrl
+        const date = new Date()
+        const year = date.getFullYear()
+        let month = date.getMonth() + 1
+        let strDate = date.getDate()
+        let hour = date.getHours()
+        let minute = date.getMinutes()
+        let second = date.getSeconds()
         if (month >= 1 && month <= 9) {
-          month = "0" + month;
+          month = '0' + month
         }
         if (strDate >= 0 && strDate <= 9) {
-          strDate = "0" + strDate;
+          strDate = '0' + strDate
         }
         if (hour >= 0 && hour <= 9) {
-          hour = "0" + hour;
+          hour = '0' + hour
         }
         if (minute >= 0 && minute <= 9) {
-          minute = "0" + minute;
+          minute = '0' + minute
         }
         if (second >= 0 && second <= 9) {
-          second = "0" + second;
+          second = '0' + second
         }
-        let filename =
+        const filename =
           this.condition1.setting.goodsCode +
-          "_" +
+          '_' +
           year +
           month +
           strDate +
           hour +
           minute +
-          second;
-        downloadElement.download = filename + ".xls";
-        document.body.appendChild(downloadElement);
-        downloadElement.click();
-        document.body.removeChild(downloadElement);
-      });
+          second
+        downloadElement.download = filename + '.xls'
+        document.body.appendChild(downloadElement)
+        downloadElement.click()
+        document.body.removeChild(downloadElement)
+      })
     }
   },
   mounted() {
-    getToolaccount({ type: "eBay" }).then(response => {
-      this.suffix = response.data.data;
-    });
+    getToolaccount({ type: 'eBay' }).then(response => {
+      this.suffix = response.data.data
+    })
     getToolsite().then(response => {
-      let s = response.data.data;
+      const s = response.data.data
       this.site = s.map(m => {
-        return m.Name;
-      });
-    });
+        return m.Name
+      })
+    })
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

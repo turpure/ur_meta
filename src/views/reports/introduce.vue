@@ -5,7 +5,7 @@
       <transition name="el-fade-in-linear">
         <el-form :model="condition" :inline="true" ref="condition" label-width="6.8rem" class="demo-form-inline" v-show="show">
           <el-form-item label="部门" class="input">
-            <el-select v-model="formInline.region" multiple collapse-tags placeholder="部门" @change="choosed">
+            <el-select size="small" v-model="formInline.region" multiple collapse-tags placeholder="部门" @change="choosed">
               <el-button plain type="info" @click="selectalld">全选</el-button>
               <el-button plain type="info" @click="noselectd">取消</el-button>
               <el-option v-for="(item,index) in section" :index="item[index]" :key="item.department" :label="item.department" :value="item.department"></el-option>
@@ -13,7 +13,7 @@
           </el-form-item>
 
           <el-form-item label="推荐人" class="input">
-            <el-select v-model="condition.member" filterable multiple collapse-tags placeholder="推荐人">
+            <el-select size="small" v-model="condition.member" filterable multiple collapse-tags placeholder="推荐人">
               <el-button plain type="info" @click="selectallm">全选</el-button>
               <el-button plain type="info" @click="noselectm">取消</el-button>
               <el-option v-for="(item,index) in member" :index="item[index]" :key="item.index" :label="item.username" :value="item.username"></el-option>
@@ -26,7 +26,7 @@
             </el-radio-group>
           </el-form-item>
           <el-form-item label="日期" class="input" prop="dateRange" :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
-            <el-date-picker v-model="condition.dateRange" value-format="yyyy-MM-dd" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions2">
+            <el-date-picker size="small" v-model="condition.dateRange" value-format="yyyy-MM-dd" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions2">
             </el-date-picker>
           </el-form-item>
 
@@ -45,7 +45,7 @@
         </transition>
       </div>
     </div>
-    <el-row :gutter="10">
+    <el-row :gutter="2">
       <el-col :span="2" :offset="18">
         <el-input clearable placeholder="search" v-model="searchValue" @change="handleSearch"></el-input>
       </el-col>
@@ -103,7 +103,7 @@
         </el-dropdown>
       </el-col>
     </el-row>
-    <el-table ref="table" :data="tableData" id="sale-table" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show2" :height="tableHeight" :max-height="tableHeight" :highlight-current-row="true" style="width: 100%;zoom:0.9;">
+    <el-table ref="table" :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show2" :height="tableHeight" :max-height="tableHeight" style="width: 100%;">
       <el-table-column v-if="this.checked1" min-width="100" prop="salernameZero" label="推荐人表" :formatter="empty" sortable></el-table-column>
       <el-table-column v-if="this.checked2" min-width="130" prop="timegroupZero" label="时间段（0-6月）"></el-table-column>
       <el-table-column v-if="this.checked3" min-width="160" prop="salemoneyrmbusZero" label="销售额$（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
@@ -119,7 +119,7 @@
       <el-table-column v-if="this.checked13" min-width="170" prop="netrateZero" label="毛利率%（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column v-if="this.checked14" min-width="140" prop="timegroupSix" label="时间段（6-12月）"></el-table-column>
       <el-table-column v-if="this.checked15" min-width="170" prop="salemoneyrmbusSix" label="销售额$（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked16" min-width="170" prop="salemoneyrmbznSix" label="销售额￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked16" min-width="180" prop="salemoneyrmbznSix" label="销售额￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column v-if="this.checked17" min-width="190" prop="costmoneyrmbSix" label="商品成本￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column v-if="this.checked18" min-width="200" prop="ppebayusSix" label="交易费汇总$（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column v-if="this.checked19" min-width="200" prop="ppebayznSix" label="交易费汇总￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
@@ -127,7 +127,7 @@
       <el-table-column v-if="this.checked21" min-width="190" prop="expressfarermbSix" label="运费成本￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column v-if="this.checked22" min-width="190" prop="devofflinefeeSix" label="死库处理￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column v-if="this.checked23" min-width="190" prop="devOpeFeeSix" label="运营杂费￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column v-if="this.checked24" min-width="170" prop="netprofitSix" label="毛利润￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked24" min-width="180" prop="netprofitSix" label="毛利润￥（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column v-if="this.checked25" min-width="170" prop="netrateSix" label="毛利率%（6-12月）" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column v-if="this.checked26" min-width="150" prop="timegroupTwe" label="时间段（12月以上）"></el-table-column>
       <el-table-column v-if="this.checked27" min-width="180" prop="salemoneyrmbusTwe" label="销售额$（12月以上）" :formatter="empty" sortable="custom"></el-table-column>
@@ -446,11 +446,11 @@ export default {
       if (this.show === false) {
         this.text = '显示输入框'
         const height = document.getElementById('app').clientHeight
-        this.tableHeight = height - 58 + 'px'
+        this.tableHeight = height - 150 + 'px'
       } else if (this.show === true) {
         this.text = '隐藏输入框'
         const height = document.getElementById('app').clientHeight
-        this.tableHeight = height - 135 + 'px'
+        this.tableHeight = height - 225 + 'px'
       }
     },
     changeActive() {
@@ -462,7 +462,7 @@ export default {
     onSubmit(form) {
       const myform = JSON.parse(JSON.stringify(form))
       const height = document.getElementById('app').clientHeight
-      this.tableHeight = height - 135 + 'px'
+      this.tableHeight = height - 225 + 'px'
       this.show2 = true
       this.$refs.condition.validate(valid => {
         if (valid) {

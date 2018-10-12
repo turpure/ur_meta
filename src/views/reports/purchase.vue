@@ -5,7 +5,7 @@
       <transition name="el-fade-in-linear">
         <el-form :model="condition" :inline="true" ref="condition" label-width="6.8rem" class="demo-form-inline" v-show="show">
           <el-form-item label="采购员" class="input">
-            <el-select v-model="condition.member" multiple collapse-tags placeholder="采购员">
+            <el-select size="small" v-model="condition.member" multiple collapse-tags placeholder="采购员">
               <el-button plain type="info" @click="selectallm">全选</el-button>
               <el-button plain type="info" @click="noselectm">取消</el-button>
               <el-option v-for="(item,index) in member" :index="item[index]" :key="item.username" :label="item.username" :value="item.username"></el-option>
@@ -19,7 +19,7 @@
             </el-radio-group>
           </el-form-item>
           <el-form-item label="日期" class="input" prop="dateRange" :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
-            <el-date-picker v-model="condition.dateRange" value-format="yyyy-MM-dd" type="daterange" align="right" unlink-panels start-placeholder="开始日期" range-separator="至" end-placeholder="结束日期" :picker-options="pickerOptions2">
+            <el-date-picker size="small" v-model="condition.dateRange" value-format="yyyy-MM-dd" type="daterange" align="right" unlink-panels start-placeholder="开始日期" range-separator="至" end-placeholder="结束日期" :picker-options="pickerOptions2">
             </el-date-picker>
           </el-form-item>
 
@@ -38,15 +38,15 @@
         </transition>
       </div>
     </div>
-    <el-row :gutter="10">
-      <el-col :span="2" :offset="20">
+    <el-row :gutter="2">
+      <el-col :span="2" :offset="19">
         <el-input clearable placeholder="search" v-model="searchValue" @change="handleSearch"></el-input>
       </el-col>
       <el-col :span="2">
         <el-button style="float:left;" type="default" @click="exportExcel">导出Excel</el-button>
       </el-col>
     </el-row>
-    <el-table :data="tableData" id="sale-table" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show2" :height="tableHeight" :max-height="tableHeight" :highlight-current-row="true" style="width: 100%">
+    <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show2" :height="tableHeight" :max-height="tableHeight" style="width: 100%">
       <el-table-column min-width="90" prop="purchaser" label="采购员" :formatter="empty" sortable></el-table-column>
       <el-table-column min-width="100" prop="salemoneyrmbus" label="成交价$" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="100" prop="salemoneyrmbzn" label="成交价￥" :formatter="empty" sortable="custom"></el-table-column>
@@ -171,11 +171,11 @@ export default {
       if (this.show === false) {
         this.text = '显示输入框'
         const height = document.getElementById('app').clientHeight
-        this.tableHeight = height - 140 + 'px'
+        this.tableHeight = height - 150 + 'px'
       } else if (this.show === true) {
         this.text = '隐藏输入框'
         const height = document.getElementById('app').clientHeight
-        this.tableHeight = height - 220 + 'px'
+        this.tableHeight = height - 230 + 'px'
       }
     },
     changeActive() {
@@ -186,7 +186,7 @@ export default {
     },
     onSubmit(form) {
       const height = document.getElementById('app').clientHeight
-      this.tableHeight = height - 220 + 'px'
+      this.tableHeight = height - 230 + 'px'
       this.show2 = true
       this.$refs.condition.validate(valid => {
         if (valid) {

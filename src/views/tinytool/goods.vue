@@ -2,52 +2,54 @@
   <div>
     <el-form :model='condition' :inline='true' label-width='15rem' class='demo-form-inline'>
       <el-form-item label='业绩归属人' class='input'>
-        <el-select v-model='condition.possessMan1' clearable>
+        <el-select size="small" v-model='condition.possessMan1' clearable>
           <el-option v-for='item in possessMan1' :key='item.username' :value='item.username'></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label='产品状态' class='input'>
-        <el-select v-model='condition.goodsSkuStatus' clearable>
+        <el-select size="small" v-model='condition.goodsSkuStatus' clearable>
           <el-option v-for='item in goodsSkuStatus' :key='item' :value='item'></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label='关键字' class='input'>
-        <el-input v-model='condition.goodsName' placeholder="商品名称关键字" style="width:20.4rem">
+        <el-input size="small" v-model='condition.goodsName' placeholder="商品名称关键字" style="width:18rem">
         </el-input>
       </el-form-item>
+      <br>
       <el-form-item label='业绩归属人2' class='input'>
-        <el-select v-model='condition.possessMan2' clearable>
+        <el-select size="small" v-model='condition.possessMan2' clearable>
           <el-option v-for='item in possessMan2' :key='item.username' :value='item.username'></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label='产品分类1' class='input'>
-        <el-select v-model='condition.categoryParentName' clearable @change="productcategory">
+        <el-select size="small" v-model='condition.categoryParentName' clearable @change="productcategory">
           <el-option v-for='item in categoryParentName' :key='item.CategoryName' :value='item.CategoryName'></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label='关键字' class='input'>
-        <el-input v-model='condition.supplierName' placeholder="供应商名称关键字" style="width:20.4rem">
+        <el-input size="small" v-model='condition.supplierName' placeholder="供应商名称关键字" style="width:18rem">
         </el-input>
       </el-form-item>
+      <br>
       <el-form-item label='产品分类2' class='input'>
-        <el-select v-model='condition.categoryName' clearable :disabled="disabled">
+        <el-select size="small" v-model='condition.categoryName' clearable :disabled="disabled">
           <el-option v-for='item in categoryName' :key='item.CategoryName' :value='item.CategoryName'></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label='责任人' class='input'>
-        <el-select v-model='condition.salerName' clearable>
+        <el-select size="small" v-model='condition.salerName' clearable>
           <el-option v-for='item in salerName' :key='item.username' :value='item.username'></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label='日期' class='input'>
-        <el-date-picker style="width:20.4rem" v-model='form.newRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2'>
+        <el-date-picker size="small" style="width:18rem" v-model='form.newRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2'>
         </el-date-picker>
       </el-form-item>
       <el-form-item class='input' style="margin-left:6.5rem">
         <el-button type="primary" @click="onSubmit(condition)">搜索</el-button>
       </el-form-item>
     </el-form>
-    <el-row v-loading="listLoading">
+    <el-row v-loading="listLoading" style="height:690px;">
       <el-col :span="4" class="mix" v-for="item in this.tableData" :key="item.rowId">
         <a :href="item.LinkUrl" style="text-decoration:none;">
           <div class="mix-inner">
@@ -187,8 +189,10 @@ export default {
     const condition = sessionStorage.getItem('condition')
     if (condition != null) {
       this.condition = JSON.parse(condition)
+      this.listLoading = true
       getGoodspicture(this.condition)
         .then(response => {
+          this.listLoading = false
           this.tableData = response.data.data.items
           this.total = Number(response.data.data.totalCount)
         })
@@ -201,7 +205,7 @@ export default {
     onSubmit() {
       this.pageSize = 50
       this.currentPage = 1
-      this.condition.start = 1
+      this.condition.start = 0
       this.condition.limit = 50
       this.listLoading = true
       this.condition.beginDate = this.form.dateRange[0]
@@ -214,6 +218,7 @@ export default {
     },
     handleSizeChange(val) {
       this.pageSize = val
+      this.currentPage = 1
       this.condition.limit = this.pageSize * this.currentPage
       this.listLoading = true
       getGoodspicture(this.condition).then(response => {
@@ -225,7 +230,7 @@ export default {
     handleCurrentChange(val) {
       this.currentPage = val
       this.condition.start = (this.currentPage - 1) * this.pageSize + 1
-      this.condition.limit = this.pageSize * this.currentPage
+      this.condition.limit = this.pageSize - 1
       this.listLoading = true
       getGoodspicture(this.condition).then(response => {
         this.listLoading = false

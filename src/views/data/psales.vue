@@ -2,17 +2,17 @@
   <div>
     <el-form :model='condition' :inline='true' ref='condition' label-width='10rem' class='demo-form-inline'>
       <el-form-item label="平台">
-        <el-select v-model="condition.plat" clearable>
+        <el-select size="small" v-model="condition.plat" clearable>
           <el-option v-for="item in plat" :key="item.plat" :value="item.plat"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="卖家简称">
-        <el-select v-model="condition.suffix" clearable>
+        <el-select size="small" v-model="condition.suffix" clearable>
           <el-option v-for="item in suffix" :key="item.id" :value="item.store"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="业绩归属人1">
-        <el-select v-model="condition.saler" clearable>
+        <el-select size="small" v-model="condition.saler" clearable>
           <el-option v-for="(item,index) in saler" :index="index" :key="item.username" :value="item.username"></el-option>
         </el-select>
       </el-form-item>
@@ -20,8 +20,8 @@
         <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
       </el-form-item>
     </el-form>
-    <el-row :gutter='10'>
-      <el-col :span='2' :offset='20'>
+    <el-row :gutter='2'>
+      <el-col :span='2' :offset='19'>
         <el-input clearable placeholder='search' v-model='searchValue' @change='handleSearch'></el-input>
       </el-col>
       <el-col :span='2'>
@@ -93,6 +93,7 @@ export default {
   methods: {
     handleSizeChange(val) {
       this.pageSize = val
+      this.currentPage = 1
       this.condition.limit = this.pageSize * this.currentPage
       this.listLoading = true
       getPsales(this.condition).then(response => {
@@ -104,7 +105,7 @@ export default {
     handleCurrentChange(val) {
       this.currentPage = val
       this.condition.start = (this.currentPage - 1) * this.pageSize + 1
-      this.condition.limit = this.pageSize * this.currentPage
+      this.condition.limit = this.pageSize
       this.listLoading = true
       getPsales(this.condition).then(response => {
         this.listLoading = false
@@ -116,7 +117,7 @@ export default {
       this.listLoading = true
       this.pageSize = 100
       this.currentPage = 1
-      this.condition.start = 1
+      this.condition.start = 0
       this.condition.limit = 100
       getPsales(this.condition).then(response => {
         this.listLoading = false
