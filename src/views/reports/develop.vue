@@ -733,7 +733,15 @@ export default {
   },
   mounted() {
     getSection().then(response => {
-      this.department = response.data.data
+      const res = response.data.data
+      let index
+      for (let i = 0; i < res.length; i++) {
+        if ((res[i].department).indexOf('供应链') > -1) {
+          index = i
+          res.splice(index, 1)
+        }
+      }
+      this.department = res
     })
     getMember().then(response => {
       const res = response.data.data

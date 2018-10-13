@@ -72,7 +72,7 @@
         <el-button style='float:left' type='default' @click='exportExcel'>导出Excel</el-button>
       </el-col>
     </el-row>
-    <el-table :data="tableData" id="sale-table" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" :height="tableHeight" :max-height="tableHeight" :highlight-current-row="true" v-show="show2" style="width: 100%;">
+    <el-table :data="tableData" id="sale-table" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" :height="tableHeight" :max-height="tableHeight" v-show="show2" style="width: 100%;">
       <el-table-column min-width="75" prop="pingtai" label="平台" :formatter="empty" sortable></el-table-column>
       <el-table-column min-width="75" prop="suffix" label="账号" :formatter="empty" sortable></el-table-column>
       <el-table-column min-width="90" prop="salesman" label="销售员" :formatter="empty" sortable></el-table-column>
@@ -420,7 +420,15 @@ export default {
   },
   mounted() {
     getSection().then(response => {
-      this.department = response.data.data
+      const res = response.data.data
+      let index
+      for (let i = 0; i < res.length; i++) {
+        if ((res[i].department).indexOf('供应链') > -1) {
+          index = i
+          res.splice(index, 1)
+        }
+      }
+      this.department = res
     })
     getPlatform().then(response => {
       this.plat = response.data.data

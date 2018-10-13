@@ -90,7 +90,7 @@
     </el-table>
     <el-col :span="24" class="toolbar" style="margin-top:0rem" v-show="total>0">
       <div class="pagination-container">
-        <el-pagination :current-page="currentPage" :page-sizes="[100,200,500,1000,this.total]" :page-size="pageSize" :total="total" background layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
+        <el-pagination :current-page="currentPage" :page-sizes="[this.total,100,200,500,1000,this.total]" :page-size="pageSize" :total="total" background layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
       </div>
     </el-col>
   </div>
@@ -110,7 +110,7 @@ export default {
   data() {
     return {
       currentPage: 1,
-      pageSize: 100,
+      pageSize: null,
       total: null,
       tableHeight: 0,
       allMember: [],
@@ -140,7 +140,7 @@ export default {
         dateRange: [],
         account: [],
         start: 1,
-        limit: 100
+        limit: 100000
       },
       pickerOptions2: {
         shortcuts: [
@@ -320,10 +320,8 @@ export default {
             })
           }
           this.listLoading = true
-          this.pageSize = 100
           this.currentPage = 1
           this.condition.start = 0
-          this.condition.limit = 100
           getaccount(myform).then(response => {
             this.listLoading = false
             this.tableData = this.searchTable = response.data.data.items
@@ -441,7 +439,15 @@ export default {
   },
   mounted() {
     getSection().then(response => {
-      this.department = response.data.data
+      const res = response.data.data
+      let index
+      for (let i = 0; i < res.length; i++) {
+        if ((res[i].department).indexOf('供应链') > -1) {
+          index = i
+          res.splice(index, 1)
+        }
+      }
+      this.department = res
     })
     getPlatform().then(response => {
       this.plat = response.data.data

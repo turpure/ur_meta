@@ -24,63 +24,63 @@
       </el-row>
       <el-tabs v-model="activeName" @tab-click="handleClick" v-show="this.tableData1.length>0?true:false">
         <el-tab-pane label="所有状态" name="first">
-          <el-table :header-row-style="rowheader" show-summary :summary-method="getSummaries" max-height="630" :data="tableData1" style="width: 100%;">
-            <el-table-column min-width="100" prop="salername" label="业绩归属人1" :formatter="empty"></el-table-column>
-            <el-table-column min-width="80" prop="goodsNum" label="商品总数" :formatter="empty"></el-table-column>
-            <el-table-column min-width="90" prop="SoldNum" label="出单商品数" :formatter="empty"></el-table-column>
-            <el-table-column min-width="80" prop="SoldRate" label="出单率%" :formatter="empty"></el-table-column>
-            <el-table-column min-width="80" prop="SkuSoldNum" label="销量数量" :formatter="empty"></el-table-column>
-            <el-table-column min-width="110" prop="saleMoneyRmb" label="销售额(RMB)" :formatter="empty"></el-table-column>
-            <el-table-column min-width="90" prop="profitRmb" label="利润(RMB)" :formatter="empty"></el-table-column>
-            <el-table-column min-width="80" prop="ProfitRate" label="利润率%" :formatter="empty"></el-table-column>
-            <el-table-column min-width="130" prop="wishSoldNum" label="Wish出单商品数" :formatter="empty"></el-table-column>
-            <el-table-column min-width="110" prop="wishRate" label="Wish出单率%" :formatter="empty"></el-table-column>
-            <el-table-column min-width="130" prop="eabySoldNum" label="eBay出单商品数" :formatter="empty"></el-table-column>
-            <el-table-column min-width="110" prop="eBayRate" label="eBay出单率%" :formatter="empty"></el-table-column>
-            <el-table-column min-width="120" prop="SMTSoldNum" label="SMT出单商品数" :formatter="empty"></el-table-column>
-            <el-table-column min-width="110" prop="SMTRate" label="SMT出单率%" :formatter="empty"></el-table-column>
-            <el-table-column min-width="150" prop="amaSoldNum" label="Amazon出单商品数" :formatter="empty"></el-table-column>
-            <el-table-column min-width="130" prop="amaRate" label="Amazon出单率%" :formatter="empty"></el-table-column>
+          <el-table :header-row-style="rowheader" @sort-change="sortNumber1" show-summary :summary-method="getSummaries" max-height="630" :data="tableData1" style="width: 100%;">
+            <el-table-column min-width="125" prop="salername" label="业绩归属人1" :formatter="empty" sortable></el-table-column>
+            <el-table-column min-width="100" prop="goodsNum" label="商品总数" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="115" prop="SoldNum" label="出单商品数" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="100" prop="SoldRate" label="出单率%" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="100" prop="SkuSoldNum" label="销量数量" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="130" prop="saleMoneyRmb" label="销售额(RMB)" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="115" prop="profitRmb" label="利润(RMB)" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="100" prop="ProfitRate" label="利润率%" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="150" prop="wishSoldNum" label="Wish出单商品数" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="135" prop="wishRate" label="Wish出单率%" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="150" prop="eabySoldNum" label="eBay出单商品数" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="135" prop="eBayRate" label="eBay出单率%" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="145" prop="SMTSoldNum" label="SMT出单商品数" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="130" prop="SMTRate" label="SMT出单率%" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="170" prop="amaSoldNum" label="Amazon出单商品数" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="155" prop="amaRate" label="Amazon出单率%" :formatter="empty" sortable="custom"></el-table-column>
           </el-table>
         </el-tab-pane>
         <el-tab-pane label="爆款" name="second">
-          <el-table :header-row-style="rowheader" show-summary :summary-method="getSummaries" max-height="630" :data="tableData2" style="width: 100%;">
-            <el-table-column min-width="100" prop="salername" label="业绩归属人1" :formatter="empty"></el-table-column>
-            <el-table-column min-width="80" prop="goodsNum" label="商品总数" :formatter="empty"></el-table-column>
-            <el-table-column min-width="80" prop="SoldNum" label="爆款总数" :formatter="empty"></el-table-column>
-            <el-table-column min-width="80" prop="SoldRate" label="爆款率%" :formatter="empty"></el-table-column>
-            <el-table-column min-width="80" prop="SkuSoldNum" label="销量数量" :formatter="empty"></el-table-column>
-            <el-table-column min-width="110" prop="saleMoneyRmb" label="销售额(RMB)" :formatter="empty"></el-table-column>
-            <el-table-column min-width="90" prop="profitRmb" label="利润(RMB)" :formatter="empty"></el-table-column>
-            <el-table-column min-width="80" prop="ProfitRate" label="利润率%" :formatter="empty"></el-table-column>
-            <el-table-column min-width="100" prop="wishSoldNum" label="Wish爆款数" :formatter="empty"></el-table-column>
-            <el-table-column min-width="140" prop="wishRate" label="Wish爆款贡献率%" :formatter="empty"></el-table-column>
-            <el-table-column min-width="100" prop="eabySoldNum" label="eBay爆款数" :formatter="empty"></el-table-column>
-            <el-table-column min-width="140" prop="eBayRate" label="eBay爆款贡献率%" :formatter="empty"></el-table-column>
-            <el-table-column min-width="100" prop="SMTSoldNum" label="SMT爆款数" :formatter="empty"></el-table-column>
-            <el-table-column min-width="140" prop="SMTRate" label="SMT爆款贡献率%" :formatter="empty"></el-table-column>
-            <el-table-column min-width="120" prop="amaSoldNum" label="Amazon爆款数" :formatter="empty"></el-table-column>
-            <el-table-column min-width="160" prop="amaRate" label="Amazon爆款贡献率%" :formatter="empty"></el-table-column>
+          <el-table :header-row-style="rowheader" @sort-change="sortNumber2" show-summary :summary-method="getSummaries" max-height="630" :data="tableData2" style="width: 100%;">
+            <el-table-column min-width="125" prop="salername" label="业绩归属人1" :formatter="empty" sortable></el-table-column>
+            <el-table-column min-width="100" prop="goodsNum" label="商品总数" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="100" prop="SoldNum" label="爆款总数" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="100" prop="SoldRate" label="爆款率%" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="100" prop="SkuSoldNum" label="销量数量" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="130" prop="saleMoneyRmb" label="销售额(RMB)" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="115" prop="profitRmb" label="利润(RMB)" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="100" prop="ProfitRate" label="利润率%" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="120" prop="wishSoldNum" label="Wish爆款数" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="160" prop="wishRate" label="Wish爆款贡献率%" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="120" prop="eabySoldNum" label="eBay爆款数" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="160" prop="eBayRate" label="eBay爆款贡献率%" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="120" prop="SMTSoldNum" label="SMT爆款数" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="160" prop="SMTRate" label="SMT爆款贡献率%" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="145" prop="amaSoldNum" label="Amazon爆款数" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="185" prop="amaRate" label="Amazon爆款贡献率%" :formatter="empty" sortable="custom"></el-table-column>
           </el-table>
         </el-tab-pane>
         <el-tab-pane label="旺款" name="third">
-          <el-table :header-row-style="rowheader" show-summary :summary-method="getSummaries" max-height="630" :data="tableData3" style="width: 100%;">
-            <el-table-column min-width="100" prop="salername" label="业绩归属人1" :formatter="empty"></el-table-column>
-            <el-table-column min-width="80" prop="goodsNum" label="商品总数" :formatter="empty"></el-table-column>
-            <el-table-column min-width="80" prop="SoldNum" label="旺款总数" :formatter="empty"></el-table-column>
-            <el-table-column min-width="80" prop="SoldRate" label="旺款率%" :formatter="empty"></el-table-column>
-            <el-table-column min-width="80" prop="SkuSoldNum" label="销售数量" :formatter="empty"></el-table-column>
-            <el-table-column min-width="110" prop="saleMoneyRmb" label="销售额(RMB)" :formatter="empty"></el-table-column>
-            <el-table-column min-width="90" prop="profitRmb" label="利润(RMB)" :formatter="empty"></el-table-column>
-            <el-table-column min-width="80" prop="ProfitRate" label="利润率%" :formatter="empty"></el-table-column>
-            <el-table-column min-width="100" prop="wishSoldNum" label="Wish旺款数" :formatter="empty"></el-table-column>
-            <el-table-column min-width="140" prop="wishRate" label="Wish旺款贡献率%" :formatter="empty"></el-table-column>
-            <el-table-column min-width="100" prop="eabySoldNum" label="eBay旺款数" :formatter="empty"></el-table-column>
-            <el-table-column min-width="140" prop="eBayRate" label="eBay旺款贡献率%" :formatter="empty"></el-table-column>
-            <el-table-column min-width="100" prop="SMTSoldNum" label="SMT旺款数" :formatter="empty"></el-table-column>
-            <el-table-column min-width="140" prop="SMTRate" label="SMT旺款贡献率%" :formatter="empty"></el-table-column>
-            <el-table-column min-width="120" prop="amaSoldNum" label="Amazon旺款数" :formatter="empty"></el-table-column>
-            <el-table-column min-width="160" prop="amaRate" label="Amazon旺款贡献率%" :formatter="empty"></el-table-column>
+          <el-table :header-row-style="rowheader" @sort-change="sortNumber3" show-summary :summary-method="getSummaries" max-height="630" :data="tableData3" style="width: 100%;">
+            <el-table-column min-width="125" prop="salername" label="业绩归属人1" :formatter="empty" sortable></el-table-column>
+            <el-table-column min-width="100" prop="goodsNum" label="商品总数" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="100" prop="SoldNum" label="旺款总数" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="100" prop="SoldRate" label="旺款率%" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="100" prop="SkuSoldNum" label="销售数量" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="130" prop="saleMoneyRmb" label="销售额(RMB)" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="115" prop="profitRmb" label="利润(RMB)" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="100" prop="ProfitRate" label="利润率%" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="120" prop="wishSoldNum" label="Wish旺款数" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="160" prop="wishRate" label="Wish旺款贡献率%" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="120" prop="eabySoldNum" label="eBay旺款数" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="160" prop="eBayRate" label="eBay旺款贡献率%" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="120" prop="SMTSoldNum" label="SMT旺款数" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="160" prop="SMTRate" label="SMT旺款贡献率%" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="145" prop="amaSoldNum" label="Amazon旺款数" :formatter="empty" sortable="custom"></el-table-column>
+            <el-table-column min-width="185" prop="amaRate" label="Amazon旺款贡献率%" :formatter="empty" sortable="custom"></el-table-column>
           </el-table>
         </el-tab-pane>
       </el-tabs>
@@ -90,6 +90,7 @@
 
 <script>
 import { getPerform } from '../../api/profit'
+import { compareUp, compareDown } from '../../api/tools'
 export default {
   data() {
     return {
@@ -251,6 +252,31 @@ export default {
     }
   },
   methods: {
+    // 数字排序
+    sortNumber1(column, prop, order) {
+      const data = this.tableData1
+      if (column.order === 'descending') {
+        this.tableData1 = data.sort(compareDown(data, column.prop))
+      } else {
+        this.tableData1 = data.sort(compareUp(data, column.prop))
+      }
+    },
+    sortNumber2(column, prop, order) {
+      const data = this.tableData1
+      if (column.order === 'descending') {
+        this.tableData2 = data.sort(compareDown(data, column.prop))
+      } else {
+        this.tableData2 = data.sort(compareUp(data, column.prop))
+      }
+    },
+    sortNumber3(column, prop, order) {
+      const data = this.tableData1
+      if (column.order === 'descending') {
+        this.tableData3 = data.sort(compareDown(data, column.prop))
+      } else {
+        this.tableData3 = data.sort(compareUp(data, column.prop))
+      }
+    },
     // 合计
     getSummaries(param) {
       const { columns, data } = param
@@ -407,6 +433,5 @@ export default {
 }
 .tab {
   max-height: 69rem;
-  overflow: auto;
 }
 </style>
