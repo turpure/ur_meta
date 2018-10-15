@@ -28,8 +28,8 @@
         <el-button style='float:left' type='default' @click='exportExcel'>导出Excel</el-button>
       </el-col>
     </el-row>
-    <div v-loading="listLoading">
-      <el-table max-height="730" :data="this.tableData" @sort-change=" sortNumber" v-show="this.total>0?true:false" style="width: 100%;">
+    <div>
+      <el-table v-loading="listLoading" max-height="730" :data="this.tableData" @sort-change=" sortNumber" v-show="show" style="width: 100%;">
         <el-table-column min-width="100" prop="GoodsCode" label="商品编码" :formatter="empty" sortable></el-table-column>
         <el-table-column min-width="100" prop="GoodsName" label="商品名称" :formatter="empty" sortable></el-table-column>
         <el-table-column min-width="100" prop="GoodsSKUStatus" label="商品状态" :formatter="empty" sortable></el-table-column>
@@ -70,6 +70,7 @@ import { compareUp, compareDown } from '../../api/tools'
 export default {
   data() {
     return {
+      show: false,
       currentPage: 1,
       pageSize: 100,
       listLoading: false,
@@ -113,6 +114,7 @@ export default {
       })
     },
     onSubmit() {
+      this.show = true
       this.listLoading = true
       this.pageSize = 100
       this.currentPage = 1
