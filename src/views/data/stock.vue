@@ -33,9 +33,22 @@
       <el-table-column min-width="120px" prop="NotInStore" label="采购未入库" :formatter="empty" sortable></el-table-column>
       <el-table-column min-width="130px" prop="hopeUseNum" label="预计可用库存" :formatter="empty" sortable></el-table-column>
     </el-table>
-    <el-col :span="24" class="toolbar">
+    <el-col :span="24" class="toolbar" v-show="filters.total>0">
       <div class="pagination-container">
-        <el-pagination v-show="filters.total>0" :current-page="filters.page" :page-sizes=[this.filters.total,100,200,500,1000,this.filters.total] :page-size="filters.pageSize" :total="filters.total" background layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
+        <el-pagination 
+          :current-page="filters.page" 
+          :page-sizes=[this.filters.total,100,200,500,1000,] 
+          :page-size="filters.pageSize" 
+          :total="filters.total" 
+          background 
+          layout="total, sizes, slot, prev, pager, next, jumper" 
+          @current-change="handleCurrentChange" 
+          @size-change="handleSizeChange">
+          <span>
+            <el-button type="text" @click="showAll">显示全部</el-button>
+          </span>
+        </el-pagination>
+        
       </div>
     </el-col>
   </el-row>
@@ -50,7 +63,7 @@ export default {
       listLoading: false,
       page: 1,
       size: 2,
-      total: 10,
+      total: null,
       tableDataAll: [],
       tableData: [],
       searchTable: [],
@@ -63,6 +76,9 @@ export default {
     }
   },
   methods: {
+    showAll() {
+      this.handleSizeChange(this.filters.total)
+    },
     thstyle({ row, column, rowIndex, columnIndex }) {
       if (
         (rowIndex === 0 && columnIndex === 2) ||
