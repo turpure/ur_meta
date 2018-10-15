@@ -286,6 +286,9 @@ export default {
               })
             }
           }
+          myform.member = this.member.map(m => {
+            return m.username
+          })
           getSalestrend(myform).then(response => {
             this.listLoading = false
             const ret = response.data.data
