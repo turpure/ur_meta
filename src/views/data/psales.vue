@@ -46,7 +46,6 @@
         <el-table-column min-width="120" prop="jinshitian" label="近10天销量" :formatter="empty" sortable></el-table-column>
         <el-table-column min-width="120" prop="shangshitian" label="上10天销量" :formatter="empty" sortable></el-table-column>
         <el-table-column min-width="130" prop="changeTenDay" label="10天销量变化" :formatter="empty" sortable></el-table-column>
-
       </el-table>
     </div>
     <el-col :span="24" class="toolbar" v-show="total>0" style="margin-top:0rem">
