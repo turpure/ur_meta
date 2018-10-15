@@ -90,7 +90,19 @@
     </el-table>
     <el-col :span="24" class="toolbar" style="margin-top:0rem" v-show="total>0">
       <div class="pagination-container">
-        <el-pagination :current-page="currentPage" :page-sizes="[this.total,100,200,500,1000,this.total]" :page-size="pageSize" :total="total" background layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
+        <el-pagination 
+        :current-page="currentPage" 
+        :page-sizes="[this.total,100,200,500,1000]" 
+        :page-size="pageSize" 
+        :total="total" 
+        background 
+        layout="total, sizes, slot, prev, pager, next, jumper" 
+        @current-change="handleCurrentChange" 
+        @size-change="handleSizeChange">
+           <span>
+             <el-button type="text" @click="showAll">显示全部</el-button>
+           </span>
+        </el-pagination>
       </div>
     </el-col>
   </div>
@@ -105,7 +117,7 @@ import {
   getAccount,
   getaccount
 } from '../../api/profit'
-import { compareUp, compareDown } from '../../api/tools'
+import { compareUp, compareDown, getMonthDate } from '../../api/tools'
 export default {
   data() {
     return {
@@ -146,51 +158,23 @@ export default {
         shortcuts: [
           {
             text: '本月',
-            onClick(picker) {
-              const end = new Date()
-              const y = end.getFullYear()
-              let m = end.getMonth() + 1
-              if (m < 10) {
-                m = '0' + m
-              }
-              const firstday = y + '-' + m + '-' + '01'
-              const start = new Date()
-              const sy = start.getFullYear()
-              let sm = start.getMonth() + 1
-              const sd = start.getDate()
-              if (sm < 10) {
-                sm = '0' + sm
-              }
-              const sfirstday = sy + '-' + sm + '-' + sd
-              picker.$emit('pick', [firstday, sfirstday])
+            onClick(vm) {
+              const date = getMonthDate('thisMonth')
+              vm.$emit('pick', [date['start'], date['end']])
             }
           },
           {
             text: '上个月',
             onClick(picker) {
-              const nowdays = new Date()
-              let year = nowdays.getFullYear()
-              let month = nowdays.getMonth()
-              if (month === 0) {
-                month = 12
-                year = year - 1
-              }
-              if (month < 10) {
-                month = '0' + month
-              }
-              const firstDay = [year, month, '01'].join('-')
-              const myDate = new Date(year, month, 0)
-              const lastDay = [year, month, myDate.getDate()].join('-')
-              picker.$emit('pick', [firstDay, lastDay])
+              const date = getMonthDate('previousMonth')
+              picker.$emit('pick', [date['start'], date['end']])
             }
           },
           {
             text: '最近一个月',
             onClick(picker) {
-              const end = new Date()
-              const start = new Date()
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-              picker.$emit('pick', [start, end])
+              const date = getMonthDate('lastMonth')
+              picker.$emit('pick', [date['start'], date['end']])
             }
           }
         ]
@@ -198,6 +182,9 @@ export default {
     }
   },
   methods: {
+    showAll() {
+      this.handleSizeChange(this.total)
+    },
     handleCurrentChange(val) {
       this.currentPage = val
       this.condition.start = (this.currentPage - 1) * this.pageSize + 1
