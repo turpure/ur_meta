@@ -72,27 +72,27 @@
         <el-button style='float:left' type='default' @click='exportExcel'>导出Excel</el-button>
       </el-col>
     </el-row>
-    <el-table :data="tableData" id="sale-table" size="medium" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" :height="tableHeight" :max-height="tableHeight" v-show="show2" style="width: 100%;">
-      <el-table-column min-width="75" prop="pingtai" label="平台" :formatter="empty" sortable></el-table-column>
-      <el-table-column min-width="75" prop="suffix" label="账号" :formatter="empty" sortable></el-table-column>
-      <el-table-column min-width="90" prop="salesman" label="销售员" :formatter="empty" sortable></el-table-column>
-      <el-table-column min-width="95" prop="salemoney" label="成交价$" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="110" prop="salemoneyzn" label="成交价￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="130" prop="ebayFeeebay" label="eBay成交费$" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="135" prop="ebayfeeznebay" label="eBay成交费￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="115" prop="ppFee" label="PP成交费$" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="120" prop="ppFeezn" label="PP成交费￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="115" prop="costmoney" label="商品成本￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="115" prop="expressFare" label="运费成本￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="115" prop="inpackagemoney" label="包装成本￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="100" prop="storename" label="发货仓库" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="115" prop="refund" label="退款金额￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="100" prop="refundrate" label="退款率%" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="115" prop="diefeeZn" label="死库处理￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="115" prop="insertionFee" label="店铺杂费￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="115" prop="saleOpeFeeZn" label="运营杂费￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="100" prop="grossprofit" label="毛利￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="100" prop="grossprofitRate" label="毛利率%" :formatter="empty" sortable="custom"></el-table-column>
+    <el-table :data="tableData" size='mini' id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" :height="tableHeight" :max-height="tableHeight" v-show="show2" style="width: 100%;">
+      <el-table-column min-width="70" prop="pingtai" label="平台" :formatter="empty" sortable></el-table-column>
+      <el-table-column min-width="70" prop="suffix" label="账号" :formatter="empty" sortable></el-table-column>
+      <el-table-column min-width="80" prop="salesman" label="销售员" :formatter="empty" sortable></el-table-column>
+      <el-table-column min-width="90" prop="salemoney" label="成交价$" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="95" prop="salemoneyzn" label="成交价￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="120" prop="ebayFeeebay" label="eBay成交费$" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="125" prop="ebayfeeznebay" label="eBay成交费￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="105" prop="ppFee" label="PP成交费$" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="110" prop="ppFeezn" label="PP成交费￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="105" prop="costmoney" label="商品成本￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="105" prop="expressFare" label="运费成本￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="105" prop="inpackagemoney" label="包装成本￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="95" prop="storename" label="发货仓库" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="105" prop="refund" label="退款金额￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="95" prop="refundrate" label="退款率%" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="105" prop="diefeeZn" label="死库处理￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="105" prop="insertionFee" label="店铺杂费￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="105" prop="saleOpeFeeZn" label="运营杂费￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="80" prop="grossprofit" label="毛利￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="95" prop="grossprofitRate" label="毛利率%" :formatter="empty" sortable="custom"></el-table-column>
     </el-table>
   </div>
 </template>
