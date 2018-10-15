@@ -65,7 +65,7 @@ export function getMonthDate(dateType) {
 
 // 判断dateType
 
-export function getDateType(minDate, maxDate) {
+export function getDateRangeType(minDate, maxDate) {
   const thisMonth = getMonthDate('thisMonth')
   const previousMonth = getMonthDate('previousMonth')
   const lastMonth = getMonthDate('lastMonth')

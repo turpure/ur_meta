@@ -107,7 +107,7 @@ import {
   getSales
 } from '../../api/profit'
 import { isAdmin } from '../../api/api'
-import { compareUp, compareDown, getMonthDate } from '../../api/tools'
+import { compareUp, compareDown, getMonthDate, getDateRangeType } from '../../api/tools'
 import FileSaver from 'file-saver'
 import XLSX from 'xlsx'
 export default {
@@ -254,6 +254,7 @@ export default {
       this.tableHeight = height - 270 + 'px'
       this.show2 = true
       const members = this.allMember
+      myform.dateRangeType = getDateRangeType(myform.dateRange[0], myform.dateRange[1])
       this.$refs.condition.validate(valid => {
         if (valid) {
           if (myform.member.length === 0) {
