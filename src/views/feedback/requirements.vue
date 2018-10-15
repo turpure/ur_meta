@@ -144,7 +144,18 @@
     <el-col :span="24" class="toolbar">
       <!-- <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button> -->
       <div class="pagination-container">
-        <el-pagination v-show="filters.total>0" :current-page="filters.page" :page-sizes=[10,20,30,50] :page-size="filters.pageSize" :total="filters.total" background layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" />
+        <el-pagination
+         v-show="filters.total>0" 
+         :current-page="filters.page" 
+         :page-sizes="[10,20,30,50,filters.total]" 
+         :page-size="filters.pageSize" 
+         :total="filters.total" 
+         background 
+         layout="total, sizes, slot, prev, pager, next, jumper" 
+         @current-change="handleCurrentChange"
+         @size-change="handleSizeChange">
+         <el-button type="text" @click="showAll">显示全部</el-button>
+        </el-pagination>
       </div>
     </el-col>
   </section>
@@ -214,6 +225,13 @@ export default {
     handleCurrentChange(val) {
       this.filters.page = val
       this.getRequire()
+    },
+    handleSizeChange(val) {
+      this.filters.pageSize = val
+      this.getRequire()
+    },
+    showAll() {
+      this.handleSizeChange(this.filters.total)
     },
     formatter(row, column) {
       return row.createdDate ? row.createdDate.substring(0, 16) : ''

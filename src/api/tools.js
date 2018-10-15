@@ -31,6 +31,9 @@ export function compareDown(data, propertyName) { // 降序排序
 
 // 获取日期
 export function getMonthDate(dateType) {
+  function dateFormatter(date) {
+    return [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-')
+  }
   const today = new Date()
   let y = today.getFullYear()
   let m = today.getMonth() + 1
@@ -59,13 +62,13 @@ export function getMonthDate(dateType) {
     const end = new Date()
     const start = new Date()
     start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-    return { start: start, end: end }
+    return { start: dateFormatter(start), end: dateFormatter(end) }
   }
 }
 
 // 判断dateType
 
-export function getDateType(minDate, maxDate) {
+export function getDateRangeType(minDate, maxDate) {
   const thisMonth = getMonthDate('thisMonth')
   const previousMonth = getMonthDate('previousMonth')
   const lastMonth = getMonthDate('lastMonth')
