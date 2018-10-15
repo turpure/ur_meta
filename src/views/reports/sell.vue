@@ -72,27 +72,29 @@
         <el-button style='float:left' type='default' @click='exportExcel'>导出Excel</el-button>
       </el-col>
     </el-row>
-    <el-table :data="tableData" size='mini' id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" :height="tableHeight" :max-height="tableHeight" v-show="show2" style="width: 100%;">
-      <el-table-column min-width="70" prop="pingtai" label="平台" :formatter="empty" sortable></el-table-column>
-      <el-table-column min-width="70" prop="suffix" label="账号" :formatter="empty" sortable></el-table-column>
-      <el-table-column min-width="80" prop="salesman" label="销售员" :formatter="empty" sortable></el-table-column>
-      <el-table-column min-width="90" prop="salemoney" label="成交价$" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="95" prop="salemoneyzn" label="成交价￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="120" prop="ebayFeeebay" label="eBay成交费$" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="125" prop="ebayfeeznebay" label="eBay成交费￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="105" prop="ppFee" label="PP成交费$" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="110" prop="ppFeezn" label="PP成交费￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="105" prop="costmoney" label="商品成本￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="105" prop="expressFare" label="运费成本￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="105" prop="inpackagemoney" label="包装成本￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="95" prop="storename" label="发货仓库" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="105" prop="refund" label="退款金额￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="95" prop="refundrate" label="退款率%" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="105" prop="diefeeZn" label="死库处理￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="105" prop="insertionFee" label="店铺杂费￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="105" prop="saleOpeFeeZn" label="运营杂费￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="80" prop="grossprofit" label="毛利￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="95" prop="grossprofitRate" label="毛利率%" :formatter="empty" sortable="custom"></el-table-column>
+    <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" 
+    show-summary :summary-method="getSummaries" :height="tableHeight" :max-height="tableHeight" v-show="show2" 
+    style="width: 100%;zoom:0.6;">
+      <el-table-column prop="pingtai" label="平台" :formatter="empty" sortable></el-table-column>
+      <el-table-column prop="suffix" label="账号" :formatter="empty" sortable></el-table-column>
+      <el-table-column min-width="100" prop="salesman" label="销售员" :formatter="empty" sortable></el-table-column>
+      <el-table-column min-width="110" prop="salemoney" label="成交价$" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="120" prop="salemoneyzn" label="成交价￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="160" prop="ebayFeeebay" label="eBay成交费$" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="170" prop="ebayfeeznebay" label="eBay成交费￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="140" prop="ppFee" label="PP成交费$" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="150" prop="ppFeezn" label="PP成交费￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="140" prop="costmoney" label="商品成本￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="140" prop="expressFare" label="运费成本￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="140" prop="inpackagemoney" label="包装成本￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="120" prop="storename" label="发货仓库" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="140" prop="refund" label="退款金额￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="120" prop="refundrate" label="退款率%" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="140" prop="diefeeZn" label="死库处理￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="140" prop="insertionFee" label="店铺杂费￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="140" prop="saleOpeFeeZn" label="运营杂费￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="110" prop="grossprofit" label="毛利￥" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="120" prop="grossprofitRate" label="毛利率%" :formatter="empty" sortable="custom"></el-table-column>
     </el-table>
   </div>
 </template>
@@ -235,11 +237,11 @@ export default {
       if (this.show === false) {
         this.text = '显示输入框'
         const height = document.getElementById('app').clientHeight
-        this.tableHeight = height - 160 + 'px'
+        this.tableHeight = height + 405 + 'px'
       } else if (this.show === true) {
         this.text = '隐藏输入框'
         const height = document.getElementById('app').clientHeight
-        this.tableHeight = height - 270 + 'px'
+        this.tableHeight = height + 205 + 'px'
       }
     },
     changeActive() {
@@ -251,7 +253,7 @@ export default {
     onSubmit(form) {
       const myform = JSON.parse(JSON.stringify(form))
       const height = document.getElementById('app').clientHeight
-      this.tableHeight = height - 270 + 'px'
+      this.tableHeight = height + 205 + 'px'
       this.show2 = true
       const members = this.allMember
       this.$refs.condition.validate(valid => {

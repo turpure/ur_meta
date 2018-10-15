@@ -52,7 +52,7 @@
             <span v-else>{{scope.row.Amazon}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="SMT" label="SMT$" :formatter="empty" sortable>
+        <el-table-column prop="SMT" label="SMT￥" :formatter="empty" sortable>
           <template slot-scope="scope">
             <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.SMT}}</span>
             <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.SMT}}</span>
@@ -64,6 +64,13 @@
             <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.Shopee}}</span>
             <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.Shopee}}</span>
             <span v-else>{{scope.row.Shopee}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="Joom" label="Joom￥" :formatter="empty" sortable>
+          <template slot-scope="scope">
+            <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.Joom}}</span>
+            <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.Joom}}</span>
+            <span v-else>{{scope.row.Joom}}</span>
           </template>
         </el-table-column>
         <el-table-column prop="total" label="合计￥" :formatter="empty" sortable>
