@@ -223,7 +223,7 @@ export default {
       if (val !== '') {
         for (let i = 0; i < val.length; i++) {
           per = res.filter(
-            ele => ele.department === val[i] && ele.position === '销售'
+            ele => (ele.department === val[i] || ele.parent_depart === val[i]) && ele.position === '销售'
           )
           this.member = this.member.concat(per)
         }
@@ -255,23 +255,21 @@ export default {
       const height = document.getElementById('app').clientHeight
       this.tableHeight = height + 205 + 'px'
       this.show2 = true
-      const members = this.allMember
+      // const members = this.allMember
       myform.dateRangeType = getDateRangeType(myform.dateRange[0], myform.dateRange[1])
       this.$refs.condition.validate(valid => {
         if (valid) {
-          if (myform.member.length === 0) {
+          if (myform.member.length !== 0) {
             if (isAdmin() === false) {
-              myform.member = members.map(m => {
-                return m.username
-              })
+              myform.member = this.condition.member
             }
           }
-          if (myform.department.length !== 0) {
+          if (myform.member.length === 0 && myform.department.lenght !== 0) {
             const val = form.department
             const res = this.allMember
             for (let i = 0; i < val.length; i++) {
               const per = res.filter(
-                ele => ele.department === val[i] && ele.position === '销售'
+                ele => (ele.department === val[i] || ele.parent_depart === val[i]) && ele.position === '销售'
               )
               this.member.concat(per)
             }

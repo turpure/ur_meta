@@ -259,7 +259,7 @@ export default {
       if (val !== '') {
         for (let i = 0; i < val.length; i++) {
           per = res.filter(
-            ele => ele.department === val[i] && ele.position === '销售'
+            ele => (ele.department === val[i] || ele.parent_depart === val[i]) && ele.position === '销售'
           )
           this.member = this.member.concat(per)
         }
@@ -293,12 +293,12 @@ export default {
       this.show2 = true
       this.$refs.condition.validate(valid => {
         if (valid) {
-          if (myform.member.length === 0) {
+          if (myform.member.length === 0 && myform.department.lenght !== 0) {
             const val = form.department
             const res = this.allMember
             for (let i = 0; i < val.length; i++) {
               const per = res.filter(
-                ele => ele.department === val[i] && ele.position === '销售'
+                ele => (ele.department === val[i] || ele.parent_depart === val[i]) && ele.position === '销售'
               )
               this.member.concat(per)
             }
