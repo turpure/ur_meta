@@ -2,7 +2,7 @@
 <div class="dashboard-editor-container">
 <section>
    <el-alert
-    title="2018旺季销售目标完成进度报表"
+    title="2018旺季销售目标完成进度"
     show-icon
     type="info">
   </el-alert>
