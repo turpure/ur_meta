@@ -457,7 +457,7 @@ export default {
       if (val !== '') {
         for (let i = 0; i < val.length; i++) {
           per = res.filter(
-            ele => ele.department === val[i] && ele.position === '开发'
+            ele => (ele.department === val[i] || ele.parent_depart === val[i]) && ele.position === '开发'
           )
           this.member = this.member.concat(per)
         }

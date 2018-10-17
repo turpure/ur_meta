@@ -45,10 +45,9 @@
           @current-change="handleCurrentChange" 
           @size-change="handleSizeChange">
           <span>
-            <el-button type="text" @click="showAll">显示全部</el-button>
+            <el-button type="text" @click=showAll>显示全部</el-button>
           </span>
         </el-pagination>
-        
       </div>
     </el-col>
   </el-row>
