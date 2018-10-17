@@ -41,14 +41,13 @@
           :page-size="filters.pageSize" 
           :total="filters.total" 
           background 
-          layout="total, slot, prev, pager, next, jumper" 
+          layout="total, sizes, slot, prev, pager, next, jumper" 
           @current-change="handleCurrentChange" 
           @size-change="handleSizeChange">
-          <el-select v-model="value">
-            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
-          </el-select>
+          <span>
+            <el-button type="text" @click=showAll>显示全部</el-button>
+          </span>
         </el-pagination>
-        
       </div>
     </el-col>
   </el-row>
@@ -60,27 +59,6 @@ import { compareUp, compareDown } from '../../api/tools'
 export default {
   data() {
     return {
-      value: this.total,
-      options: [{
-        value: this.total,
-        label: '全部/页'
-      }, {
-        value: 100,
-        label: '100/页'
-      }, {
-        value: 200,
-        label: '200/页'
-      }, {
-        value: 500,
-        label: '500/页'
-      }, {
-        value: 1000,
-        label: '1000/页'
-      }, {
-        value: this.total,
-        label: '全部/页'
-      }
-      ],
       listLoading: false,
       page: 1,
       size: 2,
@@ -97,9 +75,9 @@ export default {
     }
   },
   methods: {
-    // showAll() {
-    //   this.handleSizeChange(this.filters.total)
-    // },
+    showAll() {
+      this.handleSizeChange(this.filters.total)
+    },
     thstyle({ row, column, rowIndex, columnIndex }) {
       if (
         (rowIndex === 0 && columnIndex === 2) ||
@@ -167,9 +145,8 @@ export default {
       this.filters.page = val
       this.getData()
     },
-    handleSizeChange(value) {
-      this.filters.pageSize = this.value
-      console.log(this.filters.pageSize)
+    handleSizeChange(val) {
+      this.filters.pageSize = val
       this.getData()
     },
     handleSearch() {
