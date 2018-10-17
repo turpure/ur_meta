@@ -75,6 +75,7 @@ import {
   getAccount,
   getSalestrend
 } from '../../api/profit'
+import { getMonthDate } from '../../api/tools'
 
 export default {
   data() {
@@ -157,60 +158,23 @@ export default {
         shortcuts: [
           {
             text: '本月',
-            onClick(picker) {
-              const end = new Date()
-              const y = end.getFullYear()
-              let m = end.getMonth() + 1
-              if (m < 10) {
-                m = '0' + m
-              }
-              const firstday = y + '-' + m + '-' + '01'
-              const start = new Date()
-              const sy = start.getFullYear()
-              let sm = start.getMonth() + 1
-              const sd = start.getDate()
-              if (sm < 10) {
-                sm = '0' + sm
-              }
-              const sfirstday = sy + '-' + sm + '-' + sd
-              picker.$emit('pick', [firstday, sfirstday])
+            onClick(vm) {
+              const date = getMonthDate('thisMonth')
+              vm.$emit('pick', [date['start'], date['end']])
             }
           },
           {
             text: '上个月',
             onClick(picker) {
-              const start = new Date()
-              const y = start.getFullYear()
-              const m = start.getMonth()
-              let lastday
-              if (
-                m === 1 ||
-                m === 3 ||
-                m === 5 ||
-                m === 7 ||
-                m === 8 ||
-                m === 10 ||
-                m === 12
-              ) {
-                lastday = y + '-' + ('0' + m) + '-' + '31'
-              } else if (m === 4 || m === 6 || m === 9 || m === 11) {
-                lastday = y + '-' + ('0' + m) + '-' + '30'
-              } else if (y % 4 === 0 && (y % 100 !== 0 || y % 400 === 0)) {
-                lastday = y + '-' + '02' + '-' + '29'
-              } else {
-                lastday = y + '-' + '02' + '-' + '28'
-              }
-              const firstday = y + '-' + ('0' + m) + '-' + '01'
-              picker.$emit('pick', [firstday, lastday])
+              const date = getMonthDate('previousMonth')
+              picker.$emit('pick', [date['start'], date['end']])
             }
           },
           {
             text: '最近一个月',
             onClick(picker) {
-              const end = new Date()
-              const start = new Date()
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-              picker.$emit('pick', [start, end])
+              const date = getMonthDate('lastMonth')
+              picker.$emit('pick', [date['start'], date['end']])
             }
           }
         ]
