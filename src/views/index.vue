@@ -3,7 +3,7 @@
 <section>
    <el-alert
     title="2018旺季销售目标完成进度"
-    show-
+    show-icon
     type="info">
   </el-alert>
   
