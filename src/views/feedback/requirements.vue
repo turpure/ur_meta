@@ -76,7 +76,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="优先级">
-          <el-rate v-model="addForm.priority" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="5" style="margin-top:8px;" />
+          <el-rate show-text :texts='text' v-model="addForm.priority" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="5" style="margin-top:8px;" />
         </el-form-item>
         <el-form-item label="处理人">
           <el-checkbox-group v-model="addForm.processingPerson">
@@ -88,6 +88,13 @@
         <el-form-item label="详情">
           <el-input type="textarea" v-model="addForm.detail"></el-input>
         </el-form-item>
+        <quill-editor v-model="content"
+          ref="myQuillEditor"
+          :options="editorOption"
+          @blur="onEditorBlur($event)"
+          @focus="onEditorFocus($event)"
+          @ready="onEditorReady($event)">
+        </quill-editor>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click.native="addFormVisible = false">取消</el-button>
@@ -122,7 +129,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="优先级">
-          <el-rate v-model="editForm.priority" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="5" style="margin-top:8px;" />
+          <el-rate show-text :texts='text' v-model="editForm.priority" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="5" style="margin-top:8px;" />
         </el-form-item>
         <el-form-item label="处理人">
           <el-checkbox-group v-model="editForm.processingPerson">
@@ -134,6 +141,13 @@
         <el-form-item label="详情">
           <el-input type="textarea" v-model="editForm.detail"></el-input>
         </el-form-item>
+        <quill-editor v-model="mycontent"
+          ref="myQuillEditor"
+          :options="editorOption"
+          @blur="onEditorBlur($event)"
+          @focus="onEditorFocus($event)"
+          @ready="onEditorReady($event)">
+        </quill-editor>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click.native="editFormVisible = false">取消</el-button>
@@ -169,9 +183,16 @@ import {
   editRequirements,
   deleteRequirements
 } from '../../api/api'
+import Quill from 'quill'
 export default {
   data() {
     return {
+      content: '',
+      mycontent: '',
+        editorOption: {
+          // some quill options
+        },
+      text: ['仅建议', '不重要不紧急', '重要不紧急', '紧急不重要', '重要且紧急'],
       filters: { name: '', page: 1, pageSize: 10, total: 10 },
       tags: {
         1: { name: '无关紧要', type: '' },
@@ -221,7 +242,32 @@ export default {
       editForm: {}
     }
   },
+  computed: {
+      editor() {
+        return this.$refs.myQuillEditor
+      }
+    },
   methods: {
+    onEditorBlur(quill) {
+        console.log('editor blur!', quill)
+      },
+    onEditorFocus(quill) {
+      console.log('editor focus!', quill)
+    },
+    onEditorReady(quill) {
+      console.log('editor ready!', quill)
+    },
+    onEditorChange({ quill, html, text }) {
+      console.log('editor change!', quill, html, text)
+      this.content = html
+      this.mycontent = html
+    },
+    handleRemove(file, fileList) {
+      console.log(file, fileList)
+    },
+    handlePreview(file) {
+      console.log(file)
+    },
     handleCurrentChange(val) {
       this.filters.page = val
       this.getRequire()
@@ -314,9 +360,11 @@ export default {
   },
   mounted() {
     this.getRequire()
+    console.log('this is current quill instance object', this.editor)
   }
 }
 </script>
 
 <style scoped>
+
 </style>

@@ -15,9 +15,13 @@ import VueHighlightJS from 'vue-highlight.js'
 import 'highlight.js/styles/atom-one-dark.css'
 import PerfectScrollbar from 'perfect-scrollbar'
 import 'perfect-scrollbar/css/perfect-scrollbar.css'
+import VueQuillEditor from 'vue-quill-editor'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
 
+Vue.use(VueQuillEditor, /* { default global options } */)
 Vue.use(VueHighlightJS)
-// Vue.use(VueAwesomeSwiper)
 Vue.use(Myechart)
 Vue.use(Myechartlre)
 Vue.use(Myecharts)

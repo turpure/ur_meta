@@ -274,17 +274,29 @@ export default {
       this.$refs.condition.validate(valid => {
         if (valid) {
           this.listLoading = true
-          if (
-            this.condition.department.length === 0 &&
+          if (this.condition.department.length === 0 &&
             this.condition.member.length === 0 &&
             this.condition.plat.length === 0 &&
-            this.condition.account.length === 0
-          ) {
+            this.condition.account.length === 0) {
             if (this.department.length === 1) {
               myform.department = this.department.map(m => {
                 return m.department
               })
             }
+          } else if (this.condition.department.lenght !== 0 && this.condition.member.lenght === 0) {
+            const val = form.department
+            const res = this.allMember
+            for (let i = 0; i < val.length; i++) {
+              const per = res.filter(
+                ele => (ele.department === val[i] || ele.parent_depart === val[i]) && ele.position === '销售'
+              )
+              this.member.concat(per)
+            }
+            myform.member = this.member.map(m => {
+              return m.username
+            })
+          } else if (this.condition.member.lenght !== 0) {
+            myform.member = this.condition.member
           }
           getSalestrend(myform).then(response => {
             this.listLoading = false
