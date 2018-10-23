@@ -1,57 +1,97 @@
 <template>
-  <div>
-    <!--工具条-->
-    <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
-      <el-form :inline="true" :model="condition">
-        <el-form-item>
-          <el-input v-model="condition.name" placeholder="名称"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="default" @click="searchRequirements">查询</el-button>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="default" @click="handleAdd">新增</el-button>
-        </el-form-item>
-      </el-form>
-    </el-col>
-    <!--需求列表-->
+  <section>
+        <!--工具条-->
+        <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
+          <el-form :inline="true" :model="condition">
+            <el-form-item>
+              <el-input v-model="condition.name" placeholder="名称"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="default" @click="searchRequirements">查询</el-button>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="default" @click="handleAdd">新增</el-button>
+            </el-form-item>
+          </el-form>
+        </el-col>
+        <!--需求列表-->
         <el-table :data="requirements" highlight-current-row :loading="listLoading" style="width: 100%;">
-        <el-table-column prop="id" label="id" v-if="false"></el-table-column>
-        <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column type="index" width="60"></el-table-column>
-        <el-table-column prop="createdDate" label="创建时间" :formatter="formatter" width="140"></el-table-column>
-        <el-table-column prop="creator" label="创建人" sortable></el-table-column>
-        <el-table-column prop="name" label="名称" sortable>
-         <template slot-scope="scope">
-          <span class="link-type">{{ scope.row.name }}</span>
-          <el-tag :type="tags[scope.row.priority]['type']">{{ tags[scope.row.priority]['name']}}</el-tag>
-         </template>
-        </el-table-column>
-        <el-table-column prop="type" label="类别" min-width="100" sortable>
-         <template slot-scope="scope">
-          <span>{{types[scope.row.type]}}</span>
-         </template>
-        </el-table-column>
-        <el-table-column prop="detail" label="详情" min-width="180" sortable></el-table-column>
-        <el-table-column prop="processingPerson" label="处理人" min-width="80" sortable></el-table-column>
-        <el-table-column prop="status" label="状态" min-width="100" sortable>
-         <template slot-scope="scope">
-          <el-popover trigger="hover" placement="top">
-            <p>说明: {{status[scope.row.status]['hints']}}</p>
-            <div slot="reference" class="name-wrapper">
-              <el-tag size="medium">{{status[scope.row.status]['name']}}</el-tag>
-            </div>
-          </el-popover>
-         </template>
-        </el-table-column>
-        <el-table-column label="操作" width="220">
-         <template slot-scope="scope">
-          <el-button type="success" size="small" @click="handleExamine(scope.$index, scope.row)">审核</el-button>
-          <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
-         </template>
-        </el-table-column>
+          <el-table-column prop="id" label="id" v-if="false"></el-table-column>
+          <el-table-column type="selection" width="55"></el-table-column>
+          <el-table-column type="index" width="60"></el-table-column>
+          <el-table-column prop="createdDate" label="创建时间" :formatter="formatter" width="140"></el-table-column>
+          <el-table-column prop="creator" label="创建人" sortable></el-table-column>
+          <el-table-column prop="name" label="名称" sortable>
+            <template slot-scope="scope">
+              <span class="link-type">{{ scope.row.name }}</span>
+              <el-tag :type="tags[scope.row.priority]['type']">{{ tags[scope.row.priority]['name']}}</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column prop="type" label="类别" min-width="100" sortable>
+            <template slot-scope="scope">
+              <span>{{types[scope.row.type]}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="detail" label="详情" min-width="180" sortable></el-table-column>
+          <el-table-column prop="processingPerson" label="处理人" min-width="80" sortable></el-table-column>
+          <el-table-column prop="status" label="状态" min-width="100" sortable>
+            <template slot-scope="scope">
+              <el-popover trigger="hover" placement="top">
+                <p>说明: {{ status[scope.row.status]['hints']}}</p>
+                <div slot="reference" class="name-wrapper">
+                  <el-tag size="medium">{{ status[scope.row.status]['name']}}</el-tag>
+                </div>
+              </el-popover>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作" width="290">
+            <template slot-scope="scope">
+              <el-button type="success" size="small" @click="handleExamine(scope.$index, scope.row)">审核</el-button>
+              <el-button type="primary" size="small" @click="handleDetail(scope.$index, scope.row)">详情</el-button>
+              <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+              <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
+            </template>
+          </el-table-column>
         </el-table> 
+        <!--处理列表-->
+        <!-- <el-table :data="requirements" highlight-current-row :loading="listLoading" style="width: 100%;">
+          <el-table-column prop="id" label="id" v-if="false"></el-table-column>
+          <el-table-column type="selection" width="55"></el-table-column>
+          <el-table-column type="index" width="60"></el-table-column>
+          <el-table-column prop="createdDate" label="创建时间" :formatter="formatter" width="140"></el-table-column>
+          <el-table-column prop="creator" label="创建人" sortable></el-table-column>
+          <el-table-column prop="name" label="名称" sortable>
+            <template slot-scope="scope">
+              <span class="link-type">{{ scope.row.name }}</span>
+              <el-tag :type="tags[scope.row.priority]['type']">{{ tags[scope.row.priority]['name']}}</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column prop="type" label="类别" min-width="100" sortable>
+            <template slot-scope="scope">
+              <span>{{types[scope.row.type]}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="detail" label="详情" min-width="180" sortable></el-table-column>
+          <el-table-column prop="processingPerson" label="处理人" min-width="80" sortable></el-table-column>
+          <el-table-column prop="status" label="进度" min-width="100" sortable>
+            <template slot-scope="scope">
+              <el-popover trigger="hover" placement="top">
+                <p>说明: {{status[scope.row.status]['hints']}}</p>
+                <div slot="reference" class="name-wrapper">
+                  <el-tag size="medium">{{status[scope.row.status]['name']}}</el-tag>
+                </div>
+              </el-popover>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作" width="290">
+            <template slot-scope="scope">
+              <el-button type="success" size="small" @click="handleExamine(scope.$index, scope.row)">审核</el-button>
+              <el-button type="primary" size="small" @click="handleDetail(scope.$index, scope.row)">详情</el-button>
+              <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+              <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>-->
     <!--新增界面-->
     <el-dialog title="新增" :visible.sync="addFormVisible" :close-on-click-modal="false">
       <el-form :model="addForm" label-width="80px" ref="addForm">
@@ -151,6 +191,40 @@
         <el-button type="primary" @click.native="editSubmit" :loading="editLoading">提交</el-button>
       </div>
     </el-dialog>
+    <!--详情界面-->
+    <el-dialog title="详情" :visible.sync="detailFormVisible" :close-on-click-modal="false">
+      <el-form :model="detailForm" label-width="80px" ref="detailForm">
+        <el-form-item label="名称" prop="name">
+          <span>{{detailForm.name}}</span>
+          <!-- <el-tag :type="tags[detailForm.priority]['type']">{{tags[detailForm.priority]['name']}}</el-tag> -->
+        </el-form-item>
+        <el-form-item label="类别" prop="type">
+          <span>{{types[detailForm.type]}}</span>
+        </el-form-item>
+        <el-form-item label="状态" prop="status">
+          <el-steps :space="100" :active=this.number finish-status="success">
+            <el-step title="Open"></el-step>
+            <el-step title="In Progress"></el-step>
+            <el-step title="Resovled"></el-step>
+            <el-step title="Reopened"></el-step>
+            <el-step title="Closed"></el-step>
+          </el-steps>
+        </el-form-item>
+        <el-form-item label="优先级" prop="priority">
+          <el-rate show-text disabled :texts='text' v-model="this.count" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="5" style="margin-top:8px;" />
+        </el-form-item>
+        <el-form-item label="创建人" prop="creator">
+          <span>{{detailForm.creator}}</span>
+        </el-form-item>
+        <el-form-item label="详情" prop="detail">
+          <img :src=img>
+          <span>{{detailForm.detail}}</span>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click.native="detailFormVisible = false">关闭</el-button>
+      </div>
+    </el-dialog>
     <!--工具条-->
     <el-col :span="24" class="toolbar">
       <div class="pagination-container">
@@ -168,7 +242,7 @@
         </el-pagination>
       </div>
     </el-col>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -184,7 +258,9 @@ import {
 export default {
   data() {
     return {
-      activeName: 'first',
+      count:null,
+      number:null,
+      img:'',
       total:null,
       content: '',
       mycontent: '',
@@ -223,21 +299,16 @@ export default {
       status: {
         0: { name: 'Open', hints: '问题被提交,等待审核' },
         1: { name: 'In Progress', hints: '问题在处理当中，尚未完成' },
-        2: {
-          name: 'Resovled',
-          hints: '问题曾解决，但结论尚未被认可需重新分配解决'
-        },
-        3: {
-          name: 'Reopened',
-          hints: '问题解决，等待确认结果，确认的结果是Reopend或Closed'
-        },
+        2: { name: 'Resovled', hints: '问题曾解决，但结论尚未被认可需重新分配解决' },
+        3: { name: 'Reopened', hints: '问题解决，等待确认结果，确认的结果是Reopend或Closed' },
         4: { name: 'Closed', hints: '问题处理结果得到确认，处于关闭状态' }
       },
-
       dialogVisible: false,
       requirements: [],
+      detailForm:{},
       addFormVisible: false, // 新增界面是否显示
       editFormVisible: false, // 编辑界面是否显示
+      detailFormVisible: false,
       listLoading: false,
       addLoading: false,
       editLoading: false,
@@ -262,9 +333,6 @@ export default {
     }
   },
   methods: {
-    handleClick(tab, event) {
-      console.log(tab, event);
-    },
     onEditorBlur(quill) {
         console.log('editor blur!', quill)
       },
@@ -353,6 +421,13 @@ export default {
       //   }
       // })
     },
+    handleDetail(index,row){
+      this.detailFormVisible = true
+      this.detailForm = Object.assign({}, row)
+      this.img=this.detailForm.img
+      this.number=Number(this.detailForm.status)
+      this.count=Number(this.detailForm.priority)
+    },
     handleEdit(index, row) {
       this.editFormVisible = true
       row.priority = parseInt(row.priority)
@@ -390,11 +465,5 @@ export default {
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
-.editor-slide-upload {
-  margin-bottom: 20px;
-  /deep/ .el-upload--picture-card {
-    width: 100%;
-  }
-}
+<style lang="scss" scoped>
 </style>

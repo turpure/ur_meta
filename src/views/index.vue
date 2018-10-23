@@ -155,7 +155,6 @@
   </div>
 </template>
 
-
 <script>
 import { IndexPermission, ShangHaiTarget, ZhengZhouTarget, DepartTarget, DeveloperTarget } from '../api/api'
 import { compareUp, compareDown } from '../api/tools'
