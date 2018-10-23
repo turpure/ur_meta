@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <div>
     <!--工具条-->
     <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
       <el-form :inline="true" :model="condition">
@@ -51,7 +51,7 @@
           <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
          </template>
         </el-table-column>
-        </el-table>
+        </el-table> 
     <!--新增界面-->
     <el-dialog title="新增" :visible.sync="addFormVisible" :close-on-click-modal="false">
       <el-form :model="addForm" label-width="80px" ref="addForm">
@@ -168,7 +168,7 @@
         </el-pagination>
       </div>
     </el-col>
-  </section>
+  </div>
 </template>
 
 <script>
