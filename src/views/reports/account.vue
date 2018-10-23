@@ -372,7 +372,7 @@ export default {
         '利润率%'
       ]
       const filterVal = [
-        'rowId',
+        'suffix',
         'pingtai',
         'salesman',
         'GoodsCode',

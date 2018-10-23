@@ -275,10 +275,12 @@ export default {
       },
       condition: {
         flag: "",
+        creator:"",
+        detail:"",
         name:"",
-        type:"",   
-        priority:"",   
-        status:"",
+        type:null,   
+        priority:null,   
+        status:null,
         processingPerson:[],
         page:1,
         pageSize:10

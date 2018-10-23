@@ -66,7 +66,7 @@ export function fyndiqz() {
 
 export function getRequirements(condition) {
   return request({
-    url: 'requirements/search-requirements?name=' + condition.name + '&page=' + condition.page + '&pageSize=' + condition.pageSize + '&flag=' + condition.flag + '&type=' + condition.type + '&priority=' + condition.priority + '&status=' + condition.status + '&processingPerson=' + condition.processingPerson,
+    url: 'requirements/deal-list?name=' + condition.name + '&page=' + condition.page + '&pageSize=' + condition.pageSize + '&flag=' + condition.flag + '&type=' + condition.type + '&priority=' + condition.priority + '&status=' + condition.status + '&processingPerson=' + condition.processingPerson+'&creator='+condition.creator+'&detail='+condition.detail,
     method: 'get'
   })
 }
