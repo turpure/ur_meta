@@ -32,22 +32,28 @@ export function compareDown(data, propertyName) { // 降序排序
 // 获取日期
 export function getMonthDate(dateType) {
   function dateFormatter(date) {
-    return [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-')
+    m = date.getMonth() + 1
+    if (m < 10) {
+      m = '0' + m
+    }
+    return [date.getFullYear(), m, date.getDate()].join('-')
   }
   const today = new Date()
   let y = today.getFullYear()
   let m = today.getMonth() + 1
-
-  if (m < 10) {
-    m = '0' + m
-  }
   if (dateType === 'thisMonth') {
+    if (m < 10) {
+      m = '0' + m
+    }
     const start = [y, m, '01'].join('-')
     const end = [y, m, today.getDate()].join('-')
     return { start: start, end: end }
   }
   if (dateType === 'previousMonth') {
     m = m - 1
+    if (m < 10) {
+      m = '0' + m
+    }
     if (m === 0) {
       m = 12
       y = y - 1

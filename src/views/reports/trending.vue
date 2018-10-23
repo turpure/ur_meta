@@ -174,6 +174,7 @@ export default {
             text: '最近一个月',
             onClick(picker) {
               const date = getMonthDate('lastMonth')
+              debugger
               picker.$emit('pick', [date['start'], date['end']])
             }
           }
