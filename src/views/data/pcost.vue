@@ -23,7 +23,8 @@
       </el-col>
     </el-row>
     <div v-loading="listLoading">
-      <el-table id="sale-table" :header-row-style="rowheader" max-height="800" :data="tableData" @sort-change="sortNumber" style="width: 100%;" v-show="this.tableData.length>0?true:false">
+      <el-table id="sale-table" :header-row-style="rowheader" max-height="800" :data="tableData" 
+      @sort-change="sortNumber" show-summary :summary-method="getSummaries" style="width: 100%;" v-show="this.tableData.length>0">
         <el-table-column prop="wlCompany" label="物流公司" :formatter="empty" sortable>
           <template slot-scope="scope">
             <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.wlCompany}}</span>
@@ -31,56 +32,56 @@
             <span v-else>{{scope.row.wlCompany}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="eBay" label="eBay￥" :formatter="empty" sortable>
+        <el-table-column prop="eBay" label="eBay￥" :formatter="empty" sortable="custom">
           <template slot-scope="scope">
             <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.eBay}}</span>
             <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.eBay}}</span>
             <span v-else>{{scope.row.eBay}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="Wish" label="Wish￥" :formatter="empty" sortable>
+        <el-table-column prop="Wish" label="Wish￥" :formatter="empty" sortable="custom">
           <template slot-scope="scope">
             <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.Wish}}</span>
             <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.Wish}}</span>
             <span v-else>{{scope.row.Wish}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="Amazon" label="Amazon￥" :formatter="empty" sortable>
+        <el-table-column prop="Amazon" label="Amazon￥" :formatter="empty" sortable="custom">
           <template slot-scope="scope">
             <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.Amazon}}</span>
             <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.Amazon}}</span>
             <span v-else>{{scope.row.Amazon}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="SMT" label="SMT￥" :formatter="empty" sortable>
+        <el-table-column prop="SMT" label="SMT￥" :formatter="empty" sortable="custom">
           <template slot-scope="scope">
             <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.SMT}}</span>
             <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.SMT}}</span>
             <span v-else>{{scope.row.SMT}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="Shopee" label="Shopee￥" :formatter="empty" sortable>
+        <el-table-column prop="Shopee" label="Shopee￥" :formatter="empty" sortable="custom">
           <template slot-scope="scope">
             <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.Shopee}}</span>
             <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.Shopee}}</span>
             <span v-else>{{scope.row.Shopee}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="Joom" label="Joom￥" :formatter="empty" sortable>
+        <el-table-column prop="Joom" label="Joom￥" :formatter="empty" sortable="custom">
           <template slot-scope="scope">
             <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.Joom}}</span>
             <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.Joom}}</span>
             <span v-else>{{scope.row.Joom}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="total" label="合计￥" :formatter="empty" sortable>
+        <el-table-column prop="total" label="合计￥" :formatter="empty" sortable="custom">
           <template slot-scope="scope">
             <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.total}}</span>
             <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.total}}</span>
             <span v-else>{{scope.row.total}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="fare" label="实际费用￥" :formatter="empty" sortable>
+        <el-table-column prop="fare" label="实际费用￥" :formatter="empty" sortable="custom">
           <template slot-scope="scope">
             <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.fare}}</span>
             <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.fare}}</span>
@@ -180,6 +181,7 @@ export default {
           getPerformcost(this.condition).then(response => {
             this.listLoading = false
             const obj = response.data.data
+            delete(obj["allfee"]);
             const arr = []
             for (const i in obj) {
               arr.push(obj[i])
@@ -235,6 +237,35 @@ export default {
         if (typeof console !== 'undefined') console.log(e, wbout)
       }
       //  return wbout
+    },
+    // 合计
+    getSummaries(param) {
+      const { columns, data } = param
+      const sums = []
+      const fileds = columns.map(item => item.property)
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = '合计'
+          return
+        }
+        const values = data.map(item =>
+          Number(item[column.property] ? item[column.property] : 'unkonwn')
+        )
+        if (!values.every(value => isNaN(value))) {
+          sums[index] = values.reduce((prev, curr) => {
+            const value = Number(curr)
+            if (!isNaN(value)) {
+              return prev + curr
+            } else {
+              return prev
+            }
+          }, 0)
+          sums[index] = Math.round(sums[index] * 100) / 100
+        } else {
+          sums[index] = 'N/A'
+        }
+      })
+      return sums
     },
     handleSearch() {
       const searchValue = this.searchValue && this.searchValue.toLowerCase()
