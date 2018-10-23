@@ -64,9 +64,9 @@ export function fyndiqz() {
   return baseUrl + url
 }
 
-export function getRequirements(filter) {
+export function getRequirements(condition) {
   return request({
-    url: 'requirements/search-requirements?name=' + filter.name + '&page=' + filter.page + '&pageSize=' + filter.pageSize,
+    url: 'requirements/search-requirements?name=' + condition.name + '&page=' + condition.page + '&pageSize=' + condition.pageSize + '&flag=' + condition.flag + '&type=' + condition.type + '&priority=' + condition.priority + '&status=' + condition.status + '&processingPerson=' + condition.processingPerson,
     method: 'get'
   })
 }
@@ -91,6 +91,22 @@ export function deleteRequirements(id) {
   return request({
     url: 'requirements/' + id,
     method: 'delete'
+  })
+}
+
+export function Examine(data) {
+  return request({
+    url: 'requirements/examine',
+    method: 'post',
+    data
+  })
+}
+
+export function Deal(data) {
+  return request({
+    url: 'requirements/deal',
+    method: 'post',
+    data
   })
 }
 
@@ -128,3 +144,6 @@ export function IndexPermission() {
     method: 'get'
   })
 }
+
+
+

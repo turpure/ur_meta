@@ -61,7 +61,8 @@
     <el-table-column prop="depart" label="部门" ></el-table-column>
     <el-table-column prop="username"  label="姓名" sortable></el-table-column>
     <el-table-column prop="role"  label="角色"></el-table-column>
-    <el-table-column prop="high"  label="毛利润(￥)" sortable="custom"></el-table-column>
+    <el-table-column prop="amt"  label="毛利润(￥)" sortable="custom"></el-table-column>
+    <el-table-column prop="high"  label="目标" sortable="custom"></el-table-column>
     <el-table-column prop="highRate"  label="目标完成度" sortable="custom" >
      <template slot-scope="scope">
         <el-progress :text-inside="true" :stroke-width="18" :status="checkStatus(scope.row,'highRate')" :percentage="Math.round(scope.row.highRate*10000)/100"></el-progress>
