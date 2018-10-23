@@ -114,6 +114,7 @@ import FileSaver from 'file-saver'
 import XLSX from 'xlsx'
 export default {
   data() {
+    const vue = this
     return {
       tableHeight: 0,
       allMember: [],
@@ -144,18 +145,23 @@ export default {
         dateRangeType: 3
       },
       pickerOptions2: {
+        onPick(maxDate, minDate) {
+          vue.condition.dateRangeType = 3
+        },
         shortcuts: [
           {
             text: '本月',
             onClick(vm) {
               const date = getMonthDate('thisMonth')
               vm.$emit('pick', [date['start'], date['end']])
+              vue.condition.dateRangeType = getDateRangeType(date['start'], date['end'])
             }
           },
           {
             text: '上个月',
             onClick(picker) {
               const date = getMonthDate('previousMonth')
+              vue.condition.dateRangeType = 2
               picker.$emit('pick', [date['start'], date['end']])
             }
           },
@@ -163,6 +169,7 @@ export default {
             text: '最近一个月',
             onClick(picker) {
               const date = getMonthDate('lastMonth')
+              vue.condition.dateRangeType = 1
               picker.$emit('pick', [date['start'], date['end']])
             }
           }
@@ -256,7 +263,7 @@ export default {
       this.tableHeight = height + 205 + 'px'
       this.show2 = true
       // const members = this.allMember
-      myform.dateRangeType = getDateRangeType(myform.dateRange[0], myform.dateRange[1])
+      // myform.dateRangeType = getDateRangeType(myform.dateRange[0], myform.dateRange[1])
       this.$refs.condition.validate(valid => {
         if (valid) {
           if (myform.member.length !== 0) {
