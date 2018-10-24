@@ -201,13 +201,12 @@
         <el-form-item label="类别" prop="type">
           <span>{{types[detailForm.type]}}</span>
         </el-form-item>
-        <el-form-item label="状态" prop="status">
+        <el-form-item label="状态" prop="schedule">
           <el-steps :space="100" :active=this.number finish-status="success">
-            <el-step title="Open"></el-step>
-            <el-step title="In Progress"></el-step>
-            <el-step title="Resovled"></el-step>
-            <el-step title="Reopened"></el-step>
-            <el-step title="Closed"></el-step>
+            <el-step title="待审核 "></el-step>
+            <el-step title="已驳回"></el-step>
+            <el-step title="处理中"></el-step>
+            <el-step title="处理完成"></el-step>
           </el-steps>
         </el-form-item>
         <el-form-item label="优先级" prop="priority">
@@ -247,12 +246,10 @@
 
 <script>
 import {
-  getRequirements,
+  getRequirementsIndex,
   createRequirements,
   editRequirements,
-  deleteRequirements,
-  Deal,
-  Examine
+  deleteRequirements
 } from '../../api/api'
 
 export default {
@@ -274,14 +271,12 @@ export default {
         type:''
       },
       condition: {
-        flag: "",
-        creator:"",
-        detail:"",
-        name:"",
-        type:null,   
-        priority:null,   
-        status:null,
-        processingPerson:[],
+        flag: '',
+        detail:'',
+        name:'',
+        type:'',   
+        priority:'',   
+        schedule:'',
         page:1,
         pageSize:10
       },
@@ -299,11 +294,12 @@ export default {
         3: '改进建议'
       },
       status: {
-        0: { name: 'Open', hints: '问题被提交,等待审核' },
-        1: { name: 'In Progress', hints: '问题在处理当中，尚未完成' },
-        2: { name: 'Resovled', hints: '问题曾解决，但结论尚未被认可需重新分配解决' },
-        3: { name: 'Reopened', hints: '问题解决，等待确认结果，确认的结果是Reopend或Closed' },
-        4: { name: 'Closed', hints: '问题处理结果得到确认，处于关闭状态' }
+        0: { name: '待审核', hints: '问题被提交,等待审核' },
+        1: { name: '已驳回', hints: '问题被驳回，不予处理' },
+        2: { name: '处理中', hints: '问题在处理当中，尚未完成' },
+        3: { name: '处理中', hints: '问题在处理当中，尚未完成' },
+        4: { name: '处理中', hints: '问题在处理当中，尚未完成' },
+        5: { name: '处理完成', hints: '问题处理结果得到确认，处于关闭状态'}
       },
       dialogVisible: false,
       requirements: [],
@@ -427,7 +423,7 @@ export default {
       this.detailFormVisible = true
       this.detailForm = Object.assign({}, row)
       this.img=this.detailForm.img
-      this.number=Number(this.detailForm.status)
+      this.number=Number(this.detailForm.schedule)
       this.count=Number(this.detailForm.priority)
     },
     handleEdit(index, row) {
@@ -451,7 +447,7 @@ export default {
       )
     },
     getRequire() {
-      getRequirements(this.condition).then(response => {
+      getRequirementsIndex(this.condition).then(response => {
         const res = response.data.data
         this.requirements = res.items
         this.total = res._meta.totalCount

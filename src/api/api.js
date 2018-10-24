@@ -71,6 +71,20 @@ export function getRequirements(condition) {
   })
 }
 
+export function getRequirementsIndex(condition) {
+  return request({
+    url: 'requirements/index?name=' + condition.name + '&page=' + condition.page + '&pageSize=' + condition.pageSize + '&flag=' + condition.flag + '&type=' + condition.type + '&priority=' + condition.priority + '&schedule=' + condition.schedule+'&detail='+condition.detail,
+    method: 'get'
+  })
+}
+
+export function getRequirementsExamine(condition) {
+  return request({
+    url: 'requirements/examine-list?name=' + condition.name + '&page=' + condition.page + '&pageSize=' + condition.pageSize + '&flag=' + condition.flag + '&type=' + condition.type + '&priority=' + condition.priority + '&creator=' + condition.creator + '&detail=' + condition.detail,
+    method: 'get'
+  })
+}
+
 export function createRequirements(data) {
   return request({
     url: '/requirements',
