@@ -32,7 +32,7 @@
               <span>{{types[scope.row.type]}}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="detail" label="详情" min-width="180" sortable></el-table-column>
+          <el-table-column prop="detail" label="详情" min-width="180" :formatter="detailFormatter" sortable></el-table-column>
           <el-table-column prop="processingPerson" label="处理人" min-width="80" sortable></el-table-column>
           <el-table-column prop="status" label="状态" min-width="100" sortable>
             <template slot-scope="scope">
@@ -108,11 +108,11 @@
         </el-form-item>
         <el-form-item label="状态">
           <el-radio-group v-model="addForm.status">
-            <el-radio class="radio" :label="0">Open</el-radio>
-            <el-radio class="radio" :label="1">In Progress</el-radio>
-            <el-radio class="radio" :label="2">Resovled</el-radio>
-            <el-radio class="radio" :label="3">Reopened</el-radio>
-            <el-radio class="radio" :label="4">Closed</el-radio>
+            <el-radio class="radio" :label="1">Open</el-radio>
+            <el-radio class="radio" :label="2">In Progress</el-radio>
+            <el-radio class="radio" :label="3">Resovled</el-radio>
+            <el-radio class="radio" :label="4">Reopened</el-radio>
+            <el-radio class="radio" :label="5">Closed</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="优先级">
@@ -151,19 +151,19 @@
         </el-form-item>
         <el-form-item label="类别">
           <el-radio-group v-model="editForm.type">
-            <el-radio class="radio" label="0">BUG</el-radio>
-            <el-radio class="radio" label="1">新需求</el-radio>
-            <el-radio class="radio" label="2">任务</el-radio>
-            <el-radio class="radio" label="3">改进建议</el-radio>
+            <el-radio class="radio" :label="0">BUG</el-radio>
+            <el-radio class="radio" :label="1">新需求</el-radio>
+            <el-radio class="radio" :label="2">任务</el-radio>
+            <el-radio class="radio" :label="3">改进建议</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="状态">
           <el-radio-group v-model="editForm.status">
-            <el-radio class="radio" label="0">Open</el-radio>
-            <el-radio class="radio" label="1">In Progress</el-radio>
-            <el-radio class="radio" label="2">Resovled</el-radio>
-            <el-radio class="radio" label="3">Reopened</el-radio>
-            <el-radio class="radio" label="4">Closed</el-radio>
+            <el-radio class="radio" :label="1">Open</el-radio>
+            <el-radio class="radio" :label="2">In Progress</el-radio>
+            <el-radio class="radio" :label="3">Resovled</el-radio>
+            <el-radio class="radio" :label="4">Reopened</el-radio>
+            <el-radio class="radio" :label="5">Closed</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="优先级">
@@ -203,11 +203,11 @@
         </el-form-item>
         <el-form-item label="状态" prop="status">
           <el-steps :space="100" :active=this.number finish-status="success">
-            <el-step title="Open"></el-step>
-            <el-step title="In Progress"></el-step>
-            <el-step title="Resovled"></el-step>
-            <el-step title="Reopened"></el-step>
-            <el-step title="Closed"></el-step>
+            <el-step title="待审核"></el-step>
+            <el-step :title='this.number<=2?"已驳回":"处理中"'></el-step>
+            <el-step title="处理中"></el-step>
+            <el-step title="处理中"></el-step>
+            <el-step title="处理完成"></el-step>
           </el-steps>
         </el-form-item>
         <el-form-item label="优先级" prop="priority">
@@ -217,8 +217,10 @@
           <span>{{detailForm.creator}}</span>
         </el-form-item>
         <el-form-item label="详情" prop="detail">
-          <img :src=img>
-          <span>{{detailForm.detail}}</span>
+          <!-- 从数据库读取展示 -->
+          <div v-html="str" class="ql-editor">
+            {{str}}
+          </div>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -247,17 +249,17 @@
 
 <script>
 import {
-  getRequirements,
+  getRequirementsIndex,
   createRequirements,
   editRequirements,
-  deleteRequirements,
-  Deal,
-  Examine
+  deleteRequirements
 } from '../../api/api'
 
 export default {
   data() {
     return {
+      detail:'',
+      str:'',
       count:null,
       number:null,
       img:'',
@@ -274,21 +276,21 @@ export default {
         type:''
       },
       condition: {
-        flag: "",
-        name:"",
-        type:"",   
-        priority:"",   
-        status:"",
-        processingPerson:[],
+        flag: '',
+        detail:'',
+        name:'',
+        type:'',   
+        priority:'',   
+        schedule:'',
         page:1,
         pageSize:10
       },
       tags: {
-        1: { name: '无关紧要', type: '' },
-        2: { name: '次要', type: 'success' },
-        3: { name: '一般', type: 'info' },
-        4: { name: '严重', type: 'warning' },
-        5: { name: '紧急', type: 'danger' }
+        1: { name: '仅建议', type: '' },
+        2: { name: '不重要不紧急', type: 'success' },
+        3: { name: '重要不紧急', type: 'info' },
+        4: { name: '紧急不重要', type: 'warning' },
+        5: { name: '重要且紧急', type: 'danger' }
       },
       types: {
         0: 'BUG',
@@ -297,11 +299,11 @@ export default {
         3: '改进建议'
       },
       status: {
-        0: { name: 'Open', hints: '问题被提交,等待审核' },
-        1: { name: 'In Progress', hints: '问题在处理当中，尚未完成' },
-        2: { name: 'Resovled', hints: '问题曾解决，但结论尚未被认可需重新分配解决' },
-        3: { name: 'Reopened', hints: '问题解决，等待确认结果，确认的结果是Reopend或Closed' },
-        4: { name: 'Closed', hints: '问题处理结果得到确认，处于关闭状态' }
+        1: { name: '待审核', hints: '问题被提交,等待审核' },
+        2: { name: '已驳回', hints: '问题被驳回，不予处理' },
+        3: { name: '处理中', hints: '问题在处理当中，尚未完成' },
+        4: { name: '处理中', hints: '问题在处理当中，尚未完成' },
+        5: { name: '处理完成', hints: '问题处理结果得到确认，处于关闭状态'}
       },
       dialogVisible: false,
       requirements: [],
@@ -333,19 +335,20 @@ export default {
     }
   },
   methods: {
-    onEditorBlur(quill) {
-        console.log('editor blur!', quill)
-      },
-    onEditorFocus(quill) {
-      console.log('editor focus!', quill)
+    onEditorBlur(quill) {// 失去焦点事件
     },
-    onEditorReady(quill) {
-      console.log('editor ready!', quill)
+    onEditorFocus(quill) {// 获得焦点事件
     },
-    onEditorChange({ quill, html, text }) {
-      console.log('editor change!', quill, html, text)
+    onEditorReady(quill) {// 准备编辑器
+    },
+    onEditorChange({ quill, html, text }) {// 内容改变事件
       this.content = html
       this.mycontent = html
+    },
+    escapeStringHTML(str) {
+      str = str.replace(/&lt;/g,'<');
+      str = str.replace(/&gt;/g,'>');
+      return str;
     },
     handleCurrentChange(val) {
       this.condition.page = val
@@ -361,16 +364,20 @@ export default {
     formatter(row, column) {
       return row.createdDate ? row.createdDate.substring(0, 16) : ''
     },
+    detailFormatter(row,column){
+      return row.detail.replace(/<\/?[^>]*>/g,'') ? row.detail.replace(/<\/?[^>]*>/g,'').substring(0, 100) : ''
+    },
     searchRequirements() {
       this.getRequire()
     },
     addSubmit() {
       this.addFormVisible = false
       this.addForm.img = this.content.match(/data:([^"]*)/g)
-      this.addForm.detail = this.content.replace(/<\/?[^>]*>/g,'').toString()
+      //this.addForm.detail = this.content.replace(/<\/?[^>]*>/g,'').toString()
       const addContent = Object.assign({}, this.addForm)
       addContent.creator = this.$store.getters.name
       addContent.processingPerson = this.addForm.processingPerson.join(',')
+      addContent.detail=this.content.replace(/data:([^"]*)/g,'')
       this.addForm.processingPerson = []
       createRequirements(addContent).then(response => {
         this.requirements.push(response.data.data)
@@ -380,10 +387,9 @@ export default {
     editSubmit() {
       this.$confirm('确认提交吗？', '提示', {}).then(() => {
         this.editLoading = true
-        this.editForm.processingPerson = this.editForm.processingPerson.join(
-          ','
-        )
-        this.editForm.detail = this.mycontent.replace(/<\/?[^>]*>/g,'').toString()
+        this.editForm.processingPerson = this.editForm.processingPerson.join(',')
+        this.editForm.img = this.mycontent.match(/data:([^"]*)/g)||this.mycontent.match(/http:([^"]*)/g)
+        this.editForm.detail = this.mycontent.replace(/data:([^"]*)/g,'')
         editRequirements(this.editForm).then(response => {
           this.editFormVisible = false
           const req = response.data.data
@@ -424,18 +430,27 @@ export default {
     handleDetail(index,row){
       this.detailFormVisible = true
       this.detailForm = Object.assign({}, row)
-      this.img=this.detailForm.img
       this.number=Number(this.detailForm.status)
       this.count=Number(this.detailForm.priority)
+      for(let i=0;i<this.requirements.length;i++){
+        if(this.requirements[i].id===row.id){
+          this.detailForm.detail=this.requirements[i].detail.replace(/""/g,this.requirements[i].img)
+        }
+      }
+      this.str = this.escapeStringHTML(this.detailForm.detail)
     },
     handleEdit(index, row) {
       this.editFormVisible = true
       row.priority = parseInt(row.priority)
       this.editForm = Object.assign({}, row)
-      this.editForm.processingPerson = this.editForm.processingPerson.split(
-        ','
-      )
-      this.mycontent='<p>'+'<img src='+this.editForm.img+'>'+this.editForm.detail+'</p>'
+      this.editForm.processingPerson = this.editForm.processingPerson.split(',')
+      //this.detail=this.editForm.detail.replace(/http:([^"]*)/g,'').toString()
+      for(let i=0;i<this.requirements.length;i++){
+        if(this.requirements[i].id===row.id){
+          this.editForm.detail=this.requirements[i].detail.replace(/""/g,this.requirements[i].img)
+        }
+      }
+      this.mycontent=this.editForm.detail
     },
     handleDel(index, row) {
       this.$confirm('确定删除该条记录？', '提示', { type: 'warning' }).then(
@@ -449,7 +464,7 @@ export default {
       )
     },
     getRequire() {
-      getRequirements(this.condition).then(response => {
+      getRequirementsIndex(this.condition).then(response => {
         const res = response.data.data
         this.requirements = res.items
         this.total = res._meta.totalCount
@@ -460,7 +475,6 @@ export default {
   },
   mounted() {
     this.getRequire()
-    console.log('this is current quill instance object', this.editor)
   }
 }
 </script>
