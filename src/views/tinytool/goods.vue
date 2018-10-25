@@ -6,9 +6,9 @@
           <el-option v-for='item in possessMan1' :key='item.username' :value='item.username'></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label='产品状态' class='input'>
-        <el-select size="small" v-model='condition.goodsSkuStatus' clearable>
-          <el-option v-for='item in goodsSkuStatus' :key='item' :value='item'></el-option>
+      <el-form-item label='业绩归属人2' class='input'>
+        <el-select size="small" v-model='condition.possessMan2' clearable>
+          <el-option v-for='item in possessMan2' :key='item.username' :value='item.username'></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label='关键字' class='input'>
@@ -16,14 +16,14 @@
         </el-input>
       </el-form-item>
       <br>
-      <el-form-item label='业绩归属人2' class='input'>
-        <el-select size="small" v-model='condition.possessMan2' clearable>
-          <el-option v-for='item in possessMan2' :key='item.username' :value='item.username'></el-option>
-        </el-select>
-      </el-form-item>
       <el-form-item label='产品分类1' class='input'>
         <el-select size="small" v-model='condition.categoryParentName' clearable @change="productcategory">
           <el-option v-for='item in categoryParentName' :key='item.CategoryName' :value='item.CategoryName'></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label='产品分类2' class='input'>
+        <el-select size="small" v-model='condition.categoryName' clearable :disabled="disabled">
+          <el-option v-for='item in categoryName' :key='item.CategoryName' :value='item.CategoryName'></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label='关键字' class='input'>
@@ -31,9 +31,9 @@
         </el-input>
       </el-form-item>
       <br>
-      <el-form-item label='产品分类2' class='input'>
-        <el-select size="small" v-model='condition.categoryName' clearable :disabled="disabled">
-          <el-option v-for='item in categoryName' :key='item.CategoryName' :value='item.CategoryName'></el-option>
+      <el-form-item label='产品状态' class='input'>
+        <el-select size="small" v-model='condition.goodsSkuStatus' clearable>
+          <el-option v-for='item in goodsSkuStatus' :key='item' :value='item'></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label='责任人' class='input'>

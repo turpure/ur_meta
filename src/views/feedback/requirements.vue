@@ -258,32 +258,32 @@ import {
 export default {
   data() {
     return {
-      detail:'',
-      str:'',
-      count:null,
-      number:null,
-      img:'',
-      total:null,
+      detail: '',
+      str: '',
+      count: null,
+      number: null,
+      img: '',
+      total: null,
       content: '',
       mycontent: '',
       editorOption: {},
       text: ['仅建议', '不重要不紧急', '重要不紧急', '紧急不重要', '重要且紧急'],
-      examine:{
-        ids:[],
+      examine: {
+        ids: []
       },
-      deal:{
-        id:1,
-        type:''
+      deal: {
+        id: 1,
+        type: ''
       },
       condition: {
         flag: '',
-        detail:'',
-        name:'',
-        type:'',   
-        priority:'',   
-        schedule:'',
-        page:1,
-        pageSize:10
+        detail: '',
+        name: '',
+        type: '',
+        priority: '',
+        schedule: '',
+        page: 1,
+        pageSize: 10
       },
       tags: {
         1: { name: '仅建议', type: '' },
@@ -303,11 +303,11 @@ export default {
         2: { name: '已驳回', hints: '问题被驳回，不予处理' },
         3: { name: '处理中', hints: '问题在处理当中，尚未完成' },
         4: { name: '处理中', hints: '问题在处理当中，尚未完成' },
-        5: { name: '处理完成', hints: '问题处理结果得到确认，处于关闭状态'}
+        5: { name: '处理完成', hints: '问题处理结果得到确认，处于关闭状态' }
       },
       dialogVisible: false,
       requirements: [],
-      detailForm:{},
+      detailForm: {},
       addFormVisible: false, // 新增界面是否显示
       editFormVisible: false, // 编辑界面是否显示
       detailFormVisible: false,
@@ -318,7 +318,7 @@ export default {
       addForm: {
         id: 0,
         name: '',
-        img:[],
+        img: [],
         detail: '',
         type: 0,
         status: 0,
@@ -335,20 +335,20 @@ export default {
     }
   },
   methods: {
-    onEditorBlur(quill) {// 失去焦点事件
+    onEditorBlur(quill) { // 失去焦点事件
     },
-    onEditorFocus(quill) {// 获得焦点事件
+    onEditorFocus(quill) { // 获得焦点事件
     },
-    onEditorReady(quill) {// 准备编辑器
+    onEditorReady(quill) { // 准备编辑器
     },
-    onEditorChange({ quill, html, text }) {// 内容改变事件
+    onEditorChange({ quill, html, text }) { // 内容改变事件
       this.content = html
       this.mycontent = html
     },
     escapeStringHTML(str) {
-      str = str.replace(/&lt;/g,'<');
-      str = str.replace(/&gt;/g,'>');
-      return str;
+      str = str.replace(/&lt;/g, '<')
+      str = str.replace(/&gt;/g, '>')
+      return str
     },
     handleCurrentChange(val) {
       this.condition.page = val
@@ -364,8 +364,8 @@ export default {
     formatter(row, column) {
       return row.createdDate ? row.createdDate.substring(0, 16) : ''
     },
-    detailFormatter(row,column){
-      return row.detail.replace(/<\/?[^>]*>/g,'') ? row.detail.replace(/<\/?[^>]*>/g,'').substring(0, 100) : ''
+    detailFormatter(row, column) {
+      return row.detail.replace(/<\/?[^>]*>/g, '') ? row.detail.replace(/<\/?[^>]*>/g, '').substring(0, 100) : ''
     },
     searchRequirements() {
       this.getRequire()
@@ -373,11 +373,11 @@ export default {
     addSubmit() {
       this.addFormVisible = false
       this.addForm.img = this.content.match(/data:([^"]*)/g)
-      //this.addForm.detail = this.content.replace(/<\/?[^>]*>/g,'').toString()
+      // this.addForm.detail = this.content.replace(/<\/?[^>]*>/g,'').toString()
       const addContent = Object.assign({}, this.addForm)
       addContent.creator = this.$store.getters.name
       addContent.processingPerson = this.addForm.processingPerson.join(',')
-      addContent.detail=this.content.replace(/data:([^"]*)/g,'')
+      addContent.detail = this.content.replace(/data:([^"]*)/g, '')
       this.addForm.processingPerson = []
       createRequirements(addContent).then(response => {
         this.requirements.push(response.data.data)
@@ -388,8 +388,8 @@ export default {
       this.$confirm('确认提交吗？', '提示', {}).then(() => {
         this.editLoading = true
         this.editForm.processingPerson = this.editForm.processingPerson.join(',')
-        this.editForm.img = this.mycontent.match(/data:([^"]*)/g)||this.mycontent.match(/http:([^"]*)/g)
-        this.editForm.detail = this.mycontent.replace(/data:([^"]*)/g,'')
+        this.editForm.img = this.mycontent.match(/data:([^"]*)/g) || this.mycontent.match(/http:([^"]*)/g)
+        this.editForm.detail = this.mycontent.replace(/data:([^"]*)/g, '')
         editRequirements(this.editForm).then(response => {
           this.editFormVisible = false
           const req = response.data.data
@@ -407,7 +407,7 @@ export default {
       const form = {
         id: 0,
         name: '',
-        img:[],
+        img: [],
         detail: '',
         type: 0,
         status: 0,
@@ -417,7 +417,7 @@ export default {
       this.addForm = Object.assign({}, form)
       this.addFormVisible = true
     },
-    handleExamine(index,row){
+    handleExamine(index, row) {
       // this.examine.ids=[row.id]
       // Examine(this.examine).then(response => {
       //   if(response.data.code === 200) {
@@ -427,14 +427,14 @@ export default {
       //   }
       // })
     },
-    handleDetail(index,row){
+    handleDetail(index, row) {
       this.detailFormVisible = true
       this.detailForm = Object.assign({}, row)
-      this.number=Number(this.detailForm.status)
-      this.count=Number(this.detailForm.priority)
-      for(let i=0;i<this.requirements.length;i++){
-        if(this.requirements[i].id===row.id){
-          this.detailForm.detail=this.requirements[i].detail.replace(/""/g,this.requirements[i].img)
+      this.number = Number(this.detailForm.status)
+      this.count = Number(this.detailForm.priority)
+      for (let i = 0; i < this.requirements.length; i++) {
+        if (this.requirements[i].id === row.id) {
+          this.detailForm.detail = this.requirements[i].detail.replace(/""/g, this.requirements[i].img)
         }
       }
       this.str = this.escapeStringHTML(this.detailForm.detail)
@@ -444,13 +444,13 @@ export default {
       row.priority = parseInt(row.priority)
       this.editForm = Object.assign({}, row)
       this.editForm.processingPerson = this.editForm.processingPerson.split(',')
-      //this.detail=this.editForm.detail.replace(/http:([^"]*)/g,'').toString()
-      for(let i=0;i<this.requirements.length;i++){
-        if(this.requirements[i].id===row.id){
-          this.editForm.detail=this.requirements[i].detail.replace(/""/g,this.requirements[i].img)
+      // this.detail=this.editForm.detail.replace(/http:([^"]*)/g,'').toString()
+      for (let i = 0; i < this.requirements.length; i++) {
+        if (this.requirements[i].id === row.id) {
+          this.editForm.detail = this.requirements[i].detail.replace(/""/g, this.requirements[i].img)
         }
       }
-      this.mycontent=this.editForm.detail
+      this.mycontent = this.editForm.detail
     },
     handleDel(index, row) {
       this.$confirm('确定删除该条记录？', '提示', { type: 'warning' }).then(
