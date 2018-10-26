@@ -244,7 +244,7 @@ export default {
 
           // 人员
           per = res.filter(
-            ele => (ele.department === val[i] || ele.parent_depart === val[i]) && ele.position === '销售'
+            ele => (ele.department === val[i] || ele.parent_department === val[i]) && ele.position === '销售'
           )
           this.member = this.member.concat(per)
         }
