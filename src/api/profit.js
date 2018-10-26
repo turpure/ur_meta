@@ -8,6 +8,13 @@ export function getSection() {
   })
 }
 
+export function getSecDepartment() {
+  return request({
+    url: '/condition/sec-department',
+    method: 'get'
+  })
+}
+
 // platform 平台 http://192.168.0.134:8089/v1/condition/plat
 export function getPlatform() {
   return request({

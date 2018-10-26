@@ -12,6 +12,13 @@
               </el-option>
             </el-select>
           </el-form-item>
+          <el-form-item label='二级部门' class='input'>
+            <el-select size="small" v-model='condition.secDepartment' multiple collapse-tags placeholder='二级部门' @change='secChoosed'>
+              <el-button plain type="info" @click='selectAll("secDepartment")'>全选</el-button>
+              <el-button plain type="info" @click='unselect("secDepartment")'>取消</el-button>
+              <el-option v-for='(item,index) in secDepartment' :index='index' :key='item.department' :label='item.department' :value='item.department'></el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="平台" class="input">
             <el-select size="small" v-model="condition.plat" multiple collapse-tags placeholder="平台" style="height: 3rem;">
               <el-button plain type="info" @click='selectAll("plat")'>全选</el-button>
@@ -27,6 +34,7 @@
               <el-option v-for='(item,index) in member' :index='index' :key='item.username' :label='item.username' :value='item.username'></el-option>
             </el-select>
           </el-form-item>
+          <br>
           <el-form-item label="账号" class="input">
             <el-select size="small" v-model="condition.account" filterable multiple collapse-tags placeholder="账号">
               <el-button plain type="info" @click='selectAll("account")'>全选</el-button>
@@ -48,7 +56,7 @@
             <el-date-picker size="small" v-model="condition.dateRange" value-format="yyyy-MM-dd" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions2" style="width:18rem;">
             </el-date-picker>
           </el-form-item>
-          <el-form-item style="margin-left:22rem">
+          <el-form-item style="margin-left:6rem">
             <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
           </el-form-item>
         </el-form>
@@ -70,6 +78,7 @@
 <script>
 import {
   getSection,
+  getSecDepartment,
   getPlatform,
   getMember,
   getAccount,
@@ -141,11 +150,14 @@ export default {
       member: [],
       account: [],
       department: [],
+      allSecDp: [],
+      getSecDepartment: [],
       dateType: [{ id: 1, type: '发货时间' }, { id: 0, type: '交易时间' }],
       flag: [{ id: 0, type: '按天' }, { id: 2, type: '按月' }],
       dateRange: [],
       condition: {
         department: [],
+        getSecDepartment: [],
         plat: [],
         member: [],
         store: [],
@@ -191,6 +203,9 @@ export default {
       } else if (name === 'department') {
         this.condition[name] = this[name].map(ele => ele[name])
         this.member = this.allMember
+      } else if (name === 'secDepartment') {
+        this.condition[name] = this[name].map(ele => ele.department)
+        this.member = this.allMember
       } else {
         this.condition[name] = this[name].map(ele => ele[name])
       }
@@ -203,15 +218,57 @@ export default {
     },
     choosed() {
       let res = []
-      this.member = []
-      this.condition.member = []
       const val = this.condition.department
+
+      // 二级部门处理
+      const allDepartments = this.department
+      const allDepartmentsMap = {}
+      for (let i = 0; i < allDepartments.length; i++) {
+        allDepartmentsMap[allDepartments[i].id] = allDepartments[i].department
+      }
+
+      // 人员处理
       res = this.allMember
       let per = []
-      if (val !== '') {
+      const secDep = []
+      this.member = []
+      this.condition.member = []
+      if (val.length !== 0) {
         for (let i = 0; i < val.length; i++) {
+          // 部门
+          for (let k = 0; k < this.allSecDep.length; k++) {
+            if (allDepartmentsMap[this.allSecDep[k].parent] === val[i]) {
+              secDep.push(this.allSecDep[k])
+            }
+          }
+
+          // 人员
           per = res.filter(
             ele => (ele.department === val[i] || ele.parent_depart === val[i]) && ele.position === '销售'
+          )
+          this.member = this.member.concat(per)
+        }
+        this.secDepartment = secDep
+      } else {
+        this.member = res
+        this.secDepartment = this.allSecDep
+      }
+    },
+    secChoosed() {
+      // 值变化之后人员要处理
+      let res = []
+      const val = this.condition.secDepartment
+      // 人员处理
+      res = this.allMember
+      debugger
+      let per = []
+      this.member = []
+      this.condition.member = []
+      if (val.length !== 0) {
+        for (let i = 0; i < val.length; i++) {
+          // 人员
+          per = res.filter(
+            ele => ele.department === val[i] && ele.position === '销售'
           )
           this.member = this.member.concat(per)
         }
@@ -323,6 +380,10 @@ export default {
         }
       }
       this.department = res
+    })
+    getSecDepartment().then(reseponse => {
+      const res = reseponse.data.data
+      this.secDepartment = this.allSecDep = res
     })
     getPlatform().then(response => {
       this.plat = response.data.data

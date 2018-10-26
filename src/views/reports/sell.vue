@@ -11,6 +11,13 @@
               <el-option v-for='(item,index) in department' :index='index' :key='item.department' :label='item.department' :value='item.department'></el-option>
             </el-select>
           </el-form-item>
+          <el-form-item label='二级部门' class='input'>
+            <el-select size="small" v-model='condition.secDepartment' multiple collapse-tags placeholder='二级部门' @change='secChoosed'>
+              <el-button plain type="info" @click="selectallSec">全选</el-button>
+              <el-button plain type="info" @click="noselectSec">取消</el-button>
+              <el-option v-for='(item,index) in secDepartment' :index='index' :key='item.department' :label='item.department' :value='item.department'></el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label='平台' class='input'>
             <el-select size="small" v-model='condition.plat' clearable placeholder='平台'>
               <el-option v-for='(item,index) in plat' :index='index' :key='item.plat' :label='item.plat' :value='item.plat'></el-option>
@@ -23,7 +30,7 @@
               <el-option v-for='(item,index) in member' :index='index' :key='item.username' :label='item.username' :value='item.username'></el-option>
             </el-select>
           </el-form-item>
-
+          <br>
           <el-form-item label="账号" class="input">
             <el-select size="small" v-model="condition.account" filterable multiple collapse-tags placeholder="账号">
               <el-button plain type="info" @click="selectall">全选</el-button>
@@ -49,10 +56,10 @@
             <el-date-picker size="small" v-model='condition.dateRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2' style="width:18rem;">
             </el-date-picker>
           </el-form-item>
-          <el-form-item style="margin-left:22rem">
+          <el-form-item style="margin-left:6rem">
             <el-button type='primary' class='input' @click='onSubmit(condition)'>查询</el-button>
           </el-form-item>
-        </el-form>
+          </el-form>
       </transition>
       <div class='demo-block-control' @click='handleChange' style='left:0rem'>
         <transition>
@@ -102,6 +109,7 @@
 <script>
 import {
   getSection,
+  getSecDepartment,
   getPlatform,
   getMember,
   getStore,
@@ -128,6 +136,8 @@ export default {
       searchValue: '',
       listLoading: false,
       department: [],
+      allSecDep: [],
+      secDepartment: [],
       plat: '',
       member: [],
       store: [],
@@ -136,6 +146,7 @@ export default {
       account: [],
       condition: {
         department: [],
+        secDepartment: [],
         plat: '',
         member: [],
         store: [],
@@ -210,6 +221,18 @@ export default {
       this.condition.department = []
       this.member = this.allMember
     },
+    selectallSec() {
+      const allValues = []
+      for (const item of this.secDepartment) {
+        allValues.push(item.department)
+      }
+      this.condition.secDepartment = allValues
+      this.member = this.allMember
+    },
+    noselectSec() {
+      this.condition.secDepartment = []
+      this.member = this.allMember
+    },
     selectall() {
       const allValues = []
       for (const item of this.account) {
@@ -223,14 +246,55 @@ export default {
     choosed() {
       let res = []
       const val = this.condition.department
+
+      // 二级部门处理
+      const allDepartments = this.department
+      const allDepartmentsMap = {}
+      for (let i = 0; i < allDepartments.length; i++) {
+        allDepartmentsMap[allDepartments[i].id] = allDepartments[i].department
+      }
+
+      // 人员处理
+      res = this.allMember
+      let per = []
+      const secDep = []
+      this.member = []
+      this.condition.member = []
+      if (val.length !== 0) {
+        for (let i = 0; i < val.length; i++) {
+          // 部门
+          for (let k = 0; k < this.allSecDep.length; k++) {
+            if (allDepartmentsMap[this.allSecDep[k].parent] === val[i]) {
+              secDep.push(this.allSecDep[k])
+            }
+          }
+
+          // 人员
+          per = res.filter(
+            ele => (ele.department === val[i] || ele.parent_depart === val[i]) && ele.position === '销售'
+          )
+          this.member = this.member.concat(per)
+        }
+        this.secDepartment = secDep
+      } else {
+        this.member = res
+        this.secDepartment = this.allSecDep
+      }
+    },
+    secChoosed() {
+      // 值变化之后人员要处理
+      let res = []
+      const val = this.condition.secDepartment
+      // 人员处理
       res = this.allMember
       let per = []
       this.member = []
       this.condition.member = []
-      if (val !== '') {
+      if (val.length !== 0) {
         for (let i = 0; i < val.length; i++) {
+          // 人员
           per = res.filter(
-            ele => (ele.department === val[i] || ele.parent_depart === val[i]) && ele.position === '销售'
+            ele => ele.department === val[i] && ele.position === '销售'
           )
           this.member = this.member.concat(per)
         }
@@ -271,18 +335,51 @@ export default {
               myform.member = this.condition.member
             }
           }
-          if (myform.member.length === 0 && myform.department.lenght !== 0) {
-            const val = form.department
-            const res = this.allMember
-            for (let i = 0; i < val.length; i++) {
-              const per = res.filter(
-                ele => (ele.department === val[i] || ele.parent_depart === val[i]) && ele.position === '销售'
-              )
-              this.member.concat(per)
+
+          // 根据选定的部门，处理人员
+          if (myform.member.length === 0) {
+            if (myform.department.length !== 0) {
+              if (myform.secDepartment.length === 0) {
+                const val = form.department
+                const res = this.allMember
+                for (let i = 0; i < val.length; i++) {
+                  const per = res.filter(
+                    ele => ele.department === val[i] && ele.position === '销售'
+                  )
+                  this.member.concat(per)
+                }
+                myform.member = this.member.map(m => {
+                  return m.username
+                })
+              }
+              if (myform.secDepartment.length !== 0) {
+                const val = form.secDepartment
+                const res = this.allMember
+                for (let i = 0; i < val.length; i++) {
+                  const per = res.filter(
+                    ele => ele.department === val[i] && ele.position === '销售'
+                  )
+                  this.member.concat(per)
+                }
+                myform.member = this.member.map(m => {
+                  return m.username
+                })
+              }
+            } else {
+              if (myform.secDepartment.length !== 0) {
+                const val = form.secDepartment
+                const res = this.allMember
+                for (let i = 0; i < val.length; i++) {
+                  const per = res.filter(
+                    ele => ele.department === val[i] && ele.position === '销售'
+                  )
+                  this.member.concat(per)
+                }
+                myform.member = this.member.map(m => {
+                  return m.username
+                })
+              }
             }
-            myform.member = this.member.map(m => {
-              return m.username
-            })
           }
           this.listLoading = true
           getSales(myform).then(response => {
@@ -437,6 +534,10 @@ export default {
         }
       }
       this.department = res
+    })
+    getSecDepartment().then(reseponse => {
+      const res = reseponse.data.data
+      this.secDepartment = this.allSecDep = res
     })
     getPlatform().then(response => {
       this.plat = response.data.data
