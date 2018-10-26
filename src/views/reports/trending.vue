@@ -151,7 +151,7 @@ export default {
       account: [],
       department: [],
       allSecDp: [],
-      getSecDepartment: [],
+      secDepartment: [],
       dateType: [{ id: 1, type: '发货时间' }, { id: 0, type: '交易时间' }],
       flag: [{ id: 0, type: '按天' }, { id: 2, type: '按月' }],
       dateRange: [],
