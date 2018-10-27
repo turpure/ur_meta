@@ -102,10 +102,8 @@
 import {
   getToolaccount,
   getwishsku,
-  getwishskutemplate,
-  getToolcolor,
-  getToolsize
-} from '../../api/profit';
+  getwishskutemplate
+} from '../../api/profit'
 export default {
   data() {
     return {
@@ -157,7 +155,7 @@ export default {
     varition2Change(row, index) {},
     onSubmit() {
       getwishsku(this.condition).then(response => {
-        if (response.data.data != '') {
+        if (response.data.data !== '') {
           this.tableData = response.data.data.payload
           this.tableData1 = response.data.data.setting
         } else {
@@ -196,8 +194,8 @@ export default {
         const downloadElement = document.createElement('a')
         const objectUrl = window.URL.createObjectURL(blob)
         downloadElement.href = objectUrl
-        let date = new Date()
-        let year = date.getFullYear()
+        const date = new Date()
+        const year = date.getFullYear()
         let month = date.getMonth() + 1
         let strDate = date.getDate()
         let hour = date.getHours()
@@ -227,7 +225,7 @@ export default {
           hour +
           minute +
           second
-        downloadElement.download = filename + '.xls';
+        downloadElement.download = filename + '.xls'
         document.body.appendChild(downloadElement)
         downloadElement.click()
         document.body.removeChild(downloadElement)
