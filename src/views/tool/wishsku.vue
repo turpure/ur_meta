@@ -188,6 +188,7 @@ export default {
         e => e.$shippingTime
       )
       getwishskutemplate(this.condition1).then(response => {
+        console.log(response)
         const blob = new Blob([response.data], {
           type: 'application/vnd.ms-excel;charset=UTF-8'
         })
