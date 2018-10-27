@@ -64,16 +64,16 @@ export function fyndiqz() {
   return baseUrl + url
 }
 
-export function getRequirements(condition) {
+export function getRequirementsDeal(condition) {
   return request({
-    url: 'requirements/deal-list?name=' + condition.name + '&page=' + condition.page + '&pageSize=' + condition.pageSize + '&flag=' + condition.flag + '&type=' + condition.type + '&priority=' + condition.priority + '&status=' + condition.status + '&processingPerson=' + condition.processingPerson+'&creator='+condition.creator+'&detail='+condition.detail,
+    url: 'requirements/deal-list?name=' + condition.name + '&page=' + condition.page + '&pageSize=' + condition.pageSize + '&flag=' + condition.flag + '&type=' + condition.type + '&priority=' + condition.priority + '&status=' + condition.status + '&processingPerson=' + condition.processingPerson + '&creator=' + condition.creator + '&detail=' + condition.detail,
     method: 'get'
   })
 }
 
 export function getRequirementsIndex(condition) {
   return request({
-    url: 'requirements/index?name=' + condition.name + '&page=' + condition.page + '&pageSize=' + condition.pageSize + '&flag=' + condition.flag + '&type=' + condition.type + '&priority=' + condition.priority + '&schedule=' + condition.schedule+'&detail='+condition.detail,
+    url: 'requirements/index?name=' + condition.name + '&page=' + condition.page + '&pageSize=' + condition.pageSize + '&flag=' + condition.flag + '&type=' + condition.type + '&priority=' + condition.priority + '&schedule=' + condition.schedule + '&detail=' + condition.detail,
     method: 'get'
   })
 }
@@ -82,6 +82,14 @@ export function getRequirementsExamine(condition) {
   return request({
     url: 'requirements/examine-list?name=' + condition.name + '&page=' + condition.page + '&pageSize=' + condition.pageSize + '&flag=' + condition.flag + '&type=' + condition.type + '&priority=' + condition.priority + '&creator=' + condition.creator + '&detail=' + condition.detail,
     method: 'get'
+  })
+}
+
+export function getExamine(data) {
+  return request({
+    url: '/requirements/examine',
+    method: 'post',
+    data
   })
 }
 
@@ -105,22 +113,6 @@ export function deleteRequirements(id) {
   return request({
     url: 'requirements/' + id,
     method: 'delete'
-  })
-}
-
-export function Examine(data) {
-  return request({
-    url: 'requirements/examine',
-    method: 'post',
-    data
-  })
-}
-
-export function Deal(data) {
-  return request({
-    url: 'requirements/deal',
-    method: 'post',
-    data
   })
 }
 
@@ -158,6 +150,3 @@ export function IndexPermission() {
     method: 'get'
   })
 }
-
-
-

@@ -24,12 +24,15 @@ import smtsku from '../views/tool/smtsku.vue'
 import express from '../views/tinytool/express.vue'
 import brand from '../views/tinytool/brand.vue'
 import fyndiqzUpload from '../views/tinytool/fyndiqzUpload.vue'
-import requirements from '../views/feedback/requirements.vue'
 import goods from '../views/tinytool/goods.vue'
 
 import deadFee from '../views/settings/deadFee.vue'
 import operationFee from '../views/settings/operationFee.vue'
 import exchange from '../views/settings/exchange.vue'
+
+import requirements from '../views/feedback/requirements.vue'
+import audit from '../views/feedback/audit.vue'
+import deal from '../views/feedback/deal.vue'
 
 const routes = [{
   path: '/login',
@@ -178,6 +181,16 @@ const routes = [{
       path: '/v1/requirements/index',
       component: requirements,
       name: '需求管理'
+    },
+    {
+      path: '/v1/requirements/examine-list',
+      component: audit,
+      name: '需求审核'
+    },
+    {
+      path: '/v1/requirements/deal-list',
+      component: deal,
+      name: '需求处理'
     }
   ]
 },
