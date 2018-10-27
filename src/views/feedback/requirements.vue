@@ -119,25 +119,9 @@
                 <el-radio class="radio" :label="3">改进建议</el-radio>
               </el-radio-group>
             </el-form-item>
-            <!-- <el-form-item label="状态">
-              <el-radio-group v-model="editForm.status">
-                <el-radio class="radio" :label="1">Open</el-radio>
-                <el-radio class="radio" :label="2">In Progress</el-radio>
-                <el-radio class="radio" :label="3">Resovled</el-radio>
-                <el-radio class="radio" :label="4">Reopened</el-radio>
-                <el-radio class="radio" :label="5">Closed</el-radio>
-              </el-radio-group>
-            </el-form-item> -->
             <el-form-item label="优先级">
               <el-rate show-text :texts='text' v-model="editForm.priority" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="5" style="margin-top:8px;" />
             </el-form-item>
-            <!-- <el-form-item label="处理人">
-              <el-checkbox-group v-model="editForm.processingPerson">
-                <el-checkbox label="周朋许" name="processingPerson"></el-checkbox>
-                <el-checkbox label="叶先钱" name="processingPerson"></el-checkbox>
-                <el-checkbox label="朱洪涛" name="processingPerson"></el-checkbox>
-              </el-checkbox-group>
-            </el-form-item> -->
             <el-form-item label="详情">
               <quill-editor v-model="mycontent"
                 ref="myQuillEditor"
@@ -604,7 +588,9 @@ export default {
       // 新增界面数据
       editForm: {},
       editDealForm: {},
-      editAuditForm: {}
+      editAuditForm: {
+        processingPerson: []
+      }
     }
   },
   watch: {
@@ -789,10 +775,9 @@ export default {
     editAuditSubmit() {
       this.$confirm('确认提交吗？', '提示', {}).then(() => {
         this.editAuditLoading = true
-        this.editAuditForm.processingPerson = this.editAuditForm.processingPerson.join(
+        this.editAuditForm.processingPerson = this.editAuditForm.processingPerson.filter(ele => ele.length > 0).join(
           ','
         )
-        console.log(this.editAuditForm.processingPerson)
         this.editAuditForm.img =
           this.mycontent.match(/data:([^"]*)/g) ||
           this.mycontent.match(/http:([^"]*)/g)

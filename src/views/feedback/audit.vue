@@ -262,6 +262,7 @@ export default {
       this.$confirm('确认提交吗？', '提示', {}).then(() => {
         this.editLoading = true
         this.editForm.processingPerson = this.editForm.processingPerson.join(',')
+        debugger
         this.editForm.img = this.mycontent.match(/data:([^"]*)/g) || this.mycontent.match(/http:([^"]*)/g)
         this.editForm.detail = this.mycontent.replace(/data:([^"]*)/g, '')
         editRequirements(this.editForm).then(response => {
