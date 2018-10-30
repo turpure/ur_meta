@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :model='condition' :inline='true' label-width='15rem' class='demo-form-inline'>
+    <el-form :model='condition' :inline='true' label-width='8.5rem' class='demo-form-inline'>
       <el-form-item label='业绩归属人' class='input'>
         <el-select size="small" v-model='condition.possessMan1' clearable>
           <el-option v-for='item in possessMan1' :key='item.username' :value='item.username'></el-option>
@@ -15,7 +15,6 @@
         <el-input size="small" v-model='condition.goodsName' placeholder="商品名称关键字" style="width:18rem">
         </el-input>
       </el-form-item>
-      <br>
       <el-form-item label='产品分类1' class='input'>
         <el-select size="small" v-model='condition.categoryParentName' clearable @change="productcategory">
           <el-option v-for='item in categoryParentName' :key='item.CategoryName' :value='item.CategoryName'></el-option>
@@ -30,7 +29,6 @@
         <el-input size="small" v-model='condition.supplierName' placeholder="供应商名称关键字" style="width:18rem">
         </el-input>
       </el-form-item>
-      <br>
       <el-form-item label='产品状态' class='input'>
         <el-select size="small" v-model='condition.goodsSkuStatus' clearable>
           <el-option v-for='item in goodsSkuStatus' :key='item' :value='item'></el-option>
@@ -45,11 +43,11 @@
         <el-date-picker size="small" style="width:18rem" v-model='form.newRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2'>
         </el-date-picker>
       </el-form-item>
-      <el-form-item class='input' style="margin-left:6.5rem">
+      <el-form-item class='input' style="margin-left:9rem">
         <el-button type="primary" @click="onSubmit(condition)">搜索</el-button>
       </el-form-item>
     </el-form>
-    <el-row v-loading="listLoading" style="height:690px;">
+    <el-row v-loading="listLoading">
       <el-col :span="4" class="mix" v-for="item in this.tableData" :key="item.rowId">
         <a :href="item.LinkUrl" style="text-decoration:none;">
           <div class="mix-inner">
@@ -270,11 +268,11 @@ export default {
 <style lang="scss" scoped>
 .el-form {
   .el-form-item {
-    margin: 0.2rem;
+    margin: 0.1rem;
   }
 }
 .el-row {
-  max-height: 57rem;
+  max-height: 62.5rem;
   overflow: auto;
   .mix:hover {
     border-radius: 1rem;

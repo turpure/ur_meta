@@ -17,28 +17,28 @@
 </template>
 
 <script>
-import { geteBaytemplate, getToolaccount } from "../../api/profit";
+import { geteBaytemplate, getToolaccount } from '../../api/profit'
 export default {
   data() {
     return {
       suffix: [],
-      goodsCode: "",
+      goodsCode: '',
       condition: {
         suffix: [],
-        goodsCode: ""
+        goodsCode: ''
       }
-    };
+    }
   },
   methods: {
     selectall() {
-      const allValues = [];
+      const allValues = []
       for (const item of this.suffix) {
-        allValues.push(item.ebaySuffix);
+        allValues.push(item.ebaySuffix)
       }
-      this.condition.suffix = allValues;
+      this.condition.suffix = allValues
     },
     noselect() {
-      this.condition.suffix = [];
+      this.condition.suffix = []
     },
     onSubmit(form) {
       this.$refs.condition.validate(valid => {
@@ -46,53 +46,53 @@ export default {
           geteBaytemplate(form).then(response => {
             if (response.data.byteLength > 42) {
               const blob = new Blob([response.data], {
-                type: "application/vnd.ms-excel;charset=UTF-8"
-              });
-              const downloadElement = document.createElement("a");
-              const objectUrl = window.URL.createObjectURL(blob);
-              downloadElement.href = objectUrl;
-              let date = new Date();
-              let year = date.getFullYear();
-              let month = date.getMonth() + 1;
-              let strDate = date.getDate();
-              let hour = date.getHours();
-              let minute = date.getMinutes();
-              let second = date.getSeconds();
+                type: 'application/vnd.ms-excel;charset=UTF-8'
+              })
+              const downloadElement = document.createElement('a')
+              const objectUrl = window.URL.createObjectURL(blob)
+              downloadElement.href = objectUrl
+              const date = new Date()
+              const year = date.getFullYear()
+              let month = date.getMonth() + 1
+              let strDate = date.getDate()
+              let hour = date.getHours()
+              let minute = date.getMinutes()
+              let second = date.getSeconds()
               if (month >= 1 && month <= 9) {
-                month = "0" + month;
+                month = '0' + month
               }
               if (strDate >= 0 && strDate <= 9) {
-                strDate = "0" + strDate;
+                strDate = '0' + strDate
               }
               if (hour >= 0 && hour <= 9) {
-                hour = "0" + hour;
+                hour = '0' + hour
               }
               if (minute >= 0 && minute <= 9) {
-                minute = "0" + minute;
+                minute = '0' + minute
               }
               if (second >= 0 && second <= 9) {
-                second = "0" + second;
+                second = '0' + second
               }
-              let filename =
-                "ebay_" + year + month + strDate + hour + minute + second;
-              downloadElement.download = filename + ".xls";
-              document.body.appendChild(downloadElement);
-              downloadElement.click();
-              document.body.removeChild(downloadElement);
+              const filename =
+                'ebay_' + year + month + strDate + hour + minute + second
+              downloadElement.download = filename + '.xls'
+              document.body.appendChild(downloadElement)
+              downloadElement.click()
+              document.body.removeChild(downloadElement)
             } else {
-              alert("商品编码不匹配！");
+              alert('商品编码不匹配！')
             }
-          });
+          })
         }
-      });
+      })
     }
   },
   mounted() {
-    getToolaccount({ type: "eBay" }).then(response => {
-      this.suffix = response.data.data;
-    });
+    getToolaccount({ type: 'eBay' }).then(response => {
+      this.suffix = response.data.data
+    })
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -101,7 +101,7 @@ export default {
   border-radius: 5px;
   -moz-border-radius: 5px;
   background-clip: padding-box;
-  margin: 10rem auto;
+  margin: 8rem auto;
   width: 40rem;
   padding: 6rem 2rem 2rem 4.5rem;
   background: #fff;

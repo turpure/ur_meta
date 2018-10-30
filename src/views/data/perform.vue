@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :model='form' :inline='true' ref='condition' label-width='12rem' class='demo-form-inline'>
+    <el-form :model='form' :inline='true' ref='condition' label-width='10rem' class='demo-form-inline'>
       <el-form-item label='交易日期' class='input' prop="dateRange" :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
         <el-date-picker size="small" v-model='form.dateRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2'>
         </el-date-picker>

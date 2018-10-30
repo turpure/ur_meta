@@ -38,7 +38,7 @@
         </transition>
       </div>
     </div>
-    <el-row :gutter="2">
+    <el-row>
       <el-col :span="2" :offset="19">
         <el-input clearable placeholder="search" v-model="searchValue" @change="handleSearch"></el-input>
       </el-col>

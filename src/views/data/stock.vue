@@ -1,6 +1,6 @@
 <template>
   <el-row class="toolbar">
-    <el-row :gutter='10'>
+    <el-row>
       <el-col :span="8">
         <span>备注：报表中商品的销量和库存指的是对应
           <font color="red">
@@ -8,7 +8,7 @@
           </font>的销量和库存之和
         </span>
       </el-col>
-      <el-col :span='2' :offset='12'>
+      <el-col :span='2' :offset='11'>
         <el-input clearable placeholder='search' v-model='searchValue' @change='handleSearch'></el-input>
       </el-col>
       <el-col :span='2'>

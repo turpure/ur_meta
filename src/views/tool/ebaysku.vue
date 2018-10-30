@@ -159,13 +159,12 @@ export default {
     BmpFileNameChange(row, index) {},
     pro1Change(row, index) {},
     pro2Change(row, index) {},
-    priceChange(row, index) {},
     EANChange(row, index) {},
     property1Change(row, index) {},
     property2Change(row, index) {},
     onSubmit() {
       geteBaysku(this.condition).then(response => {
-        if (response.data.data != '') {
+        if (response.data.data !== '') {
           this.tableData = response.data.data.payload
           this.tableData1 = response.data.data.setting
         } else {
@@ -259,7 +258,7 @@ export default {
 <style lang="scss" scoped>
 .el-form {
   .el-form-item {
-    margin: 0.8rem;
+    margin: 0.1rem;
   }
 }
 .modal-content {
