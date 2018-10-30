@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :model='condition' :inline='true' ref='condition' label-width='10rem' class='demo-form-inline'>
+    <el-form :model='condition' :inline='true' ref='condition' label-width='8rem' class='demo-form-inline'>
       <el-form-item label="品牌" prop="brand">
         <el-input size="small" v-model="condition.brand" style="width:18rem"></el-input>
       </el-form-item>

@@ -130,7 +130,7 @@ export default {
     varition2Change(row, index) {},
     onSubmit() {
       getsmtsku(this.condition).then(response => {
-        if (response.data.data != '') {
+        if (response.data.data !== '') {
           this.tableData = response.data.data
         } else {
           alert('商品编码不匹配！')
@@ -210,7 +210,7 @@ export default {
 <style lang="scss" scoped>
 .el-form {
   .el-form-item {
-    margin: 0.8rem;
+    margin: 0.1rem;
   }
 }
 .modal-content {

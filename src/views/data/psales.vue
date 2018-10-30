@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :model='condition' :inline='true' ref='condition' label-width='10rem' class='demo-form-inline'>
+    <el-form :model='condition' :inline='true' ref='condition' label-width='8rem' class='demo-form-inline'>
       <el-form-item label="平台">
         <el-select size="small" v-model="condition.plat" clearable>
           <el-option v-for="item in plat" :key="item.plat" :value="item.plat"></el-option>
@@ -20,7 +20,7 @@
         <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
       </el-form-item>
     </el-form>
-    <el-row :gutter='2'>
+    <el-row>
       <el-col :span='2' :offset='19'>
         <el-input clearable placeholder='search' v-model='searchValue' @change='handleSearch'></el-input>
       </el-col>

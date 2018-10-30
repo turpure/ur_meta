@@ -1,8 +1,8 @@
 <template>
   <section>
     <el-row class="toolbar">
-    <el-form :inline="true" :model='condition'>
-      <el-form-item prop="sku" label="SKU*" style="margin-left:15%;">
+    <el-form :inline="true" :model='condition' label-width="100px">
+      <el-form-item prop="sku" label="SKU*">
         <el-input v-model="condition.sku" placeholder="请填写产品SKU"></el-input>
       </el-form-item>
       <el-form-item prop="num" label="SKU套装">
@@ -19,8 +19,7 @@
       </el-form-item>
     </el-form>
     </el-row>
-    <el-tabs v-model="activeName" type="card" @tab-click="handleClick" v-loading="listLoading">
-      <el-tab-pane label="SKU信息" name="first">
+    <h4>SKU信息</h4>
         <el-table :data="tableData1" style="width:100%">
           <el-table-column prop="num" label="套餐数量"></el-table-column>
           <el-table-column prop="skuname" label="SKU名称"></el-table-column>
@@ -33,8 +32,7 @@
           <el-table-column prop="width" label="宽（cm）"></el-table-column>
           <el-table-column prop="height" label="高（cm）"></el-table-column>
         </el-table>
-      </el-tab-pane>
-      <el-tab-pane label="根据售价获取毛利率" name="second">
+        <h4>根据售价获取毛利率</h4>
         <el-table :data="tableData2" style="width:100%">
           <el-table-column prop="price" label="售价（AU $）"></el-table-column>
           <el-table-column prop="eFee" label="eBay交易费（AU $）"></el-table-column>
@@ -43,8 +41,7 @@
           <el-table-column prop="profitRmb" label="毛利润（￥）"></el-table-column>
           <el-table-column prop="rate" label="毛利率（%）"></el-table-column>
         </el-table>
-      </el-tab-pane>
-      <el-tab-pane label="根据毛利率获取售价" name="third">
+        <h4>根据毛利率获取售价</h4>
         <el-table :data="tableData3" style="width:100%">
           <el-table-column prop="rate" label="毛利率（%）"></el-table-column>
           <el-table-column prop="eFee" label="eBay交易费（AU $）"></el-table-column>
@@ -53,15 +50,12 @@
           <el-table-column prop="profitRmb" label="毛利润（￥）"></el-table-column>
           <el-table-column prop="price" label="售价（AU $）"></el-table-column>
         </el-table>
-      </el-tab-pane>
-      <el-tab-pane label="物流信息" name="fourth">
+        <h4>物流信息</h4>
         <el-table :data="tableData4" style="width:100%">
           <el-table-column prop="out" label="出库费（AU $）"></el-table-column>
           <el-table-column prop="name" label="物流方式"></el-table-column>
           <el-table-column prop="cost" label="物流费（AU $）"></el-table-column>
         </el-table>
-      </el-tab-pane>
-    </el-tabs>
   </section>
 </template>
 
@@ -70,7 +64,6 @@ import { getAU } from '../../api/profit'
 export default {
   data() {
     return {
-      activeName: 'first',
       listLoading: false,
       tableData1: [],
       tableData2: [],
@@ -85,7 +78,6 @@ export default {
     }
   },
   methods: {
-    handleClick() {},
     onSubmit() {
       this.listLoading = true
       getAU(this.condition).then(response => {

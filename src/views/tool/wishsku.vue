@@ -243,7 +243,7 @@ export default {
 <style lang="scss" scoped>
 .el-form {
   .el-form-item {
-    margin: 0.5rem;
+    margin: 0.1rem;
   }
 }
 .modal-content {

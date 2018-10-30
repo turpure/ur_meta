@@ -45,15 +45,15 @@
         </transition>
       </div>
     </div>
-    <el-row :gutter="2">
-      <el-col :span="2" :offset="18">
+    <el-row>
+      <el-col :span="2" :offset="17">
         <el-input clearable placeholder="search" v-model="searchValue" @change="handleSearch"></el-input>
       </el-col>
       <el-col :span="2">
         <el-button style="float:left;" type="default" @click="exportExcel">导出Excel</el-button>
       </el-col>
-      <el-col :span="2">
-        <el-dropdown trigger="click">
+      <el-col :span="3">
+        <el-dropdown trigger="click" style="margin-left:20px;">
           <span class="el-dropdown-link">
             属性选择
             <i class="el-icon-arrow-down el-icon--right"></i>

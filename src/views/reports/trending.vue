@@ -34,7 +34,6 @@
               <el-option v-for='(item,index) in member' :index='index' :key='item.username' :label='item.username' :value='item.username'></el-option>
             </el-select>
           </el-form-item>
-          <br>
           <el-form-item label="账号" class="input">
             <el-select size="small" v-model="condition.account" filterable multiple collapse-tags placeholder="账号">
               <el-button plain type="info" @click='selectAll("account")'>全选</el-button>

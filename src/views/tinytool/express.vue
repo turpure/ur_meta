@@ -1,15 +1,15 @@
 <template>
   <div>
-    <el-row :gutter='2' class="toolbar" style="margin-bottom: 0rem;margin-top:0rem">
+    <el-row class="toolbar" style="margin-bottom: 0rem;margin-top:0rem">
       <el-col :span='2' :offset='21'>
         <el-input clearable placeholder='search' v-model='searchValue' @change='handleSearch'></el-input>
       </el-col>
     </el-row>
     <el-table border max-height=830 :data="tableData" :header-row-style="thClass">
-      <el-table-column min-width="120" prop="NID" label="ID" :formatter="empty"></el-table-column>
-      <el-table-column min-width="260" prop="DefaultExpress" label="物流公司" :formatter="empty"></el-table-column>
-      <el-table-column min-width="450" prop="name" label="物流方式" :formatter="empty"></el-table-column>
-      <el-table-column min-width="700" prop="URL" label="查询网址" :formatter="empty">
+      <el-table-column min-width="80" prop="NID" label="ID" :formatter="empty"></el-table-column>
+      <el-table-column min-width="200" prop="DefaultExpress" label="物流公司" :formatter="empty"></el-table-column>
+      <el-table-column min-width="300" prop="name" label="物流方式" :formatter="empty"></el-table-column>
+      <el-table-column min-width="400" prop="URL" label="查询网址" :formatter="empty">
         <template slot-scope="scope">
           <a :href=scope.row.URL>{{scope.row.URL}}</a>
         </template>

@@ -9,7 +9,7 @@
           <i class="fa fa-align-justify"></i>
         </div>
       </el-col>
-      <el-col :span="13">
+      <el-col :span="16">
         <el-menu :default-active="activeIndex" @select="handleSelect" class="el-menu-demo" mode="horizontal" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" router>
           <el-menu-item index="/index" key="index"><font size="4">主页</font></el-menu-item>
           <el-submenu v-for="(item,position) in allMenu" :index="generateIndex(-1,position)" :key="generateIndex(-1,position)">
@@ -20,10 +20,7 @@
           </el-submenu>
         </el-menu>
       </el-col>
-      <el-col :span="6" class="userinfo">
-        <el-col :span="14">
-          <screenfull class="screenfull right-menu-item"></screenfull>
-        </el-col>
+      <el-col :span="3" class="userinfo">
         <el-dropdown trigger="hover">
           <span class="el-dropdown-link userinfo-inner">
             {{sysUserName}}
@@ -68,10 +65,9 @@ import { removeToken } from '../utils/auth'
 import { getMenu } from '../api/login'
 import { getAvatarUrl } from '../api/api'
 import ImageCropper from '@/components/ImageCropper'
-import Screenfull from '@/components/Screenfull'
 export default {
   name: 'avatarUpload-demo',
-  components: { ImageCropper, Screenfull },
+  components: { ImageCropper },
   data() {
     return {
       activeIndex: '',
@@ -191,7 +187,7 @@ export default {
     line-height: 5rem;
     background-color: #545c64;
     color: #fff;
-    .el-col-6 {
+    .el-col-3 {
       height: 5rem;
       .el-dropdown {
         line-height: 0rem;
@@ -201,9 +197,6 @@ export default {
       text-align: right;
       padding-right: 3.5rem;
       float: right;
-      .screenfull {
-        padding-top: 1.4rem;
-      }
       .userinfo-inner {
         cursor: pointer;
         color: #fff;
@@ -292,7 +285,7 @@ export default {
       bottom: 0rem;
       left: 23rem;
       overflow: auto;
-      padding: 1rem; //二次修改
+      padding: 0rem !important; //二次修改
       .grid-content .bg-purple-light {
         overflow: auto;
       }
@@ -309,7 +302,7 @@ export default {
       bottom: 0rem;
       left: 0rem;
       overflow: auto;
-      padding: 1rem; //二次修改
+      padding: 0rem !important; //二次修改
       .grid-content .bg-purple-light {
         overflow: auto;
       }

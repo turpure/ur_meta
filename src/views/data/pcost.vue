@@ -14,7 +14,7 @@
         <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
       </el-form-item>
     </el-form>
-    <el-row :gutter='2'>
+    <el-row>
       <el-col :span='2' :offset='19'>
         <el-input clearable placeholder='search' v-model='searchValue' @change='handleSearch'></el-input>
       </el-col>
