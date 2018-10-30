@@ -427,14 +427,7 @@ export default {
   mounted() {
     getSection().then(response => {
       const res = response.data.data
-      let index
-      for (let i = 0; i < res.length; i++) {
-        if ((res[i].department).indexOf('供应链') > -1) {
-          index = i
-          res.splice(index, 1)
-        }
-      }
-      this.department = res
+      this.department = res.filter(ele => ele.department !== '供应链' && ele.department !== '采购部')
     })
     getPlatform().then(response => {
       this.plat = response.data.data
