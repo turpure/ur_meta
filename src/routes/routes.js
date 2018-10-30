@@ -25,14 +25,15 @@ import express from '../views/tinytool/express.vue'
 import brand from '../views/tinytool/brand.vue'
 import fyndiqzUpload from '../views/tinytool/fyndiqzUpload.vue'
 import goods from '../views/tinytool/goods.vue'
+import uk from '../views/tinytool/uk.vue'
+import au from '../views/tinytool/au.vue'
+import ukfic from '../views/tinytool/ukfic.vue'
 
 import deadFee from '../views/settings/deadFee.vue'
 import operationFee from '../views/settings/operationFee.vue'
 import exchange from '../views/settings/exchange.vue'
 
 import requirements from '../views/feedback/requirements.vue'
-import audit from '../views/feedback/audit.vue'
-import deal from '../views/feedback/deal.vue'
 
 const routes = [{
   path: '/login',
@@ -181,16 +182,6 @@ const routes = [{
       path: '/v1/requirements/index',
       component: requirements,
       name: '需求管理'
-    },
-    {
-      path: '/v1/requirements/examine-list',
-      component: audit,
-      name: '需求审核'
-    },
-    {
-      path: '/v1/requirements/deal-list',
-      component: deal,
-      name: '需求处理'
     }
   ]
 },
@@ -219,6 +210,21 @@ const routes = [{
       path: '/v1/tiny-tool/fyndiqz-upload',
       component: fyndiqzUpload,
       name: '产品上传'
+    },
+    {
+      path: '/v1/tiny-tool/uk-fic',
+      component: ukfic,
+      name: 'UK虚拟仓定价器'
+    },
+    {
+      path: '/v1/tiny-tool/uk',
+      component: uk,
+      name: 'UK真仓定价'
+    },
+    {
+      path: '/v1/tiny-tool/au',
+      component: au,
+      name: 'AU真仓定价'
     }
   ]
 },
