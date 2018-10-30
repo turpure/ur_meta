@@ -318,4 +318,29 @@ export function getPerformcost(param) {
     data
   })
 }
+// 定价器
+export function getUkfic(param) {
+  const data = { 'condition': param }
+  return request({
+    url: '/tiny-tool/uk-fic',
+    method: 'post',
+    data
+  })
+}
+export function getUK(param) {
+  const data = { 'condition': param }
+  return request({
+    url: '/tiny-tool/uk',
+    method: 'post',
+    data
+  })
+}
+export function getAU(param) {
+  const data = { 'condition': param }
+  return request({
+    url: '/tiny-tool/au',
+    method: 'post',
+    data
+  })
+}
 

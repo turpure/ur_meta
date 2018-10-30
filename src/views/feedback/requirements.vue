@@ -931,6 +931,7 @@ export default {
           deleteRequirements(row.id).then(res => {
             this.dealLoading = false
             this.requirements.splice(index, 1)
+            this.getRequire(this.activeName)
           })
         }
       )
