@@ -187,6 +187,15 @@ export default {
     line-height: 5rem;
     background-color: #545c64;
     color: #fff;
+    .el-col-16{
+      .el-menu{
+        .el-submenu{
+      .el-submenu__title{
+        padding: 0 10px !important;
+      }
+        }
+      }
+    }
     .el-col-3 {
       height: 5rem;
       .el-dropdown {
