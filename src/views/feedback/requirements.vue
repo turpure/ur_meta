@@ -716,7 +716,7 @@ export default {
       // this.addForm.detail = this.content.replace(/<\/?[^>]*>/g,'').toString()
       const addContent = Object.assign({}, this.addForm)
       addContent.creator = this.$store.getters.name
-      addContent.processingPerson = this.addForm.processingPerson.join(',')
+      addContent.processingPerson = this.addForm.processingPerson.filter(ele => ele.length > 0).join(',')
       addContent.detail = this.content.replace(/data:([^"]*)/g, '')
       this.addForm.processingPerson = []
       createRequirements(addContent).then(response => {
@@ -728,9 +728,7 @@ export default {
     editSubmit() {
       this.$confirm('确认提交吗？', '提示', {}).then(() => {
         this.editLoading = true
-        this.editForm.processingPerson = this.editForm.processingPerson.join(
-          ','
-        )
+        this.editForm.processingPerson = this.editForm.processingPerson.filter(ele => ele.length > 0).join(',')
         this.editForm.img =
           this.mycontent.match(/data:([^"]*)/g) ||
           this.mycontent.match(/http:([^"]*)/g)
@@ -751,9 +749,7 @@ export default {
     editDealSubmit() {
       this.$confirm('确认提交吗？', '提示', {}).then(() => {
         this.editDealLoading = true
-        this.editDealForm.processingPerson = this.editDealForm.processingPerson.join(
-          ','
-        )
+        this.editDealForm.processingPerson = this.editDealForm.processingPerson.filter(ele => ele.length > 0).join(',')
         this.editDealForm.img =
           this.mycontent.match(/data:([^"]*)/g) ||
           this.mycontent.match(/http:([^"]*)/g)
@@ -775,9 +771,7 @@ export default {
     editAuditSubmit() {
       this.$confirm('确认提交吗？', '提示', {}).then(() => {
         this.editAuditLoading = true
-        this.editAuditForm.processingPerson = this.editAuditForm.processingPerson.filter(ele => ele.length > 0).join(
-          ','
-        )
+        this.editAuditForm.processingPerson = this.editAuditForm.processingPerson.filter(ele => ele.length > 0).join(',')
         this.editAuditForm.img =
           this.mycontent.match(/data:([^"]*)/g) ||
           this.mycontent.match(/http:([^"]*)/g)
