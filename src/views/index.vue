@@ -1,5 +1,5 @@
 <template>
-<div class="dashboard-editor-container">
+<div class="dashboard-editor-container" style="min-height:930px;">
 <section>
    <el-alert
     title="2018旺季销售目标完成进度"
@@ -16,7 +16,7 @@
   <el-table
     :data="shanghaiTable"
     size="small"
-    height="750"
+    max-height="750"
     v-if="show.shanghai"
     v-scrollBar:slim
     @sort-change="sortNumber"
@@ -54,7 +54,7 @@
     :data="zhengzhouTable"
     @sort-change="sortNumber"
     size="small"
-    height="750"
+    max-height="750"
     v-show="show.zhengzhou"
     >
     <el-table-column type="index" ></el-table-column>
@@ -83,7 +83,7 @@
   <el-table
     :data="departTable"
     size="small"
-    height="750"
+    max-height="750"
     v-show="show.depart"
     @sort-change="sortNumber"
     style="width:100%">
@@ -115,7 +115,7 @@
       </template>
     </el-table-column>
   </el-table>
-  <el-table :data="developerTable" height="750" size="small" v-show="show.developer" style="width:100%">
+  <el-table :data="developerTable" max-height="750" size="small" v-show="show.developer" style="width:100%">
     <el-table-column type="index"></el-table-column>
     <el-table-column prop="depart"  label="部门" sortable></el-table-column>
     <el-table-column prop="username"  label="姓名" sortable></el-table-column>
@@ -232,26 +232,13 @@ export default {
   background-color: rgb(240, 242, 245);
   zoom:0.9;
 }
-
 .table-container {
   background-color: #FFFFFF;
-  //margin:0px;
-  //margin-bottom: 0px;
-  //margin-top: 0px;
-  .table-show {
-    padding:30px;
-  }
-  .table-footer {
-    height:30px 
-  }
 }
 .tabs-container {
   background-color:#FFFFFF;
 }
 .el-table--fit {
   margin: 30px;
-}
-.el-table__body{
-    table-layout:auto !important;
 }
 </style>
