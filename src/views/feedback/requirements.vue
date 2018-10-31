@@ -113,10 +113,10 @@
             </el-form-item>
             <el-form-item label="类别">
               <el-radio-group v-model="editForm.type">
-                <el-radio class="radio" :label="0">BUG</el-radio>
-                <el-radio class="radio" :label="1">新需求</el-radio>
-                <el-radio class="radio" :label="2">任务</el-radio>
-                <el-radio class="radio" :label="3">改进建议</el-radio>
+                <el-radio label="0" :value="this.editForm.type">BUG</el-radio>
+                <el-radio label="1" :value="this.editForm.type">新需求</el-radio>
+                <el-radio label="2" :value="this.editForm.type">任务</el-radio>
+                <el-radio label="3" :value="this.editForm.type">改进建议</el-radio>
               </el-radio-group>
             </el-form-item>
             <el-form-item label="优先级">
@@ -152,7 +152,7 @@
                 <el-step title="待审核"></el-step>
                 <el-step :title='this.detailForm.schedule<=2?"已驳回":"处理中"'></el-step>
                 <el-step title="处理中"></el-step>
-                <el-step title="处理中"></el-step>
+                <!-- <el-step title="处理中"></el-step> -->
                 <el-step title="处理完成"></el-step>
               </el-steps>
             </el-form-item>
@@ -248,10 +248,10 @@
             </el-form-item>
             <el-form-item label="类别">
               <el-radio-group v-model="editAuditForm.type">
-                <el-radio class="radio" :label="0">BUG</el-radio>
-                <el-radio class="radio" :label="1">新需求</el-radio>
-                <el-radio class="radio" :label="2">任务</el-radio>
-                <el-radio class="radio" :label="3">改进建议</el-radio>
+                <el-radio label="0" :value="this.editAuditForm.type">BUG</el-radio>
+                <el-radio label="1" :value="this.editAuditForm.type">新需求</el-radio>
+                <el-radio label="2" :value="this.editAuditForm.type">任务</el-radio>
+                <el-radio label="3" :value="this.editAuditForm.type">改进建议</el-radio>
               </el-radio-group>
             </el-form-item>
             <el-form-item label="优先级">
@@ -358,19 +358,19 @@
             </el-form-item>
             <el-form-item label="类别">
               <el-radio-group v-model="editDealForm.type">
-                <el-radio class="radio" :label="0">BUG</el-radio>
-                <el-radio class="radio" :label="1">新需求</el-radio>
-                <el-radio class="radio" :label="2">任务</el-radio>
-                <el-radio class="radio" :label="3">改进建议</el-radio>
+                <el-radio label="0" :value="this.editDealForm.type">BUG</el-radio>
+                <el-radio label="1" :value="this.editDealForm.type">新需求</el-radio>
+                <el-radio label="2" :value="this.editDealForm.type">任务</el-radio>
+                <el-radio label="3" :value="this.editDealForm.type">改进建议</el-radio>
               </el-radio-group>
             </el-form-item>
             <el-form-item label="状态">
               <el-radio-group v-model="editDealForm.status">
-                <el-radio class="radio" :label="1">Open</el-radio>
-                <el-radio class="radio" :label="2">In Progress</el-radio>
-                <el-radio class="radio" :label="3">Resovled</el-radio>
-                <el-radio class="radio" :label="4">Reopened</el-radio>
-                <el-radio class="radio" :label="5">Closed</el-radio>
+                <el-radio label="1" :value="this.editDealForm.status">Open</el-radio>
+                <el-radio label="2" :value="this.editDealForm.status">In Progress</el-radio>
+                <el-radio label="3" :value="this.editDealForm.status">Resovled</el-radio>
+                <el-radio label="4" :value="this.editDealForm.status">Reopened</el-radio>
+                <el-radio label="5" :value="this.editDealForm.status">Closed</el-radio>
               </el-radio-group>
             </el-form-item>
             <el-form-item label="优先级">
@@ -413,7 +413,7 @@
                 <el-step title="待审核"></el-step>
                 <el-step :title='this.detailDealForm.schedule<=2?"已驳回":"处理中"'></el-step>
                 <el-step title="处理中"></el-step>
-                <el-step title="处理中"></el-step>
+                <!-- <el-step title="处理中"></el-step> -->
                 <el-step title="处理完成"></el-step>
               </el-steps>
             </el-form-item>
@@ -545,8 +545,8 @@ export default {
         1: { name: '待审核', hints: '问题被提交,等待审核' },
         2: { name: '已驳回', hints: '问题被驳回，不予处理' },
         3: { name: '处理中', hints: '问题在处理当中，尚未完成' },
-        4: { name: '处理中', hints: '问题在处理当中，尚未完成' },
-        5: { name: '处理完成', hints: '问题处理结果得到确认，处于关闭状态' }
+        // 4: { name: '处理中', hints: '问题在处理当中，尚未完成' },
+        4: { name: '处理完成', hints: '问题处理结果得到确认，处于关闭状态' }
       },
       status: {
         1: { name: 'Open ', hints: '问题被提交,等待处理' },

@@ -16,7 +16,7 @@
   <el-table
     :data="shanghaiTable"
     size="small"
-    max-height="750"
+    height="750"
     v-if="show.shanghai"
     v-scrollBar:slim
     @sort-change="sortNumber"
@@ -54,7 +54,7 @@
     :data="zhengzhouTable"
     @sort-change="sortNumber"
     size="small"
-    max-height="750"
+    height="750"
     v-show="show.zhengzhou"
     >
     <el-table-column type="index" ></el-table-column>
@@ -83,7 +83,7 @@
   <el-table
     :data="departTable"
     size="small"
-    max-height="750"
+    height="750"
     v-show="show.depart"
     @sort-change="sortNumber"
     style="width:100%">
@@ -115,7 +115,7 @@
       </template>
     </el-table-column>
   </el-table>
-  <el-table :data="developerTable" max-height="750" size="small" v-show="show.developer" style="width:100%">
+  <el-table :data="developerTable" height="750" size="small" v-show="show.developer" style="width:100%">
     <el-table-column type="index"></el-table-column>
     <el-table-column prop="depart"  label="部门" sortable></el-table-column>
     <el-table-column prop="username"  label="姓名" sortable></el-table-column>

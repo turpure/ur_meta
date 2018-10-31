@@ -9,7 +9,7 @@
           <i class="fa fa-align-justify"></i>
         </div>
       </el-col>
-      <el-col :span="16">
+      <el-col :span="9">
         <el-menu :default-active="activeIndex" @select="handleSelect" class="el-menu-demo" mode="horizontal" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" router>
           <el-menu-item index="/index" key="index"><font size="4">主页</font></el-menu-item>
           <el-submenu v-for="(item,position) in allMenu" :index="generateIndex(-1,position)" :key="generateIndex(-1,position)">
@@ -183,19 +183,15 @@ export default {
   bottom: 0rem;
   width: 100%;
   .header {
+    @media (min-width:800px) and (max-width:1680px){
+  body{
+    font-size: 8px;
+  }
+}
     height: 5rem;
     line-height: 5rem;
     background-color: #545c64;
     color: #fff;
-    .el-col-16{
-      .el-menu{
-        .el-submenu{
-      .el-submenu__title{
-        padding: 0 10px !important;
-      }
-        }
-      }
-    }
     .el-col-3 {
       height: 5rem;
       .el-dropdown {
@@ -213,7 +209,7 @@ export default {
           width: 4rem;
           height: 4rem;
           border-radius: 2rem;
-          margin: 0.5rem 0rem 1rem 1rem;
+          margin: 0.5rem 0rem 0rem 1rem;
           float: right;
         }
         .hiddenInput {
@@ -322,4 +318,9 @@ export default {
     }
   }
 }
+// @media (min-width:800px) and (max-width:1680px){
+//   body{
+//     font-size: 8px;
+//   }
+// }
 </style>
