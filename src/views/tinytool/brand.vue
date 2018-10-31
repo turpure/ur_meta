@@ -20,7 +20,7 @@
     </el-form>
     <el-row v-loading="listLoading" style="height:780px;">
       <el-col :span="6" class="mix" v-for="item in this.tableData" :key="item.rowId">
-        <a :href="item.url" style="text-decoration:none;">
+        <a :href="item.url" target="_blank" style="text-decoration:none;">
           <img :src=item.imgUrl :alt="item.imgName">
           <p>
             <font color="black" size="3">

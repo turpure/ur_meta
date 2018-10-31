@@ -8,7 +8,7 @@
             <el-select size="small" v-model="formInline.region" multiple collapse-tags placeholder="部门" @change="choosed">
               <el-button plain type="info" @click="selectalld">全选</el-button>
               <el-button plain type="info" @click="noselectd">取消</el-button>
-              <el-option v-for="(item,index) in section" :index="item[index]" :key="item.department" :label="item.department" :value="item.department"></el-option>
+              <el-option v-for="(item,index) in department" :index="item[index]" :key="item.id" :label="item.department" :value="item.department"></el-option>
             </el-select>
           </el-form-item>
 
@@ -207,7 +207,7 @@ export default {
       searchTable: [],
       searchValue: '',
       listLoading: false,
-      section: [],
+      department: [],
       dateType: [{ id: 1, type: '发货时间' }, { id: 0, type: '交易时间' }],
       member: [],
       formInline: {

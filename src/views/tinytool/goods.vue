@@ -49,7 +49,7 @@
     </el-form>
     <el-row v-loading="listLoading">
       <el-col :span="4" class="mix" v-for="item in this.tableData" :key="item.rowId">
-        <a :href="item.LinkUrl" style="text-decoration:none;">
+        <a :href="item.LinkUrl" target="_blank" style="text-decoration:none;">
           <div class="mix-inner">
             <img :src=item.BmpFileName :alt='item.GoodsName+item.GoodsSKUStatus'>
             <p>
