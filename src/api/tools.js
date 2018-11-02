@@ -36,7 +36,11 @@ export function getMonthDate(dateType) {
     if (m < 10) {
       m = '0' + m
     }
-    return [date.getFullYear(), m, date.getDate()].join('-')
+    let d = date.getDate()
+    if (d < 10) {
+      d = '0' + d
+    }
+    return [date.getFullYear(), m, d].join('-')
   }
   const today = new Date()
   let y = today.getFullYear()

@@ -14,7 +14,7 @@
           <el-menu-item index="/index" key="index"><font size="3">主页</font></el-menu-item>
           <el-submenu v-for="(item,position) in allMenu" :index="generateIndex(-1,position)" :key="generateIndex(-1,position)">
             <template slot="title">
-              {{item.name}}
+              <font size="3">{{item.name}}</font>
             </template>
             <el-menu-item v-for="(child,index) in item.children" :index="child.route" :key="generateIndex(position,index)">{{child.name}}</el-menu-item>
           </el-submenu>
