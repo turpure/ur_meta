@@ -39,7 +39,7 @@ export default {
             .dispatch('LoginByUsername', this.ruleForm2)
             .then(() => {
               this.loading = false
-              sessionStorage.setItem('user', 'fefawefaewfawfaw')
+              sessionStorage.setItem('user', this.ruleForm2.username)
               this.$router.push({ path: '/index' })
             })
             .catch(err => {

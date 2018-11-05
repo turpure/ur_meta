@@ -69,6 +69,7 @@ import { getMember, getPurchase } from '../../api/profit'
 import { compareUp, compareDown, getMonthDate } from '../../api/tools'
 import FileSaver from 'file-saver'
 import XLSX from 'xlsx'
+import { isAdmin } from '../../api/api'
 
 export default {
   data() {
@@ -83,6 +84,7 @@ export default {
       searchTable: [],
       searchValue: '',
       listLoading: false,
+      res: [],
       member: [],
       dateType: [{ id: 1, type: '发货时间' }, { id: 0, type: '交易时间' }],
       condition: {
@@ -148,16 +150,31 @@ export default {
       this.show1 = false
     },
     onSubmit(form) {
+      const myform = JSON.parse(JSON.stringify(form))
       const height = document.getElementById('app').clientHeight
       this.tableHeight = height - 230 + 'px'
       this.show2 = true
+      let admin = ''
       this.$refs.condition.validate(valid => {
         if (valid) {
-          this.listLoading = true
-          getPurchase(form).then(response => {
-            this.listLoading = false
-            this.tableData = this.searchTable = response.data.data
-          })
+          const username = sessionStorage.getItem('user')
+          for (let i = 0; i < this.res.length; i++) {
+            admin = this.res[i].username
+          }
+          if (username === admin || isAdmin() === true) {
+            this.listLoading = true
+            getPurchase(myform).then(response => {
+              this.listLoading = false
+              this.tableData = this.searchTable = response.data.data
+            })
+          } else {
+            myform.member = [username]
+            this.listLoading = true
+            getPurchase(myform).then(response => {
+              this.listLoading = false
+              this.tableData = this.searchTable = response.data.data
+            })
+          }
         } else {
           console.log('error submit!!')
           return false
@@ -273,6 +290,7 @@ export default {
     getMember().then(response => {
       const res = response.data.data
       this.member = res.filter(ele => ele.position === '采购')
+      this.res = res.filter(ele => ele.position === '主管' && ele.department === '采购部')
     })
   }
 }
