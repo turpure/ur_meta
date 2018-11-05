@@ -40,7 +40,7 @@
     </el-table-column>
     <el-table-column prop="dateRate" label="时间进度" >
       <template slot-scope="scope">
-        <el-progress :text-inside="true" :stroke-width="18" status="exception" :percentage="scope.row.dateRate*100"></el-progress>
+        <el-progress :text-inside="true" :stroke-width="18" status="exception" :percentage="Math.round(scope.row.dateRate*10000)/100"></el-progress>
       </template>
     </el-table-column>
     <el-table-column prop="updatetime" label="统计截止日期">
@@ -70,7 +70,7 @@
     </el-table-column>
     <el-table-column prop="dateRate"  label="时间进度">
       <template slot-scope="scope">
-        <el-progress :text-inside="true" :stroke-width="18" status="exception" :percentage="scope.row.dateRate*100"></el-progress>
+        <el-progress :text-inside="true" :stroke-width="18" status="exception" :percentage="Math.round(scope.row.dateRate*10000)/100"></el-progress>
       </template>
     </el-table-column>
     <el-table-column prop="updatetime" label="统计截止日期">
@@ -105,7 +105,7 @@
     </el-table-column>
     <el-table-column prop="dateRate" label="时间进度">
       <template slot-scope="scope">
-        <el-progress :text-inside="true" :stroke-width="18" status="exception" :percentage="scope.row.dateRate*100"></el-progress>
+        <el-progress :text-inside="true" :stroke-width="18" status="exception" :percentage="Math.round(scope.row.dateRate*10000)/100"></el-progress>
       </template>
     </el-table-column>
     <el-table-column prop="updatetime" label="统计截止日期">
@@ -135,7 +135,7 @@
     </el-table-column>
     <el-table-column prop="dateRate" label="时间进度" >
       <template slot-scope="scope">
-        <el-progress :text-inside="true" :stroke-width="18" status="exception" :percentage="scope.row.dateRate*100"></el-progress>
+        <el-progress :text-inside="true" :stroke-width="18" status="exception" :percentage="Math.round(scope.row.dateRate*10000)/100"></el-progress>
       </template>
     </el-table-column>
     <el-table-column prop="updatetime" label="统计截止日期">
