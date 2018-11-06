@@ -434,7 +434,6 @@ export default {
       let admin = ''
       this.$refs.condition.validate(valid => {
         if (valid) {
-          this.listLoading = true
           const username = sessionStorage.getItem('user')
           for (let i = 0; i < this.res.length; i++) {
             admin = this.res[i].username
@@ -442,10 +441,6 @@ export default {
           if (isAdmin() === true && this.formInline.region.length === 0 && myform.member === 0) {
             myform.member = this.member.map(m => {
               return m.username
-            })
-            getPossess(myform).then(response => {
-              this.listLoading = false
-              this.tableData = this.searchTable = response.data.data
             })
           } else if (this.formInline.region.length !== 0 && myform.member.length === 0) {
             const val = this.formInline.region
@@ -461,35 +456,20 @@ export default {
             myform.member = this.member.map(m => {
               return m.username
             })
-            getPossess(myform).then(response => {
-              this.listLoading = false
-              this.tableData = this.searchTable = response.data.data
-            })
           } else if (username === admin && this.formInline.region.length === 0 && myform.member.length === 0) {
-            this.listLoading = true
             myform.member = this.member.map(m => {
               return m.username
-            })
-            getPossess(myform).then(response => {
-              this.listLoading = false
-              this.tableData = this.searchTable = response.data.data
             })
           } else if (isAdmin() === false && username !== admin) {
             myform.member = this.member.map(m => {
               return m.username
             })
-            this.listLoading = true
-            getPossess(myform).then(response => {
-              this.listLoading = false
-              this.tableData = this.searchTable = response.data.data
-            })
-          } else {
-            this.listLoading = true
-            getPossess(myform).then(response => {
-              this.listLoading = false
-              this.tableData = this.searchTable = response.data.data
-            })
           }
+          this.listLoading = true
+          getPossess(myform).then(response => {
+            this.listLoading = false
+            this.tableData = this.searchTable = response.data.data
+          })
         } else {
           console.log('error submit!!')
           return false

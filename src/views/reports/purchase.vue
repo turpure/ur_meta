@@ -168,7 +168,9 @@ export default {
               this.tableData = this.searchTable = response.data.data
             })
           } else {
-            myform.member = [username]
+            myform.member = this.member.map(m => {
+              return m.username
+            })
             this.listLoading = true
             getPurchase(myform).then(response => {
               this.listLoading = false

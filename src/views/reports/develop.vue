@@ -504,43 +504,15 @@ export default {
           for (let i = 0; i < this.res.length; i++) {
             admin = this.res[i].username
           }
-          if (isAdmin() === true && this.formInline.region.length === 0 && myform.member.length === 0) {
-            this.listLoading = true
-            getDevelop(myform).then(response => {
-              this.listLoading = false
-              ret = response.data.data
-              posseman1Data = ret.filter(ele => ele.tableType === '归属1人表')
-              posseman2Data = ret.filter(ele => ele.tableType === '归属2人表')
-              this.tableData01 = this.searchTableFirst = posseman1Data
-              this.tableData02 = this.searchTableSecond = posseman2Data
-            })
-          } else if (username === admin && this.formInline.region.length === 0 && myform.member.length === 0) {
+          if (username === admin && this.formInline.region.length === 0 && myform.member.length === 0) {
             myform.member = this.member.map(m => {
               return m.username
-            })
-            this.listLoading = true
-            getDevelop(myform).then(response => {
-              this.listLoading = false
-              ret = response.data.data
-              posseman1Data = ret.filter(ele => ele.tableType === '归属1人表')
-              posseman2Data = ret.filter(ele => ele.tableType === '归属2人表')
-              this.tableData01 = this.searchTableFirst = posseman1Data
-              this.tableData02 = this.searchTableSecond = posseman2Data
             })
           } else if (username !== admin && isAdmin() === false) {
             myform.member = this.member.map(m => {
               return m.username
             })
-            this.listLoading = true
-            getDevelop(myform).then(response => {
-              this.listLoading = false
-              ret = response.data.data
-              posseman1Data = ret.filter(ele => ele.tableType === '归属1人表')
-              posseman2Data = ret.filter(ele => ele.tableType === '归属2人表')
-              this.tableData01 = this.searchTableFirst = posseman1Data
-              this.tableData02 = this.searchTableSecond = posseman2Data
-            })
-          } else if (this.formInline.region.length !== 0 && myform.member === 0) {
+          } else if (this.formInline.region.length !== 0 && myform.member.length === 0) {
             const val = this.formInline.region
             const res = this.allMember
             for (let i = 0; i < val.length; i++) {
@@ -552,27 +524,18 @@ export default {
             myform.member = this.member.map(m => {
               return m.username
             })
-            this.listLoading = true
-            getDevelop(myform).then(response => {
-              this.listLoading = false
-              ret = response.data.data
-              posseman1Data = ret.filter(ele => ele.tableType === '归属1人表')
-              posseman2Data = ret.filter(ele => ele.tableType === '归属2人表')
-              this.tableData01 = this.searchTableFirst = posseman1Data
-              this.tableData02 = this.searchTableSecond = posseman2Data
-            })
           } else {
             myform.member = this.condition.member
-            this.listLoading = true
-            getDevelop(myform).then(response => {
-              this.listLoading = false
-              ret = response.data.data
-              posseman1Data = ret.filter(ele => ele.tableType === '归属1人表')
-              posseman2Data = ret.filter(ele => ele.tableType === '归属2人表')
-              this.tableData01 = this.searchTableFirst = posseman1Data
-              this.tableData02 = this.searchTableSecond = posseman2Data
-            })
           }
+          this.listLoading = true
+          getDevelop(myform).then(response => {
+            this.listLoading = false
+            ret = response.data.data
+            posseman1Data = ret.filter(ele => ele.tableType === '归属1人表')
+            posseman2Data = ret.filter(ele => ele.tableType === '归属2人表')
+            this.tableData01 = this.searchTableFirst = posseman1Data
+            this.tableData02 = this.searchTableSecond = posseman2Data
+          })
         } else {
           return false
         }

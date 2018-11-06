@@ -50,7 +50,7 @@ export function getAccount() {
 
 export function getExchange() {
   return request({
-    url: '/upload/exchange',
+    url: '/settings/exchange',
     method: 'get'
   })
 }
@@ -177,7 +177,7 @@ export function getSalesdeadfee(param) {
 export function getUpdateexchange(param) {
   const data = { 'condition': param }
   return request({
-    url: '/upload/exchange',
+    url: '/settings/exchange',
     method: 'post',
     data
   })

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
+import { MessageBox } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 import router from '../routes/router'
@@ -36,16 +37,27 @@ service.interceptors.response.use(
     if (error.response) {
       switch (error.response.status) {
         case 401:
+          Message({
+            message: error.message,
+            type: 'error',
+            duration: 5 * 1000
+          })
           router.replace({
             path: '/login'
           })
+          break
+        case 403:
+          MessageBox.alert('您尚无此权限，请联系管理员！', '提示', {
+            confirmButtonText: '确定',
+            type: 'warning'
+          })
       }
-      console.log('err' + error)// for debug
-      Message({
-        message: error.message,
-        type: 'error',
-        duration: 5 * 1000
-      })
+      // console.log('err' + error)// for debug
+      // Message({
+      //   message: error.message,
+      //   type: 'error',
+      //   duration: 5 * 1000
+      // })
       return Promise.reject(error)
     }
   })
