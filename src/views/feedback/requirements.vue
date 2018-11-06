@@ -68,25 +68,9 @@
                 <el-radio class="radio" :label="3">改进建议</el-radio>
               </el-radio-group>
             </el-form-item>
-            <!-- <el-form-item label="状态">
-              <el-radio-group v-model="addForm.status">
-                <el-radio class="radio" :label="1">Open</el-radio>
-                <el-radio class="radio" :label="2">In Progress</el-radio>
-                <el-radio class="radio" :label="3">Resovled</el-radio>
-                <el-radio class="radio" :label="4">Reopened</el-radio>
-                <el-radio class="radio" :label="5">Closed</el-radio>
-              </el-radio-group>
-            </el-form-item> -->
             <el-form-item label="优先级">
               <el-rate show-text :texts='text' v-model="addForm.priority" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="5" style="margin-top:8px;" />
             </el-form-item>
-            <!-- <el-form-item label="处理人">
-              <el-checkbox-group v-model="addForm.processingPerson">
-                <el-checkbox label="周朋许" name="processingPerson"></el-checkbox>
-                <el-checkbox label="叶先钱" name="processingPerson"></el-checkbox>
-                <el-checkbox label="朱洪涛" name="processingPerson"></el-checkbox>
-              </el-checkbox-group>
-            </el-form-item> -->
             <el-form-item label="详情">
               <quill-editor v-model="content"
                 ref="QuillEditor"
@@ -466,6 +450,7 @@ import {
   deleteRequirements,
   getExamine
 } from '../../api/api'
+import { getMenu } from '../../api/login'
 
 export default {
   data() {
@@ -971,6 +956,9 @@ export default {
   },
   mounted() {
     this.getRequire(this.activeName)
+    getMenu().then(response => {
+      this.allMenu = response.data.data
+    })
   }
 }
 </script>

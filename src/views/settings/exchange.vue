@@ -36,27 +36,39 @@ export default {
   },
   methods: {
     onSubmit(form) {
+      if (this.sell.mun === '' || this.oper.mun === '') {
+        this.sell.mun = this.placeholders
+        this.oper.mun = this.placeholderd
+      }
       form.saleRate = this.sell.mun
       form.devRate = this.oper.mun
       getUpdateexchange(form).then(response => {
-        alert('更新销售汇率成功！')
+        this.$alert('更新销售汇率成功！', '提示', {
+          confirmButtonText: '确定',
+          type: 'warning'
+        })
       })
     },
     onSubmit2(form) {
+      if (this.sell.mun === '' || this.oper.mun === '') {
+        this.sell.mun = this.placeholders
+        this.oper.mun = this.placeholderd
+      }
       form.saleRate = this.sell.mun
       form.devRate = this.oper.mun
       getUpdateexchange(form).then(response => {
-        alert('更新开发汇率成功！')
+        this.$alert('更新开发汇率成功！', '提示', {
+          confirmButtonText: '确定',
+          type: 'warning'
+        })
       })
     }
   },
   mounted() {
     getExchange().then(response => {
       const saler = response.data.data
-      this.placeholders = saler.salerRate
-    })
-    getExchange().then(response => {
       const dev = response.data.data
+      this.placeholders = saler.salerRate
       this.placeholderd = dev.devRate
     })
   }
