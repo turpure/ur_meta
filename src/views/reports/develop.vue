@@ -197,6 +197,7 @@
 <script>
 import { getSection, getMember, getDevelop } from '../../api/profit'
 import { compareUp, compareDown, getMonthDate } from '../../api/tools'
+import { isAdmin } from '../../api/api'
 
 export default {
   data() {
@@ -256,6 +257,7 @@ export default {
       searchValue: '',
       listLoading: false,
       department: [],
+      res: [],
       member: [],
       dateRange: [],
       dateType: [{ id: 1, type: '发货时间' }, { id: 0, type: '交易时间' }],
@@ -494,18 +496,83 @@ export default {
       let posseman1Data
       let posseman2Data
       let ret
+      let admin = ''
       this.show2 = true
       this.$refs.condition.validate(valid => {
         if (valid) {
-          this.listLoading = true
-          getDevelop(myform).then(response => {
-            this.listLoading = false
-            ret = response.data.data
-            posseman1Data = ret.filter(ele => ele.tableType === '归属1人表')
-            posseman2Data = ret.filter(ele => ele.tableType === '归属2人表')
-            this.tableData01 = this.searchTableFirst = posseman1Data
-            this.tableData02 = this.searchTableSecond = posseman2Data
-          })
+          const username = sessionStorage.getItem('user')
+          for (let i = 0; i < this.res.length; i++) {
+            admin = this.res[i].username
+          }
+          if (isAdmin() === true && this.formInline.region.length === 0 && myform.member.length === 0) {
+            this.listLoading = true
+            getDevelop(myform).then(response => {
+              this.listLoading = false
+              ret = response.data.data
+              posseman1Data = ret.filter(ele => ele.tableType === '归属1人表')
+              posseman2Data = ret.filter(ele => ele.tableType === '归属2人表')
+              this.tableData01 = this.searchTableFirst = posseman1Data
+              this.tableData02 = this.searchTableSecond = posseman2Data
+            })
+          } else if (username === admin && this.formInline.region.length === 0 && myform.member.length === 0) {
+            myform.member = this.member.map(m => {
+              return m.username
+            })
+            this.listLoading = true
+            getDevelop(myform).then(response => {
+              this.listLoading = false
+              ret = response.data.data
+              posseman1Data = ret.filter(ele => ele.tableType === '归属1人表')
+              posseman2Data = ret.filter(ele => ele.tableType === '归属2人表')
+              this.tableData01 = this.searchTableFirst = posseman1Data
+              this.tableData02 = this.searchTableSecond = posseman2Data
+            })
+          } else if (username !== admin && isAdmin() === false) {
+            myform.member = this.member.map(m => {
+              return m.username
+            })
+            this.listLoading = true
+            getDevelop(myform).then(response => {
+              this.listLoading = false
+              ret = response.data.data
+              posseman1Data = ret.filter(ele => ele.tableType === '归属1人表')
+              posseman2Data = ret.filter(ele => ele.tableType === '归属2人表')
+              this.tableData01 = this.searchTableFirst = posseman1Data
+              this.tableData02 = this.searchTableSecond = posseman2Data
+            })
+          } else if (this.formInline.region.length !== 0 && myform.member === 0) {
+            const val = this.formInline.region
+            const res = this.allMember
+            for (let i = 0; i < val.length; i++) {
+              const per = res.filter(
+                ele => (ele.department === val[i] || ele.parent_depart === val[i]) && ele.position === '开发'
+              )
+              this.member.concat(per)
+            }
+            myform.member = this.member.map(m => {
+              return m.username
+            })
+            this.listLoading = true
+            getDevelop(myform).then(response => {
+              this.listLoading = false
+              ret = response.data.data
+              posseman1Data = ret.filter(ele => ele.tableType === '归属1人表')
+              posseman2Data = ret.filter(ele => ele.tableType === '归属2人表')
+              this.tableData01 = this.searchTableFirst = posseman1Data
+              this.tableData02 = this.searchTableSecond = posseman2Data
+            })
+          } else {
+            myform.member = this.condition.member
+            this.listLoading = true
+            getDevelop(myform).then(response => {
+              this.listLoading = false
+              ret = response.data.data
+              posseman1Data = ret.filter(ele => ele.tableType === '归属1人表')
+              posseman2Data = ret.filter(ele => ele.tableType === '归属2人表')
+              this.tableData01 = this.searchTableFirst = posseman1Data
+              this.tableData02 = this.searchTableSecond = posseman2Data
+            })
+          }
         } else {
           return false
         }
@@ -702,6 +769,7 @@ export default {
     getMember().then(response => {
       const res = response.data.data
       this.allMember = this.member = res.filter(ele => ele.position === '开发')
+      this.res = res.filter(ele => ele.position === '主管')
     })
   }
 }

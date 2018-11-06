@@ -151,6 +151,7 @@
 <script>
 import { getSection, getMember, getPossess } from '../../api/profit'
 import { compareUp, compareDown, getMonthDate } from '../../api/tools'
+import { isAdmin } from '../../api/api'
 
 export default {
   data() {
@@ -208,6 +209,7 @@ export default {
       listLoading: false,
       department: [],
       dateType: [{ id: 1, type: '发货时间' }, { id: 0, type: '交易时间' }],
+      res: [],
       member: [],
       formInline: {
         region: []
@@ -429,13 +431,23 @@ export default {
       const height = document.getElementById('app').clientHeight
       this.tableHeight = height - 225 + 'px'
       this.show2 = true
+      let admin = ''
       this.$refs.condition.validate(valid => {
         if (valid) {
           this.listLoading = true
-          if (
-            this.formInline.region.length !== 0 &&
-            this.condition.member.length === 0
-          ) {
+          const username = sessionStorage.getItem('user')
+          for (let i = 0; i < this.res.length; i++) {
+            admin = this.res[i].username
+          }
+          if (isAdmin() === true && this.formInline.region.length === 0 && myform.member === 0) {
+            myform.member = this.member.map(m => {
+              return m.username
+            })
+            getPossess(myform).then(response => {
+              this.listLoading = false
+              this.tableData = this.searchTable = response.data.data
+            })
+          } else if (this.formInline.region.length !== 0 && myform.member.length === 0) {
             const val = this.formInline.region
             let res = []
             let person = []
@@ -453,9 +465,20 @@ export default {
               this.listLoading = false
               this.tableData = this.searchTable = response.data.data
             })
-          } else if (this.condition.member.length !== 0) {
+          } else if (username === admin && this.formInline.region.length === 0 && myform.member.length === 0) {
             this.listLoading = true
-            myform.member = this.condition.member
+            myform.member = this.member.map(m => {
+              return m.username
+            })
+            getPossess(myform).then(response => {
+              this.listLoading = false
+              this.tableData = this.searchTable = response.data.data
+            })
+          } else if (isAdmin() === false && username !== admin) {
+            myform.member = this.member.map(m => {
+              return m.username
+            })
+            this.listLoading = true
             getPossess(myform).then(response => {
               this.listLoading = false
               this.tableData = this.searchTable = response.data.data
@@ -654,6 +677,7 @@ export default {
     getMember().then(response => {
       const res = response.data.data
       this.allMember = this.member = res.filter(ele => ele.position === '美工')
+      this.res = res.filter(ele => (ele.position === '经理' || ele.position === '主管'))
     })
   }
 }
