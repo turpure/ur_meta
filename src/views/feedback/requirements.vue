@@ -1,7 +1,10 @@
 <template>
   <section>
     <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-      <el-tab-pane label="用户需求" name="first">
+      <el-tab-pane v-for="(item, index) in this.allMenu" :label="item.name" :name="item.name" :key="index">
+      </el-tab-pane>
+    </el-tabs>
+      <div v-show="userShow">
         <!--需求工具条-->
         <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
           <el-form :inline="true" :model="condition">
@@ -174,8 +177,8 @@
             </el-pagination>
           </div>
         </el-col>
-      </el-tab-pane>
-      <el-tab-pane label="审核列表" name="second">
+      </div>
+      <div v-show="auditShow">
         <!--审核工具条-->
         <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
           <el-form :inline="true" :model="examine">
@@ -260,7 +263,7 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click.native="editFormVisibleAudit = false">取消</el-button>
-            <el-button type="primary" @click.native="editAuditSubmit" :loading="editAuditLoading">提交</el-button>
+            <el-button type="primary" @click.native="editSubmit('Audit')" :loading="editAuditLoading">提交</el-button>
           </div>
         </el-dialog>
         <!--审核分页工具条-->
@@ -274,14 +277,14 @@
               :total="this.auditTotal" 
               background 
               layout="total, sizes, slot, prev, pager, next, jumper" 
-              @current-change="handleCurrentChangeAudit"
-              @size-change="handleSizeChangeAudit">
-              <el-button type="text" @click="showAllAudit">显示全部</el-button>
+              @current-change="handleCurrentChange"
+              @size-change="handleSizeChange">
+              <el-button type="text" @click="showAll('Audit')">显示全部</el-button>
             </el-pagination>
           </div>
         </el-col>
-      </el-tab-pane>
-      <el-tab-pane label="处理列表" name="third">
+      </div>
+      <div v-show="dealShow">
         <!--处理工具条-->
         <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
           <el-form :inline="true" :model="deal">
@@ -379,7 +382,7 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click.native="editFormVisibleDeal = false">取消</el-button>
-            <el-button type="primary" @click.native="editDealSubmit" :loading="editDealLoading">提交</el-button>
+            <el-button type="primary" @click.native="editSubmit('Deal')" :loading="editDealLoading">提交</el-button>
           </div>
         </el-dialog>
         <!--处理详情界面-->
@@ -429,14 +432,13 @@
               :total="this.dealTotal" 
               background 
               layout="total, sizes, slot, prev, pager, next, jumper" 
-              @current-change="handleCurrentChangeDeal"
-              @size-change="handleSizeChangeDeal">
-              <el-button type="text" @click="showAllDeal">显示全部</el-button>
+              @current-change="handleCurrentChange"
+              @size-change="handleSizeChange">
+              <el-button type="text" @click="showAll('Deal')">显示全部</el-button>
             </el-pagination>
           </div>
         </el-col>
-      </el-tab-pane>
-    </el-tabs>
+      </div>
   </section>
 </template>
 
@@ -455,8 +457,12 @@ import { getMenu } from '../../api/login'
 export default {
   data() {
     return {
+      userShow: false,
+      auditShow: false,
+      dealShow: false,
+      allMenu: [],
       sels: [],
-      activeName: 'first',
+      activeName: '',
       detail: '',
       str: '',
       img: '',
@@ -629,7 +635,24 @@ export default {
         })
       }
     },
-    handleClick(tab, event) {},
+    // 权限
+    handleClick(tab, event) {
+      if (tab.label === '用户需求') {
+        this.userShow = true
+      } else {
+        this.userShow = false
+      }
+      if (tab.label === '审核列表') {
+        this.auditShow = true
+      } else {
+        this.auditShow = false
+      }
+      if (tab.label === '处理列表') {
+        this.dealShow = true
+      } else {
+        this.dealShow = false
+      }
+    },
     // 富文本
     onEditorBlur(quill) {
       // 失去焦点事件
@@ -652,37 +675,33 @@ export default {
     },
     // 分页器
     handleCurrentChange(val) {
-      this.condition.page = val
-      this.getRequire(this.activeName)
-    },
-    handleCurrentChangeAudit(val) {
-      this.examine.page = val
-      this.getRequire(this.activeName)
-    },
-    handleCurrentChangeDeal(val) {
-      this.deal.page = val
+      if (this.activeName === '用户需求') {
+        this.condition.page = val
+      } else if (this.activeName === '审核列表') {
+        this.examine.page = val
+      } else if (this.activeName === '处理列表') {
+        this.deal.page = val
+      }
       this.getRequire(this.activeName)
     },
     handleSizeChange(val) {
-      this.condition.pageSize = val
+      if (this.activeName === '用户需求') {
+        this.condition.pageSize = val
+      } else if (this.activeName === '审核列表') {
+        this.examine.pageSize = val
+      } else if (this.activeName === '处理列表') {
+        this.deal.pageSize = val
+      }
       this.getRequire(this.activeName)
     },
-    handleSizeChangeAudit(val) {
-      this.examine.pageSize = val
-      this.getRequire(this.activeName)
-    },
-    handleSizeChangeDeal(val) {
-      this.deal.pageSize = val
-      this.getRequire(this.activeName)
-    },
-    showAll() {
-      this.handleSizeChange(this.total)
-    },
-    showAllAudit() {
-      this.handleSizeChangeAudit(this.auditTotal)
-    },
-    showAllDeal() {
-      this.handleSizeChangeDeal(this.dealTotal)
+    showAll(name) {
+      if (name === 'Audit') {
+        this.handleSizeChange(this.auditTotal)
+      } else if (name === 'Deal') {
+        this.handleSizeChange(this.dealTotal)
+      } else {
+        this.handleSizeChange(this.total)
+      }
     },
     formatter(row, column) {
       return row.createdDate ? row.createdDate.substring(0, 16) : ''
@@ -710,71 +729,105 @@ export default {
       })
     },
     // 编辑界面提交
-    editSubmit() {
-      this.$confirm('确认提交吗？', '提示', {}).then(() => {
-        this.editLoading = true
-        this.editForm.processingPerson = this.editForm.processingPerson.filter(ele => ele.length > 0).join(',')
-        this.editForm.img =
-          this.mycontent.match(/data:([^"]*)/g) ||
-          this.mycontent.match(/http:([^"]*)/g)
-        this.editForm.detail = this.mycontent.replace(/data:([^"]*)/g, '')
-        editRequirements(this.editForm).then(response => {
-          this.editFormVisible = false
-          const req = response.data.data
-          this.editLoading = false
-          this.requirements = this.requirements.map(ele => {
-            if (parseInt(ele.id) === req.id) {
-              return req
-            }
-            return ele
+    editSubmit(name) {
+      if (name === 'Deal') {
+        this.$confirm('确认提交吗？', '提示', {}).then(() => {
+          this.editDealLoading = true
+          this.editDealForm.processingPerson = this.editDealForm.processingPerson.filter(ele => ele.length > 0).join(',')
+          this.editDealForm.img = this.mycontent.match(/data:([^"]*)/g) || this.mycontent.match(/http:([^"]*)/g)
+          this.editDealForm.detail = this.mycontent.replace(/data:([^"]*)/g, '')
+          editRequirements(this.editDealForm).then(response => {
+            this.editFormVisibleDeal = false
+            const req = response.data.data
+            this.editDealLoading = false
+            this.requirements = this.requirements.map(ele => {
+              if (parseInt(ele.id) === req.id) {
+                return req
+              }
+              return ele
+            })
+            this.getRequire(this.activeName)
           })
         })
-      })
-    },
-    editDealSubmit() {
-      this.$confirm('确认提交吗？', '提示', {}).then(() => {
-        this.editDealLoading = true
-        this.editDealForm.processingPerson = this.editDealForm.processingPerson.filter(ele => ele.length > 0).join(',')
-        this.editDealForm.img =
-          this.mycontent.match(/data:([^"]*)/g) ||
-          this.mycontent.match(/http:([^"]*)/g)
-        this.editDealForm.detail = this.mycontent.replace(/data:([^"]*)/g, '')
-        editRequirements(this.editDealForm).then(response => {
-          this.editFormVisibleDeal = false
-          const req = response.data.data
-          this.editDealLoading = false
-          this.requirements = this.requirements.map(ele => {
-            if (parseInt(ele.id) === req.id) {
-              return req
-            }
-            return ele
+      } else if (name === 'Audit') {
+        this.$confirm('确认提交吗？', '提示', {}).then(() => {
+          this.editAuditLoading = true
+          this.editAuditForm.processingPerson = this.editAuditForm.processingPerson.filter(ele => ele.length > 0).join(',')
+          this.editAuditForm.img = this.mycontent.match(/data:([^"]*)/g) || this.mycontent.match(/http:([^"]*)/g)
+          this.editAuditForm.detail = this.mycontent.replace(/data:([^"]*)/g, '')
+          editRequirements(this.editAuditForm).then(response => {
+            this.editFormVisibleAudit = false
+            const req = response.data.data
+            this.editAuditLoading = false
+            this.requirements = this.requirements.map(ele => {
+              if (parseInt(ele.id) === req.id) {
+                return req
+              }
+              return ele
+            })
+            this.getRequire(this.activeName)
           })
-          this.getRequire(this.activeName)
         })
-      })
-    },
-    editAuditSubmit() {
-      this.$confirm('确认提交吗？', '提示', {}).then(() => {
-        this.editAuditLoading = true
-        this.editAuditForm.processingPerson = this.editAuditForm.processingPerson.filter(ele => ele.length > 0).join(',')
-        this.editAuditForm.img =
-          this.mycontent.match(/data:([^"]*)/g) ||
-          this.mycontent.match(/http:([^"]*)/g)
-        this.editAuditForm.detail = this.mycontent.replace(/data:([^"]*)/g, '')
-        editRequirements(this.editAuditForm).then(response => {
-          this.editFormVisibleAudit = false
-          const req = response.data.data
-          this.editAuditLoading = false
-          this.requirements = this.requirements.map(ele => {
-            if (parseInt(ele.id) === req.id) {
-              return req
-            }
-            return ele
+      } else {
+        this.$confirm('确认提交吗？', '提示', {}).then(() => {
+          this.editLoading = true
+          this.editForm.processingPerson = this.editForm.processingPerson.filter(ele => ele.length > 0).join(',')
+          this.editForm.img = this.mycontent.match(/data:([^"]*)/g) || this.mycontent.match(/http:([^"]*)/g)
+          this.editForm.detail = this.mycontent.replace(/data:([^"]*)/g, '')
+          editRequirements(this.editForm).then(response => {
+            this.editFormVisible = false
+            const req = response.data.data
+            this.editLoading = false
+            this.requirements = this.requirements.map(ele => {
+              if (parseInt(ele.id) === req.id) {
+                return req
+              }
+              return ele
+            })
           })
-          this.getRequire(this.activeName)
         })
-      })
+      }
     },
+    // editDealSubmit() {
+    //   this.$confirm('确认提交吗？', '提示', {}).then(() => {
+    //     this.editDealLoading = true
+    //     this.editDealForm.processingPerson = this.editDealForm.processingPerson.filter(ele => ele.length > 0).join(',')
+    //     this.editDealForm.img = this.mycontent.match(/data:([^"]*)/g) || this.mycontent.match(/http:([^"]*)/g)
+    //     this.editDealForm.detail = this.mycontent.replace(/data:([^"]*)/g, '')
+    //     editRequirements(this.editDealForm).then(response => {
+    //       this.editFormVisibleDeal = false
+    //       const req = response.data.data
+    //       this.editDealLoading = false
+    //       this.requirements = this.requirements.map(ele => {
+    //         if (parseInt(ele.id) === req.id) {
+    //           return req
+    //         }
+    //         return ele
+    //       })
+    //       this.getRequire(this.activeName)
+    //     })
+    //   })
+    // },
+    // editAuditSubmit() {
+    //   this.$confirm('确认提交吗？', '提示', {}).then(() => {
+    //     this.editAuditLoading = true
+    //     this.editAuditForm.processingPerson = this.editAuditForm.processingPerson.filter(ele => ele.length > 0).join(',')
+    //     this.editAuditForm.img = this.mycontent.match(/data:([^"]*)/g) || this.mycontent.match(/http:([^"]*)/g)
+    //     this.editAuditForm.detail = this.mycontent.replace(/data:([^"]*)/g, '')
+    //     editRequirements(this.editAuditForm).then(response => {
+    //       this.editFormVisibleAudit = false
+    //       const req = response.data.data
+    //       this.editAuditLoading = false
+    //       this.requirements = this.requirements.map(ele => {
+    //         if (parseInt(ele.id) === req.id) {
+    //           return req
+    //         }
+    //         return ele
+    //       })
+    //       this.getRequire(this.activeName)
+    //     })
+    //   })
+    // },
     // 新增
     handleAdd() {
       const form = {
@@ -829,7 +882,6 @@ export default {
       this.editForm.processingPerson = this.editForm.processingPerson.split(
         ','
       )
-      // this.detail=this.editForm.detail.replace(/http:([^"]*)/g,'').toString()
       for (let i = 0; i < this.requirements.length; i++) {
         if (this.requirements[i].id === row.id) {
           this.editForm.detail = this.requirements[i].detail.replace(
@@ -847,7 +899,6 @@ export default {
       this.editAuditForm.processingPerson = this.editAuditForm.processingPerson.split(
         ','
       )
-      // this.detail=this.editForm.detail.replace(/http:([^"]*)/g,'').toString()
       for (let i = 0; i < this.requirements.length; i++) {
         if (this.requirements[i].id === row.id) {
           this.editAuditForm.detail = this.requirements[i].detail.replace(
@@ -865,7 +916,6 @@ export default {
       this.editDealForm.processingPerson = this.editDealForm.processingPerson.split(
         ','
       )
-      // this.detail=this.editForm.detail.replace(/http:([^"]*)/g,'').toString()
       for (let i = 0; i < this.requirements.length; i++) {
         if (this.requirements[i].id === row.id) {
           this.editDealForm.detail = this.requirements[i].detail.replace(
@@ -927,7 +977,7 @@ export default {
       })
     },
     getRequire(name) {
-      if (name === 'first') {
+      if (name === '用户需求') {
         getRequirementsIndex(this.condition).then(response => {
           const res = response.data.data
           this.requirements = res.items
@@ -935,7 +985,7 @@ export default {
           this.condition.page = res._meta.currentPage
           this.condition.pageSize = res._meta.perPage
         })
-      } else if (name === 'second') {
+      } else if (name === '审核列表') {
         getRequirementsExamine(this.examine).then(response => {
           const res = response.data.data
           this.requirementsAudit = res.items
@@ -943,7 +993,7 @@ export default {
           this.examine.page = res._meta.currentPage
           this.examine.pageSize = res._meta.perPage
         })
-      } else if (name === 'third') {
+      } else if (name === '处理列表') {
         getRequirementsDeal(this.deal).then(response => {
           const res = response.data.data
           this.requirementsDeal = res.items
@@ -957,7 +1007,13 @@ export default {
   mounted() {
     this.getRequire(this.activeName)
     getMenu().then(response => {
-      this.allMenu = response.data.data
+      const res = response.data.data
+      const menu = res.filter(e => e.name === '反馈中心')
+      for (let i = 0; i < menu.length; i++) {
+        for (let j = 0; j < menu[i].children.length; j++) {
+          this.allMenu = menu[i].children[j].tabs
+        }
+      }
     })
   }
 }

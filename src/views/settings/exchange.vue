@@ -1,14 +1,14 @@
 <template>
-  <el-form :inline="true" :model="condition" class="demo-form-inline" label-width="9rem">
+  <el-form :inline="true" :model="condition" class="demo-form-inline" label-width="10rem">
     <el-form-item label="销售汇率">
-      <el-input v-model="sell.mun" :placeholder="placeholders"></el-input>
+      <el-input v-model="condition.saleRate" :placeholder="placeholders"></el-input>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="onSubmit">保存</el-button>
     </el-form-item>
     <br>
     <el-form-item label="开发汇率">
-      <el-input v-model="oper.mun" :placeholder="placeholderd"></el-input>
+      <el-input v-model="condition.devRate" :placeholder="placeholderd"></el-input>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="onSubmit2">保存</el-button>
@@ -22,12 +22,6 @@ export default {
     return {
       placeholderd: '',
       placeholders: '',
-      sell: {
-        mun: ''
-      },
-      oper: {
-        mun: ''
-      },
       condition: {
         devRate: '',
         saleRate: ''
@@ -36,12 +30,12 @@ export default {
   },
   methods: {
     onSubmit(form) {
-      if (this.sell.mun === '' || this.oper.mun === '') {
-        this.sell.mun = this.placeholders
-        this.oper.mun = this.placeholderd
+      if (this.condition.saleRate === '' || this.condition.devRate === '') {
+        this.condition.saleRate = this.placeholders
+        this.condition.devRate = this.placeholderd
       }
-      form.saleRate = this.sell.mun
-      form.devRate = this.oper.mun
+      form.saleRate = this.condition.saleRate
+      form.devRate = this.condition.devRate
       getUpdateexchange(form).then(response => {
         this.$alert('更新销售汇率成功！', '提示', {
           confirmButtonText: '确定',
@@ -50,12 +44,12 @@ export default {
       })
     },
     onSubmit2(form) {
-      if (this.sell.mun === '' || this.oper.mun === '') {
-        this.sell.mun = this.placeholders
-        this.oper.mun = this.placeholderd
+      if (this.condition.saleRate === '' || this.condition.devRate === '') {
+        this.condition.saleRate = this.placeholders
+        this.condition.devRate = this.placeholderd
       }
-      form.saleRate = this.sell.mun
-      form.devRate = this.oper.mun
+      form.saleRate = this.condition.saleRate
+      form.devRate = this.condition.devRate
       getUpdateexchange(form).then(response => {
         this.$alert('更新开发汇率成功！', '提示', {
           confirmButtonText: '确定',
