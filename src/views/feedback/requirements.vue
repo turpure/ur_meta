@@ -788,46 +788,6 @@ export default {
         })
       }
     },
-    // editDealSubmit() {
-    //   this.$confirm('确认提交吗？', '提示', {}).then(() => {
-    //     this.editDealLoading = true
-    //     this.editDealForm.processingPerson = this.editDealForm.processingPerson.filter(ele => ele.length > 0).join(',')
-    //     this.editDealForm.img = this.mycontent.match(/data:([^"]*)/g) || this.mycontent.match(/http:([^"]*)/g)
-    //     this.editDealForm.detail = this.mycontent.replace(/data:([^"]*)/g, '')
-    //     editRequirements(this.editDealForm).then(response => {
-    //       this.editFormVisibleDeal = false
-    //       const req = response.data.data
-    //       this.editDealLoading = false
-    //       this.requirements = this.requirements.map(ele => {
-    //         if (parseInt(ele.id) === req.id) {
-    //           return req
-    //         }
-    //         return ele
-    //       })
-    //       this.getRequire(this.activeName)
-    //     })
-    //   })
-    // },
-    // editAuditSubmit() {
-    //   this.$confirm('确认提交吗？', '提示', {}).then(() => {
-    //     this.editAuditLoading = true
-    //     this.editAuditForm.processingPerson = this.editAuditForm.processingPerson.filter(ele => ele.length > 0).join(',')
-    //     this.editAuditForm.img = this.mycontent.match(/data:([^"]*)/g) || this.mycontent.match(/http:([^"]*)/g)
-    //     this.editAuditForm.detail = this.mycontent.replace(/data:([^"]*)/g, '')
-    //     editRequirements(this.editAuditForm).then(response => {
-    //       this.editFormVisibleAudit = false
-    //       const req = response.data.data
-    //       this.editAuditLoading = false
-    //       this.requirements = this.requirements.map(ele => {
-    //         if (parseInt(ele.id) === req.id) {
-    //           return req
-    //         }
-    //         return ele
-    //       })
-    //       this.getRequire(this.activeName)
-    //     })
-    //   })
-    // },
     // 新增
     handleAdd() {
       const form = {
