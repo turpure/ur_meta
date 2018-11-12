@@ -424,10 +424,18 @@ export default {
     },
     // 小数和空值格式化
     empty(row, column, cellValue, index) {
-      row.grossprofitRate = Math.round(row.grossprofitRate * 100) / 100
+      if (row.grossprofitRate === '0') {
+        return row.grossprofitRate
+      } else {
+        row.grossprofitRate = Math.round(row.grossprofitRate * 100) / 100
+      }
       row.expressFare = Math.round(row.expressFare * 100) / 100
       row.refund = Math.round(row.refund * 100) / 100
-      row.refundrate = Math.round(row.refundrate * 100) / 100
+      if (row.refundrate === '0') {
+        return row.refundrate
+      } else {
+        row.refundrate = Math.round(row.refundrate * 100) / 100
+      }
       row.diefeeZn = Math.round(row.diefeeZn * 100) / 100
       row.insertionFee = Math.round(row.insertionFee * 100) / 100
       row.grossprofit = Math.round(row.grossprofit * 100) / 100
@@ -556,7 +564,6 @@ export default {
 <style lang="scss" scoped>
 .el-form {
   margin-bottom: 1.7rem;
-  margin-top: 1.5rem;
   .el-form-item {
     margin-bottom: 0rem;
     .el-form-item__content {
