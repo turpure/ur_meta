@@ -1,6 +1,6 @@
 <template>
-  <section>
-    <el-row class="toolbar">
+  <section class="toolbar">
+    <el-row>
     <el-form :inline="true" :model='condition' label-width="80px">
       <el-form-item prop="sku" label="SKU*">
         <el-input v-model="condition.sku" placeholder="请填写产品SKU"></el-input>
@@ -93,5 +93,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.toolbar{
+  padding: 10px;
+}
 </style>

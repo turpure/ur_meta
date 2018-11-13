@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="toolbar">
     <el-form v-model="condition" label-width="15rem" class="demo-form-inline" :inline='true'>
       <el-form-item label="卖家账号：">
         <el-select size="small" v-model="condition.suffix" filterable clearable>
@@ -130,7 +130,7 @@ export default {
     varition2Change(row, index) {},
     onSubmit() {
       getsmtsku(this.condition).then(response => {
-        if (response.data.data !== '') {
+        if (response.data.data.length !== 0) {
           this.tableData = response.data.data
         } else {
           alert('商品编码不匹配！')
@@ -209,9 +209,7 @@ export default {
 
 <style lang="scss" scoped>
 .el-form {
-  .el-form-item {
-    margin: 0.1rem;
-  }
+  padding-top: 10px;
 }
 .modal-content {
   position: relative;
@@ -241,7 +239,7 @@ export default {
   .table {
     margin-bottom: 2rem;
     border-collapse: collapse;
-    max-height: 30rem;
+    max-height: 49rem;
     overflow: auto;
   }
 }

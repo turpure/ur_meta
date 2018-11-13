@@ -15,7 +15,7 @@
               <el-button type="default" @click="searchRequirements">查询</el-button>
             </el-form-item>
             <el-form-item>
-              <el-button type="default" @click="handleAdd">新增</el-button>
+              <el-button type="primary" @click="handleAdd">新增</el-button>
             </el-form-item>
           </el-form>
         </el-col>
@@ -980,4 +980,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.toolbar{
+  padding: 10px 0;
+}
 </style>

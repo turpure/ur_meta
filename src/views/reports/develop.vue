@@ -473,11 +473,11 @@ export default {
       if (this.show === false) {
         this.text = '显示输入框'
         const height = document.getElementById('app').clientHeight
-        this.tableHeight = height - 210 + 'px'
+        this.tableHeight = height - 195 + 'px'
       } else if (this.show === true) {
         this.text = '隐藏输入框'
         const height = document.getElementById('app').clientHeight
-        this.tableHeight = height - 290 + 'px'
+        this.tableHeight = height - 275 + 'px'
       }
     },
     changeActive() {
@@ -492,7 +492,7 @@ export default {
     onSubmit(form) {
       const myform = JSON.parse(JSON.stringify(form))
       const height = document.getElementById('app').clientHeight
-      this.tableHeight = height - 290 + 'px'
+      this.tableHeight = height - 275 + 'px'
       let posseman1Data
       let posseman2Data
       let ret
@@ -740,8 +740,6 @@ export default {
 
 <style lang="scss">
 .container .main .content-container[data-v-0ff1e341] {
-  margin: 0rem;
-  padding: 0.1rem;
   .demo-block.hover {
     box-shadow: 0 0 8px 0 rgba(232, 237, 250, 0.6),
       0 2px 4px 0 rgba(232, 237, 250, 0.5);
@@ -796,9 +794,8 @@ export default {
       }
     }
     form {
-      margin-top: 1.5rem;
-      margin-left: 0.5rem;
-      background-color: #fafafa;
+      padding-top: 15px;
+      background-color: #f2f2f2;
       transition: 0.2s 0.2s;
       .el-date-editor .el-range__icon {
         line-height: 0.1rem;

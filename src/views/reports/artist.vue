@@ -1,9 +1,9 @@
 <template>
   <!-- <div>美工毛利润报表</div>     -->
-  <div>
+  <div class="toolbar">
     <div class="demo-block demo-box demo-zh-CN demo-transition" @mouseover="changeActive" @mouseout="removeActive">
       <transition name="el-fade-in-linear">
-        <el-form :model="condition" :inline="true" ref="condition" label-width="6.8rem" class="demo-form-inline" v-show="show">
+        <el-form :model="condition" :inline="true" ref="condition" label-width="6.8rem" class="demo-form-inline" v-show="show" style="margin-bottom:10px;">
           <el-form-item label="部门" class="input">
             <el-select size="small" v-model="formInline.region" multiple collapse-tags placeholder="部门" @change="choosed">
               <el-button plain type="info" @click="selectalld">全选</el-button>

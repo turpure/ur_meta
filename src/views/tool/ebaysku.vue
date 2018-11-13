@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <el-form v-model="condition" label-width="18rem" class="demo-form-inline" :inline='true'>
+  <div class="toolbar">
+    <el-form v-model="condition" label-width="16rem" class="demo-form-inline" :inline='true'>
       <el-form-item label="卖家账号：">
         <el-select size="small" v-model="condition.suffix" filterable clearable>
           <el-option v-for='(item,index) in suffix' :index='index' :key='item.ebaySuffix' :label='item.ebayName' :value='item.ebayName'></el-option>
@@ -25,7 +25,7 @@
         <el-input size="small" v-model="condition.shipping1" style="width:8.8rem;" placeholder="首件运费"></el-input>
         <el-input size="small" v-model="condition.shipping2" style="width:8.8rem;" placeholder="续件运费"></el-input>
       </el-form-item>
-      <el-form-item>
+      <el-form-item style="margin-left:50px;">
         <el-button type="primary" @click="onSubmit(condition)">
           属性设置
           <i class="el-icon-caret-right"></i>
@@ -164,7 +164,7 @@ export default {
     property2Change(row, index) {},
     onSubmit() {
       geteBaysku(this.condition).then(response => {
-        if (response.data.data !== '') {
+        if (response.data.data.length !== 0) {
           this.tableData = response.data.data.payload
           this.tableData1 = response.data.data.setting
         } else {
@@ -257,9 +257,7 @@ export default {
 
 <style lang="scss" scoped>
 .el-form {
-  .el-form-item {
-    margin: 0.1rem;
-  }
+  padding-top: 10px;
 }
 .modal-content {
   background-color: #fff;
@@ -287,7 +285,7 @@ export default {
   .table {
     margin-bottom: 2rem;
     border-collapse: collapse;
-    max-height: 30rem;
+    max-height: 45rem;
     overflow: auto;
   }
 }

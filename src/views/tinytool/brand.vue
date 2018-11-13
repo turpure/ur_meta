@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="toolbar">
     <el-form :model='condition' :inline='true' ref='condition' label-width='8rem' class='demo-form-inline'>
       <el-form-item label="品牌" prop="brand">
         <el-input size="small" v-model="condition.brand" style="width:18rem"></el-input>
@@ -18,7 +18,7 @@
         <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
       </el-form-item>
     </el-form>
-    <el-row v-loading="listLoading" style="height:780px;">
+    <el-row v-loading="listLoading">
       <el-col :span="6" class="mix" v-for="item in this.tableData" :key="item.rowId">
         <a :href="item.url" target="_blank" style="text-decoration:none;">
           <img :src=item.imgUrl :alt="item.imgName">
@@ -140,7 +140,7 @@ export default {
   margin: 0.5rem;
 }
 .el-row {
-  max-height: 65rem;
+  max-height: 64rem;
   overflow: auto;
   .mix:hover {
     border-radius: 1rem;

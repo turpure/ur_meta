@@ -1,6 +1,6 @@
 <template>
   <el-row class="toolbar">
-    <el-row>
+    <el-row style="padding-top:10px;">
       <el-col :span="8">
         <span>备注：报表中商品的销量和库存指的是对应
           <font color="red">
@@ -15,7 +15,7 @@
         <el-button style='float:left' type='default' @click='exportExcel'>导出Excel</el-button>
       </el-col>
     </el-row>
-    <el-table :data="tableData" id="sale-table" :header-cell-style="thstyle" height="765" v-loading="listLoading">
+    <el-table :data="tableData" id="sale-table" :header-cell-style="thstyle" height="810" v-loading="listLoading">
       <el-table-column prop="Season" label="季节" :formatter="empty" sortable></el-table-column>
       <el-table-column min-width="100px" prop="goodscode" label="商品编码" :formatter="empty" sortable></el-table-column>
       <el-table-column min-width="130px" prop="num" label="最大延迟天数" :formatter="empty" sortable></el-table-column>
@@ -200,11 +200,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.toolbar {
-  margin-top: 0rem;
-  .el-col-2 {
-    margin-bottom: 0.5rem;
-  }
+.el-col-2 {
+  margin-bottom: 10px;
 }
 </style>
 

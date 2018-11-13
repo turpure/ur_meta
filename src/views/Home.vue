@@ -168,7 +168,7 @@ export default {
 
 <style lang="scss" scoped >
 @import "~scss_vars";
-@media (min-width: 800px) and (max-width: 1152px){
+@media (max-width: 1152px){
   .header {
     height: 5rem;
     line-height: 5rem;
@@ -297,7 +297,7 @@ export default {
   top: 0rem;
   bottom: 0rem;
   width: 100%;
-  @media (min-width: 1280px){
+  @media (min-width: 1152px){
   .header {
     height: 5rem;
     line-height: 5rem;

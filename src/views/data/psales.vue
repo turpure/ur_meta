@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="toolbar">
     <el-form :model='condition' :inline='true' ref='condition' label-width='8rem' class='demo-form-inline'>
       <el-form-item label="平台">
         <el-select size="small" v-model="condition.plat" clearable>
@@ -29,7 +29,7 @@
       </el-col>
     </el-row>
     <div>
-      <el-table v-loading="listLoading" max-height="730" :data="this.tableData" @sort-change=" sortNumber" v-show="show" style="width: 100%;">
+      <el-table v-loading="listLoading" max-height="760" :data="this.tableData" @sort-change=" sortNumber" v-show="show" style="width: 100%;">
         <el-table-column min-width="100" prop="GoodsCode" label="商品编码" :formatter="empty" sortable></el-table-column>
         <el-table-column min-width="100" prop="GoodsName" label="商品名称" :formatter="empty" sortable></el-table-column>
         <el-table-column min-width="100" prop="GoodsSKUStatus" label="商品状态" :formatter="empty" sortable></el-table-column>
@@ -48,7 +48,7 @@
         <el-table-column min-width="130" prop="changeTenDay" label="10天销量变化" :formatter="empty" sortable></el-table-column>
       </el-table>
     </div>
-    <el-col :span="24" class="toolbar" v-show="total>0" style="margin-top:0rem">
+    <el-col :span="24" class="toolbar" v-show="total>0">
       <div class="pagination-container" align="right">
         <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[100, 200, 500,1000,this.total]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
         </el-pagination>
@@ -216,6 +216,6 @@ export default {
 
 <style lang="scss" scoped>
 .el-form {
-  margin-top: 1rem;
+  padding-top: 1rem;
 }
 </style>

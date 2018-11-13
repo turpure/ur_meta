@@ -1,6 +1,6 @@
 <template>
   <!-- <div>销售毛利润报表</div>     -->
-  <div>
+  <div class="toolbar">
     <div class='demo-block demo-box demo-zh-CN demo-transition' @mouseover='changeActive' @mouseout='removeActive'>
       <transition name='el-fade-in-linear'>
         <el-form :model='condition' :inline='true' ref='condition' label-width='10rem' class='demo-form-inline' v-show='show'>
@@ -563,35 +563,9 @@ export default {
 
 <style lang="scss" scoped>
 .el-form {
-  margin-bottom: 1.7rem;
+  margin-bottom: 20px;
   .el-form-item {
-    margin-bottom: 0rem;
-    .el-form-item__content {
-      .el-date-editor--daterange {
-        width: 18rem;
-        .el-range-input {
-          width: 100%;
-        }
-      }
-    }
-  }
-}
-.el-select-dropdown {
-  .el-button--info.is-plain {
-    width: 50%;
-    padding: 0.5rem 1rem;
-    font-size: 12px;
-    line-height: 1.5;
-    margin-left: 0;
-    float: left;
-    border-radius: 0 !important;
-    color: #333;
-    background-color: #fff;
-  }
-  .el-button:hover {
-    color: #333;
-    background-color: #ebebeb;
-    border-color: #adadad;
+    margin-bottom: 0px;
   }
 }
 </style>

@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <el-row class="toolbar" style="margin-bottom: 0rem;margin-top:0rem">
+  <div class="toolbar" style="padding:10px">
+    <el-row>
       <el-col :span='2' :offset='21'>
         <el-input clearable placeholder='search' v-model='searchValue' @change='handleSearch'></el-input>
       </el-col>
     </el-row>
-    <el-table border max-height=830 :data="tableData" :header-row-style="thClass">
+    <el-table border max-height=845 :data="tableData" :header-row-style="thClass">
       <el-table-column min-width="80" prop="NID" label="ID" :formatter="empty"></el-table-column>
       <el-table-column min-width="200" prop="DefaultExpress" label="物流公司" :formatter="empty"></el-table-column>
       <el-table-column min-width="300" prop="name" label="物流方式" :formatter="empty"></el-table-column>

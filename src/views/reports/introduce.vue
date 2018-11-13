@@ -1,6 +1,6 @@
 <template>
   <!-- <div>推荐人毛利润报表</div>     -->
-  <div>
+  <div class="toolbar">
     <div class="demo-block demo-box demo-zh-CN demo-transition" @mouseover="changeActive" @mouseout="removeActive">
       <transition name="el-fade-in-linear">
         <el-form :model="condition" :inline="true" ref="condition" label-width="6.8rem" class="demo-form-inline" v-show="show">
@@ -406,11 +406,11 @@ export default {
       if (this.show === false) {
         this.text = '显示输入框'
         const height = document.getElementById('app').clientHeight
-        this.tableHeight = height - 150 + 'px'
+        this.tableHeight = height - 145 + 'px'
       } else if (this.show === true) {
         this.text = '隐藏输入框'
         const height = document.getElementById('app').clientHeight
-        this.tableHeight = height - 225 + 'px'
+        this.tableHeight = height - 220 + 'px'
       }
     },
     changeActive() {
@@ -422,7 +422,7 @@ export default {
     onSubmit(form) {
       const myform = JSON.parse(JSON.stringify(form))
       const height = document.getElementById('app').clientHeight
-      this.tableHeight = height - 225 + 'px'
+      this.tableHeight = height - 220 + 'px'
       this.show2 = true
       this.$refs.condition.validate(valid => {
         if (valid) {
@@ -659,25 +659,13 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.el-table__body {
-  td {
-    padding: 0.5rem 0;
-    .cell {
-      line-height: normal;
-    }
+<style lang="scss" scoped>
+.el-form {
+  margin-bottom: 20px;
+  .el-form-item {
+    margin-bottom: 0px;
   }
-}
-.el-table__footer {
-  .cell {
-    line-height: normal;
-    color: red;
-    font-weight: 550;
-  }
-}
-.el-radio.is-bordered {
-  padding: 0.6rem 1.6rem 0 0.6rem;
-  height: 3rem;
 }
 </style>
+
 

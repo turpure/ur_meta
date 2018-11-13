@@ -1,6 +1,6 @@
 <template>
   <!-- <div>销售额走势</div>     -->
-  <div>
+  <div class="toolbar">
     <div class="demo-block demo-box demo-zh-CN demo-transition" @mouseover="changeActive" @mouseout="removeActive">
       <transition name="el-fade-in-linear">
         <el-form :model="condition" :inline="true" ref="condition" class="demo-form-inline" label-width="10rem" v-show="show">
@@ -385,18 +385,9 @@ export default {
 
 <style lang="scss" scoped>
 .el-form {
-  margin-bottom: 1.7rem;
-  margin-top: 1.5rem;
+  margin-bottom: 20px;
   .el-form-item {
     margin-bottom: 0rem;
-    .el-form-item__content {
-      .el-date-editor--daterange {
-        width: 18rem;
-        .el-range-input {
-          width: 100%;
-        }
-      }
-    }
   }
 }
 </style>

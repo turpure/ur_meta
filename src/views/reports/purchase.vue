@@ -1,6 +1,6 @@
 <template>
   <!-- <div>采购毛利润报表</div>     -->
-  <div>
+  <div class="toolbar">
     <div class="demo-block demo-box demo-zh-CN demo-transition" @mouseover="changeActive" @mouseout="removeActive">
       <transition name="el-fade-in-linear">
         <el-form :model="condition" :inline="true" ref="condition" label-width="6.8rem" class="demo-form-inline" v-show="show">
@@ -136,11 +136,11 @@ export default {
       if (this.show === false) {
         this.text = '显示输入框'
         const height = document.getElementById('app').clientHeight
-        this.tableHeight = height - 150 + 'px'
+        this.tableHeight = height - 140 + 'px'
       } else if (this.show === true) {
         this.text = '隐藏输入框'
         const height = document.getElementById('app').clientHeight
-        this.tableHeight = height - 230 + 'px'
+        this.tableHeight = height - 220 + 'px'
       }
     },
     changeActive() {
@@ -152,7 +152,7 @@ export default {
     onSubmit(form) {
       const myform = JSON.parse(JSON.stringify(form))
       const height = document.getElementById('app').clientHeight
-      this.tableHeight = height - 230 + 'px'
+      this.tableHeight = height - 220 + 'px'
       this.show2 = true
       let admin = ''
       this.$refs.condition.validate(valid => {
@@ -299,4 +299,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.el-form {
+  margin-bottom: 20px;
+  .el-form-item {
+    margin-bottom: 0px;
+  }
+}
 </style>
