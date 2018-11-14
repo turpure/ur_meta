@@ -178,14 +178,6 @@ export default {
     empty(row, column, cellValue, index) {
       return cellValue || '--'
     },
-    sortNumber(column, prop, order) {
-      const data = this.tableData
-      if (column.order === 'descending') {
-        this.tableData = data.sort(compareDown(data, column.prop))
-      } else {
-        this.tableData = data.sort(compareUp(data, column.prop))
-      }
-    },
     getData() {
       this.listLoading = true
       getStock(this.filters).then(response => {
