@@ -20,13 +20,6 @@
       </el-col>
     </el-row>
     <el-table :data="tableData" id="sale-table" :header-cell-style="thstyle" @sort-change="sortNumber" :height="tableHeight" v-loading="listLoading" >
-      <infinite-loading 
-        direction="top"
-        slot="append"
-        @infinite="infiniteHandlerTop"
-        ref="infiniteLoading"
-        force-use-infinite-wrapper=".el-table__body-wrapper">
-      </infinite-loading>
       <el-table-column fixed min-width="90" prop="Season" label="季节" :formatter="empty" sortable></el-table-column>
       <el-table-column fixed min-width="120" prop="goodscode" label="商品编码" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="160" prop="num" label="最大延迟天数" :formatter="empty" sortable="custom"></el-table-column>
@@ -45,8 +38,7 @@
       <el-table-column min-width="160" prop="hopeUseNum" label="预计可用库存" :formatter="empty" sortable="custom"></el-table-column>
       <infinite-loading
         slot="append"
-        @infinite="infiniteHandlerBottom"
-        ref="infiniteLoading"
+        @infinite="infiniteHandler"
         force-use-infinite-wrapper=".el-table__body-wrapper">
       </infinite-loading>
     </el-table>
@@ -82,7 +74,8 @@ export default {
     return {
       tableHeight: null,
       listLoading: false,
-      // page: 1,
+      scrollPage: 1,
+      scrollPageSize: 30,
       // size: 2,
       // total: null,
       tableDataAll: [],
@@ -90,15 +83,10 @@ export default {
       searchTable: [],
       searchValue: '',
       filters: {
-        page: 3,
-        pageSize: 50,
-        total: 50
+        page: 1,
+        pageSize: null,
+        total: null
       }
-    }
-  },
-  watch: {
-    scroll: function() {
-      this.$refs.infiniteLoading.scrollParent.scrollTop = this.$refs.infiniteLoading.scrollParent.scrollHeight * 0.5
     }
   },
   methods: {
@@ -119,11 +107,20 @@ export default {
     },
     // 数字排序
     sortNumber(column, prop, order) {
-      const data = this.tableData
+      const data = this.tableDataAll
+      var ret = []
       if (column.order === 'descending') {
-        this.tableData = data.sort(compareDown(data, column.prop))
+        ret = data.sort(compareDown(data, column.prop))
       } else {
-        this.tableData = data.sort(compareUp(data, column.prop))
+        ret = data.sort(compareUp(data, column.prop))
+      }
+      this.tableDataAll = ret
+      if (this.tableData.length === this.scrollPageSize) {
+        this.tableData = data.slice(0, this.scrollPageSize)
+        this.scrollPage = 1
+      } else {
+        this.tableData = []
+        this.scrollPage = 0
       }
     },
     // 导出
@@ -205,42 +202,31 @@ export default {
     empty(row, column, cellValue, index) {
       return cellValue || '--'
     },
-    infiniteHandlerTop($state) {
-      this.filters.page -= 1
-      if (this.filters.page !== 0) {
-        getStock(this.filters).then(response => {
+    infiniteHandler($state) {
+      if (this.tableDataAll.length) {
+        var data = this.tableDataAll.slice(this.scrollPage * this.scrollPageSize, (this.scrollPage + 1) * this.scrollPageSize)
+        this.scrollPage += 1
+        this.tableData.push(...data)
+        $state.loaded()
+      } else {
+        var param = { total: null }
+        param.page = this.scrollPage
+        param.pageSize = this.scrollPageSize
+        getStock(param).then(response => {
           const res = response.data.data
           if (res.items.length) {
-            // this.tableData = []
-            this.tableData = this.tableData.concat(res.items)
+            this.tableData.push(...res.items)
             $state.loaded()
-          } else {
-            $state.complete()
           }
         })
-      } else {
-        $state.complete()
       }
-    },
-    infiniteHandlerBottom($state) {
-      this.filters.page += 1
-      getStock(this.filters).then(response => {
-        const res = response.data.data
-        if (res.items.length) {
-          // this.tableData = []
-          this.tableData = this.tableData.concat(res.items)
-          $state.loaded()
-        } else {
-          $state.complete()
-        }
-      })
     },
     getData() {
       this.listLoading = true
       getStock(this.filters).then(response => {
         this.listLoading = false
         const res = response.data.data
-        this.tableData = res.items
+        this.tableDataAll = res.items
         this.filters.total = res._meta.totalCount
         this.filters.page = res._meta.currentPage
         this.filters.pageSize = res._meta.perPage
@@ -250,14 +236,10 @@ export default {
   mounted() {
     this.tableHeight = document.documentElement.scrollHeight - 205
     this.getData()
-    getStock({
-      page: 1,
-      pageSize: null,
-      total: null
-    }).then(response => {
-      const res = response.data.data
-      this.tableDataAll = res.items
-    })
+    // getStock({ page: 1, pageSize: null, total: null }).then(response => {
+    //   const res = response.data.data
+    //   this.tableDataAll = res.items
+    // })
   }
 }
 </script>
