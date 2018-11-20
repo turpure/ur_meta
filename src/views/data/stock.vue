@@ -42,23 +42,6 @@
         force-use-infinite-wrapper=".el-table__body-wrapper">
       </infinite-loading>
     </el-table>
-    <!-- <el-col :span="24" class="toolbar" v-show="filters.total>0">
-      <div class="pagination-container">
-        <el-pagination 
-          :current-page="filters.page" 
-          :page-sizes=[this.filters.total,100,200,500,1000,] 
-          :page-size="filters.pageSize" 
-          :total="filters.total" 
-          background 
-          layout="total, sizes, slot, prev, pager, next, jumper" 
-          @current-change="handleCurrentChange" 
-          @size-change="handleSizeChange">
-          <span>
-            <el-button type="text" @click=showAll>显示全部</el-button>
-          </span>
-        </el-pagination>
-      </div>
-    </el-col> -->
   </el-row>
 </template>
 
@@ -76,12 +59,11 @@ export default {
       listLoading: false,
       scrollPage: 1,
       scrollPageSize: 30,
-      // size: 2,
-      // total: null,
       tableDataAll: [],
       tableData: [],
       searchTable: [],
       searchValue: '',
+      searchData: [],
       filters: {
         page: 1,
         pageSize: null,
@@ -90,9 +72,6 @@ export default {
     }
   },
   methods: {
-    // showAll() {
-    //   this.handleSizeChange(this.filters.total)
-    // },
     thstyle({ row, column, rowIndex, columnIndex }) {
       if (
         (rowIndex === 0 && columnIndex === 2) ||
@@ -174,19 +153,12 @@ export default {
       const [fileName, fileType, sheetName] = [filename, 'xls']
       this.$toExcel({ th, data, fileName, fileType, sheetName })
     },
-    // handleCurrentChange(val) {
-    //   this.filters.page = val
-    //   this.getData()
-    // },
-    // handleSizeChange(val) {
-    //   this.filters.pageSize = val
-    //   this.getData()
-    // },
+    // 过滤
     handleSearch() {
       const searchValue = this.searchValue && this.searchValue.toLowerCase()
-      const data = this.searchTable
+      const data = this.searchTable = this.tableDataAll
       if (searchValue) {
-        this.tableData = data.filter(function(row) {
+        this.searchData = data.filter(function(row) {
           return Object.keys(row).some(function(key) {
             return (
               String(row[key])
@@ -195,8 +167,12 @@ export default {
             )
           })
         })
+        this.tableDataAll = this.searchData
+        this.tableData = this.searchData.slice((this.scrollPage - 1) * this.scrollPageSize, this.scrollPageSize)
+        console.log(this.searchData)
+        console.log(this.tableData)
       } else {
-        this.tableData = data
+        this.tableData = data.slice(this.scrollPage * this.scrollPageSize, this.scrollPageSize)
       }
     },
     empty(row, column, cellValue, index) {
@@ -227,19 +203,12 @@ export default {
         this.listLoading = false
         const res = response.data.data
         this.tableDataAll = res.items
-        this.filters.total = res._meta.totalCount
-        this.filters.page = res._meta.currentPage
-        this.filters.pageSize = res._meta.perPage
       })
     }
   },
   mounted() {
     this.tableHeight = document.documentElement.scrollHeight - 205
     this.getData()
-    // getStock({ page: 1, pageSize: null, total: null }).then(response => {
-    //   const res = response.data.data
-    //   this.tableDataAll = res.items
-    // })
   }
 }
 </script>
