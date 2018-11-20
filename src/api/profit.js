@@ -343,4 +343,12 @@ export function getAU(param) {
     data
   })
 }
+export function getOrder(param) {
+  const data = { 'condition': param }
+  return request({
+    url: '/tiny-tool/declared-value',
+    method: 'post',
+    data
+  })
+}
 

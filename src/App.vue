@@ -62,4 +62,22 @@ body {
 .fade-leave-active {
   opacity: 0;
 }
+// 滚动条
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb{  
+  background-color:#DCDFE6;  
+  height:50px;  
+  outline-offset:-2px;  
+  outline:2px solid #fff;  
+  -webkit-border-radius:40px;  
+  border: 2px solid #fff;  
+}  
+::-webkit-scrollbar-thumb:hover{  
+  background-color:#c0c4cc;  
+  height:50px;  
+  -webkit-border-radius:40px;  
+}
 </style>

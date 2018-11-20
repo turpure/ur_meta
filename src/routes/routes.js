@@ -1,7 +1,7 @@
 import Login from '../views/Login.vue'
 import NotFound from '../views/404.vue'
 import Home from '../views/Home.vue'
-
+// 毛利润报表
 import sell from '../views/reports/sell.vue'
 import develop from '../views/reports/develop.vue'
 import purchase from '../views/reports/purchase.vue'
@@ -10,17 +10,17 @@ import account from '../views/reports/account.vue'
 import trending from '../views/reports/trending.vue'
 import index from '../views/index.vue'
 import introduce from '../views/reports/introduce.vue'
-
+// 数据中心
 import stock from '../views/data/stock.vue'
 import pcost from '../views/data/pcost.vue'
 import perform from '../views/data/perform.vue'
 import psales from '../views/data/psales.vue'
-
+// 销售工具
 import ebay from '../views/tool/ebay.vue'
 import ebaysku from '../views/tool/ebaysku.vue'
 import wishsku from '../views/tool/wishsku.vue'
 import smtsku from '../views/tool/smtsku.vue'
-
+// UR小工具
 import express from '../views/tinytool/express.vue'
 import brand from '../views/tinytool/brand.vue'
 import fyndiqzUpload from '../views/tinytool/fyndiqzUpload.vue'
@@ -28,11 +28,12 @@ import goods from '../views/tinytool/goods.vue'
 import uk from '../views/tinytool/uk.vue'
 import au from '../views/tinytool/au.vue'
 import ukfic from '../views/tinytool/ukfic.vue'
-
+import order from '../views/tinytool/order.vue'
+// 设置中心
 import deadFee from '../views/settings/deadFee.vue'
 import operationFee from '../views/settings/operationFee.vue'
 import exchange from '../views/settings/exchange.vue'
-
+// 反馈中心
 import requirements from '../views/feedback/requirements.vue'
 
 const routes = [{
@@ -225,6 +226,11 @@ const routes = [{
       path: '/v1/tiny-tool/au',
       component: au,
       name: 'AU真仓定价'
+    },
+    {
+      path: '/v1/tiny-tool/declared-value',
+      component: order,
+      name: '修改订单申报价'
     }
   ]
 },
