@@ -19,14 +19,14 @@ export default {
     return {
       condition: {
         order_id: '',
-        declared_value: ''
+        declared_value: null
       },
       rules: {
         order_id: [
           { required: true, message: '请输入订单编码', trigger: 'blur' }
         ],
         declared_value: [
-          { type: 'number', message: '必须为数字值', trigger: 'change' }
+          { type: 'number', message: '必须为数字值' }
         ]
       }
     }
