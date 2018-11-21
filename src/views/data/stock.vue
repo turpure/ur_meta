@@ -169,8 +169,6 @@ export default {
         })
         this.tableDataAll = this.searchData
         this.tableData = this.searchData.slice((this.scrollPage - 1) * this.scrollPageSize, this.scrollPageSize)
-        console.log(this.searchData)
-        console.log(this.tableData)
       } else {
         this.tableData = data.slice(this.scrollPage * this.scrollPageSize, this.scrollPageSize)
       }
@@ -181,9 +179,13 @@ export default {
     infiniteHandler($state) {
       if (this.tableDataAll.length) {
         var data = this.tableDataAll.slice(this.scrollPage * this.scrollPageSize, (this.scrollPage + 1) * this.scrollPageSize)
-        this.scrollPage += 1
-        this.tableData.push(...data)
-        $state.loaded()
+        if (data.length) {
+          this.scrollPage += 1
+          this.tableData.push(...data)
+          $state.loaded()
+        } else {
+          $state.complete()
+        }
       } else {
         var param = { total: null }
         param.page = this.scrollPage

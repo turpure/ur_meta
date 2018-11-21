@@ -26,7 +26,7 @@ export default {
           { required: true, message: '请输入订单编码', trigger: 'blur' }
         ],
         declared_value: [
-          { type: 'number', message: '必须为数字值' }
+          { type: 'number', message: '必须为数字值', trigger: 'change' }
         ]
       }
     }
