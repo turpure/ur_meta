@@ -156,7 +156,7 @@ export default {
     // 过滤
     handleSearch() {
       const searchValue = this.searchValue && this.searchValue.toLowerCase()
-      const data = this.searchTable = this.tableDataAll
+      const data = this.tableDataAll
       if (searchValue) {
         this.searchData = data.filter(function(row) {
           return Object.keys(row).some(function(key) {
@@ -170,7 +170,11 @@ export default {
         this.tableDataAll = this.searchData
         this.tableData = this.searchData.slice((this.scrollPage - 1) * this.scrollPageSize, this.scrollPageSize)
       } else {
-        this.tableData = data.slice(this.scrollPage * this.scrollPageSize, this.scrollPageSize)
+        if (this.tableDataAll.length) {
+          this.tableData = data.slice((this.scrollPage - 1) * this.scrollPageSize, this.scrollPageSize)
+        } else {
+          this.tableData = this.searchTable.slice((this.scrollPage - 1) * this.scrollPageSize, this.scrollPageSize)
+        }
       }
     },
     empty(row, column, cellValue, index) {
@@ -204,7 +208,7 @@ export default {
       getStock(this.filters).then(response => {
         this.listLoading = false
         const res = response.data.data
-        this.tableDataAll = res.items
+        this.searchTable = this.tableDataAll = res.items
       })
     }
   },
