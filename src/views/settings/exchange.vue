@@ -30,31 +30,53 @@ export default {
   },
   methods: {
     onSubmit(form) {
-      if (this.condition.saleRate === '' || this.condition.devRate === '') {
+      if (this.condition.saleRate === '' && this.condition.devRate !== '') {
+        this.condition.saleRate = this.placeholders
+      } else if (this.condition.devRate === '' && this.condition.saleRate !== '') {
+        this.condition.devRate = this.placeholderd
+      } else if (this.condition.saleRate === '' && this.condition.devRate === '') {
         this.condition.saleRate = this.placeholders
         this.condition.devRate = this.placeholderd
       }
       form.saleRate = this.condition.saleRate
       form.devRate = this.condition.devRate
       getUpdateexchange(form).then(response => {
-        this.$alert('更新销售汇率成功！', '提示', {
-          confirmButtonText: '确定',
-          type: 'warning'
-        })
+        if (response.data.code === 200) {
+          this.$alert('更新开发汇率成功！', '提示', {
+            confirmButtonText: '确定',
+            type: 'success'
+          })
+        } else {
+          this.$alert('更新开发汇率失败！', '提示', {
+            confirmButtonText: '确定',
+            type: 'error'
+          })
+        }
       })
     },
     onSubmit2(form) {
-      if (this.condition.saleRate === '' || this.condition.devRate === '') {
+      if (this.condition.saleRate === '' && this.condition.devRate !== '') {
+        this.condition.saleRate = this.placeholders
+      } else if (this.condition.devRate === '' && this.condition.saleRate !== '') {
+        this.condition.devRate = this.placeholderd
+      } else if (this.condition.saleRate === '' && this.condition.devRate === '') {
         this.condition.saleRate = this.placeholders
         this.condition.devRate = this.placeholderd
       }
       form.saleRate = this.condition.saleRate
       form.devRate = this.condition.devRate
       getUpdateexchange(form).then(response => {
-        this.$alert('更新开发汇率成功！', '提示', {
-          confirmButtonText: '确定',
-          type: 'warning'
-        })
+        if (response.data.code === 200) {
+          this.$alert('更新开发汇率成功！', '提示', {
+            confirmButtonText: '确定',
+            type: 'success'
+          })
+        } else {
+          this.$alert('更新开发汇率失败！', '提示', {
+            confirmButtonText: '确定',
+            type: 'error'
+          })
+        }
       })
     }
   },
