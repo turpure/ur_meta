@@ -29,6 +29,8 @@ import uk from '../views/tinytool/uk.vue'
 import au from '../views/tinytool/au.vue'
 import ukfic from '../views/tinytool/ukfic.vue'
 import order from '../views/tinytool/order.vue'
+import paypal from '../views/tinytool/paypal.vue'
+import risk from '../views/tinytool/risk.vue'
 // 设置中心
 import deadFee from '../views/settings/deadFee.vue'
 import operationFee from '../views/settings/operationFee.vue'
@@ -231,6 +233,16 @@ const routes = [{
       path: '/v1/tiny-tool/declared-value',
       component: order,
       name: '修改订单申报价'
+    },
+    {
+      path: '/v1/tiny-tool/exception-pay-pal',
+      component: paypal,
+      name: '异常paypal列表'
+    },
+    {
+      path: '/v1/tiny-tool/risky-order',
+      component: risk,
+      name: '风险订单'
     }
   ]
 },

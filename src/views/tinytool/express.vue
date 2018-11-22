@@ -11,7 +11,7 @@
       <el-table-column min-width="300" prop="name" label="物流方式" :formatter="empty"></el-table-column>
       <el-table-column min-width="400" prop="URL" label="查询网址" :formatter="empty">
         <template slot-scope="scope">
-          <a :href=scope.row.URL>{{scope.row.URL}}</a>
+          <a :href=scope.row.URL target="_blank">{{scope.row.URL}}</a>
         </template>
       </el-table-column>
     </el-table>

@@ -2,7 +2,7 @@
   <div>
     <el-form :model='form' :inline='true' ref='condition' label-width='10rem' class='demo-form-inline toolbar'>
       <el-form-item label='交易日期' class='input' prop="dateRange" :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
-        <el-date-picker size="small" v-model='form.dateRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2'>
+        <el-date-picker size="small" v-model='form.dateRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions'>
         </el-date-picker>
       </el-form-item>
       <el-form-item label='新品日期' class='input'>
@@ -90,13 +90,13 @@
 
 <script>
 import { getPerform } from '../../api/profit'
-import { compareUp, compareDown } from '../../api/tools'
+import { compareUp, compareDown, getMonthDate } from '../../api/tools'
 export default {
   data() {
     return {
       form: {
         dateRange: [],
-        newRange: ['', '']
+        newRange: []
       },
       activeName: 'first',
       show: false,
@@ -196,55 +196,52 @@ export default {
         createBeginDate: '',
         createEndDate: ''
       },
-      pickerOptions2: {
+      pickerOptions: {
         shortcuts: [
           {
             text: '本月',
             onClick(vm) {
-              const end = new Date()
-              const y = end.getFullYear()
-              let m = end.getMonth() + 1
-              if (m < 10) {
-                m = '0' + m
-              }
-              const firstday = y + '-' + m + '-' + '01'
-              const start = new Date()
-              const sy = start.getFullYear()
-              let sm = start.getMonth() + 1
-              const sd = start.getDate()
-              if (sm < 10) {
-                sm = '0' + sm
-              }
-              const sfirstday = sy + '-' + sm + '-' + sd
-              vm.$emit('pick', [firstday, sfirstday])
+              const date = getMonthDate('thisMonth')
+              vm.$emit('pick', [date['start'], date['end']])
             }
           },
           {
             text: '上个月',
             onClick(picker) {
-              const nowdays = new Date()
-              let year = nowdays.getFullYear()
-              let month = nowdays.getMonth()
-              if (month === 0) {
-                month = 12
-                year = year - 1
-              }
-              if (month < 10) {
-                month = '0' + month
-              }
-              const firstDay = [year, month, '01'].join('-')
-              const myDate = new Date(year, month, 0)
-              const lastDay = [year, month, myDate.getDate()].join('-')
-              picker.$emit('pick', [firstDay, lastDay])
+              const date = getMonthDate('previousMonth')
+              picker.$emit('pick', [date['start'], date['end']])
             }
           },
           {
             text: '最近一个月',
             onClick(picker) {
-              const end = new Date()
-              const start = new Date()
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-              picker.$emit('pick', [start, end])
+              const date = getMonthDate('lastMonth')
+              picker.$emit('pick', [date['start'], date['end']])
+            }
+          }
+        ]
+      },
+      pickerOptions2: {
+        shortcuts: [
+          {
+            text: '本月',
+            onClick(vm) {
+              const date = getMonthDate('thisMonth')
+              vm.$emit('pick', [date['start'], date['end']])
+            }
+          },
+          {
+            text: '上个月',
+            onClick(picker) {
+              const date = getMonthDate('previousMonth')
+              picker.$emit('pick', [date['start'], date['end']])
+            }
+          },
+          {
+            text: '最近一个月',
+            onClick(picker) {
+              const date = getMonthDate('lastMonth')
+              picker.$emit('pick', [date['start'], date['end']])
             }
           }
         ]

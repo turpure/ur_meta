@@ -351,4 +351,12 @@ export function getOrder(param) {
     data
   })
 }
+export function getPaypal(param) {
+  const data = { 'condition': param }
+  return request({
+    url: '/tiny-tool/exception-pay-pal',
+    method: 'post',
+    data
+  })
+}
 

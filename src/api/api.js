@@ -150,3 +150,9 @@ export function IndexPermission() {
     method: 'get'
   })
 }
+export function Risk() {
+  return request({
+    url: 'tiny-tool/risky-order',
+    method: 'get'
+  })
+}
