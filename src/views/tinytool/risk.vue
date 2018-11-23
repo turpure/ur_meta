@@ -5,7 +5,7 @@
       </el-tab-pane>
     </el-tabs>
     <div v-show="risk">
-      <el-table :data="this.tableData" height="890" v-loading="loading">
+      <el-table :data="this.tableData" height="850" v-loading="loading">
         <el-table-column label="订单编号" prop="tradeNid"></el-table-column>
         <el-table-column label="orderTime" prop="orderTime"></el-table-column>
         <el-table-column label="suffix" prop="suffix"></el-table-column>
@@ -28,48 +28,65 @@
         </el-form>
       </el-col>
       <!-- 黑名单列表 -->
-      <el-table :data="this.blackData" height="890" v-loading="blackloading">
+      <el-table :data="this.blackData" height="800" v-loading="blackloading">
         <el-table-column label="platform" prop="platform"></el-table-column>
         <el-table-column label="buyerid" prop="buyerid"></el-table-column>
-        <el-table-column label="shipToName" prop="shipToName"></el-table-column>
-        <el-table-column label="shiptostreet" prop="shiptostreet"></el-table-column>
-        <el-table-column label="shiptostreet2" prop="shiptostreet2"></el-table-column>
-        <el-table-column label="shiptocity" prop="shiptocity"></el-table-column>
-        <el-table-column label="shiptostate" prop="shiptostate"></el-table-column>
-        <el-table-column label="shiptozip" prop="shiptozip"></el-table-column>
-        <el-table-column label="shiptocountryCode" prop="shiptocountryCode"></el-table-column>
-        <el-table-column label="SHIPtoPHONEnUM" prop="SHIPtoPHONEnUM"></el-table-column>
+        <el-table-column label="Ship">
+          <el-table-column label="shipToName" prop="shipToName"></el-table-column>
+          <el-table-column label="shiptostreet" prop="shiptostreet"></el-table-column>
+          <el-table-column label="shiptostreet2" prop="shiptostreet2"></el-table-column>
+          <el-table-column label="shiptocity" prop="shiptocity"></el-table-column>
+          <el-table-column label="shiptostate" prop="shiptostate"></el-table-column>
+          <el-table-column label="shiptozip" prop="shiptozip"></el-table-column>
+          <el-table-column label="shiptocountryCode" prop="shiptocountryCode"></el-table-column>
+          <el-table-column label="SHIPtoPHONEnUM" prop="SHIPtoPHONEnUM"></el-table-column>
+        </el-table-column>
       </el-table>
       <!-- 新增界面  -->
       <el-dialog title="新增" :visible.sync="addFormVisible" :close-on-click-modal="false">
-          <el-form :model="data" label-width="80px" ref="data">
+          <el-form :inline="true" :model="data" label-width="100px" ref="data">
             <el-form-item label="平台">
-              <el-input v-model="data.platform"></el-input>
+              <el-input v-model="data.platform" auto-complete="off"></el-input>
             </el-form-item>
+            <el-form-item label="是否模糊匹配">
+              <el-switch v-model="value1" @change="platmatch" active-color="#13ce66" inactive-color="#909399"></el-switch>
+            </el-form-item>
+            <br>
             <el-form-item label="买家账号">
               <el-input v-model="data.buyerid"></el-input>
             </el-form-item>
+            <el-form-item label="是否模糊匹配">
+              <el-switch v-model="value2" @change="idmatch" active-color="#13ce66" inactive-color="#909399"></el-switch>
+            </el-form-item>
+            <br>
             <el-form-item label="卖家人称">
               <el-input v-model="data.shipToName"></el-input>
             </el-form-item>
+            <br>
             <el-form-item label="卖家店铺1">
               <el-input v-model="data.shiptostreet"></el-input>
             </el-form-item>
+            <br>
             <el-form-item label="卖家店铺2">
               <el-input v-model="data.shiptostreet2"></el-input>
             </el-form-item>
+            <br>
             <el-form-item label="卖家城市">
               <el-input v-model="data.shiptocity"></el-input>
             </el-form-item>
+            <br>
             <el-form-item label="卖家站点">
               <el-input v-model="data.shiptostate"></el-input>
             </el-form-item>
+            <br>
             <el-form-item label="卖家zip">
               <el-input v-model="data.shiptozip"></el-input>
             </el-form-item>
+            <br>
             <el-form-item label="卖家国家编码">
               <el-input v-model="data.shiptocountryCode"></el-input>
             </el-form-item>
+            <br>
             <el-form-item label="卖家电话">
               <el-input v-model="data.SHIPtoPHONEnUM"></el-input>
             </el-form-item>
@@ -89,6 +106,8 @@ import { getMenu } from '../../api/login'
 export default {
   data() {
     return {
+      value1: false,
+      value2: false,
       addFormVisible: false,
       risk: false,
       blacklist: false,
@@ -100,7 +119,7 @@ export default {
       blackData: [],
       data: {
         platform: '',
-        buyerId: '',
+        buyerid: '',
         shipToName: '',
         shipToStreet: '',
         shipToStreet2: '',
@@ -131,6 +150,20 @@ export default {
     })
   },
   methods: {
+    platmatch() {
+      if (this.value1 === true) {
+        this.data.platform = '%' + this.data.platform + '%'
+      } else {
+        this.data.platform = this.data.platform.split('%').join('')
+      }
+    },
+    idmatch() {
+      if (this.value2 === true) {
+        this.data.buyerid = '%' + this.data.buyerid + '%'
+      } else {
+        this.data.buyerid = this.data.buyerid.split('%').join('')
+      }
+    },
     // 权限
     handleClick(tab, event) {
       if (tab.label === '风险订单') {
@@ -148,7 +181,7 @@ export default {
     handleAdd() {
       const form = {
         platform: '',
-        buyerId: '',
+        buyerid: '',
         shipToName: '',
         shipToStreet: '',
         shipToStreet2: '',
