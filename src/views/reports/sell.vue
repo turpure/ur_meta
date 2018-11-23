@@ -322,8 +322,8 @@ export default {
     },
     onSubmit(form) {
       const myform = JSON.parse(JSON.stringify(form))
-      const height = document.getElementById('app').clientHeight
-      this.tableHeight = height + 365 + 'px'
+      const height = document.documentElement.clientHeight
+      this.tableHeight = height + 360
       this.show2 = true
       // const members = this.allMember
       // myform.dateRangeType = getDateRangeType(myform.dateRange[0], myform.dateRange[1])

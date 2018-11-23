@@ -240,9 +240,9 @@ const routes = [{
       name: '异常paypal列表'
     },
     {
-      path: '/v1/tiny-tool/risky-order',
+      path: '/v1/tiny-tool/risk-control',
       component: risk,
-      name: '风险订单'
+      name: '风险控制'
     }
   ]
 },

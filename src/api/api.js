@@ -156,3 +156,17 @@ export function Risk() {
     method: 'get'
   })
 }
+export function BlackList() {
+  return request({
+    url: '/tiny-tool/blacklist',
+    method: 'get'
+  })
+}
+export function postBlacklist(param) {
+  const data = { 'data': param }
+  return request({
+    url: '/tiny-tool/blacklist',
+    method: 'post',
+    data
+  })
+}
