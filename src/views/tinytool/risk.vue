@@ -185,16 +185,24 @@ export default {
     },
     platmatch() {
       if (this.value1 === true) {
-        this.data.addressowner = '%' + this.data.addressowner + '%'
+        if (this.data.addressowner === undefined) {
+          this.data.addressowner = ''
+        } else if (this.data.addressowner !== undefined) {
+          this.data.addressowner = '%' + this.data.addressowner + '%'
+        }
       } else {
         this.data.addressowner = this.data.addressowner.split('%').join('')
       }
     },
     idmatch() {
       if (this.value2 === true) {
-        this.data.buyerid = '%' + this.data.buyerid + '%'
+        if (this.data.buyerId === undefined) {
+          this.data.buyerId = ''
+        } else if (this.data.buyerId !== undefined) {
+          this.data.buyerId = '%' + this.data.buyerId + '%'
+        }
       } else {
-        this.data.buyerid = this.data.buyerid.split('%').join('')
+        this.data.buyerId = this.data.buyerId.split('%').join('')
       }
     },
     // 权限
