@@ -19,76 +19,107 @@
         <el-table-column label="shipToPhoneNum" prop="shipToPhoneNum"></el-table-column>
       </el-table>
     </div>
-    <div v-show="blacklist">
-      <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
+    <div v-show="blacklist" class="toolbar" style="padding:10px 20px;">
+      <el-col :span="24">
         <el-form :inline="true" :model="data">
+          <el-form-item>
+            <el-input placeholder="名称"></el-input>
+          </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="handleAdd">新增</el-button>
           </el-form-item>
         </el-form>
       </el-col>
       <!-- 黑名单列表 -->
-      <el-table :data="this.blackData" height="800" v-loading="blackloading">
-        <el-table-column label="platform" prop="platform"></el-table-column>
-        <el-table-column label="buyerid" prop="buyerid"></el-table-column>
-        <el-table-column label="Ship">
-          <el-table-column label="shipToName" prop="shipToName"></el-table-column>
-          <el-table-column label="shiptostreet" prop="shiptostreet"></el-table-column>
-          <el-table-column label="shiptostreet2" prop="shiptostreet2"></el-table-column>
-          <el-table-column label="shiptocity" prop="shiptocity"></el-table-column>
-          <el-table-column label="shiptostate" prop="shiptostate"></el-table-column>
-          <el-table-column label="shiptozip" prop="shiptozip"></el-table-column>
-          <el-table-column label="shiptocountryCode" prop="shiptocountryCode"></el-table-column>
-          <el-table-column label="SHIPtoPHONEnUM" prop="SHIPtoPHONEnUM"></el-table-column>
-        </el-table-column>
-      </el-table>
+      <!-- <el-table :data="this.blackData" :header-cell-style="thstyle" height="790" border v-loading="blackloading">
+        <el-table-column label="平台" prop="addressowner"></el-table-column>
+        <el-table-column label="买家ID" prop="buyerid"></el-table-column>
+        <el-table-column label="收货人姓名" prop="shipToName"></el-table-column>
+        <el-table-column label="收货人地址" prop="shiptostreet"></el-table-column>
+        <el-table-column label="街道" prop="shiptostreet2"></el-table-column>
+        <el-table-column label="收货人城市" prop="shiptocity"></el-table-column>
+        <el-table-column label="收货人省份" prop="shiptostate"></el-table-column>
+        <el-table-column label="国家" prop="shiptozip"></el-table-column>
+        <el-table-column label="邮编" prop="shiptocountryCode"></el-table-column>
+        <el-table-column label="电话" prop="SHIPtoPHONEnUM"></el-table-column>
+      </el-table> -->
+      <table border="1px solid #ebeef5" cellpadding="15" style="border: 1px solid #ebeef5;background-color:#fff;color:#606266;width:100%;border-collapse:collapse;">
+        <thead>
+          <tr>
+            <th>平台</th>
+            <th>买家ID</th>
+            <th>收货人姓名</th>
+            <th>收货人地址</th>
+            <!-- <th>shiptostreet2</th>
+            <th>国家</th>
+            <th>收货人城市</th>
+            <th>收货人省份</th> -->
+            <th>邮编</th>
+            <th>电话</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, index) in blackData" :key="index">
+            <td>{{ item.addressowner }}</td>
+            <td>{{ item.buyerid}}</td>
+            <td>{{ item.shipToName}}</td>
+            <td>{{ item.shiptozip}}{{ item.shiptostate}}{{ item.shiptocity}}{{ item.shiptostreet}}{{ item.shiptostreet2}}</td>
+            <td>{{ item.shiptocountryCode}}</td>
+            <!-- <td></td>
+            <td></td>
+            <td></td>
+            <td></td> -->
+            <td>{{ item.SHIPtoPHONEnUM}}</td>
+          </tr>
+        </tbody>
+      </table>
       <!-- 新增界面  -->
       <el-dialog title="新增" :visible.sync="addFormVisible" :close-on-click-modal="false">
           <el-form :inline="true" :model="data" label-width="100px" ref="data">
             <el-form-item label="平台">
-              <el-input v-model="data.platform" auto-complete="off"></el-input>
+              <el-input v-model="data.addressowner" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="是否模糊匹配">
               <el-switch v-model="value1" @change="platmatch" active-color="#13ce66" inactive-color="#909399"></el-switch>
             </el-form-item>
             <br>
-            <el-form-item label="买家账号">
-              <el-input v-model="data.buyerid"></el-input>
+            <el-form-item label="买家ID">
+              <el-input v-model="data.buyerId"></el-input>
             </el-form-item>
             <el-form-item label="是否模糊匹配">
               <el-switch v-model="value2" @change="idmatch" active-color="#13ce66" inactive-color="#909399"></el-switch>
             </el-form-item>
             <br>
-            <el-form-item label="卖家人称">
+            <el-form-item label="收货人姓名">
               <el-input v-model="data.shipToName"></el-input>
             </el-form-item>
             <br>
-            <el-form-item label="卖家店铺1">
-              <el-input v-model="data.shiptostreet"></el-input>
+            <el-form-item label="区">
+              <el-input v-model="data.shipToStreet"></el-input>
             </el-form-item>
             <br>
-            <el-form-item label="卖家店铺2">
-              <el-input v-model="data.shiptostreet2"></el-input>
+            <el-form-item label="街道">
+              <el-input v-model="data.shipToStreet2"></el-input>
             </el-form-item>
             <br>
-            <el-form-item label="卖家城市">
-              <el-input v-model="data.shiptocity"></el-input>
+            <el-form-item label="收货人城市">
+              <el-input v-model="data.shipToCity"></el-input>
             </el-form-item>
             <br>
-            <el-form-item label="卖家站点">
-              <el-input v-model="data.shiptostate"></el-input>
+            <el-form-item label="收货人省份">
+              <el-input v-model="data.shipToState"></el-input>
             </el-form-item>
             <br>
-            <el-form-item label="卖家zip">
-              <el-input v-model="data.shiptozip"></el-input>
+            <el-form-item label="国家">
+              <el-input v-model="data.shipToZip"></el-input>
             </el-form-item>
             <br>
-            <el-form-item label="卖家国家编码">
-              <el-input v-model="data.shiptocountryCode"></el-input>
+            <el-form-item label="邮编">
+              <el-input v-model="data.shipToCountryCode"></el-input>
             </el-form-item>
             <br>
-            <el-form-item label="卖家电话">
-              <el-input v-model="data.SHIPtoPHONEnUM"></el-input>
+            <el-form-item label="电话">
+              <el-input v-model="data.shipToPhoneNum"></el-input>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -118,8 +149,8 @@ export default {
       tableData: [],
       blackData: [],
       data: {
-        platform: '',
-        buyerid: '',
+        addressowner: '',
+        buyerId: '',
         shipToName: '',
         shipToStreet: '',
         shipToStreet2: '',
@@ -138,7 +169,6 @@ export default {
     }
   },
   mounted() {
-    // this.getOrder(this.activeName)
     getMenu().then(response => {
       const res = response.data.data
       const menu = res.filter(e => e.name === 'UR小工具')
@@ -150,11 +180,14 @@ export default {
     })
   },
   methods: {
+    thstyle() {
+      return 'color:black'
+    },
     platmatch() {
       if (this.value1 === true) {
-        this.data.platform = '%' + this.data.platform + '%'
+        this.data.addressowner = '%' + this.data.addressowner + '%'
       } else {
-        this.data.platform = this.data.platform.split('%').join('')
+        this.data.addressowner = this.data.addressowner.split('%').join('')
       }
     },
     idmatch() {
@@ -179,19 +212,7 @@ export default {
     },
     // 新增
     handleAdd() {
-      const form = {
-        platform: '',
-        buyerid: '',
-        shipToName: '',
-        shipToStreet: '',
-        shipToStreet2: '',
-        shipToCity: '',
-        shipToState: '',
-        shipToZip: '',
-        shipToCountryCode: '',
-        shipToPhoneNum: ''
-      }
-      this.data = Object.assign({}, form)
+      this.data = Object.assign({})
       this.addFormVisible = true
     },
     addSubmit() {
@@ -202,6 +223,7 @@ export default {
             confirmButtonText: '确定',
             type: 'success'
           })
+          this.getOrder(this.activeName)
         } else {
           this.$confirm('失败！', '提示', {
             confirmButtonText: '确定',
