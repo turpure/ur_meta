@@ -7,16 +7,16 @@
     <div v-show="risk">
       <el-table :data="this.tableData" height="850" v-loading="loading">
         <el-table-column label="订单编号" prop="tradeNid"></el-table-column>
-        <el-table-column label="orderTime" prop="orderTime"></el-table-column>
-        <el-table-column label="suffix" prop="suffix"></el-table-column>
-        <el-table-column label="buyerId" prop="buyerId"></el-table-column>
-        <el-table-column label="shipToName" prop="shipToName"></el-table-column>
-        <el-table-column label="shipToStreet" prop="shipToStreet"></el-table-column>
-        <el-table-column label="shipToStreet2" prop="shipToStreet2"></el-table-column>
-        <el-table-column label="shipToCity" prop="shipToCity"></el-table-column>
-        <el-table-column label="shipToZip" prop="shipToZip"></el-table-column>
-        <el-table-column label="shipToCountryCode" prop="shipToCountryCode"></el-table-column>
-        <el-table-column label="shipToPhoneNum" prop="shipToPhoneNum"></el-table-column>
+        <el-table-column label="交易时间" prop="orderTime"></el-table-column>
+        <el-table-column label="账号简称" prop="suffix"></el-table-column>
+        <el-table-column label="买家ID" prop="buyerId"></el-table-column>
+        <el-table-column label="收货人" prop="shipToName"></el-table-column>
+        <el-table-column label="收货地址" prop="shipToStreet"></el-table-column>
+        <el-table-column label="收货地址2" prop="shipToStreet2"></el-table-column>
+        <el-table-column label="城市" prop="shipToCity"></el-table-column>
+        <el-table-column label="邮编" prop="shipToZip"></el-table-column>
+        <el-table-column label="国家" prop="shipToCountryCode"></el-table-column>
+        <el-table-column label="电话" prop="shipToPhoneNum"></el-table-column>
       </el-table>
     </div>
     <div v-show="blacklist" class="toolbar" style="padding:10px 20px;">

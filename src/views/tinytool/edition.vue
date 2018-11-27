@@ -11,11 +11,11 @@
       </el-form-item>
     </el-form>
     <el-table :data="this.tableData" height="830" v-loading="loading">
-      <el-table-column label="editor" prop="editor"></el-table-column>
-      <el-table-column label="shipToName" prop="shipToName"></el-table-column>
-      <el-table-column label="shipToZip" prop="shipToZip"></el-table-column>
-      <el-table-column label="tableName" prop="tableName"></el-table-column>
-      <el-table-column label="tradeNid" prop="tradeNid"></el-table-column>
+      <el-table-column label="修改人" prop="editor"></el-table-column>
+      <el-table-column label="订单编号" prop="tradeNid"></el-table-column>
+      <el-table-column label="收货人" prop="shipToName"></el-table-column>
+      <el-table-column label="邮编" prop="shipToZip"></el-table-column>
+      <el-table-column label="修改时间" prop="createdTime"></el-table-column>
     </el-table>
   </section>   
 </template>
