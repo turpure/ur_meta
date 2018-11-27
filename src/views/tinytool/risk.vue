@@ -21,9 +21,9 @@
     </div>
     <div v-show="blacklist" class="toolbar" style="padding:10px 20px;">
       <el-col :span="24">
-        <el-form :inline="true" :model="data">
+        <el-form :inline="true">
           <el-form-item>
-            <el-input placeholder="名称"></el-input>
+            <el-input clearable placeholder='search' v-model='searchValue' @change='handleSearch'></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="handleAdd">新增</el-button>
@@ -137,6 +137,8 @@ import { getMenu } from '../../api/login'
 export default {
   data() {
     return {
+      searchValue: '',
+      searchTable: [],
       value1: false,
       value2: false,
       addFormVisible: false,
@@ -180,6 +182,25 @@ export default {
     })
   },
   methods: {
+    // 搜索
+    handleSearch() {
+      debugger
+      const searchValue = this.searchValue && this.searchValue.toLowerCase()
+      const data = this.searchTable
+      if (searchValue) {
+        this.tableData = data.filter(function(row) {
+          return Object.keys(row).some(function(key) {
+            return (
+              String(row[key])
+                .toLowerCase()
+                .indexOf(searchValue) > -1
+            )
+          })
+        })
+      } else {
+        this.tableData = data
+      }
+    },
     thstyle() {
       return 'color:black'
     },
@@ -220,7 +241,19 @@ export default {
     },
     // 新增
     handleAdd() {
-      this.data = Object.assign({})
+      const form = {
+        addressowner: '',
+        buyerId: '',
+        shipToName: '',
+        shipToStreet: '',
+        shipToStreet2: '',
+        shipToCity: '',
+        shipToState: '',
+        shipToZip: '',
+        shipToCountryCode: '',
+        shipToPhoneNum: ''
+      }
+      this.data = Object.assign({}, form)
       this.addFormVisible = true
     },
     addSubmit() {
@@ -251,7 +284,7 @@ export default {
         this.blackloading = true
         BlackList().then(response => {
           this.blackloading = false
-          this.blackData = response.data.data
+          this.blackData = this.searchTable = response.data.data
         })
       }
     }
