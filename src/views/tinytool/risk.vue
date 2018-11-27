@@ -23,7 +23,7 @@
       <el-col :span="24">
         <el-form :inline="true">
           <el-form-item>
-            <el-input clearable placeholder='search' v-model='searchValue' @change='handleSearch'></el-input>
+            <el-input clearable placeholder='search' v-model='searchValue' @keyup.native='handleSearch'></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="handleAdd">新增</el-button>
@@ -31,29 +31,13 @@
         </el-form>
       </el-col>
       <!-- 黑名单列表 -->
-      <!-- <el-table :data="this.blackData" :header-cell-style="thstyle" height="790" border v-loading="blackloading">
-        <el-table-column label="平台" prop="addressowner"></el-table-column>
-        <el-table-column label="买家ID" prop="buyerid"></el-table-column>
-        <el-table-column label="收货人姓名" prop="shipToName"></el-table-column>
-        <el-table-column label="收货人地址" prop="shiptostreet"></el-table-column>
-        <el-table-column label="街道" prop="shiptostreet2"></el-table-column>
-        <el-table-column label="收货人城市" prop="shiptocity"></el-table-column>
-        <el-table-column label="收货人省份" prop="shiptostate"></el-table-column>
-        <el-table-column label="国家" prop="shiptozip"></el-table-column>
-        <el-table-column label="邮编" prop="shiptocountryCode"></el-table-column>
-        <el-table-column label="电话" prop="SHIPtoPHONEnUM"></el-table-column>
-      </el-table> -->
-      <table border="1px solid #ebeef5" cellpadding="15" style="border: 1px solid #ebeef5;background-color:#fff;color:#606266;width:100%;border-collapse:collapse;">
+      <table id="oTable" border="1px solid #ebeef5" cellpadding="15" style="border: 1px solid #ebeef5;background-color:#fff;color:#606266;width:100%;border-collapse:collapse;">
         <thead>
           <tr>
             <th>平台</th>
             <th>买家ID</th>
             <th>收货人姓名</th>
             <th>收货人地址</th>
-            <!-- <th>shiptostreet2</th>
-            <th>国家</th>
-            <th>收货人城市</th>
-            <th>收货人省份</th> -->
             <th>邮编</th>
             <th>电话</th>
           </tr>
@@ -65,10 +49,6 @@
             <td>{{ item.shipToName}}</td>
             <td>{{ item.shiptozip}}{{ item.shiptostate}}{{ item.shiptocity}}{{ item.shiptostreet}}{{ item.shiptostreet2}}</td>
             <td>{{ item.shiptocountryCode}}</td>
-            <!-- <td></td>
-            <td></td>
-            <td></td>
-            <td></td> -->
             <td>{{ item.SHIPtoPHONEnUM}}</td>
           </tr>
         </tbody>
@@ -176,7 +156,9 @@ export default {
       const menu = res.filter(e => e.name === 'UR小工具')
       for (let i = 0; i < menu.length; i++) {
         for (let j = 0; j < menu[i].children.length; j++) {
-          this.allMenu = menu[i].children[j].tabs
+          if (menu[i].children[j].tabs.length) {
+            this.allMenu = menu[i].children[j].tabs
+          }
         }
       }
     })
@@ -184,21 +166,16 @@ export default {
   methods: {
     // 搜索
     handleSearch() {
-      debugger
+      const ot = document.getElementById('oTable')
+      const rowsLength = ot.rows.length
       const searchValue = this.searchValue && this.searchValue.toLowerCase()
-      const data = this.searchTable
-      if (searchValue) {
-        this.tableData = data.filter(function(row) {
-          return Object.keys(row).some(function(key) {
-            return (
-              String(row[key])
-                .toLowerCase()
-                .indexOf(searchValue) > -1
-            )
-          })
-        })
-      } else {
-        this.tableData = data
+      for (let i = 1; i < rowsLength; i++) {
+        const searchText = ot.rows[i].innerHTML
+        if (searchText.toLowerCase().indexOf(searchValue) > -1) {
+          ot.rows[i].style.display = ''
+        } else {
+          ot.rows[i].style.display = 'none'
+        }
       }
     },
     thstyle() {
