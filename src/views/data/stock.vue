@@ -22,8 +22,8 @@
     <el-table :data="tableData" id="sale-table" :header-cell-style="thstyle" @sort-change="sortNumber" :height="tableHeight" v-loading="listLoading" >
       <el-table-column fixed min-width="90" prop="Season" label="季节" :formatter="empty" sortable></el-table-column>
       <el-table-column fixed min-width="120" prop="goodscode" label="商品编码" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="160" prop="num" label="最大延迟天数" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="110" prop="delay_days" label="SKU数" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="160" prop="delay_days" label="最大延迟天数" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column min-width="110" prop="num" label="SKU数" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="100" prop="goodsname" label="商品名" :formatter="empty" sortable></el-table-column>
       <el-table-column min-width="120" prop="GoodsCodeStat" label="商品状态" :formatter="empty" sortable></el-table-column>
       <el-table-column min-width="100" prop="Purchaser" label="采购人" :formatter="empty" sortable></el-table-column>

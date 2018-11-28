@@ -150,10 +150,12 @@ export function IndexPermission() {
     method: 'get'
   })
 }
-export function Risk() {
+export function Risk(param) {
+  var data = { 'condition': param }
   return request({
     url: 'tiny-tool/risky-order',
-    method: 'get'
+    method: 'post',
+    data
   })
 }
 export function BlackList() {

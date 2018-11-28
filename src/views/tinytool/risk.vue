@@ -17,6 +17,7 @@
         <el-table-column label="邮编" prop="shipToZip"></el-table-column>
         <el-table-column label="国家" prop="shipToCountryCode"></el-table-column>
         <el-table-column label="电话" prop="shipToPhoneNum"></el-table-column>
+        <el-table-column label="处理状态" prop="completeStatus"></el-table-column>
       </el-table>
     </div>
     <div v-show="blacklist" class="toolbar" style="padding:10px 20px;">
@@ -141,6 +142,10 @@ export default {
         shipToZip: '',
         shipToCountryCode: '',
         shipToPhoneNum: ''
+      },
+      condition: {
+        'beginDate': '',
+        'endDate': ''
       }
     }
   },
@@ -251,9 +256,16 @@ export default {
       })
     },
     getOrder(name) {
+      // if (this.date !== null) {
+      //   this.condition.beginDate = this.date[0]
+      //   this.condition.endDate = this.date[1]
+      // } else if (this.date === null) {
+      //   this.condition.beginDate = ''
+      //   this.condition.endDate = ''
+      // }
       if (name === '风险订单') {
         this.loading = true
-        Risk().then(response => {
+        Risk(this.condition).then(response => {
           this.loading = false
           this.tableData = response.data.data
         })
