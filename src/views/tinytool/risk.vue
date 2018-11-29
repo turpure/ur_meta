@@ -23,7 +23,7 @@
       <el-col :span="24">
         <el-form :inline="true">
           <el-form-item>
-            <el-input clearable placeholder='search' v-model='searchValue' @keyup.native='handleSearch'></el-input>
+            <el-input clearable placeholder='search' v-model='searchValue' @input='handleSearch'></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="handleAdd">新增</el-button>

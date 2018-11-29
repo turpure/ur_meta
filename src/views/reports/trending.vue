@@ -258,7 +258,6 @@ export default {
       const val = this.condition.secDepartment
       // 人员处理
       res = this.allMember
-      debugger
       let per = []
       this.member = []
       this.condition.member = []
@@ -321,11 +320,11 @@ export default {
           getSalestrend(myform).then(response => {
             this.listLoading = false
             const ret = response.data.data
-            const lineName = []
+            let lineName = []
             const series = []
             ret.forEach(element => {
               if (lineName.indexOf(element.title) < 0) {
-                lineName.push(element.title)
+                lineName = element.title.split(',')
               }
             })
             const date = []
@@ -337,7 +336,8 @@ export default {
               }
               const amt = []
               ret.map(element => {
-                if (element.title === name) {
+                element.title = element.title.toString().split(',')
+                if (element.title.toString() === lineName.toString()) {
                   amt.push(Number(element.totalamt))
                   if (date.indexOf(element.ordertime) < 0) {
                     date.push(element.ordertime)
