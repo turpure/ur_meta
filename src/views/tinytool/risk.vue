@@ -17,7 +17,17 @@
         <el-table-column label="邮编" prop="shipToZip"></el-table-column>
         <el-table-column label="国家" prop="shipToCountryCode"></el-table-column>
         <el-table-column label="电话" prop="shipToPhoneNum"></el-table-column>
-        <el-table-column label="处理状态" prop="completeStatus"></el-table-column>
+        <el-table-column label="处理人" prop="processor"></el-table-column>
+        <el-table-column label="处理状态" prop="completeStatus">
+          <template slot-scope="scope">
+            <el-tag type="danger">{{ scope.row.completeStatus }}</el-tag>
+          </template>
+        </el-table-column>
+         <el-table-column label="操作" >
+            <template slot-scope="scope"> 
+              <el-button type="info" round size="small" >标记完成</el-button>
+            </template>
+          </el-table-column>
       </el-table>
     </div>
     <div v-show="blacklist" class="toolbar" style="padding:10px 20px;">
