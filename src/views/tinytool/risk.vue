@@ -7,16 +7,17 @@
     <div v-show="risk">
       <el-table :data="this.tableData" height="850" v-loading="loading">
         <el-table-column label="订单编号" prop="tradeNid"></el-table-column>
-        <el-table-column label="orderTime" prop="orderTime"></el-table-column>
-        <el-table-column label="suffix" prop="suffix"></el-table-column>
-        <el-table-column label="buyerId" prop="buyerId"></el-table-column>
-        <el-table-column label="shipToName" prop="shipToName"></el-table-column>
-        <el-table-column label="shipToStreet" prop="shipToStreet"></el-table-column>
-        <el-table-column label="shipToStreet2" prop="shipToStreet2"></el-table-column>
-        <el-table-column label="shipToCity" prop="shipToCity"></el-table-column>
-        <el-table-column label="shipToZip" prop="shipToZip"></el-table-column>
-        <el-table-column label="shipToCountryCode" prop="shipToCountryCode"></el-table-column>
-        <el-table-column label="shipToPhoneNum" prop="shipToPhoneNum"></el-table-column>
+        <el-table-column label="交易时间" prop="orderTime"></el-table-column>
+        <el-table-column label="账号简称" prop="suffix"></el-table-column>
+        <el-table-column label="买家ID" prop="buyerId"></el-table-column>
+        <el-table-column label="收货人" prop="shipToName"></el-table-column>
+        <el-table-column label="收货地址" prop="shipToStreet"></el-table-column>
+        <el-table-column label="收货地址2" prop="shipToStreet2"></el-table-column>
+        <el-table-column label="城市" prop="shipToCity"></el-table-column>
+        <el-table-column label="邮编" prop="shipToZip"></el-table-column>
+        <el-table-column label="国家" prop="shipToCountryCode"></el-table-column>
+        <el-table-column label="电话" prop="shipToPhoneNum"></el-table-column>
+        <el-table-column label="处理状态" prop="completeStatus"></el-table-column>
       </el-table>
     </div>
     <div v-show="blacklist" class="toolbar" style="padding:10px 20px;">
@@ -141,6 +142,10 @@ export default {
         shipToZip: '',
         shipToCountryCode: '',
         shipToPhoneNum: ''
+      },
+      condition: {
+        'beginDate': '',
+        'endDate': ''
       }
     }
   },
@@ -251,9 +256,16 @@ export default {
       })
     },
     getOrder(name) {
+      // if (this.date !== null) {
+      //   this.condition.beginDate = this.date[0]
+      //   this.condition.endDate = this.date[1]
+      // } else if (this.date === null) {
+      //   this.condition.beginDate = ''
+      //   this.condition.endDate = ''
+      // }
       if (name === '风险订单') {
         this.loading = true
-        Risk().then(response => {
+        Risk(this.condition).then(response => {
           this.loading = false
           this.tableData = response.data.data
         })
