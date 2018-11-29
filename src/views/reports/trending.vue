@@ -320,11 +320,11 @@ export default {
           getSalestrend(myform).then(response => {
             this.listLoading = false
             const ret = response.data.data
-            let lineName = []
+            const lineName = []
             const series = []
             ret.forEach(element => {
               if (lineName.indexOf(element.title) < 0) {
-                lineName = element.title.split(',')
+                lineName.push(element.title)
               }
             })
             const date = []
@@ -336,8 +336,7 @@ export default {
               }
               const amt = []
               ret.map(element => {
-                element.title = element.title.toString().split(',')
-                if (element.title.toString() === lineName.toString()) {
+                if (element.title === name) {
                   amt.push(Number(element.totalamt))
                   if (date.indexOf(element.ordertime) < 0) {
                     date.push(element.ordertime)

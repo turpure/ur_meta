@@ -153,7 +153,7 @@ export function IndexPermission() {
 export function Risk(param) {
   var data = { 'condition': param }
   return request({
-    url: 'tiny-tool/risky-order',
+    url: '/tiny-tool/risky-order',
     method: 'post',
     data
   })
@@ -168,6 +168,14 @@ export function postBlacklist(param) {
   const data = { 'data': param }
   return request({
     url: '/tiny-tool/blacklist',
+    method: 'post',
+    data
+  })
+}
+export function postHandleOrder(param) {
+  const data = { 'data': param }
+  return request({
+    url: '/tiny-tool/handle-risky-order',
     method: 'post',
     data
   })

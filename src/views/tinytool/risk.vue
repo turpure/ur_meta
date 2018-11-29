@@ -5,7 +5,17 @@
       </el-tab-pane>
     </el-tabs>
     <div v-show="risk">
-      <el-table :data="this.tableData" height="850" v-loading="loading">
+      <el-form :model="condition" :inline="true" class="toolbar" label-width="100px">
+        <el-form-item label="时间">
+          <el-date-picker v-model="date" type="daterange" value-format="yyyy-MM-dd" range-separator="至"
+      start-placeholder="开始日期"
+      end-placeholder="结束日期"></el-date-picker>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="onSubmit">查询</el-button>
+        </el-form-item>
+      </el-form>
+      <el-table :data="this.tableData" v-loading="loading">
         <el-table-column label="订单编号" prop="tradeNid"></el-table-column>
         <el-table-column label="交易时间" prop="orderTime"></el-table-column>
         <el-table-column label="账号简称" prop="suffix"></el-table-column>
@@ -20,15 +30,18 @@
         <el-table-column label="处理人" prop="processor"></el-table-column>
         <el-table-column label="处理状态" prop="completeStatus">
           <template slot-scope="scope">
-            <el-tag type="danger">{{ scope.row.completeStatus }}</el-tag>
+            <el-tag :type="tags[scope.row.completeStatus]['type']">{{ scope.row.completeStatus }}</el-tag>
           </template>
         </el-table-column>
          <el-table-column label="操作" >
             <template slot-scope="scope"> 
-              <el-button type="info" round size="small" >标记完成</el-button>
+              <el-button :type="tags[scope.row.completeStatus]['type']" round size="small" @click="mark(scope.$index, scope.row)">标记完成</el-button>
             </template>
           </el-table-column>
       </el-table>
+      <div class="block toolbar">
+        <el-pagination @size-change='handleSizeChange' @current-change='handleCurrentChange' :current-page="currentPage4" :page-size="10" :page-sizes="[10,20,30,40]" layout="total,sizes,prev,pager,next,jumper" :total="10"></el-pagination>
+      </div>
     </div>
     <div v-show="blacklist" class="toolbar" style="padding:10px 20px;">
       <el-col :span="24">
@@ -123,11 +136,17 @@
 </template>
 
 <script>
-import { Risk, BlackList, postBlacklist } from '../../api/api'
+import { Risk, BlackList, postBlacklist, postHandleOrder } from '../../api/api'
 import { getMenu } from '../../api/login'
 export default {
   data() {
     return {
+      tags: {
+        '待处理': { type: 'danger' },
+        '已完成': { type: 'success' }
+      },
+      value: '',
+      currentPage4: 4,
       searchValue: '',
       searchTable: [],
       value1: false,
@@ -153,9 +172,14 @@ export default {
         shipToCountryCode: '',
         shipToPhoneNum: ''
       },
+      date: [],
       condition: {
-        'beginDate': '',
-        'endDate': ''
+        beginDate: '',
+        endDate: ''
+      },
+      condition2: {
+        tradeNid: '',
+        processor: ''
       }
     }
   },
@@ -179,6 +203,21 @@ export default {
     })
   },
   methods: {
+    // 标记
+    mark(index, row) {
+      this.condition2.tradeNid = row.tradeNid
+      this.condition2.processor = this.$store.getters.name
+      postHandleOrder(this.condition2).then(response => {
+        this.getOrder(this.activeName)
+      })
+    },
+    // 分页
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`)
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`)
+    },
     // 搜索
     handleSearch() {
       const ot = document.getElementById('oTable')
@@ -265,15 +304,18 @@ export default {
         }
       })
     },
+    onSubmit() {
+      this.getOrder(this.activeName)
+    },
     getOrder(name) {
-      // if (this.date !== null) {
-      //   this.condition.beginDate = this.date[0]
-      //   this.condition.endDate = this.date[1]
-      // } else if (this.date === null) {
-      //   this.condition.beginDate = ''
-      //   this.condition.endDate = ''
-      // }
       if (name === '风险订单') {
+        if (this.date.length) {
+          this.condition.beginDate = this.date[0]
+          this.condition.endDate = this.date[1]
+        } else {
+          this.condition.beginDate = ''
+          this.condition.endDate = ''
+        }
         this.loading = true
         Risk(this.condition).then(response => {
           this.loading = false

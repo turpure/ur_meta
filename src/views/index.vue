@@ -259,6 +259,7 @@ export default {
 .box-card{
   //margin-top: 5px;
   margin-bottom: -30px;
+  height: 410px;
 }
 a {
   color: #428bac;

@@ -1,6 +1,6 @@
 <template>
   <section>
-    <el-form :inline="true" class="toolbar" label-width="100px">
+    <el-form :model="condition" :inline="true" class="toolbar" label-width="100px">
       <el-form-item label="日期">
         <el-date-picker v-model="date" type="daterange" value-format="yyyy-MM-dd" range-separator="至"
       start-placeholder="开始日期"
@@ -27,31 +27,28 @@ export default {
     return {
       loading: false,
       date: [],
-      tableData: []
+      tableData: [],
+      condition: {
+        beginDate: '',
+        endDate: ''
+      }
     }
   },
   methods: {
     onSubmit() {
-      // if (this.date !== null) {
-      //   this.condition.beginDate = this.date[0]
-      //   this.condition.endDate = this.date[1]
-      // } else if (this.date === null) {
-      //   this.condition.beginDate = ''
-      //   this.condition.endDate = ''
-      // }
+      if (this.date.length) {
+        this.condition.beginDate = this.date[0]
+        this.condition.endDate = this.date[1]
+      } else {
+        this.condition.beginDate = ''
+        this.condition.endDate = ''
+      }
       this.loading = true
-      getEdition().then(response => {
+      getEdition(this.condition).then(response => {
         this.loading = false
         this.tableData = response.data.data
       })
     }
-  },
-  mounted() {
-    this.loading = true
-    getEdition().then(response => {
-      this.loading = false
-      this.tableData = response.data.data
-    })
   }
 }
 </script>
