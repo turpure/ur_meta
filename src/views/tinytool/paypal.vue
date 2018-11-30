@@ -42,7 +42,7 @@ export default {
       if (this.date !== null) {
         this.condition.beginDate = this.date[0]
         this.condition.endDate = this.date[1]
-      } else if (this.date === null) {
+      } else {
         this.condition.beginDate = ''
         this.condition.endDate = ''
       }

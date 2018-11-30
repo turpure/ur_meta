@@ -7,7 +7,7 @@
     <div v-show="risk">
       <el-form :model="condition" :inline="true" class="toolbar" label-width="100px">
         <el-form-item label="时间">
-          <el-date-picker v-model="date" type="daterange" value-format="yyyy-MM-dd" range-separator="至"
+          <el-date-picker v-model="date" @change="time" type="daterange" value-format="yyyy-MM-dd" range-separator="至"
       start-placeholder="开始日期"
       end-placeholder="结束日期"></el-date-picker>
         </el-form-item>
@@ -203,6 +203,15 @@ export default {
     })
   },
   methods: {
+    time() {
+      if (this.date !== null) {
+        this.condition.beginDate = this.date[0]
+        this.condition.endDate = this.date[1]
+      } else {
+        this.condition.beginDate = ''
+        this.condition.endDate = ''
+      }
+    },
     // 标记
     mark(index, row) {
       this.condition2.tradeNid = row.tradeNid
@@ -308,14 +317,7 @@ export default {
       this.getOrder(this.activeName)
     },
     getOrder(name) {
-      if (name === '风险订单') {
-        if (this.date.length) {
-          this.condition.beginDate = this.date[0]
-          this.condition.endDate = this.date[1]
-        } else {
-          this.condition.beginDate = ''
-          this.condition.endDate = ''
-        }
+      if (name === '风险订单') {       
         this.loading = true
         Risk(this.condition).then(response => {
           this.loading = false

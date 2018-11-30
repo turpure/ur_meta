@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     onSubmit() {
-      if (this.date.length) {
+      if (this.date !== null) {
         this.condition.beginDate = this.date[0]
         this.condition.endDate = this.date[1]
       } else {
