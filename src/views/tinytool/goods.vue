@@ -44,7 +44,7 @@
         </el-date-picker>
       </el-form-item>
       <el-form-item class='input' style="margin-left:20.5rem">
-        <el-button type="primary" @click="onSubmit(condition)">搜索</el-button>
+        <el-button size="small" type="primary" @click="onSubmit(condition)">搜索</el-button>
       </el-form-item>
     </el-form>
     <el-row v-loading="listLoading">

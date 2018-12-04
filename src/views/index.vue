@@ -1,21 +1,23 @@
 <template>
-  <div class="dashboard-editor-container" style="min-height:1000px;">
+  <div class="dashboard-editor-container" style="height:1010px;">
     <section>
-      <el-card class="box-card">
-        <ol style="font-size:18px;">
-          <el-popover placement="bottom" trigger="click">
-            <el-table :data="gridData">
-              <el-table-column width="300" property="date" label="日期"></el-table-column>
-              <el-table-column width="250" property="name" label="发布人"></el-table-column>
-            </el-table>
-            <el-button type="text" slot="reference" style="padding:0px;">
-              <li style="font-size:18px;">2018-11-28 毕郑强 侵权:
-                <a href="https://sellerdefense.cn/" target="_blank">https://sellerdefense.cn/
-                </a>
-                <el-badge value="顶"></el-badge>
-              </li>
-            </el-button>
-          </el-popover>
+      <el-card class="box-card" ref="box">
+        <ol>
+          <h3>
+          <li>2018-11-28 企划部 侵权:
+            <a href="https://sellerdefense.cn/" target="_blank">https://sellerdefense.cn/
+            </a>
+            <el-popover placement="bottom" trigger="click">
+              <el-table :data="gridData">
+                <el-table-column width="300" property="date" label="日期"></el-table-column>
+                <el-table-column width="250" property="name" label="发布人"></el-table-column>
+              </el-table>
+              <el-button type="text" slot="reference" style="padding:0px;">
+              <el-badge value="顶"></el-badge>
+              </el-button>
+            </el-popover>
+          </li>
+          </h3>
         </ol>
       </el-card>
       <div class="tabs-container">
@@ -27,7 +29,8 @@
         <el-table
           :data="shanghaiTable"
           size="small"
-          max-height="535"
+          :max-height="this.tableHeight"
+          ref="table1"
           v-if="show.shanghai"
           v-scrollBar:slim
           @sort-change="sortNumber"
@@ -65,7 +68,7 @@
           :data="zhengzhouTable"
           @sort-change="sortNumber"
           size="small"
-          max-height="535"
+          :max-height="this.tableHeight"
           v-show="show.zhengzhou"
         >
           <el-table-column type="index" ></el-table-column>
@@ -94,7 +97,7 @@
         <el-table
         :data="departTable"
         size="small"
-        max-height="535"
+        :max-height="this.tableHeight"
         v-show="show.depart"
         @sort-change="sortNumber"
         style="width:100%">
@@ -126,7 +129,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-table :data="developerTable" max-height="535" size="small" v-show="show.developer" style="width:100%">
+        <el-table :data="developerTable" :max-height="this.tableHeight" size="small" v-show="show.developer" style="width:100%">
           <el-table-column type="index"></el-table-column>
           <el-table-column prop="depart"  label="部门" sortable></el-table-column>
           <el-table-column prop="username"  label="姓名" sortable></el-table-column>
@@ -168,6 +171,9 @@ import { compareUp, compareDown } from '../api/tools'
 export default {
   data() {
     return {
+      boxHeight: '',
+      tableHeight: null,
+      screenHeight: window.innerHeight,
       gridData: [{
         date: '2018-11-28',
         name: '毕郑强'
@@ -218,7 +224,21 @@ export default {
       return 'success'
     }
   },
+  watch: {
+    screenHeight(val) {
+      this.screenHeight = val
+      this.tableHeight = this.screenHeight - this.boxHeight - 20
+    }
+  },
   mounted() {
+    this.boxHeight = this.$refs.box.$el.clientHeight
+    this.tableHeight = window.innerHeight - this.boxHeight - 20
+    window.onresize = () => {
+      return (() => {
+        window.screenHeight = window.innerHeight
+        this.screenHeight = window.screenHeight
+      })()
+    }
     ShangHaiTarget().then((res) => {
       this.shanghaiTable = res.data.data
     })
@@ -242,6 +262,9 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+li:hover{
+  color: #1ebbf0;
+}
 .dashboard-editor-container {
   padding: 0 30px;
   background-color: rgb(240, 242, 245);
@@ -257,9 +280,7 @@ export default {
   font-size: 18px;
 }
 .box-card{
-  //margin-top: 5px;
   margin-bottom: -30px;
-  height: 410px;
 }
 a {
   color: #428bac;

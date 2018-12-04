@@ -7,12 +7,12 @@
     <div v-show="risk">
       <el-form :model="condition" :inline="true" class="toolbar" label-width="100px">
         <el-form-item label="时间">
-          <el-date-picker v-model="date" @change="time" type="daterange" value-format="yyyy-MM-dd" range-separator="至"
+          <el-date-picker size="small" v-model="date" @change="time" type="daterange" value-format="yyyy-MM-dd" range-separator="至"
       start-placeholder="开始日期"
       end-placeholder="结束日期"></el-date-picker>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit">查询</el-button>
+          <el-button size="small" type="primary" @click="onSubmit">查询</el-button>
         </el-form-item>
       </el-form>
       <el-table :data="this.tableData" v-loading="loading">
@@ -40,17 +40,17 @@
           </el-table-column>
       </el-table>
       <div class="block toolbar">
-        <el-pagination @size-change='handleSizeChange' @current-change='handleCurrentChange' :current-page="currentPage4" :page-size="10" :page-sizes="[10,20,30,40]" layout="total,sizes,prev,pager,next,jumper" :total="10"></el-pagination>
+        <el-pagination @size-change='handleSizeChange' @current-change='handleCurrentChange' :current-page="this.currentPage" :page-size="this.condition.pageSize" :page-sizes="[10,20,30,40]" layout="total,sizes,prev,pager,next,jumper" :total="this.totalCount"></el-pagination>
       </div>
     </div>
     <div v-show="blacklist" class="toolbar" style="padding:10px 20px;">
       <el-col :span="24">
         <el-form :inline="true">
           <el-form-item>
-            <el-input clearable placeholder='search' v-model='searchValue' @input='handleSearch'></el-input>
+            <el-input size="small" clearable placeholder='search' v-model='searchValue' @input='handleSearch'></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="handleAdd">新增</el-button>
+            <el-button size="small" type="primary" @click="handleAdd">新增</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -146,7 +146,9 @@ export default {
         '已完成': { type: 'success' }
       },
       value: '',
-      currentPage4: 4,
+      currentPage: null,
+      perPage: null,
+      totalCount: null,
       searchValue: '',
       searchTable: [],
       value1: false,
@@ -175,7 +177,8 @@ export default {
       date: [],
       condition: {
         beginDate: '',
-        endDate: ''
+        endDate: '',
+        pageSize: null
       },
       condition2: {
         tradeNid: '',
@@ -222,10 +225,12 @@ export default {
     },
     // 分页
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`)
+      this.pageSize = val
+      this.getOrder(this.activeName)
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`)
+      this.currentPage = val
+      this.getOrder(this.activeName)
     },
     // 搜索
     handleSearch() {
@@ -317,11 +322,14 @@ export default {
       this.getOrder(this.activeName)
     },
     getOrder(name) {
-      if (name === '风险订单') {       
+      if (name === '风险订单') {
         this.loading = true
         Risk(this.condition).then(response => {
           this.loading = false
-          this.tableData = response.data.data
+          this.tableData = response.data.data.items
+          this.totalCount = response.data.data._meta.totalCount
+          this.currentPage = response.data.data._meta.currentPage
+          this.condition.pageSize = response.data.data._meta.perPage
         })
       } else if (name === '黑名单') {
         this.blackloading = true
@@ -337,7 +345,8 @@ export default {
 
 <style lang="scss" scoped>
 .toolbar{
-  padding: 10px 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 </style>
 
