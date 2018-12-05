@@ -40,7 +40,7 @@
           </el-table-column>
       </el-table>
       <div class="block toolbar">
-        <el-pagination @size-change='handleSizeChange' @current-change='handleCurrentChange' :current-page="this.currentPage" :page-size="this.condition.pageSize" :page-sizes="[10,20,30,40]" layout="total,sizes,prev,pager,next,jumper" :total="this.totalCount"></el-pagination>
+        <el-pagination @size-change='handleSizeChange' @current-change='handleCurrentChange' :current-page="this.condition.currentPage" :page-size="this.condition.pageSize" :page-sizes="[10,20,30,40]" layout="total,sizes,prev,pager,next,jumper" :total="this.totalCount"></el-pagination>
       </div>
     </div>
     <div v-show="blacklist" class="toolbar" style="padding:10px 20px;">
@@ -178,7 +178,8 @@ export default {
       condition: {
         beginDate: '',
         endDate: '',
-        pageSize: null
+        pageSize: '10',
+        currentPage: '1'
       },
       condition2: {
         tradeNid: '',
@@ -225,11 +226,11 @@ export default {
     },
     // 分页
     handleSizeChange(val) {
-      this.pageSize = val
+      this.condition.pageSize = val
       this.getOrder(this.activeName)
     },
     handleCurrentChange(val) {
-      this.currentPage = val
+      this.condition.currentPage = val
       this.getOrder(this.activeName)
     },
     // 搜索
@@ -328,7 +329,7 @@ export default {
           this.loading = false
           this.tableData = response.data.data.items
           this.totalCount = response.data.data._meta.totalCount
-          this.currentPage = response.data.data._meta.currentPage
+          this.condition.currentPage = response.data.data._meta.currentPage
           this.condition.pageSize = response.data.data._meta.perPage
         })
       } else if (name === '黑名单') {

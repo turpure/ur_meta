@@ -714,6 +714,7 @@ export default {
     searchRequirements() {
       this.getRequire(this.activeName)
     },
+    // 新增
     addSubmit() {
       this.addFormVisible = false
       this.addForm.img = this.content.match(/data:([^"]*)/g)

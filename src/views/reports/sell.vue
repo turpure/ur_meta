@@ -381,15 +381,10 @@ export default {
             }
           }
           this.listLoading = true
-          try {
-            getSales(myform).then(response => {
-              this.listLoading = false
-              this.tableData = this.searchTable = response.data.data
-            })
-          } catch (error) {
+          getSales(myform).then(response => {
             this.listLoading = false
-            this.show2 = false
-          }
+            this.tableData = this.searchTable = response.data.data
+          })
         } else {
           return false
         }

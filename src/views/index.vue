@@ -21,7 +21,7 @@
         </ol>
       </el-card>
       <div class="tabs-container">
-        <el-tabs v-model="activeName"  @tab-click="handleClick" style="margin-top:2%">
+        <el-tabs v-model="activeName" @tab-click="handleClick" style="margin-top:2%">
           <el-tab-pane v-for="(item,index) in permission" :key="index" :label="item.label" :name="item.name"></el-tab-pane>
         </el-tabs>
       </div>
@@ -176,7 +176,7 @@ export default {
       screenHeight: window.innerHeight,
       gridData: [{
         date: '2018-11-28',
-        name: '毕郑强'
+        name: '企划部'
       }],
       permission: [],
       shanghaiTable: [],

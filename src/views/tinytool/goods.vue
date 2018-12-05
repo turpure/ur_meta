@@ -1,6 +1,6 @@
 <template>
-  <div class="toolbar">
-    <el-form :model='condition' :inline='true' label-width='8.5rem' class='demo-form-inline'>
+  <div>
+    <el-form :model='condition' :inline='true' label-width='8.5rem' class='demo-form-inline toolbar'>
       <el-form-item label='美工1' class='input'>
         <el-select size="small" v-model='condition.possessMan1' clearable>
           <el-option v-for='item in possessMan1' :key='item.username' :value='item.username'></el-option>
