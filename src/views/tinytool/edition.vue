@@ -2,7 +2,7 @@
   <section>
     <el-form :model="condition" :inline="true" class="toolbar" label-width="100px">
       <el-form-item label="日期">
-        <el-date-picker size="small" v-model="date" type="daterange" value-format="yyyy-MM-dd" range-separator="至"
+        <el-date-picker @change="time" size="small" v-model="date" type="daterange" value-format="yyyy-MM-dd" range-separator="至"
       start-placeholder="开始日期"
       end-placeholder="结束日期"></el-date-picker>
       </el-form-item>
@@ -35,7 +35,7 @@ export default {
     }
   },
   methods: {
-    onSubmit() {
+    time() {
       if (this.date !== null) {
         this.condition.beginDate = this.date[0]
         this.condition.endDate = this.date[1]
@@ -43,6 +43,8 @@ export default {
         this.condition.beginDate = ''
         this.condition.endDate = ''
       }
+    },
+    onSubmit() {
       this.loading = true
       getEdition(this.condition).then(response => {
         this.loading = false
