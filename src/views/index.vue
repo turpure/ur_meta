@@ -1,7 +1,11 @@
 <template>
   <div class="dashboard-editor-container" style="height: 1000px;">
     <section>
-      <div class="left-box"> 
+      <div class="left-box">
+        <el-card>
+          <div slot="header" class="clearfix">
+            <h2>完成度表</h2>
+          </div>
         <div class="tabs-container">
           <el-tabs v-model="activeName" @tab-click="handleClick">
             <el-tab-pane v-for="(item,index) in permission" :key="index" :label="item.label" :name="item.name"></el-tab-pane>
@@ -11,7 +15,7 @@
           <el-table
           :data="shanghaiTable"
           size="small"
-          height="865"
+          height="798"
           ref="table1"
           v-if="show.shanghai"
           v-scrollBar:slim
@@ -50,7 +54,7 @@
           :data="zhengzhouTable"
           @sort-change="sortNumber"
           size="small"
-          height="865"
+          height="798"
           v-show="show.zhengzhou"
           >
           <el-table-column type="index" ></el-table-column>
@@ -79,7 +83,7 @@
           <el-table
           :data="departTable"
           size="small"
-          height="865"
+          height="798"
           v-show="show.depart"
           @sort-change="sortNumber">
           <el-table-column type="index"></el-table-column>
@@ -110,7 +114,12 @@
             </template>
           </el-table-column>
           </el-table>
-          <el-table :data="developerTable" height="865" size="small" v-show="show.developer">
+          <el-table 
+          :data="developerTable" 
+          height="798" 
+          size="small" 
+          v-show="show.developer"
+          >
           <el-table-column type="index"></el-table-column>
           <el-table-column prop="depart"  label="部门" sortable></el-table-column>
           <el-table-column prop="username"  label="姓名" sortable></el-table-column>
@@ -141,8 +150,12 @@
           </el-table-column>
           </el-table>
         </div>
+        </el-card>
       </div>
         <el-card class="box-card">
+          <div slot="header" class="clearfix">
+            <h2>公告栏</h2>
+          </div>
           <ul>
             <li v-for="(item, index) in newsTopList" :key="index">
               <div class="post-left-box">
@@ -305,6 +318,10 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+.clearfix{
+  height: 10px;
+  line-height: 0px;
+}
 .left-box{
   width: 69%;
   float: left;
