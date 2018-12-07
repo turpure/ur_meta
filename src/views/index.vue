@@ -144,10 +144,10 @@
       </div>
         <el-card class="box-card">
           <ul>
-            <li v-for="(item, index) in newsTopList" :key="index" @click="dialogTopShow(item.id)">
+            <li v-for="(item, index) in newsTopList" :key="index">
               <div class="post-left-box">
                 <div class="subtitle">
-                  <h2>{{item.title}}
+                  <h2 @click="dialogTopShow(item.id)">{{item.title}}
                     <!-- <a :href=item.detail target="_blank">{{item.detail}}
                     </a> -->
                   </h2>
@@ -160,10 +160,10 @@
                 </el-button>
               </div>
             </li>
-            <li v-for="item in news.slice(0, 9)" :key="item.id" @click="dialogShow(item.id)">
+            <li v-for="item in news.slice(0, 9)" :key="item.id">
               <div class="post-left-box">
                 <div class="subtitle">
-                  <h2>
+                  <h2 @click="dialogShow(item.id)">
                     {{item.title}}
                   </h2>
                   <p style="color:#b2b2b2;">{{item.creator}} &nbsp;&nbsp;| &nbsp;&nbsp;{{item.createDate.substring(0, 16)}}</p>
