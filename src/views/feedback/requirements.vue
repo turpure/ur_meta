@@ -972,7 +972,9 @@ export default {
       const menu = res.filter(e => e.name === '反馈中心')
       for (let i = 0; i < menu.length; i++) {
         for (let j = 0; j < menu[i].children.length; j++) {
-          this.allMenu = menu[i].children[j].tabs
+          if (menu[i].children[j].tabs.length) {
+            this.allMenu = menu[i].children[j].tabs
+          }
         }
       }
     })
