@@ -11,7 +11,7 @@
           <el-table
           :data="shanghaiTable"
           size="small"
-          :max-height="this.tableHeight"
+          height="865"
           ref="table1"
           v-if="show.shanghai"
           v-scrollBar:slim
@@ -50,7 +50,7 @@
           :data="zhengzhouTable"
           @sort-change="sortNumber"
           size="small"
-          :max-height="this.tableHeight"
+          height="865"
           v-show="show.zhengzhou"
           >
           <el-table-column type="index" ></el-table-column>
@@ -79,7 +79,7 @@
           <el-table
           :data="departTable"
           size="small"
-          :max-height="this.tableHeight"
+          height="865"
           v-show="show.depart"
           @sort-change="sortNumber">
           <el-table-column type="index"></el-table-column>
@@ -110,7 +110,7 @@
             </template>
           </el-table-column>
           </el-table>
-          <el-table :data="developerTable" :max-height="this.tableHeight" size="small" v-show="show.developer">
+          <el-table :data="developerTable" height="865" size="small" v-show="show.developer">
           <el-table-column type="index"></el-table-column>
           <el-table-column prop="depart"  label="部门" sortable></el-table-column>
           <el-table-column prop="username"  label="姓名" sortable></el-table-column>
@@ -147,35 +147,34 @@
             <li v-for="(item, index) in newsTopList" :key="index">
               <div class="post-left-box">
                 <div class="subtitle">
-                  <h2>{{item.title}}{{item.detail}}
+                  <h2>{{item.title}}
                     <!-- <a :href=item.detail target="_blank">{{item.detail}}
                     </a> -->
-                    <el-popover placement="bottom" trigger="click">
-                      <el-table :data="newsList">
-                        <el-table-column width="300" property="createDate" label="日期"></el-table-column>
-                        <el-table-column width="250" property="creator" label="发布人"></el-table-column>
-                      </el-table>
-                      <el-button type="text" slot="reference" style="padding:0px;">
-                        <el-badge value="顶"></el-badge>
-                      </el-button>
-                    </el-popover>
                   </h2>
-                  <p>{{item.creator}} | {{item.createDate.substring(0, 16)}}</p>
+                  
+                  <p style="color:#b2b2b2;">{{item.creator}} &nbsp;&nbsp;| &nbsp;&nbsp;{{item.createDate.substring(0, 16)}}</p>
                 </div>
+              </div>
+              <div class="post-right-box">
+                <el-button type="text" slot="reference" style="padding:0px;">
+                  <el-badge value="置顶"></el-badge>
+                </el-button>
               </div>
             </li>
             <li v-for="item in news.slice(0, 9)" :key="item.id">
               <div class="post-left-box">
                 <div class="subtitle">
                   <h2>
-                    {{item.title}}{{item.detail}}
+                    {{item.title}}
                   </h2>
-                  <p>{{item.creator}} | {{item.createDate.substring(0, 16)}}</p>
+                  <p style="color:#b2b2b2;">{{item.creator}} &nbsp;&nbsp;| &nbsp;&nbsp;{{item.createDate.substring(0, 16)}}</p>
                 </div>
               </div>
-              <!-- <div class="post-right-box">
-                <el-button type="success" @click="handleTop(item.id)">置顶</el-button>
-              </div> -->
+              <div class="post-right-box">
+                <el-button type="text" @click="handleTop(item.id)" slot="reference" style="padding:0px;">
+                  <i style="color:red;font-style:normal;font-size:24px;">⇧</i>
+                </el-button>
+              </div>
             </li>
           </ul>
         </el-card>
@@ -218,14 +217,6 @@ export default {
     }
   },
   methods: {
-    // url(param) {
-    //   var reg = /^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/
-    //   if (!reg.test(param)) {
-    //     return false
-    //   } else {
-    //     return true
-    //   }
-    // },
     handleTop(id) {
       this.data.id = id
       newsTop(this.data).then(res => {
@@ -265,20 +256,7 @@ export default {
       return 'success'
     }
   },
-  watch: {
-    screenHeight(val) {
-      this.screenHeight = val
-      this.tableHeight = this.screenHeight - 106
-    }
-  },
   mounted() {
-    this.tableHeight = window.innerHeight - 106
-    window.onresize = () => {
-      return (() => {
-        window.screenHeight = window.innerHeight
-        this.screenHeight = window.screenHeight
-      })()
-    }
     ShangHaiTarget().then((res) => {
       this.shanghaiTable = res.data.data
     })
@@ -312,6 +290,7 @@ export default {
   width: 69%;
   float: left;
   margin-top:3%;
+  height: 900px;
 }
 .box-card{
   width: 30%;
@@ -327,7 +306,7 @@ export default {
   .post-right-box{
     position: relative;
     float: right;
-    margin-top: 10px;
+    margin-top: 20px;
     margin-right: 10px;
   }
   li{
