@@ -144,24 +144,23 @@
       </div>
         <el-card class="box-card">
           <ul>
-            <li v-for="(item, index) in newsTopList" :key="index">
+            <li v-for="(item, index) in newsTopList" :key="index" @click="dialogTopShow(item.id)">
               <div class="post-left-box">
                 <div class="subtitle">
                   <h2>{{item.title}}
                     <!-- <a :href=item.detail target="_blank">{{item.detail}}
                     </a> -->
                   </h2>
-                  
                   <p style="color:#b2b2b2;">{{item.creator}} &nbsp;&nbsp;| &nbsp;&nbsp;{{item.createDate.substring(0, 16)}}</p>
                 </div>
               </div>
               <div class="post-right-box">
                 <el-button type="text" slot="reference" style="padding:0px;">
-                  <el-badge value="置顶"></el-badge>
+                  <el-badge value="顶"></el-badge>
                 </el-button>
               </div>
             </li>
-            <li v-for="item in news.slice(0, 9)" :key="item.id">
+            <li v-for="item in news.slice(0, 9)" :key="item.id" @click="dialogShow(item.id)">
               <div class="post-left-box">
                 <div class="subtitle">
                   <h2>
@@ -172,12 +171,22 @@
               </div>
               <div class="post-right-box">
                 <el-button type="text" @click="handleTop(item.id)" slot="reference" style="padding:0px;">
-                  <i style="color:red;font-style:normal;font-size:24px;">⇧</i>
+                  <i>⇧</i>
                 </el-button>
               </div>
             </li>
           </ul>
         </el-card>
+        <el-dialog title="详情" :visible.sync="dialogVisible">
+          <span v-for="(item, index) in newsDetailList" :key="index">
+            <a :href="item.detail" target="_blank">{{item.detail}}</a>
+            {{item.detail}}
+          </span>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+          </span>
+        </el-dialog>
     </section>
   </div>
 </template>
@@ -189,6 +198,7 @@ import { compareUp, compareDown } from '../api/tools'
 export default {
   data() {
     return {
+      dialogVisible: false,
       data: {
         id: '',
         isTop: '1'
@@ -198,6 +208,7 @@ export default {
         pageSize: 10
       },
       newsTopList: [],
+      newsDetailList: {},
       news: [],
       newsList: [],
       tableHeight: null,
@@ -217,6 +228,14 @@ export default {
     }
   },
   methods: {
+    dialogTopShow(id) {
+      this.dialogVisible = true
+      this.newsDetailList = this.newsTopList.filter(e => e.id === id)
+    },
+    dialogShow(id) {
+      this.dialogVisible = true
+      this.newsDetailList = this.news.filter(e => e.id === id)
+    },
     handleTop(id) {
       this.data.id = id
       newsTop(this.data).then(res => {
@@ -301,30 +320,38 @@ export default {
   .post-left-box{
     position: relative;
     float: left;
-    width: 500px;
+    //width: 400px;
   }
   .post-right-box{
     position: relative;
     float: right;
     margin-top: 20px;
     margin-right: 10px;
+    i{
+      margin-right: 5px;
+      font-style: normal;
+      font-size: 24px;
+    }
+    i:hover{
+      color: red;
+    }
   }
   li{
     list-style: none;
     border-bottom: 1px solid #eee;
     transition: all .3s;
     height: 100px;
-    a {
-      color: #428bac;
-      text-decoration: none;
-    }
-    a:hover {
-      color: #2a6496;
-      text-decoration: underline;
-    }
   }
 }
-h2:hover{
+a {
+  color: #428bac;
+  text-decoration: none;
+}
+a:hover {
+  color: #2a6496;
+  text-decoration: underline;
+}
+h2:hover {
   color: #1ebbf0;
 }
 .dashboard-editor-container {
