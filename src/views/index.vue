@@ -177,7 +177,7 @@
               </div>
             </li>
           </ul>
-          <el-button type="text" @click="loadMore" class="more">加载更多</el-button>
+          <el-button type="text" @click="loadMore" class="more" v-text="this.page>=this.newsData.page?'加载更多':'已无更多'"></el-button>
         </el-card>
         <el-dialog title="详情" :visible.sync="dialogVisible">
           <span v-for="(item, index) in newsDetailList" :key="index">
@@ -200,6 +200,7 @@ import { compareUp, compareDown } from '../api/tools'
 export default {
   data() {
     return {
+      page: null,
       dialogVisible: false,
       data: {
         id: '',
@@ -210,6 +211,7 @@ export default {
         pageSize: 10
       },
       newsDetailList: {},
+      moreData: [],
       newsList: [],
       tableHeight: null,
       screenHeight: window.innerHeight,
@@ -232,8 +234,8 @@ export default {
     loadMore() {
       this.newsData.page++
       news(this.newsData).then(res => {
-        const ret = res.data.data.items
-        this.newsList = this.newsList.concat(ret)
+        this.moreData = res.data.data.items
+        this.newsList = this.newsList.concat(this.moreData)
       })
     },
     // 公告详情
@@ -247,11 +249,13 @@ export default {
       newsTop(this.data).then(res => {
         this.getNews()
       })
+      this.newsData.page = 1
     },
     getNews() {
       news(this.newsData).then(res => {
         const ret = res.data.data.items
         this.newsList = ret
+        this.page = res.data.data._meta.pageCount
       })
     },
     handleClick(tab, event) {
