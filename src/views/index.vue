@@ -28,12 +28,12 @@
             <el-table-column prop="primary" label="初级目标(￥)" sortable="custom"></el-table-column>
             <el-table-column prop="high" label="高级目标(￥)" sortable="custom"></el-table-column>
             <el-table-column prop="amt" label="毛利润(￥)" sortable="custom"></el-table-column>
-            <el-table-column prop="primaryRate" width="150" label="初级目标完成度" sortable="custom" >
+            <el-table-column prop="primaryRate" width="140" label="初级目标完成度" sortable="custom" >
               <template slot-scope="scope">
                 <el-progress :text-inside="true" :stroke-width="18" :status="checkStatus(scope.row,'primaryRate')" :percentage="Math.round(scope.row.primaryRate*10000)/100"></el-progress>
               </template>
             </el-table-column>
-            <el-table-column prop="highRate" width="150" label="高级目标完成度" sortable="custom">
+            <el-table-column prop="highRate" width="140" label="高级目标完成度" sortable="custom">
               <template slot-scope="scope">
                 <el-progress :text-inside="true" :stroke-width="18" :status="checkStatus(scope.row,'highRate')" :percentage="Math.round(scope.row.highRate*10000)/100"></el-progress>
               </template> 
@@ -157,7 +157,7 @@
             <h2>公告栏</h2>
           </div>
           <ul>
-            <li v-for="(item, index) in newsTopList" :key="index">
+            <li v-for="(item, index) in newsList" :key="index">
               <div class="post-left-box">
                 <div class="subtitle">
                   <h2 @click="dialogTopShow(item.id)">{{item.title}}
@@ -168,27 +168,16 @@
                 </div>
               </div>
               <div class="post-right-box">
-                <el-button type="text" slot="reference" style="padding:0px;">
+                <el-button type="text" slot="reference" style="padding:0px;" v-if="item.isTop===1">
                   <el-badge value="顶"></el-badge>
                 </el-button>
-              </div>
-            </li>
-            <li v-for="item in news.slice(0, 9)" :key="item.id">
-              <div class="post-left-box">
-                <div class="subtitle">
-                  <h2 @click="dialogShow(item.id)">
-                    {{item.title}}
-                  </h2>
-                  <p style="color:#b2b2b2;">{{item.creator}} &nbsp;&nbsp;| &nbsp;&nbsp;{{item.createDate.substring(0, 16)}}</p>
-                </div>
-              </div>
-              <div class="post-right-box">
-                <el-button type="text" @click="handleTop(item.id)" slot="reference" style="padding:0px;">
+                <el-button type="text" @click="handleTop(item.id)" slot="reference" style="padding:0px;" v-else-if="item.isTop===0">
                   <i>⇧</i>
                 </el-button>
               </div>
             </li>
           </ul>
+          <el-button type="text" @click="loadMore" class="more">加载更多</el-button>
         </el-card>
         <el-dialog title="详情" :visible.sync="dialogVisible">
           <span v-for="(item, index) in newsDetailList" :key="index">
@@ -220,9 +209,7 @@ export default {
         page: 1,
         pageSize: 10
       },
-      newsTopList: [],
       newsDetailList: {},
-      news: [],
       newsList: [],
       tableHeight: null,
       screenHeight: window.innerHeight,
@@ -241,20 +228,30 @@ export default {
     }
   },
   methods: {
+    // 加载更多
+    loadMore() {
+      this.newsData.page++
+      news(this.newsData).then(res => {
+        const ret = res.data.data.items
+        this.newsList = ret
+      })
+    },
+    // 公告详情
     dialogTopShow(id) {
       this.dialogVisible = true
-      this.newsDetailList = this.newsTopList.filter(e => e.id === id)
+      this.newsDetailList = this.newsList.filter(e => e.id === id)
     },
-    dialogShow(id) {
-      this.dialogVisible = true
-      this.newsDetailList = this.news.filter(e => e.id === id)
-    },
+    // 置顶
     handleTop(id) {
       this.data.id = id
       newsTop(this.data).then(res => {
-        news(this.newsData).then(res => {
-          this.newsList = res.data.data.items
-        })
+        this.getNews()
+      })
+    },
+    getNews() {
+      news(this.newsData).then(res => {
+        const ret = res.data.data.items
+        this.newsList = ret
       })
     },
     handleClick(tab, event) {
@@ -307,12 +304,7 @@ export default {
       this.activeName = ret[0].name
       this.show[this.activeName] = true
     })
-    news(this.newsData).then(res => {
-      const ret = res.data.data.items
-      this.newsList = ret
-      this.newsTopList = ret.filter(e => e.isTop === 1)
-      this.news = ret.filter(e => e.isTop === 0)
-    })
+    this.getNews()
   }
 }
 </script>
@@ -358,6 +350,9 @@ export default {
     border-bottom: 1px solid #eee;
     transition: all .3s;
     height: 100px;
+  }
+  .more{
+    margin-left: 50%;
   }
 }
 a {
