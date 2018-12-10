@@ -233,7 +233,7 @@ export default {
       this.newsData.page++
       news(this.newsData).then(res => {
         const ret = res.data.data.items
-        this.newsList = ret
+        this.newsList = this.newsList.concat(ret)
       })
     },
     // 公告详情
