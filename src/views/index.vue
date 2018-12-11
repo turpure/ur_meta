@@ -166,10 +166,10 @@
                 </div>
               </div>
               <div class="post-right-box">
-                <el-button type="text" slot="reference" style="padding:0px;" v-if="item.isTop===1">
+                <el-button type="text" slot="reference" style="padding:10px;" v-if='item.isTop==="1"'>
                   <el-badge value="顶"></el-badge>
                 </el-button>
-                <el-button type="text" @click="handleTop(item.id)" slot="reference" style="padding:0px;" v-else-if="item.isTop===0">
+                <el-button type="text" @click="handleTop(item.id)" slot="reference" style="padding:10px;" v-else-if='item.isTop==="0"'>
                   <i>⇧</i>
                 </el-button>
               </div>
@@ -329,8 +329,8 @@ export default {
   .post-left-box{
     position: relative;
     float: left;
+    width: 400px;
     h2{
-      width: 400px;
       text-overflow:ellipsis; 
       white-space:nowrap;
       overflow: hidden;
