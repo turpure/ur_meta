@@ -160,18 +160,21 @@
             <li v-for="(item, index) in newsList" :key="index">
               <div class="post-left-box">
                 <div class="subtitle">
-                  <h2 @click="dialogTopShow(item.id)" v-html="item.title">
+                  <h2 v-html="item.title">
                   </h2>
                   <p style="color:#b2b2b2;">{{item.creator}} &nbsp;&nbsp;| &nbsp;&nbsp;{{item.createDate.substring(0, 16)}}</p>
                 </div>
               </div>
               <div class="post-right-box">
-                <el-button type="text" slot="reference" style="padding:10px;" v-if='item.isTop==="1"'>
-                  <el-badge value="顶"></el-badge>
+                <el-button type="text" @click="dialogTopShow(item.id)">
+                  <i class="el-icon-view" ></i>
+                </el-button>
+                <el-button type="text" slot="reference" style="padding:8px;" v-if='item.isTop==="1"'>
+                  <el-badge value="顶" style="margin-top:-5px;"></el-badge>
                 </el-button>
                 <el-button type="text" @click="handleTop(item.id)" slot="reference" style="padding:10px;" v-else-if='item.isTop==="0"'>
-                  <i>⇧</i>
-                </el-button>
+                  <span>⇧</span>
+                  </el-button>
               </div>
             </li>
           </ul>
@@ -339,14 +342,18 @@ export default {
   .post-right-box{
     position: relative;
     float: right;
-    margin-top: 20px;
+    margin-top: 10px;
     margin-right: 10px;
     i{
+      margin-right: -15px;
+      font-size: 20px;
+    }
+    span{
       margin-right: 5px;
       font-style: normal;
       font-size: 24px;
     }
-    i:hover{
+    span:hover{
       color: red;
     }
   }
