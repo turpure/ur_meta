@@ -180,13 +180,15 @@
           </ul>
           <el-button type="text" @click="loadMore" class="more" v-text="this.page>=this.newsData.page?'加载更多':'已无更多'"></el-button>
         </el-card>
-        <el-dialog title="详情" :visible.sync="dialogVisible">
-          <span v-for="(item, index) in newsDetailList" :key="index" v-html="item.detail">
-          </span>
-          <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisible = false">取 消</el-button>
-            <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-          </span>
+        <el-dialog :visible.sync="dialogVisible">
+          <el-form :model="newsDetailList" label-width="80px" ref="detailForm">
+            <el-form-item label="标题：" prop="title">
+              <span v-html="newsDetailList.title" style="font-size:18px;"></span>
+            </el-form-item>
+            <el-form-item label="详情：" prop="detail">
+              <span v-html="newsDetailList.detail" style="font-size:18px;"></span>
+            </el-form-item>
+          </el-form>
         </el-dialog>
     </section>
   </div>
@@ -241,6 +243,7 @@ export default {
     dialogTopShow(id) {
       this.dialogVisible = true
       this.newsDetailList = this.newsList.filter(e => e.id === id)
+      this.newsDetailList = this.newsDetailList[0]
     },
     // 置顶
     handleTop(id) {

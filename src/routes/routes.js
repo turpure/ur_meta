@@ -39,6 +39,8 @@ import exchange from '../views/settings/exchange.vue'
 // 反馈中心
 import requirements from '../views/feedback/requirements.vue'
 import news from '../views/feedback/news.vue'
+// 产品中心
+import productRecommend from '../views/productDevelop/productRecommend.vue'
 
 const routes = [{
   path: '/login',
@@ -255,6 +257,19 @@ const routes = [{
       path: '/v1/tiny-tool/exception-edition',
       component: edition,
       name: '异常改订单'
+    }
+  ]
+},
+{
+  path: '/v1/oa-goods/list',
+  component: Home,
+  name: '产品中心',
+  iconCls: 'el-icon-message',
+  children: [
+    {
+      path: '/v1/oa-goods/list',
+      component: productRecommend,
+      name: '产品推荐' 
     }
   ]
 },
