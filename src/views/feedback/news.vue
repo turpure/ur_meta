@@ -10,8 +10,16 @@
       <el-table-column type="index" width="60"></el-table-column>
       <el-table-column prop="createDate" label="创建时间" :formatter="formatter" width="140"></el-table-column>
       <el-table-column prop="creator" label="创建人"></el-table-column>
-      <el-table-column prop="title" label="标题"></el-table-column>
-      <el-table-column prop="detail" label="详情"></el-table-column>
+      <el-table-column prop="title" label="标题">
+        <template slot-scope="scope">
+          <span v-html="scope.row.title"></span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="detail" label="详情">
+        <template slot-scope="scope">
+          <span v-html="scope.row.detail"></span>
+        </template>
+      </el-table-column>
       <el-table-column prop="isTop" label="是否置顶"></el-table-column>
       <el-table-column label="操作" width="220">
         <template slot-scope="scope"> 

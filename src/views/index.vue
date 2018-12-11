@@ -160,9 +160,7 @@
             <li v-for="(item, index) in newsList" :key="index">
               <div class="post-left-box">
                 <div class="subtitle">
-                  <h2 @click="dialogTopShow(item.id)">{{item.title}}
-                    <!-- <a :href=item.detail target="_blank">{{item.detail}}
-                    </a> -->
+                  <h2 @click="dialogTopShow(item.id)" v-html="item.title">
                   </h2>
                   <p style="color:#b2b2b2;">{{item.creator}} &nbsp;&nbsp;| &nbsp;&nbsp;{{item.createDate.substring(0, 16)}}</p>
                 </div>
@@ -180,9 +178,7 @@
           <el-button type="text" @click="loadMore" class="more" v-text="this.page>=this.newsData.page?'加载更多':'已无更多'"></el-button>
         </el-card>
         <el-dialog title="详情" :visible.sync="dialogVisible">
-          <span v-for="(item, index) in newsDetailList" :key="index">
-            <a :href="item.detail" target="_blank">{{item.detail}}</a>
-            {{item.detail}}
+          <span v-for="(item, index) in newsDetailList" :key="index" v-html="item.detail">
           </span>
           <span slot="footer" class="dialog-footer">
             <el-button @click="dialogVisible = false">取 消</el-button>
@@ -333,7 +329,12 @@ export default {
   .post-left-box{
     position: relative;
     float: left;
-    //width: 400px;
+    h2{
+      width: 400px;
+      text-overflow:ellipsis; 
+      white-space:nowrap;
+      overflow: hidden;
+    }
   }
   .post-right-box{
     position: relative;
