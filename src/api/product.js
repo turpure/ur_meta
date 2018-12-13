@@ -44,7 +44,7 @@ export function goodsClaim(param) {
   const data = { 'condition': param }
   return request({
     url: '/oa-goods/claim',
-    method: 'psot',
+    method: 'post',
     data
   })
 }

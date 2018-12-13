@@ -1,11 +1,11 @@
 <template>
-  <section class="toolbar">
-  <el-col :span="24" style="padding:10px;">
+  <section>
+  <el-col :span="24" style="padding:10px 20px;">
     <el-button type="primary" plain @click='dialogVisible=true'>新增产品</el-button>
-    <el-button type="primary">批量导入</el-button>
+    <!-- <el-button type="primary">批量导入</el-button> -->
     <el-button type="danger" @click="delAll">批量删除</el-button>
     <el-button type="success">下载模板</el-button>
-    <el-button type="warning">批量审批</el-button>
+    <!-- <el-button type="warning">批量审批</el-button> -->
   </el-col>
   <!-- 新增对话框 -->
   <el-dialog title='新增' :visible.sync="dialogVisible">
@@ -23,8 +23,8 @@
           <el-option v-for="item in subCate" :value="item.CategoryName" :key="item.CategoryName"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="开发员" prop='introducer'>
-        <el-select size="small" v-model="addForm.introducer" style="width:100%;">
+      <el-form-item label="开发员" prop='developer'>
+        <el-select size="small" v-model="addForm.developer" style="width:100%;">
           <el-option v-for="item in developer" :value="item.username" :key="item.username"></el-option>
         </el-select>
       </el-form-item>
@@ -34,9 +34,6 @@
       <el-form-item label="平台参考链接" prop='origin1'>
         <el-input size="small" v-model="addForm.origin1"></el-input>
       </el-form-item>
-      <!-- <el-form-item label="推荐开发员" prop='developer'>
-        <el-input v-model="addForm.developer" placeholder="选填"></el-input>
-      </el-form-item> -->
       <el-form-item label="推荐理由" prop='introReason'>
         <el-input size="small" v-model="addForm.introReason" placeholder="选填"></el-input>
       </el-form-item>
@@ -68,6 +65,41 @@
   </el-dialog>
   <!-- 更新对话框 -->
   <el-dialog title='更新' :visible.sync="dialogVisibleEdit">
+    <el-form :model="editForm" label-width="100px" ref="editForm">
+      <el-form-item label="图片" prop="img">
+        <el-input v-model="editForm.img"></el-input>
+      </el-form-item>
+      <el-form-item label="主类目" prop="cate">
+        <el-select size="small" v-model="editForm.cate" @change="productcategory" style="width:100%;">
+          <el-option v-for="item in cate" :value="item.CategoryName" :key="item.CategoryName">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="子类目" prop="subCate">
+        <el-select size="small" v-model="editForm.subCate" :disabled="disabled" style="width:100%;">
+          <el-option v-for="item in subCate" :value="item.CategoryName" :key="item.CategoryName">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="开发员" prop="introducer">
+        <el-select size="small" v-model="editForm.developer" style="width:100%;">
+          <el-option v-for="item in developer" :value="item.username" :key="item.username">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="供应商链接">
+        <el-input size="small" v-model="editForm.vendor1"></el-input>
+      </el-form-item>
+      <el-form-item label="平台参考链接">
+        <el-input size="small" v-model="editForm.origin1"></el-input>
+      </el-form-item>
+      <el-form-item label="推荐理由">
+        <el-input size="small" v-model="editForm.introReason" placeholder="选填"></el-input>
+      </el-form-item>
+    </el-form>
+    <span slot="footer" class="dialog-footer">
+      <el-button type="primary" @click="submitEdit">确定</el-button>
+    </span>
   </el-dialog>
   <!-- 认领对话框 -->
   <el-dialog title='认领' :visible.sync="dialogVisibleClaim">
@@ -92,7 +124,7 @@
           </el-button>
         </el-tooltip>
         <el-tooltip content="更新">
-          <el-button type="text" @click="dialogVisibleEdit = true">
+          <el-button type="text" @click="edit(scope.$index, scope.row)">
             <i class="el-icon-edit"></i>
           </el-button>
         </el-tooltip>
@@ -111,7 +143,7 @@
     <el-table-column prop="img" label="图片" header-align="center">
     </el-table-column>
     <el-table-column label="主类目" header-align="center">
-      <el-table-column prop="cate" :render-header="renderHeader" width='210'>
+      <el-table-column prop="cate" :render-header="renderHeader" width='150'>
       </el-table-column>
     </el-table-column>
     <el-table-column label="子类目" header-align="center">
@@ -147,11 +179,11 @@
       </el-table-column>
     </el-table-column>
     <el-table-column label="创建时间" header-align="center">
-      <el-table-column prop="createDate" :render-header="renderHeader" width='150'>
+      <el-table-column prop="createDate" :render-header="renderHeader" width='200'>
       </el-table-column>
     </el-table-column>
     <el-table-column label="更新时间" header-align="center">
-      <el-table-column prop="updateDate" :render-header="renderHeader" width='150'>
+      <el-table-column prop="updateDate" :render-header="renderHeader" width='200'>
       </el-table-column>
     </el-table-column>
   </el-table>
@@ -214,6 +246,7 @@ export default {
       viewForm: {
         nid: null,
       },
+      editForm: {},
       delForm: {
         nid: []
       },
@@ -262,14 +295,27 @@ export default {
         this.viewForm = res.data.data
       })
     },
+    // 更新
+    edit(index, row) {
+      this.dialogVisibleEdit = true
+      this.editForm = Object.assign({}, row)
+    },
+    submitEdit() {
+      goodsUpdate(this.editForm).then(res => {
+        this.dialogVisibleEdit = false
+        this.getData()
+      })
+    },
     // 认领
     claim(index, row) {
       this.dialogVisibleClaim = true
       this.claimForm.nid = row.nid
     },
     submitClaim() {
-      console.log(this.claimForm.devStatus,this.claimForm.nid)
-      goodsClaim(this.claimForm).then(res => {})
+      goodsClaim(this.claimForm).then(res => {
+        this.dialogVisibleClaim = false
+        this.getData()
+      })
     },
     // 删除
     selsChange(sels) {
@@ -319,6 +365,7 @@ export default {
         this.total = res.data.data._meta.totalCount
       })
     },
+    // 新增
     submitForm(){
       this.$refs.addForm.validate((valid)=>{
         if(valid){
@@ -326,6 +373,7 @@ export default {
             if (res.data.code === 200) {
               this.$confirm('成功！', '提示', { type: 'success' }).then(() => {
                 this.dialogVisible=false
+                this.getData()
               })
             } else {
               this.$confirm('错误！', '提示', { type: 'error' }).then(() => {
@@ -342,7 +390,7 @@ export default {
     //过滤，搜索
     renderHeader(h,{column, $index}){
       let filters = [ {text:'全部1','value':"1"} , {text:'全部2','value':"2"} , {text:'全部3','value':"3"} ]
-      if($index === 0) {
+      if($index === 0 || $index === 7) {
       return h('el-select',{
           props:{
             placeholder:'请选择',
@@ -366,7 +414,7 @@ export default {
             });
           })
         ])
-      } else if($index === 1){
+      } else if($index === 9 || $index === 10){
         return h('el-date-picker',{
           props:{
             placeholder:'请选择',
