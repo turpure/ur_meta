@@ -19,7 +19,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="子类目" prop='subCate'>
-        <el-select size="small" v-model="addForm.subCate" :disabled="disabled" style="width:100%;">
+        <el-select size="small" v-model="addForm.subCate" :disabled="this.disabled" style="width:100%;">
           <el-option v-for="item in subCate" :value="item.CategoryName" :key="item.CategoryName"></el-option>
         </el-select>
       </el-form-item>
@@ -45,43 +45,49 @@
   </el-dialog>
   <!-- 查看对话框 -->
   <el-dialog title='查看' :visible.sync="dialogVisibleView">
-    <el-form :model="viewForm" label-width="100px" ref="viewForm">
-      <el-form-item label="图片" prop="img">
+    <el-form :model="viewForm" label-position="left" label-width="100px" ref="viewForm">
+      <el-form-item label="图片" class="item">
+        <span v-html="viewForm.img"></span>
+      </el-form-item>
+      <el-form-item label="图片地址" prop="img" class="item">
         <span>{{viewForm.img}}</span>
       </el-form-item>
-      <el-form-item label="主类目" prop="cate">
+      <el-form-item label="主类目" prop="cate" class="item">
         <span>{{viewForm.cate}}</span>
       </el-form-item>
-      <el-form-item label="子类目" prop="subCate">
+      <el-form-item label="子类目" prop="subCate" class="item">
         <span>{{viewForm.subCate}}</span>
       </el-form-item>
-      <el-form-item label="供应商链接" prop="vendor1">
+      <el-form-item label="供应商链接" prop="vendor1" class="item">
         <span>{{viewForm.vendor1}}</span>
       </el-form-item>
-      <el-form-item label="平台参考链接" prop="origin1">
+      <el-form-item label="平台参考链接" prop="origin1" class="item">
         <span>{{viewForm.origin1}}</span>
       </el-form-item>
     </el-form>
   </el-dialog>
   <!-- 更新对话框 -->
   <el-dialog title='更新' :visible.sync="dialogVisibleEdit">
-    <el-form :model="editForm" label-width="100px" ref="editForm">
-      <el-form-item label="图片" prop="img">
+    <el-form :model="editForm" :rules="rules" label-width="100px" label-position="left" ref="editForm">
+      <el-form-item label="图片">
+        <span v-html="editForm.img"></span>
+      </el-form-item>
+      <el-form-item label="图片地址" prop="img">
         <el-input v-model="editForm.img"></el-input>
       </el-form-item>
       <el-form-item label="主类目" prop="cate">
-        <el-select size="small" v-model="editForm.cate" @change="productcategory" style="width:100%;">
+        <el-select size="small" v-model="editForm.cate" @change="getSubcate" style="width:100%;">
           <el-option v-for="item in cate" :value="item.CategoryName" :key="item.CategoryName">
           </el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="子类目" prop="subCate">
-        <el-select size="small" v-model="editForm.subCate" :disabled="disabled" style="width:100%;">
+        <el-select size="small" v-model="editForm.subCate" style="width:100%;">
           <el-option v-for="item in subCate" :value="item.CategoryName" :key="item.CategoryName">
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="开发员" prop="introducer">
+      <el-form-item label="开发员" prop="developer">
         <el-select size="small" v-model="editForm.developer" style="width:100%;">
           <el-option v-for="item in developer" :value="item.username" :key="item.username">
           </el-option>
@@ -102,11 +108,15 @@
     </span>
   </el-dialog>
   <!-- 认领对话框 -->
-  <el-dialog title='认领' :visible.sync="dialogVisibleClaim">
-    <el-select v-model="claimForm.devStatus" placeholder="认领到" size="small" style="width:100%;">
-      <el-option value="正向认领"></el-option>
-      <el-option value="逆向认领"></el-option>
-    </el-select>
+  <el-dialog :visible.sync="dialogVisibleClaim">
+    <el-form :model="claimForm" label-position="left" label-width="50px" ref="claimForm">
+      <el-form-item label="认领">
+        <el-select v-model="claimForm.devStatus" placeholder="认领到" size="small" style="width:90%;">
+          <el-option value="正向认领"></el-option>
+          <el-option value="逆向认领"></el-option>
+        </el-select>
+      </el-form-item>
+    </el-form>
     <span slot="footer" class="dialog-footer">
       <el-button type="primary" @click="submitClaim">确定</el-button>
     </span>
@@ -246,7 +256,16 @@ export default {
       viewForm: {
         nid: null,
       },
-      editForm: {},
+      editForm: {
+        nid: null,
+        img: '',
+        cate: '',
+        subCate: '',
+        vendor1: '',
+        origin1: '',
+        developer: '',
+        introReason: ''
+      },
       delForm: {
         nid: []
       },
@@ -255,19 +274,19 @@ export default {
         devStatus: ''
       },
       rules: {
-          img: [
-            { required: true, message: '图片不能为空', trigger: 'blur' }
-          ],
-          cate: [
-            { required: true, message: '主类目不能为空', trigger: 'change' }
-          ],
-          cateChildren: [
-            { required: true, message: '子类目不能为空', trigger: 'change' }
-          ],
-          cateDevelop: [
-            { required: true, message: '开发员不能为空', trigger: 'change' }
-          ],
-        },
+        img: [
+          { required: true, message: '图片不能为空', trigger: 'blur' }
+        ],
+        cate: [
+          { required: true, message: '主类目不能为空', trigger: 'blur' }
+        ],
+        subCate: [
+          { required: true, message: '子类目不能为空', trigger: 'blur' }
+        ],
+        developer: [
+          { required: true, message: '开发员不能为空', trigger: 'blur' }
+        ],
+      },
       dialogVisible:false,
       input: '',
       value: '',
@@ -299,11 +318,23 @@ export default {
     edit(index, row) {
       this.dialogVisibleEdit = true
       this.editForm = Object.assign({}, row)
+      if (this.editForm.cate !== '') {
+        const val = this.editForm.cate
+        const res = this.category
+        this.subCate = res.filter(e => e.CategoryParentName === val)
+      }
     },
     submitEdit() {
-      goodsUpdate(this.editForm).then(res => {
-        this.dialogVisibleEdit = false
-        this.getData()
+      this.$refs.editForm.validate((valid)=>{
+        if(valid){
+          goodsUpdate(this.editForm).then(res => {
+            this.dialogVisibleEdit = false
+            this.getData()
+         })
+        } else {
+          console.log('error submit!!')
+          return false
+        }
       })
     },
     // 认领
@@ -357,6 +388,13 @@ export default {
         this.disabled = true
       }
     },
+    getSubcate() {
+      if (this.editForm.cate !== '') {
+        const val = this.editForm.cate
+        const res = this.category
+        this.subCate = res.filter(e => e.CategoryParentName === val)
+      }
+    },
     getData() {
       goodsList(this.condition).then(res => {
         this.tableData = res.data.data.items
@@ -381,7 +419,7 @@ export default {
               })
             }
           })
-        }else{
+        } else {
           console.log('error submit!!')
           return false
         }
@@ -459,6 +497,13 @@ export default {
   }
 }
 </script>
+
+<style>
+  .item .el-form-item__label{
+    color: #F56C6C;
+    margin-right: 5%;
+  }
+</style>
 
 <style lang="scss" scoped>
 .el-button{
