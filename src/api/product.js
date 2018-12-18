@@ -3,7 +3,7 @@ import request from '@/utils/request'
 export function goodsList(param) {
   const data = { 'condition': param }
   return request({
-    url: '/oa-goods/list',
+    url: '/oa-goods/list?page='+param.page,
     method: 'post',
     data
   })

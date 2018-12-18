@@ -2,7 +2,7 @@
   <section>
     <!-- 新增 -->
     <el-col :span="24" class="toolbar">
-      <el-button size="small" type="primary" @click="handleAdd">新增</el-button>
+      <el-button size="small" plain @click="handleAdd">新增</el-button>
     </el-col>
     <!-- 标题列表 -->
     <el-table :data="newsList" :loading="listLoading">
