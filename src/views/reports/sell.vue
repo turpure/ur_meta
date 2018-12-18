@@ -19,7 +19,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label='平台' class='input'>
-            <el-select size="small" v-model='condition.plat' clearable placeholder='平台'>
+            <el-select size="small" v-model='condition.plat' multiple collapse-tags placeholder='平台'>
               <el-option v-for='(item,index) in plat' :index='index' :key='item.plat' :label='item.plat' :value='item.plat'></el-option>
             </el-select>
           </el-form-item>
@@ -137,7 +137,7 @@ export default {
       department: [],
       allSecDep: [],
       secDepartment: [],
-      plat: '',
+      plat: [],
       member: [],
       store: [],
       dateType: [{ id: 1, type: '发货时间' }, { id: 0, type: '交易时间' }],
