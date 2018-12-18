@@ -1,10 +1,10 @@
 <template>
   <section>
   <el-col :span="24" style="padding:10px 20px;">
-    <el-button type="primary" plain @click='dialogVisible=true'>新增产品</el-button>
+    <el-button plain @click='dialogVisible=true'>新增产品</el-button>
     <!-- <el-button type="primary">批量导入</el-button> -->
-    <el-button type="danger" @click="delAll">批量删除</el-button>
-    <el-button type="success">下载模板</el-button>
+    <el-button plain @click="delAll">批量删除</el-button>
+    <el-button plain>下载模板</el-button>
     <!-- <el-button type="warning">批量审批</el-button> -->
   </el-col>
   <!-- 新增对话框 -->
@@ -151,6 +151,9 @@
       </template>
     </el-table-column>
     <el-table-column prop="img" label="图片" header-align="center">
+      <template slot-scope="scope">
+        <img :src='scope.row.img' alt="" style="width: 60px;height: 50px">
+      </template>
     </el-table-column>
     <el-table-column label="主类目" header-align="center">
       <el-table-column prop="cate" :render-header="renderHeader" width='150'>

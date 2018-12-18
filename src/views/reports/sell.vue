@@ -419,22 +419,11 @@ export default {
     },
     // 小数和空值格式化
     empty(row, column, cellValue, index) {
-      if (row.grossprofitRate === '0') {
-        return row.grossprofitRate
-      } else {
-        row.grossprofitRate = Math.round(row.grossprofitRate * 100) / 100
-      }
-      row.expressFare = Math.round(row.expressFare * 100) / 100
-      row.refund = Math.round(row.refund * 100) / 100
-      if (row.refundrate === '0') {
-        return row.refundrate
-      } else {
-        row.refundrate = Math.round(row.refundrate * 100) / 100
-      }
-      row.diefeeZn = Math.round(row.diefeeZn * 100) / 100
-      row.insertionFee = Math.round(row.insertionFee * 100) / 100
+      row.salemoneyzn = Math.round(row.salemoneyzn * 100) / 100
+      row.ebayfeeznebay = Math.round(row.ebayfeeznebay * 100) / 100
+      row.ppFeezn = Math.round(row.ppFeezn * 100) / 100
+      row.refundrate = Math.round(row.refundrate * 100) / 100
       row.grossprofit = Math.round(row.grossprofit * 100) / 100
-      row.saleOpeFeeZn = Math.round(row.saleOpeFeeZn * 100) / 100
       if (!isNaN(cellValue)) {
         return Number(cellValue)
       }
