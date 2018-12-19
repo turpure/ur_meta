@@ -47,7 +47,7 @@
   <el-dialog title='查看' :visible.sync="dialogVisibleView">
     <el-form :model="viewForm" label-position="left" label-width="100px" ref="viewForm">
       <el-form-item label="图片" class="item">
-        <span v-html="viewForm.img"></span>
+        <img :src='viewForm.img' style="width: 60px;height: 50px">
       </el-form-item>
       <el-form-item label="图片地址" prop="img" class="item">
         <span>{{viewForm.img}}</span>
@@ -70,7 +70,7 @@
   <el-dialog title='更新' :visible.sync="dialogVisibleEdit">
     <el-form :model="editForm" :rules="rules" label-width="100px" label-position="left" ref="editForm">
       <el-form-item label="图片">
-        <span v-html="editForm.img"></span>
+        <img :src='editForm.img' style="width: 60px;height: 50px">
       </el-form-item>
       <el-form-item label="图片地址" prop="img">
         <el-input v-model="editForm.img"></el-input>
@@ -152,7 +152,7 @@
     </el-table-column>
     <el-table-column prop="img" label="图片" header-align="center">
       <template slot-scope="scope">
-        <img :src='scope.row.img' alt="" style="width: 60px;height: 50px">
+        <img :src='scope.row.img' style="width: 60px;height: 50px">
       </template>
     </el-table-column>
     <el-table-column label="主类目" header-align="center">
@@ -225,6 +225,7 @@ export default {
       dialogVisibleClaim: false,
       dialogVisibleEdit: false,
       dialogVisibleView: false,
+      dialogVisible:false,
       condition: {
         cate: '',
         introducer: '',
@@ -290,11 +291,8 @@ export default {
           { required: true, message: '开发员不能为空', trigger: 'blur' }
         ],
       },
-      dialogVisible:false,
-      input: '',
-      value: '',
-      time:[],
-      options: ['1','2'],
+      time1: '',
+      time2: '',
       tableData: []
     }
   },
@@ -407,7 +405,7 @@ export default {
       })
     },
     // 新增
-    submitForm(){
+    submitForm() {
       this.$refs.addForm.validate((valid)=>{
         if(valid){
           goodsCreate(this.addForm).then(res => {
@@ -429,20 +427,85 @@ export default {
       })
     },
     //过滤，搜索
-    renderHeader(h,{column, $index}){
-      let filters = [ {text:'全部1','value':"1"} , {text:'全部2','value':"2"} , {text:'全部3','value':"3"} ]
-      if($index === 0 || $index === 7) {
-      return h('el-select',{
+    formatTen(num) {
+      return num > 9 ? (num + "") : ("0" + num)
+    },
+    formatDate(date) { 
+      const year = date.getFullYear()
+      const month = date.getMonth() + 1
+      const day = date.getDate() 
+      const hour = date.getHours()
+      const minute = date.getMinutes()
+      const second = date.getSeconds() 
+      return year + "-" + this.formatTen(month) + "-" + this.formatTen(day) 
+    },
+    filter() {
+      if (this.time1 !== null && this.time1.length !== 0) {
+        this.condition.createDate = [this.formatDate(this.time1[0]), this.formatDate(this.time1[1])]
+      } else {
+        this.condition.createDate = []
+      }
+      if (this.time2 !== null && this.time2.length !== 0) {
+        this.condition.updateDate = [this.formatDate(this.time2[0]), this.formatDate(this.time2[1])]
+      } else {
+        this.condition.updateDate = []
+      }
+      this.getData()
+      // const condition = {cate: this.value1, checkStatus: this.value2, subCate: this.input1, vendor1: this.input2, origin1: this.input3, developer: this.input4, introducer: this.input5, introReason: this.input6, approvalNote: this.input8, createDate: this.time1, updateDate: this.time2}
+      // const data = this.searchTable
+      // this.tableData = data.filter(item => {
+      //   return Object.keys(condition).every(key=> {
+      //     return (String(item[key]).toLowerCase().includes(String(condition[key]).trim().toLowerCase()))
+      //   })
+      // })
+    },
+    renderHeader(h,{column, $index}) {
+      let filters = this.category
+      if($index === 0) {
+        return h('el-select',{
           props:{
             placeholder:'请选择',
             filterable:true, 
-            value:this.value,
+            value:this.condition.cate,
             size:'mini',
+            clearable:true,
           },
           on:{
             input:value=>{
-              this.value=value
+              this.condition.cate=value
               this.$emit('input', value)
+            },
+            change:searchValue=>{
+              this.filter()
+            }
+          }
+        },[
+          filters.map(item=>{
+            return h('el-option',{
+              props:{
+                value:item.CategoryName,
+                label:item.CategoryName
+              }
+            });
+          })
+        ])
+      } else if($index === 7){
+        let filters = [ {text:'未认领','value':"未认领"} , {text:'已认领','value':"已认领"} ]
+        return h('el-select',{
+          props:{
+            placeholder:'请选择',
+            filterable:true, 
+            value:this.condition.checkStatus,
+            size:'mini',
+            clearable:true,
+          },
+          on:{
+            input:value=>{
+              this.condition.checkStatus=value
+              this.$emit('input', value)
+            },
+            change:searchValue=>{
+              this.filter()
             }
           }
         },[
@@ -450,33 +513,54 @@ export default {
             return h('el-option',{
               props:{
                 value:item.text,
-                label:item.text
+                label:item.value
               }
             });
           })
         ])
-      } else if($index === 9 || $index === 10){
+      } else if($index === 9){
         return h('el-date-picker',{
           props:{
-            placeholder:'请选择',
-            value:this.time,
+            value:this.time1,
             size:'mini',
             type:'daterange',
           },
           style:{
-            width:'185px',
+            width:'180px',
             padding:'2px',
           },
           on:{
             input:value=>{
-              this.time=value
+              this.time1=value
               this.$emit('input', value)
-              console.log(this.time)
+            },
+            change:value => {
+              this.filter()
             }
           }
         })
-      }
-      else {
+      } else if($index === 10) {
+        return h('el-date-picker',{
+          props:{
+            value:this.time2,
+            size:'mini',
+            type:'daterange',
+          },
+          style:{
+            width:'180px',
+            padding:'2px',
+          },
+          on:{
+            input:value=>{
+              this.time2=value
+              this.$emit('input', value)
+            },
+            change:value => {
+              this.filter()
+            }
+          }
+        })
+      } else if($index === 1){
         return h('div',{
           style:{
             height:'40px'
@@ -484,13 +568,155 @@ export default {
         },[
           h('el-input',{
             props:{
-              placeholder:'',
-              value:'',
+              value: this.condition.subCate,
               size:'mini',
+              clearable: true
             },
             on:{
               input:value=>{
-                this.$emit('input', value);
+                this.condition.subCate = value
+                this.$emit('input', value)
+              },
+              change: value => {
+                this.filter()
+              }
+            }
+          })
+        ])
+      } else if($index === 2){
+        return h('div',{
+          style:{
+            height:'40px'
+          },
+        },[
+          h('el-input',{
+            props:{
+              value: this.condition.vendor1,
+              size:'mini',
+              clearable: true
+            },
+            on:{
+              input:value=>{
+                this.condition.vendor1 = value
+                this.$emit('input', value)
+              },
+              change: value => {
+                this.filter()
+              }
+            }
+          })
+        ])
+      } else if($index === 3){
+        return h('div',{
+          style:{
+            height:'40px'
+          },
+        },[
+          h('el-input',{
+            props:{
+              value: this.condition.origin1,
+              size:'mini',
+              clearable: true
+            },
+            on:{
+              input:value=>{
+                this.condition.origin1 = value
+                this.$emit('input', value)
+              },
+              change: value => {
+                this.filter()
+              }
+            }
+          })
+        ])
+      } else if($index === 4){
+        return h('div',{
+          style:{
+            height:'40px'
+          },
+        },[
+          h('el-input',{
+            props:{
+              value: this.condition.developer,
+              size:'mini',
+              clearable: true
+            },
+            on:{
+              input:value=>{
+                this.condition.developer = value
+                this.$emit('input', value)
+              },
+              change: value => {
+                this.filter()
+              }
+            }
+          })
+        ])
+      } else if($index === 5){
+        return h('div',{
+          style:{
+            height:'40px'
+          },
+        },[
+          h('el-input',{
+            props:{
+              value: this.condition.introducer,
+              size:'mini',
+              clearable: true
+            },
+            on:{
+              input:value=>{
+                this.condition.introducer = value
+                this.$emit('input', value)
+              },
+              change: value => {
+                this.filter()
+              }
+            }
+          })
+        ])
+      } else if($index === 6){
+        return h('div',{
+          style:{
+            height:'40px'
+          },
+        },[
+          h('el-input',{
+            props:{
+              value: this.condition.introReason,
+              size:'mini',
+              clearable: true
+            },
+            on:{
+              input:value=>{
+                this.condition.introReason = value
+                this.$emit('input', value)
+              },
+              change: value => {
+                this.filter()
+              }
+            }
+          })
+        ])
+      } else {
+        return h('div',{
+          style:{
+            height:'40px'
+          },
+        },[
+          h('el-input',{
+            props:{
+              value: this.condition.approvalNote,
+              size:'mini',
+              clearable: true
+            },
+            on:{
+              input:value=>{
+                this.condition.approvalNote = value
+                this.$emit('input', value)
+              },
+              change: value => {
+                this.filter()
               }
             }
           })
