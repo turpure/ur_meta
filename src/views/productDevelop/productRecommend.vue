@@ -1,10 +1,10 @@
 <template>
-  <section>
+  <section class="toolbar">
   <el-col :span="24" style="padding:10px 20px;">
     <el-button plain @click='dialogVisible=true'>新增产品</el-button>
     <!-- <el-button type="primary">批量导入</el-button> -->
     <el-button plain @click="delAll">批量删除</el-button>
-    <el-button plain>下载模板</el-button>
+    <!-- <el-button plain>下载模板</el-button> -->
     <!-- <el-button type="warning">批量审批</el-button> -->
   </el-col>
   <!-- 新增对话框 -->
@@ -121,12 +121,12 @@
       <el-button type="primary" @click="submitClaim">确定</el-button>
     </span>
   </el-dialog>
-  <el-table :data="tableData" @selection-change="selsChange" style="width: 100%;">
-    <el-table-column type="selection" header-align="center">
+  <el-table :data="tableData" @selection-change="selsChange" style="width: 97%;margin-left:20px">
+    <el-table-column type="selection" fixed align="center" header-align="center">
     </el-table-column>
-    <el-table-column type="index" header-align="center">
+    <el-table-column type="index" fixed align="center" header-align="center">
     </el-table-column>
-    <el-table-column label="操作" header-align="center" width="100">
+    <el-table-column label="操作" fixed header-align="center" width="100">
       <template slot-scope="scope">
         <el-tooltip content="查看">
           <el-button type="text" @click="view(scope.$index, scope.row)">
@@ -150,53 +150,53 @@
         </el-tooltip>
       </template>
     </el-table-column>
-    <el-table-column prop="img" label="图片" header-align="center">
+    <el-table-column prop="img" fixed label="图片" header-align="center">
       <template slot-scope="scope">
         <img :src='scope.row.img' style="width: 60px;height: 50px">
       </template>
     </el-table-column>
     <el-table-column label="主类目" header-align="center">
-      <el-table-column prop="cate" :render-header="renderHeader" width='150'>
+      <el-table-column prop="cate" :render-header="renderHeader" width='150' align="center">
       </el-table-column>
     </el-table-column>
     <el-table-column label="子类目" header-align="center">
-      <el-table-column prop="subCate" :render-header="renderHeader" width='150'>
+      <el-table-column prop="subCate" :render-header="renderHeader" width='150' align="center">
       </el-table-column>
     </el-table-column>
     <el-table-column label="供应商链接" header-align="center">
-      <el-table-column prop="vendor1" :render-header="renderHeader" width='150'>
+      <el-table-column prop="vendor1" :render-header="renderHeader" width='150' align="center">
       </el-table-column>
     </el-table-column>
     <el-table-column label="平台参考链接" header-align="center">
-      <el-table-column prop="origin1" :render-header="renderHeader" width='150'>
+      <el-table-column prop="origin1" :render-header="renderHeader" width='150' align="center">
       </el-table-column>
     </el-table-column>
     <el-table-column label="开发员" header-align="center">
-      <el-table-column prop="developer" :render-header="renderHeader" width='150'>
+      <el-table-column prop="developer" :render-header="renderHeader" width='150' align="center">
       </el-table-column>
     </el-table-column>
     <el-table-column label="推荐人" header-align="center">
-      <el-table-column prop="introducer" :render-header="renderHeader" width='150'>
+      <el-table-column prop="introducer" :render-header="renderHeader" width='150' align="center">
       </el-table-column>
     </el-table-column>
     <el-table-column label="推荐理由" header-align="center">
-      <el-table-column prop="introReason" :render-header="renderHeader" width='150'>
+      <el-table-column prop="introReason" :render-header="renderHeader" width='150' align="center">
       </el-table-column>
     </el-table-column>
     <el-table-column label="产品状态" header-align="center">
-      <el-table-column prop="checkStatus" :render-header="renderHeader" width='150'>
+      <el-table-column prop="checkStatus" :render-header="renderHeader" width='150' align="center">
       </el-table-column>
     </el-table-column>
     <el-table-column label="审批备注" header-align="center">
-      <el-table-column prop="approvalNote" :render-header="renderHeader" width='150'>
+      <el-table-column prop="approvalNote" :render-header="renderHeader" width='150' align="center">
       </el-table-column>
     </el-table-column>
     <el-table-column label="创建时间" header-align="center">
-      <el-table-column prop="createDate" :render-header="renderHeader" width='200'>
+      <el-table-column prop="createDate" :render-header="renderHeader" width='200' align="center">
       </el-table-column>
     </el-table-column>
     <el-table-column label="更新时间" header-align="center">
-      <el-table-column prop="updateDate" :render-header="renderHeader" width='200'>
+      <el-table-column prop="updateDate" :render-header="renderHeader" width='200' align="center">
       </el-table-column>
     </el-table-column>
   </el-table>
@@ -354,7 +354,6 @@ export default {
       this.sels = sels
     },
     del(index, row) {
-      console.log(row.nid)
       this.$confirm('确定删除该条记录？', '提示', { type: 'warning' }).then(() => {
         this.delForm.nid = [row.nid]
         goodsDelete(this.delForm).then(res => {
