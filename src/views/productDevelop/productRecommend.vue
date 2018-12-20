@@ -46,8 +46,8 @@
   <!-- 查看对话框 -->
   <el-dialog title='查看' :visible.sync="dialogVisibleView">
     <el-form :model="viewForm" label-position="left" label-width="100px" ref="viewForm">
-      <el-form-item label="图片" class="item">
-        <img :src='viewForm.img' style="width: 60px;height: 50px">
+      <el-form-item label="图片" prop="img" class="item1">
+        <img :src='viewForm.img' style="width: 150px;height: 100px;">
       </el-form-item>
       <el-form-item label="图片地址" prop="img" class="item">
         <span>{{viewForm.img}}</span>
@@ -728,8 +728,13 @@ export default {
 
 <style>
   .item .el-form-item__label{
-    color: #F56C6C;
-    margin-right: 5%;
+    color: #99a9bf;
+    margin-right: 1%;
+  }
+  .item1 .el-form-item__label{
+    color: #99a9bf;
+    margin-right: 1%;
+    margin-top: 3%;
   }
 </style>
 
