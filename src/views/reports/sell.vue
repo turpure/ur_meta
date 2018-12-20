@@ -71,13 +71,26 @@
       </div>
     </div>
     <el-row>
-      <el-col :span='2' :offset='19'>
+      <el-col :span="19">
+        <el-tabs v-model="activeName" @tab-click="handleClick">
+          <el-tab-pane label="毛利润报表" name="first">
+          </el-tab-pane>
+          <el-tab-pane label="退款订单明细" name="second">
+          </el-tab-pane>
+          <el-tab-pane label="退款产品明细" name="third">
+          </el-tab-pane>
+          <el-tab-pane label="退款分析报告" name="fourth">
+          </el-tab-pane>
+        </el-tabs>
+      </el-col>
+      <el-col :span='2'>
         <el-input clearable placeholder='search' v-model='searchValue' @change='handleSearch'></el-input>
       </el-col>
       <el-col :span='2'>
         <el-button style='float:left' type='default' @click='exportExcel'>导出Excel</el-button>
       </el-col>
     </el-row>
+    <!-- 毛利润报表 -->
     <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" 
     show-summary :summary-method="getSummaries" :height="tableHeight" :max-height="tableHeight" v-show="show2" 
     style="width: 100%;zoom:0.53;">
@@ -102,6 +115,24 @@
       <el-table-column min-width="140" prop="grossprofit" label="毛利￥" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column min-width="140" prop="grossprofitRate" label="毛利率%" :formatter="empty" sortable="custom"></el-table-column>
     </el-table>
+    <!-- 退款订单明细 -->
+    <el-table :data="tableData1" @sort-change="sortNumber" max-height="670" v-show="show3">
+      <el-table-column prop="suffix" label="账号" sortable></el-table-column>
+      <el-table-column prop="goodsName" label="商品名称" sortable></el-table-column>
+      <el-table-column prop="goodsCode" label="商品编码" sortable></el-table-column>
+      <el-table-column prop="goodsSku" label="商品SKU" sortable></el-table-column>
+      <el-table-column prop="tradeId" label="订单编号" sortable></el-table-column>
+      <el-table-column prop="orderId" label="店铺代号" sortable></el-table-column>
+      <el-table-column prop="storeName" label="仓库" sortable></el-table-column>
+      <el-table-column prop="refund" label="退款$" sortable="custom"></el-table-column>
+      <el-table-column prop="refundZn" label="退款￥" sortable="custom" :formatter="empty"></el-table-column>
+      <el-table-column prop="refundTime" label="退款时间" sortable="custom"></el-table-column>
+      <el-table-column prop="slesman" label="销售员" sortable></el-table-column>
+    </el-table>
+    <div class="block toolbar" v-show="show3">
+      <el-pagination @size-change='handleSizeChange' @current-change='handleCurrentChange' :current-page="this.condition.page" :page-size="this.condition.pageSize" :page-sizes="[10,20,30,40]" layout="total,sizes,prev,pager,next,jumper" :total="this.total">
+      </el-pagination>
+    </div>
   </div>
 </template>
 
@@ -113,7 +144,8 @@ import {
   getMember,
   getStore,
   getAccount,
-  getSales
+  getSales,
+  getRefund
 } from '../../api/profit'
 import { isAdmin } from '../../api/api'
 import { compareUp, compareDown, getMonthDate, getDateRangeType } from '../../api/tools'
@@ -123,6 +155,8 @@ export default {
   data() {
     const vue = this
     return {
+      total: null,
+      activeName: 'first',
       tableHeight: 0,
       allMember: [],
       isA: true,
@@ -130,8 +164,11 @@ export default {
       show: true,
       show1: false,
       show2: false,
+      show3: false,
       tableData: [],
+      tableData1: [],
       searchTable: [],
+      searchTable1: [],
       searchValue: '',
       listLoading: false,
       department: [],
@@ -152,7 +189,12 @@ export default {
         dateType: 1,
         dateRange: [],
         account: [],
-        dateRangeType: 3
+        dateRangeType: 3,
+        page: 1,
+        pageSize: 10,
+        suffix: [],
+        storename: [],
+        type: ''
       },
       pickerOptions2: {
         onPick(maxDate, minDate) {
@@ -188,6 +230,24 @@ export default {
     }
   },
   methods: {
+    handleSizeChange(val) {
+      this.condition.pageSize = val
+      this.getData()
+    },
+    handleCurrentChange(val) {
+      this.condition.page = val
+      this.getData()
+    },
+    handleClick(tab, event) {
+      this.activeName = tab.name
+      if (this.activeName === 'second') {
+        this.show2 = false
+        this.show3 = true
+      } else {
+        this.show2 = true
+        this.show3 = false
+      }
+    },
     selectalls() {
       const allValues = []
       for (const item of this.store) {
@@ -325,6 +385,8 @@ export default {
       const height = document.documentElement.clientHeight
       this.tableHeight = height + 360
       this.show2 = true
+      this.activeName = 'first'
+      this.show3 = false
       // const members = this.allMember
       // myform.dateRangeType = getDateRangeType(myform.dateRange[0], myform.dateRange[1])
       this.$refs.condition.validate(valid => {
@@ -385,6 +447,7 @@ export default {
             this.listLoading = false
             this.tableData = this.searchTable = response.data.data
           })
+          this.getData()
         } else {
           return false
         }
@@ -393,28 +456,54 @@ export default {
     // 搜索
     handleSearch() {
       const searchValue = this.searchValue && this.searchValue.toLowerCase()
-      const data = this.searchTable
-      if (searchValue) {
-        this.tableData = data.filter(function(row) {
-          return Object.keys(row).some(function(key) {
-            return (
-              String(row[key])
-                .toLowerCase()
-                .indexOf(searchValue) > -1
-            )
+      if (this.activeName === 'first') {
+        const data = this.searchTable
+        if (searchValue) {
+          this.tableData = data.filter(function(row) {
+            return Object.keys(row).some(function(key) {
+              return (
+                String(row[key])
+                  .toLowerCase()
+                  .indexOf(searchValue) > -1
+              )
+            })
           })
-        })
+        } else {
+          this.tableData = data
+        }
       } else {
-        this.tableData = data
+        const data = this.searchTable1
+        if (searchValue) {
+          this.tableData1 = data.filter(function(row) {
+            return Object.keys(row).some(function(key) {
+              return (
+                String(row[key])
+                  .toLowerCase()
+                  .indexOf(searchValue) > -1
+              )
+            })
+          })
+        } else {
+          this.tableData1 = data
+        }
       }
     },
     // 数字排序
     sortNumber(column, prop, order) {
-      const data = this.tableData
-      if (column.order === 'descending') {
-        this.tableData = data.sort(compareDown(data, column.prop))
-      } else {
-        this.tableData = data.sort(compareUp(data, column.prop))
+      if (this.activeName === 'first') {
+        const data = this.tableData
+        if (column.order === 'descending') {
+          this.tableData = data.sort(compareDown(data, column.prop))
+        } else {
+          this.tableData = data.sort(compareUp(data, column.prop))
+        }
+      } else if (this.activeName === 'second') {
+        const data =this.tableData1
+        if (column.order === 'descending') {
+          this.tableData1 = data.sort(compareDown(data, column.prop))
+        } else {
+          this.tableData1 = data.sort(compareUp(data, column.prop))
+        }
       }
     },
     // 小数和空值格式化
@@ -424,6 +513,7 @@ export default {
       row.ppFeezn = Math.round(row.ppFeezn * 100) / 100
       row.refundrate = Math.round(row.refundrate * 100) / 100
       row.grossprofit = Math.round(row.grossprofit * 100) / 100
+      row.refundZn = Math.round(row.refundZn * 100) / 100
       if (!isNaN(cellValue)) {
         return Number(cellValue)
       }
@@ -432,40 +522,74 @@ export default {
     // 导出
     exportExcel() {
       /* generate workbook object from table */
-      var wb = XLSX.utils.table_to_book(document.querySelector('#sale-table'), {
-        raw: true
-      })
-      var lastRow = wb.Sheets.Sheet1['!ref'].match(/\d+$/)[0]
-      for (var ele in wb.Sheets.Sheet1) {
-        var rowNumber = ele.replace(/[^0-9]+/g, '')
-        if (rowNumber === lastRow) {
-          delete wb.Sheets.Sheet1[ele]
-          continue
-        }
-        const row = wb.Sheets.Sheet1[ele]
-        try {
-          if (!isNaN(row['v']) && row['v'] !== '') {
-            row['t'] = 'n'
-            row['v'] = Number(row['v'])
+      if (this.activeName === 'first') {
+        var wb = XLSX.utils.table_to_book(document.querySelector    ('#sale-table'), {
+          raw: true
+        })
+        var lastRow = wb.Sheets.Sheet1['!ref'].match(/\d+$/)[0]
+        for (var ele in wb.Sheets.Sheet1) {
+          var rowNumber = ele.replace(/[^0-9]+/g, '')
+          if (rowNumber === lastRow) {
+            delete wb.Sheets.Sheet1[ele]
+            continue
           }
-        } catch (err) {
-          console.log(err)
+          const row = wb.Sheets.Sheet1[ele]
+          try {
+            if (!isNaN(row['v']) && row['v'] !== '') {
+              row['t'] = 'n'
+              row['v'] = Number(row['v'])
+            }
+          } catch (err) {
+            console.log(err)
+          }
         }
-      }
-      /* get binary string as output */
-      const filename = '销售毛利润报表'
-      var wbout = XLSX.write(wb, {
-        bookType: 'xls',
-        bookSST: true,
-        type: 'array'
-      })
-      try {
-        FileSaver.saveAs(
-          new Blob([wbout], { type: 'application/octet-stream' }),
-          filename + '.xls'
-        )
-      } catch (e) {
-        if (typeof console !== 'undefined') console.log(e, wbout)
+        /* get binary string as output */
+        const filename = '销售毛利润报表'
+        var wbout = XLSX.write(wb, {
+          bookType: 'xls',
+          bookSST: true,
+          type: 'array'
+        })
+        try {
+          FileSaver.saveAs(
+            new Blob([wbout], { type: 'application/octet-stream' }),
+            filename + '.xls'
+          )
+        } catch (e) {
+          if (typeof console !== 'undefined') console.log(e, wbout)
+        }
+      } else {
+        debugger
+        const th = [
+          '账号',
+          '商品名称',
+          '商品编码',
+          '商品SKU',
+          '订单编号',
+          '店铺代号',
+          '仓库',
+          '退款$',
+          '退款￥',
+          '退款时间',
+          '销售员'
+        ]
+        const filterVal = [
+          'suffix',
+          'goodsName',
+          'goodsCode',
+          'goodsSku',
+          'tradeId',
+          'orderId',
+          'storeName',
+          'refund',
+          'refundZn',
+          'refundTime',
+          'slesman'
+        ]
+        const Filename = '退款订单明细'
+        const data = this.tableData1.map(v => filterVal.map(k => v[k]))
+        const [fileName, fileType, sheetName] = [Filename, 'xls']
+        this.$toExcel({ th, data, fileName, fileType, sheetName })
       }
       //  return wbout
     },
@@ -517,6 +641,17 @@ export default {
       this.$refs.menuCollapsed.getElementsByClassName(
         'submenu-hook-' + i
       )[0].style.display = status ? 'block' : 'none'
+    },
+    getData() {
+      this.condition.suffix = this.condition.account
+      this.condition.type = this.condition.dateType
+      this.condition.storename = this.condition.store
+      getRefund(this.condition).then(res => {
+        this.searchTable1 = this.tableData1 = res.data.data.items
+        this.total = res.data.data._meta.totalCount
+        this.condition.page = res.data.data._meta.currentPage
+        this.condition.pageSize = res.data.data._meta.perPage
+      })
     }
   },
   mounted() {

@@ -119,6 +119,7 @@
           height="798" 
           size="small" 
           v-show="show.developer"
+          @sort-change="sortNumber"
           >
           <el-table-column type="index"></el-table-column>
           <el-table-column prop="depart"  label="部门" sortable></el-table-column>
@@ -215,7 +216,6 @@ export default {
       moreData: [],
       newsList: [],
       tableHeight: null,
-      screenHeight: window.innerHeight,
       permission: [],
       shanghaiTable: [],
       zhengzhouTable: [],

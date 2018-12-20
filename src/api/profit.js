@@ -367,4 +367,12 @@ export function getEdition(param) {
     data
   })
 }
+export function getRefund(param) {
+  const data = { 'condition': param }
+  return request({
+    url: '/report/refund?page='+param.page,
+    method: 'post',
+    data
+  })
+}
 
