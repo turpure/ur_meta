@@ -436,6 +436,9 @@ export default {
       const height = document.documentElement.clientHeight
       this.tableHeight = height + 360
       this.showTable['sell'] = true
+      this.showTable['order'] = false
+      this.showTable['goods'] = false
+      this.showTable['report'] = false
       this.activeName = '毛利润报表'
       // const members = this.allMember
       // myform.dateRangeType = getDateRangeType(myform.dateRange[0], myform.dateRange[1])
@@ -738,7 +741,6 @@ export default {
       this.goods.department = this.condition.dateRangeType
       this.goods.secDepartment = this.condition.secDepartment
       this.goods.plat = this.condition.plat
-      // this.goods.type = 'goods'
       getRefund(this.goods).then(res => {
         this.searchTable2 = this.tableData2 = res.data.data.items
         this.total2 = res.data.data._meta.totalCount
