@@ -137,7 +137,7 @@
       <el-table-column prop="salesman" label="销售员" sortable></el-table-column>
     </el-table>
     <div class="block toolbar" v-show="showTable.goods">
-      <el-pagination @size-change='handleSizeChangeGoods' @current-change='handleCurrentChangeGoods' :current-page="this.condition.page2" :page-size="this.condition.pageSize2" :page-sizes="[10,20,30,40]" layout="total,sizes,prev,pager,next,jumper" :total="this.total2">
+      <el-pagination @size-change='handleSizeChangeGoods' @current-change='handleCurrentChangeGoods' :current-page="this.goods.page" :page-size="this.goods.pageSize" :page-sizes="[10,20,30,40]" layout="total,sizes,prev,pager,next,jumper" :total="this.total2">
       </el-pagination>
     </div>
   </div>
@@ -212,6 +212,18 @@ export default {
         storename: [],
         type: 'order'
       },
+      goods: {
+        department: [],
+        secDepartment: [],
+        plat: '',
+        member: [],
+        dateRange: [],
+        account: [],
+        dateRangeType: 3,
+        page: 1,
+        pageSize: 10,
+        type: 'goods'
+      },
       pickerOptions2: {
         onPick(maxDate, minDate) {
           vue.condition.dateRangeType = 3
@@ -255,11 +267,11 @@ export default {
       this.getData()
     },
     handleSizeChangeGoods(val) {
-      this.condition.pageSize2 = val
+      this.goods.pageSize = val
       this.getGoods()
     },
     handleCurrentChangeGoods(val) {
-      this.condition.page2 = val
+      this.goods.page = val
       this.getGoods()
     },
     handleClick(tab, event) {
@@ -711,9 +723,6 @@ export default {
       )[0].style.display = status ? 'block' : 'none'
     },
     getData() {
-      this.condition.suffix = this.condition.account
-      this.condition.storename = this.condition.store
-      this.condition.type = 'order'
       getRefund(this.condition).then(res => {
         this.searchTable1 = this.tableData1 = res.data.data.items
         this.total = res.data.data._meta.totalCount
@@ -722,14 +731,19 @@ export default {
       })
     },
     getGoods() {
-      this.condition.suffix = this.condition.account
-      this.condition.storename = this.condition.store
-      this.condition.type = 'goods'
-      getRefund(this.condition).then(res => {
+      this.goods.dateRange = this.condition.dateRange
+      this.goods.account = this.condition.account
+      this.goods.member = this.condition.member
+      this.goods.dateRangeType = this.condition.dateRangeType
+      this.goods.department = this.condition.dateRangeType
+      this.goods.secDepartment = this.condition.secDepartment
+      this.goods.plat = this.condition.plat
+      // this.goods.type = 'goods'
+      getRefund(this.goods).then(res => {
         this.searchTable2 = this.tableData2 = res.data.data.items
         this.total2 = res.data.data._meta.totalCount
-        this.condition.page2 = res.data.data._meta.currentPage
-        this.condition.pageSize2 = res.data.data._meta.perPage
+        this.goods.page = res.data.data._meta.currentPage
+        this.goods.pageSize = res.data.data._meta.perPage
       })
     }
   },
