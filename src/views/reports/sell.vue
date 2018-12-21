@@ -72,14 +72,8 @@
     </div>
     <el-row>
       <el-col :span="19">
-        <el-tabs v-model="activeName" @tab-click="handleClick">
-          <el-tab-pane label="毛利润报表" name="first">
-          </el-tab-pane>
-          <el-tab-pane label="退款订单明细" name="second">
-          </el-tab-pane>
-          <el-tab-pane label="退款产品明细" name="third">
-          </el-tab-pane>
-          <el-tab-pane label="退款分析报告" name="fourth">
+        <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+          <el-tab-pane v-for="(item, index) in this.allMenu" :label="item.name" :name="item.name" :key="index">
           </el-tab-pane>
         </el-tabs>
       </el-col>
@@ -92,7 +86,7 @@
     </el-row>
     <!-- 毛利润报表 -->
     <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" 
-    show-summary :summary-method="getSummaries" :height="tableHeight" :max-height="tableHeight" v-show="show2" 
+    show-summary :summary-method="getSummaries" :height="tableHeight" :max-height="tableHeight" v-show="showTable.sell" 
     style="width: 100%;zoom:0.53;">
       <el-table-column min-width="100" prop="pingtai" label="平台" :formatter="empty" sortable></el-table-column>
       <el-table-column min-width="100" prop="suffix" label="账号" :formatter="empty" sortable></el-table-column>
@@ -116,7 +110,7 @@
       <el-table-column min-width="140" prop="grossprofitRate" label="毛利率%" :formatter="empty" sortable="custom"></el-table-column>
     </el-table>
     <!-- 退款订单明细 -->
-    <el-table :data="tableData1" @sort-change="sortNumber" max-height="670" v-show="show3">
+    <el-table :data="tableData1" @sort-change="sortNumber" max-height="670" v-show="showTable.order">
       <el-table-column prop="suffix" label="账号" sortable></el-table-column>
       <el-table-column prop="goodsName" label="商品名称" sortable></el-table-column>
       <el-table-column prop="goodsCode" label="商品编码" sortable></el-table-column>
@@ -127,10 +121,23 @@
       <el-table-column prop="refund" label="退款$" sortable="custom"></el-table-column>
       <el-table-column prop="refundZn" label="退款￥" sortable="custom" :formatter="empty"></el-table-column>
       <el-table-column prop="refundTime" label="退款时间" sortable="custom"></el-table-column>
-      <el-table-column prop="slesman" label="销售员" sortable></el-table-column>
+      <el-table-column prop="salesman" label="销售员" sortable></el-table-column>
     </el-table>
-    <div class="block toolbar" v-show="show3">
+    <div class="block toolbar" v-show="showTable.order">
       <el-pagination @size-change='handleSizeChange' @current-change='handleCurrentChange' :current-page="this.condition.page" :page-size="this.condition.pageSize" :page-sizes="[10,20,30,40]" layout="total,sizes,prev,pager,next,jumper" :total="this.total">
+      </el-pagination>
+    </div>
+    <!-- 退款产品明细 -->
+    <el-table :data="tableData2" @sort-change="sortNumber" max-height="670" v-show="showTable.goods">
+      <el-table-column prop="suffix" label="账号" sortable></el-table-column>
+      <el-table-column prop="goodsName" label="商品名称" sortable></el-table-column>
+      <el-table-column prop="goodsCode" label="商品编码" sortable></el-table-column>
+      <el-table-column prop="goodsSku" label="商品SKU" sortable></el-table-column>
+      <el-table-column prop="times" label="退款次数" sortable="custom"></el-table-column>
+      <el-table-column prop="salesman" label="销售员" sortable></el-table-column>
+    </el-table>
+    <div class="block toolbar" v-show="showTable.goods">
+      <el-pagination @size-change='handleSizeChangeGoods' @current-change='handleCurrentChangeGoods' :current-page="this.condition.page2" :page-size="this.condition.pageSize2" :page-sizes="[10,20,30,40]" layout="total,sizes,prev,pager,next,jumper" :total="this.total2">
       </el-pagination>
     </div>
   </div>
@@ -149,6 +156,7 @@ import {
 } from '../../api/profit'
 import { isAdmin } from '../../api/api'
 import { compareUp, compareDown, getMonthDate, getDateRangeType } from '../../api/tools'
+import { getMenu } from '../../api/login'
 import FileSaver from 'file-saver'
 import XLSX from 'xlsx'
 export default {
@@ -156,19 +164,27 @@ export default {
     const vue = this
     return {
       total: null,
-      activeName: 'first',
+      total2: null,
+      activeName: '毛利润报表',
       tableHeight: 0,
       allMember: [],
       isA: true,
       text: '显示输入框',
       show: true,
       show1: false,
-      show2: false,
-      show3: false,
+      showTable: {
+        sell: false,
+        order: false,
+        goods: false,
+        report: false
+      },
+      allMenu: [],
       tableData: [],
       tableData1: [],
+      tableData2: [],
       searchTable: [],
       searchTable1: [],
+      searchTable2: [],
       searchValue: '',
       listLoading: false,
       department: [],
@@ -194,7 +210,7 @@ export default {
         pageSize: 10,
         suffix: [],
         storename: [],
-        type: ''
+        type: 'order'
       },
       pickerOptions2: {
         onPick(maxDate, minDate) {
@@ -238,14 +254,37 @@ export default {
       this.condition.page = val
       this.getData()
     },
+    handleSizeChangeGoods(val) {
+      this.condition.pageSize2 = val
+      this.getGoods()
+    },
+    handleCurrentChangeGoods(val) {
+      this.condition.page2 = val
+      this.getGoods()
+    },
     handleClick(tab, event) {
-      this.activeName = tab.name
-      if (this.activeName === 'second') {
-        this.show2 = false
-        this.show3 = true
+      if (tab.label === '退款订单明细') {
+        this.showTable['sell'] = false
+        this.showTable['order'] = true
+        this.showTable['goods'] = false
+        this.showTable['report'] = false
+        this.getData()
+      } else if (tab.label === '退款产品明细') {
+        this.showTable['sell'] = false
+        this.showTable['order'] = false
+        this.showTable['goods'] = true
+        this.showTable['report'] = false
+        this.getGoods()
+      } else if (tab.label === '退款分析报告') {
+        this.showTable['sell'] = false
+        this.showTable['order'] = false
+        this.showTable['goods'] = false
+        this.showTable['report'] = true
       } else {
-        this.show2 = true
-        this.show3 = false
+        this.showTable['sell'] = true
+        this.showTable['order'] = false
+        this.showTable['goods'] = false
+        this.showTable['report'] = false
       }
     },
     selectalls() {
@@ -384,9 +423,8 @@ export default {
       const myform = JSON.parse(JSON.stringify(form))
       const height = document.documentElement.clientHeight
       this.tableHeight = height + 360
-      this.show2 = true
-      this.activeName = 'first'
-      this.show3 = false
+      this.showTable['sell'] = true
+      this.activeName = '毛利润报表'
       // const members = this.allMember
       // myform.dateRangeType = getDateRangeType(myform.dateRange[0], myform.dateRange[1])
       this.$refs.condition.validate(valid => {
@@ -396,9 +434,16 @@ export default {
               myform.member = this.condition.member
             }
           }
-
           // 根据选定的部门，处理人员
           if (myform.member.length === 0) {
+            if (isAdmin() === false) {
+              const name = this.$store.getters.name
+              const res = this.allMember
+              const per = res.filter(ele => ele.username === name)[0].department
+              myform.member = res.filter(ele => ele.department === per).map(m => {
+                return m.username
+              })
+            }
             if (myform.department.length !== 0) {
               if (myform.secDepartment.length === 0) {
                 const val = form.department
@@ -447,7 +492,8 @@ export default {
             this.listLoading = false
             this.tableData = this.searchTable = response.data.data
           })
-          this.getData()
+          // this.getData()
+          // this.getGoods()
         } else {
           return false
         }
@@ -456,7 +502,7 @@ export default {
     // 搜索
     handleSearch() {
       const searchValue = this.searchValue && this.searchValue.toLowerCase()
-      if (this.activeName === 'first') {
+      if (this.activeName === '毛利润报表') {
         const data = this.searchTable
         if (searchValue) {
           this.tableData = data.filter(function(row) {
@@ -471,7 +517,7 @@ export default {
         } else {
           this.tableData = data
         }
-      } else {
+      } else if (this.activeName === '退款订单明细') {
         const data = this.searchTable1
         if (searchValue) {
           this.tableData1 = data.filter(function(row) {
@@ -486,23 +532,45 @@ export default {
         } else {
           this.tableData1 = data
         }
+      } else if (this.activeName === '退款产品明细') {
+        const data = this.searchTable2
+        if (searchValue) {
+          this.tableData2 = data.filter(function(row) {
+            return Object.keys(row).some(function(key) {
+              return (
+                String(row[key])
+                  .toLowerCase()
+                  .indexOf(searchValue) > -1
+              )
+            })
+          })
+        } else {
+          this.tableData2 = data
+        }
       }
     },
     // 数字排序
     sortNumber(column, prop, order) {
-      if (this.activeName === 'first') {
+      if (this.activeName === '毛利润报表') {
         const data = this.tableData
         if (column.order === 'descending') {
           this.tableData = data.sort(compareDown(data, column.prop))
         } else {
           this.tableData = data.sort(compareUp(data, column.prop))
         }
-      } else if (this.activeName === 'second') {
+      } else if (this.activeName === '退款订单明细') {
         const data =this.tableData1
         if (column.order === 'descending') {
           this.tableData1 = data.sort(compareDown(data, column.prop))
         } else {
           this.tableData1 = data.sort(compareUp(data, column.prop))
+        }
+      } else if (this.activeName === '退款产品明细') {
+        const data =this.tableData2
+        if (column.order === 'descending') {
+          this.tableData2 = data.sort(compareDown(data, column.prop))
+        } else {
+          this.tableData2 = data.sort(compareUp(data, column.prop))
         }
       }
     },
@@ -644,17 +712,40 @@ export default {
     },
     getData() {
       this.condition.suffix = this.condition.account
-      this.condition.type = this.condition.dateType
       this.condition.storename = this.condition.store
+      this.condition.type = 'order'
       getRefund(this.condition).then(res => {
         this.searchTable1 = this.tableData1 = res.data.data.items
         this.total = res.data.data._meta.totalCount
         this.condition.page = res.data.data._meta.currentPage
         this.condition.pageSize = res.data.data._meta.perPage
       })
+    },
+    getGoods() {
+      this.condition.suffix = this.condition.account
+      this.condition.storename = this.condition.store
+      this.condition.type = 'goods'
+      getRefund(this.condition).then(res => {
+        this.searchTable2 = this.tableData2 = res.data.data.items
+        this.total2 = res.data.data._meta.totalCount
+        this.condition.page2 = res.data.data._meta.currentPage
+        this.condition.pageSize2 = res.data.data._meta.perPage
+      })
     }
   },
   mounted() {
+    // 权限
+    getMenu().then(response => {
+      const res = response.data.data
+      const menu = res.filter(e => e.name === '毛利润报表')
+      for (let i = 0; i < menu.length; i++) {
+        for (let j = 0; j < menu[i].children.length; j++) {
+          if (menu[i].children[j].tabs.length) {
+            this.allMenu = menu[i].children[j].tabs
+          }
+        }
+      }
+    })
     getSection().then(response => {
       const res = response.data.data
       this.department = res.filter(ele => ele.department !== '供应链' && ele.department !== '采购部')
