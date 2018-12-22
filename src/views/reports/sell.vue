@@ -179,6 +179,8 @@ export default {
         report: false
       },
       allMenu: [],
+      allDataOrder: [],
+      allDataGoods: [],
       tableData: [],
       tableData1: [],
       tableData2: [],
@@ -224,6 +226,7 @@ export default {
         pageSize: 10,
         type: 'goods'
       },
+      order: {},
       pickerOptions2: {
         onPick(maxDate, minDate) {
           vue.condition.dateRangeType = 3
@@ -507,8 +510,6 @@ export default {
             this.listLoading = false
             this.tableData = this.searchTable = response.data.data
           })
-          // this.getData()
-          // this.getGoods()
         } else {
           return false
         }
@@ -605,7 +606,7 @@ export default {
     // 导出
     exportExcel() {
       /* generate workbook object from table */
-      if (this.activeName === 'first') {
+      if (this.activeName === '毛利润报表') {
         var wb = XLSX.utils.table_to_book(document.querySelector    ('#sale-table'), {
           raw: true
         })
@@ -641,8 +642,16 @@ export default {
         } catch (e) {
           if (typeof console !== 'undefined') console.log(e, wbout)
         }
-      } else {
-        debugger
+      } else if (this.activeName === '退款订单明细') {
+        this.order = Object.assign({}, this.condition)
+        this.order.pageSize = this.total
+        getRefund(this.order).then(res => {
+          this.allDataOrder = res.data.data.items
+          const Filename = '退款订单明细'
+          const data = this.allDataOrder.map(v => filterVal.map(k => v[k]))
+          const [fileName, fileType, sheetName] = [Filename, 'xls']
+          this.$toExcel({ th, data, fileName, fileType, sheetName })
+        })
         const th = [
           '账号',
           '商品名称',
@@ -667,12 +676,34 @@ export default {
           'refund',
           'refundZn',
           'refundTime',
-          'slesman'
+          'salesman'
         ]
-        const Filename = '退款订单明细'
-        const data = this.tableData1.map(v => filterVal.map(k => v[k]))
-        const [fileName, fileType, sheetName] = [Filename, 'xls']
-        this.$toExcel({ th, data, fileName, fileType, sheetName })
+      } else if (this.activeName === '退款产品明细') {
+        this.order = Object.assign({}, this.goods)
+        this.order.pageSize = this.total2
+        getRefund(this.order).then(res => {
+          this.allDataGoods = res.data.data.items
+          const Filename = '退款产品明细'
+          const data = this.allDataGoods.map(v => filterVal.map(k => v[k]))
+          const [fileName, fileType, sheetName] = [Filename, 'xls']
+          this.$toExcel({ th, data, fileName, fileType, sheetName })
+        })
+        const th = [
+          '账号',
+          '商品名称',
+          '商品编码',
+          '商品SKU',
+          '退款次数',
+          '销售员'
+        ]
+        const filterVal = [
+          'suffix',
+          'goodsName',
+          'goodsCode',
+          'goodsSku',
+          'times',
+          'salesman'
+        ]
       }
       //  return wbout
     },
