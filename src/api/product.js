@@ -48,3 +48,59 @@ export function goodsClaim(param) {
     data
   })
 }
+export function forwardList(param) {
+  const data = { 'condition': param }
+  return request({
+    url: '/forward-develop/list?page='+param.page1,
+    method: 'post',
+    data
+  })
+}
+export function forwardCreate(param) {
+  const data = { 'condition': param }
+  return request({
+    url: '/forward-develop/create',
+    method: 'post',
+    data
+  })
+}
+export function forwardUpdate(param) {
+  const data = { 'condition': param }
+  return request({
+    url: '/forward-develop/update',
+    method: 'put',
+    data
+  })
+}
+export function forwardSubmit(param) {
+  const data = { 'condition': param }
+  return request({
+    url: '/forward-develop/submit',
+    method: 'post',
+    data
+  })
+}
+export function reverseList(param) {
+  const data = { 'condition': param }
+  return request({
+    url: '/backward-develop/list?page='+param.page2,
+    method: 'post',
+    data
+  })
+}
+export function reverseCreate(param) {
+  const data = { 'condition': param }
+  return request({
+    url: '/backward-develop/create',
+    method: 'post',
+    data
+  })
+}
+export function reverseUpdate(param) {
+  const data = { 'condition': param }
+  return request({
+    url: '/backward-develop/update',
+    method: 'put',
+    data
+  })
+}
