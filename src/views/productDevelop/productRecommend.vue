@@ -1035,9 +1035,7 @@ export default {
     getMenu().then(response => {
       const res = response.data.data
       const menu = res.filter(e => e.name === '产品中心')
-      for (let j = 0; j < 3; j++) {
-        this.allMenu.push(menu[0].children[j])
-      }
+      this.allMenu = menu[0].children[0].tabs
     })
     this.getData()
     this.getForward()

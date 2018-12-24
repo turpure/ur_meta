@@ -7,7 +7,7 @@
             <h2>完成度表</h2>
           </div>
         <div class="tabs-container">
-          <el-tabs v-model="activeName" @tab-click="handleClick">
+          <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
             <el-tab-pane v-for="(item,index) in permission" :key="index" :label="item.label" :name="item.name"></el-tab-pane>
           </el-tabs>
         </div>
