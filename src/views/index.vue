@@ -1,6 +1,6 @@
 <template>
-  <div class="dashboard-editor-container" style="height: 1000px;">
-    <section>
+  <div class="dashboard-editor-container" style="height: 1010px;">
+    <section style="opacity:0.8;">
       <div class="left-box">
         <el-card>
           <div slot="header" class="clearfix">
@@ -384,6 +384,9 @@ h2:hover {
 .dashboard-editor-container {
   padding: 0 30px;
   background-color: #f0f2f5;
+  background:url("../assets/sd.jpg");
+  background-Repeat: no-repeat;
+  background-Size: 2126px 1010px;
   zoom:0.9;
 }
 .table-container {

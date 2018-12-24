@@ -116,7 +116,7 @@
       <el-table-column prop="goodsCode" label="商品编码" sortable></el-table-column>
       <el-table-column prop="goodsSku" label="商品SKU" sortable></el-table-column>
       <el-table-column prop="tradeId" label="订单编号" sortable></el-table-column>
-      <el-table-column prop="orderId" label="店铺代号" sortable></el-table-column>
+      <el-table-column prop="orderId" label="店铺单号" sortable></el-table-column>
       <el-table-column prop="storeName" label="仓库" sortable></el-table-column>
       <el-table-column prop="refund" label="退款$" sortable="custom"></el-table-column>
       <el-table-column prop="refundZn" label="退款￥" sortable="custom" :formatter="empty"></el-table-column>
@@ -607,7 +607,8 @@ export default {
     exportExcel() {
       /* generate workbook object from table */
       if (this.activeName === '毛利润报表') {
-        var wb = XLSX.utils.table_to_book(document.querySelector    ('#sale-table'), {
+        debugger
+        var wb = XLSX.utils.table_to_book(document.querySelector('#sale-table'), {
           raw: true
         })
         var lastRow = wb.Sheets.Sheet1['!ref'].match(/\d+$/)[0]
@@ -658,7 +659,7 @@ export default {
           '商品编码',
           '商品SKU',
           '订单编号',
-          '店铺代号',
+          '店铺单号',
           '仓库',
           '退款$',
           '退款￥',
