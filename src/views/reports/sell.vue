@@ -434,8 +434,70 @@ export default {
     removeActive() {
       this.show1 = false
     },
-    onSubmit(form) {
+    myForm(form) {
       const myform = JSON.parse(JSON.stringify(form))
+      if (myform.member.length !== 0) {
+        if (isAdmin() === false) {
+          myform.member = this.condition.member
+          }
+        }
+      // 根据选定的部门，处理人员
+      if (myform.member.length === 0) {
+        if (isAdmin() === false) {
+          const name = this.$store.getters.name
+          const res = this.allMember
+          const per = res.filter(ele => ele.username === name)[0].department
+          myform.member = res.filter(ele => ele.department === per).map(m => {
+            return m.username
+          })
+        }
+        if (myform.department.length !== 0) {
+          if (myform.secDepartment.length === 0) {
+            const val = form.department
+            const res = this.allMember
+            for (let i = 0; i < val.length; i++) {
+              const per = res.filter(
+                ele => ele.department === val[i] && ele.position === '销售'
+              )
+              this.member.concat(per)
+            }
+            myform.member = this.member.map(m => {
+              return m.username
+            })
+          }
+          if (myform.secDepartment.length !== 0) {
+            const val = form.secDepartment
+            const res = this.allMember
+            for (let i = 0; i < val.length; i++) {
+              const per = res.filter(
+                ele => ele.department === val[i] && ele.position === '销售'
+              )
+              this.member.concat(per)
+            }
+            myform.member = this.member.map(m => {
+              return m.username
+            })
+          }
+        } else {
+          if (myform.secDepartment.length !== 0) {
+            const val = form.secDepartment
+            const res = this.allMember
+            for (let i = 0; i < val.length; i++) {
+              const per = res.filter(
+                ele => ele.department === val[i] && ele.position === '销售'
+              )
+              this.member.concat(per)
+            }
+            myform.member = this.member.map(m => {
+              return m.username
+            })
+          }
+        }
+      }
+      return myform
+    },
+    onSubmit(form) {
+      // const myform = JSON.parse(JSON.stringify(form))
       const height = document.documentElement.clientHeight
       this.tableHeight = height + 360
       this.showTable['sell'] = true
@@ -447,64 +509,65 @@ export default {
       // myform.dateRangeType = getDateRangeType(myform.dateRange[0], myform.dateRange[1])
       this.$refs.condition.validate(valid => {
         if (valid) {
-          if (myform.member.length !== 0) {
-            if (isAdmin() === false) {
-              myform.member = this.condition.member
-            }
-          }
+      //     if (myform.member.length !== 0) {
+      //       if (isAdmin() === false) {
+      //         myform.member = this.condition.member
+      //       }
+      //     }
           // 根据选定的部门，处理人员
-          if (myform.member.length === 0) {
-            if (isAdmin() === false) {
-              const name = this.$store.getters.name
-              const res = this.allMember
-              const per = res.filter(ele => ele.username === name)[0].department
-              myform.member = res.filter(ele => ele.department === per).map(m => {
-                return m.username
-              })
-            }
-            if (myform.department.length !== 0) {
-              if (myform.secDepartment.length === 0) {
-                const val = form.department
-                const res = this.allMember
-                for (let i = 0; i < val.length; i++) {
-                  const per = res.filter(
-                    ele => ele.department === val[i] && ele.position === '销售'
-                  )
-                  this.member.concat(per)
-                }
-                myform.member = this.member.map(m => {
-                  return m.username
-                })
-              }
-              if (myform.secDepartment.length !== 0) {
-                const val = form.secDepartment
-                const res = this.allMember
-                for (let i = 0; i < val.length; i++) {
-                  const per = res.filter(
-                    ele => ele.department === val[i] && ele.position === '销售'
-                  )
-                  this.member.concat(per)
-                }
-                myform.member = this.member.map(m => {
-                  return m.username
-                })
-              }
-            } else {
-              if (myform.secDepartment.length !== 0) {
-                const val = form.secDepartment
-                const res = this.allMember
-                for (let i = 0; i < val.length; i++) {
-                  const per = res.filter(
-                    ele => ele.department === val[i] && ele.position === '销售'
-                  )
-                  this.member.concat(per)
-                }
-                myform.member = this.member.map(m => {
-                  return m.username
-                })
-              }
-            }
-          }
+          // if (myform.member.length === 0) {
+          //   if (isAdmin() === false) {
+          //     const name = this.$store.getters.name
+          //     const res = this.allMember
+          //     const per = res.filter(ele => ele.username === name)[0].department
+          //     myform.member = res.filter(ele => ele.department === per).map(m => {
+          //       return m.username
+          //     })
+          //   }
+          //   if (myform.department.length !== 0) {
+          //     if (myform.secDepartment.length === 0) {
+          //       const val = form.department
+          //       const res = this.allMember
+          //       for (let i = 0; i < val.length; i++) {
+          //         const per = res.filter(
+          //           ele => ele.department === val[i] && ele.position === '销售'
+          //         )
+          //         this.member.concat(per)
+          //       }
+          //       myform.member = this.member.map(m => {
+          //         return m.username
+          //       })
+          //     }
+          //     if (myform.secDepartment.length !== 0) {
+          //       const val = form.secDepartment
+          //       const res = this.allMember
+          //       for (let i = 0; i < val.length; i++) {
+          //         const per = res.filter(
+          //           ele => ele.department === val[i] && ele.position === '销售'
+          //         )
+          //         this.member.concat(per)
+          //       }
+          //       myform.member = this.member.map(m => {
+          //         return m.username
+          //       })
+          //     }
+          //   } else {
+          //     if (myform.secDepartment.length !== 0) {
+          //       const val = form.secDepartment
+          //       const res = this.allMember
+          //       for (let i = 0; i < val.length; i++) {
+          //         const per = res.filter(
+          //           ele => ele.department === val[i] && ele.position === '销售'
+          //         )
+          //         this.member.concat(per)
+          //       }
+          //       myform.member = this.member.map(m => {
+          //         return m.username
+          //       })
+          //     }
+          //   }
+          // }
+          const myform = this.myForm(form)
           this.listLoading = true
           getSales(myform).then(response => {
             this.listLoading = false
@@ -758,6 +821,7 @@ export default {
       )[0].style.display = status ? 'block' : 'none'
     },
     getData() {
+      this.condition = this.myForm(this.condition)
       getRefund(this.condition).then(res => {
         this.searchTable1 = this.tableData1 = res.data.data.items
         this.total = res.data.data._meta.totalCount
@@ -773,6 +837,7 @@ export default {
       this.goods.department = this.condition.dateRangeType
       this.goods.secDepartment = this.condition.secDepartment
       this.goods.plat = this.condition.plat
+      this.goods = this.myForm(this.goods)
       getRefund(this.goods).then(res => {
         this.searchTable2 = this.tableData2 = res.data.data.items
         this.total2 = res.data.data._meta.totalCount
