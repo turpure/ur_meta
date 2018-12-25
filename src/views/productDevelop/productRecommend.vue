@@ -1057,25 +1057,29 @@ export default {
       }
       if (tab.label === '正向开发') {
         this.show['forward'] = true
+        this.getForward()
       } else {
         this.show['forward'] = false
       }
       if (tab.label === '逆向开发') {
         this.show['reverse'] = true
+        this.getReverse()
       } else {
         this.show['reverse'] = false
       }
     },
     // 正向开发
-    handleCurrentChange1(val) {},
-    handleSizeChange1(val) {},
+    handleCurrentChange1(val) {
+      this.condition1.page1 = val
+      this.getForward()
+    },
+    handleSizeChange1(val) {
+      this.condition1.pageSize1 = val
+      this.getForward()
+    },
     view1(index, row) {
       this.dialogVisibleView1 = true
       this.viewForm = Object.assign({}, row)
-      // this.viewForm.nid = row.nid
-      // forwardList(this.viewForm).then(res => {
-      //   this.viewForm = res.data.data
-      // })
     },
     edit1(index, row) {
       this.dialogVisibleEdit1 = true
@@ -1089,16 +1093,16 @@ export default {
     // 审批
     claim1(index, row) {
       this.$confirm('确定审批该条记录？', '提示', { type: 'warning' }).then(() => {
-        this.claimForm.nid = [row.nid]
-        forwardSubmit(this.claimForm).then(res => {
+        this.delForm.nid = [row.nid]
+        forwardSubmit(this.delForm).then(res => {
           this.getForward()
         })
       })
     },
     claimAll1() {
-      this.claimForm.nid = this.sels.map(e => e.nid)
+      this.delForm.nid = this.sels.map(e => e.nid)
       this.$confirm('确定审批所选记录？', '提示', { type: 'warning' }).then(() => {
-        forwardSubmit(this.claimForm).then(res => {
+        forwardSubmit(this.delForm).then(res => {
           this.getForward()
         })
       })
@@ -1634,8 +1638,14 @@ export default {
     },
 
     // 逆向开发
-    handleCurrentChange2(val) {},
-    handleSizeChange2(val) {},
+    handleCurrentChange2(val) {
+      this.condition2.page2 = val
+      this.getReverse()
+    },
+    handleSizeChange2(val) {
+      this.condition2.pageSize2 = val
+      this.getReverse()
+    },
     view2(index, row) {
       this.dialogVisibleView2 = true
       this.viewForm = Object.assign({}, row)
@@ -1668,16 +1678,16 @@ export default {
     // 审批
     claim2(index, row) {
       this.$confirm('确定审批该条记录？', '提示', { type: 'warning' }).then(() => {
-        this.claimForm.nid = [row.nid]
-        forwardSubmit(this.claimForm).then(res => {
+        this.delForm.nid = [row.nid]
+        forwardSubmit(this.delForm).then(res => {
           this.getReverse()
         })
       })
     },
     claimAll2() {
-      this.claimForm.nid = this.sels.map(e => e.nid)
+      this.delForm.nid = this.sels.map(e => e.nid)
       this.$confirm('确定审批所选记录？', '提示', { type: 'warning' }).then(() => {
-        forwardSubmit(this.claimForm).then(res => {
+        forwardSubmit(this.delForm).then(res => {
           this.getReverse()
         })
       })

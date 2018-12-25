@@ -214,30 +214,6 @@
         </el-table-column>
         <el-table-column type="index" fixed align="center" header-align="center">
         </el-table-column>
-        <el-table-column label="操作" fixed header-align="center" width="105">
-          <template slot-scope="scope">
-            <el-tooltip content="查看">
-              <el-button type="text" @click="view1(scope.$index, scope.row)">
-                <i class="el-icon-view"></i>
-              </el-button>
-            </el-tooltip>
-            <el-tooltip content="通过">
-              <el-button type="text" @click="pass1(scope.$index, scope.row)">
-                <i class="iconfont icon-appreciate"></i>
-              </el-button>
-            </el-tooltip>
-            <el-tooltip content="未通过">
-              <el-button type="text" @click="unPass1(scope.$index, scope.row)">
-                <i class="iconfont icon-oppose_light"></i>
-              </el-button>  
-            </el-tooltip>
-            <el-tooltip content="作废">
-              <el-button type="text" @click="cancel1(scope.$index, scope.row)">
-                <i class="el-icon-delete"></i>
-              </el-button>
-            </el-tooltip>
-          </template>
-        </el-table-column>
         <el-table-column prop="img" fixed label="图片" header-align="center">
           <template slot-scope="scope">
             <img :src='scope.row.img' style="width: 60px;height: 50px">
@@ -273,10 +249,6 @@
         </el-table-column>
         <el-table-column label="推荐人" header-align="center">
           <el-table-column prop="introducer" :render-header="renderHeader1" width='150' align="center">
-          </el-table-column>
-        </el-table-column>
-        <el-table-column label="推荐理由" header-align="center">
-          <el-table-column prop="introReason" :render-header="renderHeader1" width='150' align="center">
           </el-table-column>
         </el-table-column>
         <el-table-column label="产品状态" header-align="center">
@@ -324,7 +296,7 @@
         </el-table-column>
         <el-table-column type="index" fixed align="center" header-align="center">
         </el-table-column>
-        <el-table-column label="操作" fixed header-align="center" width="105">
+        <el-table-column label="操作" fixed header-align="center" width="100">
           <template slot-scope="scope">
             <el-tooltip content="查看">
               <el-button type="text" @click="view2(scope.$index, scope.row)">
@@ -335,11 +307,6 @@
               <el-button type="text" @click="pass2(scope.$index, scope.row)">
                 <i class="iconfont icon-appreciate"></i>
               </el-button>
-            </el-tooltip>
-            <el-tooltip content="未通过">
-              <el-button type="text" @click="unPass2(scope.$index, scope.row)">
-                <i class="iconfont icon-oppose_light"></i>
-              </el-button>  
             </el-tooltip>
             <el-tooltip content="作废">
               <el-button type="text" @click="cancel2(scope.$index, scope.row)">
@@ -464,7 +431,7 @@ export default {
       unPassForm: {},
       delForm: {},
       condition: {
-        stockUp: 0,
+        stockUp: null,
         devNum: '',
         cate: '',
         introducer: '',
@@ -480,7 +447,23 @@ export default {
         page: 1,
         pageSize: 10
       },
-      condition1: {},
+      condition1: {
+        stockUp: null,
+        devNum: '',
+        cate: '',
+        introducer: '',
+        checkStatus: '',
+        createDate: [],
+        updateDate: [],
+        subCate: '',
+        vendor1: '',
+        origin1: '',
+        developer: '',
+        introReason: '',
+        approvalNote: '',
+        page: 1,
+        pageSize: 10
+      },
       condition2: {},
       rules: {
         img: [
@@ -592,10 +575,6 @@ export default {
       })
     },
     // 已通过
-    view1(index, row) {},
-    pass1(index, row) {},
-    unPass1(index, row) {},
-    cancel1(index, row) {},
     renderHeader1() {},
     getPass() {
       checkPassList(this.condition1).then(res => {
@@ -608,7 +587,6 @@ export default {
     // 未通过
     view2(index, row) {},
     pass2(index, row) {},
-    unPass2(index, row) {},
     cancel2(index, row) {},
     renderHeader2() {},
     selsChange(sels) {
