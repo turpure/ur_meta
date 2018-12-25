@@ -384,7 +384,7 @@ h2:hover {
 .dashboard-editor-container {
   padding: 0 30px;
   background-color: #f0f2f5;
-  background:url("../assets/333.jpg");
+  background:url("../assets/555.jpg");
   background-Repeat: no-repeat;
   background-Size: 2126px 1010px;
   zoom:0.9;

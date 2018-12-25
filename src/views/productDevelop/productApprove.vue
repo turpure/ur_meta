@@ -433,6 +433,7 @@
 <script>
 import { getGoodscats } from '../../api/profit'
 import { checkList, checkPassList, checkPass, checkFailed, checkCancel } from '../../api/product'
+import { getMenu } from '../../api/login'
 
 export default {
   data() {
