@@ -41,6 +41,7 @@ import requirements from '../views/feedback/requirements.vue'
 import news from '../views/feedback/news.vue'
 // 产品中心
 import productRecommend from '../views/productDevelop/productRecommend.vue'
+import productApprove from '../views/productDevelop/productApprove.vue'
 
 const routes = [{
   path: '/login',
@@ -269,7 +270,12 @@ const routes = [{
     {
       path: '/v1/oa-goods/list',
       component: productRecommend,
-      name: '产品推荐' 
+      name: '产品开发' 
+    },
+    {
+      path: '/v1/check/check-list',
+      component: productApprove,
+      name: '产品审批'
     }
   ]
 },
