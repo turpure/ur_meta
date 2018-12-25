@@ -609,7 +609,6 @@ export default {
     exportExcel() {
       /* generate workbook object from table */
       if (this.activeName === '毛利润报表') {
-        debugger
         var wb = XLSX.utils.table_to_book(document.querySelector('#sale-table'), {
           raw: true
         })
