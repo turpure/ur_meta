@@ -392,18 +392,18 @@
         </el-table-column>
         <el-table-column type="index" fixed align="center" header-align="center">
         </el-table-column>
-        <el-table-column label="操作" fixed header-align="center" width="100">
+        <el-table-column label="操作" fixed header-align="center" width="80">
           <template slot-scope="scope">
             <el-tooltip content="查看">
               <el-button type="text" @click="view2(scope.$index, scope.row)">
                 <i class="el-icon-view"></i>
               </el-button>
             </el-tooltip>
-            <el-tooltip content="通过">
+            <!-- <el-tooltip content="通过">
               <el-button type="text" @click="pass2(scope.$index, scope.row)">
                 <i class="iconfont icon-appreciate"></i>
               </el-button>
-            </el-tooltip>
+            </el-tooltip> -->
             <el-tooltip content="作废">
               <el-button type="text" @click="cancel2(scope.$index, scope.row)">
                 <i class="el-icon-delete"></i>
@@ -516,7 +516,7 @@ import { getMenu } from '../../api/login'
 export default {
   data() {
     return {
-      activeName: '',
+      activeName: '待审批列表',
       total: null,
       total1: null,
       total2: null,
@@ -533,7 +533,7 @@ export default {
       time1: [],
       time2: [],
       show: {
-        wait: false,
+        wait: true,
         pass: false,
         unPass: false
       },
@@ -556,6 +556,12 @@ export default {
         developer: '',
         introReason: '',
         approvalNote: '',
+        salePrice: null,
+        hopeMonthProfit: null,
+        hopeRate: null,
+        hopeWeight: null,
+        hopeCost: null,
+        hopeSale: null,
         page: 1,
         pageSize: 10
       },
@@ -574,6 +580,12 @@ export default {
         developer: '',
         introReason: '',
         approvalNote: '',
+        salePrice: null,
+        hopeMonthProfit: null,
+        hopeRate: null,
+        hopeWeight: null,
+        hopeCost: null,
+        hopeSale: null,
         page: 1,
         pageSize: 10
       },
@@ -592,6 +604,12 @@ export default {
         developer: '',
         introReason: '',
         approvalNote: '',
+        salePrice: null,
+        hopeMonthProfit: null,
+        hopeRate: null,
+        hopeWeight: null,
+        hopeCost: null,
+        hopeSale: null,
         page: 1,
         pageSize: 10
       },
@@ -641,11 +659,13 @@ export default {
       }
       if (tab.label === '已审批列表') {
         this.show['pass'] = true
+        this.getPass()
       } else {
         this.show['pass'] = false
       }
       if (tab.label === '未通过列表') {
         this.show['unPass'] = true
+        this.getFailed()
       } else {
         this.show['unPass'] = false
       }
@@ -1148,12 +1168,12 @@ export default {
       this.viewForm = Object.assign({}, row)
     },
     pass2(index, row) {
-      this.$confirm('确定通过该条记录？', '提示', { type: 'warning' }).then(() => {
-        this.passForm.nid = [row.nid]
-        checkPass(this.passForm).then(res => {
-          this.getFailed()
-        })
-      })
+      // this.$confirm('确定通过该条记录？', '提示', { type: 'warning' }).then(() => {
+      //   this.passForm.nid = [row.nid]
+      //   checkPass(this.passForm).then(res => {
+      //     this.getFailed()
+      //   })
+      // })
     },
     cancel2(index, row) {
       this.$confirm('确定作废该条记录？', '提示', { type: 'warning' }).then(() => {
@@ -1493,7 +1513,30 @@ export default {
             }
           })
         ])
-      } else if($index === 15){
+      } else if ($index === 15) {
+        return h('div',{
+          style:{
+            height:'40px'
+          },
+        },[
+          h('el-input',{
+            props:{
+              value: this.condition2.hopeCost,
+              size:'mini',
+              clearable: true
+            },
+            on:{
+              input:value=>{
+                this.condition2.hopeCost = value
+                this.$emit('input', value)
+              },
+              change: value => {
+                this.filter()
+              }
+            }
+          })
+        ])
+      } else if($index === 16){
         return h('div',{
           style:{
             height:'40px'
@@ -1516,7 +1559,7 @@ export default {
             }
           })
         ])
-      } else if($index === 16){
+      } else if($index === 17){
         return h('div',{
           style:{
             height:'40px'
@@ -1539,7 +1582,7 @@ export default {
             }
           })
         ])
-      } else if($index === 17){
+      } else if($index === 18){
         return h('div',{
           style:{
             height:'40px'
@@ -1647,7 +1690,7 @@ export default {
         } else {
           this.condition2.updateDate = []
         }
-        // this.getReverse()
+        this.getFailed()
       }
     },
     renderHeader(h, {column, $index}) {

@@ -113,10 +113,10 @@
   <el-dialog :visible.sync="dialogVisibleClaim">
     <el-form :model="claimForm" label-position="left" label-width="50px" ref="claimForm">
       <el-form-item label="认领">
-        <el-select v-model="claimForm.devStatus" placeholder="认领到" size="small" style="width:90%;">
-          <el-option value="正向认领"></el-option>
-          <el-option value="逆向认领"></el-option>
-        </el-select>
+        <el-radio-group v-model="claimForm.devStatus">
+          <el-radio label="正向认领" border>正向认领</el-radio>
+          <el-radio label="逆向认领" border>逆向认领</el-radio>
+        </el-radio-group>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -905,7 +905,7 @@ import { getMenu } from '../../api/login'
 export default {
   data() {
     return {
-      activeName: '',
+      activeName: '产品推荐',
       disabled: true,
       total: null,
       total1: null,
@@ -921,7 +921,7 @@ export default {
       dialogVisibleView: false,
       dialogVisible:false,
       show: {
-        product: false,
+        product: true,
         forward: false,
         reverse: false
       },
@@ -954,6 +954,12 @@ export default {
         developer: '',
         introReason: '',
         approvalNote: '',
+        salePrice: null,
+        hopeMonthProfit: null,
+        hopeRate: null,
+        hopeWeight: null,
+        hopeCost: null,
+        hopeSale: null,
         page1: 1,
         pageSize1: 10
       },
@@ -971,6 +977,12 @@ export default {
         developer: '',
         introReason: '',
         approvalNote: '',
+        salePrice: null,
+        hopeMonthProfit: null,
+        hopeRate: null,
+        hopeWeight: null,
+        hopeCost: null,
+        hopeSale: null,
         page2: 1,
         pageSize2: 10
       },
