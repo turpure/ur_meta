@@ -459,7 +459,7 @@
           </el-tooltip>
           <el-tooltip content="提交审核">
             <el-button type="text" @click="claim1(scope.$index, scope.row)">
-              <i class="el-icon-upload"></i>
+              <i class="el-icon-circle-check-outline"></i>
             </el-button>  
           </el-tooltip>
         </template>
@@ -470,7 +470,7 @@
         </template>
       </el-table-column>
       <el-table-column label="是否备货" header-align="center">
-        <el-table-column prop="stockUp" :render-header="renderHeader1" width='150' align="center">
+        <el-table-column prop="stockUp" :formatter="empty" :render-header="renderHeader1" width='150' align="center">
         </el-table-column>
       </el-table-column>
       <el-table-column label="主类目" header-align="center">
@@ -799,7 +799,7 @@
           </el-tooltip>
           <el-tooltip content="提交审核">
             <el-button type="text" @click="claim2(scope.$index, scope.row)">
-              <i class="el-icon-upload"></i>
+              <i class="el-icon-circle-check-outline"></i>
             </el-button>  
           </el-tooltip>
         </template>
@@ -810,7 +810,7 @@
         </template>
       </el-table-column>
       <el-table-column label="是否备货" header-align="center">
-        <el-table-column prop="stockUp" :render-header="renderHeader2" width='150' align="center">
+        <el-table-column prop="stockUp" :formatter="empty" :render-header="renderHeader2" width='150' align="center">
         </el-table-column>
       </el-table-column>
       <el-table-column label="主类目" header-align="center">
@@ -1049,6 +1049,15 @@ export default {
     })
   },
   methods:{
+    empty(row, column, cellValue, index) {
+      if (cellValue === 0) {
+        return '否'
+      } else if (cellValue === 1) {
+        return '是'
+      } else {
+        return cellValue
+      }
+    },
     handleClick(tab, event) {
       if (tab.label === '产品推荐') {
         this.show['product'] = true
@@ -1207,7 +1216,7 @@ export default {
     },
     renderHeader1(h,{column, $index}) {
       if($index === 0) {
-        let filters = [ {text:'1','value':"是"} , {text:'0','value':"否"} ]
+        let filters = [ {text: 1,'value':"是"} , {text: 0,'value':"否"} ]
         return h('el-select',{
           props:{
             placeholder:'请选择',

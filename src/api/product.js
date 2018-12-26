@@ -144,3 +144,11 @@ export function checkCancel(param) {
     data
   })
 }
+export function checkFailedList(param) {
+  const data = { 'condition': param }
+  return request({
+    url: '/check/failed-list?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
