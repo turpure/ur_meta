@@ -71,8 +71,8 @@
   <!-- 更新对话框 -->
   <el-dialog title='更新' :visible.sync="dialogVisibleEdit">
     <el-form :model="editForm" :rules="rules" label-width="100px" label-position="left" ref="editForm">
-      <el-form-item label="图片">
-        <img :src='editForm.img' style="width: 60px;height: 50px">
+      <el-form-item label="图片" class="item2">
+        <img :src='editForm.img' style="width: 150px;height: 100px">
       </el-form-item>
       <el-form-item label="图片地址" prop="img">
         <el-input v-model="editForm.img"></el-input>
@@ -224,22 +224,22 @@
       </el-col>
     <!-- 新增对话框 -->
     <el-dialog title='新增' :visible.sync="dialogVisible1">
-      <el-form :model="addForm" :rules="rules" label-width="110px" class="demo-ruleForm" ref="addForm">
+      <el-form :model="addForm" :rules="rules" label-width="110px" label-position="left" class="demo-ruleForm" ref="addForm">
         <el-form-item label="图片" prop='img'>
           <el-input size="small" v-model="addForm.img" placeholder="必填"></el-input>
         </el-form-item>
         <el-form-item label="主类目" prop='cate'>
-          <el-select size="small" v-model="addForm.cate" @change="productcategory" style="width:100%;">
+          <el-select size="small" v-model="addForm.cate" @change="productcategory" style="width:100%;" placeholder="请选择父类">
             <el-option v-for="item in cate" :value="item.CategoryName" :key="item.CategoryName"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="子类目" prop='subCate'>
+        <el-form-item label="子类目" prop='subCate' placeholder="请选择父类">
           <el-select size="small" v-model="addForm.subCate" :disabled="this.disabled" style="width:100%;">
             <el-option v-for="item in subCate" :value="item.CategoryName" :key="item.CategoryName"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="供应商链接1" prop='vendor1'>
-          <el-input size="small" v-model="addForm.vendor1"></el-input>
+        <el-form-item label="供应商链接1" prop='vendor1' :rules="[{required: true, message: '不能为空', trigger: 'blur'}]">
+          <el-input size="small" v-model="addForm.vendor1" placeholder="必填"></el-input>
         </el-form-item>
         <el-form-item label="供应商链接2" prop='vendor2'>
           <el-input size="small" v-model="addForm.vendor2"></el-input>
@@ -248,19 +248,19 @@
           <el-input size="small" v-model="addForm.vendor3"></el-input>
         </el-form-item>
         <el-form-item label="平台参考链接1" prop='origin1'>
-          <el-input size="small" v-model="addForm.origin1"></el-input>
+          <el-input size="small" v-model="addForm.origin1" placeholder="选填"></el-input>
         </el-form-item>
         <el-form-item label="平台参考链接2" prop='origin2'>
-          <el-input size="small" v-model="addForm.origin2"></el-input>
+          <el-input size="small" v-model="addForm.origin2" placeholder="选填"></el-input>
         </el-form-item>
         <el-form-item label="平台参考链接3" prop='origin3'>
-          <el-input size="small" v-model="addForm.origin3"></el-input>
+          <el-input size="small" v-model="addForm.origin3" placeholder="选填"></el-input>
         </el-form-item>
-        <el-form-item label="开发员" prop='developer'>
+        <!-- <el-form-item label="开发员" prop='developer'>
           <el-select size="small" v-model="addForm.developer" style="width:100%;">
             <el-option v-for="item in developer" :value="item.username" :key="item.username"></el-option>
           </el-select>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="售价($)" prop='salePrice'>
           <el-input size="small" v-model="addForm.salePrice" placeholder="选填"></el-input>
         </el-form-item>
@@ -277,9 +277,9 @@
           <el-input size="small" v-model="addForm.hopeCost" placeholder="选填"></el-input>
         </el-form-item>
         <el-form-item label="预估月毛利($)" prop='hopeMonthProfit'>
-          <el-input size="small" v-model="addForm.hopeMonthProfit" placeholder="自动计算"></el-input>
+          <el-input size="small" v-model="addForm.hopeMonthProfit" disabled placeholder="自动计算"></el-input>
         </el-form-item>
-        <el-form-item label="售价($)">
+        <el-form-item label="">
           <el-checkbox-group v-model="addForm.stockUp">
             <el-checkbox label="是否备货" true-label="1" false-label="0" name="type"></el-checkbox>
           </el-checkbox-group>
@@ -371,7 +371,7 @@
     <el-dialog title='更新' :visible.sync="dialogVisibleEdit1">
       <el-form :model="editForm" :rules="rules" label-width="110px" label-position="left" ref="editForm">
         <el-form-item label="图片">
-          <img :src='editForm.img' style="width: 60px;height: 50px">
+          <img :src='editForm.img' style="width: 150px;height: 100px">
         </el-form-item>
         <el-form-item label="图片地址" prop="img">
           <el-input v-model="editForm.img"></el-input>
@@ -2671,6 +2671,10 @@ export default {
   }
   .item1 .el-form-item__label{
     color: #99a9bf;
+    margin-right: 1%;
+    margin-top: 3%;
+  }
+  .item2 .el-form-item__label{
     margin-right: 1%;
     margin-top: 3%;
   }

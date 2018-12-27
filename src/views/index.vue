@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-editor-container" style="height: 1010px;">
-    <section style="opacity:0.8;">
+    <section style="opacity:1;">
       <div class="left-box">
         <el-card>
           <div slot="header" class="clearfix">
@@ -179,7 +179,14 @@
               </div>
             </li>
           </ul>
-          <el-button type="text" @click="loadMore" class="more" v-text="this.page>=this.newsData.page?'加载更多':'已无更多'"></el-button>
+          <el-button type="text" @click="loadMore" class="more" v-text="this.page>=this.newsData.page?'加载更多':'已无更多'">
+          </el-button>
+        </el-card>
+        <el-card class="box-card1">
+          <div slot="header" class="clearfix">
+            <h2>活动栏</h2>
+          </div>
+          <img src="../assets/123.jpg" style="height:400px;width:95%;padding:15px;">
         </el-card>
         <el-dialog :visible.sync="dialogVisible">
           <el-form :model="newsDetailList" label-width="80px" ref="detailForm">
@@ -328,7 +335,7 @@ export default {
 }
 .box-card{
   width: 30%;
-  height: 900px;
+  height: 400px;
   overflow-y: scroll;
   float: right;
   margin-top:3%;
@@ -370,6 +377,12 @@ export default {
     margin-left: 50%;
   }
 }
+.box-card1{
+  width: 30%;
+  height: 490px;
+  float: right;
+  margin-top: 10px;
+}
 a {
   color: #428bac;
   text-decoration: none;
@@ -384,9 +397,9 @@ h2:hover {
 .dashboard-editor-container {
   padding: 0 30px;
   background-color: #f0f2f5;
-  background:url("../assets/999.jpg");
+  //background:url("../assets/999.jpg");
   background-Repeat: no-repeat;
-  background-Size: 2126px 1010px;
+  background-Size: 100%;
   zoom:0.9;
 }
 .table-container {
