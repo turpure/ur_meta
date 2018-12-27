@@ -440,26 +440,26 @@
       </el-table-column>
       <el-table-column type="index" fixed align="center" header-align="center">
       </el-table-column>
-      <el-table-column label="操作" fixed header-align="center" width="100">
+      <el-table-column label="操作" fixed header-align="center" width="110">
         <template slot-scope="scope">
           <el-tooltip content="查看">
             <el-button type="text" @click="view1(scope.$index, scope.row)">
-              <i class="el-icon-view"></i>
+              <i class="iconfont icon-yulan"></i>
             </el-button>
           </el-tooltip>
           <el-tooltip content="更新">
             <el-button type="text" @click="edit1(scope.$index, scope.row)">
-              <i class="el-icon-edit"></i>
+              <i class="iconfont icon-bianji"></i>
             </el-button>
           </el-tooltip>
           <el-tooltip content="删除">
             <el-button type="text" @click="del1(scope.$index, scope.row)">
-              <i class="el-icon-delete"></i>
+              <i class="iconfont icon-shanchu"></i>
             </el-button>
           </el-tooltip>
           <el-tooltip content="提交审核">
             <el-button type="text" @click="claim1(scope.$index, scope.row)">
-              <i class="el-icon-circle-check-outline"></i>
+              <i class="iconfont icon-zhihangfankui"></i>
             </el-button>  
           </el-tooltip>
         </template>
@@ -780,26 +780,26 @@
       </el-table-column>
       <el-table-column type="index" fixed align="center" header-align="center">
       </el-table-column>
-      <el-table-column label="操作" fixed header-align="center" width="100">
+      <el-table-column label="操作" fixed header-align="center" width="110">
         <template slot-scope="scope">
           <el-tooltip content="查看">
             <el-button type="text" @click="view2(scope.$index, scope.row)">
-              <i class="el-icon-view"></i>
+              <i class="iconfont icon-yulan"></i>
             </el-button>
           </el-tooltip>
           <el-tooltip content="更新">
             <el-button type="text" @click="edit2(scope.$index, scope.row)">
-              <i class="el-icon-edit"></i>
+              <i class="iconfont icon-bianji"></i>
             </el-button>
           </el-tooltip>
           <el-tooltip content="删除">
             <el-button type="text" @click="del2(scope.$index, scope.row)">
-              <i class="el-icon-delete"></i>
+              <i class="iconfont icon-shanchu"></i>
             </el-button>
           </el-tooltip>
           <el-tooltip content="提交审核">
             <el-button type="text" @click="claim2(scope.$index, scope.row)">
-              <i class="el-icon-circle-check-outline"></i>
+              <i class="iconfont icon-zhihangfankui"></i>
             </el-button>  
           </el-tooltip>
         </template>

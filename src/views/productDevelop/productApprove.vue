@@ -97,22 +97,22 @@
         <template slot-scope="scope">
           <el-tooltip content="查看">
             <el-button type="text" @click="view(scope.$index, scope.row)">
-              <i class="el-icon-view"></i>
+              <i class="iconfont icon-yulan"></i>
             </el-button>
           </el-tooltip>
           <el-tooltip content="通过">
             <el-button type="text" @click="pass(scope.$index, scope.row)">
-              <i class="iconfont icon-appreciate"></i>
+              <i class="iconfont icon-dianzan"></i>
             </el-button>
           </el-tooltip>
           <el-tooltip content="未通过">
             <el-button type="text" @click="unPass(scope.$index, scope.row)">
-              <i class="iconfont icon-oppose_light"></i>
+              <i class="iconfont icon-dianzan-copy"></i>
             </el-button>  
           </el-tooltip>
           <el-tooltip content="作废">
             <el-button type="text" @click="cancel(scope.$index, scope.row)">
-              <i class="el-icon-delete"></i>
+              <i class="iconfont icon-shanchu"></i>
             </el-button>
           </el-tooltip>
         </template>
@@ -399,17 +399,17 @@
           <template slot-scope="scope">
             <el-tooltip content="查看">
               <el-button type="text" @click="view2(scope.$index, scope.row)">
-                <i class="el-icon-view"></i>
+                <i class="iconfont icon-yulan"></i>
               </el-button>
             </el-tooltip>
             <!-- <el-tooltip content="通过">
               <el-button type="text" @click="pass2(scope.$index, scope.row)">
-                <i class="iconfont icon-appreciate"></i>
+                <i class="iconfont icon-dianzan3"></i>
               </el-button>
             </el-tooltip> -->
             <el-tooltip content="作废">
               <el-button type="text" @click="cancel2(scope.$index, scope.row)">
-                <i class="el-icon-delete"></i>
+                <i class="iconfont icon-shanchu"></i>
               </el-button>
             </el-tooltip>
           </template>
