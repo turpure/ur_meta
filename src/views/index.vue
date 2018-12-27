@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-editor-container" style="height: 1010px;">
-    <section style="opacity:1;">
+    <section>
       <div class="left-box">
         <el-card>
           <div slot="header" class="clearfix">
@@ -397,9 +397,6 @@ h2:hover {
 .dashboard-editor-container {
   padding: 0 30px;
   background-color: #f0f2f5;
-  //background:url("../assets/999.jpg");
-  background-Repeat: no-repeat;
-  background-Size: 100%;
   zoom:0.9;
 }
 .table-container {

@@ -20,7 +20,7 @@
           <span>{{viewForm.img}}</span>
         </el-form-item>
         <el-form-item label="是否备货" prop="stockUp" class="item">
-          <span>{{viewForm.stockUp}}</span>
+          <span>{{viewForm.stockUp === 1 ? '是' : '否'}}</span>
         </el-form-item>
         <el-form-item label="主类目" prop="cate" class="item">
           <span>{{viewForm.cate}}</span>
@@ -319,7 +319,7 @@
           <span>{{viewForm.img}}</span>
         </el-form-item>
         <el-form-item label="是否备货" prop="stockUp" class="item">
-          <span>{{viewForm.stockUp}}</span>
+          <span>{{viewForm.stockUp === 1 ? '是' : '否'}}</span>
         </el-form-item>
         <el-form-item label="主类目" prop="cate" class="item">
           <span>{{viewForm.cate}}</span>
@@ -374,6 +374,9 @@
         </el-form-item>
         <el-form-item label="预估重量(克)" prop="hopeWeight" class="item">
           <span>{{viewForm.hopeWeight}}</span>
+        </el-form-item>
+        <el-form-item label="预估成本(￥)" prop="hopeCost" class="item">
+          <span>{{viewForm.hopeCost}}</span>
         </el-form-item>
         <el-form-item label="预估利润率(%)" prop="hopeRate" class="item">
           <span>{{viewForm.hopeRate}}</span>
@@ -510,7 +513,7 @@
 
 <script>
 import { getGoodscats } from '../../api/profit'
-import { checkList, checkPassList, checkPass, checkFailed, checkCancel, checkFailedList } from '../../api/product'
+import { checkList, checkPassList, checkPass, checkFailed, checkCancel, checkFailedList, goodsInfo } from '../../api/product'
 import { getMenu } from '../../api/login'
 
 export default {
@@ -681,7 +684,10 @@ export default {
     },
     view(index, row) {
       this.dialogVisible = true
-      this.viewForm = Object.assign({}, row)
+      this.viewForm.nid = row.nid
+      goodsInfo(this.viewForm).then(res => {
+        this.viewForm = res.data.data
+      })
     },
     // 审核
     pass(index, row) {
@@ -1165,7 +1171,10 @@ export default {
     },
     view2(index, row) {
       this.dialogVisible2 = true
-      this.viewForm = Object.assign({}, row)
+      this.viewForm.nid = row.nid
+      goodsInfo(this.viewForm).then(res => {
+        this.viewForm = res.data.data
+      })
     },
     pass2(index, row) {
       // this.$confirm('确定通过该条记录？', '提示', { type: 'warning' }).then(() => {

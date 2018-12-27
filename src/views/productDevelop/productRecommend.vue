@@ -300,7 +300,7 @@
           <span>{{viewForm.img}}</span>
         </el-form-item>
         <el-form-item label="是否备货" prop="stockUp" class="item">
-          <span>{{viewForm.stockUp}}</span>
+          <span>{{viewForm.stockUp===1?'是':'否'}}</span>
         </el-form-item>
         <el-form-item label="主类目" prop="cate" class="item">
           <span>{{viewForm.cate}}</span>
@@ -370,7 +370,7 @@
     <!-- 更新对话框 -->
     <el-dialog title='更新' :visible.sync="dialogVisibleEdit1">
       <el-form :model="editForm" :rules="rules" label-width="110px" label-position="left" ref="editForm">
-        <el-form-item label="图片">
+        <el-form-item label="图片" class="item2">
           <img :src='editForm.img' style="width: 150px;height: 100px">
         </el-form-item>
         <el-form-item label="图片地址" prop="img">
@@ -388,7 +388,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="供应商链接1">
+        <el-form-item label="供应商链接1" prop="vendor1" :rules="[{required: true, message: '不能为空', trigger: 'blur'}]">
           <el-input size="small" v-model="editForm.vendor1"></el-input>
         </el-form-item>
         <el-form-item label="供应商链接2">
@@ -424,7 +424,7 @@
         <el-form-item label="预估月毛利($):">
           <el-input size="small" v-model="editForm.hopeMonthProfit" placeholder="选填"></el-input>
         </el-form-item>
-        <el-form-item label="预估月毛利($):">
+        <el-form-item label="">
           <el-checkbox-group v-model="editForm.stockUp">
             <el-checkbox label="是否备货" true-label="1" false-label="0" name="type"></el-checkbox>
           </el-checkbox-group>
@@ -764,7 +764,7 @@
         <el-form-item label="预估月毛利($):">
           <el-input size="small" v-model="editForm.hopeMonthProfit" placeholder="选填"></el-input>
         </el-form-item>
-        <el-form-item label="预估月毛利($):">
+        <el-form-item label="">
           <el-checkbox-group v-model="editForm.stockUp">
             <el-checkbox label="是否备货" true-label="1" false-label="0" name="type"></el-checkbox>
           </el-checkbox-group>
@@ -1100,11 +1100,17 @@ export default {
     },
     view1(index, row) {
       this.dialogVisibleView1 = true
-      this.viewForm = Object.assign({}, row)
+      this.viewForm.nid = row.nid
+      goodsInfo(this.viewForm).then(res => {
+        this.viewForm = res.data.data
+      })
     },
     edit1(index, row) {
       this.dialogVisibleEdit1 = true
-      this.editForm = Object.assign({}, row)
+      this.editForm.nid = row.nid
+      goodsInfo(this.editForm).then(res => {
+        this.editForm = res.data.data
+      })
       if (this.editForm.cate !== '') {
         const val = this.editForm.cate
         const res = this.category
@@ -1669,11 +1675,17 @@ export default {
     },
     view2(index, row) {
       this.dialogVisibleView2 = true
-      this.viewForm = Object.assign({}, row)
+      this.viewForm.nid = row.nid
+      goodsInfo(this.viewForm).then(res => {
+        this.viewForm = res.data.data
+      })
     },
     edit2(index, row) {
       this.dialogVisibleEdit2 = true
-      this.editForm = Object.assign({}, row)
+      this.editForm.nid = row.nid
+      goodsInfo(this.editForm).then(res => {
+        this.editForm = res.data.data
+      })
       if (this.editForm.cate !== '') {
         const val = this.editForm.cate
         const res = this.category
