@@ -51,7 +51,7 @@ export function goodsClaim(param) {
 export function forwardList(param) {
   const data = { 'condition': param }
   return request({
-    url: '/forward-develop/list?page=' + param.page1,
+    url: '/oa-goods/forward-list?page=' + param.page1,
     method: 'post',
     data
   })
@@ -59,7 +59,7 @@ export function forwardList(param) {
 export function forwardCreate(param) {
   const data = { 'condition': param }
   return request({
-    url: '/forward-develop/create',
+    url: '/oa-goods/dev-create',
     method: 'post',
     data
   })
@@ -67,7 +67,7 @@ export function forwardCreate(param) {
 export function forwardUpdate(param) {
   const data = { 'condition': param }
   return request({
-    url: '/forward-develop/update',
+    url: '/oa-goods/dev-update',
     method: 'put',
     data
   })
@@ -75,7 +75,7 @@ export function forwardUpdate(param) {
 export function forwardSubmit(param) {
   const data = { 'condition': param }
   return request({
-    url: '/forward-develop/submit',
+    url: '/oa-goods/submit',
     method: 'post',
     data
   })

@@ -44,7 +44,7 @@
     </div>
     <el-row>
       <el-col :span="17">
-        <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
           <el-tab-pane label="业绩归属1人表" name="first">
           </el-tab-pane>
           <el-tab-pane label="业绩归属2人表" name="second">
