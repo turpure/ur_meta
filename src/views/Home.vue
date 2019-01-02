@@ -95,10 +95,6 @@ export default {
   name: 'avatarUpload-demo',
   components: { ImageCropper },
   props: {
-    image: {
-      type: String,
-      required: true
-    },
     zIndex: {
       type: Number,
       default: 1
