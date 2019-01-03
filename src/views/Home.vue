@@ -53,7 +53,7 @@
           { required: true, message: '请输入邮箱地址', trigger: 'blur' },
           { type:'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
           ]" class="lab">
-            <el-input size="small" v-model="ValidateForm.email"></el-input>
+            <el-input v-model="ValidateForm.email"></el-input>
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">

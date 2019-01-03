@@ -310,6 +310,14 @@ export function getPsales(param) {
     data
   })
 }
+export function getSalesChange(param) {
+  const data = { 'condition': param }
+  return request({
+    url: '/data-center/sales-change?page=' + param.page + '&pageSize=' + param.pageSize,
+    method: 'get',
+    data
+  })
+}
 export function getPerformcost(param) {
   const data = { 'condition': param }
   return request({

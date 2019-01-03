@@ -204,6 +204,7 @@
   </el-table>
   <div class="toolbar">
     <el-pagination
+      background
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="this.condition.page"
@@ -544,6 +545,7 @@
     </el-table>
     <div class="toolbar">
       <el-pagination
+        background
         @size-change="handleSizeChange1"
         @current-change="handleCurrentChange1"
         :current-page="this.condition1.page1"
@@ -884,6 +886,7 @@
       </el-table>
       <div class="toolbar">
         <el-pagination
+          background
           @size-change="handleSizeChange2"
           @current-change="handleCurrentChange2"
           :current-page="this.condition2.page2"
