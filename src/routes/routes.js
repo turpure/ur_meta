@@ -15,6 +15,7 @@ import stock from '../views/data/stock.vue'
 import pcost from '../views/data/pcost.vue'
 import perform from '../views/data/perform.vue'
 import psales from '../views/data/psales.vue'
+import saleschange from '../views/data/saleschange.vue'
 // 销售工具
 import ebay from '../views/tool/ebay.vue'
 import ebaysku from '../views/tool/ebaysku.vue'
@@ -127,6 +128,11 @@ const routes = [{
       path: '/v1/perform/sales',
       component: psales,
       name: '销售变化表'
+    },
+    {
+      path: '/v1/data-center/sales-change',
+      component: saleschange,
+      name: '产品销售变化'
     }
   ]
 },

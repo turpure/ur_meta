@@ -42,7 +42,7 @@
         </transition>
       </div>
     </div>
-    <el-row>
+    <el-row class="toolbar">
       <el-col :span="17">
         <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
           <el-tab-pane label="业绩归属1人表" name="first">
