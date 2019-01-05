@@ -190,7 +190,7 @@ export default {
       department: [],
       allSecDep: [],
       secDepartment: [],
-      plat: '',
+      plat: [],
       member: [],
       store: [],
       dateType: [{ id: 1, type: '发货时间' }, { id: 0, type: '交易时间' }],
@@ -199,7 +199,7 @@ export default {
       condition: {
         department: [],
         secDepartment: [],
-        plat: '',
+        plat: [],
         member: [],
         store: [],
         dateType: 1,
@@ -215,7 +215,7 @@ export default {
       goods: {
         department: [],
         secDepartment: [],
-        plat: '',
+        plat: [],
         member: [],
         dateRange: [],
         account: [],
