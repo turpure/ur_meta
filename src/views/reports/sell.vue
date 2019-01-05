@@ -199,7 +199,7 @@ export default {
       condition: {
         department: [],
         secDepartment: [],
-        plat: '',
+        plat: [],
         member: [],
         store: [],
         dateType: 1,
@@ -215,7 +215,7 @@ export default {
       goods: {
         department: [],
         secDepartment: [],
-        plat: '',
+        plat: [],
         member: [],
         dateRange: [],
         account: [],
