@@ -471,7 +471,9 @@ export default {
       dealTotal: null,
       content: '',
       mycontent: '',
-      editorOption: {},
+      editorOption: {
+        placeholder:'请输入详情内容 ...'
+      },
       text: [
         '仅建议',
         '不重要不紧急',

@@ -796,6 +796,7 @@ export default {
         })
         const th = [
           '账号',
+          '销售员',
           '商品名称',
           '商品编码',
           '商品SKU',
@@ -804,11 +805,15 @@ export default {
           '仓库',
           '退款$',
           '退款￥',
-          '退款时间',
-          '销售员'
+          '国家',
+          '物流方式',
+          '平台',
+          '交易时间',
+          '退款时间'
         ]
         const filterVal = [
           'suffix',
+          'salesman',
           'goodsName',
           'goodsCode',
           'goodsSku',
@@ -817,8 +822,11 @@ export default {
           'storeName',
           'refund',
           'refundZn',
-          'refundTime',
-          'salesman'
+          'orderCountry',
+          'expressWay',
+          'platform',
+          'orderTime',
+          'refundTime'
         ]
       } else if (this.activeName === '退款产品明细') {
         this.order = Object.assign({}, this.goods)
