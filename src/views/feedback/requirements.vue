@@ -91,7 +91,7 @@
         </el-dialog>
         <!--需求编辑界面-->
         <el-dialog title="编辑" :visible.sync="editFormVisible" :close-on-click-modal="false">
-          <el-form :model="editForm" label-width="80px" ref="editForm">
+          <el-form :model="editForm" label-width="80px" label-position="left" ref="editForm">
             <el-form-item label="id" prop="id" v-if="false">
               <el-input v-model="editForm.id" auto-complete="off"></el-input>
             </el-form-item>
@@ -126,7 +126,7 @@
         </el-dialog>
         <!--需求详情界面-->
         <el-dialog title="详情" :visible.sync="detailFormVisible" :close-on-click-modal="false">
-          <el-form :model="detailForm" label-width="80px" ref="detailForm">
+          <el-form :model="detailForm" label-width="80px" label-position="left" ref="detailForm">
             <el-form-item label="名称" prop="name">
               <span>{{detailForm.name}}</span>
           <!-- <el-tag :type="tags[detailForm.priority]['type']">{{tags[detailForm.priority]['name']}}</el-tag> -->
@@ -226,7 +226,7 @@
         </el-table>
         <!--审核编辑界面-->
         <el-dialog title="编辑" :visible.sync="editFormVisibleAudit" :close-on-click-modal="false">
-          <el-form :model="editAuditForm" label-width="80px" ref="editFormAudit">
+          <el-form :model="editAuditForm" label-width="80px" label-position="left" ref="editFormAudit">
             <el-form-item label="id" prop="id" v-if="false">
               <el-input v-model="editAuditForm.id" auto-complete="off"></el-input>
             </el-form-item>
@@ -336,7 +336,7 @@
         </el-table> 
         <!--处理编辑界面-->
         <el-dialog title="编辑" :visible.sync="editFormVisibleDeal" :close-on-click-modal="false">
-          <el-form :model="editDealForm" label-width="80px" ref="editDealForm">
+          <el-form :model="editDealForm" label-width="80px" label-position="left" ref="editDealForm">
             <el-form-item label="id" prop="id" v-if="false">
               <el-input v-model="editDealForm.id" auto-complete="off"></el-input>
             </el-form-item>
@@ -387,7 +387,7 @@
         </el-dialog>
         <!--处理详情界面-->
         <el-dialog title="详情" :visible.sync="detailFormVisibleDeal" :close-on-click-modal="false">
-          <el-form :model="detailDealForm" label-width="80px" ref="detailDealForm">
+          <el-form :model="detailDealForm" label-width="80px" label-position="left" ref="detailDealForm">
             <el-form-item label="名称" prop="name">
               <span>{{detailDealForm.name}}</span>
           <!-- <el-tag :type="tags[detailForm.priority]['type']">{{tags[detailForm.priority]['name']}}</el-tag> -->
@@ -457,12 +457,12 @@ import { getMenu } from '../../api/login'
 export default {
   data() {
     return {
-      userShow: false,
+      userShow: true,
       auditShow: false,
       dealShow: false,
       allMenu: [],
       sels: [],
-      activeName: '',
+      activeName: '用户需求',
       detail: '',
       str: '',
       img: '',
@@ -592,7 +592,7 @@ export default {
   },
   computed: {
     editor() {
-      return this.$refs.myQuillEditor
+      return this.$refs.myQuillEditor.quill
     }
   },
   methods: {
@@ -978,6 +978,7 @@ export default {
         }
       }
     })
+    this.getRequire(this.activeName)
   }
 }
 </script>
