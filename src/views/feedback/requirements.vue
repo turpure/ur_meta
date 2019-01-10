@@ -453,7 +453,10 @@ import {
   getExamine
 } from '../../api/api'
 import { getMenu } from '../../api/login'
+// import {quillEditor, Quill} from 'vue-quill-editor'
+// import {container, ImageExtend} from 'quill-image-extend-module'
 
+// Quill.register('modules/ImageExtend', ImageExtend)
 export default {
   data() {
     return {
@@ -472,6 +475,22 @@ export default {
       content: '',
       mycontent: '',
       editorOption: {
+        // modules: {
+        //   ImageExtend: {
+        //     loading: true,
+        //     response: (res) => {
+        //       return res.info
+        //     }
+        //   },
+        //   toolbar: {
+        //     container: container,
+        //     handlers: {
+        //       'image': function () {
+        //         document.querySelector('.quill-image-input').click()
+        //       }
+        //     }
+        //   }
+        // },
         placeholder:'请输入详情内容 ...'
       },
       text: [
