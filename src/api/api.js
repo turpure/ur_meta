@@ -143,6 +143,12 @@ export function DeveloperTarget() {
     method: 'get'
   })
 }
+export function ProsTarget() {
+  return request({
+    url: 'site/pros',
+    method: 'get'
+  })
+}
 export function Risk(param) {
   var data = { 'condition': param }
   return request({

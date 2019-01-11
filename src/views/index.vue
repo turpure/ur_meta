@@ -16,7 +16,26 @@
               </el-tab-pane>
             </el-tabs>
           </div>
-          <div v-show="showTitle.baokuan"></div>
+          <div v-show="showTitle.baokuan">
+            <el-table :data="proTable" size="small" @sort-change="sortNumber" height="840">
+              <el-table-column type="index" align="center"></el-table-column>
+              <el-table-column prop="platform" label="平台" sortable align="center"></el-table-column>
+              <el-table-column prop="goodsCode" label="商品编码" sortable align="center"></el-table-column>
+              <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
+              <el-table-column prop="img" label="图片" sortable align="center">
+                <template slot-scope="scope">
+                  <img :src='scope.row.img' style="width: 100px;height: 70px;">
+                </template>
+              </el-table-column>
+              <el-table-column prop="profit" label="毛利" sortable="custom" align="center"></el-table-column>
+              <el-table-column prop="endTime" label="统计截止日期" sortable align="center">
+                <template slot-scope="scope">
+                  <i class="el-icon-time"></i>
+                  <span>{{dateFormatter(scope.row.endTime)}}</span>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
         <div class='table-container' v-show="showTitle.zengzhang">
           <el-table
           :data="shanghaiTable"
@@ -191,7 +210,7 @@
 </template>
 
 <script>
-import { ShangHaiTarget, ZhengZhouTarget, DepartTarget, DeveloperTarget, news, newsTop } from '../api/api'
+import { ShangHaiTarget, ZhengZhouTarget, DepartTarget, DeveloperTarget, news, newsTop, ProsTarget } from '../api/api'
 import { compareUp, compareDown } from '../api/tools'
 import { getMenu } from '../api/login'
 
@@ -219,6 +238,7 @@ export default {
       zhengzhouTable: [],
       departTable: [],
       developerTable: [],
+      proTable: [],
       activeName: '上海销售',
       activeTitle: '利润增长表',
       show: {
@@ -304,22 +324,31 @@ export default {
     },
     // 数字排序
     sortNumber(column, prop, order) {
-      var tab
-      if (this.activeName === '上海销售') {
-        tab = 'shanghai'
-      } else if (this.activeName === '郑州销售') {
-        tab = 'zhengzhou'
-      } else if (this.activeName === '所有部门') {
-        tab = 'depart'
-      } else if (this.activeName === '所有开发') {
-        tab = 'developer'
-      }
-      const tableName = tab + 'Table'
-      const data = this[tableName]
-      if (column.order === 'descending') {
-        this.tableData = data.sort(compareDown(data, column.prop))
+      if (this.activeTitle === '利润增长表') {
+        var tab
+        if (this.activeName === '上海销售') {
+          tab = 'shanghai'
+        } else if (this.activeName === '郑州销售') {
+          tab = 'zhengzhou'
+        } else if (this.activeName === '所有部门') {
+          tab = 'depart'
+        } else if (this.activeName === '所有开发') {
+          tab = 'developer'
+        }
+        const tableName = tab + 'Table'
+        const data = this[tableName]
+        if (column.order === 'descending') {
+          this.tableData = data.sort(compareDown(data, column.prop))
+        } else {
+          this.tableData = data.sort(compareUp(data, column.prop))
+        }
       } else {
-        this.tableData = data.sort(compareUp(data, column.prop))
+        const data = this.proTable
+        if (column.order === 'descending') {
+          this.tableData = data.sort(compareDown(data, column.prop))
+        } else {
+          this.tableData = data.sort(compareUp(data, column.prop))
+        }
       }
     },
     checkStatus(row, prop) {
@@ -347,6 +376,9 @@ export default {
     })
     DeveloperTarget().then((res) => {
       this.developerTable = res.data.data
+    })
+    ProsTarget().then(res => {
+      this.proTable = res.data.data
     })
     this.getNews()
   }
