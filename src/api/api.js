@@ -118,35 +118,28 @@ export function deleteRequirements(id) {
 
 export function ShangHaiTarget() {
   return request({
-    url: 'site/index',
+    url: 'site/profit',
     method: 'get'
   })
 }
 
 export function ZhengZhouTarget() {
   return request({
-    url: 'site/sales',
+    url: 'site/zz-profit',
     method: 'get'
   })
 }
 
 export function DepartTarget() {
   return request({
-    url: 'site/depart',
+    url: 'site/depart-profit',
     method: 'get'
   })
 }
 
 export function DeveloperTarget() {
   return request({
-    url: 'site/develop',
-    method: 'get'
-  })
-}
-
-export function IndexPermission() {
-  return request({
-    url: 'site/permission',
+    url: 'site/dev-profit',
     method: 'get'
   })
 }
