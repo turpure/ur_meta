@@ -3,16 +3,21 @@
     <section>
       <div class="left-box">
         <el-card>
-          <div slot="header" class="clearfix">
-            <h2>完成度表</h2>
+          <div slot="header" class="clearfix-table">
+            <el-tabs v-model="activeTitle" @tab-click="handleTitle">
+              <el-tab-pane v-for="(item, index) in titleMenu" :label="item.name" :name="item.name" :key="index">
+              </el-tab-pane>
+            </el-tabs>
+            <!-- <h2>完成度表</h2> -->
           </div>
-        <div class="tabs-container">
-          <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-            <el-tab-pane v-for="(item, index) in allMenu" :label="item.name" :name="item.name" :key="index">
-            </el-tab-pane>
-          </el-tabs>
-        </div>
-        <div class='table-container'>
+          <div class="tabs-container" v-show="showTitle.zengzhang">
+            <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+              <el-tab-pane v-for="(item, index) in allMenu" :label="item.name" :name="item.name" :key="index">
+              </el-tab-pane>
+            </el-tabs>
+          </div>
+          <div v-show="showTitle.baokuan"></div>
+        <div class='table-container' v-show="showTitle.zengzhang">
           <el-table
           :data="shanghaiTable"
           size="small"
@@ -58,6 +63,11 @@
           <el-table-column prop="role" align="center" label="角色"></el-table-column>
           <el-table-column prop="lastProfit" align="center" label="上月毛利" sortable="custom"></el-table-column>
           <el-table-column prop="profit" align="center" label="本月毛利" sortable="custom"></el-table-column>
+          <el-table-column prop="rate" align="center" label="本月VS上月" sortable="custom">
+              <template slot-scope="scope">
+                <el-progress :text-inside="true" :stroke-width="18" :status="checkStatus(scope.row,'rate')" :percentage="Math.round(scope.row.rate*10000)/100"></el-progress>
+              </template>
+          </el-table-column>
           <el-table-column prop="dateRate" align="center" label="时间进度">
             <template slot-scope="scope">
               <el-progress :text-inside="true" :stroke-width="18" status="exception" :percentage="Math.round(scope.row.dateRate*10000)/100"></el-progress>
@@ -132,7 +142,7 @@
         </el-card>
       </div>
         <el-card class="box-card">
-          <div slot="header" class="clearfix">
+          <div slot="header" class="clearfix-list">
             <h2>公告栏</h2>
           </div>
           <ul>
@@ -161,7 +171,7 @@
           </el-button>
         </el-card>
         <el-card class="box-card1">
-          <div slot="header" class="clearfix">
+          <div slot="header" class="clearfix-list">
             <h2>活动栏</h2>
           </div>
           <img src="../assets/1.5.jpg" style="height:400px;width:95%;padding:15px;">
@@ -200,6 +210,7 @@ export default {
       },
       newsDetailList: {},
       allMenu: [],
+      titleMenu: [],
       moreData: [],
       newsList: [],
       tableHeight: null,
@@ -209,11 +220,16 @@ export default {
       departTable: [],
       developerTable: [],
       activeName: '上海销售',
+      activeTitle: '利润增长表',
       show: {
         shanghai: true,
         zhengzhou: false,
         depart: false,
         developer: false
+      },
+      showTitle: {
+        baokuan: false,
+        zengzhang: true
       }
     }
   },
@@ -248,7 +264,6 @@ export default {
       })
     },
     handleClick(tab, event) {
-      console.log(this.activeName)
       if (tab.label === '上海销售') {
         this.show['shanghai'] = true
       } else {
@@ -268,6 +283,18 @@ export default {
         this.show['developer'] = true
       } else {
         this.show['developer'] = false
+      }
+    },
+    handleTitle(tab, event) {
+      if (tab.label === '今日爆款') {
+        this.showTitle['baokuan'] = true
+      } else {
+        this.showTitle['baokuan'] = false
+      }
+      if (tab.label === '利润增长表') {
+        this.showTitle['zengzhang'] = true
+      } else {
+        this.showTitle['zengzhang'] = false
       }
     },
     dateFormatter(date) {
@@ -307,6 +334,7 @@ export default {
       const res = response.data.data
       const menu = res.filter(e => e.name === '主页')
       this.allMenu = menu[0].tabs[1].tabs
+      this.titleMenu = menu[0].tabs
     })
     ShangHaiTarget().then((res) => {
       this.shanghaiTable = res.data.data
@@ -326,8 +354,12 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-.clearfix{
-  height: 10px;
+.clearfix-table{
+  height: 21px;
+  line-height: 0px;
+}
+.clearfix-list{
+  height: 4px;
   line-height: 0px;
 }
 .left-box{
@@ -382,7 +414,7 @@ export default {
 }
 .box-card1{
   width: 30%;
-  height: 490px;
+  height: 485px;
   float: right;
   margin-top: 10px;
 }
