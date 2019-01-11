@@ -248,7 +248,6 @@ export default {
       })
     },
     handleClick(tab, event) {
-      console.log(this.activeName)
       if (tab.label === '上海销售') {
         this.show['shanghai'] = true
       } else {
