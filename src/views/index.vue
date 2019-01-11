@@ -8,7 +8,8 @@
           </div>
         <div class="tabs-container">
           <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-            <el-tab-pane v-for="(item,index) in permission" :key="index" :label="item.label" :name="item.name"></el-tab-pane>
+            <el-tab-pane v-for="(item, index) in allMenu" :label="item.name" :name="item.name" :key="index">
+            </el-tab-pane>
           </el-tabs>
         </div>
         <div class='table-container'>
@@ -25,28 +26,22 @@
             <el-table-column prop="depart" align="center" label="部门" sortable></el-table-column>
             <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
             <el-table-column prop="role" align="center" label="角色"></el-table-column>
-            <el-table-column prop="primary" align="center" label="初级目标(￥)" sortable="custom"></el-table-column>
-            <el-table-column prop="high" align="center" label="高级目标(￥)" sortable="custom"></el-table-column>
-            <el-table-column prop="amt" align="center" label="毛利润(￥)" sortable="custom"></el-table-column>
-            <el-table-column prop="primaryRate" width="140" align="center" label="初级目标完成度" sortable="custom" >
+            <el-table-column prop="lastProfit" align="center" label="上月毛利" sortable="custom"></el-table-column>
+            <el-table-column prop="profit" align="center" label="本月毛利" sortable="custom"></el-table-column>
+            <el-table-column prop="rate" align="center" label="本月VS上月" sortable="custom">
               <template slot-scope="scope">
-                <el-progress :text-inside="true" :stroke-width="18" :status="checkStatus(scope.row,'primaryRate')" :percentage="Math.round(scope.row.primaryRate*10000)/100"></el-progress>
+                <el-progress :text-inside="true" :stroke-width="18" :status="checkStatus(scope.row,'rate')" :percentage="Math.round(scope.row.rate*10000)/100"></el-progress>
               </template>
-            </el-table-column>
-            <el-table-column prop="highRate" width="140" align="center" label="高级目标完成度" sortable="custom">
-              <template slot-scope="scope">
-                <el-progress :text-inside="true" :stroke-width="18" :status="checkStatus(scope.row,'highRate')" :percentage="Math.round(scope.row.highRate*10000)/100"></el-progress>
-              </template> 
             </el-table-column>
             <el-table-column prop="dateRate" align="center" label="时间进度" >
               <template slot-scope="scope">
                 <el-progress :text-inside="true" :stroke-width="18" status="exception" :percentage="Math.round(scope.row.dateRate*10000)/100"></el-progress>
               </template>
             </el-table-column>
-            <el-table-column prop="updatetime" align="center" label="统计截止日期">
+            <el-table-column prop="updateTime" align="center" label="统计截止日期">
               <template slot-scope="scope">
                 <i class="el-icon-time"></i>
-                <span style="margin-left: 10px">{{dateFormatter(scope.row.updatetime)}}</span>
+                <span style="margin-left: 10px">{{dateFormatter(scope.row.updateTime)}}</span>
               </template>
             </el-table-column>
           </el-table>
@@ -61,22 +56,17 @@
           <el-table-column prop="depart" align="center" label="部门" ></el-table-column>
           <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
           <el-table-column prop="role" align="center" label="角色"></el-table-column>
-          <el-table-column prop="high" align="center" label="目标" sortable="custom"></el-table-column>
-          <el-table-column prop="amt" align="center" label="毛利润(￥)" sortable="custom"></el-table-column>
-          <el-table-column prop="highRate" align="center" label="目标完成度" sortable="custom" >
-            <template slot-scope="scope">
-              <el-progress :text-inside="true" :stroke-width="18" :status="checkStatus(scope.row,'highRate')" :percentage="Math.round(scope.row.highRate*10000)/100"></el-progress>
-            </template> 
-          </el-table-column>
+          <el-table-column prop="lastProfit" align="center" label="上月毛利" sortable="custom"></el-table-column>
+          <el-table-column prop="profit" align="center" label="本月毛利" sortable="custom"></el-table-column>
           <el-table-column prop="dateRate" align="center" label="时间进度">
             <template slot-scope="scope">
               <el-progress :text-inside="true" :stroke-width="18" status="exception" :percentage="Math.round(scope.row.dateRate*10000)/100"></el-progress>
             </template>
           </el-table-column>
-          <el-table-column prop="updatetime" align="center" label="统计截止日期">
+          <el-table-column prop="updateTime" align="center" label="统计截止日期">
             <template slot-scope="scope">
               <i class="el-icon-time"></i>
-              <span style="margin-left: 10px">{{ dateFormatter(scope.row.updatetime) }}</span>
+              <span style="margin-left: 10px">{{ dateFormatter(scope.row.updateTime) }}</span>
             </template>
           </el-table-column>
           </el-table>
@@ -88,29 +78,23 @@
           @sort-change="sortNumber">
           <el-table-column type="index" align="center"></el-table-column>
           <el-table-column prop="depart" label="部门" align="center" sortable></el-table-column>
-          <el-table-column prop="primary" align="center" label="初级目标(￥)" sortable="custom"></el-table-column>
-          <el-table-column prop="high" label="高级目标(￥)" align="center" sortable="custom">
+          <el-table-column prop="lastProfit" align="center" label="上月毛利" sortable="custom"></el-table-column>
+          <el-table-column prop="profit" label="本月毛利" align="center" sortable="custom">
           </el-table-column>
-          <el-table-column prop="amt" label="毛利润(￥)" align="center" sortable="custom"></el-table-column>
-          <el-table-column prop="primaryRate" label="初级目标完成度" align="center" sortable="custom">
+          <el-table-column prop="rate" label="本月VS上月" align="center" sortable="custom">
             <template slot-scope="scope">
-              <el-progress :text-inside="true" :stroke-width="18" :status="checkStatus(scope.row,'primaryRate')" :percentage="Math.round(scope.row.primaryRate*10000)/100"></el-progress>
+              <el-progress :text-inside="true" :stroke-width="18" :status="checkStatus(scope.row,'rate')" :percentage="Math.round(scope.row.rate*10000)/100"></el-progress>
             </template>
-          </el-table-column>
-          <el-table-column prop="highRate" label="高级目标完成度" align="center" sortable="custom">
-            <template slot-scope="scope">
-              <el-progress :text-inside="true" :stroke-width="18" :status="checkStatus(scope.row,'highRate')" :percentage="Math.round(scope.row.highRate*10000)/100"></el-progress>
-            </template> 
           </el-table-column>
           <el-table-column prop="dateRate" align="center" label="时间进度">
             <template slot-scope="scope">
               <el-progress :text-inside="true" :stroke-width="18" status="exception" :percentage="Math.round(scope.row.dateRate*10000)/100"></el-progress>
             </template>
           </el-table-column>
-          <el-table-column prop="updatetime" align="center" label="统计截止日期">
+          <el-table-column prop="updateTime" align="center" label="统计截止日期">
             <template slot-scope="scope">
               <i class="el-icon-time"></i>
-              <span style="margin-left: 10px">{{ dateFormatter(scope.row.updatetime) }}</span>
+              <span style="margin-left: 10px">{{ dateFormatter(scope.row.updateTime) }}</span>
             </template>
           </el-table-column>
           </el-table>
@@ -125,28 +109,22 @@
           <el-table-column prop="depart" align="center" label="部门" sortable></el-table-column>
           <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
           <el-table-column prop="role" align="center" label="角色"></el-table-column>
-          <el-table-column prop="primary" align="center" label="初级目标(￥)" sortable="custom"></el-table-column>
-          <el-table-column prop="high" align="center" label="高级目标(￥)" sortable="custom"></el-table-column>
-          <el-table-column prop="amt" align="center" label="毛利润(￥)" sortable="custom"></el-table-column>
-          <el-table-column prop="primaryRate" align="center" label="初级目标完成度" sortable="custom">
+          <el-table-column prop="lastProfit" align="center" label="上月毛利" sortable="custom"></el-table-column>
+          <el-table-column prop="profit" align="center" label="本月毛利" sortable="custom"></el-table-column>
+          <el-table-column prop="rate" align="center" label="本月VS上月" sortable="custom">
             <template slot-scope="scope">
-              <el-progress :text-inside="true" :stroke-width="18" :status="checkStatus(scope.row,'primaryRate')" :percentage="Math.round(scope.row.primaryRate*10000)/100"></el-progress>
+              <el-progress :text-inside="true" :stroke-width="18" :status="checkStatus(scope.row,'rate')" :percentage="Math.round(scope.row.rate*10000)/100"></el-progress>
             </template>
-          </el-table-column>
-          <el-table-column prop="highRate" align="center" label="高级目标完成度" sortable="custom">
-            <template slot-scope="scope">
-              <el-progress :text-inside="true" :stroke-width="18" :status="checkStatus(scope.row,'highRate')" :percentage="Math.round(scope.row.highRate*10000)/100"></el-progress>
-            </template> 
           </el-table-column>
           <el-table-column prop="dateRate" align="center" label="时间进度" >
             <template slot-scope="scope">
               <el-progress :text-inside="true" :stroke-width="18" status="exception" :percentage="Math.round(scope.row.dateRate*10000)/100"></el-progress>
             </template>
           </el-table-column>
-          <el-table-column prop="updatetime" align="center" label="统计截止日期">
+          <el-table-column prop="updateTime" align="center" label="统计截止日期">
             <template slot-scope="scope">
               <i class="el-icon-time"></i>
-              <span style="margin-left: 10px">{{dateFormatter(scope.row.updatetime)}}</span>
+              <span style="margin-left: 10px">{{dateFormatter(scope.row.updateTime)}}</span>
             </template>
           </el-table-column>
           </el-table>
@@ -203,8 +181,9 @@
 </template>
 
 <script>
-import { IndexPermission, ShangHaiTarget, ZhengZhouTarget, DepartTarget, DeveloperTarget, news, newsTop } from '../api/api'
+import { ShangHaiTarget, ZhengZhouTarget, DepartTarget, DeveloperTarget, news, newsTop } from '../api/api'
 import { compareUp, compareDown } from '../api/tools'
+import { getMenu } from '../api/login'
 
 export default {
   data() {
@@ -220,6 +199,7 @@ export default {
         pageSize: 10
       },
       newsDetailList: {},
+      allMenu: [],
       moreData: [],
       newsList: [],
       tableHeight: null,
@@ -228,9 +208,9 @@ export default {
       zhengzhouTable: [],
       departTable: [],
       developerTable: [],
-      activeName: '',
+      activeName: '上海销售',
       show: {
-        shanghai: false,
+        shanghai: true,
         zhengzhou: false,
         depart: false,
         developer: false
@@ -268,12 +248,26 @@ export default {
       })
     },
     handleClick(tab, event) {
-      for (const ele in this.show) {
-        if (ele === tab.name) {
-          this.show[ele] = true
-        } else {
-          this.show[ele] = false
-        }
+      console.log(this.activeName)
+      if (tab.label === '上海销售') {
+        this.show['shanghai'] = true
+      } else {
+        this.show['shanghai'] = false
+      }
+      if (tab.label === '郑州销售') {
+        this.show['zhengzhou'] = true
+      } else {
+        this.show['zhengzhou'] = false
+      }
+      if (tab.label === '所有部门') {
+        this.show['depart'] = true
+      } else {
+        this.show['depart'] = false
+      }
+      if (tab.label === '所有开发') {
+        this.show['developer'] = true
+      } else {
+        this.show['developer'] = false
       }
     },
     dateFormatter(date) {
@@ -283,7 +277,17 @@ export default {
     },
     // 数字排序
     sortNumber(column, prop, order) {
-      const tableName = this.activeName + 'Table'
+      var tab
+      if (this.activeName === '上海销售') {
+        tab = 'shanghai'
+      } else if (this.activeName === '郑州销售') {
+        tab = 'zhengzhou'
+      } else if (this.activeName === '所有部门') {
+        tab = 'depart'
+      } else if (this.activeName === '所有开发') {
+        tab = 'developer'
+      }
+      const tableName = tab + 'Table'
       const data = this[tableName]
       if (column.order === 'descending') {
         this.tableData = data.sort(compareDown(data, column.prop))
@@ -299,6 +303,11 @@ export default {
     }
   },
   mounted() {
+    getMenu().then(response => {
+      const res = response.data.data
+      const menu = res.filter(e => e.name === '主页')
+      this.allMenu = menu[0].tabs[1].tabs
+    })
     ShangHaiTarget().then((res) => {
       this.shanghaiTable = res.data.data
     })
@@ -310,12 +319,6 @@ export default {
     })
     DeveloperTarget().then((res) => {
       this.developerTable = res.data.data
-    })
-    IndexPermission().then((res) => {
-      const ret = res.data.data
-      this.permission = ret
-      this.activeName = ret[0].name
-      this.show[this.activeName] = true
     })
     this.getNews()
   }
