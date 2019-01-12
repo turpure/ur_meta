@@ -143,9 +143,9 @@ export function DeveloperTarget() {
     method: 'get'
   })
 }
-export function ProsTarget() {
+export function ProsTarget(param) {
   return request({
-    url: 'site/pros',
+    url: 'site/pros?plat=' + param,
     method: 'get'
   })
 }
