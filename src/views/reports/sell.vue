@@ -58,7 +58,7 @@
           <el-form-item style="margin-left:6rem">
             <el-button size="small" type='primary' class='input' @click='onSubmit(condition)'>查询</el-button>
           </el-form-item>
-          </el-form>
+        </el-form>
       </transition>
       <div class='demo-block-control' @click='handleChange' style='left:0rem'>
         <transition>
