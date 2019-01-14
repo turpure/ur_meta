@@ -461,7 +461,14 @@ export default {
       }
     },
     checkStatus(row, prop) {
-      if (row[prop] < row.dateRate) {
+      if (row.lastProfit < 0 && row.profit > 0) {
+        if (Math.abs(row[prop]) < row.dateRate) {
+          return 'exception'
+        }
+        return 'success'
+      } else if (row.lastProfit > 0 && row.profit < 0) {
+        return 'exception'
+      } else if (row[prop] < row.dateRate) {
         return 'exception'
       }
       return 'success'
