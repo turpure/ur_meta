@@ -19,10 +19,10 @@
                   <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
                   <el-table-column prop="img" label="图片" sortable align="center">
                     <template slot-scope="scope">
-                      <img :src='scope.row.img' style="width: 100px;height: 70px;">
+                      <img :src='scope.row.img' style="width: 120px;height: 120px;">
                     </template>
                   </el-table-column>
-                  <el-table-column prop="profit" label="毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="profit" label="本月毛利" sortable="custom" align="center"></el-table-column>
                   <el-table-column prop="endTime" label="统计截止日期" sortable align="center">
                     <template slot-scope="scope">
                       <i class="el-icon-time"></i>
@@ -39,10 +39,10 @@
                   <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
                   <el-table-column prop="img" label="图片" sortable align="center">
                     <template slot-scope="scope">
-                      <img :src='scope.row.img' style="width: 100px;height: 70px;">
+                      <img :src='scope.row.img' style="width: 120px;height: 120px;">
                     </template>
                   </el-table-column>
-                  <el-table-column prop="profit" label="毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="profit" label="本月毛利" sortable="custom" align="center"></el-table-column>
                   <el-table-column prop="endTime" label="统计截止日期" sortable align="center">
                     <template slot-scope="scope">
                       <i class="el-icon-time"></i>
@@ -59,10 +59,10 @@
                   <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
                   <el-table-column prop="img" label="图片" sortable align="center">
                     <template slot-scope="scope">
-                      <img :src='scope.row.img' style="width: 100px;height: 70px;">
+                      <img :src='scope.row.img' style="width: 120px;height: 120px;">
                     </template>
                   </el-table-column>
-                  <el-table-column prop="profit" label="毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="profit" label="本月毛利" sortable="custom" align="center"></el-table-column>
                   <el-table-column prop="endTime" label="统计截止日期" sortable align="center">
                     <template slot-scope="scope">
                       <i class="el-icon-time"></i>
@@ -79,10 +79,10 @@
                   <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
                   <el-table-column prop="img" label="图片" sortable align="center">
                     <template slot-scope="scope">
-                      <img :src='scope.row.img' style="width: 100px;height: 70px;">
+                      <img :src='scope.row.img' style="width: 120px;height: 120px;">
                     </template>
                   </el-table-column>
-                  <el-table-column prop="profit" label="毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="profit" label="本月毛利" sortable="custom" align="center"></el-table-column>
                   <el-table-column prop="endTime" label="统计截止日期" sortable align="center">
                     <template slot-scope="scope">
                       <i class="el-icon-time"></i>
@@ -99,10 +99,10 @@
                   <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
                   <el-table-column prop="img" label="图片" sortable align="center">
                     <template slot-scope="scope">
-                      <img :src='scope.row.img' style="width: 100px;height: 70px;">
+                      <img :src='scope.row.img' style="width: 120px;height: 120px;">
                     </template>
                   </el-table-column>
-                  <el-table-column prop="profit" label="毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="profit" label="本月毛利" sortable="custom" align="center"></el-table-column>
                   <el-table-column prop="endTime" label="统计截止日期" sortable align="center">
                     <template slot-scope="scope">
                       <i class="el-icon-time"></i>
@@ -132,6 +132,7 @@
               <el-table-column prop="depart" align="center" label="部门" sortable></el-table-column>
               <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
               <el-table-column prop="role" align="center" label="角色"></el-table-column>
+              <el-table-column prop="storename" align="center" label="仓库"></el-table-column>
               <el-table-column prop="lastProfit" align="center" label="上月毛利" sortable="custom"></el-table-column>
               <el-table-column prop="profit" align="center" label="本月毛利" sortable="custom"></el-table-column>
               <el-table-column prop="rate" align="center" label="本月VS上月" sortable="custom">
@@ -161,6 +162,7 @@
               <el-table-column prop="depart" align="center" label="部门" ></el-table-column>
               <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
               <el-table-column prop="role" align="center" label="角色"></el-table-column>
+              <el-table-column prop="storename" align="center" label="仓库"></el-table-column>
               <el-table-column prop="lastProfit" align="center" label="上月毛利" sortable="custom"></el-table-column>
               <el-table-column prop="profit" align="center" label="本月毛利" sortable="custom"></el-table-column>
               <el-table-column prop="rate" align="center" label="本月VS上月" sortable="custom">
@@ -218,6 +220,7 @@
               <el-table-column prop="depart" align="center" label="部门" sortable></el-table-column>
               <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
               <el-table-column prop="role" align="center" label="角色"></el-table-column>
+              <el-table-column prop="storename" align="center" label="仓库"></el-table-column>
               <el-table-column prop="lastProfit" align="center" label="上月毛利" sortable="custom"></el-table-column>
               <el-table-column prop="profit" align="center" label="本月毛利" sortable="custom"></el-table-column>
               <el-table-column prop="rate" align="center" label="本月VS上月" sortable="custom">
@@ -426,9 +429,7 @@ export default {
       }
     },
     dateFormatter(date) {
-      const previous = new Date(date)
-      previous.setDate(previous.getDate() - 1)
-      return previous.toJSON().substring(0, 10)
+      return date.substring(0, 10)
     },
     // 数字排序
     sortNumber(column, prop, order) {
