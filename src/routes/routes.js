@@ -132,7 +132,7 @@ const routes = [{
     {
       path: '/v1/data-center/sales-change',
       component: saleschange,
-      name: '产品销售变化'
+      name: '销量环比变化'
     }
   ]
 },
