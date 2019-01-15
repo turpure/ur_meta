@@ -340,8 +340,8 @@ export default {
       developerTable: [],
       proTable: [],
       activeName: '上海销售',
-      activeTitle: '利润增长表',
-      activePlat: 'eBayY',
+      activeTitle: '今日爆款',
+      activePlat: 'eBay-义乌仓',
       show: {
         shanghai: true,
         zhengzhou: false,
@@ -349,8 +349,8 @@ export default {
         developer: false
       },
       showTitle: {
-        baokuan: false,
-        zengzhang: true
+        baokuan: true,
+        zengzhang: false
       }
     }
   },
