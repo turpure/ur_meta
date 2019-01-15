@@ -230,5 +230,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.el-form {
+  margin-bottom: 20px;
+  .el-form-item {
+    margin-bottom: 0rem;
+  }
+}
 </style>
 

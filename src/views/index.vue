@@ -11,7 +11,27 @@
           </div>
           <div class="tabs-container" v-show="showTitle.baokuan">
             <el-tabs v-model="activePlat" type="card" @tab-click="handlePlat">
-              <el-tab-pane label="eBay" name="eBay">
+              <el-tab-pane label="eBay-义乌仓" name="eBay-义乌仓">
+                <el-table :data="proTable" size="small" @sort-change="sortNumber" height="800">
+                  <el-table-column type="index" align="center"></el-table-column>
+                  <el-table-column prop="platform" label="平台" sortable align="center"></el-table-column>
+                  <el-table-column prop="goodsCode" label="商品编码" sortable align="center"></el-table-column>
+                  <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
+                  <el-table-column prop="img" label="图片" sortable align="center">
+                    <template slot-scope="scope">
+                      <img :src='scope.row.img' style="width: 120px;height: 120px;">
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="profit" label="本月毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="endTime" label="统计截止日期" sortable align="center">
+                    <template slot-scope="scope">
+                      <i class="el-icon-time"></i>
+                      <span>{{dateFormatter(scope.row.endTime)}}</span>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </el-tab-pane>
+              <el-tab-pane label="eBay-海外仓" name="eBay-海外仓">
                 <el-table :data="proTable" size="small" @sort-change="sortNumber" height="800">
                   <el-table-column type="index" align="center"></el-table-column>
                   <el-table-column prop="platform" label="平台" sortable align="center"></el-table-column>
@@ -132,7 +152,6 @@
               <el-table-column prop="depart" align="center" label="部门" sortable></el-table-column>
               <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
               <el-table-column prop="role" align="center" label="角色"></el-table-column>
-              <el-table-column prop="storename" align="center" label="仓库"></el-table-column>
               <el-table-column prop="lastProfit" align="center" label="上月毛利" sortable="custom"></el-table-column>
               <el-table-column prop="profit" align="center" label="本月毛利" sortable="custom"></el-table-column>
               <el-table-column prop="rate" align="center" label="本月VS上月" sortable="custom">
@@ -148,7 +167,7 @@
               <el-table-column prop="updateTime" align="center" label="统计截止日期">
                 <template slot-scope="scope">
                   <i class="el-icon-time"></i>
-                  <span style="margin-left: 10px">{{dateFormatter(scope.row.updateTime)}}</span>
+                  <span>{{dateFormatter(scope.row.updateTime)}}</span>
                 </template>
               </el-table-column>
             </el-table>
@@ -162,7 +181,6 @@
               <el-table-column prop="depart" align="center" label="部门" ></el-table-column>
               <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
               <el-table-column prop="role" align="center" label="角色"></el-table-column>
-              <el-table-column prop="storename" align="center" label="仓库"></el-table-column>
               <el-table-column prop="lastProfit" align="center" label="上月毛利" sortable="custom"></el-table-column>
               <el-table-column prop="profit" align="center" label="本月毛利" sortable="custom"></el-table-column>
               <el-table-column prop="rate" align="center" label="本月VS上月" sortable="custom">
@@ -178,7 +196,7 @@
               <el-table-column prop="updateTime" align="center" label="统计截止日期">
                 <template slot-scope="scope">
                   <i class="el-icon-time"></i>
-                  <span style="margin-left: 10px">{{ dateFormatter(scope.row.updateTime) }}</span>
+                  <span>{{ dateFormatter(scope.row.updateTime) }}</span>
                 </template>
               </el-table-column>
             </el-table>
@@ -206,7 +224,7 @@
               <el-table-column prop="updateTime" align="center" label="统计截止日期">
                 <template slot-scope="scope">
                   <i class="el-icon-time"></i>
-                  <span style="margin-left: 10px">{{ dateFormatter(scope.row.updateTime) }}</span>
+                  <span>{{ dateFormatter(scope.row.updateTime) }}</span>
                 </template>
               </el-table-column>
             </el-table>
@@ -220,7 +238,6 @@
               <el-table-column prop="depart" align="center" label="部门" sortable></el-table-column>
               <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
               <el-table-column prop="role" align="center" label="角色"></el-table-column>
-              <el-table-column prop="storename" align="center" label="仓库"></el-table-column>
               <el-table-column prop="lastProfit" align="center" label="上月毛利" sortable="custom"></el-table-column>
               <el-table-column prop="profit" align="center" label="本月毛利" sortable="custom"></el-table-column>
               <el-table-column prop="rate" align="center" label="本月VS上月" sortable="custom">
@@ -236,7 +253,7 @@
               <el-table-column prop="updateTime" align="center" label="统计截止日期">
                 <template slot-scope="scope">
                   <i class="el-icon-time"></i>
-                  <span style="margin-left: 10px">{{dateFormatter(scope.row.updateTime)}}</span>
+                  <span>{{dateFormatter(scope.row.updateTime)}}</span>
                 </template>
               </el-table-column>
             </el-table>
@@ -324,7 +341,7 @@ export default {
       proTable: [],
       activeName: '上海销售',
       activeTitle: '利润增长表',
-      activePlat: 'eBay',
+      activePlat: 'eBayY',
       show: {
         shanghai: true,
         zhengzhou: false,
@@ -402,7 +419,12 @@ export default {
       }
     },
     handlePlat(tab, event) { 
-      if (tab.label === 'eBay') {
+      if (tab.label === 'eBay-义乌仓') {
+        ProsTarget(this.activePlat).then(res => {
+          this.proTable = res.data.data
+        })
+      }
+      if (tab.label === 'eBay-海外仓') {
         ProsTarget(this.activePlat).then(res => {
           this.proTable = res.data.data
         })
