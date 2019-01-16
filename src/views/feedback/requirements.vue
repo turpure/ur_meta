@@ -22,34 +22,43 @@
         <!--需求列表-->
         <el-table :data="requirements" highlight-current-row :loading="listLoading" style="width: 100%;">
           <el-table-column prop="id" label="id" v-if="false"></el-table-column>
-          <el-table-column type="selection" width="55"></el-table-column>
-          <el-table-column type="index" width="60"></el-table-column>
-          <el-table-column prop="createdDate" label="创建时间" :formatter="formatter" width="140"></el-table-column>
-          <el-table-column prop="creator" label="创建人" sortable></el-table-column>
-          <el-table-column prop="name" label="名称" sortable>
-            <template slot-scope="scope">
-              <span class="link-type">{{ scope.row.name }}</span>
-              <el-tag :type="tags[scope.row.priority]['type']">{{ tags[scope.row.priority]['name']}}</el-tag>
-            </template>
+          <el-table-column type="selection" align="center" header-align="center" width="55"></el-table-column>
+          <el-table-column type="index" align="center" header-align="center" width="60"></el-table-column>
+          <el-table-column prop="createdDate" align="center" header-align="center" label="创建时间" :formatter="formatter" width="140"></el-table-column>
+          <el-table-column label="创建人" header-align="center" sortable>
+            <el-table-column prop="creator" :render-header="renderHeader" align="center"></el-table-column>
           </el-table-column>
-          <el-table-column prop="type" label="类别" min-width="100" sortable>
-            <template slot-scope="scope">
-              <span>{{types[scope.row.type]}}</span>
-            </template>
+          <el-table-column label="名称" header-align="center" sortable>
+            <el-table-column prop="name" :render-header="renderHeader" align="center">
+              <template slot-scope="scope">
+                <span class="link-type">{{ scope.row.name }}</span>
+                <el-tag :type="tags[scope.row.priority]['type']">{{ tags[scope.row.priority]['name']}}</el-tag>
+              </template>
+            </el-table-column>
           </el-table-column>
-          <el-table-column prop="detail" label="详情" min-width="180" :formatter="detailFormatter" sortable>
+          <el-table-column label="类别" header-align="center" min-width="100" sortable>
+            <el-table-column  prop="type" :render-header="renderHeader" align="center">
+              <template slot-scope="scope">
+                <span>{{types[scope.row.type]}}</span>
+              </template>
+            </el-table-column>
           </el-table-column>
-          <el-table-column prop="schedule" label="进度" min-width="100" sortable>
-            <template slot-scope="scope">
-              <el-popover trigger="hover" placement="top">
-                <p>说明: {{ schedule[scope.row.schedule]['hints']}}</p>
-                <div slot="reference" class="name-wrapper">
-                  <el-tag size="medium">{{ schedule[scope.row.schedule]['name']}}</el-tag>
-                </div>
-              </el-popover>
-            </template>
+          <el-table-column label="详情" header-align="center" min-width="180" :formatter="detailFormatter" sortable>
+            <el-table-column prop="detail" :render-header="renderHeader" align="center"></el-table-column>
           </el-table-column>
-          <el-table-column label="操作" width="220">
+          <el-table-column label="进度" header-align="center" min-width="100" sortable>
+            <el-table-column  prop="schedule" :render-header="renderHeader" align="center">
+              <template slot-scope="scope">
+                <el-popover trigger="hover" placement="top">
+                  <p>说明: {{ schedule[scope.row.schedule]['hints']}}</p>
+                  <div slot="reference" class="name-wrapper">
+                    <el-tag size="medium">{{ schedule[scope.row.schedule]['name']}}</el-tag>
+                  </div>
+                </el-popover>
+              </template>
+            </el-table-column>
+          </el-table-column>
+          <el-table-column label="操作" header-align="center" width="220">
             <template slot-scope="scope"> 
               <el-button type="primary" size="small" @click="handleDetail(scope.$index, scope.row)">详情</el-button>
               <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -166,7 +175,7 @@
             <el-pagination
               v-show="this.total>0" 
               :current-page="condition.page" 
-              :page-sizes="[10,20,30,50,this.total]" 
+              :page-sizes="[9,20,30,50,this.total]" 
               :page-size="condition.pageSize" 
               :total="this.total" 
               background 
@@ -299,34 +308,47 @@
         <!--处理列表-->
         <el-table :data="requirementsDeal" highlight-current-row :loading="dealLoading" style="width: 100%;">
           <el-table-column prop="id" label="id" v-if="false"></el-table-column>
-          <el-table-column type="selection" width="55"></el-table-column>
-          <el-table-column type="index" width="60"></el-table-column>
-          <el-table-column prop="createdDate" label="创建时间" :formatter="formatter" width="140"></el-table-column>
-          <el-table-column prop="creator" label="创建人" sortable></el-table-column>
-          <el-table-column prop="name" label="名称" sortable>
-            <template slot-scope="scope">
-              <span class="link-type">{{ scope.row.name }}</span>
-              <el-tag :type="tags[scope.row.priority]['type']">{{ tags[scope.row.priority]['name']}}</el-tag>
-            </template>
+          <el-table-column type="selection" header-align="center" align="center" width="55"></el-table-column>
+          <el-table-column type="index" header-align="center" align="center" width="60"></el-table-column>
+          <el-table-column prop="createdDate" header-align="center" align="center" label="创建时间" :formatter="formatter" width="140"></el-table-column>
+          <el-table-column label="创建人" header-align="center" sortable>
+            <el-table-column  prop="creator" :render-header="renderHeader1" align="center">
+            </el-table-column>
           </el-table-column>
-          <el-table-column prop="type" label="类别" min-width="100" sortable>
-            <template slot-scope="scope">
-              <span>{{types[scope.row.type]}}</span>
-            </template>
+          <el-table-column label="名称" header-align="center" sortable>
+            <el-table-column prop="name" :render-header="renderHeader1" align="center">
+              <template slot-scope="scope">
+                <span class="link-type">{{ scope.row.name }}</span>
+                <el-tag :type="tags[scope.row.priority]['type']">{{ tags[scope.row.priority]['name']}}</el-tag>
+              </template>
+            </el-table-column>
           </el-table-column>
-          <el-table-column prop="detail" label="详情" min-width="180" :formatter="detailFormatter" sortable></el-table-column>
-          <el-table-column prop="processingPerson" label="处理人" min-width="80" sortable></el-table-column>
-          <el-table-column prop="status" label="状态" min-width="100" sortable>
-            <template slot-scope="scope">
-              <el-popover trigger="hover" placement="top">
-                <p>说明: {{ status[scope.row.status]['hints']}}</p>
-                <div slot="reference" class="name-wrapper">
-                  <el-tag size="medium">{{ status[scope.row.status]['name']}}</el-tag>
-                </div>
-              </el-popover>
-            </template>
+          <el-table-column label="类别" header-align="center" min-width="100" sortable>
+            <el-table-column prop="type" :render-header="renderHeader1" align="center">
+              <template slot-scope="scope">
+                <span>{{types[scope.row.type]}}</span>
+              </template>
+            </el-table-column>
           </el-table-column>
-          <el-table-column label="操作" width="220">
+          <el-table-column label="详情" header-align="center" min-width="180" :formatter="detailFormatter" sortable>
+            <el-table-column prop="detail" :render-header="renderHeader1" align="center"></el-table-column>
+          </el-table-column>
+          <el-table-column header-align="center" label="处理人" min-width="80" sortable>
+            <el-table-column prop="processingPerson" :render-header="renderHeader1" align="center"></el-table-column>
+          </el-table-column>
+          <el-table-column label="状态" header-align="center" min-width="100" sortable>
+            <el-table-column  prop="status" :render-header="renderHeader1" align="center">
+              <template slot-scope="scope">
+                <el-popover trigger="hover" placement="top">
+                  <p>说明: {{ status[scope.row.status]['hints']}}</p>
+                  <div slot="reference" class="name-wrapper">
+                    <el-tag size="medium">{{ status[scope.row.status]['name']}}</el-tag>
+                  </div>
+                </el-popover>
+              </template>
+            </el-table-column>
+          </el-table-column>
+          <el-table-column label="操作" header-align="center" width="220">
             <template slot-scope="scope"> 
               <el-button type="primary" size="small" @click="handleDetailDeal(scope.$index, scope.row)">详情</el-button>
               <el-button size="small" @click="handleEditDeal(scope.$index, scope.row)">编辑</el-button>
@@ -427,7 +449,7 @@
             <el-pagination
               v-show="this.dealTotal>0" 
               :current-page="deal.page" 
-              :page-sizes="[10,20,30,50,this.dealTotal]" 
+              :page-sizes="[9,20,30,50,this.dealTotal]" 
               :page-size="deal.pageSize" 
               :total="this.dealTotal" 
               background 
@@ -498,7 +520,7 @@ export default {
         priority: '',
         schedule: '',
         page: 1,
-        pageSize: 10
+        pageSize: 9
       },
       examine: {
         flag: '',
@@ -520,7 +542,7 @@ export default {
         creator: '',
         processingPerson: '',
         page: 1,
-        pageSize: 10
+        pageSize: 9
       },
       auditSuccess: {
         type: 'pass',
@@ -973,6 +995,265 @@ export default {
           this.deal.page = res._meta.currentPage
           this.deal.pageSize = res._meta.perPage
         })
+      }
+    },
+    renderHeader(h,{column, $index}) {
+      if($index === 0) {
+        return h('div',{
+          style:{
+            height:'40px'
+          },
+        },[
+          h('el-input',{
+            props:{
+              value: this.condition.creator,
+              size:'mini',
+              clearable: true
+            },
+            on:{
+              input:value=>{
+                this.condition.creator = value
+                this.$emit('input', value)
+              },
+              change: value => {
+                // this.filter()
+              }
+            }
+          })
+        ])
+      } else if ($index === 1) {
+        return h('div',{
+          style:{
+            height:'40px'
+          },
+        },[
+          h('el-input',{
+            props:{
+              value: this.condition.name,
+              size:'mini',
+              clearable: true
+            },
+            on:{
+              input:value=>{
+                this.condition.name = value
+                this.$emit('input', value)
+              },
+              change: value => {
+                // this.filter()
+              }
+            }
+          })
+        ])
+      } else if ($index === 2) {
+        return h('div',{
+          style:{
+            height:'40px'
+          },
+        },[
+          h('el-input',{
+            props:{
+              value: this.condition.type,
+              size:'mini',
+              clearable: true
+            },
+            on:{
+              input:value=>{
+                this.condition.type = value
+                this.$emit('input', value)
+              },
+              change: value => {
+                // this.filter()
+              }
+            }
+          })
+        ])
+      } else if ($index === 3) {
+        return h('div',{
+          style:{
+            height:'40px'
+          },
+        },[
+          h('el-input',{
+            props:{
+              value: this.condition.detail,
+              size:'mini',
+              clearable: true
+            },
+            on:{
+              input:value=>{
+                this.condition.detail = value
+                this.$emit('input', value)
+              },
+              change: value => {
+                // this.filter()
+              }
+            }
+          })
+        ])
+      } else if ($index === 4) {
+        return h('div',{
+          style:{
+            height:'40px'
+          },
+        },[
+          h('el-input',{
+            props:{
+              value: this.condition.schedule,
+              size:'mini',
+              clearable: true
+            },
+            on:{
+              input:value=>{
+                this.condition.schedule = value
+                this.$emit('input', value)
+              },
+              change: value => {
+                // this.filter()
+              }
+            }
+          })
+        ])
+      }
+    },
+    renderHeader1(h,{column, $index}) {
+      if($index === 0) {
+        return h('div',{
+          style:{
+            height:'40px'
+          },
+        },[
+          h('el-input',{
+            props:{
+              value: this.deal.creator,
+              size:'mini',
+              clearable: true
+            },
+            on:{
+              input:value=>{
+                this.deal.creator = value
+                this.$emit('input', value)
+              },
+              change: value => {
+                // this.filter()
+              }
+            }
+          })
+        ])
+      } else if ($index === 1) {
+        return h('div',{
+          style:{
+            height:'40px'
+          },
+        },[
+          h('el-input',{
+            props:{
+              value: this.deal.name,
+              size:'mini',
+              clearable: true
+            },
+            on:{
+              input:value=>{
+                this.deal.name = value
+                this.$emit('input', value)
+              },
+              change: value => {
+                // this.filter()
+              }
+            }
+          })
+        ])
+      } else if ($index === 2) {
+        return h('div',{
+          style:{
+            height:'40px'
+          },
+        },[
+          h('el-input',{
+            props:{
+              value: this.deal.type,
+              size:'mini',
+              clearable: true
+            },
+            on:{
+              input:value=>{
+                this.deal.type = value
+                this.$emit('input', value)
+              },
+              change: value => {
+                // this.filter()
+              }
+            }
+          })
+        ])
+      } else if ($index === 3) {
+        return h('div',{
+          style:{
+            height:'40px'
+          },
+        },[
+          h('el-input',{
+            props:{
+              value: this.deal.detail,
+              size:'mini',
+              clearable: true
+            },
+            on:{
+              input:value=>{
+                this.deal.detail = value
+                this.$emit('input', value)
+              },
+              change: value => {
+                // this.filter()
+              }
+            }
+          })
+        ])
+      } else if ($index === 4) {
+        return h('div',{
+          style:{
+            height:'40px'
+          },
+        },[
+          h('el-input',{
+            props:{
+              value: this.deal.processingPerson,
+              size:'mini',
+              clearable: true
+            },
+            on:{
+              input:value=>{
+                this.deal.processingPerson = value
+                this.$emit('input', value)
+              },
+              change: value => {
+                // this.filter()
+              }
+            }
+          })
+        ])
+      } else if ($index === 5) {
+        return h('div',{
+          style:{
+            height:'40px'
+          },
+        },[
+          h('el-input',{
+            props:{
+              value: this.deal.status,
+              size:'mini',
+              clearable: true
+            },
+            on:{
+              input:value=>{
+                this.deal.status = value
+                this.$emit('input', value)
+              },
+              change: value => {
+                // this.filter()
+              }
+            }
+          })
+        ])
       }
     }
   },
