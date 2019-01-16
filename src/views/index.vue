@@ -15,14 +15,22 @@
                 <el-table :data="proTable" size="small" @sort-change="sortNumber" height="800">
                   <el-table-column type="index" align="center"></el-table-column>
                   <el-table-column prop="platform" label="平台" sortable align="center"></el-table-column>
-                  <el-table-column prop="goodsCode" label="商品编码" sortable align="center"></el-table-column>
+                  <el-table-column prop="developer" label="开发员" sortable align="center"></el-table-column>
+                  <el-table-column prop="goodsCode" label="商品编码" sortable align="center">
+                    <template slot-scope="scope">
+                      <a :href="scope.row.linkUrl" target="_blank">{{scope.row.goodsCode}}</a>
+                    </template>
+                  </el-table-column>
                   <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
-                  <el-table-column prop="img" label="图片" sortable align="center">
+                  <el-table-column prop="subCate" label="主类目" sortable align="center"></el-table-column>
+                  <el-table-column prop="cate" label="子类目" sortable align="center"></el-table-column>
+                  <el-table-column prop="img" label="图片" align="center">
                     <template slot-scope="scope">
                       <img :src='scope.row.img' style="width: 120px;height: 120px;">
                     </template>
                   </el-table-column>
-                  <el-table-column prop="profit" label="本月毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="salesNum" label="月销量" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="profit" label="月毛利" sortable="custom" align="center"></el-table-column>
                   <el-table-column prop="endTime" label="统计截止日期" sortable align="center">
                     <template slot-scope="scope">
                       <i class="el-icon-time"></i>
@@ -35,14 +43,22 @@
                 <el-table :data="proTable" size="small" @sort-change="sortNumber" height="800">
                   <el-table-column type="index" align="center"></el-table-column>
                   <el-table-column prop="platform" label="平台" sortable align="center"></el-table-column>
-                  <el-table-column prop="goodsCode" label="商品编码" sortable align="center"></el-table-column>
+                  <el-table-column prop="developer" label="开发员" sortable align="center"></el-table-column>
+                  <el-table-column prop="goodsCode" label="商品编码" sortable align="center">
+                    <template slot-scope="scope">
+                      <a :href="scope.row.linkUrl" target="_blank">{{scope.row.goodsCode}}</a>
+                    </template>
+                  </el-table-column>
                   <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
+                  <el-table-column prop="subCate" label="主类目" sortable align="center"></el-table-column>
+                  <el-table-column prop="cate" label="子类目" sortable align="center"></el-table-column>
                   <el-table-column prop="img" label="图片" sortable align="center">
                     <template slot-scope="scope">
                       <img :src='scope.row.img' style="width: 120px;height: 120px;">
                     </template>
                   </el-table-column>
-                  <el-table-column prop="profit" label="本月毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="salesNum" label="月销量" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="profit" label="月毛利" sortable="custom" align="center"></el-table-column>
                   <el-table-column prop="endTime" label="统计截止日期" sortable align="center">
                     <template slot-scope="scope">
                       <i class="el-icon-time"></i>
@@ -55,14 +71,22 @@
                 <el-table :data="proTable" size="small" @sort-change="sortNumber" height="800">
                   <el-table-column type="index" align="center"></el-table-column>
                   <el-table-column prop="platform" label="平台" sortable align="center"></el-table-column>
-                  <el-table-column prop="goodsCode" label="商品编码" sortable align="center"></el-table-column>
+                  <el-table-column prop="developer" label="开发员" sortable align="center"></el-table-column>
+                  <el-table-column prop="goodsCode" label="商品编码" sortable align="center">
+                    <template slot-scope="scope">
+                      <a :href="scope.row.linkUrl" target="_blank">{{scope.row.goodsCode}}</a>
+                    </template>
+                  </el-table-column>
                   <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
+                  <el-table-column prop="subCate" label="主类目" sortable align="center"></el-table-column>
+                  <el-table-column prop="cate" label="子类目" sortable align="center"></el-table-column>
                   <el-table-column prop="img" label="图片" sortable align="center">
                     <template slot-scope="scope">
                       <img :src='scope.row.img' style="width: 120px;height: 120px;">
                     </template>
                   </el-table-column>
-                  <el-table-column prop="profit" label="本月毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="salesNum" label="月销量" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="profit" label="月毛利" sortable="custom" align="center"></el-table-column>
                   <el-table-column prop="endTime" label="统计截止日期" sortable align="center">
                     <template slot-scope="scope">
                       <i class="el-icon-time"></i>
@@ -75,14 +99,22 @@
                 <el-table :data="proTable" size="small" @sort-change="sortNumber" height="800">
                   <el-table-column type="index" align="center"></el-table-column>
                   <el-table-column prop="platform" label="平台" sortable align="center"></el-table-column>
-                  <el-table-column prop="goodsCode" label="商品编码" sortable align="center"></el-table-column>
+                  <el-table-column prop="developer" label="开发员" sortable align="center"></el-table-column>
+                  <el-table-column prop="goodsCode" label="商品编码" sortable align="center">
+                    <template slot-scope="scope">
+                      <a :href="scope.row.linkUrl" target="_blank">{{scope.row.goodsCode}}</a>
+                    </template>
+                  </el-table-column>
                   <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
+                  <el-table-column prop="subCate" label="主类目" sortable align="center"></el-table-column>
+                  <el-table-column prop="cate" label="子类目" sortable align="center"></el-table-column>
                   <el-table-column prop="img" label="图片" sortable align="center">
                     <template slot-scope="scope">
                       <img :src='scope.row.img' style="width: 120px;height: 120px;">
                     </template>
                   </el-table-column>
-                  <el-table-column prop="profit" label="本月毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="salesNum" label="月销量" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="profit" label="月毛利" sortable="custom" align="center"></el-table-column>
                   <el-table-column prop="endTime" label="统计截止日期" sortable align="center">
                     <template slot-scope="scope">
                       <i class="el-icon-time"></i>
@@ -95,14 +127,22 @@
                 <el-table :data="proTable" size="small" @sort-change="sortNumber" height="800">
                   <el-table-column type="index" align="center"></el-table-column>
                   <el-table-column prop="platform" label="平台" sortable align="center"></el-table-column>
-                  <el-table-column prop="goodsCode" label="商品编码" sortable align="center"></el-table-column>
+                  <el-table-column prop="developer" label="开发员" sortable align="center"></el-table-column>
+                  <el-table-column prop="goodsCode" label="商品编码" sortable align="center">
+                    <template slot-scope="scope">
+                      <a :href="scope.row.linkUrl" target="_blank">{{scope.row.goodsCode}}</a>
+                    </template>
+                  </el-table-column>
                   <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
+                  <el-table-column prop="subCate" label="主类目" sortable align="center"></el-table-column>
+                  <el-table-column prop="cate" label="子类目" sortable align="center"></el-table-column>
                   <el-table-column prop="img" label="图片" sortable align="center">
                     <template slot-scope="scope">
                       <img :src='scope.row.img' style="width: 120px;height: 120px;">
                     </template>
                   </el-table-column>
-                  <el-table-column prop="profit" label="本月毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="salesNum" label="月销量" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="profit" label="月毛利" sortable="custom" align="center"></el-table-column>
                   <el-table-column prop="endTime" label="统计截止日期" sortable align="center">
                     <template slot-scope="scope">
                       <i class="el-icon-time"></i>
@@ -115,14 +155,22 @@
                 <el-table :data="proTable" size="small" @sort-change="sortNumber" height="800">
                   <el-table-column type="index" align="center"></el-table-column>
                   <el-table-column prop="platform" label="平台" sortable align="center"></el-table-column>
-                  <el-table-column prop="goodsCode" label="商品编码" sortable align="center"></el-table-column>
+                  <el-table-column prop="developer" label="开发员" sortable align="center"></el-table-column>
+                  <el-table-column prop="goodsCode" label="商品编码" sortable align="center">
+                    <template slot-scope="scope">
+                      <a :href="scope.row.linkUrl" target="_blank">{{scope.row.goodsCode}}</a>
+                    </template>
+                  </el-table-column>
                   <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
+                  <el-table-column prop="subCate" label="主类目" sortable align="center"></el-table-column>
+                  <el-table-column prop="cate" label="子类目" sortable align="center"></el-table-column>
                   <el-table-column prop="img" label="图片" sortable align="center">
                     <template slot-scope="scope">
                       <img :src='scope.row.img' style="width: 120px;height: 120px;">
                     </template>
                   </el-table-column>
-                  <el-table-column prop="profit" label="本月毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="salesNum" label="月销量" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="profit" label="月毛利" sortable="custom" align="center"></el-table-column>
                   <el-table-column prop="endTime" label="统计截止日期" sortable align="center">
                     <template slot-scope="scope">
                       <i class="el-icon-time"></i>

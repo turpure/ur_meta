@@ -20,7 +20,7 @@
           </el-form>
         </el-col>
         <!--需求列表-->
-        <el-table :data="requirements" highlight-current-row :loading="listLoading" style="width: 100%;">
+        <el-table :data="requirements" highlight-current-row :loading="listLoading" max-height="750" style="width: 100%;">
           <el-table-column prop="id" label="id" v-if="false"></el-table-column>
           <el-table-column type="selection" align="center" header-align="center" width="55"></el-table-column>
           <el-table-column type="index" align="center" header-align="center" width="60"></el-table-column>
@@ -175,7 +175,7 @@
             <el-pagination
               v-show="this.total>0" 
               :current-page="condition.page" 
-              :page-sizes="[9,20,30,50,this.total]" 
+              :page-sizes="[10,20,30,50,this.total]" 
               :page-size="condition.pageSize" 
               :total="this.total" 
               background 
@@ -306,7 +306,7 @@
           </el-form>
         </el-col>
         <!--处理列表-->
-        <el-table :data="requirementsDeal" highlight-current-row :loading="dealLoading" style="width: 100%;">
+        <el-table :data="requirementsDeal" highlight-current-row :loading="dealLoading" max-height="750" style="width: 100%;">
           <el-table-column prop="id" label="id" v-if="false"></el-table-column>
           <el-table-column type="selection" header-align="center" align="center" width="55"></el-table-column>
           <el-table-column type="index" header-align="center" align="center" width="60"></el-table-column>
@@ -449,7 +449,7 @@
             <el-pagination
               v-show="this.dealTotal>0" 
               :current-page="deal.page" 
-              :page-sizes="[9,20,30,50,this.dealTotal]" 
+              :page-sizes="[10,20,30,50,this.dealTotal]" 
               :page-size="deal.pageSize" 
               :total="this.dealTotal" 
               background 
@@ -520,7 +520,7 @@ export default {
         priority: '',
         schedule: '',
         page: 1,
-        pageSize: 9
+        pageSize: 10
       },
       examine: {
         flag: '',
@@ -542,7 +542,7 @@ export default {
         creator: '',
         processingPerson: '',
         page: 1,
-        pageSize: 9
+        pageSize: 10
       },
       auditSuccess: {
         type: 'pass',
