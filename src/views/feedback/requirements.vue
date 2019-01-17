@@ -44,7 +44,11 @@
             </el-table-column>
           </el-table-column>
           <el-table-column label="详情" header-align="center" min-width="180" :formatter="detailFormatter" sortable>
-            <el-table-column prop="detail" :render-header="renderHeader" align="center"></el-table-column>
+            <el-table-column prop="detail" :render-header="renderHeader" align="center">
+              <template slot-scope="scope">
+                <span v-html="scope.row.detail"></span>
+              </template>
+            </el-table-column>
           </el-table-column>
           <el-table-column label="进度" header-align="center" min-width="100" sortable>
             <el-table-column  prop="schedule" :render-header="renderHeader" align="center">
@@ -331,7 +335,11 @@
             </el-table-column>
           </el-table-column>
           <el-table-column label="详情" header-align="center" min-width="180" :formatter="detailFormatter" sortable>
-            <el-table-column prop="detail" :render-header="renderHeader1" align="center"></el-table-column>
+            <el-table-column prop="detail" :render-header="renderHeader1" align="center">
+              <template slot-scope="scope">
+                <span v-html="scope.row.detail"></span>
+              </template>
+            </el-table-column>
           </el-table-column>
           <el-table-column header-align="center" label="处理人" min-width="80" sortable>
             <el-table-column prop="processingPerson" :render-header="renderHeader1" align="center"></el-table-column>
