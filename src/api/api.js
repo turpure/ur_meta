@@ -73,7 +73,7 @@ export function getRequirementsDeal(condition) {
 
 export function getRequirementsIndex(condition) {
   return request({
-    url: 'requirements/index?name=' + condition.name + '&page=' + condition.page + '&pageSize=' + condition.pageSize + '&flag=' + condition.flag + '&type=' + condition.type + '&priority=' + condition.priority + '&schedule=' + condition.schedule + '&detail=' + condition.detail,
+    url: 'requirements/index?name=' + condition.name + '&page=' + condition.page + '&pageSize=' + condition.pageSize + '&flag=' + condition.flag + '&type=' + condition.type + '&priority=' + condition.priority + '&schedule=' + condition.schedule + '&detail=' + condition.detail + '&creator=' + condition.creator,
     method: 'get'
   })
 }
