@@ -515,13 +515,13 @@ export default {
         '重要且紧急'
       ],
       condition: {
-        flag: '',
         detail: '',
         name: '',
         type: '',
         creator: '',
         priority: '',
         schedule: '',
+        status: '',
         page: 1,
         pageSize: 10
       },
@@ -1176,26 +1176,31 @@ export default {
           })
         ])
       } else if ($index === 2) {
-        return h('div',{
-          style:{
-            height:'40px'
+        let filters = [{text: 0,'value':"BUG"}, {text: 1,'value':"新需求"}, {text: 2,'value':"任务"}, {text: 3,'value':"改进建议"}]
+        return h('el-select',{
+          props:{
+            placeholder:'请选择', 
+            value:this.deal.type,
+            size:'mini',
+            clearable:true,
           },
-        },[
-          h('el-input',{
-            props:{
-              value: this.deal.type,
-              size:'mini',
-              clearable: true
+          on:{
+            input:value=>{
+              this.deal.type=value
+              this.$emit('input', value)
             },
-            on:{
-              input:value=>{
-                this.deal.type = value
-                this.$emit('input', value)
-              },
-              change: value => {
-                this.getRequire(this.activeName)
-              }
+            change:searchValue=>{
+              this.getRequire(this.activeName)
             }
+          }
+        },[
+          filters.map(item=>{
+            return h('el-option',{
+              props:{
+                value:item.text,
+                label:item.value
+              }
+            });
           })
         ])
       } else if ($index === 3) {
@@ -1245,26 +1250,31 @@ export default {
           })
         ])
       } else if ($index === 5) {
-        return h('div',{
-          style:{
-            height:'40px'
+        let filters = [{text: 1,'value':"Open"}, {text: 2,'value':"In Progress"}, {text: 3,'value':"Resovled"}, {text: 4,'value':"Reopened"}, {text: 5,'value':"Closed"}]
+        return h('el-select',{
+          props:{
+            placeholder:'请选择', 
+            value:this.deal.status,
+            size:'mini',
+            clearable:true,
           },
-        },[
-          h('el-input',{
-            props:{
-              value: this.deal.status,
-              size:'mini',
-              clearable: true
+          on:{
+            input:value=>{
+              this.deal.status=value
+              this.$emit('input', value)
             },
-            on:{
-              input:value=>{
-                this.deal.status = value
-                this.$emit('input', value)
-              },
-              change: value => {
-                this.getRequire(this.activeName)
-              }
+            change:searchValue=>{
+              this.getRequire(this.activeName)
             }
+          }
+        },[
+          filters.map(item=>{
+            return h('el-option',{
+              props:{
+                value:item.text,
+                label:item.value
+              }
+            });
           })
         ])
       }

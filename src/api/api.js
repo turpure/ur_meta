@@ -66,21 +66,21 @@ export function fyndiqz() {
 
 export function getRequirementsDeal(condition) {
   return request({
-    url: 'requirements/deal-list?name=' + condition.name + '&page=' + condition.page + '&pageSize=' + condition.pageSize + '&flag=' + condition.flag + '&type=' + condition.type + '&priority=' + condition.priority + '&status=' + condition.status + '&processingPerson=' + condition.processingPerson + '&creator=' + condition.creator + '&detail=' + condition.detail,
+    url: 'requirements/deal-list?name=' + condition.name + '&page=' + condition.page + '&pageSize=' + condition.pageSize + '&type=' + condition.type + '&priority=' + condition.priority + '&status=' + condition.status + '&processingPerson=' + condition.processingPerson + '&creator=' + condition.creator + '&detail=' + condition.detail,
     method: 'get'
   })
 }
 
 export function getRequirementsIndex(condition) {
   return request({
-    url: 'requirements/index?name=' + condition.name + '&page=' + condition.page + '&pageSize=' + condition.pageSize + '&flag=' + condition.flag + '&type=' + condition.type + '&priority=' + condition.priority + '&schedule=' + condition.schedule + '&detail=' + condition.detail + '&creator=' + condition.creator,
+    url: 'requirements/index?name=' + condition.name + '&page=' + condition.page + '&pageSize=' + condition.pageSize + '&type=' + condition.type + '&priority=' + condition.priority + '&schedule=' + condition.schedule + '&detail=' + condition.detail + '&creator=' + condition.creator + '&status=' + condition.status,
     method: 'get'
   })
 }
 
 export function getRequirementsExamine(condition) {
   return request({
-    url: 'requirements/examine-list?name=' + condition.name + '&page=' + condition.page + '&pageSize=' + condition.pageSize + '&flag=' + condition.flag + '&type=' + condition.type + '&priority=' + condition.priority + '&creator=' + condition.creator + '&detail=' + condition.detail,
+    url: 'requirements/examine-list?name=' + condition.name + '&page=' + condition.page + '&pageSize=' + condition.pageSize + '&type=' + condition.type + '&priority=' + condition.priority + '&creator=' + condition.creator + '&detail=' + condition.detail,
     method: 'get'
   })
 }
