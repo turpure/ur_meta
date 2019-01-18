@@ -80,7 +80,7 @@ export function getRequirementsIndex(condition) {
 
 export function getRequirementsExamine(condition) {
   return request({
-    url: 'requirements/examine-list?name=' + condition.name + '&page=' + condition.page + '&pageSize=' + condition.pageSize + '&type=' + condition.type + '&priority=' + condition.priority + '&creator=' + condition.creator + '&detail=' + condition.detail,
+    url: 'requirements/examine-list?name=' + condition.name + '&page=' + condition.page + '&pageSize=' + condition.pageSize + '&type=' + condition.type + '&priority=' + condition.priority + '&creator=' + condition.creator + '&detail=' + condition.detail + '&processingPerson=' + condition.processingPerson,
     method: 'get'
   })
 }

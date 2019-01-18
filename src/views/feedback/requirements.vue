@@ -212,20 +212,30 @@
           <el-table-column type="selection" width="55"></el-table-column>
           <el-table-column type="index" width="60"></el-table-column>
           <el-table-column prop="createdDate" label="创建时间" :formatter="formatter" width="140"></el-table-column>
-          <el-table-column prop="creator" label="创建人" sortable></el-table-column>
-          <el-table-column prop="name" label="名称" sortable>
-            <template slot-scope="scope">
-              <span class="link-type">{{ scope.row.name }}</span>
-              <el-tag :type="tags[scope.row.priority]['type']">{{ tags[scope.row.priority]['name']}}</el-tag>
-            </template>
+          <el-table-column label="创建人" header-align="center" sortable>
+            <el-table-column prop="creator" :render-header="renderHeader2" align="center"></el-table-column>
           </el-table-column>
-          <el-table-column prop="type" label="类别" min-width="100" sortable>
-            <template slot-scope="scope">
-              <span>{{types[scope.row.type]}}</span>
-            </template>
+          <el-table-column label="名称" header-align="center" sortable>
+            <el-table-column prop="name" :render-header="renderHeader2" align="center">
+              <template slot-scope="scope">
+                <span class="link-type">{{ scope.row.name }}</span>
+                <el-tag :type="tags[scope.row.priority]['type']">{{ tags[scope.row.priority]['name']}}</el-tag>
+              </template>
+            </el-table-column>
           </el-table-column>
-          <el-table-column prop="detail" label="详情" min-width="180" :formatter="detailFormatter" sortable></el-table-column>
-          <el-table-column prop="processingPerson" label="处理人" min-width="80" sortable></el-table-column>
+          <el-table-column label="类别" header-align="center" min-width="100" sortable>
+            <el-table-column prop="type" :render-header="renderHeader2" align="center">
+              <template slot-scope="scope">
+                <span>{{types[scope.row.type]}}</span>
+              </template>
+            </el-table-column>
+          </el-table-column>
+          <el-table-column label="详情" header-align="center" min-width="180" sortable>
+            <el-table-column prop="detail" :formatter="detailFormatter" :render-header="renderHeader2" align="center"></el-table-column>
+          </el-table-column>
+          <el-table-column label="处理人" header-align="center" min-width="80" sortable>
+            <el-table-column prop="processingPerson" :render-header="renderHeader2" align="center"></el-table-column>
+          </el-table-column>
           <el-table-column label="操作" width="240">
             <template slot-scope="scope"> 
               <el-button size="small" @click="handleEditAudit(scope.$index, scope.row)">修改</el-button>
@@ -526,17 +536,16 @@ export default {
         pageSize: 10
       },
       examine: {
-        flag: '',
         detail: '',
         creator: '',
         name: '',
         type: '',
         priority: '',
+        processingPerson: '',
         page: 1,
         pageSize: 10
       },
       deal: {
-        flag: '',
         detail: '',
         name: '',
         type: '',
@@ -1278,7 +1287,130 @@ export default {
           })
         ])
       }
-    }
+    },
+    renderHeader2(h,{column, $index}) {
+      if($index === 0) {
+        return h('div',{
+          style:{
+            height:'40px'
+          },
+        },[
+          h('el-input',{
+            props:{
+              value: this.examine.creator,
+              size:'mini',
+              clearable: true
+            },
+            on:{
+              input:value=>{
+                this.examine.creator = value
+                this.$emit('input', value)
+              },
+              change: value => {
+                this.getRequire(this.activeName)
+              }
+            }
+          })
+        ])
+      } else if ($index === 1) {
+        return h('div',{
+          style:{
+            height:'40px'
+          },
+        },[
+          h('el-input',{
+            props:{
+              value: this.examine.name,
+              size:'mini',
+              clearable: true
+            },
+            on:{
+              input:value=>{
+                this.examine.name = value
+                this.$emit('input', value)
+              },
+              change: value => {
+                this.getRequire(this.activeName)
+              }
+            }
+          })
+        ])
+      } else if ($index === 2) {
+        let filters = [{text: 0,'value':"BUG"}, {text: 1,'value':"新需求"}, {text: 2,'value':"任务"}, {text: 3,'value':"改进建议"}]
+        return h('el-select',{
+          props:{
+            placeholder:'请选择', 
+            value:this.examine.type,
+            size:'mini',
+            clearable:true,
+          },
+          on:{
+            input:value=>{
+              this.examine.type=value
+              this.$emit('input', value)
+            },
+            change:searchValue=>{
+              this.getRequire(this.activeName)
+            }
+          }
+        },[
+          filters.map(item=>{
+            return h('el-option',{
+              props:{
+                value:item.text,
+                label:item.value
+              }
+            });
+          })
+        ])
+      } else if ($index === 3) {
+        return h('div',{
+          style:{
+            height:'40px'
+          },
+        },[
+          h('el-input',{
+            props:{
+              value: this.examine.detail,
+              size:'mini',
+              clearable: true
+            },
+            on:{
+              input:value=>{
+                this.examine.detail = value
+                this.$emit('input', value)
+              },
+              change: value => {
+                this.getRequire(this.activeName)
+              }
+            }
+          })
+        ])
+      } else if ($index === 4) {
+        return h('div',{
+          style:{
+            height:'40px'
+          },
+        },[
+          h('el-input',{
+            props:{
+              value: this.examine.processingPerson,
+              size:'mini',
+              clearable: true
+            },
+            on:{
+              input:value=>{
+                this.examine.processingPerson = value
+                this.$emit('input', value)
+              },
+              change: value => {
+                this.getRequire(this.activeName)
+              }
+            }
+          })
+        ])
+      }
+    },
   },
   mounted() {
     getMenu().then(response => {
