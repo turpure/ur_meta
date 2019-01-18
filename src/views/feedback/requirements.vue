@@ -519,6 +519,7 @@ export default {
         detail: '',
         name: '',
         type: '',
+        creator: '',
         priority: '',
         schedule: '',
         page: 1,
@@ -1018,7 +1019,7 @@ export default {
                 this.$emit('input', value)
               },
               change: value => {
-                // this.filter()
+                this.getRequire(this.activeName)
               }
             }
           })
@@ -1041,32 +1042,37 @@ export default {
                 this.$emit('input', value)
               },
               change: value => {
-                // this.filter()
+                this.getRequire(this.activeName)
               }
             }
           })
         ])
       } else if ($index === 2) {
-        return h('div',{
-          style:{
-            height:'40px'
+        let filters = [{text: 0,'value':"BUG"}, {text: 1,'value':"新需求"}, {text: 2,'value':"任务"}, {text: 3,'value':"改进建议"}]
+        return h('el-select',{
+          props:{
+            placeholder:'请选择', 
+            value:this.condition.type,
+            size:'mini',
+            clearable:true,
           },
-        },[
-          h('el-input',{
-            props:{
-              value: this.condition.type,
-              size:'mini',
-              clearable: true
+          on:{
+            input:value=>{
+              this.condition.type=value
+              this.$emit('input', value)
             },
-            on:{
-              input:value=>{
-                this.condition.type = value
-                this.$emit('input', value)
-              },
-              change: value => {
-                // this.filter()
-              }
+            change:searchValue=>{
+              this.getRequire(this.activeName)
             }
+          }
+        },[
+          filters.map(item=>{
+            return h('el-option',{
+              props:{
+                value:item.text,
+                label:item.value
+              }
+            });
           })
         ])
       } else if ($index === 3) {
@@ -1087,32 +1093,37 @@ export default {
                 this.$emit('input', value)
               },
               change: value => {
-                // this.filter()
+                this.getRequire(this.activeName)
               }
             }
           })
         ])
       } else if ($index === 4) {
-        return h('div',{
-          style:{
-            height:'40px'
+        let filters = [{text: 1,'value':"待审核"}, {text: 2,'value':"已驳回"}, {text: 3,'value':"处理中"}, {text: 4,'value':"处理完成"}]
+        return h('el-select',{
+          props:{
+            placeholder:'请选择', 
+            value:this.condition.schedule,
+            size:'mini',
+            clearable:true,
           },
-        },[
-          h('el-input',{
-            props:{
-              value: this.condition.schedule,
-              size:'mini',
-              clearable: true
+          on:{
+            input:value=>{
+              this.condition.schedule=value
+              this.$emit('input', value)
             },
-            on:{
-              input:value=>{
-                this.condition.schedule = value
-                this.$emit('input', value)
-              },
-              change: value => {
-                // this.filter()
-              }
+            change:searchValue=>{
+              this.getRequire(this.activeName)
             }
+          }
+        },[
+          filters.map(item=>{
+            return h('el-option',{
+              props:{
+                value:item.text,
+                label:item.value
+              }
+            });
           })
         ])
       }
@@ -1136,7 +1147,7 @@ export default {
                 this.$emit('input', value)
               },
               change: value => {
-                // this.filter()
+                this.getRequire(this.activeName)
               }
             }
           })
@@ -1159,7 +1170,7 @@ export default {
                 this.$emit('input', value)
               },
               change: value => {
-                // this.filter()
+                this.getRequire(this.activeName)
               }
             }
           })
@@ -1182,7 +1193,7 @@ export default {
                 this.$emit('input', value)
               },
               change: value => {
-                // this.filter()
+                this.getRequire(this.activeName)
               }
             }
           })
@@ -1205,7 +1216,7 @@ export default {
                 this.$emit('input', value)
               },
               change: value => {
-                // this.filter()
+                this.getRequire(this.activeName)
               }
             }
           })
@@ -1228,7 +1239,7 @@ export default {
                 this.$emit('input', value)
               },
               change: value => {
-                // this.filter()
+                this.getRequire(this.activeName)
               }
             }
           })
@@ -1251,7 +1262,7 @@ export default {
                 this.$emit('input', value)
               },
               change: value => {
-                // this.filter()
+                this.getRequire(this.activeName)
               }
             }
           })
@@ -1260,7 +1271,6 @@ export default {
     }
   },
   mounted() {
-    this.getRequire(this.activeName)
     getMenu().then(response => {
       const res = response.data.data
       const menu = res.filter(e => e.name === '反馈中心')

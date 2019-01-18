@@ -330,7 +330,7 @@ export default {
             const date = []
             lineName.forEach(name => {
               const sery = {
-                type: 'line',
+                type: 'bar',
                 stack: '总量',
                 areaStyle: { normal: {}}
               }
