@@ -796,6 +796,7 @@ export default {
         })
         const th = [
           '账号',
+          '退款月份',
           '销售员',
           '商品名称',
           '商品编码',
@@ -809,10 +810,12 @@ export default {
           '物流方式',
           '平台',
           '交易时间',
-          '退款时间'
+          '退款时间',
+          '退款时间-交易时间(天)'
         ]
         const filterVal = [
           'suffix',
+          'refMonth',
           'salesman',
           'goodsName',
           'goodsCode',
@@ -826,7 +829,8 @@ export default {
           'expressWay',
           'platform',
           'orderTime',
-          'refundTime'
+          'refundTime',
+          'dateDelta'
         ]
       } else if (this.activeName === '退款产品明细') {
         this.order = Object.assign({}, this.goods)
