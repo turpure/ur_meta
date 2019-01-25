@@ -351,6 +351,7 @@
       </el-col>
       <!--审核列表-->
       <el-table :data="requirementsAudit"
+                @sort-change="sortNumber"
                 highlight-current-row
                 :loading="auditLoading"
                 @selection-change="selsChange"
@@ -367,6 +368,7 @@
                          :formatter="formatter"
                          width="140"></el-table-column>
         <el-table-column label="创建人"
+                         prop="creator"
                          header-align="center"
                          sortable>
           <el-table-column prop="creator"
@@ -374,8 +376,9 @@
                            align="center"></el-table-column>
         </el-table-column>
         <el-table-column label="名称"
+                         prop="priority"
                          header-align="center"
-                         sortable>
+                         sortable="impotant">
           <el-table-column prop="name"
                            :render-header="renderHeader2"
                            align="center">
@@ -386,6 +389,7 @@
           </el-table-column>
         </el-table-column>
         <el-table-column label="类别"
+                         prop="type"
                          header-align="center"
                          min-width="100"
                          sortable>
@@ -398,6 +402,7 @@
           </el-table-column>
         </el-table-column>
         <el-table-column label="详情"
+                         prop="detail"
                          header-align="center"
                          min-width="180"
                          sortable>
@@ -407,6 +412,7 @@
                            align="center"></el-table-column>
         </el-table-column>
         <el-table-column label="处理人"
+                         prop="processingPerson"
                          header-align="center"
                          min-width="80"
                          sortable>
@@ -535,6 +541,7 @@
       </el-col>
       <!--处理列表-->
       <el-table :data="requirementsDeal"
+                @sort-change="sortNumber"
                 highlight-current-row
                 :loading="dealLoading"
                 max-height="750"
@@ -557,6 +564,7 @@
                          :formatter="formatter"
                          width="140"></el-table-column>
         <el-table-column label="创建人"
+                         prop="creator"
                          header-align="center"
                          sortable>
           <el-table-column prop="creator"
@@ -565,8 +573,9 @@
           </el-table-column>
         </el-table-column>
         <el-table-column label="名称"
+                         prop="priority"
                          header-align="center"
-                         sortable>
+                         sortable="important">
           <el-table-column prop="name"
                            :render-header="renderHeader1"
                            align="center">
@@ -577,6 +586,7 @@
           </el-table-column>
         </el-table-column>
         <el-table-column label="类别"
+                         prop="type"
                          header-align="center"
                          min-width="100"
                          sortable>
@@ -589,6 +599,7 @@
           </el-table-column>
         </el-table-column>
         <el-table-column label="详情"
+                         prop="detail"
                          header-align="center"
                          min-width="180"
                          sortable>
@@ -600,6 +611,7 @@
         </el-table-column>
         <el-table-column header-align="center"
                          label="处理人"
+                         prop="processingPerson"
                          min-width="80"
                          sortable>
           <el-table-column prop="processingPerson"
@@ -607,6 +619,7 @@
                            align="center"></el-table-column>
         </el-table-column>
         <el-table-column label="状态"
+                         prop="status"
                          header-align="center"
                          min-width="100"
                          sortable>
@@ -869,6 +882,8 @@ export default {
         type: '',
         priority: '',
         processingPerson: '',
+        sortProperty: '',
+        sortOrder: '',
         page: 1,
         pageSize: 10
       },
@@ -880,6 +895,8 @@ export default {
         status: '',
         creator: '',
         processingPerson: '',
+        sortProperty: '',
+        sortOrder: '',
         page: 1,
         pageSize: 10
       },
@@ -976,13 +993,30 @@ export default {
   methods: {
     //排序
     sortNumber(column, prop, order) {
+      debugger
       if (column.order === 'descending') {
-        this.condition.sortOrder = 'DESC'
-        this.condition.sortProperty = column.prop
+        if (this.activeName === '用户需求') {
+          this.condition.sortOrder = 'DESC'
+          this.condition.sortProperty = column.prop
+        } else if (this.activeName === '审核列表') {
+          this.examine.sortOrder = 'DESC'
+          this.examine.sortProperty = column.prop
+        } else {
+          this.deal.sortOrder = 'DESC'
+          this.deal.sortProperty = column.prop
+        }
         this.getRequire(this.activeName)
       } else {
-        this.condition.sortOrder = 'ASC'
-        this.condition.sortProperty = column.prop
+        if (this.activeName === '用户需求') {
+          this.condition.sortOrder = 'ASC'
+          this.condition.sortProperty = column.prop
+        } else if (this.activeName === '审核列表') {
+          this.examine.sortOrder = 'ASC'
+          this.examine.sortProperty = column.prop
+        } else {
+          this.deal.sortOrder = 'ASC'
+          this.deal.sortProperty = column.prop
+        }
         this.getRequire(this.activeName)
       }
     },
