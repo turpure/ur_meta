@@ -140,11 +140,7 @@ export function getRequirementsExamine(condition) {
       '&detail=' +
       condition.detail +
       '&processingPerson=' +
-      condition.processingPerson +
-      '&sortProperty=' +
-      condition.sortProperty +
-      '&sortOrder=' +
-      condition.sortOrder,
+      condition.processingPerson,
     method: 'get'
   })
 }

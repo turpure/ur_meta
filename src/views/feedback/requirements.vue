@@ -376,9 +376,9 @@
                            align="center"></el-table-column>
         </el-table-column>
         <el-table-column label="名称"
-                         prop="priority"
+                         prop="name"
                          header-align="center"
-                         sortable="impotant">
+                         sortable>
           <el-table-column prop="name"
                            :render-header="renderHeader2"
                            align="center">
@@ -882,8 +882,6 @@ export default {
         type: '',
         priority: '',
         processingPerson: '',
-        sortProperty: '',
-        sortOrder: '',
         page: 1,
         pageSize: 10
       },
@@ -998,9 +996,6 @@ export default {
         if (this.activeName === '用户需求') {
           this.condition.sortOrder = 'DESC'
           this.condition.sortProperty = column.prop
-        } else if (this.activeName === '审核列表') {
-          this.examine.sortOrder = 'DESC'
-          this.examine.sortProperty = column.prop
         } else {
           this.deal.sortOrder = 'DESC'
           this.deal.sortProperty = column.prop
@@ -1010,9 +1005,6 @@ export default {
         if (this.activeName === '用户需求') {
           this.condition.sortOrder = 'ASC'
           this.condition.sortProperty = column.prop
-        } else if (this.activeName === '审核列表') {
-          this.examine.sortOrder = 'ASC'
-          this.examine.sortProperty = column.prop
         } else {
           this.deal.sortOrder = 'ASC'
           this.deal.sortProperty = column.prop
