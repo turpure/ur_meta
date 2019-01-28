@@ -695,8 +695,8 @@
              class="clearfix-list">
           <h2>活动栏</h2>
         </div>
-        <img src="../assets/1.5.jpg"
-             style="height:400px;width:95%;padding:15px;">
+        <!-- <img src="../assets/1.5.jpg"
+             style="height:400px;width:95%;padding:15px;"> -->
       </el-card>
       <el-dialog :visible.sync="dialogVisible">
         <el-form :model="newsDetailList"
