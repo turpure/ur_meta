@@ -21,6 +21,12 @@
                    clearable
                    multiple
                    collapse-tags>
+          <el-button plain
+                     type="info"
+                     @click="selectall">全选</el-button>
+          <el-button plain
+                     type="info"
+                     @click="noselect">取消</el-button>
           <el-option v-for="item in suffix"
                      :key="item.id"
                      :value="item.store"></el-option>
@@ -186,7 +192,7 @@ export default {
       saler: [],
       condition: {
         plat: '',
-        suffix: '',
+        suffix: [],
         saler: '',
         start: 1,
         limit: 100
@@ -194,6 +200,17 @@ export default {
     }
   },
   methods: {
+    // 全选
+    selectall() {
+      const allValues = []
+      for (const item of this.suffix) {
+        allValues.push(item.store)
+      }
+      this.condition.suffix = allValues
+    },
+    noselect() {
+      this.condition.suffix = []
+    },
     platform() {
       if (this.condition.plat.length > 0) {
         this.suffix = this.allSuffix.filter(
@@ -240,47 +257,46 @@ export default {
     },
     // 导出
     exportExcel() {
-      /* generate workbook object from table */
-      var wb = XLSX.utils.table_to_book(document.querySelector('#sale-table'))
-      /* get binary string as output */
-      const date = new Date()
-      const year = date.getFullYear()
-      let month = date.getMonth() + 1
-      let strDate = date.getDate()
-      let hour = date.getHours()
-      let minute = date.getMinutes()
-      let second = date.getSeconds()
-      if (month >= 1 && month <= 9) {
-        month = '0' + month
-      }
-      if (strDate >= 0 && strDate <= 9) {
-        strDate = '0' + strDate
-      }
-      if (hour >= 0 && hour <= 9) {
-        hour = '0' + hour
-      }
-      if (minute >= 0 && minute <= 9) {
-        minute = '0' + minute
-      }
-      if (second >= 0 && second <= 9) {
-        second = '0' + second
-      }
-      const filename =
-        '物流费用' + year + month + strDate + hour + minute + second
-      var wbout = XLSX.write(wb, {
-        bookType: 'xlsx',
-        bookSST: true,
-        type: 'array'
-      })
-      try {
-        FileSaver.saveAs(
-          new Blob([wbout], { type: 'application/octet-stream' }),
-          filename + '.xlsx'
-        )
-      } catch (e) {
-        if (typeof console !== 'undefined') console.log(e, wbout)
-      }
-      //  return wbout
+      const th = [
+        '商品编码',
+        '商品名称',
+        '商品状态',
+        '类目',
+        '归属1',
+        '归属2',
+        '创建日期',
+        '近1天销量',
+        '上1天销量',
+        '1天销量变化',
+        '近5天销量',
+        '上5天销量',
+        '5天销量变化',
+        '近10天销量',
+        '上10天销量',
+        '10天销量变化'
+      ]
+      const filterVal = [
+        'GoodsCode',
+        'GoodsName',
+        'GoodsSKUStatus',
+        'CategoryName',
+        'SalerName',
+        'SalerName2',
+        'CreateDate',
+        'jinyitian',
+        'shangyitian',
+        'changeOneDay',
+        'jinwutian',
+        'shangwutian',
+        'changeFiveDay',
+        'jinshitian',
+        'shangshitian',
+        'changeTenDay'
+      ]
+      const Filename = '销售变化表'
+      const data = this.tableData.map(v => filterVal.map(k => v[k]))
+      const [fileName, fileType, sheetName] = [Filename, 'xls']
+      this.$toExcel({ th, data, fileName, fileType, sheetName })
     },
     handleSearch() {
       const searchValue = this.searchValue && this.searchValue.toLowerCase()
