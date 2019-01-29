@@ -178,6 +178,7 @@ import { compareUp, compareDown } from '../../api/tools'
 export default {
   data() {
     return {
+      allData: [],
       allSuffix: [],
       show: false,
       currentPage: 1,
@@ -293,10 +294,15 @@ export default {
         'shangshitian',
         'changeTenDay'
       ]
-      const Filename = '销售变化表'
-      const data = this.tableData.map(v => filterVal.map(k => v[k]))
-      const [fileName, fileType, sheetName] = [Filename, 'xls']
-      this.$toExcel({ th, data, fileName, fileType, sheetName })
+      const form = Object.assign({}, this.condition)
+      form.limit = this.total
+      getPsales(form).then(response => {
+        this.allData = response.data.data.items
+        const Filename = '销售变化表'
+        const data = this.allData.map(v => filterVal.map(k => v[k]))
+        const [fileName, fileType, sheetName] = [Filename, 'xls']
+        this.$toExcel({ th, data, fileName, fileType, sheetName })
+      })
     },
     handleSearch() {
       const searchValue = this.searchValue && this.searchValue.toLowerCase()
