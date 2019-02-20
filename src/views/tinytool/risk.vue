@@ -104,7 +104,7 @@
       <!-- 黑名单列表 -->
       <table id="oTable"
              border="1px solid #ebeef5"
-             cellpadding="15"
+             cellpadding="9"
              style="border: 1px solid #ebeef5;background-color:#fff;color:#606266;width:100%;border-collapse:collapse;">
         <thead>
           <tr>
@@ -120,8 +120,7 @@
         <tbody>
           <tr v-for="(item, index) in blackData"
               :key="index"
-              style="text-align:center">
-            <!-- <td style="display:none">{{item.id}}</td> -->
+              style="text-align:center;">
             <td>{{ item.addressowner }}</td>
             <td>{{ item.buyerid}}</td>
             <td>{{ item.shipToName}}</td>
@@ -131,7 +130,8 @@
             <td>
               <el-button size="mini"
                          type="danger"
-                         @click="del(item.id)">删除</el-button>
+                         @click="del(item.id)"
+                         style="margin:-20px;">删除</el-button>
             </td>
           </tr>
         </tbody>
@@ -142,7 +142,7 @@
                        @current-change='handleCurrentChange1'
                        :current-page="this.page.currentPage"
                        :page-size="this.page.pageSize"
-                       :page-sizes="[10,20,30,40]"
+                       :page-sizes="[20,30,40,50]"
                        layout="total,sizes,prev,pager,next,jumper"
                        :total="this.total"></el-pagination>
       </div>
@@ -315,7 +315,7 @@ export default {
       },
       page: {
         currentPage: 1,
-        pageSize: 10
+        pageSize: 20
       },
       condition2: {
         tradeNid: '',
