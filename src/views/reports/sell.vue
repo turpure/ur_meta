@@ -905,7 +905,6 @@ export default {
       this.show1 = false
     },
     myForm(form) {
-      debugger
       const myform = JSON.parse(JSON.stringify(form))
       if (myform.member.length !== 0) {
         if (isAdmin() === false) {
