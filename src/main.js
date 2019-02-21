@@ -34,7 +34,7 @@ Vue.prototype.$toExcel = toExcel
  * @description 为自定义滚动条全局注入自定义指令。自动判断该更新PerfectScrollbar还是创建它
  * @param {Element} el - 必填。dom元素
  */
-const el_scrollBar = (el) => {
+const el_scrollBar = el => {
   if (el._ps_ instanceof PerfectScrollbar) {
     el._ps_.update()
   } else {
@@ -53,7 +53,11 @@ Vue.directive('scrollBar', {
     }
     const rules = ['fixed', 'absolute', 'relative']
     if (!rules.includes(window.getComputedStyle(el, null).position)) {
-      console.error(`perfect-scrollbar所在的容器的position属性必须是以下之一：${rules.join('、')}`)
+      console.error(
+        `perfect-scrollbar所在的容器的position属性必须是以下之一：${rules.join(
+          '、'
+        )}`
+      )
     }
     el_scrollBar(el)
   },
@@ -65,15 +69,13 @@ Vue.directive('scrollBar', {
         return console.warn('未发现className为el-table__body-wrapper的dom')
       }
     }
-    vnode.context.$nextTick(
-      () => {
-        try {
-          el_scrollBar(el)
-        } catch (error) {
-          console.error(error)
-        }
+    vnode.context.$nextTick(() => {
+      try {
+        el_scrollBar(el)
+      } catch (error) {
+        console.error(error)
       }
-    )
+    })
   }
 })
 

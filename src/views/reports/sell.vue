@@ -905,6 +905,7 @@ export default {
       this.show1 = false
     },
     myForm(form) {
+      debugger
       const myform = JSON.parse(JSON.stringify(form))
       if (myform.member.length !== 0) {
         if (isAdmin() === false) {
@@ -1416,7 +1417,7 @@ export default {
     getMember().then(response => {
       const res = response.data.data
       this.allMember = this.member = res.filter(ele => ele.position === '销售')
-      this.kefu = res.filter(ele => ele.position === 'eBay客服')
+      this.kefu = res.filter(ele => ele.position !== '销售')
     })
     getStore().then(response => {
       this.store = response.data.data
