@@ -269,53 +269,43 @@ export default {
   },
   methods: {
     onSubmit() {
-      // this.$refs.myecharts.drawAreaStack(this.options)
-      this.$refs.condition.validate(valid => {
-        if (valid) {
-          this.listLoading = true
-          priceTrend(this.condition).then(res => {
-            debugger
-            this.listLoading = false
-            const ret = res.data.data
-            const lineName = []
-            const series = []
-            ret.forEach(element => {
-              if (lineName.indexOf(element.flag) < 0) {
-                lineName.push(element.flag)
-              }
-            })
-            const date = []
-            lineName.forEach(name => {
-              const sery = {
-                value: element.orderNum,
-                name: element.type,
-                itemStyle: {
-                  emphasis: {
-                    shadowBlur: 10,
-                    shadowOffsetX: 0,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-                  }
-                }
-              }
-              const amt = []
-              ret.map(element => {
-                if (element.flag === name) {
-                  amt.push(Number(element.orderNum))
-                  if (date.indexOf(element.orderDate) < 0) {
-                    date.push(element.orderDate)
-                  }
-                }
-              })
-              sery['data'] = amt
-              sery['name'] = name
-              series.push(sery)
-            })
-            this.options.legend.data = lineName
-            this.options.series = series
-            this.$refs.myecharts.drawAreaStack(this.options)
-          })
-        }
-      })
+      this.$refs.myecharts.drawAreaStack(this.options)
+      // this.$refs.condition.validate(valid => {
+      //   if (valid) {
+      //     this.listLoading = true
+      //     priceTrend(this.condition).then(res => {
+      //       debugger
+      //       this.listLoading = false
+      //       const ret = res.data.data
+      //       const lineName = []
+      //       const series = []
+      //       ret.forEach(element => {
+      //         if (lineName.indexOf(element.type) < 0) {
+      //           lineName.push(element.type)
+      //         }
+      //       })
+      //       const date = []
+      //       lineName.forEach(name => {
+      //         const sery = {}
+      //         const amt = []
+      //         ret.map(element => {
+      //           if (element.type === name) {
+      //             amt.push(Number(element.orderNum))
+      //             if (date.indexOf(element.orderDate) < 0) {
+      //               date.push(element.orderDate)
+      //             }
+      //           }
+      //         })
+      //         sery['value'] = amt
+      //         sery['name'] = name
+      //         series.push(sery)
+      //       })
+      //       this.options.legend.data = lineName
+      //       this.options.series = series
+      //       this.$refs.myecharts.drawAreaStack(this.options)
+      //     })
+      //   }
+      // })
     },
     selectAll(name) {
       if (name === 'member') {
