@@ -156,29 +156,35 @@
                    @click="onSubmit">查询</el-button>
       </el-form-item>
     </el-form>
-    <el-table :data="tableData">
+    <el-table :data="tableData"
+              @sort-change="sortNumber"
+              v-loading="listLoading">
       <el-table-column label="平台"
                        prop="platform"></el-table-column>
-      <el-table-column label="名称"
-                       prop="username"></el-table-column>
+      <el-table-column label="销售员"
+                       prop="username"
+                       sortable="custom"></el-table-column>
       <el-table-column label="部门"
                        prop="department"></el-table-column>
       <el-table-column label="二级部门"
                        prop="secDepartment"></el-table-column>
-      <el-table-column label="Id"
+      <el-table-column label="订单编号"
                        prop="trendId"></el-table-column>
       <el-table-column label="账号"
-                       prop="suffix"></el-table-column>
+                       prop="suffix"
+                       sortable="custom"></el-table-column>
       <el-table-column label="毛利"
                        prop="profit"></el-table-column>
-      <el-table-column label="orderWeight"
+      <el-table-column label="订单总重量 "
                        prop="orderWeight"></el-table-column>
-      <el-table-column label="skuWeight"
+      <el-table-column label="SKU总重量"
                        prop="skuWeight"></el-table-column>
       <el-table-column label="重量差异"
-                       prop="weightDiff"></el-table-column>
-      <el-table-column label="时间"
-                       prop="orderCloseDate"></el-table-column>
+                       prop="weightDiff"
+                       sortable="custom"></el-table-column>
+      <el-table-column label="发货时间"
+                       prop="orderCloseDate"
+                       sortable="custom"></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button size="mini"
@@ -237,7 +243,8 @@ export default {
         department: [],
         secDepartment: [],
         page: 1,
-        pageSize: 10
+        pageSize: 10,
+        sort: ''
       },
       pickerOptions2: {
         shortcuts: [
@@ -267,7 +274,17 @@ export default {
     }
   },
   methods: {
+    // 排序
+    sortNumber(column, prop, order) {
+      if (column.order === 'descending') {
+        this.condition.sort = '-' + column.prop
+      } else {
+        this.condition.sort = column.prop
+      }
+      this.getData()
+    },
     handleEdit(row) {},
+    // 分页
     handleSizeChange(val) {
       this.condition.pageSize = val
       this.getData()
@@ -276,6 +293,7 @@ export default {
       this.condition.page = val
       this.getData()
     },
+    // 查询
     onSubmit() {
       this.getData()
     },
@@ -362,7 +380,9 @@ export default {
       }
     },
     getData() {
+      this.listLoading = true
       APIWeightDiff(this.condition).then(res => {
+        this.listLoading = false
         this.tableData = res.data.data.items
         this.condition.page = res.data.data._meta.currentPage
         this.condition.pageSize = res.data.data._meta.perPage

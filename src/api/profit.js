@@ -411,3 +411,12 @@ export function getExtraFee(param) {
     data
   })
 }
+// 订单量走势
+export function APIOrderCount(param) {
+  const data = { condition: param }
+  return request({
+    url: '/report/order-count',
+    method: 'post',
+    data
+  })
+}

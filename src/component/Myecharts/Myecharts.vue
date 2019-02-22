@@ -2,7 +2,8 @@
   <section class="chart-container">
     <el-row>
       <el-col :span="24">
-        <div id="areaStack" style="width:100%; height:50rem;"></div>
+        <div id="areaStack"
+             style="width:100%; height:50rem;"></div>
       </el-col>
     </el-row>
   </section>
