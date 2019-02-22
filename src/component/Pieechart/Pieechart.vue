@@ -3,7 +3,7 @@
     <el-row>
       <el-col :span="12">
         <div id="AreaStack"
-             style="width:100%; height:400px;"></div>
+             style="width:100%; height:500px;"></div>
       </el-col>
     </el-row>
   </section>
@@ -45,5 +45,8 @@ export default {
 .chart-container {
   width: 100%;
   float: left;
+}
+.el-col {
+  padding: 30px 20px;
 }
 </style>

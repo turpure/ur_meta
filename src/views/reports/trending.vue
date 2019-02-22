@@ -199,11 +199,11 @@
                :options="options"
                v-loading="listLoading"
                ref="myecharts"></Myecharts>
-    <Myecharts v-if="order"
-               style="max-height:800px;overflow:auto"
-               :options="options"
-               v-loading="listLoading"
-               ref="myechart"></Myecharts>
+    <Chart v-if="order"
+           style="max-height:800px;overflow:auto"
+           :options="options"
+           v-loading="listLoading"
+           ref="myechart"></Chart>
   </div>
 </template>
 
@@ -219,8 +219,12 @@ import {
 } from '../../api/profit'
 import { getMonthDate } from '../../api/tools'
 import { getMenu } from '../../api/login'
+import Chart from '@/component/order/Orderchart'
 
 export default {
+  components: {
+    Chart
+  },
   data() {
     return {
       sale: true,
@@ -233,7 +237,7 @@ export default {
       id: 'test',
       options: {
         title: {
-          text: '销售额走势$'
+          text: '销售额走势($)'
         },
         tooltip: {
           trigger: 'axis',
@@ -510,7 +514,8 @@ export default {
               this.options.series = series
               this.$refs.myecharts.drawAreaStack(this.options)
             })
-            this.options.title.text = '销售额走势$'
+            this.options.title.text = '销售额走势($)'
+            this.options.yAxis[0].axisLabel.formatter = '{value} $'
           } else {
             APIOrderCount(myform).then(response => {
               this.listLoading = false
@@ -547,7 +552,8 @@ export default {
               this.options.series = series
               this.$refs.myechart.drawAreaStack(this.options)
             })
-            this.options.title.text = '订单量走势$'
+            this.options.title.text = '订单量走势(单)'
+            this.options.yAxis[0].axisLabel.formatter = '{value} 单'
           }
         } else {
           return false
