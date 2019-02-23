@@ -20,6 +20,7 @@ import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 import './assets/icon/iconfont.css'
+import echarts from 'echarts'
 
 Vue.use(VueQuillEditor)
 Vue.use(VueHighlightJS)
@@ -30,6 +31,7 @@ Vue.use(VModal)
 Vue.use(ElementUI)
 Vue.use(Vuex)
 Vue.prototype.$toExcel = toExcel
+Vue.prototype.$echarts = echarts
 /**
  * @description 为自定义滚动条全局注入自定义指令。自动判断该更新PerfectScrollbar还是创建它
  * @param {Element} el - 必填。dom元素

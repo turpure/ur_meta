@@ -14,3 +14,11 @@ export function APIWeightDiff(param) {
     data
   })
 }
+export function APIUpdateWeight(param) {
+  const data = { condition: param }
+  return request({
+    url: '/data-center/update-weight',
+    method: 'post',
+    data
+  })
+}

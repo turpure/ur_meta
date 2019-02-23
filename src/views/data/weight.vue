@@ -215,7 +215,7 @@ import {
   getAccount,
   getSalestrend
 } from '../../api/profit'
-import { APIWeightDiff } from '../../api/data'
+import { APIWeightDiff, APIUpdateWeight } from '../../api/data'
 import { getMonthDate } from '../../api/tools'
 export default {
   data() {
@@ -245,6 +245,9 @@ export default {
         page: 1,
         pageSize: 10,
         sort: ''
+      },
+      Id: {
+        nid: []
       },
       pickerOptions2: {
         shortcuts: [
@@ -283,7 +286,22 @@ export default {
       }
       this.getData()
     },
-    handleEdit(row) {},
+    handleEdit(row) {
+      this.Id.nid = [row.id]
+      APIUpdateWeight(this.Id).then(res => {
+        if (res.data.code === 200) {
+          this.$message({
+            message: '修改成功！',
+            type: 'success'
+          })
+        } else {
+          this.$message({
+            message: '修改失败！',
+            type: 'warning'
+          })
+        }
+      })
+    },
     // 分页
     handleSizeChange(val) {
       this.condition.pageSize = val
