@@ -219,7 +219,7 @@ import {
 } from '../../api/profit'
 import { getMonthDate } from '../../api/tools'
 import { getMenu } from '../../api/login'
-import Chart from '@/component/order/Orderchart'
+import Chart from '../../component/order/Orderchart'
 
 export default {
   components: {

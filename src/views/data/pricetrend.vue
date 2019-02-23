@@ -174,7 +174,7 @@ import {
   priceTrend
 } from '../../api/profit'
 import { getMonthDate } from '../../api/tools'
-import Chart from '@/component/Pieechart/Pieechart'
+import Chart from '../../component/Pieechart/Pieechart'
 export default {
   components: {
     Chart
@@ -270,42 +270,47 @@ export default {
   methods: {
     onSubmit() {
       this.$refs.myecharts.drawAreaStack(this.options)
-      // this.$refs.condition.validate(valid => {
-      //   if (valid) {
-      //     this.listLoading = true
-      //     priceTrend(this.condition).then(res => {
-      //       debugger
-      //       this.listLoading = false
-      //       const ret = res.data.data
-      //       const lineName = []
-      //       const series = []
-      //       ret.forEach(element => {
-      //         if (lineName.indexOf(element.type) < 0) {
-      //           lineName.push(element.type)
-      //         }
-      //       })
-      //       const date = []
-      //       lineName.forEach(name => {
-      //         const sery = {}
-      //         const amt = []
-      //         ret.map(element => {
-      //           if (element.type === name) {
-      //             amt.push(Number(element.orderNum))
-      //             if (date.indexOf(element.orderDate) < 0) {
-      //               date.push(element.orderDate)
-      //             }
-      //           }
-      //         })
-      //         sery['value'] = amt
-      //         sery['name'] = name
-      //         series.push(sery)
-      //       })
-      //       this.options.legend.data = lineName
-      //       this.options.series = series
-      //       this.$refs.myecharts.drawAreaStack(this.options)
-      //     })
-      //   }
-      // })
+      this.$refs.condition.validate(valid => {
+        if (valid) {
+          this.listLoading = true
+          priceTrend(this.condition).then(res => {
+            const orderpie = res.data.data.orderPie
+            const skupie = res.data.data.skuPie
+            const orderlinenum = res.data.data.orderLineNum
+            const orderlinerate = res.data.data.orderLineRate
+            const skulinenum = res.data.data.skuLineNum
+            const skulinerate = res.data.data.skuLineRate
+            // this.listLoading = false
+            // const ret = res.data.data
+            // const lineName = []
+            // const series = []
+            // ret.forEach(element => {
+            //   if (lineName.indexOf(element.type) < 0) {
+            //     lineName.push(element.type)
+            //   }
+            // })
+            // const date = []
+            // lineName.forEach(name => {
+            //   const sery = {}
+            //   const amt = []
+            //   ret.map(element => {
+            //     if (element.type === name) {
+            //       amt.push(Number(element.orderNum))
+            //       if (date.indexOf(element.orderDate) < 0) {
+            //         date.push(element.orderDate)
+            //       }
+            //     }
+            //   })
+            //   sery['value'] = amt
+            //   sery['name'] = name
+            //   series.push(sery)
+            // })
+            // this.options.legend.data = lineName
+            // this.options.series = series
+            // this.$refs.myecharts.drawAreaStack(this.options)
+          })
+        }
+      })
     },
     selectAll(name) {
       if (name === 'member') {
