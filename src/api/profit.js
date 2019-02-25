@@ -420,3 +420,12 @@ export function APIOrderCount(param) {
     data
   })
 }
+// 销售数量走势
+export function APISkuCount(param) {
+  const data = { condition: param }
+  return request({
+    url: '/report/sku-count',
+    method: 'post',
+    data
+  })
+}
