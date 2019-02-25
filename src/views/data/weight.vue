@@ -113,7 +113,7 @@
       </el-form-item>
       <el-form-item label="订单编号">
         <el-input size="small"
-                  v-model="condition.tradeId"
+                  v-model="condition.trendId"
                   placeholder="多个订单以英文格式逗号分隔"
                   style="width:215px;"></el-input>
       </el-form-item>
@@ -222,7 +222,7 @@ export default {
       flag: [{ id: 0, type: '按天' }, { id: 2, type: '按月' }],
       dateRange: [],
       condition: {
-        tradeId: '',
+        trendId: '',
         dateRange: [],
         member: [],
         plat: [],
@@ -274,7 +274,7 @@ export default {
       this.getData()
     },
     handleEdit(row) {
-      this.Id.nid = [row.tradeId]
+      this.Id.nid = [row.trendId]
       APIUpdateWeight(this.Id).then(res => {
         if (res.data.code === 200) {
           this.$message({
