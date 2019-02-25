@@ -111,29 +111,13 @@
                      :value="item.store"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="时间类型">
-        <el-radio-group v-model="condition.dateType">
-          <el-radio border
-                    v-for="(item,index) in dateType"
-                    :index="index"
-                    :key="item.id"
-                    :label="item.id"
-                    :value="item.id"
-                    style="width:8.55rem">{{item.type}}</el-radio>
-        </el-radio-group>
+      <el-form-item label="订单编号">
+        <el-input size="small"
+                  v-model="condition.tradeId"
+                  placeholder="多个订单以英文格式逗号分隔"
+                  style="width:215px;"></el-input>
       </el-form-item>
-      <el-form-item label="显示方式">
-        <el-radio-group v-model="condition.flag">
-          <el-radio border
-                    v-for="(item,index) in flag"
-                    :index="index"
-                    :key="item.id"
-                    :label="item.id"
-                    :value="item.id"
-                    style="width:8.55rem;">{{item.type}}</el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="日期"
+      <el-form-item label="发货时间"
                     class="input"
                     prop="dateRange"
                     :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
@@ -238,10 +222,9 @@ export default {
       flag: [{ id: 0, type: '按天' }, { id: 2, type: '按月' }],
       dateRange: [],
       condition: {
-        dateType: 1,
+        tradeId: '',
         dateRange: [],
         member: [],
-        flag: 0,
         plat: [],
         account: [],
         department: [],
@@ -291,7 +274,7 @@ export default {
       this.getData()
     },
     handleEdit(row) {
-      this.Id.nid = [row.trendId]
+      this.Id.nid = [row.tradeId]
       APIUpdateWeight(this.Id).then(res => {
         if (res.data.code === 200) {
           this.$message({
