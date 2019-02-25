@@ -291,7 +291,7 @@ export default {
       this.getData()
     },
     handleEdit(row) {
-      this.Id.nid = [row.id]
+      this.Id.nid = [row.trendId]
       APIUpdateWeight(this.Id).then(res => {
         if (res.data.code === 200) {
           this.$message({
