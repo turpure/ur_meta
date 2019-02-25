@@ -175,9 +175,9 @@
                        sortable="custom"></el-table-column>
       <el-table-column label="毛利"
                        prop="profit"></el-table-column>
-      <el-table-column label="订单总重量 "
+      <el-table-column label="订单总重量(克)"
                        prop="orderWeight"></el-table-column>
-      <el-table-column label="SKU总重量"
+      <el-table-column label="SKU总重量(克)"
                        prop="skuWeight"></el-table-column>
       <el-table-column label="重量差异"
                        prop="weightDiff"

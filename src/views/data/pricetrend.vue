@@ -206,7 +206,7 @@ export default {
       options: {
         title: {
           text: 'orderpie',
-          subtext: '纯属虚构',
+          subtext: '',
           x: 'center'
         },
         tooltip: {
@@ -238,7 +238,7 @@ export default {
       opt: {
         title: {
           text: 'skupie',
-          subtext: '纯属虚构',
+          subtext: '',
           x: 'center'
         },
         tooltip: {
