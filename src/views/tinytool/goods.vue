@@ -84,11 +84,10 @@
                      :value='item.username'></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label='日期'
-                    class='input'>
+      <el-form-item label='日期'>
         <el-date-picker size="small"
                         style="width:18rem"
-                        v-model='form.dateRange'
+                        v-model='dateRange'
                         type='daterange'
                         value-format='yyyy-MM-dd'
                         align='right'
@@ -163,9 +162,7 @@ import {
 export default {
   data() {
     return {
-      form: {
-        dateRange: ['', '']
-      },
+      dateRange: [],
       category: [],
       currentPage: 1,
       pageSize: 50,
@@ -285,8 +282,8 @@ export default {
       this.condition.start = 0
       this.condition.limit = 50
       this.listLoading = true
-      this.condition.beginDate = this.form.dateRange[0]
-      this.condition.endDate = this.form.dateRange[1]
+      this.condition.beginDate = this.dateRange[0]
+      this.condition.endDate = this.dateRange[1]
       getGoodspicture(this.condition).then(response => {
         this.listLoading = false
         this.tableData = response.data.data.items
@@ -332,7 +329,6 @@ export default {
       this.goodsSkuStatus = response.data.data
     })
     getGoodscats().then(response => {
-      debugger
       this.category = response.data.data
       this.ParentName = this.category.filter(
         e => e.CategoryParentName === '全部类别'
