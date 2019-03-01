@@ -29,7 +29,13 @@ export function getMember() {
     method: 'get'
   })
 }
-
+// 没有权限的人员
+export function getUsers() {
+  return request({
+    url: '/condition/member?flag=true',
+    method: 'get'
+  })
+}
 // store 仓库 http://192.168.0.134:8089/v1/condition/store
 
 export function getStore() {

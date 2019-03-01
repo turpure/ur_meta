@@ -1,57 +1,122 @@
 <template>
   <div>
-    <el-form :model='condition' :inline='true' label-width='8.5rem' class='demo-form-inline toolbar'>
-      <el-form-item label='美工1' class='input'>
-        <el-select size="small" v-model='condition.possessMan1' clearable>
-          <el-option v-for='item in possessMan1' :key='item.username' :value='item.username'></el-option>
+    <el-form :model='condition'
+             :inline='true'
+             label-width='8.5rem'
+             class='demo-form-inline toolbar'>
+      <el-form-item label='美工1'
+                    class='input'>
+        <el-select size="small"
+                   v-model='condition.possessMan1'
+                   clearable>
+          <el-option v-for='item in possessMan1'
+                     :key='item.username'
+                     :value='item.username'></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label='美工2' class='input'>
-        <el-select size="small" v-model='condition.possessMan2' clearable>
-          <el-option v-for='item in possessMan2' :key='item.username' :value='item.username'></el-option>
+      <el-form-item label='美工2'
+                    class='input'>
+        <el-select size="small"
+                   v-model='condition.possessMan2'
+                   clearable>
+          <el-option v-for='item in possessMan2'
+                     :key='item.username'
+                     :value='item.username'></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label='关键字' class='input'>
-        <el-input size="small" v-model='condition.goodsName' placeholder="商品名称关键字" style="width:18rem">
+      <el-form-item label='关键字'
+                    class='input'>
+        <el-input size="small"
+                  v-model='condition.goodsName'
+                  placeholder="商品名称关键字"
+                  style="width:18rem">
         </el-input>
       </el-form-item>
-      <el-form-item label='产品分类1' class='input'>
-        <el-select size="small" v-model='condition.categoryParentName' clearable @change="productcategory">
-          <el-option v-for='item in categoryParentName' :key='item.CategoryName' :value='item.CategoryName'></el-option>
+      <el-form-item label='产品分类1'
+                    class='input'>
+        <el-select size="small"
+                   v-model='condition.categoryParentName'
+                   clearable
+                   @change="productcategory">
+          <el-option v-for='item in ParentName'
+                     :key='item.CategoryName'
+                     :value='item.CategoryName'
+                     :label="item.CategoryName"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label='产品分类2' class='input'>
-        <el-select size="small" v-model='condition.categoryName' clearable :disabled="disabled">
-          <el-option v-for='item in categoryName' :key='item.CategoryName' :value='item.CategoryName'></el-option>
+      <el-form-item label='产品分类2'
+                    class='input'>
+        <el-select size="small"
+                   v-model='condition.categoryName'
+                   clearable
+                   :disabled="disabled">
+          <el-option v-for='item in categoryName'
+                     :key='item.CategoryName'
+                     :value='item.CategoryName'
+                     :label="item.CategoryName"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label='关键字' class='input'>
-        <el-input size="small" v-model='condition.supplierName' placeholder="供应商名称关键字" style="width:18rem">
+      <el-form-item label='关键字'
+                    class='input'>
+        <el-input size="small"
+                  v-model='condition.supplierName'
+                  placeholder="供应商名称关键字"
+                  style="width:18rem">
         </el-input>
       </el-form-item>
-      <el-form-item label='产品状态' class='input'>
-        <el-select size="small" v-model='condition.goodsSkuStatus' clearable>
-          <el-option v-for='item in goodsSkuStatus' :key='item' :value='item'></el-option>
+      <el-form-item label='产品状态'
+                    class='input'>
+        <el-select size="small"
+                   v-model='condition.goodsSkuStatus'
+                   clearable>
+          <el-option v-for='item in goodsSkuStatus'
+                     :key='item'
+                     :value='item'></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label='开发' class='input'>
-        <el-select size="small" v-model='condition.salerName' clearable>
-          <el-option v-for='item in salerName' :key='item.username' :value='item.username'></el-option>
+      <el-form-item label='开发'
+                    class='input'>
+        <el-select size="small"
+                   v-model='condition.salerName'
+                   clearable>
+          <el-option v-for='item in salerName'
+                     :key='item.username'
+                     :value='item.username'></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label='日期' class='input'>
-        <el-date-picker size="small" style="width:18rem" v-model='form.newRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2'>
+      <el-form-item label='日期'
+                    class='input'>
+        <el-date-picker size="small"
+                        style="width:18rem"
+                        v-model='form.newRange'
+                        type='daterange'
+                        value-format='yyyy-MM-dd'
+                        align='right'
+                        unlink-panels
+                        range-separator='至'
+                        start-placeholder='开始日期'
+                        end-placeholder='结束日期'
+                        :picker-options='pickerOptions2'>
         </el-date-picker>
       </el-form-item>
-      <el-form-item class='input' style="margin-left:20.5rem">
-        <el-button size="small" type="primary" @click="onSubmit(condition)">搜索</el-button>
+      <el-form-item class='input'
+                    style="margin-left:20.5rem">
+        <el-button size="small"
+                   type="primary"
+                   @click="onSubmit(condition)">搜索</el-button>
       </el-form-item>
     </el-form>
     <el-row v-loading="listLoading">
-      <el-col :span="4" class="mix" v-for="item in this.tableData" :key="item.rowId">
-        <a :href="item.LinkUrl" target="_blank" style="text-decoration:none;">
+      <el-col :span="4"
+              class="mix"
+              v-for="item in this.tableData"
+              :key="item.rowId">
+        <a :href="item.LinkUrl"
+           target="_blank"
+           style="text-decoration:none;">
           <div class="mix-inner">
-            <img :src=item.BmpFileName :alt='item.GoodsName+item.GoodsSKUStatus'>
+            <img :src=item.BmpFileName
+                 :alt='item.GoodsName+item.GoodsSKUStatus'>
             <p>
               <font color="black">
                 &nbsp;{{item.GoodsCode}}&nbsp;{{item.CategoryParentName}}&nbsp;{{item.CategoryName}}
@@ -66,9 +131,19 @@
         </a>
       </el-col>
     </el-row>
-    <el-col :span="24" class="toolbar" v-show="total>0">
-      <div class="pagination-container" align="right">
-        <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[50, 100, 500,1000,this.total]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
+    <el-col :span="24"
+            class="toolbar"
+            v-show="total>0">
+      <div class="pagination-container"
+           align="right">
+        <el-pagination background
+                       @size-change="handleSizeChange"
+                       @current-change="handleCurrentChange"
+                       :current-page="currentPage"
+                       :page-sizes="[50, 100, 500,1000,this.total]"
+                       :page-size="pageSize"
+                       layout="total, sizes, prev, pager, next, jumper"
+                       :total="total">
         </el-pagination>
       </div>
     </el-col>
@@ -80,7 +155,7 @@ import {
   getGoodspicture,
   getGoodsstatus,
   getGoodscats,
-  getMember
+  getUsers
 } from '../../api/profit'
 export default {
   data() {
@@ -104,6 +179,7 @@ export default {
       supplierName: '',
       goodsSkuStatus: [],
       categoryParentName: [],
+      ParentName: [],
       categoryName: [],
       condition: {
         salerName: '',
@@ -174,31 +250,31 @@ export default {
       }
     }
   },
-  beforeRouteLeave(to, from, next) {
-    if (from.name === '产品一览表') {
-      const condition = JSON.stringify(this.condition)
-      sessionStorage.setItem('condition', condition)
-    } else {
-      sessionStorage.removeItem('condition')
-    }
-    next()
-  },
-  created() {
-    const condition = sessionStorage.getItem('condition')
-    if (condition != null) {
-      this.condition = JSON.parse(condition)
-      this.listLoading = true
-      getGoodspicture(this.condition)
-        .then(response => {
-          this.listLoading = false
-          this.tableData = response.data.data.items
-          this.total = Number(response.data.data.totalCount)
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    }
-  },
+  // beforeRouteLeave(to, from, next) {
+  //   if (from.name === '产品一览表') {
+  //     const condition = JSON.stringify(this.condition)
+  //     sessionStorage.setItem('condition', condition)
+  //   } else {
+  //     sessionStorage.removeItem('condition')
+  //   }
+  //   next()
+  // },
+  // created() {
+  //   const condition = sessionStorage.getItem('condition')
+  //   if (condition != null) {
+  //     this.condition = JSON.parse(condition)
+  //     this.listLoading = true
+  //     getGoodspicture(this.condition)
+  //       .then(response => {
+  //         this.listLoading = false
+  //         this.tableData = response.data.data.items
+  //         this.total = Number(response.data.data.totalCount)
+  //       })
+  //       .catch(error => {
+  //         console.log(error)
+  //       })
+  //   }
+  // },
   methods: {
     onSubmit() {
       this.pageSize = 50
@@ -243,6 +319,7 @@ export default {
         const res = this.category
         this.categoryName = res.filter(e => e.CategoryParentName === val)
       } else if (this.condition.categoryParentName === '') {
+        this.condition.categoryName = ''
         this.disabled = true
       }
     }
@@ -252,9 +329,13 @@ export default {
       this.goodsSkuStatus = response.data.data
     })
     getGoodscats().then(response => {
-      this.category = this.categoryParentName = response.data.data
+      debugger
+      this.category = response.data.data
+      this.ParentName = this.category.filter(
+        e => e.CategoryParentName === '全部类别'
+      )
     })
-    getMember().then(response => {
+    getUsers().then(response => {
       const possessMan = response.data.data
       this.possessMan1 = this.possessMan2 = possessMan.filter(
         e => e.position === '美工'
