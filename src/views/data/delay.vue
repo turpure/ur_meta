@@ -149,15 +149,37 @@
         </el-form-item>
       </el-form>
     </div>
-    <div ref="delaypie"
-         v-loading="listLoading"
-         :style="{width: '100%', height: '400px'}">
-    </div>
-    <el-table :data="tableData">
-      <el-table-column label=""></el-table-column>
-      <el-table-column label=""></el-table-column>
-      <el-table-column label=""></el-table-column>
-    </el-table>
+    <el-row>
+      <el-col :span="24">
+        <el-tabs v-model="activeName"
+                 type="card"
+                 @tab-click="handleClick">
+          <el-tab-pane label="缺货率占比饼状图"
+                       name="first">
+            <div ref="delaypie"
+                 v-loading="listLoading"
+                 :style="{width: '100%', height: '400px'}">
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="缺货率占比表格"
+                       name="second">
+            <el-table :data="tableData"
+                      style="width: 100%"
+                      height="750">
+              <el-table-column label="sku"
+                               prop="sku"></el-table-column>
+              <el-table-column label="skuName"
+                               prop="skuName"></el-table-column>
+              <el-table-column label="数量"
+                               prop="number"></el-table-column>
+              <el-table-column label="百分比"
+                               :formatter="empty"
+                               prop="rate"></el-table-column>
+            </el-table>
+          </el-tab-pane>
+        </el-tabs>
+      </el-col>
+    </el-row>
   </section>
 </template>
 <script>
@@ -173,6 +195,7 @@ import { APIDelay } from '../../api/data'
 export default {
   data() {
     return {
+      activeName: 'first',
       tableData: [],
       listLoading: false,
       plat: [],
@@ -192,8 +215,8 @@ export default {
       },
       options: {
         title: {
-          text: 'delaypie',
-          subtext: '',
+          text: '延迟饼状图',
+          subtext: '延迟天数占比',
           x: 'center'
         },
         tooltip: {
@@ -250,6 +273,13 @@ export default {
     }
   },
   methods: {
+    empty(row, column, cellValue, index) {
+      if (cellValue == null || cellValue == '') return ''
+      return Math.round(cellValue * 10000) / 100 + '%'
+    },
+    handleClick(tab, event) {
+      this.activeName = tab.name
+    },
     onSubmit() {
       this.$refs.condition.validate(valid => {
         if (valid) {
@@ -257,11 +287,11 @@ export default {
           APIDelay(this.condition).then(res => {
             this.listLoading = false
             const data = res.data.data
-            this.options.legend.data = data.filter(e => e.flag)
-            this.options.series[0].data = data
-            console.log(this.options.legend.data)
+            this.options.legend.data = data.pieData.map(e => e.name)
+            this.options.series[0].data = data.pieData
             let delayPie = this.$echarts.init(this.$refs.delaypie)
             delayPie.setOption(this.options)
+            this.tableData = data.tableData
           })
         }
       })
