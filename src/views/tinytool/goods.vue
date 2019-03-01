@@ -88,7 +88,7 @@
                     class='input'>
         <el-date-picker size="small"
                         style="width:18rem"
-                        v-model='form.newRange'
+                        v-model='form.dateRange'
                         type='daterange'
                         value-format='yyyy-MM-dd'
                         align='right'
@@ -106,17 +106,20 @@
                    @click="onSubmit(condition)">搜索</el-button>
       </el-form-item>
     </el-form>
-    <el-row v-loading="listLoading">
-      <el-col :span="4"
-              class="mix"
-              v-for="item in this.tableData"
-              :key="item.rowId">
-        <a :href="item.LinkUrl"
-           target="_blank"
-           style="text-decoration:none;">
+    <div v-loading="listLoading"
+         element-loading-text="正在加载中...">
+      <el-row>
+        <el-col :span="4"
+                class="mix"
+                v-for="item in this.tableData"
+                :key="item.rowId">
           <div class="mix-inner">
-            <img :src=item.BmpFileName
-                 :alt='item.GoodsName+item.GoodsSKUStatus'>
+            <a :href="item.LinkUrl"
+               target="_blank"
+               style="text-decoration:none;">
+              <img :src=item.BmpFileName
+                   :alt='item.GoodsName+item.GoodsSKUStatus'>
+            </a>
             <p>
               <font color="black">
                 &nbsp;{{item.GoodsCode}}&nbsp;{{item.CategoryParentName}}&nbsp;{{item.CategoryName}}
@@ -128,25 +131,25 @@
             </p>
             <font color="black">&nbsp;{{item.GoodsName}}&nbsp;&nbsp;&nbsp;{{item.GoodsSKUStatus}}</font>
           </div>
-        </a>
+        </el-col>
+      </el-row>
+      <el-col :span="24"
+              class="toolbar"
+              v-show="total>0">
+        <div class="pagination-container"
+             align="right">
+          <el-pagination background
+                         @size-change="handleSizeChange"
+                         @current-change="handleCurrentChange"
+                         :current-page="currentPage"
+                         :page-sizes="[50, 100, 500,1000,this.total]"
+                         :page-size="pageSize"
+                         layout="total, sizes, prev, pager, next, jumper"
+                         :total="total">
+          </el-pagination>
+        </div>
       </el-col>
-    </el-row>
-    <el-col :span="24"
-            class="toolbar"
-            v-show="total>0">
-      <div class="pagination-container"
-           align="right">
-        <el-pagination background
-                       @size-change="handleSizeChange"
-                       @current-change="handleCurrentChange"
-                       :current-page="currentPage"
-                       :page-sizes="[50, 100, 500,1000,this.total]"
-                       :page-size="pageSize"
-                       layout="total, sizes, prev, pager, next, jumper"
-                       :total="total">
-        </el-pagination>
-      </div>
-    </el-col>
+    </div>
   </div>
 </template>
 
