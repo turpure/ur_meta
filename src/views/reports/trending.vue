@@ -278,7 +278,6 @@ export default {
         xAxis: [
           {
             type: 'category',
-            boundaryGap: false,
             data: [String]
           }
         ],
@@ -493,7 +492,6 @@ export default {
           } else if (this.condition.member.lenght !== 0) {
             myform.member = this.condition.member
           }
-          debugger
           if (this.activeName === '销售额走势') {
             getSalestrend(myform).then(response => {
               this.listLoading = false
