@@ -154,14 +154,16 @@
         <el-tabs v-model="activeName"
                  type="card"
                  @tab-click="handleClick">
-          <el-tab-pane label="缺货率占比饼状图"
+          <el-tab-pane label="缺货天数统计"
                        name="first">
-            <div ref="delaypie"
+            <div :span="24"
+                 ref="delaypie"
                  v-loading="listLoading"
+                 element-loading-text="正在加载中..."
                  :style="{width: '100%', height: '400px'}">
             </div>
           </el-tab-pane>
-          <el-tab-pane label="缺货率占比表格"
+          <el-tab-pane label="缺货产品详情"
                        name="second">
             <el-table :data="tableData"
                       style="width: 100%"
@@ -215,35 +217,47 @@ export default {
       },
       options: {
         title: {
-          text: '延迟饼状图',
-          subtext: '延迟天数占比',
-          x: 'center'
+          text: '延迟柱状图'
         },
         tooltip: {
-          trigger: 'item',
-          formatter: '{a} <br/>{b} : {c} ({d}%)'
-        },
-        legend: {
-          orient: 'vertical',
-          left: 'left',
-          data: [String]
-        },
-        series: [
-          {
-            name: 'delaypie',
-            type: 'pie',
-            radius: '55%',
-            center: ['50%', '60%'],
-            data: [Object],
-            itemStyle: {
-              emphasis: {
-                shadowBlur: 10,
-                shadowOffsetX: 0,
-                shadowColor: 'rgba(0, 0, 0, 0.5)'
-              }
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            label: {
+              backgroundColor: '#6a7985'
             }
           }
-        ]
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            dataView: { show: true, readOnly: false },
+            magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
+            restore: { show: true },
+            saveAsImage: { show: true }
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: [
+          {
+            type: 'category',
+            data: [String]
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value',
+            axisLabel: {
+              formatter: '{value} 天'
+            }
+          }
+        ],
+        series: [Object]
       },
       pickerOptions2: {
         shortcuts: [
@@ -274,8 +288,11 @@ export default {
   },
   methods: {
     empty(row, column, cellValue, index) {
-      if (cellValue == null || cellValue == '') return ''
-      return Math.round(cellValue * 10000) / 100 + '%'
+      if (cellValue == null || cellValue == '') {
+        return ''
+      } else {
+        return Math.round(cellValue * 10000) / 100 + '%'
+      }
     },
     handleClick(tab, event) {
       this.activeName = tab.name
@@ -287,8 +304,16 @@ export default {
           APIDelay(this.condition).then(res => {
             this.listLoading = false
             const data = res.data.data
-            this.options.legend.data = data.pieData.map(e => e.name)
-            this.options.series[0].data = data.pieData
+            const piedata = data.pieData
+            const lineName = []
+            const series = []
+            this.options.xAxis[0].data = piedata.map(e => e.name)
+            const sery = {
+              type: 'bar'
+            }
+            sery['data'] = piedata.map(e => e.value)
+            series.push(sery)
+            this.options.series = series
             let delayPie = this.$echarts.init(this.$refs.delaypie)
             delayPie.setOption(this.options)
             this.tableData = data.tableData
