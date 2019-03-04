@@ -159,6 +159,7 @@
             <div :span="24"
                  ref="delaypie"
                  v-loading="listLoading"
+                 element-loading-text="正在加载中..."
                  :style="{width: '100%', height: '400px'}">
             </div>
           </el-tab-pane>

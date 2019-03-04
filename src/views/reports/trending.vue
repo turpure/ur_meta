@@ -198,16 +198,19 @@
                style="max-height:800px;overflow:auto"
                :options="options"
                v-loading="listLoading"
+               element-loading-text="正在加载中..."
                ref="myecharts"></Myecharts>
     <Chart v-if="order"
            style="max-height:800px;overflow:auto"
            :options="options"
            v-loading="listLoading"
+           element-loading-text="正在加载中..."
            ref="myechart"></Chart>
     <sku-chart v-if="count"
                style="max-height:800px;overflow:auto"
                :options="options"
                v-loading="listLoading"
+               element-loading-text="正在加载中..."
                ref="skuchart"></sku-chart>
   </div>
 </template>
