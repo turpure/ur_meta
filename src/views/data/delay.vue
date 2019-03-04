@@ -219,7 +219,7 @@ export default {
       },
       options: {
         title: {
-          text: '延迟柱状图'
+          text: '缺货柱状图'
         },
         tooltip: {
           trigger: 'axis',
@@ -228,6 +228,21 @@ export default {
             label: {
               backgroundColor: '#6a7985'
             }
+          },
+          formatter: function(params) {
+            var str = ''
+            // str += '<div>' + params[0].name + '</div>'
+            for (var i = 0; i < params.length; i++) {
+              str +=
+                '<div><span>' +
+                params[i].name +
+                '</span> : <span>' +
+                (params[i].data
+                  ? Math.round(params[i].data * 10000) / 100 + '%'
+                  : '暂无') +
+                '</span></div>'
+            }
+            return str
           }
         },
         toolbox: {
@@ -255,7 +270,7 @@ export default {
           {
             type: 'value',
             axisLabel: {
-              formatter: '{value} 个'
+              formatter: '{value}'
             }
           }
         ],
