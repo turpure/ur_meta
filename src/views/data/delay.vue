@@ -160,12 +160,14 @@
                  ref="delaypie"
                  v-loading="listLoading"
                  element-loading-text="正在加载中..."
-                 :style="{width: '100%', height: '400px'}">
+                 :style="{width: '100%', height: '500px'}">
             </div>
           </el-tab-pane>
           <el-tab-pane label="缺货产品详情"
                        name="second">
             <el-table :data="tableData"
+                      v-loading="listLoading"
+                      element-loading-text="正在加载中..."
                       style="width: 100%"
                       height="750">
               <el-table-column label="sku"
@@ -193,7 +195,7 @@ import {
   getAccount
 } from '../../api/profit'
 import { getMonthDate } from '../../api/tools'
-import { APIDelay } from '../../api/data'
+import { APIDelay, APIDelayDetail } from '../../api/data'
 export default {
   data() {
     return {
@@ -253,7 +255,7 @@ export default {
           {
             type: 'value',
             axisLabel: {
-              formatter: '{value} 天'
+              formatter: '{value} 个'
             }
           }
         ],
@@ -301,23 +303,28 @@ export default {
       this.$refs.condition.validate(valid => {
         if (valid) {
           this.listLoading = true
-          APIDelay(this.condition).then(res => {
-            this.listLoading = false
-            const data = res.data.data
-            const piedata = data.pieData
-            const lineName = []
-            const series = []
-            this.options.xAxis[0].data = piedata.map(e => e.name)
-            const sery = {
-              type: 'bar'
-            }
-            sery['data'] = piedata.map(e => e.value)
-            series.push(sery)
-            this.options.series = series
-            let delayPie = this.$echarts.init(this.$refs.delaypie)
-            delayPie.setOption(this.options)
-            this.tableData = data.tableData
-          })
+          if (this.activeName === 'first') {
+            APIDelay(this.condition).then(res => {
+              this.listLoading = false
+              const data = res.data.data
+              const lineName = []
+              const series = []
+              this.options.xAxis[0].data = data.map(e => e.name)
+              const sery = {
+                type: 'bar'
+              }
+              sery['data'] = data.map(e => e.value)
+              series.push(sery)
+              this.options.series = series
+              let delayPie = this.$echarts.init(this.$refs.delaypie)
+              delayPie.setOption(this.options)
+            })
+          } else {
+            APIDelayDetail(this.condition).then(res => {
+              this.listLoading = false
+              this.tableData = res.data.data
+            })
+          }
         }
       })
     },
