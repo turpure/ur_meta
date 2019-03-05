@@ -197,7 +197,6 @@ import {
   getPlatform,
   getMember,
   getAccount,
-  getSalestrend,
   priceTrend
 } from '../../api/profit'
 import { getMonthDate } from '../../api/tools'
