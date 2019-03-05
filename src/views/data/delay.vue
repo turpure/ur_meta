@@ -112,7 +112,7 @@
                        :value="item.store"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="显示方式"
+        <!-- <el-form-item label="显示方式"
                       class="input"
                       prop="flag">
           <el-radio-group v-model="condition.flag">
@@ -124,11 +124,9 @@
                       :value="item.id"
                       style="width:8.55rem;">{{item.type}}</el-radio>
           </el-radio-group>
-        </el-form-item>
-        <el-form-item label="发货时间"
-                      class="input"
-                      prop="dateRange"
-                      :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
+        </el-form-item> -->
+        <el-form-item label="交易时间"
+                      class="input">
           <el-date-picker size="small"
                           v-model="condition.dateRange"
                           value-format="yyyy-MM-dd"
@@ -207,15 +205,15 @@ export default {
       account: [],
       department: [],
       secDepartment: [],
-      flag: [{ id: 0, type: '按天' }, { id: 2, type: '按月' }],
+      // flag: [{ id: 0, type: '按天' }, { id: 2, type: '按月' }],
       condition: {
         dateRange: [],
         member: [],
         plat: [],
         account: [],
         department: [],
-        secDepartment: [],
-        flag: 0
+        secDepartment: []
+        // flag: 0
       },
       options: {
         title: {

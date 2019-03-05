@@ -19,6 +19,7 @@ import saleschange from '../views/data/saleschange.vue'
 import ptrend from '../views/data/pricetrend.vue'
 import weight from '../views/data/weight.vue'
 import delay from '../views/data/delay.vue'
+import ship from '../views/data/ship.vue'
 // 销售工具
 import ebay from '../views/tool/ebay.vue'
 import ebaysku from '../views/tool/ebaysku.vue'
@@ -153,6 +154,11 @@ const routes = [
         path: '/v1/data-center/delay-delivery',
         component: delay,
         name: '延迟发货率分析'
+      },
+      {
+        path: '/v1/data-center/delay-ship',
+        component: ship,
+        name: '延迟发货统计'
       }
     ]
   },
