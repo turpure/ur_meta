@@ -184,3 +184,11 @@ export function APIAttribute(param) {
     data
   })
 }
+export function APIAttributeInfo(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/attribute-info',
+    method: 'post',
+    data
+  })
+}

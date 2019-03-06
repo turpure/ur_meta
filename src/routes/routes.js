@@ -48,6 +48,7 @@ import news from '../views/feedback/news.vue'
 import productRecommend from '../views/productDevelop/productRecommend.vue'
 import productApprove from '../views/productDevelop/productApprove.vue'
 import goodsInfo from '../views/productDevelop/goodsInfo.vue'
+import edit from '../views/productDevelop/edit.vue'
 
 const routes = [
   {
@@ -315,6 +316,11 @@ const routes = [
         path: '/v1/oa-goodsinfo/index',
         component: goodsInfo,
         name: '属性信息'
+      },
+      {
+        path: '/:id',
+        component: edit,
+        name: 'tables'
       }
     ]
   },

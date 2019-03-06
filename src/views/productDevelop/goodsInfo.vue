@@ -35,9 +35,9 @@
               </el-button>
             </el-tooltip>
             <el-tooltip content="更新">
-              <el-button type="text">
+              <router-link :to="'/'+scope.row.id">
                 <i class="el-icon-edit"></i>
-              </el-button>
+              </router-link>
             </el-tooltip>
             <el-tooltip content="导入普源">
               <el-button type="text">
@@ -791,6 +791,7 @@ export default {
     view(index, row) {
       this.dialogVisible = true
       this.viewForm.id = row.id
+      console.log(this.viewForm)
       APIAttribute(this.viewForm).then(res => {
         this.viewForm = res.data.data
       })
