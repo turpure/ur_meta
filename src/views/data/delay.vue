@@ -154,11 +154,10 @@
                  @tab-click="handleClick">
           <el-tab-pane label="缺货天数统计"
                        name="first">
-            <div :span="24"
-                 ref="delaypie"
+            <div ref="delaypie"
                  v-loading="listLoading"
                  element-loading-text="正在加载中..."
-                 :style="{width: '100%', height: '500px'}">
+                 :style="{width: '100%', height: '500px', marginTop:'10px'}">
             </div>
           </el-tab-pane>
           <el-tab-pane label="缺货产品详情"
