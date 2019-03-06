@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
 export function goodsList(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/oa-goods/list?page=' + param.page,
     method: 'post',
@@ -9,7 +9,7 @@ export function goodsList(param) {
   })
 }
 export function goodsCreate(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/oa-goods/create',
     method: 'post',
@@ -17,7 +17,7 @@ export function goodsCreate(param) {
   })
 }
 export function goodsUpdate(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/oa-goods/update',
     method: 'put',
@@ -25,7 +25,7 @@ export function goodsUpdate(param) {
   })
 }
 export function goodsInfo(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/oa-goods/info',
     method: 'post',
@@ -33,7 +33,7 @@ export function goodsInfo(param) {
   })
 }
 export function goodsDelete(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/oa-goods/delete',
     method: 'delete',
@@ -41,7 +41,7 @@ export function goodsDelete(param) {
   })
 }
 export function goodsClaim(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/oa-goods/claim',
     method: 'post',
@@ -49,7 +49,7 @@ export function goodsClaim(param) {
   })
 }
 export function forwardList(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/oa-goods/forward-list?page=' + param.page1,
     method: 'post',
@@ -57,7 +57,7 @@ export function forwardList(param) {
   })
 }
 export function forwardCreate(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/oa-goods/dev-create',
     method: 'post',
@@ -65,7 +65,7 @@ export function forwardCreate(param) {
   })
 }
 export function forwardUpdate(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/oa-goods/dev-update',
     method: 'put',
@@ -73,7 +73,7 @@ export function forwardUpdate(param) {
   })
 }
 export function forwardSubmit(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/oa-goods/submit',
     method: 'post',
@@ -81,7 +81,7 @@ export function forwardSubmit(param) {
   })
 }
 export function reverseList(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/backward-develop/list?page=' + param.page2,
     method: 'post',
@@ -89,7 +89,7 @@ export function reverseList(param) {
   })
 }
 export function reverseCreate(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/backward-develop/create',
     method: 'post',
@@ -97,7 +97,7 @@ export function reverseCreate(param) {
   })
 }
 export function reverseUpdate(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/backward-develop/update',
     method: 'put',
@@ -105,7 +105,7 @@ export function reverseUpdate(param) {
   })
 }
 export function checkList(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/check/check-list?page=' + param.page,
     method: 'post',
@@ -113,7 +113,7 @@ export function checkList(param) {
   })
 }
 export function checkPassList(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/check/pass-list?page=' + param.page,
     method: 'post',
@@ -121,7 +121,7 @@ export function checkPassList(param) {
   })
 }
 export function checkPass(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/check/pass',
     method: 'post',
@@ -129,7 +129,7 @@ export function checkPass(param) {
   })
 }
 export function checkFailed(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/check/failed',
     method: 'post',
@@ -137,7 +137,7 @@ export function checkFailed(param) {
   })
 }
 export function checkCancel(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/check/cancel',
     method: 'post',
@@ -145,9 +145,41 @@ export function checkCancel(param) {
   })
 }
 export function checkFailedList(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/check/failed-list?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+export function APIGoodsInfo(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/attributes-list',
+    method: 'post',
+    data
+  })
+}
+export function APIPictureList(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/picture-list',
+    method: 'post',
+    data
+  })
+}
+export function APIPlatList(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/plat-list',
+    method: 'post',
+    data
+  })
+}
+export function APIAttribute(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/attribute',
     method: 'post',
     data
   })
