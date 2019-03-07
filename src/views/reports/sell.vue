@@ -906,7 +906,6 @@ export default {
       this.show1 = false
     },
     myForm(form) {
-      debugger
       const myform = JSON.parse(JSON.stringify(form))
       if (myform.member.length !== 0) {
         if (isAdmin() === false) {
@@ -1121,13 +1120,13 @@ export default {
       row.salemoneyzn = Math.round(row.salemoneyzn * 100) / 100
       row.ebayfeeznebay = Math.round(row.ebayfeeznebay * 100) / 100
       row.ppFeezn = Math.round(row.ppFeezn * 100) / 100
-      row.refundrate = Math.round(row.refundrate * 100) / 100
       row.grossprofit = Math.round(row.grossprofit * 100) / 100
       row.refundZn = Math.round(row.refundZn * 100) / 100
       if (!isNaN(cellValue)) {
         return Number(cellValue)
+      } else {
+        return cellValue
       }
-      return cellValue
     },
     // 导出
     exportExcel() {

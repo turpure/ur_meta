@@ -26,34 +26,31 @@
         <el-table-column label="操作"
                          fixed
                          header-align="center"
-                         width="160">
+                         width="110">
           <template slot-scope="scope">
             <el-tooltip content="查看">
-              <el-button type="text"
-                         @click="view(scope.$index, scope.row)">
-                <i class="el-icon-view"></i>
-              </el-button>
+              <i class="el-icon-view"
+                 @click="view(scope.$index, scope.row)"
+                 style="color: #409EFF"></i>
             </el-tooltip>
             <el-tooltip content="更新">
-              <router-link :to="'/'+scope.row.id">
+              <router-link :to="'/'+scope.row.id"
+                           style="color: #409EFF">
                 <i class="el-icon-edit"></i>
               </router-link>
             </el-tooltip>
             <el-tooltip content="导入普源">
-              <el-button type="text">
-                <i class="el-icon-printer"></i>
-              </el-button>
+              <i class="el-icon-printer"
+                 style="color: #409EFF"></i>
             </el-tooltip>
             <el-tooltip content="标记已完善">
-              <el-button type="text">
-                <i class="el-icon-star-on"></i>
-              </el-button>
+              <i class="el-icon-star-on"
+                 style="color: #409EFF"></i>
             </el-tooltip>
             <el-tooltip content="删除">
-              <el-button type="text"
-                         @click="del(scope.$index, scope.row)">
-                <i class="el-icon-delete"></i>
-              </el-button>
+              <i class="el-icon-delete"
+                 @click="del(scope.$index, scope.row)"
+                 style="color: #409EFF"></i>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -325,23 +322,20 @@
         <el-table-column label="操作"
                          fixed
                          header-align="center"
-                         width="100">
+                         width="80">
           <template slot-scope="scope">
             <el-tooltip content="查看">
-              <el-button type="text"
-                         @click="viewPic(scope.$index, scope.row)">
-                <i class="el-icon-view"></i>
-              </el-button>
+              <i class="el-icon-view"
+                 @click="viewPic(scope.$index, scope.row)"
+                 style="color: #409EFF"></i>
             </el-tooltip>
             <el-tooltip content="更新">
-              <el-button type="text">
-                <i class="el-icon-edit"></i>
-              </el-button>
+              <i class="el-icon-edit"
+                 style="color: #409EFF"></i>
             </el-tooltip>
             <el-tooltip content="标记已完善">
-              <el-button type="text">
-                <i class="el-icon-star-on"></i>
-              </el-button>
+              <i class="el-icon-star-on"
+                 style="color: #409EFF"></i>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -498,23 +492,20 @@
         <el-table-column label="操作"
                          fixed
                          header-align="center"
-                         width="100">
+                         width="80">
           <template slot-scope="scope">
             <el-tooltip content="查看">
-              <el-button type="text"
-                         @click="viewPlat(scope.$index, scope.row)">
-                <i class="el-icon-view"></i>
-              </el-button>
+              <i class="el-icon-view"
+                 @click="viewPlat(scope.$index, scope.row)"
+                 style="color: #409EFF"></i>
             </el-tooltip>
             <el-tooltip content="更新">
-              <el-button type="text">
-                <i class="el-icon-edit"></i>
-              </el-button>
+              <i class="el-icon-edit"
+                 style="color: #409EFF"></i>
             </el-tooltip>
             <el-tooltip content="删除">
-              <el-button type="text">
-                <i class="el-icon-delete"></i>
-              </el-button>
+              <i class="el-icon-delete"
+                 style="color: #409EFF"></i>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -730,7 +721,7 @@ export default {
       total: null,
       totalPic: null,
       totalPlat: null,
-      activeName: '',
+      activeName: '属性信息',
       sels: [],
       allMenu: [],
       tableData: [],
@@ -1251,8 +1242,8 @@ export default {
       APIPictureList(this.picture).then(res => {
         this.pictureData = res.data.data.items
         this.totalPic = res.data.data._meta.totalCount
-        this.picture.pageSize = res.data.data_meta.perPage
-        this.picture.currentPage = res.data.data_meta.currentPage
+        this.picture.pageSize = res.data.data._meta.perPage
+        this.picture.currentPage = res.data.data._meta.currentPage
       })
     },
     //图片信息表头input框

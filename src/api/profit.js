@@ -299,7 +299,7 @@ export function getBrand(param) {
 export function getGoodspicture(param) {
   const data = { condition: param }
   return request({
-    url: '/tiny-tool/goods-picture',
+    url: '/tiny-tool/goods-picture?page=' + param.page,
     method: 'post',
     data
   })
