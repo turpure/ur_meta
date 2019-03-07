@@ -256,11 +256,11 @@ export default {
       this.getData()
     },
     handleSizeChange(val) {
-      this.pageSize = val
+      this.condition.pageSize = val
       this.getData()
     },
     handleCurrentChange(val) {
-      this.page = val
+      this.condition.page = val
       this.getData()
     },
     productcategory() {

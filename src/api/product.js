@@ -192,3 +192,11 @@ export function APIAttributeInfo(param) {
     data
   })
 }
+export function APIFinishAttribute(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/finish-attribute',
+    method: 'post',
+    data
+  })
+}

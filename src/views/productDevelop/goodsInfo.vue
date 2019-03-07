@@ -45,6 +45,7 @@
             </el-tooltip>
             <el-tooltip content="标记已完善">
               <i class="el-icon-star-on"
+                 @click="mark(scope.$index,scope.row)"
                  style="color: #409EFF"></i>
             </el-tooltip>
             <el-tooltip content="删除">
@@ -709,7 +710,8 @@ import {
   APIGoodsInfo,
   APIPictureList,
   APIPlatList,
-  APIAttribute
+  APIAttribute,
+  APIFinishAttribute
 } from '../../api/product'
 import { getMenu } from '../../api/login'
 export default {
@@ -745,6 +747,9 @@ export default {
         currentPage: 1
       },
       viewForm: {
+        id: null
+      },
+      finish: {
         id: null
       }
     }
@@ -785,6 +790,19 @@ export default {
       console.log(this.viewForm)
       APIAttribute(this.viewForm).then(res => {
         this.viewForm = res.data.data
+      })
+    },
+    mark(index, row) {
+      this.finish.id = row.id
+      APIFinishAttribute(this.finish).then(res => {
+        if (res.data.data[0] === 'success') {
+          this.$message({
+            message: '标记成功',
+            type: 'success'
+          })
+        } else {
+          this.$message.error('标记失败')
+        }
       })
     },
     //属性信息删除
