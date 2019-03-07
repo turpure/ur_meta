@@ -137,7 +137,7 @@
       <el-form-item style="margin-left:60px">
         <el-button size="small"
                    type="primary"
-                   @click="onSubmit">查询</el-button>
+                   @click="onSubmit(condition)">查询</el-button>
       </el-form-item>
     </el-form>
     <el-table :data="tableData"
@@ -206,6 +206,7 @@ import {
 } from '../../api/profit'
 import { APIWeightDiff, APIUpdateWeight } from '../../api/data'
 import { getMonthDate } from '../../api/tools'
+import { isAdmin } from '../../api/api'
 export default {
   data() {
     return {
@@ -291,11 +292,11 @@ export default {
     // 分页
     handleSizeChange(val) {
       this.condition.pageSize = val
-      this.getData()
+      this.getData(form)
     },
     handleCurrentChange(val) {
       this.condition.page = val
-      this.getData()
+      this.getData(form)
     },
     //权限
     myForm(form) {
@@ -310,16 +311,16 @@ export default {
         if (isAdmin() === false) {
           const name = this.$store.getters.name
           const res = this.allMember
-          const kes = this.kefu
-          if (kes.length > 0) {
-            myform.member = res.map(m => {
-              return m.username
-            })
-          } else {
-            myform.member = res.map(m => {
-              return m.username
-            })
-          }
+          // const kes = this.kefu
+          // if (kes.length > 0) {
+          //   myform.member = res.map(m => {
+          //     return m.username
+          //   })
+          // } else {
+          myform.member = res.map(m => {
+            return m.username
+          })
+          // }
         }
         if (myform.department.length !== 0) {
           if (myform.secDepartment.length === 0) {
@@ -367,8 +368,8 @@ export default {
       return myform
     },
     // 查询
-    onSubmit() {
-      this.getData()
+    onSubmit(form) {
+      this.getData(form)
     },
     selectAll(name) {
       if (name === 'member') {
@@ -452,7 +453,7 @@ export default {
         this.member = res
       }
     },
-    getData() {
+    getData(form) {
       const myform = this.myForm(form)
       this.listLoading = true
       APIWeightDiff(myform).then(res => {
