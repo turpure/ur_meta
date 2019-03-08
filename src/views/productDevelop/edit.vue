@@ -8,7 +8,7 @@
         <el-col :span="8">
           <el-form-item label="">
             <img :src='editForm.picUrl'
-                 style="width: 500px;height: 400px;">
+                 style="width: 440px;height: 405px;padding-left:100px;padding-top:10px;margin-bottom:5px;">
           </el-form-item>
         </el-col>
         <el-col :span="8">
@@ -101,6 +101,7 @@
         <el-col :span="8">
           <el-form-item label="特殊属性必填">
             <el-select size="small"
+                       v-model="editForm.StoreName"
                        style="width:390px">
               <el-option label="否"
                          value="0"></el-option>
@@ -244,38 +245,44 @@
       <el-row>
         <el-col :span="6">
           <el-form-item label="禁售平台">
-            <!-- <el-select style="width:300px">
+            <el-select size="small"
+                       style="width:250px"
+                       v-model="editForm.mapPersons">
               <el-option label="否"
                          value="0"></el-option>
               <el-option label="是"
                          value="1"></el-option>
-            </el-select> -->
+            </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="6">
           <el-form-item label="主类目">
-            <!-- <el-select style="width:300px">
+            <el-select size="small"
+                       style="width:250px"
+                       v-model="editForm.mapPersons">
               <el-option label="否"
                          value="0"></el-option>
               <el-option label="是"
                          value="1"></el-option>
-            </el-select> -->
+            </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="6">
           <el-form-item label="子类目">
-            <!-- <el-select style="width:300px">
+            <el-select size="small"
+                       style="width:250px"
+                       v-model="editForm.mapPersons">
               <el-option label="否"
                          value="0"></el-option>
               <el-option label="是"
                          value="1"></el-option>
-            </el-select> -->
+            </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="6">
           <el-form-item label="对应销售">
             <el-select size="small"
-                       style="width:300px"
+                       style="width:250px"
                        v-model="editForm.mapPersons">
               <el-option label="否"
                          value="0"></el-option>
@@ -288,46 +295,54 @@
           <el-form-item label="供应商链接1">
             <el-input size="small"
                       v-model="oaGoods.vendor1"
-                      style="width:400px"></el-input>
+                      style="width:390px"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item label="供应商链接2">
             <el-input size="small"
                       v-model="oaGoods.vendor2"
-                      style="width:400px"></el-input>
+                      style="width:390px"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item label="供应商链接3">
             <el-input size="small"
                       v-model="oaGoods.vendor3"
-                      style="width:400px"></el-input>
+                      style="width:390px"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item label="平台链接1">
             <el-input size="small"
                       v-model="oaGoods.origin1"
-                      style="width:400px"></el-input>
+                      style="width:390px"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item label="平台链接2">
             <el-input size="small"
                       v-model="oaGoods.origin2"
-                      style="width:400px"></el-input>
+                      style="width:390px"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item label="平台链接3">
             <el-input size="small"
                       v-model="oaGoods.origin3"
-                      style="width:400px"></el-input>
+                      style="width:390px"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
     </el-form>
+    <el-select v-model="btn"
+               size="small"
+               placeholder="请选择操作方式">
+      <el-option v-for="item in options"
+                 :key="item.value"
+                 :label="item.label"
+                 :value="item.value"></el-option>
+    </el-select>
     <el-table :data="tableData">
       <el-table-column type="selection"
                        align="center"
@@ -341,10 +356,9 @@
                        align="center">
         <template slot-scope="scope">
           <el-tooltip content="删除">
-            <el-button type="text"
-                       @click="del(scope.$index, scope.row)">
-              <i class="el-icon-delete"></i>
-            </el-button>
+            <i class="el-icon-delete"
+               @click="del(scope.$index, scope.row)"
+               style="color:#409EFF;cursor:pointer;"></i>
           </el-tooltip>
         </template>
       </el-table-column>
@@ -429,71 +443,288 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-row style="margin-top:5px;">
+      <el-col :span="4">
+        <el-input size="small"
+                  placeholder="行数"
+                  style="width:190px"></el-input>
+        <el-button size="small"
+                   @click="addClomun">新增行</el-button>
+      </el-col>
+      <el-col :span="4">
+        <el-input size="small"
+                  placeholder="成本价￥"
+                  style="width:190px"></el-input>
+        <el-button size="small">成本确定</el-button>
+      </el-col>
+      <el-col :span="4">
+        <el-input size="small"
+                  placeholder="重量g"
+                  style="width:190px"></el-input>
+        <el-button size="small">重量确定</el-button>
+      </el-col>
+      <el-col :span="4">
+        <el-input size="small"
+                  placeholder="零售价$"
+                  style="width:190px"></el-input>
+        <el-button size="small">价格确定</el-button>
+      </el-col>
+      <el-col :span="4">
+        <el-input size="small"
+                  placeholder="joom零售价$"
+                  style="width:190px"></el-input>
+        <el-button size="small">价格确定</el-button>
+      </el-col>
+      <el-col :span="4">
+        <el-input size="small"
+                  placeholder="joom运费$"
+                  style="width:185px"></el-input>
+        <el-button size="small">价格确定</el-button>
+      </el-col>
+    </el-row>
+    <!-- <div style="margin-top:20px;">
+      <el-button size="small"
+                 type="success">一键生成SKU</el-button>
+      <el-button size="small"
+                 type="primary">保存当前数据</el-button>
+      <el-button size="small"
+                 type="primary">保存并完善</el-button>
+      <el-button size="small"
+                 type="warning">导入普源</el-button>
+      <el-button size="small"
+                 type="info">生成采购单</el-button>
+      <el-button size="small"
+                 type="danger">删除行</el-button>
+    </div> -->
+    <el-button type="primary"
+               @click="save"
+               style="position: fixed;bottom: 5px;left:50%;width:200px;">保存</el-button>
   </section>
 </template>
 <script>
-import { APIAttributeInfo } from '../../api/product'
+import { APIAttributeInfo, APISaveAttribute } from '../../api/product'
 export default {
   data() {
     return {
       tableData: [],
+      btn: '',
+      options: [
+        {
+          value: '选项1',
+          label: '一键生成SKU'
+        },
+        {
+          value: '选项2',
+          label: '保存当前数据'
+        },
+        {
+          value: '选项3',
+          label: '保存并完善'
+        },
+        {
+          value: '选项4',
+          label: '导入普源'
+        },
+        {
+          value: '选项5',
+          label: '生成采购单'
+        },
+        {
+          value: '选项6',
+          label: '删除行'
+        }
+      ],
       condition: {
         id: 5
       },
-      editForm: {
-        id: null,
-        IsLiquid: '是',
-        IsPowder: '否',
-        isMagnetism: '否',
-        IsCharged: '否',
-        description: null,
-        GoodsName: 'test-01-01-plat',
-        AliasCnName: null,
-        AliasEnName: null,
-        PackName: null,
-        Season: null,
-        DictionaryName: null,
-        SupplierName: null,
-        StoreName: null,
-        Purchaser: null,
-        possessMan1: null,
-        possessMan2: null,
-        DeclaredValue: null,
-        picUrl: null,
-        goodsid: 24,
-        GoodsCode: null,
-        achieveStatus: null,
-        devDatetime: null,
-        developer: null,
-        updateTime: null,
-        picStatus: null,
-        SupplierID: null,
-        StoreID: null,
-        AttributeName: null,
-        bgoodsid: null,
-        completeStatus: null,
-        isVar: '否',
-        headKeywords: null,
-        requiredKeywords: null,
-        randomKeywords: null,
-        tailKeywords: null,
-        wishtags: null,
-        stockUp: '否',
-        picCompleteTime: null,
-        goodsstatus: null,
-        stockdays: null,
-        wishpublish: null,
-        number: null,
-        mid: null,
-        extendStatus: null,
-        mapPersons: null,
-        filterType: 3
-      },
-      oaGoods: {}
+      editForm: {},
+      oaGoods: {},
+      saveInfo: {
+        basicInfo: {
+          goodsInfo: {
+            id: 5,
+            IsLiquid: '是',
+            IsPowder: '否',
+            isMagnetism: '否',
+            IsCharged: '否',
+            description: null,
+            GoodsName: 'test-01-01-plat',
+            AliasCnName: null,
+            AliasEnName: null,
+            PackName: null,
+            Season: null,
+            DictionaryName: null,
+            SupplierName: null,
+            StoreName: null,
+            Purchaser: null,
+            possessMan1: null,
+            possessMan2: null,
+            DeclaredValue: null,
+            picUrl: null,
+            goodsid: 24,
+            GoodsCode: null,
+            achieveStatus: null,
+            devDatetime: null,
+            developer: null,
+            updateTime: null,
+            picStatus: null,
+            SupplierID: null,
+            StoreID: null,
+            AttributeName: null,
+            bgoodsid: null,
+            completeStatus: null,
+            isVar: '否',
+            headKeywords: null,
+            requiredKeywords: null,
+            randomKeywords: null,
+            tailKeywords: null,
+            wishtags: null,
+            stockUp: '否',
+            picCompleteTime: null,
+            goodsstatus: null,
+            stockdays: null,
+            wishpublish: null,
+            number: null,
+            mid: null,
+            extendStatus: null,
+            mapPersons: null,
+            filterType: 3
+          },
+          oaGoods: {
+            nid: 24,
+            vendor1: '',
+            vendor2: null,
+            vendor3: null,
+            origin1: '',
+            origin2: null,
+            origin3: null
+          }
+        },
+        skuInfo: [
+          {
+            id: 1,
+            infoId: 5,
+            sku: 'jing-a',
+            property1: null,
+            property2: null,
+            property3: null,
+            Weight: null,
+            memo1: null,
+            memo2: null,
+            memo3: null,
+            memo4: null,
+            linkurl: null,
+            goodsskuid: null,
+            RetailPrice: null,
+            CostPrice: null,
+            stockNum: null,
+            did: null,
+            joomPrice: null,
+            joomShipping: null
+          },
+          {
+            id: 2,
+            infoId: 5,
+            sku: 'jingjing-a',
+            property1: null,
+            property2: null,
+            property3: null,
+            Weight: null,
+            memo1: null,
+            memo2: null,
+            memo3: null,
+            memo4: null,
+            linkurl: null,
+            goodsskuid: null,
+            RetailPrice: null,
+            CostPrice: null,
+            stockNum: null,
+            did: null,
+            joomPrice: null,
+            joomShipping: null
+          },
+          {
+            id: 3,
+            infoId: 5,
+            sku: 'jeany-a',
+            property1: null,
+            property2: null,
+            property3: null,
+            Weight: null,
+            memo1: null,
+            memo2: null,
+            memo3: null,
+            memo4: null,
+            linkurl: null,
+            goodsskuid: null,
+            RetailPrice: null,
+            CostPrice: null,
+            stockNum: null,
+            did: null,
+            joomPrice: null,
+            joomShipping: null
+          },
+          {
+            id: 4,
+            infoId: 5,
+            sku: 'jeany-test',
+            property1: null,
+            property2: null,
+            property3: null,
+            Weight: null,
+            memo1: null,
+            memo2: null,
+            memo3: null,
+            memo4: null,
+            linkurl: null,
+            goodsskuid: null,
+            RetailPrice: null,
+            CostPrice: null,
+            stockNum: null,
+            did: null,
+            joomPrice: null,
+            joomShipping: null
+          },
+          {
+            id: 5,
+            infoId: 5,
+            sku: 'jeany-test',
+            property1: null,
+            property2: null,
+            property3: null,
+            Weight: null,
+            memo1: null,
+            memo2: null,
+            memo3: null,
+            memo4: null,
+            linkurl: null,
+            goodsskuid: null,
+            RetailPrice: null,
+            CostPrice: null,
+            stockNum: null,
+            did: null,
+            joomPrice: null,
+            joomShipping: null
+          }
+        ]
+      }
     }
   },
   methods: {
     del(index, row) {},
+    addClomun() {},
+    save() {
+      APISaveAttribute(this.saveInfo).then(res => {
+        if (res.data.data[0] === 'success') {
+          this.$message({
+            message: '保存成功',
+            type: 'success'
+          })
+        } else {
+          this.$message.error('保存失败')
+        }
+      })
+    },
     getData() {
       APIAttributeInfo(this.condition).then(res => {
         this.tableData = res.data.data.skuInfo
@@ -509,5 +740,8 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+section {
+  margin-bottom: 80px;
+}
 </style>
 

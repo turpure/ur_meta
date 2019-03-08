@@ -31,7 +31,7 @@
             <el-tooltip content="查看">
               <i class="el-icon-view"
                  @click="view(scope.$index, scope.row)"
-                 style="color: #409EFF"></i>
+                 style="color: #409EFF;cursor:pointer;"></i>
             </el-tooltip>
             <el-tooltip content="更新">
               <router-link :to="'/'+scope.row.id"
@@ -41,17 +41,17 @@
             </el-tooltip>
             <el-tooltip content="导入普源">
               <i class="el-icon-printer"
-                 style="color: #409EFF"></i>
+                 style="color: #409EFF;cursor:pointer;"></i>
             </el-tooltip>
             <el-tooltip content="标记已完善">
               <i class="el-icon-star-on"
                  @click="mark(scope.$index,scope.row)"
-                 style="color: #409EFF"></i>
+                 style="color: #409EFF;cursor:pointer;"></i>
             </el-tooltip>
             <el-tooltip content="删除">
               <i class="el-icon-delete"
                  @click="del(scope.$index, scope.row)"
-                 style="color: #409EFF"></i>
+                 style="color: #409EFF;cursor:pointer;"></i>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -328,15 +328,15 @@
             <el-tooltip content="查看">
               <i class="el-icon-view"
                  @click="viewPic(scope.$index, scope.row)"
-                 style="color: #409EFF"></i>
+                 style="color: #409EFF;cursor:pointer;"></i>
             </el-tooltip>
             <el-tooltip content="更新">
               <i class="el-icon-edit"
-                 style="color: #409EFF"></i>
+                 style="color: #409EFF;cursor:pointer;"></i>
             </el-tooltip>
             <el-tooltip content="标记已完善">
               <i class="el-icon-star-on"
-                 style="color: #409EFF"></i>
+                 style="color: #409EFF;cursor:pointer;"></i>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -498,15 +498,15 @@
             <el-tooltip content="查看">
               <i class="el-icon-view"
                  @click="viewPlat(scope.$index, scope.row)"
-                 style="color: #409EFF"></i>
+                 style="color: #409EFF;cursor:pointer;"></i>
             </el-tooltip>
             <el-tooltip content="更新">
               <i class="el-icon-edit"
-                 style="color: #409EFF"></i>
+                 style="color: #409EFF;cursor:pointer;"></i>
             </el-tooltip>
             <el-tooltip content="删除">
               <i class="el-icon-delete"
-                 style="color: #409EFF"></i>
+                 style="color: #409EFF;cursor:pointer;"></i>
             </el-tooltip>
           </template>
         </el-table-column>

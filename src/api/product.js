@@ -200,3 +200,11 @@ export function APIFinishAttribute(param) {
     data
   })
 }
+export function APISaveAttribute(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/save-attribute',
+    method: 'post',
+    data
+  })
+}
