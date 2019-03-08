@@ -760,32 +760,52 @@ export default {
     },
     //成本确定
     cosprice() {
-      for (let i = 0; i < this.tableData.length; i++) {
-        this.tableData[i].CostPrice = this.costprice
+      if (this.costprice) {
+        for (let i = 0; i < this.tableData.length; i++) {
+          this.tableData[i].CostPrice = this.costprice
+        }
+      } else {
+        return false
       }
     },
     //重量确定
     weht() {
-      for (let i = 0; i < this.tableData.length; i++) {
-        this.tableData[i].Weight = this.weight
+      if (this.weight) {
+        for (let i = 0; i < this.tableData.length; i++) {
+          this.tableData[i].Weight = this.weight
+        }
+      } else {
+        return false
       }
     },
     //零售价格确定
     price() {
-      for (let i = 0; i < this.tableData.length; i++) {
-        this.tableData[i].RetailPrice = this.retailprice
+      if (this.retailprice) {
+        for (let i = 0; i < this.tableData.length; i++) {
+          this.tableData[i].RetailPrice = this.retailprice
+        }
+      } else {
+        return false
       }
     },
     //joom零售价格确定
     joomprice() {
-      for (let i = 0; i < this.tableData.length; i++) {
-        this.tableData[i].joomPrice = this.joomretailprice
+      if (this.joomretailprice) {
+        for (let i = 0; i < this.tableData.length; i++) {
+          this.tableData[i].joomPrice = this.joomretailprice
+        }
+      } else {
+        return false
       }
     },
     //joom运费
     transport() {
-      for (let i = 0; i < this.tableData.length; i++) {
-        this.tableData[i].joomShipping = this.transportationcost
+      if (this.transportationcost) {
+        for (let i = 0; i < this.tableData.length; i++) {
+          this.tableData[i].joomShipping = this.transportationcost
+        }
+      } else {
+        return false
       }
     },
     save() {
