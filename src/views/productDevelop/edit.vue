@@ -445,41 +445,52 @@
     </el-table>
     <el-row style="margin-top:5px;">
       <el-col :span="4">
-        <el-input size="small"
+        <el-input v-model="rows"
+                  size="small"
                   placeholder="行数"
                   style="width:190px"></el-input>
         <el-button size="small"
                    @click="addClomun">新增行</el-button>
       </el-col>
       <el-col :span="4">
-        <el-input size="small"
+        <el-input v-model="costprice"
+                  size="small"
                   placeholder="成本价￥"
                   style="width:190px"></el-input>
-        <el-button size="small">成本确定</el-button>
+        <el-button size="small"
+                   @click="cosprice">成本确定</el-button>
       </el-col>
       <el-col :span="4">
-        <el-input size="small"
+        <el-input v-model="weight"
+                  size="small"
                   placeholder="重量g"
                   style="width:190px"></el-input>
-        <el-button size="small">重量确定</el-button>
+        <el-button size="small"
+                   @click="weht">重量确定</el-button>
       </el-col>
       <el-col :span="4">
-        <el-input size="small"
+        <el-input v-model="retailprice"
+                  size="small"
                   placeholder="零售价$"
                   style="width:190px"></el-input>
-        <el-button size="small">价格确定</el-button>
+        <el-button size="small"
+                   @click="price">价格确定</el-button>
       </el-col>
       <el-col :span="4">
-        <el-input size="small"
+        <el-input v-model="joomretailprice"
+                  size="small"
                   placeholder="joom零售价$"
                   style="width:190px"></el-input>
-        <el-button size="small">价格确定</el-button>
+        <el-button size="small"
+                   @click="joomprice">价格确定</el-button>
       </el-col>
       <el-col :span="4">
-        <el-input size="small"
+        <el-input v-model="transportationcost"
+                  size="small"
                   placeholder="joom运费$"
                   style="width:185px"></el-input>
-        <el-button size="small">价格确定</el-button>
+        <el-button size="small"
+                   @click="transport">价格确定</el-button>
       </el-col>
     </el-row>
     <!-- <div style="margin-top:20px;">
@@ -508,6 +519,12 @@ export default {
     return {
       tableData: [],
       btn: '',
+      rows: null,
+      costprice: null,
+      weight: null,
+      retailprice: null,
+      joomretailprice: null,
+      transportationcost: null,
       options: [
         {
           value: '选项1',
@@ -711,8 +728,86 @@ export default {
     }
   },
   methods: {
-    del(index, row) {},
-    addClomun() {},
+    del(index, row) {
+      this.tableData.splice(index, 1)
+    },
+    //增加行
+    addClomun() {
+      let data = {
+        id: null,
+        infoId: null,
+        sku: '',
+        property1: null,
+        property2: null,
+        property3: null,
+        Weight: null,
+        memo1: null,
+        memo2: null,
+        memo3: null,
+        memo4: null,
+        linkurl: null,
+        goodsskuid: null,
+        RetailPrice: null,
+        CostPrice: null,
+        stockNum: null,
+        did: null,
+        joomPrice: null,
+        joomShipping: null
+      }
+      for (let i = 0; i < this.rows; i++) {
+        this.tableData.push(data)
+      }
+    },
+    //成本确定
+    cosprice() {
+      if (this.costprice) {
+        for (let i = 0; i < this.tableData.length; i++) {
+          this.tableData[i].CostPrice = this.costprice
+        }
+      } else {
+        return false
+      }
+    },
+    //重量确定
+    weht() {
+      if (this.weight) {
+        for (let i = 0; i < this.tableData.length; i++) {
+          this.tableData[i].Weight = this.weight
+        }
+      } else {
+        return false
+      }
+    },
+    //零售价格确定
+    price() {
+      if (this.retailprice) {
+        for (let i = 0; i < this.tableData.length; i++) {
+          this.tableData[i].RetailPrice = this.retailprice
+        }
+      } else {
+        return false
+      }
+    },
+    //joom零售价格确定
+    joomprice() {
+      if (this.joomretailprice) {
+        for (let i = 0; i < this.tableData.length; i++) {
+          this.tableData[i].joomPrice = this.joomretailprice
+        }
+      } else {
+        return false
+      }
+    },
+    //joom运费
+    transport() {
+      if (this.transportationcost) {
+        for (let i = 0; i < this.tableData.length; i++) {
+          this.tableData[i].joomShipping = this.transportationcost
+        }
+      } else {
+        return false
+      }
+    },
     save() {
       APISaveAttribute(this.saveInfo).then(res => {
         if (res.data.data[0] === 'success') {
