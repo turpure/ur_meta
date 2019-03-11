@@ -10,8 +10,19 @@
       </el-tab-pane>
     </el-tabs>
     <div v-show="show.status">
+      <!-- <div v-show="show.wait"> -->
+      <el-col :span="24"
+              style="padding:10px 20px;">
+        <el-button plain
+                   @click="passAll">批量导入普源</el-button>
+        <el-button plain
+                   @click="codeAll">重新生成商品编码</el-button>
+        <el-button plain
+                   @click="markAll">标记已完善</el-button>
+      </el-col>
       <!-- 属性信息列表 -->
       <el-table :data="tableData"
+                :cell-style="cellStyle"
                 @selection-change="selsChange"
                 style="width: 97%;margin-left:20px">
         <el-table-column type="selection"
@@ -711,7 +722,8 @@ import {
   APIPictureList,
   APIPlatList,
   APIAttribute,
-  APIFinishAttribute
+  APIFinishAttribute,
+  APIGenerateCode
 } from '../../api/product'
 import { getMenu } from '../../api/login'
 export default {
@@ -787,11 +799,11 @@ export default {
     view(index, row) {
       this.dialogVisible = true
       this.viewForm.id = row.id
-      console.log(this.viewForm)
       APIAttribute(this.viewForm).then(res => {
         this.viewForm = res.data.data
       })
     },
+    //标记
     mark(index, row) {
       this.finish.id = row.id
       APIFinishAttribute(this.finish).then(res => {
@@ -805,6 +817,33 @@ export default {
         }
       })
     },
+    //导入普源
+    passAll() {},
+    //生成编码
+    codeAll() {
+      if (this.sels) {
+        let data = {
+          id: this.sels.map(e => e.id)[0]
+        }
+        APIGenerateCode(data).then(res => {
+          for (let i = 0; i < this.tableData.length; i++) {
+            if (this.tableData[i].id === data.id) {
+              this.tableData[i].GoodsCode = res.data.data[0]
+              this.cellStyle()
+            }
+          }
+        })
+      }
+    },
+    //单元格样式
+    // cellStyle({ row, column, rowIndex, columnIndex }) {
+    //   debugger
+    //   if (row.id === this.sels.map(e => e.id)[0] && columnIndex === 4) {
+    //     return 'color: red'
+    //   }
+    // },
+    //批量标记
+    markAll() {},
     //属性信息删除
     del() {},
     //属性信息全选

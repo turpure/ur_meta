@@ -208,3 +208,11 @@ export function APISaveAttribute(param) {
     data
   })
 }
+export function APIGenerateCode(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/generate-code',
+    method: 'post',
+    data
+  })
+}
