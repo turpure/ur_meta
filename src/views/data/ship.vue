@@ -269,7 +269,6 @@ export default {
             this.options.series[0].data = data
             let shipPie = this.$echarts.init(this.$refs.shippie)
             shipPie.setOption(this.options)
-            console.log(data)
           })
         }
       })
