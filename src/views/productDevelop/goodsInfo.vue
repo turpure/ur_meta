@@ -762,7 +762,7 @@ export default {
         id: null
       },
       finish: {
-        id: null
+        id: []
       }
     }
   },
@@ -817,6 +817,20 @@ export default {
         }
       })
     },
+    //批量标记
+    markAll() {
+      this.finish.id = this.sels.map(e => e.id)
+      APIFinishAttribute(this.finish).then(res => {
+        if (res.data.data[0] === 'success') {
+          this.$message({
+            message: '标记成功',
+            type: 'success'
+          })
+        } else {
+          this.$message.error('标记失败')
+        }
+      })
+    },
     //导入普源
     passAll() {},
     //生成编码
@@ -829,21 +843,17 @@ export default {
           for (let i = 0; i < this.tableData.length; i++) {
             if (this.tableData[i].id === data.id) {
               this.tableData[i].GoodsCode = res.data.data[0]
-              this.cellStyle()
             }
           }
         })
       }
     },
     //单元格样式
-    // cellStyle({ row, column, rowIndex, columnIndex }) {
-    //   debugger
-    //   if (row.id === this.sels.map(e => e.id)[0] && columnIndex === 4) {
-    //     return 'color: red'
-    //   }
-    // },
-    //批量标记
-    markAll() {},
+    cellStyle({ row, column, rowIndex, columnIndex }) {
+      if (row.isVar === '是' && columnIndex === 4) {
+        return 'color: red'
+      }
+    },
     //属性信息删除
     del() {},
     //属性信息全选
