@@ -49,6 +49,7 @@ import productRecommend from '../views/productDevelop/productRecommend.vue'
 import productApprove from '../views/productDevelop/productApprove.vue'
 import goodsInfo from '../views/productDevelop/goodsInfo.vue'
 import edit from '../views/productDevelop/edit.vue'
+import picEdit from '../views/productDevelop/picEdit.vue'
 
 const routes = [
   {
@@ -321,6 +322,11 @@ const routes = [
         path: '/:id',
         component: edit,
         name: 'tables'
+      },
+      {
+        path: '/table/:id',
+        component: picEdit,
+        name: 'pictureTable'
       }
     ]
   },
