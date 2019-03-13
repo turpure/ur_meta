@@ -216,3 +216,19 @@ export function APIGenerateCode(param) {
     data
   })
 }
+export function APIPictureInfo(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/picture-info',
+    method: 'post',
+    data
+  })
+}
+export function APISavePictureInfo(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/save-picture-info',
+    method: 'post',
+    data
+  })
+}

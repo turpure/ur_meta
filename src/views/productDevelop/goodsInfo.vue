@@ -342,7 +342,8 @@
                  style="color: #409EFF;cursor:pointer;"></i>
             </el-tooltip>
             <el-tooltip content="更新">
-              <i class="el-icon-edit"
+              <i @click="picEdit(scope.$index, scope.row)"
+                 class="el-icon-edit"
                  style="color: #409EFF;cursor:pointer;"></i>
             </el-tooltip>
             <el-tooltip content="标记已完善">
@@ -475,7 +476,68 @@
       </el-table>
       <!-- 图片信息查看对话框 -->
       <el-dialog title='查看'
-                 :visible.sync="dialogPicture"></el-dialog>
+                 :visible.sync="dialogPicture">
+        <el-form :model="picForm"
+                 label-position="left"
+                 label-width="110px"
+                 ref="picForm">
+          <el-form-item label="图片"
+                        prop="picUrl"
+                        class="item1">
+            <img :src='viewForm.picUrl'
+                 style="width: 150px;height: 100px;">
+          </el-form-item>
+          <el-form-item label="图片地址"
+                        prop="picUrl"
+                        class="item">
+            <span>{{viewForm.picUrl}}</span>
+          </el-form-item>
+          <el-form-item label="商品名称"
+                        prop="GoodsName"
+                        class="item">
+            <span>{{viewForm.GoodsName}}</span></el-form-item>
+          <el-form-item label="商品编码"
+                        prop="GoodsCode"
+                        class="item">
+            <span>{{viewForm.GoodsCode}}</span>
+          </el-form-item>
+          <el-form-item label="是否备货"
+                        prop="stockUp"
+                        class="item">
+            <span>{{viewForm.stockUp === 1 ? '是' : '否'}}</span>
+          </el-form-item>
+          <el-form-item label="供应商名称"
+                        prop="SupplierName"
+                        class="item"><span>{{viewForm.SupplierName}}</span></el-form-item>
+          <el-form-item label="中文申报名"
+                        prop="AttributeName"
+                        class="item"><span>{{viewForm.AttributeName}}</span></el-form-item>
+          <el-form-item label="英文申报名"
+                        prop="DictionaryName"
+                        class="item"><span>{{viewForm.DictionaryName}}</span></el-form-item>
+          <el-form-item label="规格"
+                        prop=""
+                        class="item"><span></span></el-form-item>
+          <el-form-item label="季节"
+                        prop="Season"
+                        class="item"><span>{{viewForm.Season}}</span></el-form-item>
+          <el-form-item label="仓库"
+                        prop="StoreName"
+                        class="item"><span>{{viewForm.StoreName}}</span></el-form-item>
+          <el-form-item label="是否液体"
+                        prop="IsLiquid"
+                        class="item"><span>{{viewForm.IsLiquid}}</span></el-form-item>
+          <el-form-item label="是否粉末"
+                        prop="IsPowder"
+                        class="item"><span>{{viewForm.IsPowder}}</span></el-form-item>
+          <el-form-item label="是否带磁"
+                        prop="isMagnetism"
+                        class="item"><span>{{viewForm.isMagnetism}}</span></el-form-item>
+          <el-form-item label="是否带电"
+                        prop="IsCharged"
+                        class="item"><span>{{viewForm.IsCharged}}</span></el-form-item>
+        </el-form>
+      </el-dialog>
       <el-pagination background
                      @size-change="handleSizeChangePic"
                      @current-change="handleCurrentChangePic"
@@ -759,6 +821,9 @@ export default {
         currentPage: 1
       },
       viewForm: {
+        id: null
+      },
+      picForm: {
         id: null
       },
       finish: {
@@ -1303,6 +1368,15 @@ export default {
     //图片信息查看
     viewPic(index, row) {
       this.dialogPicture = true
+      // this.picForm.id = row.id
+      // APIPictureInfo(this.picForm).then(res => {
+      //   this.picForm = res.data.data
+      // })
+    },
+    picEdit(index, row) {
+      this.$router.push({
+        path: `/table/${row.id}`
+      })
     },
     //图片信息获取数据
     getPic() {
