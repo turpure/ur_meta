@@ -157,7 +157,10 @@
             <div ref="delaypie"
                  v-loading="listLoading"
                  element-loading-text="正在加载中..."
-                 :style="{width: '100%', height: '500px', marginTop:'10px'}">
+                 :style="{width: '100%', height: '400px', marginTop:'10px'}">
+            </div>
+            <div ref="pie"
+                 :style="{width: '100%', height: '400px', marginTop:'10px'}">
             </div>
           </el-tab-pane>
           <el-tab-pane label="缺货产品详情"
@@ -167,10 +170,10 @@
                       element-loading-text="正在加载中..."
                       style="width: 100%"
                       height="750">
-              <el-table-column label="sku"
-                               prop="sku"></el-table-column>
-              <el-table-column label="skuName"
-                               prop="skuName"></el-table-column>
+              <el-table-column label="商品编码"
+                               prop="goodsCode"></el-table-column>
+              <el-table-column label="商品名称"
+                               prop="goodsName"></el-table-column>
               <el-table-column label="数量"
                                prop="number"></el-table-column>
               <el-table-column label="百分比"
@@ -204,7 +207,6 @@ export default {
       account: [],
       department: [],
       secDepartment: [],
-      // flag: [{ id: 0, type: '按天' }, { id: 2, type: '按月' }],
       condition: {
         dateRange: [],
         member: [],
@@ -212,7 +214,6 @@ export default {
         account: [],
         department: [],
         secDepartment: []
-        // flag: 0
       },
       options: {
         title: {
@@ -273,6 +274,38 @@ export default {
         ],
         series: [Object]
       },
+      pie: {
+        title: {
+          text: '缺货占比',
+          subtext: '',
+          x: 'center'
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{a} <br/>{b} : {c} ({d}%)'
+        },
+        legend: {
+          orient: 'vertical',
+          left: 'left',
+          data: []
+        },
+        series: [
+          {
+            name: '缺货占比',
+            type: 'pie',
+            radius: '55%',
+            center: ['50%', '60%'],
+            data: [Object],
+            itemStyle: {
+              emphasis: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+              }
+            }
+          }
+        ]
+      },
       pickerOptions2: {
         shortcuts: [
           {
@@ -318,18 +351,30 @@ export default {
           if (this.activeName === 'first') {
             APIDelay(this.condition).then(res => {
               this.listLoading = false
-              const data = res.data.data
+              const data = res.data.data.barData
               const lineName = []
               const series = []
-              this.options.xAxis[0].data = data.map(e => e.name)
+              this.options.xAxis[0].data = data.map(e => e.dt)
               const sery = {
                 type: 'bar'
               }
-              sery['data'] = data.map(e => e.value)
+              sery['data'] = data.map(e => e.rate)
               series.push(sery)
               this.options.series = series
               let delayPie = this.$echarts.init(this.$refs.delaypie)
               delayPie.setOption(this.options)
+
+              const pieData = res.data.data.pieData
+              const Name = []
+              pieData.forEach(e => {
+                if (Name.indexOf(e.name) < 0) {
+                  Name.push(e.name)
+                }
+              })
+              this.pie.legend.data = Name
+              this.pie.series[0].data = pieData
+              let Pie = this.$echarts.init(this.$refs.pie)
+              Pie.setOption(this.pie)
             })
           } else {
             APIDelayDetail(this.condition).then(res => {
