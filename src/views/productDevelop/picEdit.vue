@@ -3,8 +3,10 @@
     <el-col :span="24">
       <el-button type="primary"
                  @click="save">保存当前数据</el-button>
-      <el-button type="primary">保存并完善</el-button>
-      <el-button type="warning">上传到FTP</el-button>
+      <el-button type="primary"
+                 @click="preserve ">保存并完善</el-button>
+      <el-button type="warning"
+                 @click="upload">上传到FTP</el-button>
     </el-col>
     <el-table :data="tableData">
       <el-table-column type="index"
@@ -66,7 +68,12 @@
   </section>
 </template>
 <script>
-import { APIPictureInfo, APISavePictureInfo } from '../../api/product'
+import {
+  APIPictureInfo,
+  APISavePictureInfo,
+  APIFinishPicture,
+  APIPictureToFtp
+} from '../../api/product'
 export default {
   data() {
     return {
@@ -77,8 +84,35 @@ export default {
     }
   },
   methods: {
+    //保存
     save() {
       APISavePictureInfo(this.tableData).then(res => {
+        if (res.data.data[0] === 'success') {
+          this.$message({
+            message: '保存成功!',
+            type: 'success'
+          })
+        } else {
+          this.$message.error('保存失败!')
+        }
+      })
+    },
+    //保存并完善
+    preserve() {
+      APIFinishPicture(this.condition).then(res => {
+        if (res.data.data[0] === 'success') {
+          this.$message({
+            message: '保存成功!',
+            type: 'success'
+          })
+        } else {
+          this.$message.error('保存失败!')
+        }
+      })
+    },
+    //上传
+    upload() {
+      APIPictureToFtp(this.condition).then(res => {
         if (res.data.data[0] === 'success') {
           this.$message({
             message: '保存成功!',
