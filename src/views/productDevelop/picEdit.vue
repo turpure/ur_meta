@@ -27,6 +27,7 @@
                        label="SKU">
         <template slot-scope="scope">
           <el-input size="small"
+                    disabled
                     v-model="scope.row.sku"></el-input>
         </template>
       </el-table-column>
@@ -41,6 +42,7 @@
                        label="款式1">
         <template slot-scope="scope">
           <el-input size="small"
+                    disabled
                     v-model="scope.row.property1"></el-input>
         </template>
       </el-table-column>
@@ -48,6 +50,7 @@
                        label="款式2">
         <template slot-scope="scope">
           <el-input size="small"
+                    disabled
                     v-model="scope.row.property2"></el-input>
         </template>
       </el-table-column>
@@ -55,6 +58,7 @@
                        label="款式3">
         <template slot-scope="scope">
           <el-input size="small"
+                    disabled
                     v-model="scope.row.property3"></el-input>
         </template>
       </el-table-column>
@@ -75,7 +79,7 @@ export default {
   methods: {
     save() {
       APISavePictureInfo(this.tableData).then(res => {
-        if (res.data.data[0] === 'fauiler') {
+        if (res.data.data[0] === 'success') {
           this.$message({
             message: '保存成功!',
             type: 'success'
@@ -94,7 +98,7 @@ export default {
   },
   mounted() {
     this.getData()
-    console.log(this.$route.params.id)
+    // this.condition.id = this.$route.params.id
   }
 }
 </script>
