@@ -232,3 +232,19 @@ export function APISavePictureInfo(param) {
     data
   })
 }
+export function APIFinishPicture(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/finish-picture',
+    method: 'post',
+    data
+  })
+}
+export function APIPictureToFtp(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/picture-to-ftp',
+    method: 'post',
+    data
+  })
+}
