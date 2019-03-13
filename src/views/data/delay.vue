@@ -365,13 +365,12 @@ export default {
               delayPie.setOption(this.options)
 
               const pieData = res.data.data.pieData
-              const Name = []
               pieData.forEach(e => {
-                if (Name.indexOf(e.name) < 0) {
-                  Name.push(e.name)
+                if (lineName.indexOf(e.name) < 0) {
+                  lineName.push(e.name)
                 }
               })
-              this.pie.legend.data = Name
+              this.pie.legend.data = lineName
               this.pie.series[0].data = pieData
               let Pie = this.$echarts.init(this.$refs.pie)
               Pie.setOption(this.pie)

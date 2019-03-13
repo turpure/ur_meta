@@ -160,7 +160,9 @@
     <div ref="shippie"
          v-loading="listLoading"
          element-loading-text="正在加载中..."
-         :style="{width: '100%', height: '500px'}"></div>
+         :style="{width: '100%', height: '400px'}"></div>
+    <div ref="shipbar"
+         :style="{width: '100%', height: '400px'}"></div>
   </div>
 </template>
 <script>
@@ -178,7 +180,7 @@ export default {
     return {
       options: {
         title: {
-          text: 'shippie',
+          text: '延迟发货饼状图',
           subtext: '',
           x: 'center'
         },
@@ -194,7 +196,7 @@ export default {
         },
         series: [
           {
-            name: 'ship',
+            name: '延迟发货',
             type: 'pie',
             radius: '55%',
             center: ['50%', '60%'],
@@ -208,6 +210,68 @@ export default {
             }
           }
         ]
+      },
+      bar: {
+        title: {
+          text: '延迟发货柱状图'
+        },
+        legend: {
+          data: [String]
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            label: {
+              backgroundColor: '#6a7985'
+            }
+          },
+          formatter: function(params) {
+            var str = ''
+            // str += '<div>' + params[0].name + '</div>'
+            for (var i = 0; i < params.length; i++) {
+              str +=
+                '<div><span>' +
+                params[i].name +
+                '</span> : <span>' +
+                (params[i].data
+                  ? Math.round(params[i].data * 10000) / 100 + '%'
+                  : '暂无') +
+                '</span></div>'
+            }
+            return str
+          }
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            dataView: { show: true, readOnly: false },
+            magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
+            restore: { show: true },
+            saveAsImage: { show: true }
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: [
+          {
+            type: 'category',
+            data: [String]
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value',
+            axisLabel: {
+              formatter: '{value}'
+            }
+          }
+        ],
+        series: [Object]
       },
       listLoading: false,
       allMember: [],
@@ -264,11 +328,45 @@ export default {
           this.listLoading = true
           APIDelayShip(this.condition).then(res => {
             this.listLoading = false
-            const data = res.data.data
+            const data = res.data.data.pieData
             this.options.legend.data = data.map(e => e.name)
             this.options.series[0].data = data
             let shipPie = this.$echarts.init(this.$refs.shippie)
             shipPie.setOption(this.options)
+
+            const ret = res.data.data.barData
+            const lineName = []
+            const series = []
+            ret.forEach(element => {
+              if (lineName.indexOf(element.name) < 0) {
+                lineName.push(element.name)
+              }
+            })
+            const date = []
+            lineName.forEach(name => {
+              const sery = {
+                type: 'bar',
+                stack: '总量',
+                areaStyle: { normal: {} }
+              }
+              const amt = []
+              ret.map(element => {
+                if (element.name === name) {
+                  amt.push(Number(element.value))
+                  if (date.indexOf(element.dt) < 0) {
+                    date.push(element.dt)
+                  }
+                }
+              })
+              sery['data'] = amt
+              sery['name'] = name
+              series.push(sery)
+            })
+            this.bar.legend.data = lineName
+            this.bar.xAxis[0].data = date
+            this.bar.series = series
+            let Bar = this.$echarts.init(this.$refs.shipbar)
+            Bar.setOption(this.bar)
           })
         }
       })
