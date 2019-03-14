@@ -217,7 +217,7 @@ export default {
       },
       options: {
         title: {
-          text: '缺货柱状图'
+          text: '缺货率'
         },
         tooltip: {
           trigger: 'axis',
@@ -276,7 +276,7 @@ export default {
       },
       pie: {
         title: {
-          text: '缺货占比',
+          text: '缺货率',
           subtext: '',
           x: 'center'
         },
@@ -342,7 +342,9 @@ export default {
       }
     },
     handleClick(tab, event) {
-      this.activeName = tab.name
+      if (tab.name === 'second') {
+        this.onSubmit()
+      }
     },
     onSubmit() {
       this.$refs.condition.validate(valid => {
@@ -356,7 +358,7 @@ export default {
               const series = []
               this.options.xAxis[0].data = data.map(e => e.dt)
               const sery = {
-                type: 'bar'
+                type: 'line'
               }
               sery['data'] = data.map(e => e.rate)
               series.push(sery)
