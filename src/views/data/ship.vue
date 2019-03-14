@@ -180,7 +180,7 @@ export default {
     return {
       options: {
         title: {
-          text: '延迟发货饼状图',
+          text: '延迟发货率',
           subtext: '',
           x: 'center'
         },
@@ -196,7 +196,7 @@ export default {
         },
         series: [
           {
-            name: '延迟发货',
+            name: '延迟发货率',
             type: 'pie',
             radius: '55%',
             center: ['50%', '60%'],
@@ -213,7 +213,7 @@ export default {
       },
       bar: {
         title: {
-          text: '延迟发货柱状图'
+          text: '延迟发货率'
         },
         legend: {
           data: [String]
@@ -345,9 +345,7 @@ export default {
             const date = []
             lineName.forEach(name => {
               const sery = {
-                type: 'bar',
-                stack: '总量',
-                areaStyle: { normal: {} }
+                type: 'line'
               }
               const amt = []
               ret.map(element => {

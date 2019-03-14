@@ -418,20 +418,23 @@
           </el-col>
           <el-col :span="24">
             <el-form-item label="描述">
-              <el-input v-model="wishForm.description"
+              <el-input size="small"
+                        v-model="wishForm.description"
                         type="textarea"
                         style="width:1500px"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item label="数量">
-              <el-input v-model="wishForm.quantity"
+              <el-input size="small"
+                        v-model="wishForm.quantity"
                         style="width:1500px"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item label="运输时间">
-              <el-input v-model="wishForm.prepareDay"
+              <el-input size="small"
+                        v-model="wishForm.prepareDay"
                         style="width:1500px"></el-input>
             </el-form-item>
           </el-col>
@@ -668,22 +671,22 @@
                      style="width:50px;height:50px;">
               </el-col>
             </el-row>
-            <el-col :span="12">
+            <el-col :span="6">
               <el-form-item label="商品所在地">
                 <el-input size="small"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="6">
               <el-form-item label="国家">
                 <el-input size="small"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="6">
               <el-form-item label="邮编">
                 <el-input size="small"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="6">
               <el-form-item label="备货天数">
                 <el-input size="small"></el-input>
               </el-form-item>
@@ -691,39 +694,38 @@
           </el-row>
           <h3 class="toolbar"
               style="padding:5px;margin:10px;">站点组</h3>
-          <el-col :span="24">
-            <el-form-item label="站点">
-              <el-select v-model="select">
-                <el-option label="美国站"
-                           value="美国站"></el-option>
-                <el-option label="中国站"
-                           value="中国站"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
+          <el-form-item label="站点">
+            <el-select size="small"
+                       v-model="select">
+              <el-option label="美国站"
+                         value="美国站"></el-option>
+              <el-option label="中国站"
+                         value="中国站"></el-option>
+            </el-select>
+          </el-form-item>
           <h3 class="toolbar"
               style="padding:5px;margin:10px;">多属性</h3>
           <el-button>设置多属性</el-button>
           <h3 class="toolbar"
               style="padding:5px;margin:10px;">主信息</h3>
-          <el-col :span="12">
+          <el-col :span="6">
             <el-form-item label="刊登分类">
-              <el-input></el-input>
+              <el-input size="small"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="6">
             <el-form-item label="刊登分类2">
-              <el-input></el-input>
+              <el-input size="small"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="6">
             <el-form-item label="标题">
-              <el-input></el-input>
+              <el-input size="small"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="6">
             <el-form-item label="子标题">
-              <el-input></el-input>
+              <el-input size="small"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="24">
@@ -812,16 +814,29 @@
           </el-col>
           <el-col :span="24">
             <el-form-item label="描述">
-              <el-input v-model="wishForm.description"
+              <el-input size="small"
+                        v-model="wishForm.description"
                         type="textarea"
                         style="width:1500px"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="24">
-
-          </el-col>
+          <el-form-item label="数量">
+            <el-input size="small"></el-input>
+          </el-form-item>
+          <el-form-item label="UPC">
+            <el-input size="small"></el-input>
+          </el-form-item>
+          <el-form-item label="EAN">
+            <el-input size="small"></el-input>
+          </el-form-item>
           <h3 class="toolbar"
               style="padding:5px;margin:10px;">物品属性</h3>
+          <el-form-item label="属性名称">
+            <el-input size="small"></el-input>
+          </el-form-item>
+          <el-form-item label="属性内容">
+            <el-input size="small"></el-input>
+          </el-form-item>
           <h3 class="toolbar"
               style="padding:5px;margin:10px;">物流设置</h3>
         </el-form>
