@@ -514,7 +514,7 @@ export default {
       },
       orderAverage: {
         title: {
-          text: '平均客单价走势'
+          text: '平均订单价走势'
         },
         tooltip: {
           trigger: 'axis',
@@ -524,9 +524,6 @@ export default {
               backgroundColor: '#6a7985'
             }
           }
-        },
-        legend: {
-          data: [String]
         },
         toolbox: {
           show: true,
@@ -562,7 +559,7 @@ export default {
       },
       skuAverage: {
         title: {
-          text: '平均产品单价走势'
+          text: '平均SKU单价走势'
         },
         tooltip: {
           trigger: 'axis',
@@ -572,9 +569,6 @@ export default {
               backgroundColor: '#6a7985'
             }
           }
-        },
-        legend: {
-          data: [String]
         },
         toolbox: {
           show: true,
@@ -816,6 +810,30 @@ export default {
               let sLineRate = this.$echarts.init(this.$refs.slineRate)
               sLineRate.setOption(this.slineRate)
             }
+
+            const orderlineavg = res.data.data.orderLineAvg
+            const series = []
+            this.orderAverage.xAxis[0].data = orderlineavg.map(e => e.orderDate)
+            const sery = {
+              type: 'bar'
+            }
+            sery['data'] = orderlineavg.map(e => e.amtAvg)
+            series.push(sery)
+            this.orderAverage.series = series
+            let orderaverage = this.$echarts.init(this.$refs.orderAverage)
+            orderaverage.setOption(this.orderAverage)
+
+            const skulineavg = res.data.data.skuLineAvg
+            const meries = []
+            this.skuAverage.xAxis[0].data = skulineavg.map(e => e.orderDate)
+            const mery = {
+              type: 'bar'
+            }
+            mery['data'] = skulineavg.map(e => e.amtAvg)
+            meries.push(mery)
+            this.skuAverage.series = meries
+            let skuaverage = this.$echarts.init(this.$refs.skuAverage)
+            skuaverage.setOption(this.skuAverage)
           })
         }
       })

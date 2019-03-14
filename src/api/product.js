@@ -248,3 +248,19 @@ export function APIPictureToFtp(param) {
     data
   })
 }
+export function APIPlat(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/plat',
+    method: 'post',
+    data
+  })
+}
+export function APIPlatInfo(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/plat-info',
+    method: 'post',
+    data
+  })
+}

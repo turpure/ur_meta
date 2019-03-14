@@ -50,6 +50,7 @@ import productApprove from '../views/productDevelop/productApprove.vue'
 import goodsInfo from '../views/productDevelop/goodsInfo.vue'
 import edit from '../views/productDevelop/edit.vue'
 import picEdit from '../views/productDevelop/picEdit.vue'
+import platEdit from '../views/productDevelop/platEdit.vue'
 
 const routes = [
   {
@@ -327,6 +328,11 @@ const routes = [
         path: '/table/:id',
         component: picEdit,
         name: 'pictureTable'
+      },
+      {
+        path: '/plat/:id',
+        component: platEdit,
+        name: 'platTable'
       }
     ]
   },
