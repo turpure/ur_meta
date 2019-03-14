@@ -574,7 +574,8 @@
                  style="color: #409EFF;cursor:pointer;"></i>
             </el-tooltip>
             <el-tooltip content="更新">
-              <i class="el-icon-edit"
+              <i @click="platEdit(scope.$index, scope.row)"
+                 class="el-icon-edit"
                  style="color: #409EFF;cursor:pointer;"></i>
             </el-tooltip>
             <el-tooltip content="删除">
@@ -764,6 +765,163 @@
       <!-- 平台信息查看对话框 -->
       <el-dialog title='查看'
                  :visible.sync="dialogPlat">
+        <el-form :model="platForm"
+                 label-position="left"
+                 label-width="110px"
+                 ref="platForm">
+          <el-form-item label="供应商链接1"
+                        prop=""
+                        class="item">
+            <span>{{}}</span>
+          </el-form-item>
+          <el-form-item label="供应商链接2"
+                        prop=""
+                        class="item">
+            <span>{{}}</span>
+          </el-form-item>
+          <el-form-item label="供应商链接3"
+                        prop=""
+                        class="item">
+            <span>{{}}</span>
+          </el-form-item>
+          <el-form-item label="平台参考链接1"
+                        prop=""
+                        class="item">
+            <span>{{}}</span>
+          </el-form-item>
+          <el-form-item label="平台参考链接2"
+                        prop=""
+                        class="item">
+            <span>{{}}</span></el-form-item>
+          <el-form-item label="平台参考链接3"
+                        prop=""
+                        class="item">
+            <span>{{}}</span></el-form-item>
+          <el-form-item label="是否液体"
+                        prop="IsLiquid"
+                        class="item"><span>{{platForm.IsLiquid}}</span></el-form-item>
+          <el-form-item label="是否粉末"
+                        prop="IsPowder"
+                        class="item"><span>{{platForm.IsPowder}}</span></el-form-item>
+          <el-form-item label="是否带磁"
+                        prop="isMagnetism"
+                        class="item"><span>{{platForm.isMagnetism}}</span></el-form-item>
+          <el-form-item label="是否带电"
+                        prop="IsCharged"
+                        class="item"><span>{{platForm.IsCharged}}</span></el-form-item>
+          <el-form-item label="描述"
+                        prop="description"
+                        class="item"><span>{{platForm.description}}</span></el-form-item>
+          <el-form-item label="商品名称"
+                        prop="GoodsName"
+                        class="item"><span>{{platForm.GoodsName}}</span></el-form-item>
+          <el-form-item label="中文申报名"
+                        prop="AliasCnName"
+                        class="item"><span>{{platForm.AliasCnName}}</span></el-form-item>
+          <el-form-item label="英文申报名"
+                        prop="AliasEnName"
+                        class="item"><span>{{platForm.AliasEnName}}</span></el-form-item>
+          <el-form-item label="Pack Name"
+                        prop=""
+                        class="item"><span>{{}}</span></el-form-item>
+          <el-form-item label="季节"
+                        prop="Season"
+                        class="item"><span>{{platForm.Season}}</span></el-form-item>
+          <el-form-item label="禁售平台"
+                        prop="DictionaryName"
+                        class="item"><span>{{platForm.DictionaryName}}</span></el-form-item>
+          <el-form-item label="供应商名称"
+                        prop="SupplierName"
+                        class="item"><span>{{platForm.SupplierName}}</span></el-form-item>
+          <el-form-item label="仓库"
+                        prop="StoreName"
+                        class="item"><span>{{platForm.StoreName}}</span></el-form-item>
+          <el-form-item label="采购"
+                        prop="Purchaser"
+                        class="item">
+            <span>{{platForm.Purchaser}}</span>
+          </el-form-item>
+          <el-form-item label="美工"
+                        prop="possessMan1"
+                        class="item">
+            <span>{{platForm.possessMan1}}</span>
+          </el-form-item>
+          <el-form-item label="责任人2"
+                        prop="possessMan2"
+                        class="item">
+            <span>{{platForm.possessMan2}}</span>
+          </el-form-item>
+          <el-form-item label="声明价"
+                        prop=""
+                        class="item">
+            <span></span>
+          </el-form-item>
+          <el-form-item label="图片"
+                        prop="picUrl"
+                        class="item">
+            <span>{{platForm.picUrl}}</span>
+          </el-form-item>
+          <el-form-item label="Goodsid"
+                        prop="goodsid"
+                        class="item">
+            <span>{{platForm.goodsid}}</span>
+          </el-form-item>
+          <el-form-item label="商品编码"
+                        prop="GoodsCode"
+                        class="item">
+            <span>{{platForm.GoodsCode}}</span>
+          </el-form-item>
+          <el-form-item label="是否备货"
+                        prop="stockUp"
+                        class="item">
+            <span>{{platForm.stockUp}}</span>
+          </el-form-item>
+          <el-form-item label="Achieve Status"
+                        prop="achieveStatus"
+                        class="item">
+            <span>{{platForm.achieveStatus}}</span>
+          </el-form-item>
+          <el-form-item label="开发时间"
+                        prop="devDatetime"
+                        class="item">
+            <span>{{platForm.devDatetime}}</span>
+          </el-form-item>
+          <el-form-item label="开发员"
+                        prop="developer"
+                        class="item">
+            <span>{{platForm.developer}}</span>
+          </el-form-item>
+          <el-form-item label="更新时间"
+                        prop="updateTime"
+                        class="item">
+            <span>{{platForm.updateTime}}</span>
+          </el-form-item>
+          <el-form-item label="图片状态"
+                        prop="picStatus"
+                        class="item">
+            <span>{{platForm.picStatus}}</span>
+          </el-form-item>
+          <el-form-item label="供应商ID"
+                        prop="SupplierID"
+                        class="item">
+            <span>{{platForm.SupplierID}}</span>
+          </el-form-item>
+          <el-form-item label="仓库ID"
+                        prop="StoreID"
+                        class="item">
+            <span>{{platForm.StoreID}}</span>
+          </el-form-item>
+          <el-form-item label="特殊属性名"
+                        prop=""
+                        class="item">
+            <span></span>
+          </el-form-item>
+          <el-form-item label="Bgoodsid"
+                        prop="bgoodsid"
+                        class="item">
+            <span>{{platForm.bgoodsid}}</span>
+          </el-form-item>
+        </el-form>
       </el-dialog>
       <el-pagination background
                      @size-change="handleSizeChangePlat"
@@ -785,7 +943,8 @@ import {
   APIPlatList,
   APIAttribute,
   APIFinishAttribute,
-  APIGenerateCode
+  APIGenerateCode,
+  APIPlat
 } from '../../api/product'
 import { getMenu } from '../../api/login'
 export default {
@@ -826,6 +985,7 @@ export default {
       picForm: {
         id: null
       },
+      platForm: {},
       finish: {
         id: []
       }
@@ -1800,6 +1960,16 @@ export default {
     //平台信息查看
     viewPlat(index, row) {
       this.dialogPlat = true
+      this.platForm.id = row.id
+      APIPlat(this.platForm).then(res => {
+        this.platForm = res.data.data
+      })
+    },
+    //平台信息更新
+    platEdit(index, row) {
+      this.$router.push({
+        path: `/plat/${row.id}`
+      })
     },
     //平台信息获取数据
     getPlat() {
