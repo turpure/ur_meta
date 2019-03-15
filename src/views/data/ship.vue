@@ -345,7 +345,9 @@ export default {
             const date = []
             lineName.forEach(name => {
               const sery = {
-                type: 'line'
+                type: 'line',
+                stack: '总量',
+                areaStyle: { normal: {} }
               }
               const amt = []
               ret.map(element => {
