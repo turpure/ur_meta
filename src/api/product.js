@@ -272,3 +272,11 @@ export function APISaveWishInfo(param) {
     data
   })
 }
+export function APIFinishPlat(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/finish-plat',
+    method: 'post',
+    data
+  })
+}

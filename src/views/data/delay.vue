@@ -276,7 +276,7 @@ export default {
       },
       pie: {
         title: {
-          text: '缺货率',
+          text: '缺货订单占比分析',
           subtext: '',
           x: 'center'
         },
@@ -291,7 +291,7 @@ export default {
         },
         series: [
           {
-            name: '缺货占比',
+            name: '缺货订单占比',
             type: 'pie',
             radius: '55%',
             center: ['50%', '60%'],
