@@ -264,3 +264,11 @@ export function APIPlatInfo(param) {
     data
   })
 }
+export function APISaveWishInfo(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/save-wish-info',
+    method: 'post',
+    data
+  })
+}
