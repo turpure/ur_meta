@@ -25,33 +25,23 @@ export default {
   },
   data() {
     return {
-      select: '',
-      select1: '',
-      activeName: 'first',
-      wishForm: {},
-      mainForm: {},
-      tableData: [
-        {
-          a: 'Brand',
-          b: 'Unbranded'
-        }
-      ],
-      condition: {
-        id: 5,
-        plat: 'wish'
-      }
+      // select: '',
+      // select1: '',
+      activeName: 'first'
+      // wishForm: {},
+      // mainForm: {},
+      // tableData: [
+      //   {
+      //     a: 'Brand',
+      //     b: 'Unbranded'
+      //   }
+      // ]
     }
   },
   methods: {
-    handleClick() {},
-    getData() {
-      APIPlatInfo(this.condition).then(res => {
-        this.wishForm = res.data.data.basicInfo
-      })
-    }
+    handleClick() {}
   },
   mounted() {
-    this.getData()
     console.log(this.$route.params.id)
   }
 }
