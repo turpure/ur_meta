@@ -815,7 +815,9 @@ export default {
             const series = []
             this.orderAverage.xAxis[0].data = orderlineavg.map(e => e.orderDate)
             const sery = {
-              type: 'bar'
+              type: 'line',
+              stack: '总量',
+              areaStyle: { normal: {} }
             }
             sery['data'] = orderlineavg.map(e => e.amtAvg)
             series.push(sery)
@@ -827,7 +829,9 @@ export default {
             const meries = []
             this.skuAverage.xAxis[0].data = skulineavg.map(e => e.orderDate)
             const mery = {
-              type: 'bar'
+              type: 'line',
+              stack: '总量',
+              areaStyle: { normal: {} }
             }
             mery['data'] = skulineavg.map(e => e.amtAvg)
             meries.push(mery)

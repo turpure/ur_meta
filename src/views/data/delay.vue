@@ -358,7 +358,9 @@ export default {
               const series = []
               this.options.xAxis[0].data = data.map(e => e.dt)
               const sery = {
-                type: 'line'
+                type: 'line',
+                stack: '总量',
+                areaStyle: { normal: {} }
               }
               sery['data'] = data.map(e => e.rate)
               series.push(sery)
