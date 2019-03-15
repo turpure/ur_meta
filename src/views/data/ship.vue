@@ -228,11 +228,11 @@ export default {
           },
           formatter: function(params) {
             var str = ''
-            // str += '<div>' + params[0].name + '</div>'
+            str += '<div>' + params[0].name + '</div>'
             for (var i = 0; i < params.length; i++) {
               str +=
                 '<div><span>' +
-                params[i].name +
+                params[i].seriesName +
                 '</span> : <span>' +
                 (params[i].data
                   ? Math.round(params[i].data * 10000) / 100 + '%'

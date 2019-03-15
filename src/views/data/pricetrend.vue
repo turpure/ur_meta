@@ -514,7 +514,7 @@ export default {
       },
       orderAverage: {
         title: {
-          text: '平均订单价走势'
+          text: '平均客单价走势'
         },
         tooltip: {
           trigger: 'axis',

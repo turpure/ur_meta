@@ -30,7 +30,7 @@
       <el-row>
         <el-col :span="5">
           <el-form-item label=" ">
-            <img src="wishForm.mainImage"
+            <img :src="wishForm.mainImage"
                  style="width:250px;height:150px;" />
           </el-form-item>
         </el-col>
@@ -825,7 +825,7 @@
   </section>
 </template>
 <script>
-import { APIPlatInfo, APISaveWishInfo } from '../../api/product'
+import { APIPlatInfo, APISaveWishInfo, APIFinishPlat } from '../../api/product'
 export default {
   props: {
     id: {
@@ -856,9 +856,6 @@ export default {
     }
   },
   methods: {
-    set() {
-      this.dialogVisible = true
-    },
     del(index, row) {
       this.tableData.splice(index, 1)
     },
@@ -917,7 +914,15 @@ export default {
       }
     },
     //建议零售价
-    setAdvice() {},
+    setAdvice() {
+      if (this.advicePrice) {
+        for (let i = 0; i < this.tableData.length; i++) {
+          this.tableData[i].msrp = this.advicePrice
+        }
+      } else {
+        return false
+      }
+    },
     //joom零售价格
     setJoom() {
       if (this.joomPrice) {
@@ -939,7 +944,15 @@ export default {
       }
     },
     //运输时间
-    setTime() {},
+    setTime() {
+      if (this.time) {
+        for (let i = 0; i < this.tableData.length; i++) {
+          this.tableData[i].shippingTime = this.time
+        }
+      } else {
+        return false
+      }
+    },
     //更新
     update() {
       let data = {
@@ -985,7 +998,7 @@ export default {
     //标记
     handleCommand(command) {
       let data = {
-        id: null,
+        id: 5,
         plat: []
       }
       if (command === 'a') {
@@ -993,14 +1006,28 @@ export default {
       } else {
         data.plat = ['joom']
       }
+      APIFinishPlat(data).then(res => {
+        if (res.data.data[0] === 'success') {
+          this.$message({
+            message: '保存成功',
+            type: 'success'
+          })
+        } else {
+          this.$message.error('保存失败')
+        }
+      })
     },
     getData() {
       APIPlatInfo(this.condition).then(res => {
+        debugger
         this.wishForm = res.data.data.basicInfo
         this.tableData = res.data.data.skuInfo
+        let extraPic = res.data.data.basicInfo.extraImages
+        let picture = extraPic.match(/http:([^"]*)/g)
+        console.log(picture)
+        // this.picture = res.data.data.basicInfores.extraPage
       })
-    },
-    getMark() {}
+    }
   },
   mounted() {
     this.getData()
