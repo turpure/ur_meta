@@ -280,3 +280,83 @@ export function APIFinishPlat(param) {
     data
   })
 }
+export function APISupplierList(param) {
+  const data = { condition: param }
+  return request({
+    url: '/supplier/supplier-list?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+export function APICreateSupplier(param) {
+  const data = { condition: param }
+  return request({
+    url: '/supplier/create-supplier',
+    method: 'post',
+    data
+  })
+}
+export function APIDetail(param) {
+  const data = { condition: param }
+  return request({
+    url: '/supplier/attribute',
+    method: 'post',
+    data
+  })
+}
+export function APIDelete(param) {
+  const data = { condition: param }
+  return request({
+    url: '/supplier/attribute?id=' + param.id,
+    method: 'delete',
+    data
+  })
+}
+export function APIUpdateSupplier(param) {
+  const data = { condition: param }
+  return request({
+    url: '/supplier/update-supplier',
+    method: 'post',
+    data
+  })
+}
+export function APISupplierGoodsList(param) {
+  const data = { condition: param }
+  return request({
+    url: '/supplier/supplier-goods-list?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+export function APICreateGoods(param) {
+  const data = { condition: param }
+  return request({
+    url: '/supplier/create-goods',
+    method: 'post',
+    data
+  })
+}
+export function APIUpdateGoods(param) {
+  const data = { condition: param }
+  return request({
+    url: '/supplier/update-goods',
+    method: 'post',
+    data
+  })
+}
+export function APIGoodsAttribute(param) {
+  const data = { condition: param }
+  return request({
+    url: '/supplier/goods-attribute',
+    method: 'post',
+    data
+  })
+}
+export function APIGoodsDelelte(param) {
+  const data = { condition: param }
+  return request({
+    url: '/supplier/goods-attribute?id=' + param.id,
+    method: 'delete',
+    data
+  })
+}
