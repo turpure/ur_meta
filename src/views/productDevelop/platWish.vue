@@ -12,7 +12,7 @@
         </el-dropdown-menu>
       </el-dropdown>
       <el-button type="success">导出ibay模板</el-button>
-      <el-select v-model="select1"
+      <el-select v-model="select"
                  placeholder="--请选择账号--">
         <el-option label="是"
                    value="是"></el-option>
@@ -21,31 +21,30 @@
       </el-select>
       <el-button type="info">导出Joom模板</el-button>
     </div>
-    <h3 class="toolbar"
-        style="padding:5px;margin:10px;">基本信息</h3>
+    <h3 class="toolbar">基本信息</h3>
     <el-form :model="wishForm"
              :inline="true"
-             label-width="80px"
+             label-width="100px"
              ref="wishForm">
       <el-row>
         <el-col :span="5">
           <el-form-item label=" ">
             <img :src="wishForm.mainImage"
-                 style="width:250px;height:150px;" />
+                 style="width:230px;height:150px;" />
           </el-form-item>
         </el-col>
         <el-col :span="19">
           <el-form-item label="主图">
             <el-input v-model="wishForm.mainImage"
                       size="small"
-                      style="width:1170px;"></el-input>
+                      style="width:1150px;"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="19">
           <el-form-item label="SKU">
             <el-input size="small"
                       v-model="wishForm.SKU"
-                      style="width:1170px;"></el-input>
+                      style="width:1150px;"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="19">
@@ -53,466 +52,40 @@
             <el-input v-model="wishForm.stockUp"
                       size="small"
                       disabled
-                      style="width:1170px;"></el-input>
+                      style="width:1150px;"></el-input>
           </el-form-item>
         </el-col>
-        <el-row>
-          <el-col :span="3">
-            <div style="margin-left:80px;">附加图1</div>
-            <img src=""
-                 style="width:100px;height:90px;margin-left:80px;" />
-          </el-col>
-          <el-col :span="21">
-            <el-form-item label="">
-              <el-input size="small"
-                        style="width:1390px;"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-button size="small">
-            <font size="3">增加</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">删除</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">上移动</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">下移动</font>
-          </el-button>
-        </el-row>
-        <el-row>
-          <el-col :span="3">
-            <div style="margin-left:80px;">附加图2</div>
-            <img src=""
-                 style="width:100px;height:90px;margin-left:80px;" />
-          </el-col>
-          <el-col :span="21">
-            <el-form-item label="">
-              <el-input size="small"
-                        style="width:1390px;"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-button size="small">
-            <font size="3">增加</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">删除</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">上移动</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">下移动</font>
-          </el-button>
-        </el-row>
-        <el-row>
-          <el-col :span="3">
-            <div style="margin-left:80px;">附加图3</div>
-            <img src=""
-                 style="width:100px;height:90px;margin-left:80px;" />
-          </el-col>
-          <el-col :span="21">
-            <el-form-item label="">
-              <el-input size="small"
-                        style="width:1390px;"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-button size="small">
-            <font size="3">增加</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">删除</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">上移动</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">下移动</font>
-          </el-button>
-        </el-row>
-        <el-row>
-          <el-col :span="3">
-            <div style="margin-left:80px;">附加图4</div>
-            <img src=""
-                 style="width:100px;height:90px;margin-left:80px;" />
-          </el-col>
-          <el-col :span="21">
-            <el-form-item label="">
-              <el-input size="small"
-                        style="width:1390px;"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-button size="small">
-            <font size="3">增加</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">删除</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">上移动</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">下移动</font>
-          </el-button>
-        </el-row>
-        <el-row>
-          <el-col :span="3">
-            <div style="margin-left:80px;">附加图5</div>
-            <img src=""
-                 style="width:100px;height:90px;margin-left:80px;" />
-          </el-col>
-          <el-col :span="21">
-            <el-form-item label="">
-              <el-input size="small"
-                        style="width:1390px;"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-button size="small">
-            <font size="3">增加</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">删除</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">上移动</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">下移动</font>
-          </el-button>
-        </el-row>
-        <el-row>
-          <el-col :span="3">
-            <div style="margin-left:80px;">附加图6</div>
-            <img src=""
-                 style="width:100px;height:90px;margin-left:80px;" />
-          </el-col>
-          <el-col :span="21">
-            <el-form-item label="">
-              <el-input size="small"
-                        style="width:1390px;"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-button size="small">
-            <font size="3">增加</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">删除</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">上移动</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">下移动</font>
-          </el-button>
-        </el-row>
-        <el-row>
-          <el-col :span="3">
-            <div style="margin-left:80px;">附加图7</div>
-            <img src=""
-                 style="width:100px;height:90px;margin-left:80px;" />
-          </el-col>
-          <el-col :span="21">
-            <el-form-item label="">
-              <el-input size="small"
-                        style="width:1390px;"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-button size="small">
-            <font size="3">增加</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">删除</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">上移动</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">下移动</font>
-          </el-button>
-        </el-row>
-        <el-row>
-          <el-col :span="3">
-            <div style="margin-left:80px;">附加图8</div>
-            <img src=""
-                 style="width:100px;height:90px;margin-left:80px;" />
-          </el-col>
-          <el-col :span="21">
-            <el-form-item label="">
-              <el-input size="small"
-                        style="width:1390px;"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-button size="small">
-            <font size="3">增加</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">删除</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">上移动</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">下移动</font>
-          </el-button>
-        </el-row>
-        <el-row>
-          <el-col :span="3">
-            <div style="margin-left:80px;">附加图9</div>
-            <img src=""
-                 style="width:100px;height:90px;margin-left:80px;" />
-          </el-col>
-          <el-col :span="21">
-            <el-form-item label="">
-              <el-input size="small"
-                        style="width:1390px;"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-button size="small">
-            <font size="3">增加</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">删除</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">上移动</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">下移动</font>
-          </el-button>
-        </el-row>
-        <el-row>
-          <el-col :span="3">
-            <div style="margin-left:80px;">附加图10</div>
-            <img src=""
-                 style="width:100px;height:90px;margin-left:80px;" />
-          </el-col>
-          <el-col :span="21">
-            <el-form-item label="">
-              <el-input size="small"
-                        style="width:1390px;"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-button size="small">
-            <font size="3">增加</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">删除</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">上移动</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">下移动</font>
-          </el-button>
-        </el-row>
-        <el-row>
-          <el-col :span="3">
-            <div style="margin-left:80px;">附加图11</div>
-            <img src=""
-                 style="width:100px;height:90px;margin-left:80px;" />
-          </el-col>
-          <el-col :span="21">
-            <el-form-item label="">
-              <el-input size="small"
-                        style="width:1390px;"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-button size="small">
-            <font size="3">增加</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">删除</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">上移动</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">下移动</font>
-          </el-button>
-        </el-row>
-        <el-row>
-          <el-col :span="3">
-            <div style="margin-left:80px;">附加图12</div>
-            <img src=""
-                 style="width:100px;height:90px;margin-left:80px;" />
-          </el-col>
-          <el-col :span="21">
-            <el-form-item label="">
-              <el-input size="small"
-                        style="width:1390px;"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-button size="small">
-            <font size="3">增加</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">删除</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">上移动</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">下移动</font>
-          </el-button>
-        </el-row>
-        <el-row>
-          <el-col :span="3">
-            <div style="margin-left:80px;">附加图13</div>
-            <img src=""
-                 style="width:100px;height:90px;margin-left:80px;" />
-          </el-col>
-          <el-col :span="21">
-            <el-form-item label="">
-              <el-input size="small"
-                        style="width:1390px;"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-button size="small">
-            <font size="3">增加</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">删除</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">上移动</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">下移动</font>
-          </el-button>
-        </el-row>
-        <el-row>
-          <el-col :span="3">
-            <div style="margin-left:80px;">附加图14</div>
-            <img src=""
-                 style="width:100px;height:90px;margin-left:80px;" />
-          </el-col>
-          <el-col :span="21">
-            <el-form-item label="">
-              <el-input size="small"
-                        style="width:1390px;"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-button size="small">
-            <font size="3">增加</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">删除</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">上移动</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">下移动</font>
-          </el-button>
-        </el-row>
-        <el-row>
-          <el-col :span="3">
-            <div style="margin-left:80px;">附加图15</div>
-            <img src=""
-                 style="width:100px;height:90px;margin-left:80px;" />
-          </el-col>
-          <el-col :span="21">
-            <el-form-item label="">
-              <el-input size="small"
-                        style="width:1390px;"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-button size="small">
-            <font size="3">增加</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">删除</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">上移动</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">下移动</font>
-          </el-button>
-        </el-row>
-        <el-row>
-          <el-col :span="3">
-            <div style="margin-left:80px;">附加图16</div>
-            <img src=""
-                 style="width:100px;height:90px;margin-left:80px;" />
-          </el-col>
-          <el-col :span="21">
-            <el-form-item label="">
-              <el-input size="small"
-                        style="width:1390px;"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-button size="small">
-            <font size="3">增加</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">删除</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">上移动</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">下移动</font>
-          </el-button>
-        </el-row>
-        <el-row>
-          <el-col :span="3">
-            <div style="margin-left:80px;">附加图17</div>
-            <img src=""
-                 style="width:100px;height:90px;margin-left:80px;" />
-          </el-col>
-          <el-col :span="21">
-            <el-form-item label="">
-              <el-input size="small"
-                        style="width:1390px;"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-button size="small">
-            <font size="3">增加</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">删除</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">上移动</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">下移动</font>
-          </el-button>
-        </el-row>
-        <el-row>
-          <el-col :span="3">
-            <div style="margin-left:80px;">附加图18</div>
-            <img src=""
-                 style="width:100px;height:90px;margin-left:80px;" />
-          </el-col>
-          <el-col :span="21">
-            <el-form-item label="">
-              <el-input size="small"
-                        style="width:1390px;"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-button size="small">
-            <font size="3">增加</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">删除</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">上移动</font>
-          </el-button>
-          <el-button size="small">
-            <font size="3">下移动</font>
-          </el-button>
-        </el-row>
       </el-row>
-    </el-form>
-    <h3 class="toolbar"
-        style="padding:5px;margin:10px;">主信息</h3>
-    <el-form :model="wishForm"
-             :inline="true"
-             label-width="100px">
+      <el-row v-for="(item, index) in url"
+              :key="index">
+        <el-col :span="3">
+          <div style="margin-left:80px;">附加图{{index}}</div>
+          <img :src="url[index]"
+               class="image" />
+        </el-col>
+        <el-col :span="21">
+          <el-form-item>
+            <el-input v-model="url[index]"
+                      size="small"
+                      style="width:1390px;"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-button size="small"
+                   @click="addUrl">
+          <font size="3">增加</font>
+        </el-button>
+        <el-button size="small"
+                   @click="delUrl(index)">
+          <font size="3">删除</font>
+        </el-button>
+        <el-button size="small">
+          <font size="3">上移动</font>
+        </el-button>
+        <el-button size="small">
+          <font size="3">下移动</font>
+        </el-button>
+      </el-row>
+      <h3 class="toolbar">主信息</h3>
       <el-col :span="24">
         <el-form-item label="关键词Tags:">
           <el-input v-model="wishForm.wishTags"
@@ -538,7 +111,8 @@
           <span>
             <font style="color: red">说明：</font>物品名/材质/特征等。如T-Shirt(物品名)/V-neck(特征)/Cotton(材质)
           </span>
-          <el-button type="text">批量设置</el-button>
+          <el-button type="text"
+                     @click="setVisible = true">批量设置</el-button>
           <div>
             必填
             <el-input v-model="wishForm.requiredKeywords"
@@ -565,7 +139,8 @@
           <span>
             <font style="color: red">说明：</font>形容词/品类热词等。如Fashion/Elegant/Hot/DIY/Casual…
           </span>
-          <el-button type="text">批量设置</el-button>
+          <el-button type="text"
+                     @click="setVisible = true">批量设置</el-button>
           <div>
             必填
             <el-input v-model="wishForm.randomKeywords"
@@ -631,11 +206,11 @@
       </el-col>
     </el-form>
     <el-col :span="24">
-      <h3 class="toolbar"
-          style="padding:5px;margin:10px;">多属性(Varations)设置</h3>
+      <h3 class="toolbar">多属性(Varations)设置</h3>
     </el-col>
     <el-button @click="dialogVisible = true"
                style="margin-left:10px;">多属性设置</el-button>
+    <!-- 多属性设置对话框 -->
     <el-dialog title="多属性"
                :visible.sync="dialogVisible"
                width="80%">
@@ -822,6 +397,19 @@
         </el-col>
       </el-row>
     </el-dialog>
+    <!-- 批量设置对话框 -->
+    <el-dialog title="批量增加关键词"
+               :visible.sync="setVisible"
+               width="30%">
+      <el-input type="textarea"
+                placeholder="--多个必选关键词--"
+                rows="16"></el-input>
+      <span slot="footer"
+            class="dialog-footer">
+        <el-button type="primary"
+                   @click="setVisible = false">关 闭</el-button>
+      </span>
+    </el-dialog>
   </section>
 </template>
 <script>
@@ -835,6 +423,7 @@ export default {
   },
   data() {
     return {
+      url: [],
       rows: null,
       num: null,
       price: null,
@@ -844,10 +433,9 @@ export default {
       transport: null,
       time: null,
       dialogVisible: false,
+      setVisible: false,
       select: '',
-      select1: '',
       wishForm: {},
-      mainForm: {},
       tableData: [],
       condition: {
         id: 5,
@@ -856,8 +444,17 @@ export default {
     }
   },
   methods: {
+    //删除URL
+    delUrl(index) {
+      this.url.splice(index, 1)
+    },
+    //删除table行
     del(index, row) {
       this.tableData.splice(index, 1)
+    },
+    //增加URL
+    addUrl() {
+      this.url.push('')
     },
     //增加行
     addClomun() {
@@ -1019,13 +616,11 @@ export default {
     },
     getData() {
       APIPlatInfo(this.condition).then(res => {
-        debugger
         this.wishForm = res.data.data.basicInfo
         this.tableData = res.data.data.skuInfo
         let extraPic = res.data.data.basicInfo.extraImages
-        let picture = extraPic.match(/http:([^"]*)/g)
-        console.log(picture)
-        // this.picture = res.data.data.basicInfores.extraPage
+        let picture = extraPic.split('\n')[0]
+        this.url = picture.split('\\n')
       })
     }
   },
@@ -1035,4 +630,13 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.image {
+  width: 100px;
+  height: 90px;
+  margin-left: 80px;
+}
+h3 {
+  padding: 5px;
+  margin: 10px;
+}
 </style>
