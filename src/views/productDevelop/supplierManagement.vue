@@ -32,9 +32,9 @@
                            :loading="loading"
                            style="width:100%;">
                   <el-option v-for="item in options4"
-                             :key="item.value"
-                             :label="item.label"
-                             :value="item.value">
+                             :key="item.id"
+                             :label="item.text"
+                             :value="item.text">
                   </el-option>
                 </el-select>
               </el-form-item>
@@ -159,9 +159,9 @@
                            :loading="loading"
                            style="width:100%;">
                   <el-option v-for="item in options4"
-                             :key="item.value"
-                             :label="item.label"
-                             :value="item.value">
+                             :key="item.id"
+                             :label="item.text"
+                             :value="item.text">
                   </el-option>
                 </el-select>
               </el-form-item>
@@ -508,7 +508,8 @@ import {
   APICreateSupplier,
   APIDetail,
   APIDelete,
-  APIUpdateSupplier
+  APIUpdateSupplier,
+  APIPySupplierList
 } from '../../api/product'
 export default {
   components: {
@@ -557,10 +558,12 @@ export default {
       if (query !== '') {
         this.loading = true
         setTimeout(() => {
-          this.loading = false
-          // this.options4 = this.list.filter(item => {
-          //   return item.label.toLowerCase().indexOf(query.toLowerCase()) > -1
-          // })
+          let data = {}
+          data.q = query
+          APIPySupplierList(data).then(res => {
+            this.loading = false
+            this.options4 = res.data.data.results
+          })
         }, 200)
       } else {
         this.options4 = []

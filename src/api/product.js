@@ -360,3 +360,19 @@ export function APIGoodsDelelte(param) {
     data
   })
 }
+export function APIPySupplierList(param) {
+  const data = { condition: param }
+  return request({
+    url: '/supplier/py-supplier-list',
+    method: 'post',
+    data
+  })
+}
+export function APIDeleteSku(param) {
+  const data = { condition: param }
+  return request({
+    url: '/supplier/delete-sku',
+    method: 'post',
+    data
+  })
+}

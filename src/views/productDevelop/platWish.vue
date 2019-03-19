@@ -1,6 +1,8 @@
 <template>
   <section>
-    <div style="position:fixed;bottom:10px;left:30%;z-index:1000">
+    <el-col :span="24"
+            class="toolbar"
+            style="position:fixed;bottom:0px;text-align:center;z-index:1000;padding-bottom:10px;">
       <el-button type="primary"
                  @click="update">更新</el-button>
       <el-dropdown @command="handleCommand"
@@ -20,7 +22,7 @@
                    value="否"></el-option>
       </el-select>
       <el-button type="info">导出Joom模板</el-button>
-    </div>
+    </el-col>
     <h3 class="toolbar">基本信息</h3>
     <el-form :model="wishForm"
              :inline="true"
@@ -29,8 +31,11 @@
       <el-row>
         <el-col :span="5">
           <el-form-item label=" ">
-            <img :src="wishForm.mainImage"
-                 style="width:230px;height:150px;" />
+            <router-link :to="wishForm.mainImage"
+                         target="_blank">
+              <img :src="wishForm.mainImage"
+                   style="width:230px;height:150px;" />
+            </router-link>
           </el-form-item>
         </el-col>
         <el-col :span="19">
@@ -60,8 +65,11 @@
               :key="index">
         <el-col :span="3">
           <div style="margin-left:80px;">附加图{{index}}</div>
-          <img :src="url[index]"
-               class="image" />
+          <router-link :to="url[index]"
+                       target="_blank">
+            <img :src="url[index]"
+                 class="image" />
+          </router-link>
         </el-col>
         <el-col :span="21">
           <el-form-item>
@@ -78,10 +86,12 @@
                    @click="delUrl(index)">
           <font size="3">删除</font>
         </el-button>
-        <el-button size="small">
+        <el-button size="small"
+                   @click="up(index)">
           <font size="3">上移动</font>
         </el-button>
-        <el-button size="small">
+        <el-button size="small"
+                   @click="down(index)">
           <font size="3">下移动</font>
         </el-button>
       </el-row>
@@ -193,7 +203,7 @@
       <el-col :span="24">
         <el-form-item label="数量">
           <el-input size="small"
-                    v-model="wishForm.quantity"
+                    v-model="wishForm.inventory"
                     style="width:1500px"></el-input>
         </el-form-item>
       </el-col>
@@ -216,13 +226,16 @@
                width="80%">
       <el-table :data="tableData">
         <el-table-column type="selection"
+                         width="30"
                          align="center"
                          header-align="center"></el-table-column>
         <el-table-column type="index"
+                         width="50"
                          align="center"
                          header-align="center">
         </el-table-column>
         <el-table-column label="操作"
+                         width="50"
                          header-align="center"
                          align="center">
           <template slot-scope="scope">
@@ -456,6 +469,26 @@ export default {
     addUrl() {
       this.url.push('')
     },
+    //上移
+    up(index) {
+      if (index > 0) {
+        let upData = this.url[index - 1]
+        this.url.splice(index - 1, 1)
+        this.url.splice(index, 0, upData)
+      } else {
+        alert('已经是第一条，不可上移')
+      }
+    },
+    //下移
+    down(index) {
+      if (index + 1 === this.url.length) {
+        alert('已经是最后一条，不可下移')
+      } else {
+        let downData = this.url[index + 1]
+        this.url.splice(index + 1, 1)
+        this.url.splice(index, 0, downData)
+      }
+    },
     //增加行
     addClomun() {
       let data = {
@@ -553,33 +586,11 @@ export default {
     //更新
     update() {
       let data = {
-        basicInfo: {
-          id: 4,
-          SKU: '9A0641-test-save',
-          title: '',
-          description: null,
-          inventory: 10000,
-          price: '0.00',
-          msrp: '0.00',
-          shipping: '0.00',
-          shippingTime: '7-21',
-          tags: '',
-          mainImage:
-            'https://www.tupianku.com/view/full/10023/9A0641-test_0.jpg',
-          goodsId: null,
-          infoId: 5,
-          extraImages:
-            'https://www.tupianku.com/view/full/10023/09A0641-test0_jpg\\nhttps://www.tupianku.com/view/full/10023/19A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/29A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/39A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/49A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/59A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/69A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/79A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/89A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/99A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/109A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/119A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/129A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/139A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/149A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/159A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/169A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/179A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/189A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/199A0641-test_jpg\\n',
-          headKeywords: null,
-          requiredKeywords: null,
-          randomKeywords: null,
-          tailKeywords: null,
-          wishTags: null,
-          stockUp: '否'
-        },
+        basicInfo: {},
         skuInfo: []
       }
-      // data.basicInfo = this.wishForm
+      data.basicInfo = this.wishForm
+      data.basicInfo.extraImages = this.url.join('\\n')
       data.skuInfo = this.tableData
       APISaveWishInfo(data).then(res => {
         if (res.data.data[0] === 'success') {
@@ -587,6 +598,7 @@ export default {
             message: '保存成功',
             type: 'success'
           })
+          this.getData()
         } else {
           this.$message.error('保存失败')
         }
@@ -621,6 +633,7 @@ export default {
         let extraPic = res.data.data.basicInfo.extraImages
         let picture = extraPic.split('\n')[0]
         this.url = picture.split('\\n')
+        this.url.pop()
       })
     }
   },

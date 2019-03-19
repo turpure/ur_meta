@@ -12,16 +12,18 @@
           <el-col :span="24">
             <el-form-item label="供应商名称">
               <el-select v-model="addForm.supplier"
-                         placeholder="--供应商--"
+                         filterable
+                         remote
+                         reserve-keyword
+                         placeholder="请输入关键词"
+                         :remote-method="remoteMethod"
+                         :loading="loading"
                          style="width:100%;">
-                <el-option label="程娟"
-                           value="程娟"></el-option>
-                <el-option label="深圳市光明新区公明宇威运动器材厂"
-                           value="深圳市光明新区公明宇威运动器材厂"></el-option>
-                <el-option label="新沂市企业制衣厂"
-                           value="新沂市企业制衣厂"></el-option>
-                <el-option label="新沂市雪尚皮草店"
-                           value="新沂市雪尚皮草店"></el-option>
+                <el-option v-for="item in options"
+                           :key="item.value"
+                           :label="item.label"
+                           :value="item.value">
+                </el-option>
               </el-select>
             </el-form-item>
           </el-col>
@@ -55,25 +57,95 @@
     </el-dialog>
     <el-dialog title="产品详情"
                :visible.sync="viewVisible"
-               width="60%">
+               width="80%">
       <el-table :data="viewTableData">
-        <el-table-column type="index"></el-table-column>
-        <el-table-column type="selection"></el-table-column>
-        <el-table-column label="操作">
+        <el-table-column type="index"
+                         width="30"></el-table-column>
+        <el-table-column type="selection"
+                         width="40"></el-table-column>
+        <el-table-column label="操作"
+                         width="50">
           <template slot-scope="scope">
             <el-tooltip content="删除">
-              <i @click="del(scope.$index, scope.row)"
+              <i @click="viewDel(scope.$index, scope.row)"
                  class="el-icon-delete"></i>
             </el-tooltip>
           </template>
         </el-table-column>
         <el-table-column label="SKU"
-                         prop=""></el-table-column>
+                         prop="sku">
+          <template slot-scope="scope">
+            <el-input v-model="scope.row.sku"></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column label="款式1"
+                         prop="property1">
+          <template slot-scope="scope">
+            <el-input v-model="scope.row.property1"></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column label="款式2"
+                         prop="property2">
+          <template slot-scope="scope">
+            <el-input v-model="scope.row.property2"></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column label="款式3"
+                         prop="property3">
+          <template slot-scope="scope">
+            <el-input v-model="scope.row.property3"></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column label="成本价"
+                         prop="costPrice">
+          <template slot-scope="scope">
+            <el-input v-model="scope.row.costPrice"></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column label="采购价"
+                         prop="purchasePrice">
+          <template slot-scope="scope">
+            <el-input v-model="scope.row.purchasePrice"></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column label="重量"
+                         prop="weight">
+          <template slot-scope="scope">
+            <el-input v-model="scope.row.weight"></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column label="图片"
+                         prop="image">
+          <template slot-scope="scope">
+            <img :src="scope.row.image"
+                 style="width:50px;height:50px;">
+          </template>
+        </el-table-column>
+        <el-table-column label="近三个月最低采购价"
+                         prop="lowestPrice">
+          <template slot-scope="scope">
+            <el-input v-model="scope.row.lowestPrice"></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column label="最低价采购数量"
+                         prop="purchaseNumber">
+          <template slot-scope="scope">
+            <el-input v-model="scope.row.purchaseNumber"></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column label="供应商产品SKU"
+                         prop="supplierGoodsSku">
+          <template slot-scope="scope">
+            <el-input v-model="scope.row.supplierGoodsSku"></el-input>
+          </template>
+        </el-table-column>
       </el-table>
       <span slot="footer"
             class="dialog-footer">
         <el-button type="primary"
-                   @click="save">创 建</el-button>
+                   @click="addClomun">+增加行</el-button>
+        <el-button type="primary"
+                   @click="save">保 存</el-button>
       </span>
     </el-dialog>
     <el-dialog title="编辑产品"
@@ -85,16 +157,18 @@
           <el-col :span="24">
             <el-form-item label="供应商名称">
               <el-select v-model="editForm.supplier"
-                         placeholder="--供应商--"
+                         filterable
+                         remote
+                         reserve-keyword
+                         placeholder="请输入关键词"
+                         :remote-method="remoteMethod"
+                         :loading="loading"
                          style="width:100%;">
-                <el-option label="程娟"
-                           value="程娟"></el-option>
-                <el-option label="深圳市光明新区公明宇威运动器材厂"
-                           value="深圳市光明新区公明宇威运动器材厂"></el-option>
-                <el-option label="新沂市企业制衣厂"
-                           value="新沂市企业制衣厂"></el-option>
-                <el-option label="新沂市雪尚皮草店"
-                           value="新沂市雪尚皮草店"></el-option>
+                <el-option v-for="item in options"
+                           :key="item.value"
+                           :label="item.label"
+                           :value="item.value">
+                </el-option>
               </el-select>
             </el-form-item>
           </el-col>
@@ -215,17 +289,21 @@ import {
   APICreateGoods,
   APIUpdateGoods,
   APIGoodsAttribute,
-  APIGoodsDelelte
+  APIGoodsDelelte,
+  APISupplierList,
+  APIDeleteSku
 } from '../../api/product'
 export default {
   data() {
     return {
+      loading: false,
       total: null,
       addVisible: false,
       viewVisible: false,
       editVisible: false,
       addForm: {},
       editForm: {},
+      options: [],
       tableData: [],
       viewTableData: [],
       condition: {
@@ -240,6 +318,20 @@ export default {
     }
   },
   methods: {
+    //远程搜索
+    remoteMethod(query) {
+      if (query !== '') {
+        this.loading = true
+        setTimeout(() => {
+          this.loading = false
+          this.options = this.list.filter(item => {
+            return item.label.toLowerCase().indexOf(query.toLowerCase()) > -1
+          })
+        }, 200)
+      } else {
+        this.options = []
+      }
+    },
     //分页
     handleCurrentChange(val) {
       this.condition.page = val
@@ -267,6 +359,30 @@ export default {
     //查看
     view(index, row) {
       this.viewVisible = true
+      let data = {}
+      data.id = 2
+      APIGoodsAttribute(data).then(res => {
+        this.viewTableData = res.data.data.items
+      })
+    },
+    //增加行
+    addClomun() {
+      let data = {
+        id: null,
+        supplierGoodsId: null,
+        sku: '',
+        property1: '',
+        property2: '',
+        property3: '',
+        costPrice: '',
+        purchasePrice: '',
+        weight: '',
+        image: '',
+        lowestPrice: '',
+        purchaseNumber: null,
+        supplierGoodsSku: ''
+      }
+      this.viewTableData.push(data)
     },
     save() {},
     //更新
@@ -303,6 +419,23 @@ export default {
           this.$message.error('删除失败')
         }
       })
+    },
+    viewDel(index, row) {
+      if (row.id !== null) {
+        APIDeleteSku(row.id).then(res => {
+          if (res.data.code === 200) {
+            this.$message({
+              message: '删除成功',
+              type: 'success'
+            })
+            this.viewTableData.splice(index, 1)
+          } else {
+            this.$message.error('删除失败')
+          }
+        })
+      } else {
+        this.viewTableData.splice(index, 1)
+      }
     },
     getData() {
       APISupplierGoodsList(this.condition).then(res => {
