@@ -111,7 +111,7 @@
           <el-col :span="12" style="margin-top: 15px;margin-bottom: 2px" v-for="(item,index) in wishForm.extraPage">
             <el-col :span="19">
               <el-col :span="24">
-                <el-input :value="item" @input="revise($event,index)">
+                <el-input v-model="wishForm.extraPage[index]" @input="revise($event,index)">
 
                 </el-input>
               </el-col>
@@ -134,7 +134,7 @@
               </el-col>
             </el-col>
             <el-col :span="3" style="margin-left: 15px">
-              <img :src="item"
+              <img :src="wishForm.extraPage[index]"
                    style="display: block;width: 90px;height: 90px" />
             </el-col>
           </el-col>
@@ -392,7 +392,7 @@
             <el-input :value="key"  @input ="inputFunc($event,index)"></el-input>
           </el-col>
           <el-col :span="7" style="margin-left: 15px">
-            <el-input :value="log"></el-input>
+            <el-input :value="log"  @input ="inputFunc1($event,index)"></el-input>
           </el-col>
           <el-col :span="7" style="margin-left: 15px">
             <el-button @click="delSx(index)" type="danger" plain>删除</el-button>
@@ -726,7 +726,9 @@
     },
     methods: {
       revise(e,index){
-        this.wishForm.extraPage[index]=e
+        let ary=this.wishForm.extraPage
+        ary[index]=e
+        this.wishForm.extraPage=ary
         console.log(this.wishForm.extraPage)
       },
       swapItems(arr, index1, index2,direction){
@@ -806,16 +808,27 @@
         });
       },
       inputFunc(e,index){
-//        let tab=this.tableData[index]
-//        let atrr=""
-//        for(var key in tab) {
-//          atrr+=key
-//        }
-//        console.log(atrr)
-//        let str1={[e]:tab[atrr]}
-//        this.tableData.push(str1)
-//        console.log(this.tableData)
+        let tab=this.tableData[index]
+        let atrr=""
+        let atr2=""
+        for(var key in tab) {
+          atrr=key
+          atr2=tab[key]
+        }
+        console.log(tab)
+        this.tableData[index][e]=atr2
+        delete this.tableData[index][atrr]
+        console.log(this.tableData)
         },
+      inputFunc1(e,index){
+        let tab1=this.tableData[index]
+        let atrr1=""
+        for(var key in tab1) {
+          atrr1=key
+        }
+        this.tableData[index][atrr1]=e
+        console.log(this.tableData)
+      },
       increase(){
         let obj={
           "":""
