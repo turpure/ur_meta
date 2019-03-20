@@ -373,6 +373,10 @@
                        label="店铺单号"
                        sortable
                        align="center"></el-table-column>
+      <el-table-column prop="mergeBillId"
+                       label="合并单号"
+                       sortable
+                       align="center"></el-table-column>
       <el-table-column prop="storeName"
                        label="仓库"
                        sortable
@@ -1189,6 +1193,7 @@ export default {
           '商品SKU',
           '订单编号',
           '店铺单号',
+          '合并单号',
           '仓库',
           '退款$',
           '退款￥',
@@ -1208,6 +1213,7 @@ export default {
           'goodsSku',
           'tradeId',
           'orderId',
+          'mergeBillId',
           'storeName',
           'refund',
           'refundZn',
