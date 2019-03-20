@@ -119,8 +119,11 @@
                         <!--</el-col>-->
                         <el-col :span="10"
                                 style="margin-left: 25px">
-                            <img :src="wishForm.mainPage"
-                                 style="display: block; width: 155px;height: 155px" />
+                            <a :href="wishForm.mainPage"
+                               target="_blank">
+                                <img :src="wishForm.mainPage"
+                                     style="display: block; width: 155px;height: 155px" />
+                            </a>
                         </el-col>
                     </el-col>
                 </el-row>
@@ -131,7 +134,7 @@
                             :key="index">
                         <el-col :span="19">
                             <el-col :span="24">
-                                <el-input :value="item"
+                                <el-input v-model="wishForm.extraPage[index]"
                                           @input="revise($event,index)">
 
                                 </el-input>
@@ -160,8 +163,11 @@
                         </el-col>
                         <el-col :span="3"
                                 style="margin-left: 15px">
-                            <img :src="item"
-                                 style="display: block;width: 90px;height: 90px" />
+                            <a :href="wishForm.extraPage[index]"
+                               target="_blank">
+                                <img :src="wishForm.extraPage[index]"
+                                     style="display: block;width: 90px;height: 90px" />
+                            </a>
                         </el-col>
                     </el-col>
                     <!--<el-col :span="24" v-for="(item,index) in wishForm.extraPage">-->
@@ -450,12 +456,11 @@
                             :key="key">
                         <el-col :span="7"
                                 style="margin-left: 20px">
-                            <el-input :value="key"
-                                      @input="inputFunc($event,index)"></el-input>
+                            <el-input :value="key"  @input ="inputFunc($event,index)"></el-input>
                         </el-col>
                         <el-col :span="7"
                                 style="margin-left: 15px">
-                            <el-input :value="log"></el-input>
+                            <el-input :value="log"  @input ="inputFunc1($event,index)"></el-input>
                         </el-col>
                         <el-col :span="7"
                                 style="margin-left: 15px">
@@ -994,16 +999,24 @@
                         })
                         .catch(() => {})
             },
-            inputFunc(e, index) {
-                //        let tab=this.tableData[index]
-                //        let atrr=""
-                //        for(var key in tab) {
-                //          atrr+=key
-                //        }
-                //        console.log(atrr)
-                //        let str1={[e]:tab[atrr]}
-                //        this.tableData.push(str1)
-                //        console.log(this.tableData)
+            inputFunc(e,index){
+                let tab=this.tableData[index]
+                let atrr=""
+                let atr2=""
+                for(var key in tab) {
+                    atrr=key
+                    atr2=tab[key]
+                }
+                this.tableData[index][e]=atr2
+                delete this.tableData[index][atrr]
+            },
+            inputFunc1(e,index){
+                let tab1=this.tableData[index]
+                let atrr1=""
+                for(var key in tab1) {
+                    atrr1=key
+                }
+                this.tableData[index][atrr1]=e
             },
             increase() {
                 const obj = {

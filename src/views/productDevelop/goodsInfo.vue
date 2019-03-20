@@ -962,7 +962,9 @@ export default {
       activeName: '属性信息',
       sels: [],
       allMenu: [],
-      tableData: [],
+      tableData: [
+
+      ],
       pictureData: [],
       platData: [],
       show: {
@@ -1133,13 +1135,13 @@ export default {
           {
             props: {
               placeholder: '请选择',
-              value: '',
+              value: this.tableData.stockUp,
               size: 'mini',
               clearable: true
             },
             on: {
               input: value => {
-                // this.condition2.stockUp=value
+                 this.tableData.stockUp=value
                 this.$emit('input', value)
               },
               change: searchValue => {
@@ -1982,6 +1984,45 @@ export default {
         this.plat.pageSize = res.data.data._meta.perPage
         this.plat.currentPage = res.data.data._meta.currentPage
       })
+    },
+    filter() {
+      if (this.activeName === '属性信息') {
+//        if (this.time1 !== null && this.time1.length !== 0) {
+//          this.condition.createDate = [this.formatDate(this.time1[0]), this.formatDate(this.time1[1])]
+//        } else {
+//          this.condition.createDate = []
+//        }
+//        if (this.time2 !== null && this.time2.length !== 0) {
+//          this.condition.updateDate = [this.formatDate(this.time2[0]), this.formatDate(this.time2[1])]
+//        } else {
+//          this.condition.updateDate = []
+//        }
+//        this.getData()
+      } else if (this.activeName === '图片信息') {
+        if (this.time1 !== null && this.time1.length !== 0) {
+          this.condition1.createDate = [this.formatDate(this.time1[0]), this.formatDate(this.time1[1])]
+        } else {
+          this.condition1.createDate = []
+        }
+        if (this.time2 !== null && this.time2.length !== 0) {
+          this.condition1.updateDate = [this.formatDate(this.time2[0]), this.formatDate(this.time2[1])]
+        } else {
+          this.condition1.updateDate = []
+        }
+        this.getForward()
+      } else {
+        if (this.time1 !== null && this.time1.length !== 0) {
+          this.condition2.createDate = [this.formatDate(this.time1[0]), this.formatDate(this.time1[1])]
+        } else {
+          this.condition2.createDate = []
+        }
+        if (this.time2 !== null && this.time2.length !== 0) {
+          this.condition2.updateDate = [this.formatDate(this.time2[0]), this.formatDate(this.time2[1])]
+        } else {
+          this.condition2.updateDate = []
+        }
+        this.getReverse()
+      }
     },
     //平台信息表头input框
     renderHeaderPlat(h, { column, $index }) {
