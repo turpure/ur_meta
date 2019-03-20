@@ -1,6 +1,6 @@
 <template>
   <section>
-    <el-col style="position:fixed;bottom:0;z-index:1000;background: #f2f2f2;padding-bottom: 10px;padding-top: 5px;border-top: #eee solid 1px; width: 100%">
+    <el-col style="position:fixed;bottom:0; z-index:1000;background: #f2f2f2;padding-bottom: 10px;padding-top: 5px;border-top: #eee solid 1px; width: 100%">
       <el-button type="primary"
                  @click="update" style="margin-left: 480px">更新</el-button>
       <el-dropdown @command="handleCommand"
