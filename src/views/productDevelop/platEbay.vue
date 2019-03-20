@@ -127,7 +127,8 @@
         <el-row style="margin-left: 15px">
           <el-col :span="12"
                   style="margin-top: 15px;margin-bottom: 2px"
-                  v-for="(item,index) in wishForm.extraPage">
+                  v-for="(item,index) in wishForm.extraPage"
+                  :key="index">
             <el-col :span="19">
               <el-col :span="24">
                 <el-input :value="item"
@@ -441,10 +442,12 @@
         </el-col>
         <el-col :span="24"
                 style="margin-top: 8px"
-                v-for="(item,index) in tableData">
+                v-for="(item,index) in tableData"
+                :key="index">
           <el-col :span="24"
                   style="margin-top: 10px"
-                  v-for="(log,key) in item">
+                  v-for="(log,key) in item"
+                  :key="key">
             <el-col :span="7"
                     style="margin-left: 20px">
               <el-input :value="key"
@@ -704,8 +707,9 @@
               <th v-for="(item, index) in title"
                   :key="index">
                 <el-input clearable
-                          @change="titleDel(index)"
                           v-model="item.label"></el-input>
+                <i class="el-icon-delete"
+                   @click="titleDel(index)"></i>
               </th>
             </tr>
           </thead>
@@ -862,7 +866,7 @@ import { APISaveEbayInfo } from '../../api/platebay'
 export default {
   data() {
     return {
-      radio: '',
+      radio: 'Color',
       columns: '',
       title: [],
       select: '',
