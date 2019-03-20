@@ -702,8 +702,11 @@
               <th>图片地址</th>
               <th>图片</th>
               <th v-for="(item, index) in title"
-                  :key="index">{{item.label}}<i class="el-icon-delete"
-                   @click="titleDel(index)"></i></th>
+                  :key="index">
+                <el-input clearable
+                          @change="titleDel(index)"
+                          v-model="item.label"></el-input>
+              </th>
             </tr>
           </thead>
           <tbody>
