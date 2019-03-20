@@ -401,7 +401,7 @@ export default {
       },
       slineNum: {
         title: {
-          text: '产品单价订单量走势'
+          text: 'SKU单价出单数走势'
         },
         tooltip: {
           trigger: 'axis',
