@@ -125,6 +125,7 @@
           </el-col>
         </el-row>
         <el-row style="margin-left: 15px">
+<<<<<<< HEAD
           <el-col :span="12"
                   style="margin-top: 15px;margin-bottom: 2px"
                   v-for="(item,index) in wishForm.extraPage">
@@ -132,6 +133,12 @@
               <el-col :span="24">
                 <el-input :value="item"
                           @input="revise($event,index)">
+=======
+          <el-col :span="12" style="margin-top: 15px;margin-bottom: 2px" v-for="(item,index) in wishForm.extraPage" :key="index">
+            <el-col :span="19">
+              <el-col :span="24">
+                <el-input v-model="wishForm.extraPage[index]" @input="revise($event,index)">
+>>>>>>> 731b87ba8bbb76e37c6c97438193756c4176ac87
 
                 </el-input>
               </el-col>
@@ -157,9 +164,14 @@
                 </p>
               </el-col>
             </el-col>
+<<<<<<< HEAD
             <el-col :span="3"
                     style="margin-left: 15px">
               <img :src="item"
+=======
+            <el-col :span="3" style="margin-left: 15px">
+              <img :src="wishForm.extraPage[index]"
+>>>>>>> 731b87ba8bbb76e37c6c97438193756c4176ac87
                    style="display: block;width: 90px;height: 90px" />
             </el-col>
           </el-col>
@@ -439,6 +451,7 @@
                 style="margin-left: 15px">
           属性内容
         </el-col>
+<<<<<<< HEAD
         <el-col :span="24"
                 style="margin-top: 8px"
                 v-for="(item,index) in tableData">
@@ -460,6 +473,18 @@
                          type="danger"
                          plain>删除</el-button>
             </el-col>
+=======
+        <el-col :span="24" style="margin-top: 8px" v-for="(item,index) in tableData" :key="index">
+          <el-col :span="24" style="margin-top: 10px" v-for="(log,key) in item" :key="index">
+          <el-col :span="7" style="margin-left: 20px">
+            <el-input :value="key"  @input ="inputFunc($event,index)"></el-input>
+          </el-col>
+          <el-col :span="7" style="margin-left: 15px">
+            <el-input :value="log"  @input ="inputFunc1($event,index)"></el-input>
+          </el-col>
+          <el-col :span="7" style="margin-left: 15px">
+            <el-button @click="delSx(index)" type="danger" plain>删除</el-button>
+>>>>>>> 731b87ba8bbb76e37c6c97438193756c4176ac87
           </el-col>
         </el-col>
       </el-col>
@@ -649,36 +674,16 @@
                            header-align="center">
             <template slot-scope="scope">
               <img :src="scope.row.imageUrl"
-                   style="width:50px;height:50px;">
+                   style="width:60px;height:50px;margin-left: 30px">
             </template>
           </el-table-column>
-          <el-table-column label="Color"
-                           prop="imageUrl"
-                           header-align="center">
-            <template slot-scope="scope">
-              <el-input size="small"
-                        v-model="scope.row.property.Color"></el-input>
+          <el-table-column header-align="center">
+            <template slot="header" slot-scope="scope">
+              <el-input
+                      v-model="search"
+                      size="mini"
+                      placeholder="输入关键字搜索"/>
             </template>
-          </el-table-column>
-          <el-table-column label="Size"
-                           prop="imageUrl"
-                           header-align="center">
-            <template slot-scope="scope">
-              <el-input size="small"
-                        v-model="scope.row.property.Size"></el-input>
-            </template>
-          </el-table-column>
-          <el-table-column label="款式3"
-                           prop="imageUrl"
-                           header-align="center">
-            <template slot-scope="scope">
-              <el-input size="small"
-                        v-model="scope.row.property.Color"></el-input>
-            </template>
-          </el-table-column>
-          <el-table-column label="CPU"
-                           prop="imageUrl"
-                           header-align="center">
             <template slot-scope="scope">
               <el-input size="small"
                         v-model="scope.row.property.Color"></el-input>
@@ -938,6 +943,7 @@ export default {
       }
       this.botOm(this.wishForm.extraPage, index, index + 1)
     },
+<<<<<<< HEAD
     topIndex(index) {
       if (index == 0) {
         this.$message({
@@ -979,11 +985,171 @@ export default {
         type: 'warning'
       })
         .then(() => {
+=======
+    methods: {
+      revise(e,index){
+        let ary=this.wishForm.extraPage
+        ary[index]=e
+        this.wishForm.extraPage=ary
+        console.log(this.wishForm.extraPage)
+      },
+      swapItems(arr, index1, index2,direction){
+        if(direction=='up'){//置顶
+          arr.unshift(arr[index1]);
+          arr.splice(index1+1,1);
+          return arr;
+        }
+        arr[index1] = arr.splice(index2, 1, arr[index1])[0];
+        return arr;
+      },
+      botOm(arr, index1, index2,direction){
+        if(direction=='down'){
+          arr.push(arr[index1]);
+          arr.splice(index1,1);
+          return arr;
+        }
+        arr[index1] = arr.splice(index2, 1, arr[index1])[0];
+        return arr;
+      },
+      botIndex(index){
+        if(index == this.wishForm.extraPage.length -1) {
+          this.$message({
+            message: '已经是最后一张了',
+            type: 'success'
+          })
+          return;
+        }
+        this.botOm(this.wishForm.extraPage, index, index + 1);
+      },
+      topIndex(index){
+          if(index == 0) {
+            this.$message({
+              message: '已经是第一张了',
+              type: 'success'
+            })
+            return;
+          }
+          this.swapItems(this.wishForm.extraPage, index, index - 1);
+      },
+      delSx(index){
+        this.tableData.splice(index, 1)
+      },
+      addQuality(){
+        if(this.qualityId==""){
+          this.$message.error('属性名不能为空')
+        }else {
+          const name=this.qualityId
+          const content=this.qualityContent
+          let str={[name]:content}
+          this.tableData.push(str)
+          this.dialogFormVisible=false
+        }
+      },
+      addRess(){
+        if(this.addPhoto==""){
+          this.$message.error('不能为空')
+        }else {
+          console.log(this.addPhoto)
+          this.wishForm.extraPage.push(this.addPhoto)
+          this.dialogFormVisible1=false
+        }
+      },
+      delDz(index) {
+        this.$confirm('确定删除?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+>>>>>>> 731b87ba8bbb76e37c6c97438193756c4176ac87
           this.$message({
             type: 'success',
             message: '删除成功!'
           })
           this.wishForm.extraPage.splice(index, 1)
+<<<<<<< HEAD
+=======
+        }).catch(() => {
+        });
+      },
+      inputFunc(e,index){
+        let tab=this.tableData[index]
+        let atrr=""
+        let atr2=""
+        for(var key in tab) {
+          atrr=key
+          atr2=tab[key]
+        }
+        this.tableData[index][e]=atr2
+        delete this.tableData[index][atrr]
+        },
+      inputFunc1(e,index){
+        let tab1=this.tableData[index]
+        let atrr1=""
+        for(var key in tab1) {
+          atrr1=key
+        }
+        this.tableData[index][atrr1]=e
+      },
+      increase(){
+        let obj={
+          "":""
+        }
+        this.tableData.push(obj)
+      },
+      getData() {
+        APIPlatInfo(this.condition).then(res => {
+          this.wishForm = res.data.data.basicInfo
+          this.tabDate = res.data.data.skuInfo
+          for(var i=0;i<this.tabDate.length;i++){
+            this.tabDate[i].property=JSON.parse(this.tabDate[i].property)
+            for(var key in this.tabDate[i].property.columns){
+                console.log(key)
+            }
+          }
+          this.wishForm.site==0?this.wishForm.site="美国":""
+          this.wishForm.extraPage= this.wishForm.extraPage.split("\\n")
+          this.wishForm.extraPage.pop()
+          this.tableData= JSON.parse(res.data.data.basicInfo.specifics).specifics
+      })
+      },
+      keep(){
+        let data = {
+          basicInfo: {
+            "id":3,
+            "SKU": this.wishForm.sku,
+            "title": this.wishForm.title,
+            "description": this.wishForm.description,
+            inventory: 10000,
+            price: '0.00',
+            msrp: '0.00',
+            shipping: '0.00',
+            shippingTime: '7-21',
+            "tags": "",
+            "mainImage": this.wishForm.mainPage,
+            "goodsId": null,
+            "infoId": 5,
+            "extraImages": "enim",
+            "headKeywords": null,
+            "requiredKeywords": null,
+            "randomKeywords": null,
+            "tailKeywords": null,
+            "wishTags": null,
+            "stockUp": "否"
+          },
+          skuInfo: []
+        }
+        // data.basicInfo = this.wishForm
+        data.skuInfo = this.tabDate
+        APISaveEbayInfo(data).then(res => {
+          if (res.data.data[0] === 'success') {
+            this.$message({
+              message: '保存成功',
+              type: 'success'
+            })
+          } else {
+            this.$message.error('保存失败')
+          }
+>>>>>>> 731b87ba8bbb76e37c6c97438193756c4176ac87
         })
         .catch(() => {})
     },
@@ -1023,6 +1189,7 @@ export default {
         }
       })
     },
+<<<<<<< HEAD
     keep() {
       let data = {
         basicInfo: {
@@ -1061,6 +1228,11 @@ export default {
           this.$message.error('保存失败')
         }
       })
+=======
+    mounted() {
+      this.condition.id=this.$route.params.id
+      this.getData()
+>>>>>>> 731b87ba8bbb76e37c6c97438193756c4176ac87
     }
   },
   mounted() {
