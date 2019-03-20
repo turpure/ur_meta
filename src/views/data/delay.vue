@@ -112,19 +112,17 @@
                        :value="item.store"></el-option>
           </el-select>
         </el-form-item>
-        <!-- <el-form-item label="显示方式"
-                      class="input"
-                      prop="flag">
-          <el-radio-group v-model="condition.flag">
+        <el-form-item label="时间类型">
+          <el-radio-group v-model="condition.dateType">
             <el-radio border
-                      v-for="(item,index) in flag"
+                      v-for="(item,index) in dateType"
                       :index="index"
                       :key="item.id"
                       :label="item.id"
                       :value="item.id"
-                      style="width:8.55rem;">{{item.type}}</el-radio>
+                      style="width:8.55rem">{{item.type}}</el-radio>
           </el-radio-group>
-        </el-form-item> -->
+        </el-form-item>
         <el-form-item label="交易时间"
                       class="input">
           <el-date-picker size="small"
@@ -154,14 +152,25 @@
                  @tab-click="handleClick">
           <el-tab-pane label="缺货天数统计"
                        name="first">
-            <div ref="delaypie"
-                 v-loading="listLoading"
-                 element-loading-text="正在加载中..."
-                 :style="{width: '100%', height: '400px', marginTop:'10px'}">
-            </div>
-            <div ref="pie"
-                 :style="{width: '100%', height: '400px', marginTop:'10px'}">
-            </div>
+            <el-row v-loading="listLoading"
+                    element-loading-text="正在加载中...">
+              <el-col :span="12">
+                <div ref="delaypie"
+                     :style="{width: '100%', height: '400px', marginTop:'10px'}">
+                </div>
+                <div ref="pie"
+                     :style="{width: '100%', height: '400px', marginTop:'10px'}">
+                </div>
+              </el-col>
+              <el-col :span="12">
+                <div ref="shipBar"
+                     :style="{width: '100%', height: '400px', marginTop:'10px'}">
+                </div>
+                <div ref="shipPie"
+                     :style="{width: '100%', height: '400px', marginTop:'10px'}">
+                </div>
+              </el-col>
+            </el-row>
           </el-tab-pane>
           <el-tab-pane label="缺货产品详情"
                        name="second">
@@ -202,6 +211,7 @@ export default {
       activeName: 'first',
       tableData: [],
       listLoading: false,
+      dateType: [{ id: 1, type: '发货时间' }, { id: 0, type: '交易时间' }],
       plat: [],
       member: [],
       account: [],
@@ -209,6 +219,7 @@ export default {
       secDepartment: [],
       condition: {
         dateRange: [],
+        dateType: 1,
         member: [],
         plat: [],
         account: [],
@@ -306,6 +317,101 @@ export default {
           }
         ]
       },
+      shipBar: {
+        title: {
+          text: '延迟发货率'
+        },
+        legend: {
+          data: [String]
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            label: {
+              backgroundColor: '#6a7985'
+            }
+          },
+          formatter: function(params) {
+            var str = ''
+            str += '<div>' + params[0].name + '</div>'
+            for (var i = 0; i < params.length; i++) {
+              str +=
+                '<div><span>' +
+                params[i].seriesName +
+                '</span> : <span>' +
+                (params[i].data
+                  ? Math.round(params[i].data * 10000) / 100 + '%'
+                  : '暂无') +
+                '</span></div>'
+            }
+            return str
+          }
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            dataView: { show: true, readOnly: false },
+            magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
+            restore: { show: true },
+            saveAsImage: { show: true }
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: [
+          {
+            type: 'category',
+            data: [String]
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value',
+            axisLabel: {
+              formatter: '{value}'
+            }
+          }
+        ],
+        series: [Object]
+      },
+      shipPie: {
+        title: {
+          text: '延迟发货率',
+          subtext: '',
+          x: 'center'
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{a} <br/>{b} : {c} ({d}%)'
+        },
+        legend: {
+          orient: 'vertical',
+          left: 10,
+          top: 10,
+          data: [String]
+        },
+        series: [
+          {
+            name: '延迟发货率',
+            type: 'pie',
+            radius: '55%',
+            center: ['50%', '60%'],
+            data: [Object],
+            itemStyle: {
+              emphasis: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+              }
+            }
+          }
+        ]
+      },
       pickerOptions2: {
         shortcuts: [
           {
@@ -353,7 +459,7 @@ export default {
           if (this.activeName === 'first') {
             APIDelay(this.condition).then(res => {
               this.listLoading = false
-              const data = res.data.data.barData
+              const data = res.data.data.delayDeliveryData.barData
               const lineName = []
               const series = []
               this.options.xAxis[0].data = data.map(e => e.dt)
@@ -368,7 +474,7 @@ export default {
               let delayPie = this.$echarts.init(this.$refs.delaypie)
               delayPie.setOption(this.options)
 
-              const pieData = res.data.data.pieData
+              const pieData = res.data.data.delayDeliveryData.pieData
               pieData.forEach(e => {
                 if (lineName.indexOf(e.name) < 0) {
                   lineName.push(e.name)
@@ -378,6 +484,58 @@ export default {
               this.pie.series[0].data = pieData
               let Pie = this.$echarts.init(this.$refs.pie)
               Pie.setOption(this.pie)
+
+              const ShipPie = res.data.data.delayShipData.pieData
+              this.shipPie.legend.data = ShipPie.map(e => e.name)
+              this.shipPie.series[0].data = ShipPie
+              let shPie = this.$echarts.init(this.$refs.shipPie)
+              shPie.setOption(this.shipPie)
+
+              const ShipBar = res.data.data.delayShipData.barData
+              // const shipSeries = []
+              // this.shipBar.xAxis[0].data = data.map(e => e.dt)
+              // const ship = {
+              //   type: 'line',
+              //   stack: '总量',
+              //   areaStyle: { normal: {} }
+              // }
+              // ship['data'] = data.map(e => e.rate)
+              // shipSeries.push(ship)
+              // this.shipBar.series = shipSeries
+              // let shBar = this.$echarts.init(this.$refs.shipBar)
+              // shBar.setOption(this.shipBar)
+              const shipName = []
+              const shipSeries = []
+              ShipBar.forEach(element => {
+                if (shipName.indexOf(element.name) < 0) {
+                  shipName.push(element.name)
+                }
+              })
+              const date = []
+              shipName.forEach(name => {
+                const ship = {
+                  type: 'line',
+                  stack: '总量',
+                  areaStyle: { normal: {} }
+                }
+                const amt = []
+                ShipBar.map(element => {
+                  if (element.name === name) {
+                    amt.push(Number(element.value))
+                    if (date.indexOf(element.dt) < 0) {
+                      date.push(element.dt)
+                    }
+                  }
+                })
+                ship['data'] = amt
+                ship['name'] = name
+                shipSeries.push(ship)
+              })
+              this.shipBar.legend.data = shipName
+              this.shipBar.xAxis[0].data = date
+              this.shipBar.series = shipSeries
+              let Bar = this.$echarts.init(this.$refs.shipBar)
+              Bar.setOption(this.shipBar)
             })
           } else {
             APIDelayDetail(this.condition).then(res => {
