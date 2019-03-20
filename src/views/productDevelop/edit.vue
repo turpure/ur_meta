@@ -519,7 +519,7 @@ export default {
     return {
       tableData: [],
       btn: '',
-      rows: null,
+      rows: 1,
       costprice: null,
       weight: null,
       retailprice: null,
@@ -730,6 +730,7 @@ export default {
   methods: {
     del(index, row) {
       this.tableData.splice(index, 1)
+      console.log(this.tableData)
     },
     //增加行
     addClomun() {
@@ -757,12 +758,14 @@ export default {
       for (let i = 0; i < this.rows; i++) {
         this.tableData.push(data)
       }
+      console.log(this.tableData)
     },
     //成本确定
     cosprice() {
       if (this.costprice) {
+        console.log(this.costprice)
         for (let i = 0; i < this.tableData.length; i++) {
-          this.tableData[i].CostPrice = this.costprice
+          this.tableData[i].costPrice = this.costprice
         }
       } else {
         return false
@@ -772,7 +775,7 @@ export default {
     weht() {
       if (this.weight) {
         for (let i = 0; i < this.tableData.length; i++) {
-          this.tableData[i].Weight = this.weight
+          this.tableData[i].weight = this.weight
         }
       } else {
         return false
@@ -782,7 +785,7 @@ export default {
     price() {
       if (this.retailprice) {
         for (let i = 0; i < this.tableData.length; i++) {
-          this.tableData[i].RetailPrice = this.retailprice
+          this.tableData[i].retailPrice = this.retailprice
         }
       } else {
         return false

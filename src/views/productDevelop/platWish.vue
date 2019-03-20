@@ -4,7 +4,8 @@
             class="toolbar"
             style="position:fixed;bottom:0px;text-align:center;z-index:1000;padding-bottom:10px;">
       <el-button type="primary"
-                 @click="update" style="margin-left: -200px">更新</el-button>
+                 @click="update"
+                 style="margin-left: 480px">更新</el-button>
       <el-dropdown @command="handleCommand"
                    placement="top-start">
         <el-button type="primary">标记完善<i class="el-icon-arrow-down el-icon--right"></i></el-button>
@@ -23,238 +24,79 @@
       </el-select>
       <el-button type="info">导出Joom模板</el-button>
     </el-col>
-    <el-col :span="24"
-            style="padding: 0;margin-left: 15px">
-      <h3 class="toolbar essential">基本信息</h3>
-    </el-col>
+    <h3 class="toolbar">基本信息</h3>
     <el-form :model="wishForm"
              :inline="true"
              label-width="100px"
-             ref="wishForm"
-             style="margin-left: 15px">
-      <!--<el-row>-->
-        <!--<el-col :span="5">-->
-          <!--<el-form-item label=" ">-->
-            <!--<router-link :to="wishForm.mainImage"-->
-                         <!--target="_blank">-->
-              <!--<img :src="wishForm.mainImage"-->
-                   <!--style="width:230px;height:150px;" />-->
-            <!--</router-link>-->
-          <!--</el-form-item>-->
-        <!--</el-col>-->
-        <!--<el-col :span="19">-->
-          <!--<el-form-item label="主图">-->
-            <!--<el-input v-model="wishForm.mainImage"-->
-                      <!--size="small"-->
-                      <!--style="width:1150px;"></el-input>-->
-          <!--</el-form-item>-->
-        <!--</el-col>-->
-        <!--<el-col :span="19">-->
-          <!--<el-form-item label="SKU">-->
-            <!--<el-input size="small"-->
-                      <!--v-model="wishForm.SKU"-->
-                      <!--style="width:1150px;"></el-input>-->
-          <!--</el-form-item>-->
-        <!--</el-col>-->
-        <!--<el-col :span="19">-->
-          <!--<el-form-item label="是否备货">-->
-            <!--<el-input v-model="wishForm.stockUp"-->
-                      <!--size="small"-->
-                      <!--disabled-->
-                      <!--style="width:1150px;"></el-input>-->
-          <!--</el-form-item>-->
-        <!--</el-col>-->
-      <!--</el-row>-->
-      <!--<el-row v-for="(item, index) in url"-->
-              <!--:key="index">-->
-        <!--<el-col :span="3">-->
-          <!--<div style="margin-left:80px;">附加图{{index}}</div>-->
-          <!--<router-link :to="url[index]"-->
-                       <!--target="_blank">-->
-            <!--<img :src="url[index]"-->
-                 <!--class="image" />-->
-          <!--</router-link>-->
-        <!--</el-col>-->
-        <!--<el-col :span="21">-->
-          <!--<el-form-item>-->
-            <!--<el-input v-model="url[index]"-->
-                      <!--size="small"-->
-                      <!--style="width:1390px;"></el-input>-->
-          <!--</el-form-item>-->
-        <!--</el-col>-->
-        <!--<el-button size="small"-->
-                   <!--@click="addUrl">-->
-          <!--<font size="3">增加</font>-->
-        <!--</el-button>-->
-        <!--<el-button size="small"-->
-                   <!--@click="delUrl(index)">-->
-          <!--<font size="3">删除</font>-->
-        <!--</el-button>-->
-        <!--<el-button size="small"-->
-                   <!--@click="up(index)">-->
-          <!--<font size="3">上移动</font>-->
-        <!--</el-button>-->
-        <!--<el-button size="small"-->
-                   <!--@click="down(index)">-->
-          <!--<font size="3">下移动</font>-->
-        <!--</el-button>-->
-      <!--</el-row>-->
+             ref="wishForm">
       <el-row>
-        <el-row>
-          <el-col :span="24">
-            <el-col :span="12">
-              <el-col :span="2"
-                      class="textZt">
-                SKU
-              </el-col>
-              <el-col :span="21">
-                <el-input v-model="wishForm.SKU">
-
-                </el-input>
-              </el-col>
-              <el-col :span="2"
-                      class="textZt"
-                      style="margin-top: 15px">
-                是否备货
-              </el-col>
-              <el-col :span="21"
-                      style="margin-top: 15px">
-                <el-input v-model="wishForm.stockUp"
-                          :disabled="true">
-
-                </el-input>
-              </el-col>
-              <el-col :span="2"
-                      class="textZt"
-                      style="margin-top: 15px">
-                主图
-              </el-col>
-              <el-col :span="21"
-                      style="margin-top: 15px">
-                <el-input v-model="wishForm.mainImage">
-
-                </el-input>
-              </el-col>
-              <el-col :span="2"
-                      class="textZt"
-                      style="margin-top: 15px">
-                附加图
-              </el-col>
-            </el-col>
-            <!--<el-col :span="12">-->
-            <!--<el-col :span="2" class="textZt">-->
-            <!--是否备货-->
-            <!--</el-col>-->
-            <!--<el-col :span="20">-->
-            <!--<el-input v-model="wishForm.stockUp" :disabled="true">-->
-
-            <!--</el-input>-->
-            <!--</el-col>-->
-            <!--</el-col>-->
-            <!--<el-col :span="12">-->
-            <!--<el-col :span="24" style="margin-bottom: 10px;margin-top: 15px">-->
-            <!--<el-col :span="2" class="textZt">-->
-            <!--是否备货-->
-            <!--</el-col>-->
-            <!--<el-col :span="21">-->
-            <!--<el-input v-model="wishForm.stockUp" :disabled="true">-->
-
-            <!--</el-input>-->
-            <!--</el-col>-->
-            <!--</el-col>-->
-            <!--<el-col :span="24" style="margin-bottom: 10px;margin-top: 15px">-->
-            <!--<el-col :span="2" class="textZt">-->
-            <!--主图-->
-            <!--</el-col>-->
-            <!--<el-col :span="21">-->
-            <!--<el-input v-model="wishForm.mainPage">-->
-
-            <!--</el-input>-->
-            <!--</el-col>-->
-            <!--</el-col>-->
-            <!--<el-col :span="24">-->
-            <!--<el-col :span="2" class="textZt">-->
-            <!--附加图-->
-            <!--</el-col>-->
-            <!--</el-col>-->
-            <!--</el-col>-->
-            <el-col :span="10"
-                    style="margin-left: 25px">
+        <el-col :span="5">
+          <el-form-item label=" ">
+            <a :href="wishForm.mainImage"
+               target="_blank">
               <img :src="wishForm.mainImage"
-                   style="display: block; width: 155px;height: 155px" />
-            </el-col>
-          </el-col>
-        </el-row>
-        <el-row style="margin-left: 15px">
-          <el-col :span="12"
-                  style="margin-top: 15px;margin-bottom: 2px"
-                  v-for="(item,index) in wishForm.extraImages" :key="index">
-            <el-col :span="19">
-              <el-col :span="24">
-                <el-input :value="item"
-                          @input="revise($event,index)">
-                </el-input>
-              </el-col>
-              <el-col>
-                <p class="sx"
-                   @click="botIndex(index)">
-                  <i class="el-icon-arrow-down"></i>下移动
-                </p>
-                <p class="sx"
-                   @click="topIndex(index)">
-                  <i class="el-icon-arrow-up"></i>上移动
-                </p>
-                <p class="sx"
-                   @click="delDz(index)">
-                  <i class="el-icon-delete"></i>删除
-                </p>
-                <p class="sx"
-                   @click="dialogFormVisible1 = true">
-                  <i class="el-icon-plus"></i>增加
-                </p>
-                <p class="ss">
-                  #{{index+1}}
-                </p>
-              </el-col>
-            </el-col>
-            <el-col :span="3"
-                    style="margin-left: 15px">
-              <img :src="item"
-                   style="display: block;width: 90px;height: 90px" />
-            </el-col>
-          </el-col>
-          <!--<el-col :span="24" v-for="(item,index) in wishForm.extraPage">-->
-          <!--<el-col :span="8" style="margin-left: 15px;margin-top: 10px">-->
-          <!--<el-input :value="item">-->
-
-          <!--</el-input>-->
-          <!--</el-col>-->
-          <!--<el-col :span="0.5" class="ss">-->
-          <!--#{{index}}-->
-          <!--</el-col>-->
-          <!--<el-col :span="1" class="sx">-->
-          <!--增加-->
-          <!--</el-col>-->
-          <!--<el-col :span="1" class="sx">-->
-          <!--删除-->
-          <!--</el-col>-->
-          <!--<el-col :span="1" class="sx">-->
-          <!--上移动-->
-          <!--</el-col>-->
-          <!--<el-col :span="1" class="sx">-->
-          <!--下移动-->
-          <!--</el-col>-->
-          <!--<el-col :span="1">-->
-          <!--<img :src="item"-->
-          <!--style="display: block;margin-left: 20px;width: 60px;height: 60px" />-->
-          <!--</el-col>-->
-          <!--</el-col>-->
-        </el-row>
+                   style="width:230px;height:150px;" />
+            </a>
+          </el-form-item>
+        </el-col>
+        <el-col :span="19">
+          <el-form-item label="主图">
+            <el-input v-model="wishForm.mainImage"
+                      size="small"
+                      style="width:1150px;"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="19">
+          <el-form-item label="SKU">
+            <el-input size="small"
+                      v-model="wishForm.SKU"
+                      style="width:1150px;"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="19">
+          <el-form-item label="是否备货">
+            <el-input v-model="wishForm.stockUp"
+                      size="small"
+                      disabled
+                      style="width:1150px;"></el-input>
+          </el-form-item>
+        </el-col>
       </el-row>
-      <el-col :span="24"
-              style="padding: 0;margin-left: 15px">
-        <h3 class="toolbar essential">主信息</h3>
-      </el-col>
+      <el-row v-for="(item, index) in url"
+              :key="index">
+        <el-col :span="3">
+          <div style="margin-left:80px;">附加图{{index}}</div>
+          <a :href="url[index]"
+             target="_blank">
+            <img :src="url[index]"
+                 class="image" />
+          </a>
+        </el-col>
+        <el-col :span="21">
+          <el-form-item>
+            <el-input v-model="url[index]"
+                      size="small"
+                      style="width:1390px;"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-button size="small"
+                   @click="addUrl">
+          <font size="3">增加</font>
+        </el-button>
+        <el-button size="small"
+                   @click="delUrl(index)">
+          <font size="3">删除</font>
+        </el-button>
+        <el-button size="small"
+                   @click="up(index)">
+          <font size="3">上移动</font>
+        </el-button>
+        <el-button size="small"
+                   @click="down(index)">
+          <font size="3">下移动</font>
+        </el-button>
+      </el-row>
+      <h3 class="toolbar">主信息</h3>
       <el-col :span="24">
         <el-form-item label="关键词Tags:">
           <el-input v-model="wishForm.wishTags"
@@ -792,8 +634,6 @@
           const extraPic = res.data.data.basicInfo.extraImages
           const picture = extraPic.split('\n')[0]
           this.url = picture.split('\\n')
-          this.wishForm.extraImages=picture.split('\\n')
-          console.log(this.wishForm.extraImages)
           this.url.pop()
         })
       }
@@ -809,81 +649,8 @@
     height: 90px;
     margin-left: 80px;
   }
-  .essential {
-    font-size: 16px;
-    line-height: 45px;
-    font-weight: normal;
-    padding-left: 18px;
-    border-left: 2px solid #2395f1;
-  }
-  .spsz {
-    font-size: 15px;
-    font-weight: normal;
-    line-height: 40px;
-    padding: 0;
-    margin: 0;
-    float: left;
-    margin-right: 10px;
-  }
-  .textZt {
-    line-height: 38px;
-    text-align: center;
-  }
-  .sx {
-    background: #eee;
-    text-align: center;
-    line-height: 34px;
-    margin-left: 15px;
-    margin-top: 12px;
-    border-radius: 3px;
-    cursor: pointer;
-    width: 80px;
-    float: right;
-    font-size: 13px;
-    border: #eee solid 1px;
-  }
-  .sx:nth-child(4) {
-    background: #ecf5ff;
-    color: #409eff;
-    border: #b3d8ff solid 1px;
-  }
-  .sx:nth-child(3) {
-    background: #fef0f0;
-    color: #f56c6c;
-    border: #fbc4c4 solid 1px;
-  }
-  .sx:nth-child(1) {
-    background: #ecf5ff;
-    color: #409eff;
-    border: #b3d8ff solid 1px;
-  }
-  .sx:nth-child(2) {
-    background: #ecf5ff;
-    color: #409eff;
-    border: #b3d8ff solid 1px;
-  }
-  .sx:hover {
-    background: #409eff;
-    color: #fff;
-  }
-  .sx:nth-child(3):hover {
-    background: #f56c6c;
-    color: #fff;
-  }
-  .ss {
-    text-align: center;
-    line-height: 38px;
-    margin-left: 10px;
-    margin-top: 12px;
-    border-radius: 3px;
-    cursor: pointer;
-    width: 20px;
-    float: left;
-    color: red;
-  }
-  .adres {
-    font-weight: normal;
-    margin-top: 15px;
-    margin-left: 5px;
+  h3 {
+    padding: 5px;
+    margin: 10px;
   }
 </style>
