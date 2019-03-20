@@ -1,8 +1,10 @@
 <template>
   <section>
-    <div style="position:fixed;bottom:0;z-index:1000;background: #f2f2f2;padding-bottom: 10px;padding-top: 5px;border-top: #eee solid 1px; width: 100%">
+    <el-col :span="24"
+            class="toolbar"
+            style="position:fixed;bottom:0px;text-align:center;z-index:1000;padding-bottom:10px;">
       <el-button type="primary"
-                 @click="update" style="margin-left: 480px">更新</el-button>
+                 @click="update" style="margin-left: -200px">更新</el-button>
       <el-dropdown @command="handleCommand"
                    placement="top-start">
         <el-button type="primary">标记完善<i class="el-icon-arrow-down el-icon--right"></i></el-button>
@@ -20,72 +22,239 @@
                    value="否"></el-option>
       </el-select>
       <el-button type="info">导出Joom模板</el-button>
-    </div>
-    <h3 class="toolbar">基本信息</h3>
+    </el-col>
+    <el-col :span="24"
+            style="padding: 0;margin-left: 15px">
+      <h3 class="toolbar essential">基本信息</h3>
+    </el-col>
     <el-form :model="wishForm"
              :inline="true"
              label-width="100px"
-             ref="wishForm">
+             ref="wishForm"
+             style="margin-left: 15px">
+      <!--<el-row>-->
+        <!--<el-col :span="5">-->
+          <!--<el-form-item label=" ">-->
+            <!--<router-link :to="wishForm.mainImage"-->
+                         <!--target="_blank">-->
+              <!--<img :src="wishForm.mainImage"-->
+                   <!--style="width:230px;height:150px;" />-->
+            <!--</router-link>-->
+          <!--</el-form-item>-->
+        <!--</el-col>-->
+        <!--<el-col :span="19">-->
+          <!--<el-form-item label="主图">-->
+            <!--<el-input v-model="wishForm.mainImage"-->
+                      <!--size="small"-->
+                      <!--style="width:1150px;"></el-input>-->
+          <!--</el-form-item>-->
+        <!--</el-col>-->
+        <!--<el-col :span="19">-->
+          <!--<el-form-item label="SKU">-->
+            <!--<el-input size="small"-->
+                      <!--v-model="wishForm.SKU"-->
+                      <!--style="width:1150px;"></el-input>-->
+          <!--</el-form-item>-->
+        <!--</el-col>-->
+        <!--<el-col :span="19">-->
+          <!--<el-form-item label="是否备货">-->
+            <!--<el-input v-model="wishForm.stockUp"-->
+                      <!--size="small"-->
+                      <!--disabled-->
+                      <!--style="width:1150px;"></el-input>-->
+          <!--</el-form-item>-->
+        <!--</el-col>-->
+      <!--</el-row>-->
+      <!--<el-row v-for="(item, index) in url"-->
+              <!--:key="index">-->
+        <!--<el-col :span="3">-->
+          <!--<div style="margin-left:80px;">附加图{{index}}</div>-->
+          <!--<router-link :to="url[index]"-->
+                       <!--target="_blank">-->
+            <!--<img :src="url[index]"-->
+                 <!--class="image" />-->
+          <!--</router-link>-->
+        <!--</el-col>-->
+        <!--<el-col :span="21">-->
+          <!--<el-form-item>-->
+            <!--<el-input v-model="url[index]"-->
+                      <!--size="small"-->
+                      <!--style="width:1390px;"></el-input>-->
+          <!--</el-form-item>-->
+        <!--</el-col>-->
+        <!--<el-button size="small"-->
+                   <!--@click="addUrl">-->
+          <!--<font size="3">增加</font>-->
+        <!--</el-button>-->
+        <!--<el-button size="small"-->
+                   <!--@click="delUrl(index)">-->
+          <!--<font size="3">删除</font>-->
+        <!--</el-button>-->
+        <!--<el-button size="small"-->
+                   <!--@click="up(index)">-->
+          <!--<font size="3">上移动</font>-->
+        <!--</el-button>-->
+        <!--<el-button size="small"-->
+                   <!--@click="down(index)">-->
+          <!--<font size="3">下移动</font>-->
+        <!--</el-button>-->
+      <!--</el-row>-->
       <el-row>
-        <el-col :span="5">
-          <el-form-item label=" ">
-            <img :src="wishForm.mainImage"
-                 style="width:230px;height:150px;" />
-          </el-form-item>
-        </el-col>
-        <el-col :span="19">
-          <el-form-item label="主图">
-            <el-input v-model="wishForm.mainImage"
-                      size="small"
-                      style="width:1150px;"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="19">
-          <el-form-item label="SKU">
-            <el-input size="small"
-                      v-model="wishForm.SKU"
-                      style="width:1150px;"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="19">
-          <el-form-item label="是否备货">
-            <el-input v-model="wishForm.stockUp"
-                      size="small"
-                      disabled
-                      style="width:1150px;"></el-input>
-          </el-form-item>
-        </el-col>
+        <el-row>
+          <el-col :span="24">
+            <el-col :span="12">
+              <el-col :span="2"
+                      class="textZt">
+                SKU
+              </el-col>
+              <el-col :span="21">
+                <el-input v-model="wishForm.SKU">
+
+                </el-input>
+              </el-col>
+              <el-col :span="2"
+                      class="textZt"
+                      style="margin-top: 15px">
+                是否备货
+              </el-col>
+              <el-col :span="21"
+                      style="margin-top: 15px">
+                <el-input v-model="wishForm.stockUp"
+                          :disabled="true">
+
+                </el-input>
+              </el-col>
+              <el-col :span="2"
+                      class="textZt"
+                      style="margin-top: 15px">
+                主图
+              </el-col>
+              <el-col :span="21"
+                      style="margin-top: 15px">
+                <el-input v-model="wishForm.mainImage">
+
+                </el-input>
+              </el-col>
+              <el-col :span="2"
+                      class="textZt"
+                      style="margin-top: 15px">
+                附加图
+              </el-col>
+            </el-col>
+            <!--<el-col :span="12">-->
+            <!--<el-col :span="2" class="textZt">-->
+            <!--是否备货-->
+            <!--</el-col>-->
+            <!--<el-col :span="20">-->
+            <!--<el-input v-model="wishForm.stockUp" :disabled="true">-->
+
+            <!--</el-input>-->
+            <!--</el-col>-->
+            <!--</el-col>-->
+            <!--<el-col :span="12">-->
+            <!--<el-col :span="24" style="margin-bottom: 10px;margin-top: 15px">-->
+            <!--<el-col :span="2" class="textZt">-->
+            <!--是否备货-->
+            <!--</el-col>-->
+            <!--<el-col :span="21">-->
+            <!--<el-input v-model="wishForm.stockUp" :disabled="true">-->
+
+            <!--</el-input>-->
+            <!--</el-col>-->
+            <!--</el-col>-->
+            <!--<el-col :span="24" style="margin-bottom: 10px;margin-top: 15px">-->
+            <!--<el-col :span="2" class="textZt">-->
+            <!--主图-->
+            <!--</el-col>-->
+            <!--<el-col :span="21">-->
+            <!--<el-input v-model="wishForm.mainPage">-->
+
+            <!--</el-input>-->
+            <!--</el-col>-->
+            <!--</el-col>-->
+            <!--<el-col :span="24">-->
+            <!--<el-col :span="2" class="textZt">-->
+            <!--附加图-->
+            <!--</el-col>-->
+            <!--</el-col>-->
+            <!--</el-col>-->
+            <el-col :span="10"
+                    style="margin-left: 25px">
+              <img :src="wishForm.mainImage"
+                   style="display: block; width: 155px;height: 155px" />
+            </el-col>
+          </el-col>
+        </el-row>
+        <el-row style="margin-left: 15px">
+          <el-col :span="12"
+                  style="margin-top: 15px;margin-bottom: 2px"
+                  v-for="(item,index) in wishForm.extraImages" :key="index">
+            <el-col :span="19">
+              <el-col :span="24">
+                <el-input :value="item"
+                          @input="revise($event,index)">
+                </el-input>
+              </el-col>
+              <el-col>
+                <p class="sx"
+                   @click="botIndex(index)">
+                  <i class="el-icon-arrow-down"></i>下移动
+                </p>
+                <p class="sx"
+                   @click="topIndex(index)">
+                  <i class="el-icon-arrow-up"></i>上移动
+                </p>
+                <p class="sx"
+                   @click="delDz(index)">
+                  <i class="el-icon-delete"></i>删除
+                </p>
+                <p class="sx"
+                   @click="dialogFormVisible1 = true">
+                  <i class="el-icon-plus"></i>增加
+                </p>
+                <p class="ss">
+                  #{{index+1}}
+                </p>
+              </el-col>
+            </el-col>
+            <el-col :span="3"
+                    style="margin-left: 15px">
+              <img :src="item"
+                   style="display: block;width: 90px;height: 90px" />
+            </el-col>
+          </el-col>
+          <!--<el-col :span="24" v-for="(item,index) in wishForm.extraPage">-->
+          <!--<el-col :span="8" style="margin-left: 15px;margin-top: 10px">-->
+          <!--<el-input :value="item">-->
+
+          <!--</el-input>-->
+          <!--</el-col>-->
+          <!--<el-col :span="0.5" class="ss">-->
+          <!--#{{index}}-->
+          <!--</el-col>-->
+          <!--<el-col :span="1" class="sx">-->
+          <!--增加-->
+          <!--</el-col>-->
+          <!--<el-col :span="1" class="sx">-->
+          <!--删除-->
+          <!--</el-col>-->
+          <!--<el-col :span="1" class="sx">-->
+          <!--上移动-->
+          <!--</el-col>-->
+          <!--<el-col :span="1" class="sx">-->
+          <!--下移动-->
+          <!--</el-col>-->
+          <!--<el-col :span="1">-->
+          <!--<img :src="item"-->
+          <!--style="display: block;margin-left: 20px;width: 60px;height: 60px" />-->
+          <!--</el-col>-->
+          <!--</el-col>-->
+        </el-row>
       </el-row>
-      <el-row v-for="(item, index) in url"
-              :key="index">
-        <el-col :span="3">
-          <div style="margin-left:80px;">附加图{{index}}</div>
-          <img :src="url[index]"
-               class="image" />
-        </el-col>
-        <el-col :span="21">
-          <el-form-item>
-            <el-input v-model="url[index]"
-                      size="small"
-                      style="width:1390px;"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-button size="small"
-                   @click="addUrl">
-          <font size="3">增加</font>
-        </el-button>
-        <el-button size="small"
-                   @click="delUrl(index)">
-          <font size="3">删除</font>
-        </el-button>
-        <el-button size="small">
-          <font size="3">上移动</font>
-        </el-button>
-        <el-button size="small">
-          <font size="3">下移动</font>
-        </el-button>
-      </el-row>
-      <h3 class="toolbar">主信息</h3>
+      <el-col :span="24"
+              style="padding: 0;margin-left: 15px">
+        <h3 class="toolbar essential">主信息</h3>
+      </el-col>
       <el-col :span="24">
         <el-form-item label="关键词Tags:">
           <el-input v-model="wishForm.wishTags"
@@ -193,7 +362,7 @@
       <el-col :span="24">
         <el-form-item label="数量">
           <el-input size="small"
-                    v-model="wishForm.quantity"
+                    v-model="wishForm.inventory"
                     style="width:1500px"></el-input>
         </el-form-item>
       </el-col>
@@ -216,13 +385,16 @@
                width="80%">
       <el-table :data="tableData">
         <el-table-column type="selection"
+                         width="30"
                          align="center"
                          header-align="center"></el-table-column>
         <el-table-column type="index"
+                         width="50"
                          align="center"
                          header-align="center">
         </el-table-column>
         <el-table-column label="操作"
+                         width="50"
                          header-align="center"
                          align="center">
           <template slot-scope="scope">
@@ -413,230 +585,305 @@
   </section>
 </template>
 <script type="text/ecmascript-6">
-import { APIPlatInfo, APISaveWishInfo, APIFinishPlat } from '../../api/product'
-export default {
-  props: {
-    id: {
-      type: Number,
-      default: 5
-    }
-  },
-  data() {
-    return {
-      url: [],
-      rows: null,
-      num: null,
-      price: null,
-      ship: null,
-      advicePrice: null,
-      joomPrice: null,
-      transport: null,
-      time: null,
-      dialogVisible: false,
-      setVisible: false,
-      select: '',
-      wishForm: {},
-      tableData: [],
-      condition: {
-        id: 5,
-        plat: 'wish'
+  import { APIPlatInfo, APISaveWishInfo, APIFinishPlat } from '../../api/product'
+  export default {
+    props: {
+      id: {
+        type: Number,
+        default: 5
       }
-    }
-  },
-  methods: {
-    //删除URL
-    delUrl(index) {
-      this.url.splice(index, 1)
     },
-    //删除table行
-    del(index, row) {
-      this.tableData.splice(index, 1)
-    },
-    //增加URL
-    addUrl() {
-      this.url.push('')
-    },
-    //增加行
-    addClomun() {
-      let data = {
-        id: null,
-        infoId: null,
-        sid: null,
-        sku: '',
-        color: '',
-        size: null,
-        inventory: null,
+    data() {
+      return {
+        url: [],
+        rows: null,
+        num: null,
         price: null,
-        shipping: '',
-        msrp: '',
-        shippingTime: '',
-        linkUrl: '',
-        goodsSkuId: null,
-        weight: null,
+        ship: null,
+        advicePrice: null,
         joomPrice: null,
-        joomShipping: null
-      }
-      for (let i = 0; i < this.rows; i++) {
-        this.tableData.push(data)
-      }
-    },
-    //数量
-    setNum() {
-      if (this.num) {
-        for (let i = 0; i < this.tableData.length; i++) {
-          this.tableData[i].inventory = this.num
+        transport: null,
+        time: null,
+        dialogVisible: false,
+        setVisible: false,
+        select: '',
+        wishForm: {},
+        tableData: [],
+        condition: {
+          id: 5,
+          plat: 'wish'
         }
-      } else {
-        return false
       }
     },
-    //价格
-    setPrice() {
-      if (this.price) {
-        for (let i = 0; i < this.tableData.length; i++) {
-          this.tableData[i].price = this.price
-        }
-      } else {
-        return false
-      }
-    },
-    //运费
-    setShip() {
-      if (this.ship) {
-        for (let i = 0; i < this.tableData.length; i++) {
-          this.tableData[i].shipping = this.ship
-        }
-      } else {
-        return false
-      }
-    },
-    //建议零售价
-    setAdvice() {
-      if (this.advicePrice) {
-        for (let i = 0; i < this.tableData.length; i++) {
-          this.tableData[i].msrp = this.advicePrice
-        }
-      } else {
-        return false
-      }
-    },
-    //joom零售价格
-    setJoom() {
-      if (this.joomPrice) {
-        for (let i = 0; i < this.tableData.length; i++) {
-          this.tableData[i].joomPrice = this.joomPrice
-        }
-      } else {
-        return false
-      }
-    },
-    //joom运费
-    setTransport() {
-      if (this.transport) {
-        for (let i = 0; i < this.tableData.length; i++) {
-          this.tableData[i].joomShipping = this.transport
-        }
-      } else {
-        return false
-      }
-    },
-    //运输时间
-    setTime() {
-      if (this.time) {
-        for (let i = 0; i < this.tableData.length; i++) {
-          this.tableData[i].shippingTime = this.time
-        }
-      } else {
-        return false
-      }
-    },
-    //更新
-    update() {
-      let data = {
-        basicInfo: {
-          id: 4,
-          SKU: '9A0641-test-save',
-          title: '',
-          description: null,
-          inventory: 10000,
-          price: '0.00',
-          msrp: '0.00',
-          shipping: '0.00',
-          shippingTime: '7-21',
-          tags: '',
-          mainImage:
-            'https://www.tupianku.com/view/full/10023/9A0641-test_0.jpg',
-          goodsId: null,
-          infoId: 5,
-          extraImages:
-            'https://www.tupianku.com/view/full/10023/09A0641-test0_jpg\\nhttps://www.tupianku.com/view/full/10023/19A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/29A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/39A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/49A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/59A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/69A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/79A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/89A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/99A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/109A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/119A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/129A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/139A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/149A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/159A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/169A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/179A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/189A0641-test_jpg\\nhttps://www.tupianku.com/view/full/10023/199A0641-test_jpg\\n',
-          headKeywords: null,
-          requiredKeywords: null,
-          randomKeywords: null,
-          tailKeywords: null,
-          wishTags: null,
-          stockUp: '否'
-        },
-        skuInfo: []
-      }
-      // data.basicInfo = this.wishForm
-      data.skuInfo = this.tableData
-      APISaveWishInfo(data).then(res => {
-        if (res.data.data[0] === 'success') {
-          this.$message({
-            message: '保存成功',
-            type: 'success'
-          })
+    methods: {
+      // 删除URL
+      delUrl(index) {
+        this.url.splice(index, 1)
+      },
+      // 删除table行
+      del(index, row) {
+        this.tableData.splice(index, 1)
+      },
+      // 增加URL
+      addUrl() {
+        this.url.push('')
+      },
+      // 上移
+      up(index) {
+        if (index > 0) {
+          const upData = this.url[index - 1]
+          this.url.splice(index - 1, 1)
+          this.url.splice(index, 0, upData)
         } else {
-          this.$message.error('保存失败')
+          alert('已经是第一条，不可上移')
         }
-      })
-    },
-    //标记
-    handleCommand(command) {
-      let data = {
-        id: 5,
-        plat: []
-      }
-      if (command === 'a') {
-        data.plat = ['wish']
-      } else {
-        data.plat = ['joom']
-      }
-      APIFinishPlat(data).then(res => {
-        if (res.data.data[0] === 'success') {
-          this.$message({
-            message: '保存成功',
-            type: 'success'
-          })
+      },
+      // 下移
+      down(index) {
+        if (index + 1 === this.url.length) {
+          alert('已经是最后一条，不可下移')
         } else {
-          this.$message.error('保存失败')
+          const downData = this.url[index + 1]
+          this.url.splice(index + 1, 1)
+          this.url.splice(index, 0, downData)
         }
-      })
+      },
+      // 增加行
+      addClomun() {
+        const data = {
+          id: null,
+          infoId: null,
+          sid: null,
+          sku: '',
+          color: '',
+          size: null,
+          inventory: null,
+          price: null,
+          shipping: '',
+          msrp: '',
+          shippingTime: '',
+          linkUrl: '',
+          goodsSkuId: null,
+          weight: null,
+          joomPrice: null,
+          joomShipping: null
+        }
+        for (let i = 0; i < this.rows; i++) {
+          this.tableData.push(data)
+        }
+      },
+      // 数量
+      setNum() {
+        if (this.num) {
+          for (let i = 0; i < this.tableData.length; i++) {
+            this.tableData[i].inventory = this.num
+          }
+        } else {
+          return false
+        }
+      },
+      // 价格
+      setPrice() {
+        if (this.price) {
+          for (let i = 0; i < this.tableData.length; i++) {
+            this.tableData[i].price = this.price
+          }
+        } else {
+          return false
+        }
+      },
+      // 运费
+      setShip() {
+        if (this.ship) {
+          for (let i = 0; i < this.tableData.length; i++) {
+            this.tableData[i].shipping = this.ship
+          }
+        } else {
+          return false
+        }
+      },
+      // 建议零售价
+      setAdvice() {
+        if (this.advicePrice) {
+          for (let i = 0; i < this.tableData.length; i++) {
+            this.tableData[i].msrp = this.advicePrice
+          }
+        } else {
+          return false
+        }
+      },
+      // joom零售价格
+      setJoom() {
+        if (this.joomPrice) {
+          for (let i = 0; i < this.tableData.length; i++) {
+            this.tableData[i].joomPrice = this.joomPrice
+          }
+        } else {
+          return false
+        }
+      },
+      // joom运费
+      setTransport() {
+        if (this.transport) {
+          for (let i = 0; i < this.tableData.length; i++) {
+            this.tableData[i].joomShipping = this.transport
+          }
+        } else {
+          return false
+        }
+      },
+      // 运输时间
+      setTime() {
+        if (this.time) {
+          for (let i = 0; i < this.tableData.length; i++) {
+            this.tableData[i].shippingTime = this.time
+          }
+        } else {
+          return false
+        }
+      },
+      // 更新
+      update() {
+        const data = {
+          basicInfo: {},
+          skuInfo: []
+        }
+        data.basicInfo = this.wishForm
+        data.basicInfo.extraImages = this.url.join('\\n')
+        data.skuInfo = this.tableData
+        APISaveWishInfo(data).then(res => {
+          if (res.data.data[0] === 'success') {
+            this.$message({
+              message: '保存成功',
+              type: 'success'
+            })
+            this.getData()
+          } else {
+            this.$message.error('保存失败')
+          }
+        })
+      },
+      // 标记
+      handleCommand(command) {
+        const data = {
+          id: 5,
+          plat: []
+        }
+        if (command === 'a') {
+          data.plat = ['wish']
+        } else {
+          data.plat = ['joom']
+        }
+        APIFinishPlat(data).then(res => {
+          if (res.data.data[0] === 'success') {
+            this.$message({
+              message: '保存成功',
+              type: 'success'
+            })
+          } else {
+            this.$message.error('保存失败')
+          }
+        })
+      },
+      getData() {
+        APIPlatInfo(this.condition).then(res => {
+          this.wishForm = res.data.data.basicInfo
+          this.tableData = res.data.data.skuInfo
+          const extraPic = res.data.data.basicInfo.extraImages
+          const picture = extraPic.split('\n')[0]
+          this.url = picture.split('\\n')
+          this.wishForm.extraImages=picture.split('\\n')
+          console.log(this.wishForm.extraImages)
+          this.url.pop()
+        })
+      }
     },
-    getData() {
-      APIPlatInfo(this.condition).then(res => {
-        this.wishForm = res.data.data.basicInfo
-        this.tableData = res.data.data.skuInfo
-        let extraPic = res.data.data.basicInfo.extraImages
-        let picture = extraPic.split('\n')[0]
-        this.url = picture.split('\\n')
-      })
+    mounted() {
+      this.getData()
     }
-  },
-  mounted() {
-    this.getData()
   }
-}
 </script>
 <style lang="scss" scoped>
-.image {
-  width: 100px;
-  height: 90px;
-  margin-left: 80px;
-}
-h3 {
-  padding: 5px;
-  margin: 10px;
-}
+  .image {
+    width: 100px;
+    height: 90px;
+    margin-left: 80px;
+  }
+  .essential {
+    font-size: 16px;
+    line-height: 45px;
+    font-weight: normal;
+    padding-left: 18px;
+    border-left: 2px solid #2395f1;
+  }
+  .spsz {
+    font-size: 15px;
+    font-weight: normal;
+    line-height: 40px;
+    padding: 0;
+    margin: 0;
+    float: left;
+    margin-right: 10px;
+  }
+  .textZt {
+    line-height: 38px;
+    text-align: center;
+  }
+  .sx {
+    background: #eee;
+    text-align: center;
+    line-height: 34px;
+    margin-left: 15px;
+    margin-top: 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    width: 80px;
+    float: right;
+    font-size: 13px;
+    border: #eee solid 1px;
+  }
+  .sx:nth-child(4) {
+    background: #ecf5ff;
+    color: #409eff;
+    border: #b3d8ff solid 1px;
+  }
+  .sx:nth-child(3) {
+    background: #fef0f0;
+    color: #f56c6c;
+    border: #fbc4c4 solid 1px;
+  }
+  .sx:nth-child(1) {
+    background: #ecf5ff;
+    color: #409eff;
+    border: #b3d8ff solid 1px;
+  }
+  .sx:nth-child(2) {
+    background: #ecf5ff;
+    color: #409eff;
+    border: #b3d8ff solid 1px;
+  }
+  .sx:hover {
+    background: #409eff;
+    color: #fff;
+  }
+  .sx:nth-child(3):hover {
+    background: #f56c6c;
+    color: #fff;
+  }
+  .ss {
+    text-align: center;
+    line-height: 38px;
+    margin-left: 10px;
+    margin-top: 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    width: 20px;
+    float: left;
+    color: red;
+  }
+  .adres {
+    font-weight: normal;
+    margin-top: 15px;
+    margin-left: 5px;
+  }
 </style>

@@ -33,63 +33,63 @@
         <el-col :span="8">
           <el-form-item label="商品编码">
             <el-input size="small"
-                      v-model="editForm.GoodsCode"
+                      v-model="editForm.goodsCode"
                       style="width:390px;"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item label="商品名称">
             <el-input size="small"
-                      v-model="editForm.GoodsName"
+                      v-model="editForm.goodsName"
                       style="width:390px;"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item label="中文申报名">
             <el-input size="small"
-                      v-model="editForm.AliasCnName"
+                      v-model="editForm.aliasCnName"
                       style="width:390px;"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item label="英文申报名">
             <el-input size="small"
-                      v-model="editForm.AliasEnName"
+                      v-model="editForm.aliasEnName"
                       style="width:390px;"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item label="采购">
             <el-input size="small"
-                      v-model="editForm.Purchaser"
+                      v-model="editForm.purchaser"
                       style="width:390px;"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item label="业绩归属人1">
             <el-input size="small"
-                      v-model="editForm.mapPersons"
+                      v-model="editForm.possessMan1"
                       style="width:390px;"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item label="责任归属人1">
             <el-input size="small"
-                      v-model="editForm.possessMan1"
+                      v-model="editForm.possessMan2"
                       style="width:390px;"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item label="供应商名称">
             <el-input size="small"
-                      v-model="editForm.SupplierName"
+                      v-model="editForm.supplierName"
                       style="width:390px;"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item label="规格">
             <el-select size="small"
-                       v-model="editForm.PackName"
+                       v-model="editForm.packName"
                        style="width:390px">
               <el-option label="否"
                          value="0"></el-option>
@@ -101,7 +101,7 @@
         <el-col :span="8">
           <el-form-item label="特殊属性必填">
             <el-select size="small"
-                       v-model="editForm.StoreName"
+                       v-model="editForm.attributeName"
                        style="width:390px">
               <el-option label="否"
                          value="0"></el-option>
@@ -113,19 +113,19 @@
         <el-col :span="8">
           <el-form-item label="仓库">
             <el-select size="small"
-                       v-model="editForm.StoreName"
+                       v-model="editForm.storeName"
                        style="width:390px">
-              <el-option label="否"
-                         value="0"></el-option>
-              <el-option label="是"
-                         value="1"></el-option>
+              <!--<el-option label="否"-->
+                         <!--value="0"></el-option>-->
+              <!--<el-option label="是"-->
+                         <!--value="1"></el-option>-->
             </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item label="季节">
             <el-select size="small"
-                       v-model="editForm.Season"
+                       v-model="editForm.season"
                        style="width:390px">
               <el-option label="否"
                          value="0"></el-option>
@@ -247,7 +247,7 @@
           <el-form-item label="禁售平台">
             <el-select size="small"
                        style="width:250px"
-                       v-model="editForm.mapPersons">
+                       v-model="editForm.dictionaryName">
               <el-option label="否"
                          value="0"></el-option>
               <el-option label="是"
@@ -259,11 +259,11 @@
           <el-form-item label="主类目">
             <el-select size="small"
                        style="width:250px"
-                       v-model="editForm.mapPersons">
-              <el-option label="否"
-                         value="0"></el-option>
-              <el-option label="是"
-                         value="1"></el-option>
+                       v-model="oaGoods.cate">
+              <!--<el-option label="否"-->
+                         <!--value="0"></el-option>-->
+              <!--<el-option label="是"-->
+                         <!--value="1"></el-option>-->
             </el-select>
           </el-form-item>
         </el-col>
@@ -271,11 +271,11 @@
           <el-form-item label="子类目">
             <el-select size="small"
                        style="width:250px"
-                       v-model="editForm.mapPersons">
-              <el-option label="否"
-                         value="0"></el-option>
-              <el-option label="是"
-                         value="1"></el-option>
+                       v-model="oaGoods.subCate">
+              <!--<el-option label="否"-->
+                         <!--value="0"></el-option>-->
+              <!--<el-option label="是"-->
+                         <!--value="1"></el-option>-->
             </el-select>
           </el-form-item>
         </el-col>
@@ -395,27 +395,27 @@
         </template>
       </el-table-column>
       <el-table-column label="成本价"
-                       prop="CostPrice"
+                       prop="costPrice"
                        header-align="center">
         <template slot-scope="scope">
           <el-input size="small"
-                    v-model="scope.row.CostPrice"></el-input>
+                    v-model="scope.row.costPrice"></el-input>
         </template>
       </el-table-column>
       <el-table-column label="重量"
-                       prop="Weight"
+                       prop="weight"
                        header-align="center">
         <template slot-scope="scope">
           <el-input size="small"
-                    v-model="scope.row.Weight"></el-input>
+                    v-model="scope.row.weight"></el-input>
         </template>
       </el-table-column>
       <el-table-column label="零售价"
-                       prop="RetailPrice"
+                       prop="retailPrice"
                        header-align="center">
         <template slot-scope="scope">
           <el-input size="small"
-                    v-model="scope.row.RetailPrice"></el-input>
+                    v-model="scope.row.retailPrice"></el-input>
         </template>
       </el-table-column>
       <el-table-column label="joom零售价"
@@ -512,8 +512,8 @@
                style="position: fixed;bottom: 5px;left:50%;width:200px;">保存</el-button>
   </section>
 </template>
-<script>
-import { APIAttributeInfo, APISaveAttribute } from '../../api/product'
+<script type="text/ecmascript-6">
+import { APIAttributeInfo, APISaveAttribute,APIAttribute } from '../../api/product'
 export default {
   data() {
     return {
@@ -552,7 +552,7 @@ export default {
         }
       ],
       condition: {
-        id: 5
+        id: 0
       },
       editForm: {},
       oaGoods: {},
@@ -829,7 +829,7 @@ export default {
     }
   },
   mounted() {
-    // this.condition.id = this.$route.params.id
+    this.condition.id = this.$route.params.id
     this.getData()
   }
 }
@@ -837,6 +837,7 @@ export default {
 <style lang="scss" scoped>
 section {
   margin-bottom: 80px;
+  margin-top: 20px;
 }
 </style>
 
