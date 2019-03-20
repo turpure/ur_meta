@@ -24,7 +24,7 @@
       <el-table :data="tableData"
                 :cell-style="cellStyle"
                 @selection-change="selsChange"
-                style="width: 97%;margin-left:20px">
+                style="width: 100%;border: none;margin-bottom: 50px">
         <el-table-column type="selection"
                          fixed
                          align="center"
@@ -77,7 +77,7 @@
         </el-table-column>
         <el-table-column label="商品编码"
                          header-align="center">
-          <el-table-column prop="GoodsCode"
+          <el-table-column prop="goodsCode"
                            :render-header="renderHeader"
                            width='150'
                            align="center">
@@ -101,7 +101,7 @@
         </el-table-column>
         <el-table-column label="商品名称"
                          header-align="center">
-          <el-table-column prop="GoodsName"
+          <el-table-column prop="goodsName"
                            :render-header="renderHeader"
                            width='150'
                            align="center">
@@ -133,7 +133,7 @@
         </el-table-column>
         <el-table-column label="中文申报名"
                          header-align="center">
-          <el-table-column prop="AttributeName"
+          <el-table-column prop="aliasCnName"
                            :render-header="renderHeader"
                            width='150'
                            align="center">
@@ -141,7 +141,7 @@
         </el-table-column>
         <el-table-column label="英文申报名"
                          header-align="center">
-          <el-table-column prop="DictionaryName"
+          <el-table-column prop="aliasEnName"
                            :render-header="renderHeader"
                            width='150'
                            align="center">
@@ -149,7 +149,7 @@
         </el-table-column>
         <el-table-column label="是否液体"
                          header-align="center">
-          <el-table-column prop="IsLiquid"
+          <el-table-column prop="isLiquid"
                            :render-header="renderHeader"
                            width='150'
                            align="center">
@@ -157,7 +157,7 @@
         </el-table-column>
         <el-table-column label="是否粉末"
                          header-align="center">
-          <el-table-column prop="IsPowder"
+          <el-table-column prop="isPowder"
                            :render-header="renderHeader"
                            width='150'
                            align="center">
@@ -173,7 +173,7 @@
         </el-table-column>
         <el-table-column label="是否带电"
                          header-align="center">
-          <el-table-column prop="IsCharged"
+          <el-table-column prop="isCharged"
                            :render-header="renderHeader"
                            width='150'
                            align="center">
@@ -313,7 +313,8 @@
                      :page-sizes="[10, 20, 30, 40]"
                      :page-size="this.condition.pageSize"
                      layout="total, sizes, prev, pager, next, jumper"
-                     :total="this.total">
+                     :total="this.total"
+                     style="position: fixed;bottom: 10px;left: 0;right: 0;margin-left: 700px">
       </el-pagination>
     </div>
     <div v-show="show.picture">
@@ -545,7 +546,8 @@
                      :page-sizes="[10, 20, 30, 40]"
                      :page-size="this.picture.pageSize"
                      layout="total, sizes, prev, pager, next, jumper"
-                     :total="this.totalPic">
+                     :total="this.totalPic"
+                     style="position: fixed;bottom: 10px;left: 0;right: 0;margin-left: 700px">
       </el-pagination>
     </div>
     <div v-show="show.plat">
@@ -930,13 +932,14 @@
                      :page-sizes="[10, 20, 30, 40]"
                      :page-size="this.plat.pageSize"
                      layout="total, sizes, prev, pager, next, jumper"
-                     :total="this.totalPlat">
+                     :total="this.totalPlat"
+                     style="position: fixed;bottom: 10px;left: 0;right: 0;margin-left: 700px">
       </el-pagination>
     </div>
   </section>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
 import {
   APIGoodsInfo,
   APIPictureList,

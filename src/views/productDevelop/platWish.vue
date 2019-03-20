@@ -1,8 +1,8 @@
 <template>
   <section>
-    <div style="position:fixed;bottom:10px;left:30%;z-index:1000">
+    <div style="position:fixed;bottom:0;z-index:1000;background: #f2f2f2;padding-bottom: 10px;padding-top: 5px;border-top: #eee solid 1px; width: 100%">
       <el-button type="primary"
-                 @click="update">更新</el-button>
+                 @click="update" style="margin-left: 480px">更新</el-button>
       <el-dropdown @command="handleCommand"
                    placement="top-start">
         <el-button type="primary">标记完善<i class="el-icon-arrow-down el-icon--right"></i></el-button>
@@ -412,7 +412,7 @@
     </el-dialog>
   </section>
 </template>
-<script>
+<script type="text/ecmascript-6">
 import { APIPlatInfo, APISaveWishInfo, APIFinishPlat } from '../../api/product'
 export default {
   props: {

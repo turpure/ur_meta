@@ -108,7 +108,7 @@
         </el-col>
           </el-row>
         <el-row style="margin-left: 15px">
-          <el-col :span="12" style="margin-top: 15px;margin-bottom: 2px" v-for="(item,index) in wishForm.extraPage">
+          <el-col :span="12" style="margin-top: 15px;margin-bottom: 2px" v-for="(item,index) in wishForm.extraPage" :key="index">
             <el-col :span="19">
               <el-col :span="24">
                 <el-input v-model="wishForm.extraPage[index]" @input="revise($event,index)">
@@ -386,8 +386,8 @@
         <el-col :span="7" style="margin-left: 15px">
           属性内容
         </el-col>
-        <el-col :span="24" style="margin-top: 8px" v-for="(item,index) in tableData">
-          <el-col :span="24" style="margin-top: 10px" v-for="(log,key) in item">
+        <el-col :span="24" style="margin-top: 8px" v-for="(item,index) in tableData" :key="index">
+          <el-col :span="24" style="margin-top: 10px" v-for="(log,key) in item" :key="index">
           <el-col :span="7" style="margin-left: 20px">
             <el-input :value="key"  @input ="inputFunc($event,index)"></el-input>
           </el-col>
@@ -568,36 +568,16 @@
                            header-align="center">
             <template slot-scope="scope">
               <img :src="scope.row.imageUrl"
-                   style="width:50px;height:50px;">
+                   style="width:60px;height:50px;margin-left: 30px">
             </template>
           </el-table-column>
-          <el-table-column label="Color"
-                           prop="imageUrl"
-                           header-align="center">
-            <template slot-scope="scope">
-              <el-input size="small"
-                        v-model="scope.row.property.Color"></el-input>
+          <el-table-column header-align="center">
+            <template slot="header" slot-scope="scope">
+              <el-input
+                      v-model="search"
+                      size="mini"
+                      placeholder="输入关键字搜索"/>
             </template>
-          </el-table-column>
-          <el-table-column label="Size"
-                           prop="imageUrl"
-                           header-align="center">
-            <template slot-scope="scope">
-              <el-input size="small"
-                        v-model="scope.row.property.Size"></el-input>
-            </template>
-          </el-table-column>
-          <el-table-column label="款式3"
-                           prop="imageUrl"
-                           header-align="center">
-            <template slot-scope="scope">
-              <el-input size="small"
-                        v-model="scope.row.property.Color"></el-input>
-            </template>
-          </el-table-column>
-          <el-table-column label="CPU"
-                           prop="imageUrl"
-                           header-align="center">
             <template slot-scope="scope">
               <el-input size="small"
                         v-model="scope.row.property.Color"></el-input>
@@ -790,7 +770,6 @@
           console.log(this.addPhoto)
           this.wishForm.extraPage.push(this.addPhoto)
           this.dialogFormVisible1=false
-          console.log(this.wishForm.extraPage)
         }
       },
       delDz(index) {
@@ -815,10 +794,8 @@
           atrr=key
           atr2=tab[key]
         }
-        console.log(tab)
         this.tableData[index][e]=atr2
         delete this.tableData[index][atrr]
-        console.log(this.tableData)
         },
       inputFunc1(e,index){
         let tab1=this.tableData[index]
@@ -827,24 +804,27 @@
           atrr1=key
         }
         this.tableData[index][atrr1]=e
-        console.log(this.tableData)
       },
       increase(){
         let obj={
           "":""
         }
         this.tableData.push(obj)
-        console.log(this.tableData)
       },
       getData() {
         APIPlatInfo(this.condition).then(res => {
           this.wishForm = res.data.data.basicInfo
           this.tabDate = res.data.data.skuInfo
+          for(var i=0;i<this.tabDate.length;i++){
+            this.tabDate[i].property=JSON.parse(this.tabDate[i].property)
+            for(var key in this.tabDate[i].property.columns){
+                console.log(key)
+            }
+          }
           this.wishForm.site==0?this.wishForm.site="美国":""
           this.wishForm.extraPage= this.wishForm.extraPage.split("\\n")
           this.wishForm.extraPage.pop()
           this.tableData= JSON.parse(res.data.data.basicInfo.specifics).specifics
-          console.log(this.tableData)
       })
       },
       keep(){
@@ -890,7 +870,6 @@
     mounted() {
       this.condition.id=this.$route.params.id
       this.getData()
-      console.log(this.$route.params.id)
     }
   }
 </script>
