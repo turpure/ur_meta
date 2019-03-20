@@ -376,3 +376,11 @@ export function APIDeleteSku(param) {
     data
   })
 }
+export function APISupplier(param) {
+  const data = { condition: param }
+  return request({
+    url: '/supplier/supplier',
+    method: 'post',
+    data
+  })
+}

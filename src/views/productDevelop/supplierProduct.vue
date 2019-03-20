@@ -13,16 +13,11 @@
             <el-form-item label="供应商名称">
               <el-select v-model="addForm.supplier"
                          filterable
-                         remote
-                         reserve-keyword
-                         placeholder="请输入关键词"
-                         :remote-method="remoteMethod"
-                         :loading="loading"
                          style="width:100%;">
                 <el-option v-for="item in options"
-                           :key="item.value"
-                           :label="item.label"
-                           :value="item.value">
+                           :key="item.id"
+                           :label="item.text"
+                           :value="item.text">
                 </el-option>
               </el-select>
             </el-form-item>
@@ -158,16 +153,11 @@
             <el-form-item label="供应商名称">
               <el-select v-model="editForm.supplier"
                          filterable
-                         remote
-                         reserve-keyword
-                         placeholder="请输入关键词"
-                         :remote-method="remoteMethod"
-                         :loading="loading"
                          style="width:100%;">
                 <el-option v-for="item in options"
-                           :key="item.value"
-                           :label="item.label"
-                           :value="item.value">
+                           :key="item.id"
+                           :label="item.text"
+                           :value="item.text">
                 </el-option>
               </el-select>
             </el-form-item>
@@ -291,7 +281,8 @@ import {
   APIGoodsAttribute,
   APIGoodsDelelte,
   APISupplierList,
-  APIDeleteSku
+  APIDeleteSku,
+  APISupplier
 } from '../../api/product'
 export default {
   data() {
@@ -318,20 +309,6 @@ export default {
     }
   },
   methods: {
-    //远程搜索
-    remoteMethod(query) {
-      if (query !== '') {
-        this.loading = true
-        setTimeout(() => {
-          this.loading = false
-          this.options = this.list.filter(item => {
-            return item.label.toLowerCase().indexOf(query.toLowerCase()) > -1
-          })
-        }, 200)
-      } else {
-        this.options = []
-      }
-    },
     //分页
     handleCurrentChange(val) {
       this.condition.page = val
@@ -436,6 +413,9 @@ export default {
       } else {
         this.viewTableData.splice(index, 1)
       }
+    },
+    getList() {
+      APISupplier().then(res => {})
     },
     getData() {
       APISupplierGoodsList(this.condition).then(res => {
