@@ -4,7 +4,8 @@
             class="toolbar"
             style="position:fixed;bottom:0px;text-align:center;z-index:1000;padding-bottom:10px;">
       <el-button type="primary"
-                 @click="update" style="margin-left: 480px">更新</el-button>
+                 @click="update"
+                 style="margin-left: 480px">更新</el-button>
       <el-dropdown @command="handleCommand"
                    placement="top-start">
         <el-button type="primary">标记完善<i class="el-icon-arrow-down el-icon--right"></i></el-button>
@@ -31,11 +32,11 @@
       <el-row>
         <el-col :span="5">
           <el-form-item label=" ">
-            <router-link :to="wishForm.mainImage"
-                         target="_blank">
+            <a :href="wishForm.mainImage"
+               target="_blank">
               <img :src="wishForm.mainImage"
                    style="width:230px;height:150px;" />
-            </router-link>
+            </a>
           </el-form-item>
         </el-col>
         <el-col :span="19">
@@ -65,11 +66,11 @@
               :key="index">
         <el-col :span="3">
           <div style="margin-left:80px;">附加图{{index}}</div>
-          <router-link :to="url[index]"
-                       target="_blank">
+          <a :href="url[index]"
+             target="_blank">
             <img :src="url[index]"
                  class="image" />
-          </router-link>
+          </a>
         </el-col>
         <el-col :span="21">
           <el-form-item>
