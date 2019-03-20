@@ -896,7 +896,7 @@ export default {
     },
     addColumn() {
       if (this.columns !== '') {
-        let data = {
+        const data = {
           label: '',
           value: ''
         }
@@ -914,7 +914,7 @@ export default {
     },
     swapItems(arr, index1, index2, direction) {
       if (direction == 'up') {
-        //置顶
+        // 置顶
         arr.unshift(arr[index1])
         arr.splice(index1 + 1, 1)
         return arr
@@ -960,7 +960,7 @@ export default {
       } else {
         const name = this.qualityId
         const content = this.qualityContent
-        let str = { [name]: content }
+        const str = { [name]: content }
         this.tableData.push(str)
         this.dialogFormVisible = false
       }
@@ -1002,7 +1002,7 @@ export default {
       //        console.log(this.tableData)
     },
     increase() {
-      let obj = {
+      const obj = {
         '': ''
       }
       this.tableData.push(obj)
@@ -1016,8 +1016,8 @@ export default {
         this.wishForm.extraPage = this.wishForm.extraPage.split('\\n')
         this.wishForm.extraPage.pop()
         this.tableData = JSON.parse(res.data.data.basicInfo.specifics).specifics
-        let proper = JSON.parse(res.data.data.skuInfo[0].property).columns
-        for (let i in proper) {
+        const proper = JSON.parse(res.data.data.skuInfo[0].property).columns
+        for (const i in proper) {
           const obj = {
             label: i,
             value: proper[i]
@@ -1027,7 +1027,7 @@ export default {
       })
     },
     keep() {
-      let data = {
+      const data = {
         basicInfo: {
           id: 3,
           SKU: this.wishForm.sku,

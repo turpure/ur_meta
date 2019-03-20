@@ -1,10 +1,8 @@
 <template>
   <section>
-    <el-col :span="24"
-            class="toolbar"
-            style="position:fixed;bottom:0px;text-align:center;z-index:1000;padding-bottom:10px;">
+    <el-col style="position:fixed;bottom:0;z-index:1000;background: #f2f2f2;padding-bottom: 10px;padding-top: 5px;border-top: #eee solid 1px; width: 100%">
       <el-button type="primary"
-                 @click="update">更新</el-button>
+                 @click="update" style="margin-left: 480px">更新</el-button>
       <el-dropdown @command="handleCommand"
                    placement="top-start">
         <el-button type="primary">标记完善<i class="el-icon-arrow-down el-icon--right"></i></el-button>
@@ -425,7 +423,7 @@
     </el-dialog>
   </section>
 </template>
-<script>
+<script type="text/ecmascript-6">
 import { APIPlatInfo, APISaveWishInfo, APIFinishPlat } from '../../api/product'
 export default {
   props: {
@@ -457,41 +455,41 @@ export default {
     }
   },
   methods: {
-    //删除URL
+    // 删除URL
     delUrl(index) {
       this.url.splice(index, 1)
     },
-    //删除table行
+    // 删除table行
     del(index, row) {
       this.tableData.splice(index, 1)
     },
-    //增加URL
+    // 增加URL
     addUrl() {
       this.url.push('')
     },
-    //上移
+    // 上移
     up(index) {
       if (index > 0) {
-        let upData = this.url[index - 1]
+        const upData = this.url[index - 1]
         this.url.splice(index - 1, 1)
         this.url.splice(index, 0, upData)
       } else {
         alert('已经是第一条，不可上移')
       }
     },
-    //下移
+    // 下移
     down(index) {
       if (index + 1 === this.url.length) {
         alert('已经是最后一条，不可下移')
       } else {
-        let downData = this.url[index + 1]
+        const downData = this.url[index + 1]
         this.url.splice(index + 1, 1)
         this.url.splice(index, 0, downData)
       }
     },
-    //增加行
+    // 增加行
     addClomun() {
-      let data = {
+      const data = {
         id: null,
         infoId: null,
         sid: null,
@@ -513,7 +511,7 @@ export default {
         this.tableData.push(data)
       }
     },
-    //数量
+    // 数量
     setNum() {
       if (this.num) {
         for (let i = 0; i < this.tableData.length; i++) {
@@ -523,7 +521,7 @@ export default {
         return false
       }
     },
-    //价格
+    // 价格
     setPrice() {
       if (this.price) {
         for (let i = 0; i < this.tableData.length; i++) {
@@ -533,7 +531,7 @@ export default {
         return false
       }
     },
-    //运费
+    // 运费
     setShip() {
       if (this.ship) {
         for (let i = 0; i < this.tableData.length; i++) {
@@ -543,7 +541,7 @@ export default {
         return false
       }
     },
-    //建议零售价
+    // 建议零售价
     setAdvice() {
       if (this.advicePrice) {
         for (let i = 0; i < this.tableData.length; i++) {
@@ -553,7 +551,7 @@ export default {
         return false
       }
     },
-    //joom零售价格
+    // joom零售价格
     setJoom() {
       if (this.joomPrice) {
         for (let i = 0; i < this.tableData.length; i++) {
@@ -563,7 +561,7 @@ export default {
         return false
       }
     },
-    //joom运费
+    // joom运费
     setTransport() {
       if (this.transport) {
         for (let i = 0; i < this.tableData.length; i++) {
@@ -573,7 +571,7 @@ export default {
         return false
       }
     },
-    //运输时间
+    // 运输时间
     setTime() {
       if (this.time) {
         for (let i = 0; i < this.tableData.length; i++) {
@@ -583,9 +581,9 @@ export default {
         return false
       }
     },
-    //更新
+    // 更新
     update() {
-      let data = {
+      const data = {
         basicInfo: {},
         skuInfo: []
       }
@@ -604,9 +602,9 @@ export default {
         }
       })
     },
-    //标记
+    // 标记
     handleCommand(command) {
-      let data = {
+      const data = {
         id: 5,
         plat: []
       }
@@ -630,8 +628,8 @@ export default {
       APIPlatInfo(this.condition).then(res => {
         this.wishForm = res.data.data.basicInfo
         this.tableData = res.data.data.skuInfo
-        let extraPic = res.data.data.basicInfo.extraImages
-        let picture = extraPic.split('\n')[0]
+        const extraPic = res.data.data.basicInfo.extraImages
+        const picture = extraPic.split('\n')[0]
         this.url = picture.split('\\n')
         this.url.pop()
       })
