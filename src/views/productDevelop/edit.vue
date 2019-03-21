@@ -38,21 +38,24 @@
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="商品名称">
+          <el-form-item label="">
+            <span style="color: red;margin-left: 30px;margin-right: 8px">*商品名称</span>
             <el-input size="small"
                       v-model="editForm.goodsName"
                       style="width:390px;"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="中文申报名">
+          <el-form-item label="">
+            <span style="color: red;margin-left: 14px;margin-right: 8px">*中文申报名</span>
             <el-input size="small"
                       v-model="editForm.aliasCnName"
                       style="width:390px;"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="英文申报名">
+          <el-form-item label="">
+            <span style="color: red;margin-left: 14px;margin-right: 8px">*英文申报名</span>
             <el-input size="small"
                       v-model="editForm.aliasEnName"
                       style="width:390px;"></el-input>
@@ -80,21 +83,23 @@
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="供应商名称">
+          <el-form-item label="">
+            <span style="color: red;margin-left: 14px;margin-right: 8px">*供应商名称</span>
             <el-input size="small"
                       v-model="editForm.supplierName"
                       style="width:390px;"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="规格">
+          <el-form-item label="">
+            <span style="color: red;margin-left: 54px;margin-right: 8px">*规格</span>
             <el-select size="small"
                        v-model="editForm.packName"
                        style="width:390px">
-              <el-option label="否"
-                         value="0"></el-option>
-              <el-option label="是"
-                         value="1"></el-option>
+              <!--<el-option label="否"-->
+                         <!--value="0"></el-option>-->
+              <!--<el-option label="是"-->
+                         <!--value="1"></el-option>-->
             </el-select>
           </el-form-item>
         </el-col>
@@ -103,15 +108,16 @@
             <el-select size="small"
                        v-model="editForm.attributeName"
                        style="width:390px">
-              <el-option label="否"
-                         value="0"></el-option>
-              <el-option label="是"
-                         value="1"></el-option>
+              <!--<el-option label="否"-->
+                         <!--value="0"></el-option>-->
+              <!--<el-option label="是"-->
+                         <!--value="1"></el-option>-->
             </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="仓库">
+          <el-form-item label="">
+            <span style="color: red;margin-left: 54px;margin-right: 8px">*仓库</span>
             <el-select size="small"
                        v-model="editForm.storeName"
                        style="width:390px">
@@ -127,15 +133,16 @@
             <el-select size="small"
                        v-model="editForm.season"
                        style="width:390px">
-              <el-option label="否"
-                         value="0"></el-option>
-              <el-option label="是"
-                         value="1"></el-option>
+              <!--<el-option label="否"-->
+                         <!--value="0"></el-option>-->
+              <!--<el-option label="是"-->
+                         <!--value="1"></el-option>-->
             </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="描述">
+          <el-form-item label="">
+            <span style="color: red;margin-left: 54px;margin-right: 8px">*描述</span>
             <el-input size="small"
                       type="textarea"
                       v-model="editForm.description"
@@ -145,7 +152,7 @@
         <el-col :span="24">
           <el-form-item label="关键词Tags">
             <el-input size="small"
-                      v-model="editForm.wishtags"
+                      v-model="editForm.wishTags"
                       style="width: 1500px"
                       placeholder="--tags关键词不能超过10个，逗号分隔--"></el-input>
           </el-form-item>
@@ -153,6 +160,9 @@
         <el-col :span="24">
           <el-form-item label="最前关键词">
             <span>
+              <span style="color: red">{{editForm.headKeywords.length}}</span>个字符
+            </span>
+             <span style="margin-left: 10px">
               <font style="color: red">说明：</font>性别定位/多个一卖等。如Women/Men/Girl/Baby/Kids/1PC/2PC/5PC/4 Colors/5Pcs Set…
             </span>
             <br>
@@ -164,27 +174,30 @@
         </el-col>
         <el-col :span="24">
           <el-form-item label="必选关键词">
-            <span>
-              <font style="color: red">说明：</font>物品名/材质/特征等。如T-Shirt(物品名)/V-neck(特征)/Cotton(材质)
+             <span>
+              <span style="color: red">{{bxlength}}</span>个关键词<span style="color: red;margin-left: 10px">{{editForm.requiredKeywords[0].length+editForm.requiredKeywords[1].length+editForm.requiredKeywords[2].length+editForm.requiredKeywords[3].length+editForm.requiredKeywords[4].length+editForm.requiredKeywords[5].length}}</span>个字符
             </span>
-            <el-button type="text">批量设置</el-button>
+            <span>
+              <font style="color: red;margin-left: 10px">说明：</font>物品名/材质/特征等。如T-Shirt(物品名)/V-neck(特征)/Cotton(材质)
+            </span>
+            <el-button type="text" @click="dialogTableVisible = true">批量设置</el-button>
             <div>
               必填
               <el-input size="small"
-                        style="width:487px"></el-input>
+                        style="width:487px" v-model="editForm.requiredKeywords[0]" @blur="mandatory($event)"></el-input>
               <el-input size="small"
-                        style="width:487px"></el-input>
+                        style="width:487px" v-model="editForm.requiredKeywords[1]" @blur="mandatory($event)"></el-input>
               <el-input size="small"
-                        style="width:487px"></el-input>
+                        style="width:487px" v-model="editForm.requiredKeywords[2]" @blur="mandatory($event)"></el-input>
             </div>
             <div>
               选填
               <el-input size="small"
-                        style="width:487px"></el-input>
+                        style="width:487px" v-model="editForm.requiredKeywords[3]" @blur="mandatory($event)"></el-input>
               <el-input size="small"
-                        style="width:487px"></el-input>
+                        style="width:487px" v-model="editForm.requiredKeywords[4]" @blur="mandatory($event)"></el-input>
               <el-input size="small"
-                        style="width:487px"></el-input>
+                        style="width:487px" v-model="editForm.requiredKeywords[5]" @blur="mandatory($event)"></el-input>
 
             </div>
           </el-form-item>
@@ -192,40 +205,46 @@
         <el-col :span="24">
           <el-form-item label="随机关键词">
             <span>
-              <font style="color: red">说明：</font>形容词/品类热词等。如Fashion/Elegant/Hot/DIY/Casual…
+              <span style="color: red">{{sjlength}}</span>个关键词<span style="color: red;margin-left: 10px">{{editForm.randomKeywords[0].length+editForm.randomKeywords[1].length+editForm.randomKeywords[2].length+editForm.randomKeywords[3].length+editForm.randomKeywords[4].length+editForm.randomKeywords[5].length+editForm.randomKeywords[6].length+editForm.randomKeywords[7].length+editForm.randomKeywords[8].length+editForm.randomKeywords[9].length}}</span>个字符
             </span>
-            <el-button type="text">批量设置</el-button>
+            <span>
+              <font style="color: red;margin-left: 10px">说明：</font>形容词/品类热词等。如Fashion/Elegant/Hot/DIY/Casual…
+            </span>
+            <el-button type="text" @click="dialogTable = true">批量设置</el-button>
             <div>
               必填
               <el-input size="small"
-                        style="width:290px"></el-input>
+                        style="width:290px" v-model="editForm.randomKeywords[0]" @blur="random($event)"></el-input>
               <el-input size="small"
-                        style="width:290px"></el-input>
+                        style="width:290px" v-model="editForm.randomKeywords[1]" @blur="random($event)"></el-input>
               <el-input size="small"
-                        style="width:290px"></el-input>
+                        style="width:290px" v-model="editForm.randomKeywords[2]" @blur="random($event)"></el-input>
               <el-input size="small"
-                        style="width:290px"></el-input>
+                        style="width:290px" v-model="editForm.randomKeywords[3]" @blur="random($event)"></el-input>
               <el-input size="small"
-                        style="width:290px"></el-input>
+                        style="width:290px" v-model="editForm.randomKeywords[4]" @blur="random($event)"></el-input>
             </div>
             <div>
               选填
               <el-input size="small"
-                        style="width:290px"></el-input>
+                        style="width:290px" v-model="editForm.randomKeywords[5]" @blur="random($event)"></el-input>
               <el-input size="small"
-                        style="width:290px"></el-input>
+                        style="width:290px" v-model="editForm.randomKeywords[6]" @blur="random($event)"></el-input>
               <el-input size="small"
-                        style="width:290px"></el-input>
+                        style="width:290px" v-model="editForm.randomKeywords[7]" @blur="random($event)"></el-input>
               <el-input size="small"
-                        style="width:290px"></el-input>
+                        style="width:290px" v-model="editForm.randomKeywords[8]" @blur="random($event)"></el-input>
               <el-input size="small"
-                        style="width:290px"></el-input>
+                        style="width:290px" v-model="editForm.randomKeywords[9]" @blur="random($event)"></el-input>
 
             </div>
           </el-form-item>
         </el-col>
         <el-col :span="24">
           <el-form-item label="最后关键词">
+            <span>
+              <span style="color: red">{{editForm.tailKeywords.length}}</span>个字符
+            </span>
             <span>
               <font style="color: red">说明：</font>附加说明词。如Randomly/S-3XL/2ml/(Color: Nude)/Big Size…
             </span>
@@ -243,53 +262,73 @@
              label-width="100px"
              ref="oaGoods">
       <el-row>
-        <el-col :span="6">
-          <el-form-item label="禁售平台">
-            <el-select size="small"
-                       style="width:250px"
-                       v-model="editForm.dictionaryName">
-              <el-option label="否"
-                         value="0"></el-option>
-              <el-option label="是"
-                         value="1"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="6">
-          <el-form-item label="主类目">
-            <el-select size="small"
-                       style="width:250px"
-                       v-model="oaGoods.cate">
+        <el-col :span="24">
+          <el-col :span="6">
+            <el-form-item label="禁售平台">
+              <!--<el-select size="small"-->
+              <!--style="width:250px"-->
+              <!--multiple-->
+              <!--filterable-->
+              <!--allow-create-->
+              <!--default-first-option-->
+              <!--v-model="editForm.dictionaryName">-->
               <!--<el-option label="否"-->
-                         <!--value="0"></el-option>-->
+              <!--value="0"></el-option>-->
               <!--<el-option label="是"-->
-                         <!--value="1"></el-option>-->
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="6">
-          <el-form-item label="子类目">
-            <el-select size="small"
-                       style="width:250px"
-                       v-model="oaGoods.subCate">
-              <!--<el-option label="否"-->
-                         <!--value="0"></el-option>-->
-              <!--<el-option label="是"-->
-                         <!--value="1"></el-option>-->
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="6">
-          <el-form-item label="对应销售">
-            <el-select size="small"
-                       style="width:250px"
-                       v-model="editForm.mapPersons">
-              <el-option label="否"
-                         value="0"></el-option>
-              <el-option label="是"
-                         value="1"></el-option>
-            </el-select>
-          </el-form-item>
+              <!--value="1"></el-option>-->
+              <div style="width: 290px;overflow: hidden;border: #eee solid 1px;position: relative;height: 40px;overflow-y: auto">
+                <p class="fp" style="padding: 0 3px;background: #eee;margin: 5px;line-height: 28px">{{editForm.dictionaryName}}<i class="el-icon-close"></i></p>
+                <i class="el-icon-arrow-down" style="float: right;margin-top: 10px;margin-right: 10px;cursor:pointer;" @click="addzk()"></i>
+              </div>
+              <div style="width: 290px;overflow: hidden;border: #eee solid 1px;position: absolute;left: 0;top: 40px; z-index: 999;background: #fff" v-show="jspt">
+                <p style="line-height: 35px;padding-left: 10px;cursor: pointer;border-bottom: #eee solid 1px;margin: 0">无</p>
+              </div>
+              <!--</el-select>-->
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="主类目">
+              <el-select size="small"
+                         style="width:250px"
+                         v-model="oaGoods.cate">
+                <!--<el-option label="否"-->
+                <!--value="0"></el-option>-->
+                <!--<el-option label="是"-->
+                <!--value="1"></el-option>-->
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="子类目">
+              <el-select size="small"
+                         style="width:250px"
+                         v-model="oaGoods.subCate">
+                <!--<el-option label="否"-->
+                <!--value="0"></el-option>-->
+                <!--<el-option label="是"-->
+                <!--value="1"></el-option>-->
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="对应销售">
+              <!--<el-select size="small"-->
+                         <!--style="width:250px"-->
+                         <!--v-model="editForm.mapPersons">-->
+                <!--&lt;!&ndash;<el-option label="否"&ndash;&gt;-->
+                <!--&lt;!&ndash;value="0"></el-option>&ndash;&gt;-->
+                <!--&lt;!&ndash;<el-option label="是"&ndash;&gt;-->
+                <!--&lt;!&ndash;value="1"></el-option>&ndash;&gt;-->
+              <!--</el-select>-->
+              <div style="width: 290px;overflow: hidden;border: #eee solid 1px;position: relative;height: 40px;overflow-y: auto">
+                <p class="fp" style="padding: 0 3px;background: #eee;margin: 5px;line-height: 28px" v-for="(item,index) in editForm.mapPersons" :key="item">{{item}}<i class="el-icon-close" @click="dellxs(index)"></i></p>
+                <i class="el-icon-arrow-down" style="float: right;margin-top: 10px;margin-right: 10px;cursor:pointer;" @click="addxs()"></i>
+              </div>
+              <div style="width: 290px;overflow: hidden;border: #eee solid 1px;position: absolute;left: 0;top: 40px; z-index: 999;background: #fff" v-show="dyxs">
+                <p style="line-height: 35px;padding-left: 10px;cursor: pointer;border-bottom: #eee solid 1px;margin: 0">无</p>
+              </div>
+            </el-form-item>
+          </el-col>
         </el-col>
         <el-col :span="8">
           <el-form-item label="供应商链接1">
@@ -507,6 +546,20 @@
       <el-button size="small"
                  type="danger">删除行</el-button>
     </div> -->
+    <el-dialog title="批量增加关键词"
+               :visible.sync="dialogTableVisible">
+      <el-input size="small"
+                type="textarea"
+                :rows="20"
+                placeholder="-多个必选关键词-"></el-input>
+    </el-dialog>
+    <el-dialog title="批量增加关键词"
+               :visible.sync="dialogTable">
+      <el-input size="small"
+                type="textarea"
+                :rows="20"
+                placeholder="-多个随机关键词-"></el-input>
+    </el-dialog>
     <el-button type="primary"
                @click="save"
                style="position: fixed;bottom: 5px;left:50%;width:200px;">保存</el-button>
@@ -514,6 +567,7 @@
 </template>
 <script type="text/ecmascript-6">
 import { APIAttributeInfo, APISaveAttribute,APIAttribute } from '../../api/product'
+import { getMember, getGoodscats } from '../../api/profit'
 export default {
   data() {
     return {
@@ -525,6 +579,14 @@ export default {
       retailprice: null,
       joomretailprice: null,
       transportationcost: null,
+      dialogTableVisible:false,
+      dialogTable:false,
+      sjlength:"",
+      bxlength:"",
+      jspt:false,
+      cate: [],
+      dyxs:false,
+      category:[],
       options: [
         {
           value: '选项1',
@@ -728,6 +790,15 @@ export default {
     }
   },
   methods: {
+    addzk(){
+      this.jspt=!this.jspt
+    },
+    addxs(){
+      this.dyxs=!this.dyxs
+    },
+    dellxs(index){
+      this.editForm.mapPersons.splice(index, 1)
+    },
     del(index, row) {
       this.tableData.splice(index, 1)
       console.log(this.tableData)
@@ -823,17 +894,49 @@ export default {
         }
       })
     },
+    mandatory(e){
+      this.bxlength=0
+      for(var i=0;i<this.editForm.requiredKeywords.length;i++){
+        if(this.editForm.requiredKeywords[i]!=""){
+          this.bxlength++
+        }
+      }
+    },
+    random(e){
+      this.sjlength=0
+      for(var i=0;i<this.editForm.randomKeywords.length;i++){
+        if(this.editForm.randomKeywords[i]!=""){
+          this.sjlength++
+        }
+      }
+    },
     getData() {
       APIAttributeInfo(this.condition).then(res => {
         this.tableData = res.data.data.skuInfo
         this.editForm = res.data.data.basicInfo.goodsInfo
         this.oaGoods = res.data.data.basicInfo.oaGoods
+        this.editForm.requiredKeywords=JSON.parse(this.editForm.requiredKeywords)
+        this.editForm.randomKeywords=JSON.parse(this.editForm.randomKeywords)
+        this.editForm.mapPersons=this.editForm.mapPersons.split(",")
+        for(var i=0;i<this.editForm.randomKeywords.length;i++){
+          if(this.editForm.randomKeywords[i]!=""){
+            this.sjlength++
+          }
+        }
+        for(var i=0;i<this.editForm.requiredKeywords.length;i++){
+          if(this.editForm.requiredKeywords[i]!=""){
+            this.bxlength++
+          }
+        }
       })
     }
   },
   mounted() {
     this.condition.id = this.$route.params.id
     this.getData()
+    getGoodscats().then(response => {
+      this.category = this.cate = response.data.data
+    })
   }
 }
 </script>
@@ -842,5 +945,8 @@ section {
   margin-bottom: 80px;
   margin-top: 20px;
 }
+  .fp{
+    float: left;
+  }
 </style>
 

@@ -119,7 +119,7 @@
                          header-align="center">
           <el-table-column prop="devDatetime"
                            :render-header="renderHeader"
-                           width='150'
+                           width='230'
                            align="center">
           </el-table-column>
         </el-table-column>
@@ -127,7 +127,7 @@
                          header-align="center">
           <el-table-column prop="updateTime"
                            :render-header="renderHeader"
-                           width='150'
+                           width='200'
                            align="center">
           </el-table-column>
         </el-table-column>
@@ -191,117 +191,117 @@
       <!-- 属性信息查看对话框 -->
       <el-dialog title='查看'
                  :visible.sync="dialogVisible">
-        <el-form :model="viewForm"
+        <el-form
                  label-position="left"
                  label-width="110px"
                  ref="viewForm">
           <el-form-item label="图片"
                         prop="picUrl"
                         class="item1">
-            <img :src='viewForm.picUrl'
+            <img :src='goodsInfo.picUrl'
                  style="width: 150px;height: 100px;">
           </el-form-item>
           <el-form-item label="图片地址"
                         prop="picUrl"
                         class="item">
-            <span>{{viewForm.picUrl}}</span>
+            <span>{{goodsInfo.picUrl}}</span>
           </el-form-item>
           <el-form-item label="商品编码"
-                        prop="GoodsCode"
+                        prop="goodsCode"
                         class="item">
-            <span>{{viewForm.GoodsCode}}</span>
+            <span>{{goodsInfo.goodsCode}}</span>
           </el-form-item>
           <el-form-item label="是否备货"
                         prop="stockUp"
                         class="item">
-            <span>{{viewForm.stockUp === 1 ? '是' : '否'}}</span>
+            <span>{{goodsInfo.stockUp === 1 ? '是' : '否'}}</span>
           </el-form-item>
           <el-form-item label="商品名称"
-                        prop="GoodsName"
+                        prop="goodsName"
                         class="item">
-            <span>{{viewForm.GoodsName}}</span></el-form-item>
+            <span>{{goodsInfo.goodsName}}</span></el-form-item>
           <el-form-item label="采购"
-                        prop="Purchaser"
+                        prop="purchaser"
                         class="item">
-            <span>{{viewForm.Purchaser}}</span></el-form-item>
+            <span>{{goodsInfo.purchaser}}</span></el-form-item>
           <el-form-item label="开发员"
                         prop="developer"
-                        class="item"><span>{{viewForm.developer}}</span></el-form-item>
+                        class="item"><span>{{goodsInfo.developer}}</span></el-form-item>
           <el-form-item label="美工"
                         prop="possessMan2"
-                        class="item"><span>{{viewForm.possessMan2}}</span></el-form-item>
+                        class="item"><span>{{goodsInfo.possessMan2}}</span></el-form-item>
           <el-form-item label="供应商名称"
                         prop="SupplierName"
-                        class="item"><span>{{viewForm.SupplierName}}</span></el-form-item>
+                        class="item"><span>{{goodsInfo.supplierName}}</span></el-form-item>
           <el-form-item label="中文申报名"
                         prop="AttributeName"
-                        class="item"><span>{{viewForm.AttributeName}}</span></el-form-item>
+                        class="item"><span>{{goodsInfo.aliasCnName}}</span></el-form-item>
           <el-form-item label="英文申报名"
                         prop="DictionaryName"
-                        class="item"><span>{{viewForm.DictionaryName}}</span></el-form-item>
+                        class="item"><span>{{goodsInfo.aliasEnName}}</span></el-form-item>
           <el-form-item label="规格"
                         prop=""
-                        class="item"><span></span></el-form-item>
+                        class="item"><span>{{goodsInfo.packName}}</span></el-form-item>
           <el-form-item label="描述"
                         prop=""
-                        class="item"><span></span></el-form-item>
+                        class="item"><span>{{goodsInfo.description}}</span></el-form-item>
           <el-form-item label="季节"
                         prop="Season"
-                        class="item"><span>{{viewForm.Season}}</span></el-form-item>
+                        class="item"><span>{{goodsInfo.season}}</span></el-form-item>
           <el-form-item label="仓库"
                         prop="StoreName"
-                        class="item"><span>{{viewForm.StoreName}}</span></el-form-item>
+                        class="item"><span>{{goodsInfo.storeName}}</span></el-form-item>
           <el-form-item label="是否液体"
                         prop="IsLiquid"
-                        class="item"><span>{{viewForm.IsLiquid}}</span></el-form-item>
+                        class="item"><span>{{goodsInfo.isLiquid}}</span></el-form-item>
           <el-form-item label="是否粉末"
                         prop="IsPowder"
-                        class="item"><span>{{viewForm.IsPowder}}</span></el-form-item>
+                        class="item"><span>{{goodsInfo.isPowder}}</span></el-form-item>
           <el-form-item label="是否带磁"
                         prop="isMagnetism"
-                        class="item"><span>{{viewForm.isMagnetism}}</span></el-form-item>
+                        class="item"><span>{{goodsInfo.isMagnetism}}</span></el-form-item>
           <el-form-item label="是否带电"
                         prop="IsCharged"
-                        class="item"><span>{{viewForm.IsCharged}}</span></el-form-item>
+                        class="item"><span>{{goodsInfo.isCharged}}</span></el-form-item>
           <el-form-item label="主类目"
                         prop=""
                         class="item">
-            <span></span>
+            <span>{{oaGoods.cate}}</span>
           </el-form-item>
           <el-form-item label="子类目"
                         prop=""
                         class="item">
-            <span></span>
+            <span>{{oaGoods.subCate}}</span>
           </el-form-item>
           <el-form-item label="供应商链接1"
                         prop=""
                         class="item">
-            <span></span>
+            <span>{{oaGoods.vendor1}}</span>
           </el-form-item>
           <el-form-item label="供应商链接2"
                         prop=""
                         class="item">
-            <span></span>
+            <span>{{oaGoods.vendor2}}</span>
           </el-form-item>
           <el-form-item label="供应商链接3"
                         prop=""
                         class="item">
-            <span></span>
+            <span>{{oaGoods.vendor3}}</span>
           </el-form-item>
           <el-form-item label="平台参考链接1"
                         prop=""
                         class="item">
-            <span></span>
+            <span>{{oaGoods.origin1}}</span>
           </el-form-item>
           <el-form-item label="平台参考链接2"
                         prop=""
                         class="item">
-            <span></span>
+            <span>{{oaGoods.origin2}}</span>
           </el-form-item>
           <el-form-item label="平台参考链接3"
                         prop=""
                         class="item">
-            <span></span>
+            <span>{{oaGoods.origin3}}</span>
           </el-form-item>
         </el-form>
       </el-dialog>
@@ -945,6 +945,7 @@ import {
   APIPictureList,
   APIPlatList,
   APIAttribute,
+  APIAttributeInfo,
   APIFinishAttribute,
   APIGenerateCode,
   APIPlat
@@ -961,7 +962,11 @@ export default {
       totalPlat: null,
       activeName: '属性信息',
       sels: [],
+      time1: '',
+      time2: '',
       allMenu: [],
+      goodsInfo:[],
+      oaGoods:[],
       tableData: [
 
       ],
@@ -1029,8 +1034,12 @@ export default {
     view(index, row) {
       this.dialogVisible = true
       this.viewForm.id = row.id
-      APIAttribute(this.viewForm).then(res => {
-        this.viewForm = res.data.data
+      APIAttributeInfo(this.viewForm).then(res => {
+//        this.viewForm = res.data.data
+        this.goodsInfo = res.data.data.basicInfo.goodsInfo
+        this.oaGoods = res.data.data.basicInfo.oaGoods
+        console.log(this.goodsInfo)
+        console.log(this.oaGoods)
       })
     },
     //标记
@@ -1250,60 +1259,48 @@ export default {
             })
           ]
         )
-      } else if ($index === 5) {
-        return h(
-          'div',
-          {
-            style: {
-              height: '40px'
-            }
+      } else if($index === 5){
+        return h('el-date-picker',{
+          props:{
+            value:this.time1,
+            size:'mini',
+            type:'daterange',
           },
-          [
-            h('el-input', {
-              props: {
-                value: '',
-                size: 'mini',
-                clearable: true
-              },
-              on: {
-                input: value => {
-                  // this.condition2.subCate = value
-                  this.$emit('input', value)
-                },
-                change: value => {
-                  this.filter()
-                }
-              }
-            })
-          ]
-        )
+          style:{
+            width:'180px',
+            padding:'2px',
+          },
+          on:{
+            input:value=>{
+              this.time1=value
+              this.$emit('input', value)
+            },
+            change:value => {
+//              this.filter()
+            }
+          }
+        })
       } else if ($index === 6) {
-        return h(
-          'div',
-          {
-            style: {
-              height: '40px'
-            }
+        return h('el-date-picker',{
+          props:{
+            value:this.time2,
+            size:'mini',
+            type:'daterange',
           },
-          [
-            h('el-input', {
-              props: {
-                value: '',
-                size: 'mini',
-                clearable: true
-              },
-              on: {
-                input: value => {
-                  // this.condition2.subCate = value
-                  this.$emit('input', value)
-                },
-                change: value => {
-                  this.filter()
-                }
-              }
-            })
-          ]
-        )
+          style:{
+            width:'180px',
+            padding:'2px',
+          },
+          on:{
+            input:value=>{
+              this.time2=value
+              this.$emit('input', value)
+            },
+            change:value => {
+//              this.filter()
+            }
+          }
+        })
       } else if ($index === 7) {
         return h(
           'div',
@@ -1985,19 +1982,28 @@ export default {
         this.plat.currentPage = res.data.data._meta.currentPage
       })
     },
+    formatDate(date) {
+      const year = date.getFullYear()
+      const month = date.getMonth() + 1
+      const day = date.getDate()
+      const hour = date.getHours()
+      const minute = date.getMinutes()
+      const second = date.getSeconds()
+      return year + "-" + this.formatTen(month) + "-" + this.formatTen(day)
+    },
     filter() {
       if (this.activeName === '属性信息') {
-//        if (this.time1 !== null && this.time1.length !== 0) {
-//          this.condition.createDate = [this.formatDate(this.time1[0]), this.formatDate(this.time1[1])]
-//        } else {
-//          this.condition.createDate = []
-//        }
-//        if (this.time2 !== null && this.time2.length !== 0) {
-//          this.condition.updateDate = [this.formatDate(this.time2[0]), this.formatDate(this.time2[1])]
-//        } else {
-//          this.condition.updateDate = []
-//        }
-//        this.getData()
+        if (this.time1 !== null && this.time1.length !== 0) {
+          this.condition.createDate = [this.formatDate(this.time1[0]), this.formatDate(this.time1[1])]
+        } else {
+          this.condition.createDate = []
+        }
+        if (this.time2 !== null && this.time2.length !== 0) {
+          this.condition.updateDate = [this.formatDate(this.time2[0]), this.formatDate(this.time2[1])]
+        } else {
+          this.condition.updateDate = []
+        }
+        this.getData()
       } else if (this.activeName === '图片信息') {
         if (this.time1 !== null && this.time1.length !== 0) {
           this.condition1.createDate = [this.formatDate(this.time1[0]), this.formatDate(this.time1[1])]
