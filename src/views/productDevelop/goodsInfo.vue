@@ -978,14 +978,14 @@ export default {
         plat: false
       },
       condition: {
-        "pageSize":20,
+        "pageSize":10,
         "page":1,
-        "goodsCode":"639",
+        "goodsCode":"",
         "achieveStatus":"",
         "goodsName":"",
         "developer":"",
-        "devDatetime":["2019-01-01","2019-04-01"],
-        "updateTime":["2019-01-01","2019-04-01"],
+        "devDatetime":[],
+        "updateTime":[],
         "aliasCnName":"",
         "aliasEnName":"",
         "stockUp":"",
@@ -1141,7 +1141,7 @@ export default {
               },
               on: {
                 input: value => {
-                  // this.condition2.subCate = value
+                   this.condition.goodsCode = value
                   this.$emit('input', value)
                 },
                 change: value => {
@@ -1152,19 +1152,19 @@ export default {
           ]
         )
       } else if ($index === 1) {
-        let filters = [{ text: '1', value: '是' }, { text: '0', value: '否' }]
+        let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
         return h(
           'el-select',
           {
             props: {
               placeholder: '请选择',
-              value: this.tableData.stockUp,
+              value: this.condition.stockUp,
               size: 'mini',
               clearable: true
             },
             on: {
               input: value => {
-                 this.tableData.stockUp=value
+                this.condition.stockUp=value
                 this.$emit('input', value)
               },
               change: searchValue => {
@@ -1185,22 +1185,22 @@ export default {
         )
       } else if ($index === 2) {
         let filters = [
-          { text: '1', value: '待处理' },
-          { text: '0', value: '已完善' },
-          { text: '2', value: '已导入' }
+          { text: '待处理', value: '待处理' },
+          { text: '已完善', value: '已完善' },
+          { text: '已导入', value: '已导入' }
         ]
         return h(
           'el-select',
           {
             props: {
               placeholder: '请选择',
-              value: '',
+              value: this.condition.achieveStatus,
               size: 'mini',
               clearable: true
             },
             on: {
               input: value => {
-                // this.condition2.stockUp=value
+                this.condition.achieveStatus=value
                 this.$emit('input', value)
               },
               change: searchValue => {
@@ -1230,13 +1230,13 @@ export default {
           [
             h('el-input', {
               props: {
-                value: '',
+                value: this.condition.goodsName,
                 size: 'mini',
                 clearable: true
               },
               on: {
                 input: value => {
-                  // this.condition2.subCate = value
+                  this.condition.goodsName=value
                   this.$emit('input', value)
                 },
                 change: value => {
@@ -1257,13 +1257,13 @@ export default {
           [
             h('el-input', {
               props: {
-                value: '',
+                value: this.condition.developer,
                 size: 'mini',
                 clearable: true
               },
               on: {
                 input: value => {
-                  // this.condition2.subCate = value
+                  this.condition.developer=value
                   this.$emit('input', value)
                 },
                 change: value => {
@@ -1290,7 +1290,7 @@ export default {
               this.$emit('input', value)
             },
             change:value => {
-//              this.filter()
+              this.filter()
             }
           }
         })
@@ -1311,7 +1311,7 @@ export default {
               this.$emit('input', value)
             },
             change:value => {
-//              this.filter()
+              this.filter()
             }
           }
         })
@@ -1326,13 +1326,13 @@ export default {
           [
             h('el-input', {
               props: {
-                value: '',
+                value:this.condition.aliasCnName,
                 size: 'mini',
                 clearable: true
               },
               on: {
                 input: value => {
-                  // this.condition2.subCate = value
+                   this.condition.aliasCnName = value
                   this.$emit('input', value)
                 },
                 change: value => {
@@ -1353,13 +1353,13 @@ export default {
           [
             h('el-input', {
               props: {
-                value: '',
+                value: this.condition.aliasEnName,
                 size: 'mini',
                 clearable: true
               },
               on: {
                 input: value => {
-                  // this.condition2.subCate = value
+                   this.condition.aliasEnName = value
                   this.$emit('input', value)
                 },
                 change: value => {
@@ -1370,19 +1370,19 @@ export default {
           ]
         )
       } else if ($index === 9) {
-        let filters = [{ text: '1', value: '是' }, { text: '0', value: '否' }]
+        let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
         return h(
           'el-select',
           {
             props: {
               placeholder: '请选择',
-              value: '',
+              value: this.condition.isLiquid,
               size: 'mini',
               clearable: true
             },
             on: {
               input: value => {
-                // this.condition2.stockUp=value
+                this.condition.isLiquid = value
                 this.$emit('input', value)
               },
               change: searchValue => {
@@ -1402,19 +1402,19 @@ export default {
           ]
         )
       } else if ($index === 10) {
-        let filters = [{ text: '1', value: '是' }, { text: '0', value: '否' }]
+        let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
         return h(
           'el-select',
           {
             props: {
               placeholder: '请选择',
-              value: '',
+              value: this.condition.isPowder,
               size: 'mini',
               clearable: true
             },
             on: {
               input: value => {
-                // this.condition2.stockUp=value
+                this.condition.isPowder = value
                 this.$emit('input', value)
               },
               change: searchValue => {
@@ -1434,19 +1434,19 @@ export default {
           ]
         )
       } else if ($index === 11) {
-        let filters = [{ text: '1', value: '是' }, { text: '0', value: '否' }]
+        let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
         return h(
           'el-select',
           {
             props: {
               placeholder: '请选择',
-              value: '',
+              value: this.condition.isMagnetism,
               size: 'mini',
               clearable: true
             },
             on: {
               input: value => {
-                // this.condition2.stockUp=value
+                this.condition.isMagnetism = value
                 this.$emit('input', value)
               },
               change: searchValue => {
@@ -1466,19 +1466,19 @@ export default {
           ]
         )
       } else if ($index === 12) {
-        let filters = [{ text: '1', value: '是' }, { text: '0', value: '否' }]
+        let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
         return h(
           'el-select',
           {
             props: {
               placeholder: '请选择',
-              value: '',
+              value: this.condition.isCharged,
               size: 'mini',
               clearable: true
             },
             on: {
               input: value => {
-                // this.condition2.stockUp=value
+                this.condition.isCharged = value
                 this.$emit('input', value)
               },
               change: searchValue => {
@@ -1498,19 +1498,19 @@ export default {
           ]
         )
       } else if ($index === 13) {
-        let filters = [{ text: '1', value: '是' }, { text: '0', value: '否' }]
+        let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
         return h(
           'el-select',
           {
             props: {
               placeholder: '请选择',
-              value: '',
+              value: this.condition.isVar,
               size: 'mini',
               clearable: true
             },
             on: {
               input: value => {
-                // this.condition2.stockUp=value
+                this.condition.isVar = value
                 this.$emit('input', value)
               },
               change: searchValue => {
@@ -1995,6 +1995,9 @@ export default {
         this.plat.pageSize = res.data.data._meta.perPage
         this.plat.currentPage = res.data.data._meta.currentPage
       })
+    },
+    formatTen(num) {
+      return num > 9 ? (num + "") : ("0" + num)
     },
     formatDate(date) {
       const year = date.getFullYear()
