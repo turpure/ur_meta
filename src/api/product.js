@@ -154,6 +154,7 @@ export function checkFailedList(param) {
 }
 export function APIGoodsInfo(param) {
   const data = { condition: param }
+  console.log(data)
   return request({
     url: '/oa-goodsinfo/attributes-list',
     method: 'post',

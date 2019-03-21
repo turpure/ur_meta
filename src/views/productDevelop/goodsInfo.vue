@@ -978,8 +978,22 @@ export default {
         plat: false
       },
       condition: {
-        pageSize: 20,
-        currentPage: 1
+        "pageSize":20,
+        "page":1,
+        "goodsCode":"639",
+        "achieveStatus":"",
+        "goodsName":"",
+        "developer":"",
+        "devDatetime":["2019-01-01","2019-04-01"],
+        "updateTime":["2019-01-01","2019-04-01"],
+        "aliasCnName":"",
+        "aliasEnName":"",
+        "stockUp":"",
+        "isLiquid":"",
+        "isPowder":"",
+        "isMagnetism":"",
+        "isCharged":"",
+        "isVar":""
       },
       picture: {
         pageSize: 10,
