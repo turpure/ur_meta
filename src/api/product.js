@@ -204,7 +204,7 @@ export function APIFinishAttribute(param) {
 export function APISaveAttribute(param) {
   const data = { condition: param }
   return request({
-    url: '/oa-goodsinfo/save-attribute',
+    url: '/oa-goodsinfo/save-attribute-info',
     method: 'post',
     data
   })
