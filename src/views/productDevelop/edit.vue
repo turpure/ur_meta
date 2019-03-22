@@ -277,17 +277,49 @@
                            type="info"
                            @click="noselectd">取消</el-button>
               <el-option v-for="(item, key) in violation" :key='item.key' :label="item" :value="item"></el-option>
-              <!--<div style="width: 300px;overflow: hidden;border: #eee solid 1px;position: relative;min-height: 50px;cursor: pointer" @click="addzk()">-->
-                <!--<p class="fp" style="padding: 0 3px;background: #eee;margin: 5px;line-height: 28px" v-for="(item,index) in editForm.dictionaryName" :key="item">{{item}}<i class="el-icon-close" @click.stop="delljs(index)" style="cursor:pointer;"></i></p>-->
-                <!--<el-input style="width: 200px;float: left;height: 30px;line-height: 30px;margin-top: 5px;margin-bottom: 5px"></el-input>-->
-                <!--<i class="el-icon-arrow-down" style="float: right;margin-top: 10px;margin-right: 10px;cursor:pointer;"></i>-->
-              <!--</div>-->
-              <!--<div style="width: 290px;overflow: hidden;border: #eee solid 1px;position: absolute;left: 0;top: 40px; z-index: 999;background: #fff;height: 300px;overflow-y: auto" v-show="jspt">-->
-                <!--<p class="hovp" style="line-height: 35px;padding-left: 10px;cursor: pointer;border-bottom: #eee solid 1px;margin: 0" v-for="(item,index) in violation" :kyy="item" @click="pushVin(item)">{{item}}</p>-->
-              <!--</div>-->
               </el-select>
             </el-form-item>
           </el-col>
+          <el-col :span="6">
+            <el-form-item label="对应销售">
+              <el-select size="small"
+                         style="width:250px"
+                         multiple
+                         filterable
+                         allow-create
+                         default-first-option
+                         v-model="editForm.mapPersons"
+                         @change="forbidSale($event)">
+                <el-button plain
+                           type="info"
+                           @click="selectalld1">全选</el-button>
+                <el-button plain
+                           type="info"
+                           @click="noselectd1">取消</el-button>
+                <el-option v-for="(item, key) in mainSsale" :key='item.key' :label="item" :value="item"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <!--<el-col :span="6">-->
+            <!--<el-form-item label="对应销售">-->
+              <!--<el-select size="small"-->
+                         <!--style="width:250px"-->
+                         <!--multiple-->
+                         <!--filterable-->
+                         <!--allow-create-->
+                         <!--default-first-option-->
+                         <!--v-model="editForm.mapPersons"-->
+                         <!--@change="forbidSale($event)">-->
+                <!--<el-button plain-->
+                           <!--type="info"-->
+                           <!--@click="selectalld1">全选</el-button>-->
+                <!--<el-button plain-->
+                           <!--type="info"-->
+                           <!--@click="noselectd1">取消</el-button>-->
+                <!--<el-option v-for="(item, key) in sale" :key='item.key' :label="item" :value="item"></el-option>-->
+              <!--</el-select>-->
+            <!--</el-form-item>-->
+          <!--</el-col>-->
           <el-col :span="6">
             <el-form-item label="主类目">
               <el-select size="small"
@@ -306,33 +338,6 @@
                          @change="childrenIndex($event)">
                 <el-option v-for="(item, key) in childrenCategory" :key='item.key' :label="item" :value="item"></el-option>
               </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
-            <el-form-item label="对应销售">
-              <el-select size="small"
-                         style="width:250px"
-                         multiple
-                         filterable
-                         allow-create
-                         default-first-option
-                         v-model="editForm.mapPersons">
-                <el-button plain
-                           type="info"
-                           @click="selectalld1">全选</el-button>
-                <el-button plain
-                           type="info"
-                           @click="noselectd1">取消</el-button>
-                <el-option v-for="(item, key) in sale" :key='item.key' :label="item" :value="item"></el-option>
-              </el-select>
-              <!--<div style="width: 290px;overflow: hidden;border: #eee solid 1px;position: relative;height: 50px;overflow-y: auto;cursor: pointer" @click="addxs()">-->
-                <!--<p class="fp" style="padding: 0 3px;background: #eee;margin: 5px;line-height: 28px" v-for="(item,index) in editForm.mapPersons" :key="item">{{item}}<i class="el-icon-close" @click.stop="dellxs(index)" style="cursor:pointer;"></i></p>-->
-                <!--<el-input></el-input>-->
-                <!--<i class="el-icon-arrow-down" style="float: right;margin-top: 10px;margin-right: 10px;cursor:pointer;"></i>-->
-              <!--</div>-->
-              <!--<div style="width: 290px;overflow: hidden;border: #eee solid 1px;position: absolute;left: 0;top: 40px; z-index: 999;background: #fff;height: 300px;overflow-y: auto" v-show="dyxs">-->
-                <!--<p class="hovp" style="line-height: 35px;padding-left: 10px;cursor: pointer;border-bottom: #eee solid 1px;margin: 0" v-for="(item,index) in sale" :kyy="item" @click="pushSale(item)">{{item}}</p>-->
-              <!--</div>-->
             </el-form-item>
           </el-col>
         </el-col>
@@ -599,7 +604,7 @@ export default {
       repertory:[],
       seasonn:[],
       violation:[],
-      sale:[],
+      mainSsale:[],
       mainCategory:[],
       childrenCategory:[],
       screen:[],
@@ -827,8 +832,8 @@ export default {
     },
     selectalld1() {
       var ard1 = []
-      for (const item in this.sale) {
-        ard1.push(this.sale[item])
+      for (const item in this.mainSsale) {
+        ard1.push(this.mainSsale[item])
       }
       this.editForm.mapPersons = ard1
       console.log(this.editForm.mapPersons)
@@ -1078,9 +1083,11 @@ export default {
     })
     getAttributeInfoPlat().then(response => {
       this.violation =  response.data.data
+      console.log(this.violation)
     })
     getAttributeInfoSalesman().then(response => {
-      this.sale =  response.data.data
+      this.mainSsale =  response.data.data
+      console.log(this.mainSsale)
     })
     getAttributeInfoCat().then(response => {
       this.mainCategory =  response.data.data
