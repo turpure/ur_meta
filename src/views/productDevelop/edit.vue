@@ -262,25 +262,30 @@
         <el-col :span="24">
           <el-col :span="6">
             <el-form-item label="禁售平台">
-              <!--<el-select size="small"-->
-              <!--style="width:250px"-->
-              <!--multiple-->
-              <!--filterable-->
-              <!--allow-create-->
-              <!--default-first-option-->
-              <!--v-model="editForm.dictionaryName">-->
-              <!--<el-option label="否"-->
-              <!--value="0"></el-option>-->
-              <!--<el-option label="是"-->
-              <!--value="1"></el-option>-->
-              <div style="width: 300px;overflow: hidden;border: #eee solid 1px;position: relative;min-height: 50px;cursor: pointer" @click="addzk()">
-                <p class="fp" style="padding: 0 3px;background: #eee;margin: 5px;line-height: 28px" v-for="(item,index) in editForm.dictionaryName" :key="item">{{item}}<i class="el-icon-close" @click.stop="delljs(index)" style="cursor:pointer;"></i></p>
-                <i class="el-icon-arrow-down" style="float: right;margin-top: 10px;margin-right: 10px;cursor:pointer;"></i>
-              </div>
-              <div style="width: 290px;overflow: hidden;border: #eee solid 1px;position: absolute;left: 0;top: 40px; z-index: 999;background: #fff;height: 300px;overflow-y: auto" v-show="jspt">
-                <p class="hovp" style="line-height: 35px;padding-left: 10px;cursor: pointer;border-bottom: #eee solid 1px;margin: 0" v-for="(item,index) in violation" :kyy="item" @click="pushVin(item)">{{item}}</p>
-              </div>
-              <!--</el-select>-->
+              <el-select size="small"
+              style="width:250px"
+              multiple
+              filterable
+              allow-create
+              default-first-option
+              v-model="editForm.dictionaryName"
+              @change="forbidSale($event)">
+                <el-button plain
+                           type="info"
+                           @click="selectalld">全选</el-button>
+                <el-button plain
+                           type="info"
+                           @click="noselectd">取消</el-button>
+              <el-option v-for="(item, key) in violation" :key='item.key' :label="item" :value="item"></el-option>
+              <!--<div style="width: 300px;overflow: hidden;border: #eee solid 1px;position: relative;min-height: 50px;cursor: pointer" @click="addzk()">-->
+                <!--<p class="fp" style="padding: 0 3px;background: #eee;margin: 5px;line-height: 28px" v-for="(item,index) in editForm.dictionaryName" :key="item">{{item}}<i class="el-icon-close" @click.stop="delljs(index)" style="cursor:pointer;"></i></p>-->
+                <!--<el-input style="width: 200px;float: left;height: 30px;line-height: 30px;margin-top: 5px;margin-bottom: 5px"></el-input>-->
+                <!--<i class="el-icon-arrow-down" style="float: right;margin-top: 10px;margin-right: 10px;cursor:pointer;"></i>-->
+              <!--</div>-->
+              <!--<div style="width: 290px;overflow: hidden;border: #eee solid 1px;position: absolute;left: 0;top: 40px; z-index: 999;background: #fff;height: 300px;overflow-y: auto" v-show="jspt">-->
+                <!--<p class="hovp" style="line-height: 35px;padding-left: 10px;cursor: pointer;border-bottom: #eee solid 1px;margin: 0" v-for="(item,index) in violation" :kyy="item" @click="pushVin(item)">{{item}}</p>-->
+              <!--</div>-->
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="6">
@@ -305,21 +310,29 @@
           </el-col>
           <el-col :span="6">
             <el-form-item label="对应销售">
-              <!--<el-select size="small"-->
-                         <!--style="width:250px"-->
-                         <!--v-model="editForm.mapPersons">-->
-                <!--&lt;!&ndash;<el-option label="否"&ndash;&gt;-->
-                <!--&lt;!&ndash;value="0"></el-option>&ndash;&gt;-->
-                <!--&lt;!&ndash;<el-option label="是"&ndash;&gt;-->
-                <!--&lt;!&ndash;value="1"></el-option>&ndash;&gt;-->
-              <!--</el-select>-->
-              <div style="width: 290px;overflow: hidden;border: #eee solid 1px;position: relative;height: 50px;overflow-y: auto;cursor: pointer" @click="addxs()">
-                <p class="fp" style="padding: 0 3px;background: #eee;margin: 5px;line-height: 28px" v-for="(item,index) in editForm.mapPersons" :key="item">{{item}}<i class="el-icon-close" @click.stop="dellxs(index)" style="cursor:pointer;"></i></p>
-                <i class="el-icon-arrow-down" style="float: right;margin-top: 10px;margin-right: 10px;cursor:pointer;"></i>
-              </div>
-              <div style="width: 290px;overflow: hidden;border: #eee solid 1px;position: absolute;left: 0;top: 40px; z-index: 999;background: #fff" v-show="dyxs">
-                <p class="hovp" style="line-height: 35px;padding-left: 10px;cursor: pointer;border-bottom: #eee solid 1px;margin: 0" v-for="(item,index) in sale" :kyy="item" @click="pushSale(item)">{{item}}</p>
-              </div>
+              <el-select size="small"
+                         style="width:250px"
+                         multiple
+                         filterable
+                         allow-create
+                         default-first-option
+                         v-model="editForm.mapPersons">
+                <el-button plain
+                           type="info"
+                           @click="selectalld1">全选</el-button>
+                <el-button plain
+                           type="info"
+                           @click="noselectd1">取消</el-button>
+                <el-option v-for="(item, key) in sale" :key='item.key' :label="item" :value="item"></el-option>
+              </el-select>
+              <!--<div style="width: 290px;overflow: hidden;border: #eee solid 1px;position: relative;height: 50px;overflow-y: auto;cursor: pointer" @click="addxs()">-->
+                <!--<p class="fp" style="padding: 0 3px;background: #eee;margin: 5px;line-height: 28px" v-for="(item,index) in editForm.mapPersons" :key="item">{{item}}<i class="el-icon-close" @click.stop="dellxs(index)" style="cursor:pointer;"></i></p>-->
+                <!--<el-input></el-input>-->
+                <!--<i class="el-icon-arrow-down" style="float: right;margin-top: 10px;margin-right: 10px;cursor:pointer;"></i>-->
+              <!--</div>-->
+              <!--<div style="width: 290px;overflow: hidden;border: #eee solid 1px;position: absolute;left: 0;top: 40px; z-index: 999;background: #fff;height: 300px;overflow-y: auto" v-show="dyxs">-->
+                <!--<p class="hovp" style="line-height: 35px;padding-left: 10px;cursor: pointer;border-bottom: #eee solid 1px;margin: 0" v-for="(item,index) in sale" :kyy="item" @click="pushSale(item)">{{item}}</p>-->
+              <!--</div>-->
             </el-form-item>
           </el-col>
         </el-col>
@@ -798,6 +811,37 @@ export default {
     }
   },
   methods: {
+    selectalld() {
+      var ard = []
+      for (const item in this.violation) {
+        ard.push(this.violation[item])
+      }
+      this.editForm.dictionaryName = ard
+      console.log(this.editForm.dictionaryName)
+//      this.member = this.allMember
+    },
+    noselectd() {
+      this.editForm.dictionaryName = []
+//      this.member = this.allMember
+      console.log(this.editForm)
+    },
+    selectalld1() {
+      var ard1 = []
+      for (const item in this.sale) {
+        ard1.push(this.sale[item])
+      }
+      this.editForm.mapPersons = ard1
+      console.log(this.editForm.mapPersons)
+//      this.member = this.allMember
+    },
+    noselectd1() {
+      this.editForm.mapPersons = []
+//      this.member = this.allMember
+      console.log(this.editForm)
+    },
+    forbidSale(e){
+      console.log(e)
+    },
     top(e){
       this.foremost=e.length
     },
@@ -812,6 +856,7 @@ export default {
           this.childrenCategory.push(key)
         }
       }
+      this.oaGoods.subCate=this.childrenCategory[0]
     },
     childrenIndex(item){
       this.oaGoods.subCate=item
