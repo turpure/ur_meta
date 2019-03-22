@@ -22,11 +22,9 @@
           <el-form-item label="是否备货">
             <el-select size="small"
                        v-model="editForm.stockUp"
-                       style="width:390px;">
-              <el-option label="否"
-                         value="0"></el-option>
-              <el-option label="是"
-                         value="1"></el-option>
+                       style="width:390px;"
+                       @change="iSn($event)">
+              <el-option v-for="(item, key) in IsF" :key='item.key' :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
@@ -585,6 +583,7 @@ export default {
       tableData: [],
       btn: '',
       rows: 1,
+      IsF:["是","否"],
       costprice: null,
       weight: null,
       retailprice: null,
@@ -714,6 +713,9 @@ export default {
     }
   },
   methods: {
+    iSn(e){
+      console.log(e)
+    },
     selectalld() {
       var ard = []
       for (const item in this.violation) {

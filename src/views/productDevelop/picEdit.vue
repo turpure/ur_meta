@@ -33,11 +33,11 @@
                     v-model="scope.row.sku"></el-input>
         </template>
       </el-table-column>
-      <el-table-column prop="linkurl"
+      <el-table-column prop="linkUrl"
                        label="图片库地址">
         <template slot-scope="scope">
           <el-input size="small"
-                    v-model="scope.row.linkurl"></el-input>
+                    v-model="scope.row.linkUrl"></el-input>
         </template>
       </el-table-column>
       <el-table-column prop="property1"
@@ -67,7 +67,7 @@
     </el-table>
   </section>
 </template>
-<script>
+<script type="text/ecmascript-6">
 import {
   APIPictureInfo,
   APISavePictureInfo,
@@ -79,7 +79,7 @@ export default {
     return {
       tableData: [],
       condition: {
-        id: 5
+        id: 0
       }
     }
   },
@@ -131,8 +131,8 @@ export default {
     }
   },
   mounted() {
+    this.condition.id = this.$route.params.id
     this.getData()
-    // this.condition.id = this.$route.params.id
   }
 }
 </script>
