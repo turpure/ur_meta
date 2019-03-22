@@ -1061,23 +1061,37 @@ export default {
     }
   },
   methods: {
+//    handleClick(tab, event) {
+//      if (tab.label === '属性信息') {
+//        this.show['status'] = true
+//      } else {
+//        this.show['status'] = false
+//      }
+//      if (tab.label === '图片信息') {
+//        this.show['picture'] = true
+//        this.getPic()
+//      } else {
+//        this.show['picture'] = false
+//      }
+//      if (tab.label === '平台信息') {
+//        this.show['plat'] = true
+//        this.getPlat()
+//      } else {
+//        this.show['plat'] = false
+//      }
+//    },
     handleClick(tab, event) {
       if (tab.label === '属性信息') {
-        this.show['status'] = true
-      } else {
-        this.show['status'] = false
       }
       if (tab.label === '图片信息') {
-        this.show['picture'] = true
-        this.getPic()
-      } else {
-        this.show['picture'] = false
+        this.$router.push({
+          path: `/v1/oa-goodsinfo/goodsInfoPicture`
+        })
       }
       if (tab.label === '平台信息') {
-        this.show['plat'] = true
-        this.getPlat()
-      } else {
-        this.show['plat'] = false
+        this.$router.push({
+          path: `/v1/oa-goodsinfo/goodsInfoPlatform`
+        })
       }
     },
     //属性信息分页
@@ -1156,6 +1170,9 @@ export default {
     del() {},
     //属性信息全选
     selsChange(sels) {
+//      for(var i=0;i<sels.length;i++){
+//        console.log(sels[i].id)
+//      }
       this.sels = sels
     },
     //属性信息获取数据
