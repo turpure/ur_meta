@@ -117,6 +117,7 @@
             <el-select size="small"
                        v-model="editForm.storeName"
                        style="width:390px"
+                       filterable clearable
                        @change="repertoryIndex($event)">
               <el-option v-for="(item, key) in repertory" :key='item.key' :label="item" :value="item"></el-option>
             </el-select>
@@ -272,7 +273,7 @@
               <!--value="0"></el-option>-->
               <!--<el-option label="是"-->
               <!--value="1"></el-option>-->
-              <div style="width: 300px;overflow: hidden;border: #eee solid 1px;position: relative;height: 50px;overflow-y: auto;cursor: pointer" @click="addzk()">
+              <div style="width: 300px;overflow: hidden;border: #eee solid 1px;position: relative;min-height: 50px;cursor: pointer" @click="addzk()">
                 <p class="fp" style="padding: 0 3px;background: #eee;margin: 5px;line-height: 28px" v-for="(item,index) in editForm.dictionaryName" :key="item">{{item}}<i class="el-icon-close" @click.stop="delljs(index)" style="cursor:pointer;"></i></p>
                 <i class="el-icon-arrow-down" style="float: right;margin-top: 10px;margin-right: 10px;cursor:pointer;"></i>
               </div>

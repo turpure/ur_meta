@@ -614,7 +614,7 @@ export default {
       flag: [{ id: 0, type: '按天' }, { id: 2, type: '按月' }],
       dateRange: [],
       condition: {
-        dateType: 1,
+        dateType: 0,
         dateRange: [],
         member: [],
         flag: 0,
