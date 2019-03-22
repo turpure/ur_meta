@@ -134,6 +134,88 @@
           </el-form-item>
         </el-col>
         <el-col :span="24">
+          <el-col :span="6">
+            <el-form-item label="禁售平台">
+              <el-select size="small"
+                         style="width:250px"
+                         multiple
+                         filterable
+                         allow-create
+                         default-first-option
+                         v-model="editForm.dictionaryName"
+                         @change="forbidSale($event)">
+                <el-button plain
+                           type="info"
+                           @click="selectalld">全选</el-button>
+                <el-button plain
+                           type="info"
+                           @click="noselectd">取消</el-button>
+                <el-option v-for="(item, key) in violation" :key='item.key' :label="item" :value="item"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="对应销售">
+              <el-select size="small"
+                         style="width:250px"
+                         multiple
+                         filterable
+                         allow-create
+                         default-first-option
+                         v-model="editForm.mapPersons"
+                         @change="forbidSale($event)">
+                <el-button plain
+                           type="info"
+                           @click="selectalld1">全选</el-button>
+                <el-button plain
+                           type="info"
+                           @click="noselectd1">取消</el-button>
+                <el-option v-for="(item, key) in mainSsale" :key='item.key' :label="item" :value="item"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <!--<el-col :span="6">-->
+          <!--<el-form-item label="对应销售">-->
+          <!--<el-select size="small"-->
+          <!--style="width:250px"-->
+          <!--multiple-->
+          <!--filterable-->
+          <!--allow-create-->
+          <!--default-first-option-->
+          <!--v-model="editForm.mapPersons"-->
+          <!--@change="forbidSale($event)">-->
+          <!--<el-button plain-->
+          <!--type="info"-->
+          <!--@click="selectalld1">全选</el-button>-->
+          <!--<el-button plain-->
+          <!--type="info"-->
+          <!--@click="noselectd1">取消</el-button>-->
+          <!--<el-option v-for="(item, key) in sale" :key='item.key' :label="item" :value="item"></el-option>-->
+          <!--</el-select>-->
+          <!--</el-form-item>-->
+          <!--</el-col>-->
+          <el-col :span="6">
+            <el-form-item label="主类目">
+              <el-select size="small"
+                         style="width:250px"
+                         v-model="oaGoods.cate"
+                         @change="mainIndex($event)">
+                <el-option v-for="(item, key) in mainCategory" :key='item.key' :label="item" :value="item"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="子类目">
+              <el-select size="small"
+                         style="width:250px"
+                         v-model="oaGoods.subCate"
+                         @change="childrenIndex($event)">
+                <el-option v-for="(item, key) in childrenCategory" :key='item.key' :label="item" :value="item"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-col>
+        <el-col :span="24">
           <el-form-item label="">
             <span style="color: red;margin-left: 54px;margin-right: 8px">*描述</span>
             <el-input size="small"
@@ -259,88 +341,6 @@
              label-width="100px"
              ref="oaGoods">
       <el-row>
-        <el-col :span="24">
-          <el-col :span="6">
-            <el-form-item label="禁售平台">
-              <el-select size="small"
-              style="width:250px"
-              multiple
-              filterable
-              allow-create
-              default-first-option
-              v-model="editForm.dictionaryName"
-              @change="forbidSale($event)">
-                <el-button plain
-                           type="info"
-                           @click="selectalld">全选</el-button>
-                <el-button plain
-                           type="info"
-                           @click="noselectd">取消</el-button>
-              <el-option v-for="(item, key) in violation" :key='item.key' :label="item" :value="item"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
-            <el-form-item label="对应销售">
-              <el-select size="small"
-                         style="width:250px"
-                         multiple
-                         filterable
-                         allow-create
-                         default-first-option
-                         v-model="editForm.mapPersons"
-                         @change="forbidSale($event)">
-                <el-button plain
-                           type="info"
-                           @click="selectalld1">全选</el-button>
-                <el-button plain
-                           type="info"
-                           @click="noselectd1">取消</el-button>
-                <el-option v-for="(item, key) in mainSsale" :key='item.key' :label="item" :value="item"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <!--<el-col :span="6">-->
-            <!--<el-form-item label="对应销售">-->
-              <!--<el-select size="small"-->
-                         <!--style="width:250px"-->
-                         <!--multiple-->
-                         <!--filterable-->
-                         <!--allow-create-->
-                         <!--default-first-option-->
-                         <!--v-model="editForm.mapPersons"-->
-                         <!--@change="forbidSale($event)">-->
-                <!--<el-button plain-->
-                           <!--type="info"-->
-                           <!--@click="selectalld1">全选</el-button>-->
-                <!--<el-button plain-->
-                           <!--type="info"-->
-                           <!--@click="noselectd1">取消</el-button>-->
-                <!--<el-option v-for="(item, key) in sale" :key='item.key' :label="item" :value="item"></el-option>-->
-              <!--</el-select>-->
-            <!--</el-form-item>-->
-          <!--</el-col>-->
-          <el-col :span="6">
-            <el-form-item label="主类目">
-              <el-select size="small"
-                         style="width:250px"
-                         v-model="oaGoods.cate"
-                         @change="mainIndex($event)">
-                <el-option v-for="(item, key) in mainCategory" :key='item.key' :label="item" :value="item"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
-            <el-form-item label="子类目">
-              <el-select size="small"
-                         style="width:250px"
-                         v-model="oaGoods.subCate"
-                         @change="childrenIndex($event)">
-                <el-option v-for="(item, key) in childrenCategory" :key='item.key' :label="item" :value="item"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-        </el-col>
         <el-col :span="8">
           <el-form-item label="供应商链接1">
             <el-input size="small"
