@@ -1,6 +1,13 @@
 <template>
   <section class="toolbar">
-    <el-col :span="24">
+    <el-row>
+      <el-col :span="24" style="position: fixed;z-index: 999;overflow: hidden;border-bottom: #ccc solid 1px; background: #eee;padding: 0">
+        <span @click="attribute()" class="adClass">属性信息</span>
+        <span @click="photo()" class="adClass actie">图片信息</span>
+        <span @click="platform()" class="adClass">平台信息</span>
+      </el-col>
+    </el-row>
+    <el-col :span="24" style="margin-top: 50px;background: #fff;border-bottom: #ccc solid 1px;padding-left: 15px">
       <el-button type="primary"
                  @click="save">保存当前数据</el-button>
       <el-button type="primary"
@@ -84,6 +91,21 @@ export default {
     }
   },
   methods: {
+    attribute(){
+      this.$router.push({
+        path: `/v1/oa-goodsinfo/index`
+      })
+    },
+    photo(){
+      this.$router.push({
+        path: `/v1/oa-goodsinfo/goodsInfoPicture`
+      })
+    },
+    platform(){
+      this.$router.push({
+        path: `/v1/oa-goodsinfo/goodsInfoPlatform`
+      })
+    },
     //保存
     save() {
       APISavePictureInfo(this.tableData).then(res => {
@@ -139,6 +161,19 @@ export default {
 <style lang="scss" scoped>
 .el-col {
   padding: 10px;
+}
+.adClass{
+  display: block;
+  float: left;
+  padding: 15px 30px;
+  border-right: #cccccc solid 1px;
+  cursor: pointer;
+}
+.actie{
+  color: #409EFF;
+}
+.adClass:hover{
+  color: #409EFF;
 }
 </style>
 

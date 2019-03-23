@@ -26,22 +26,22 @@
                 <el-table-column label="操作"
                                  fixed
                                  header-align="center"
-                                 width="80">
+                                 width="70">
                     <template slot-scope="scope">
                         <el-tooltip content="查看">
                             <i class="el-icon-view"
                                @click="viewPlat(scope.$index, scope.row)"
                                style="color: #409EFF;cursor:pointer;"></i>
                         </el-tooltip>
-                        <el-tooltip content="更新">
+                        <el-tooltip content="更新"">
                             <i @click="platEdit(scope.$index, scope.row)"
                                class="el-icon-edit"
-                               style="color: #409EFF;cursor:pointer;"></i>
+                               style="color: #409EFF;cursor:pointer;margin-left: 15px"></i>
                         </el-tooltip>
-                        <el-tooltip content="删除">
-                            <i class="el-icon-delete"
-                               style="color: #409EFF;cursor:pointer;"></i>
-                        </el-tooltip>
+                        <!--<el-tooltip content="删除">-->
+                            <!--<i class="el-icon-delete"-->
+                               <!--style="color: #409EFF;cursor:pointer;"></i>-->
+                        <!--</el-tooltip>-->
                     </template>
                 </el-table-column>
                 <el-table-column prop="picUrl"

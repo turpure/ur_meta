@@ -224,6 +224,14 @@ export function APIPictureInfo(param) {
     data
   })
 }
+export function APIPicturePreview(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/picture',
+    method: 'post',
+    data
+  })
+}
 export function APISavePictureInfo(param) {
   const data = { condition: param }
   return request({

@@ -169,65 +169,65 @@
             <!-- 图片信息查看对话框 -->
             <el-dialog title='查看'
                        :visible.sync="dialogPicture">
-                <el-form :model="picForm"
+                <el-form
                          label-position="left"
                          label-width="110px"
                          ref="picForm">
                     <el-form-item label="图片"
-                                  prop="picUrl"
+                                  prop="goodsInfo.picUrl"
                                   class="item1">
-                        <img :src='viewForm.picUrl'
+                        <img :src='goodsInfo.picUrl'
                              style="width: 150px;height: 100px;">
                     </el-form-item>
                     <el-form-item label="图片地址"
                                   prop="picUrl"
                                   class="item">
-                        <span>{{viewForm.picUrl}}</span>
+                        <span>{{goodsInfo.picUrl}}</span>
                     </el-form-item>
                     <el-form-item label="商品名称"
                                   prop="GoodsName"
                                   class="item">
-                        <span>{{viewForm.GoodsName}}</span></el-form-item>
+                        <span>{{goodsInfo.goodsName}}</span></el-form-item>
                     <el-form-item label="商品编码"
                                   prop="GoodsCode"
                                   class="item">
-                        <span>{{viewForm.GoodsCode}}</span>
+                        <span>{{goodsInfo.goodsCode}}</span>
                     </el-form-item>
                     <el-form-item label="是否备货"
                                   prop="stockUp"
                                   class="item">
-                        <span>{{viewForm.stockUp === 1 ? '是' : '否'}}</span>
+                        <span>{{goodsInfo.stockUp === 1 ? '是' : '否'}}</span>
                     </el-form-item>
                     <el-form-item label="供应商名称"
-                                  prop="SupplierName"
-                                  class="item"><span>{{viewForm.SupplierName}}</span></el-form-item>
+                                  prop="supplierName"
+                                  class="item"><span>{{goodsInfo.supplierName}}</span></el-form-item>
                     <el-form-item label="中文申报名"
-                                  prop="AttributeName"
-                                  class="item"><span>{{viewForm.AttributeName}}</span></el-form-item>
+                                  prop="aliasCnName"
+                                  class="item"><span>{{goodsInfo.aliasCnName}}</span></el-form-item>
                     <el-form-item label="英文申报名"
-                                  prop="DictionaryName"
-                                  class="item"><span>{{viewForm.DictionaryName}}</span></el-form-item>
+                                  prop="aliasEnName"
+                                  class="item"><span>{{goodsInfo.aliasEnName}}</span></el-form-item>
                     <el-form-item label="规格"
                                   prop=""
-                                  class="item"><span></span></el-form-item>
+                                  class="item"><span>{{goodsInfo.packName}}</span></el-form-item>
                     <el-form-item label="季节"
-                                  prop="Season"
-                                  class="item"><span>{{viewForm.Season}}</span></el-form-item>
+                                  prop="season"
+                                  class="item"><span>{{goodsInfo.season}}</span></el-form-item>
                     <el-form-item label="仓库"
-                                  prop="StoreName"
-                                  class="item"><span>{{viewForm.StoreName}}</span></el-form-item>
+                                  prop="storeName"
+                                  class="item"><span>{{goodsInfo.storeName}}</span></el-form-item>
                     <el-form-item label="是否液体"
-                                  prop="IsLiquid"
-                                  class="item"><span>{{viewForm.IsLiquid}}</span></el-form-item>
+                                  prop="isLiquid"
+                                  class="item"><span>{{goodsInfo.isLiquid}}</span></el-form-item>
                     <el-form-item label="是否粉末"
-                                  prop="IsPowder"
-                                  class="item"><span>{{viewForm.IsPowder}}</span></el-form-item>
+                                  prop="isPowder"
+                                  class="item"><span>{{goodsInfo.isPowder}}</span></el-form-item>
                     <el-form-item label="是否带磁"
                                   prop="isMagnetism"
-                                  class="item"><span>{{viewForm.isMagnetism}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfo.isMagnetism}}</span></el-form-item>
                     <el-form-item label="是否带电"
-                                  prop="IsCharged"
-                                  class="item"><span>{{viewForm.IsCharged}}</span></el-form-item>
+                                  prop="isCharged"
+                                  class="item"><span>{{goodsInfo.isCharged}}</span></el-form-item>
                 </el-form>
             </el-dialog>
             <el-pagination background
@@ -253,7 +253,9 @@
             APIAttributeInfo,
             APIFinishAttribute,
             APIGenerateCode,
-            APIPlat
+            APIPictureInfo,
+            APIPlat,
+            APIPicturePreview
     } from '../../api/product'
     import { getMenu } from '../../api/login'
     export default {
@@ -281,24 +283,6 @@
                     status: true,
                     picture: false,
                     plat: false
-                },
-                condition: {
-                    "pageSize":10,
-                    "page":1,
-                    "goodsCode":"",
-                    "achieveStatus":"",
-                    "goodsName":"",
-                    "developer":"",
-                    "devDatetime":[],
-                    "updateTime":[],
-                    "aliasCnName":"",
-                    "aliasEnName":"",
-                    "stockUp":"",
-                    "isLiquid":"",
-                    "isPowder":"",
-                    "isMagnetism":"",
-                    "isCharged":"",
-                    "isVar":""
                 },
                 picture: {
                     "pageSize": 10,
@@ -356,7 +340,10 @@
                 viewForm: {
                     id: null
                 },
-                picForm: {
+                picForm: [
+
+                ],
+                picId:{
                     id: null
                 },
                 platForm: {},
@@ -382,32 +369,6 @@
                     })
                 }
             },
-            //属性信息分页
-            handleCurrentChange(val) {
-                this.condition.currentPage = val
-                this.getData()
-            },
-            handleSizeChange(val) {
-                this.condition.pageSize = val
-                this.getData()
-            },
-            //导入普源
-            passAll() {},
-            //生成编码
-            codeAll() {
-                if (this.sels) {
-                    let data = {
-                        id: this.sels.map(e => e.id)[0]
-                    }
-                    APIGenerateCode(data).then(res => {
-                        for (let i = 0; i < this.tableData.length; i++) {
-                            if (this.tableData[i].id === data.id) {
-                                this.tableData[i].GoodsCode = res.data.data[0]
-                            }
-                        }
-                    })
-                }
-            },
             //单元格样式
             cellStyle({ row, column, rowIndex, columnIndex }) {
                 if (row.isVar === '是' && columnIndex === 4) {
@@ -418,430 +379,8 @@
             del() {},
             //属性信息全选
             selsChange(sels) {
-//      for(var i=0;i<sels.length;i++){
-//        console.log(sels[i].id)
-//      }
                 this.sels = sels
             },
-            //属性信息获取数据
-            getData() {
-                APIGoodsInfo(this.condition).then(res => {
-                    this.tableData = res.data.data.items
-                    this.total = res.data.data._meta.totalCount
-                    this.condition.pageSize = res.data.data._meta.perPage
-                    this.condition.currentPage = res.data.data._meta.currentPage
-                })
-            },
-            //属性信息表头input框
-            renderHeader(h, { column, $index }) {
-                if ($index === 0) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '40px'
-                                }
-                            },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: '',
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            this.condition.goodsCode = value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.filter()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
-                } else if ($index === 1) {
-                    let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
-                    return h(
-                            'el-select',
-                            {
-                                props: {
-                                    placeholder: '请选择',
-                                    value: this.condition.stockUp,
-                                    size: 'mini',
-                                    clearable: true
-                                },
-                                on: {
-                                    input: value => {
-                                        this.condition.stockUp=value
-                                        this.$emit('input', value)
-                                    },
-                                    change: searchValue => {
-                                        this.filter()
-                                    }
-                                }
-                            },
-                            [
-                                filters.map(item => {
-                                    return h('el-option', {
-                                        props: {
-                                            value: item.text,
-                                            label: item.value
-                                        }
-                                    })
-                                })
-                            ]
-                    )
-                } else if ($index === 2) {
-                    let filters = [
-                        { text: '待处理', value: '待处理' },
-                        { text: '已完善', value: '已完善' },
-                        { text: '已导入', value: '已导入' }
-                    ]
-                    return h(
-                            'el-select',
-                            {
-                                props: {
-                                    placeholder: '请选择',
-                                    value: this.condition.achieveStatus,
-                                    size: 'mini',
-                                    clearable: true
-                                },
-                                on: {
-                                    input: value => {
-                                        this.condition.achieveStatus=value
-                                        this.$emit('input', value)
-                                    },
-                                    change: searchValue => {
-                                        this.filter()
-                                    }
-                                }
-                            },
-                            [
-                                filters.map(item => {
-                                    return h('el-option', {
-                                        props: {
-                                            value: item.text,
-                                            label: item.value
-                                        }
-                                    })
-                                })
-                            ]
-                    )
-                } else if ($index === 3) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '40px'
-                                }
-                            },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: this.condition.goodsName,
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            this.condition.goodsName=value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.filter()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
-                } else if ($index === 4) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '40px'
-                                }
-                            },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: this.condition.developer,
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            this.condition.developer=value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.filter()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
-                } else if($index === 5){
-                    return h('el-date-picker',{
-                        props:{
-                            value:this.time1,
-                            size:'mini',
-                            type:'daterange',
-                        },
-                        style:{
-                            width:'180px',
-                            padding:'2px',
-                        },
-                        on:{
-                            input:value=>{
-                                this.time1=value
-                                this.$emit('input', value)
-                            },
-                            change:value => {
-                                this.filter()
-                            }
-                        }
-                    })
-                } else if ($index === 6) {
-                    return h('el-date-picker',{
-                        props:{
-                            value:this.time2,
-                            size:'mini',
-                            type:'daterange',
-                        },
-                        style:{
-                            width:'180px',
-                            padding:'2px',
-                        },
-                        on:{
-                            input:value=>{
-                                this.time2=value
-                                this.$emit('input', value)
-                            },
-                            change:value => {
-                                this.filter()
-                            }
-                        }
-                    })
-                } else if ($index === 7) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '40px'
-                                }
-                            },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value:this.condition.aliasCnName,
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            this.condition.aliasCnName = value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.filter()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
-                } else if ($index === 8) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '40px'
-                                }
-                            },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: this.condition.aliasEnName,
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            this.condition.aliasEnName = value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.filter()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
-                } else if ($index === 9) {
-                    let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
-                    return h(
-                            'el-select',
-                            {
-                                props: {
-                                    placeholder: '请选择',
-                                    value: this.condition.isLiquid,
-                                    size: 'mini',
-                                    clearable: true
-                                },
-                                on: {
-                                    input: value => {
-                                        this.condition.isLiquid = value
-                                        this.$emit('input', value)
-                                    },
-                                    change: searchValue => {
-                                        this.filter()
-                                    }
-                                }
-                            },
-                            [
-                                filters.map(item => {
-                                    return h('el-option', {
-                                        props: {
-                                            value: item.text,
-                                            label: item.value
-                                        }
-                                    })
-                                })
-                            ]
-                    )
-                } else if ($index === 10) {
-                    let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
-                    return h(
-                            'el-select',
-                            {
-                                props: {
-                                    placeholder: '请选择',
-                                    value: this.condition.isPowder,
-                                    size: 'mini',
-                                    clearable: true
-                                },
-                                on: {
-                                    input: value => {
-                                        this.condition.isPowder = value
-                                        this.$emit('input', value)
-                                    },
-                                    change: searchValue => {
-                                        this.filter()
-                                    }
-                                }
-                            },
-                            [
-                                filters.map(item => {
-                                    return h('el-option', {
-                                        props: {
-                                            value: item.text,
-                                            label: item.value
-                                        }
-                                    })
-                                })
-                            ]
-                    )
-                } else if ($index === 11) {
-                    let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
-                    return h(
-                            'el-select',
-                            {
-                                props: {
-                                    placeholder: '请选择',
-                                    value: this.condition.isMagnetism,
-                                    size: 'mini',
-                                    clearable: true
-                                },
-                                on: {
-                                    input: value => {
-                                        this.condition.isMagnetism = value
-                                        this.$emit('input', value)
-                                    },
-                                    change: searchValue => {
-                                        this.filter()
-                                    }
-                                }
-                            },
-                            [
-                                filters.map(item => {
-                                    return h('el-option', {
-                                        props: {
-                                            value: item.text,
-                                            label: item.value
-                                        }
-                                    })
-                                })
-                            ]
-                    )
-                } else if ($index === 12) {
-                    let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
-                    return h(
-                            'el-select',
-                            {
-                                props: {
-                                    placeholder: '请选择',
-                                    value: this.condition.isCharged,
-                                    size: 'mini',
-                                    clearable: true
-                                },
-                                on: {
-                                    input: value => {
-                                        this.condition.isCharged = value
-                                        this.$emit('input', value)
-                                    },
-                                    change: searchValue => {
-                                        this.filter()
-                                    }
-                                }
-                            },
-                            [
-                                filters.map(item => {
-                                    return h('el-option', {
-                                        props: {
-                                            value: item.text,
-                                            label: item.value
-                                        }
-                                    })
-                                })
-                            ]
-                    )
-                } else if ($index === 13) {
-                    let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
-                    return h(
-                            'el-select',
-                            {
-                                props: {
-                                    placeholder: '请选择',
-                                    value: this.condition.isVar,
-                                    size: 'mini',
-                                    clearable: true
-                                },
-                                on: {
-                                    input: value => {
-                                        this.condition.isVar = value
-                                        this.$emit('input', value)
-                                    },
-                                    change: searchValue => {
-                                        this.filter()
-                                    }
-                                }
-                            },
-                            [
-                                filters.map(item => {
-                                    return h('el-option', {
-                                        props: {
-                                            value: item.text,
-                                            label: item.value
-                                        }
-                                    })
-                                })
-                            ]
-                    )
-                }
-            },
-
             //图片信息分页
             handleSizeChangePic(val) {
                 this.picture.pageSize = val
@@ -854,10 +393,10 @@
             //图片信息查看
             viewPic(index, row) {
                 this.dialogPicture = true
-                // this.picForm.id = row.id
-                // APIPictureInfo(this.picForm).then(res => {
-                //   this.picForm = res.data.data
-                // })
+                 this.picId.id = row.id
+                APIPicturePreview(this.picId).then(res => {
+                   this.goodsInfo = res.data.data
+                 })
             },
             picEdit(index, row) {
                 this.$router.push({

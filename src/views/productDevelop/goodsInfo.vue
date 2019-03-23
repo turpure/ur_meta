@@ -189,7 +189,7 @@
         </el-table-column>
       </el-table>
       <!-- 属性信息查看对话框 -->
-      <el-dialog title='查看'
+      <el-dialog title=''
                  :visible.sync="dialogVisible">
         <el-form
                  label-position="left"
@@ -198,8 +198,10 @@
           <el-form-item label="图片"
                         prop="picUrl"
                         class="item1">
-            <img :src='goodsInfo.picUrl'
-                 style="width: 150px;height: 100px;">
+            <a :href="goodsInfo.picUrl" target="_blank" style="cursor: pointer">
+              <img :src='goodsInfo.picUrl'
+                   style="width: 150px;height: 100px;">
+            </a>
           </el-form-item>
           <el-form-item label="图片地址"
                         prop="picUrl"
@@ -214,7 +216,7 @@
           <el-form-item label="是否备货"
                         prop="stockUp"
                         class="item">
-            <span>{{goodsInfo.stockUp === 1 ? '是' : '否'}}</span>
+            <span>{{goodsInfo.stockUp}}</span>
           </el-form-item>
           <el-form-item label="商品名称"
                         prop="goodsName"
@@ -304,6 +306,9 @@
             <span>{{oaGoods.origin3}}</span>
           </el-form-item>
         </el-form>
+        <span slot="footer" class="dialog-footer">
+             <el-button @click="dialogVisible = false" type="primary">关 闭</el-button>
+        </span>
       </el-dialog>
       <!-- 属性信息分页 -->
       <el-pagination background

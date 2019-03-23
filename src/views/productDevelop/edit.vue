@@ -1,28 +1,35 @@
 <template>
   <section>
+    <el-row>
+      <el-col :span="24" style="position: fixed;z-index: 999;overflow: hidden;border-bottom: #e4e7ed solid 1px; background: #eee">
+          <span @click="attribute()" class="adClass actie">属性信息</span>
+          <span @click="photo()" class="adClass">图片信息</span>
+          <span @click="platform()" class="adClass">平台信息</span>
+      </el-col>
+    </el-row>
     <el-form :model="editForm"
              :inline="true"
              label-width="100px"
              ref="editForm">
-      <el-row>
-        <el-col :span="8">
+      <el-row style="margin-top: 60px">
+        <el-col :span="7">
           <el-form-item label="">
             <img :src='editForm.picUrl'
-                 style="width: 440px;height: 405px;padding-left:100px;padding-top:10px;margin-bottom:5px;">
+                 style="width: 440px;height: 405px;margin-left:20px;margin-top:10px;margin-bottom:5px;border-radius: 10px">
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="8" style="margin-top: 18px">
           <el-form-item label="商品图片链接">
             <el-input size="small"
                       v-model="editForm.picUrl"
                       style="width:390px;"></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="8" style="margin-top: 18px">
           <el-form-item label="是否备货">
             <el-select size="small"
                        v-model="editForm.stockUp"
-                       style="width:390px;"
+                       style="width:430px;"
                        @change="iSn($event)">
               <el-option v-for="(item, key) in IsF" :key='item.key' :label="item" :value="item"></el-option>
             </el-select>
@@ -37,10 +44,10 @@
         </el-col>
         <el-col :span="8">
           <el-form-item label="">
-            <span style="color: red;margin-left: 30px;margin-right: 8px">*商品名称</span>
+            <span style="color: red;margin-left: 30px;margin-right: 6px">*商品名称</span>
             <el-input size="small"
                       v-model="editForm.goodsName"
-                      style="width:390px;"></el-input>
+                      style="width:430px;"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
@@ -53,10 +60,10 @@
         </el-col>
         <el-col :span="8">
           <el-form-item label="">
-            <span style="color: red;margin-left: 14px;margin-right: 8px">*英文申报名</span>
+            <span style="color: red;margin-left: 14px;margin-right: 7px">*英文申报名</span>
             <el-input size="small"
                       v-model="editForm.aliasEnName"
-                      style="width:390px;"></el-input>
+                      style="width:430px;"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
@@ -70,7 +77,7 @@
           <el-form-item label="业绩归属人1">
             <el-input size="small"
                       v-model="editForm.possessMan1"
-                      style="width:390px;"></el-input>
+                      style="width:430px;"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
@@ -85,7 +92,7 @@
             <span style="color: red;margin-left: 14px;margin-right: 8px">*供应商名称</span>
             <el-input size="small"
                       v-model="editForm.supplierName"
-                      style="width:390px;"></el-input>
+                      style="width:430px;"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
@@ -103,7 +110,7 @@
           <el-form-item label="特殊属性必填">
             <el-select size="small"
                        v-model="editForm.attributeName"
-                       style="width:390px"
+                       style="width:430px"
                        @change="specificityIndex($event)">
               <el-option v-for="(item, key) in specificity" :key='item.key' :label="item" :value="item"></el-option>
             </el-select>
@@ -125,7 +132,7 @@
           <el-form-item label="季节">
             <el-select size="small"
                        v-model="editForm.season"
-                       style="width:390px"
+                       style="width:430px"
                        @change="seasonnIndex($event)">
               <el-option v-for="(item, key) in seasonn" :key='item.key' :label="item" :value="item"></el-option>
             </el-select>
@@ -383,15 +390,15 @@
         </el-col>
       </el-row>
     </el-form>
-    <el-select v-model="btn"
-               size="small"
-               placeholder="请选择操作方式">
-      <el-option v-for="item in options"
-                 :key="item.value"
-                 :label="item.label"
-                 :value="item.value"></el-option>
-    </el-select>
-    <el-table :data="tableData">
+    <!--<el-select v-model="btn"-->
+               <!--size="small"-->
+               <!--placeholder="请选择操作方式" class="edSel">-->
+      <!--<el-option v-for="item in options"-->
+                 <!--:key="item.value"-->
+                 <!--:label="item.label"-->
+                 <!--:value="item.value"></el-option>-->
+    <!--</el-select>-->
+    <el-table :data="tableData" border style="width: 98%;margin-left: 1%">
       <el-table-column type="selection"
                        align="center"
                        header-align="center"></el-table-column>
@@ -491,57 +498,57 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-row style="margin-top:5px;">
-      <el-col :span="4">
+    <el-row style="margin-top:15px;padding-left: 1%">
+      <el-col :span="2">
         <el-input v-model="rows"
                   size="small"
                   placeholder="行数"
-                  style="width:190px"></el-input>
+                  style="width:60px"></el-input>
         <el-button size="small"
                    @click="addClomun">新增行</el-button>
       </el-col>
-      <el-col :span="4">
+      <el-col :span="3">
         <el-input v-model="costprice"
                   size="small"
                   placeholder="成本价￥"
-                  style="width:190px"></el-input>
+                  style="width:117px"></el-input>
         <el-button size="small"
                    @click="cosprice">成本确定</el-button>
       </el-col>
-      <el-col :span="4">
+      <el-col :span="3">
         <el-input v-model="weight"
                   size="small"
                   placeholder="重量g"
-                  style="width:190px"></el-input>
+                  style="width:117px"></el-input>
         <el-button size="small"
                    @click="weht">重量确定</el-button>
       </el-col>
-      <el-col :span="4">
+      <el-col :span="3">
         <el-input v-model="retailprice"
                   size="small"
                   placeholder="零售价$"
-                  style="width:190px"></el-input>
+                  style="width:117px"></el-input>
         <el-button size="small"
                    @click="price">价格确定</el-button>
       </el-col>
-      <el-col :span="4">
+      <el-col :span="3">
         <el-input v-model="joomretailprice"
                   size="small"
                   placeholder="joom零售价$"
-                  style="width:190px"></el-input>
+                  style="width:117px"></el-input>
         <el-button size="small"
                    @click="joomprice">价格确定</el-button>
       </el-col>
-      <el-col :span="4">
+      <el-col :span="3">
         <el-input v-model="transportationcost"
                   size="small"
                   placeholder="joom运费$"
-                  style="width:185px"></el-input>
+                  style="width:117px"></el-input>
         <el-button size="small"
                    @click="transport">价格确定</el-button>
       </el-col>
     </el-row>
-    <!-- <div style="margin-top:20px;">
+     <div style="margin-top:15px;margin-left: 1%">
       <el-button size="small"
                  type="success">一键生成SKU</el-button>
       <el-button size="small"
@@ -551,10 +558,10 @@
       <el-button size="small"
                  type="warning">导入普源</el-button>
       <el-button size="small"
-                 type="info">生成采购单</el-button>
-      <el-button size="small"
-                 type="danger">删除行</el-button>
-    </div> -->
+                 type="danger">生成采购单</el-button>
+      <!--<el-button size="small"-->
+                 <!--type="danger">删除行</el-button>-->
+    </div>
     <el-dialog title="批量增加关键词"
                :visible.sync="dialogTableVisible">
       <el-input size="small"
@@ -569,9 +576,13 @@
                 :rows="20"
                 placeholder="-多个随机关键词-"></el-input>
     </el-dialog>
-    <el-button type="primary"
-               @click="save"
-               style="position: fixed;bottom: 5px;left:50%;width:200px;">保存</el-button>
+    <el-col :span="24" style="background: #fff;position: fixed;bottom: 0px;border-top: #eee solid 1px">
+      <el-col :span="24":offset="8">
+        <el-button type="primary"
+                   @click="save"
+                   style="width:350px;margin: 5px 0;margin-top: 8px;padding: 15px 0">保存</el-button>
+      </el-col>
+    </el-col>
   </section>
 </template>
 <script type="text/ecmascript-6">
@@ -713,6 +724,21 @@ export default {
     }
   },
   methods: {
+    attribute(){
+      this.$router.push({
+        path: `/v1/oa-goodsinfo/index`
+      })
+    },
+    photo(){
+      this.$router.push({
+        path: `/v1/oa-goodsinfo/goodsInfoPicture`
+      })
+    },
+    platform(){
+      this.$router.push({
+        path: `/v1/oa-goodsinfo/goodsInfoPlatform`
+      })
+    },
     iSn(e){
       console.log(e)
     },
@@ -1084,13 +1110,38 @@ export default {
 <style lang="scss" scoped>
 section {
   margin-bottom: 80px;
-  margin-top: 20px;
+}
+.el-form-item{
+  margin-bottom: 18px;
 }
   .fp{
     float: left;
   }
   .hovp:hover{
     color: steelblue;
+  }
+  .tabClass{
+    text-align: center;
+    line-height: 48px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .adClass{
+    display: block;
+    float: left;
+    padding: 14px 30px;
+    border-right: 1px solid #e4e7ed;
+    cursor: pointer;
+  }
+  .actie{
+    color: #409EFF;
+  }
+  .adClass:hover{
+    color: #409EFF;
+  }
+  .edSel{
+    margin-left: 20px;
+    margin-bottom: 10px;
   }
 </style>
 
