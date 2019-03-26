@@ -501,14 +501,14 @@
     <el-row style="margin-top:15px;padding-left: 1%">
       <el-col :span="2">
         <input placeholder="行数" v-model="rowss"
-                  style="width:80px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+                  style="width:70px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
         <span class="xzz" @click="addClomun">新增行</span>
         <!--<el-button size="small"-->
                    <!--@click="addClomun">新增行</el-button>-->
       </el-col>
       <el-col :span="3">
         <input placeholder="成本价￥" v-model="costprice"
-               style="width:126px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+               style="width:116px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
         <span class="xzz1" @click="cosprice">成本确定</span>
         <!--<el-input v-model="costprice"-->
                   <!--size="small"-->
@@ -519,7 +519,7 @@
       </el-col>
       <el-col :span="3">
         <input placeholder="重量g" v-model="weight"
-               style="width:126px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+               style="width:116px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
         <span class="xzz1" @click="weht">重量确定</span>
         <!--<el-input v-model="weight"-->
                   <!--size="small"-->
@@ -530,7 +530,7 @@
       </el-col>
       <el-col :span="3">
         <input placeholder="零售价$" v-model="retailprice"
-               style="width:126px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+               style="width:116px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
         <span class="xzz1" @click="price">价格确定</span>
         <!--<el-input v-model="retailprice"-->
                   <!--size="small"-->
@@ -541,7 +541,7 @@
       </el-col>
       <el-col :span="3">
         <input placeholder="joom零售价$" v-model="joomretailprice"
-               style="width:126px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+               style="width:116px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
         <span class="xzz1" @click="joomprice">价格确定</span>
         <!--<el-input v-model="joomretailprice"-->
                   <!--size="small"-->
@@ -552,7 +552,7 @@
       </el-col>
       <el-col :span="3">
         <input placeholder="joom运费$" v-model="transportationcost"
-               style="width:126px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+               style="width:116px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
         <span class="xzz1" @click="transport">价格确定</span>
         <!--<el-input v-model="transportationcost"-->
                   <!--size="small"-->
@@ -744,61 +744,29 @@ export default {
       return num > 9 ? (num + "") : ("0" + num)
     },
     oneKey(){
-      var numBer=1
-      var dArry=[]
-      var strimg=[]
-      var result
-      for(var i=0;i<this.tableData.length;i++){
-        var strNum=""
-        var record=this.tableData[i]
-        var Identification=this.tableData[i].property1
-        if(i==0){
-          strNum+=this.editForm.goodsCode+this.formatTen(numBer++)
-          if(this.tableData[i].property2!=null && this.tableData[i].property2!=''){
-            strNum+="_"+ this.tableData[i].property2
-          }
-          if(this.tableData[i].property3!=null && this.tableData[i].property3!=''){
-            strNum+="_"+ this.tableData[i].property3
-          }
-          this.tableData[i].sku=strNum
-          dArry.push(JSON.parse(JSON.stringify(this.tableData[i])))
-//          strimg.push(this.tableData[i])
-        }else {
-          if(Identification==''){
-            Identification=null
-          }
-          for(var k=0;k<dArry.length;k++){
-            console.log(Identification,dArry[k].property1)
-            if(Identification==dArry[k].property1){
-              var sub=""
-              var cutting=dArry[k].sku.split("_")
-              sub+=cutting[0]
-              if(record.property2!=null && record.property2!=''){
-                sub+="_"+ record.property2
-              }
-              if(record.property3!=null && record.property3!=''){
-                sub+="_"+ record.property3
-              }
-              this.tableData[i].sku=sub
-
-            }else{
-              var sub1=""
-              sub1+=this.editForm.goodsCode+this.formatTen(numBer++)
-              if(this.tableData[i].property2!=null && this.tableData[i].property2!=''){
-                sub1+="_"+ this.tableData[i].property2
-              }
-              if(this.tableData[i].property3!=null && this.tableData[i].property3!=''){
-                sub1+="_"+ this.tableData[i].property3
-              }
-              this.tableData[i].sku=sub1;
-              result=JSON.parse(JSON.stringify(this.tableData[i]))
-              console.log(result)
+      let obj = {}, ary = [];
+      this.tableData.map((item, index, input) => {
+        if (obj[item.property1] !== item.property1) {
+          ary.push(item);
+          item.index = JSON.parse(JSON.stringify(ary)).length;
+          let k = ary.length;
+          item.sku = `${this.editForm.goodsCode}${this.formatTen(k)}${item.property2 ? `_` + item.property2 : ""}${
+                  item.property3 ? `_` + item.property3 : ""
+                  }`;
+        } else {
+          var targetIndex = "";
+          for (var j = 0; j < ary.length; j++) {
+            if (item.property1 == ary[j].property1) {
+              targetIndex = ary[j].index;
+              break;
             }
           }
+          item.sku = `${this.editForm.goodsCode}${this.formatTen(targetIndex)}${
+                  item.property2 ? `_` + item.property2 : ""
+                  }${item.property3 ? `_` + item.property3 : ""}`;
         }
-      }
-      dArry.push(result)
-      console.log(dArry)
+        obj[item.property1] = item.property1;
+      });
     },
     mandatoryDate(e){
       this.bxlength=0

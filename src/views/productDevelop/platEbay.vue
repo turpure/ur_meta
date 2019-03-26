@@ -1240,31 +1240,76 @@
                 })
             },
             keep() {
-                const data = {
-                    basicInfo: {
-                        id: 3,
-                        SKU: this.wishForm.sku,
-                        title: this.wishForm.title,
-                        description: this.wishForm.description,
-                        inventory: 10000,
-                        price: '0.00',
-                        msrp: '0.00',
-                        shipping: '0.00',
-                        shippingTime: '7-21',
-                        tags: '',
-                        mainImage: this.wishForm.mainPage,
-                        goodsId: null,
-                        infoId: 5,
-                        extraImages: 'enim',
-                        headKeywords: null,
-                        requiredKeywords: null,
-                        randomKeywords: null,
-                        tailKeywords: null,
-                        wishTags: null,
-                        stockUp: '否'
-                    },
-                    skuInfo: []
+                for(var i=0;i<this.title.length;i++){
+                    var obj={}
+                    obj.columns={}
+                    obj.pictureKey=this.radio
+                    for(var k=0;k<this.title[i].value.length;k++){
+                        obj.columns[this.tite[k]] = this.title[i].value[k];
+                    }
+                    this.tabDate[i].property=JSON.stringify(obj)
                 }
+                const md=JSON.stringify(this.mandatoryData)
+                const mr=JSON.stringify(this.randomData)
+                const url=this.wishForm.extraPage.join('\\n')
+              const data = {
+                basicInfo: {
+                    "nid": this.wishForm.nid,
+                    "goodsId": this.wishForm.goodsId,
+                    "location": this.wishForm.location,
+                    "country": this.wishForm.country,
+                    "postCode": this.wishForm.postCode,
+                    "prepareDay": this.wishForm.prepareDay,
+                    "site": this.wishForm.site,
+                    "listedCate": "",
+                    "listedSubcate": "",
+                    "title": "test-save",
+                    "subTitle": "",
+                    "description": null,
+                    "quantity": 6,
+                    "nowPrice": "",
+                    "UPC": "",
+                    "EAN": "",
+                    "brand": "",
+                    "MPN": "",
+                    "color": "",
+                    "type": "",
+                    "material": "",
+                    "intendedUse": "",
+                    "unit": "",
+                    "bundleListing": "",
+                    "shape": "",
+                    "features": "",
+                    "regionManufacture": "",
+                    "reserveField": "",
+                    "inShippingMethod1": "23",
+                    "inFirstCost1": null,
+                    "inSuccessorCost1": null,
+                    "inShippingMethod2": "",
+                    "inFirstCost2": null,
+                    "inSuccessorCost2": null,
+                    "outShippingMethod1": "93",
+                    "outFirstCost1": null,
+                    "outSuccessorCost1": null,
+                    "outShipToCountry1": "",
+                    "outShippingMethod2": "",
+                    "outFirstCost2": null,
+                    "outSuccessorCost2": null,
+                    "outShipToCountry2": "",
+                    "mainPage": this.wishForm.mainPage,
+                    "extraPage": url,
+                    "sku": this.wishForm.sku,
+                    "infoId": this.wishForm.infoId,
+                    "specifics": "",
+                    "iBayTemplate": "pr110",
+                    "headKeywords": this.wishForm.headKeywords,
+                    "requiredKeywords": md,
+                    "randomKeywords": mr,
+                    "tailKeywords": this.wishForm.tailKeywords,
+                    "stockUp": this.wishForm.stockUp
+                },
+                skuInfo: []
+                 }
                 // data.basicInfo = this.wishForm
                 data.skuInfo = this.tabDate
                 APISaveEbayInfo(data).then(res => {
