@@ -77,46 +77,8 @@
                             <el-col :span="2"
                                     class="textZt"
                                     style="margin-top: 15px">
-                                附加图
                             </el-col>
                         </el-col>
-                        <!--<el-col :span="12">-->
-                        <!--<el-col :span="2" class="textZt">-->
-                        <!--是否备货-->
-                        <!--</el-col>-->
-                        <!--<el-col :span="20">-->
-                        <!--<el-input v-model="wishForm.stockUp" :disabled="true">-->
-
-                        <!--</el-input>-->
-                        <!--</el-col>-->
-                        <!--</el-col>-->
-                        <!--<el-col :span="12">-->
-                        <!--<el-col :span="24" style="margin-bottom: 10px;margin-top: 15px">-->
-                        <!--<el-col :span="2" class="textZt">-->
-                        <!--是否备货-->
-                        <!--</el-col>-->
-                        <!--<el-col :span="21">-->
-                        <!--<el-input v-model="wishForm.stockUp" :disabled="true">-->
-
-                        <!--</el-input>-->
-                        <!--</el-col>-->
-                        <!--</el-col>-->
-                        <!--<el-col :span="24" style="margin-bottom: 10px;margin-top: 15px">-->
-                        <!--<el-col :span="2" class="textZt">-->
-                        <!--主图-->
-                        <!--</el-col>-->
-                        <!--<el-col :span="21">-->
-                        <!--<el-input v-model="wishForm.mainPage">-->
-
-                        <!--</el-input>-->
-                        <!--</el-col>-->
-                        <!--</el-col>-->
-                        <!--<el-col :span="24">-->
-                        <!--<el-col :span="2" class="textZt">-->
-                        <!--附加图-->
-                        <!--</el-col>-->
-                        <!--</el-col>-->
-                        <!--</el-col>-->
                         <el-col :span="10"
                                 style="margin-left: 25px">
                             <a :href="wishForm.mainPage"
@@ -127,11 +89,16 @@
                         </el-col>
                     </el-col>
                 </el-row>
+                <el-row>
+                    <el-col style="margin-bottom: 5px;margin-top: 5px" :span="24">
+                        <span  @click="sIs()" style="padding: 10px 20px;background: #409EFF;color: #fff;cursor: pointer;display: block;width: 70px;padding-left:10px;text-align: center;margin-left: 15px"><i :class="[shoIS1?'el-icon-minus':'el-icon-plus']" style="margin-right: 5px"></i>附加图</span>
+                    </el-col>
+                </el-row>
                 <el-row style="margin-left: 15px">
                     <el-col :span="12"
                             style="margin-top: 15px;margin-bottom: 2px"
                             v-for="(item,index) in wishForm.extraPage"
-                            :key="index">
+                            :key="index" v-show="shoIS1">
                         <el-col :span="19">
                             <el-col :span="24">
                                 <el-input v-model="wishForm.extraPage[index]"
@@ -297,92 +264,106 @@
                               v-model="wishForm.subTitle"></el-input>
                 </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="24">
                 <el-form-item label="最前关键词">
-          <span>
-            <font style="color: red">说明：</font>性别定位/多个一卖等。如Women/Men/Girl/Baby/Kids/1PC/2PC/5PC/4
-            Colors/5Pcs Set…
-          </span>
-                    <br />
+            <span>
+              <span style="color: red">{{foremost1}}</span>个字符
+            </span>
+             <span style="margin-left: 10px">
+              <font style="color: red">说明：</font>性别定位/多个一卖等。如Women/Men/Girl/Baby/Kids/1PC/2PC/5PC/4 Colors/5Pcs Set…
+            </span>
+                    <br>
                     <el-input size="small"
-                              style="width:660px"
+                              v-model="wishForm.headKeywords"
+                              style="width:1500px"
                               placeholder="--一个关键词--"
-                              v-model="wishForm.headKeywords"></el-input>
+                              @input="top1($event)"
+                    ></el-input>
                 </el-form-item>
             </el-col>
-            <el-col :span="12">
-                <el-form-item label="最后关键词"
-                              wight="82">
-          <span>
-            <font style="color: red">说明：</font>附加说明词。如Randomly/S-3XL/2ml/(Color: Nude)/Big Size…
-          </span>
-                    <br />
-                    <el-input size="small"
-                              style="width: 700px"
-                              placeholder="--最多一个关键词--"
-                              v-model="wishForm.tailKeywords"></el-input>
-                </el-form-item>
-            </el-col>
-            <el-col :span="12">
+            <el-col :span="24">
                 <el-form-item label="必选关键词">
-          <span>
-            <font style="color: red">说明：</font>物品名/材质/特征等。如T-Shirt(物品名)/V-neck(特征)/Cotton(材质)
-          </span>
-                    <el-button type="text"
-                               @click="dialogTableVisible = true">批量设置</el-button>
+             <span>
+              <span style="color: red">{{bxlength}}</span>个关键词<span style="color: red;margin-left: 10px">{{bxtotal}}</span>个字符
+            </span>
+            <span>
+              <font style="color: red;margin-left: 10px">说明：</font>物品名/材质/特征等。如T-Shirt(物品名)/V-neck(特征)/Cotton(材质)
+            </span>
+                    <el-button type="text" @click="dialogTableVisible = true">批量设置</el-button>
                     <div>
                         必填
                         <el-input size="small"
-                                  style="width:220px"></el-input>
+                                  style="width:487px" v-model="mandatoryData[0]" @blur="mandatory()"></el-input>
                         <el-input size="small"
-                                  style="width:220px"></el-input>
+                                  style="width:487px" v-model="mandatoryData[1]" @blur="mandatory()"></el-input>
                         <el-input size="small"
-                                  style="width:220px"></el-input>
+                                  style="width:487px" v-model="mandatoryData[2]" @blur="mandatory()"></el-input>
                     </div>
                     <div>
                         选填
                         <el-input size="small"
-                                  style="width:220px"></el-input>
+                                  style="width:487px" v-model="mandatoryData[3]" @blur="mandatory()"></el-input>
                         <el-input size="small"
-                                  style="width:220px"></el-input>
+                                  style="width:487px" v-model="mandatoryData[4]" @blur="mandatory()"></el-input>
                         <el-input size="small"
-                                  style="width:220px"></el-input>
+                                  style="width:487px" v-model="mandatoryData[5]" @blur="mandatory()"></el-input>
+
                     </div>
                 </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="24">
                 <el-form-item label="随机关键词">
-          <span>
-            <font style="color: red">说明：</font>形容词/品类热词等。如Fashion/Elegant/Hot/DIY/Casual…
-          </span>
-                    <el-button type="text"
-                               @click="dialogTable = true">批量设置</el-button>
+            <span>
+              <span style="color: red">{{sjlength}}</span>个关键词<span style="color: red;margin-left: 10px">{{sjtotal}}</span>个字符
+            </span>
+            <span>
+              <font style="color: red;margin-left: 10px">说明：</font>形容词/品类热词等。如Fashion/Elegant/Hot/DIY/Casual…
+            </span>
+                    <el-button type="text" @click="dialogTable = true">批量设置</el-button>
                     <div>
                         必填
                         <el-input size="small"
-                                  style="width:135px"></el-input>
+                                  style="width:290px" v-model="randomData[0]" @blur="random()"></el-input>
                         <el-input size="small"
-                                  style="width:135px"></el-input>
+                                  style="width:290px" v-model="randomData[1]" @blur="random()"></el-input>
                         <el-input size="small"
-                                  style="width:135px"></el-input>
+                                  style="width:290px" v-model="randomData[2]" @blur="random()"></el-input>
                         <el-input size="small"
-                                  style="width:135px"></el-input>
+                                  style="width:290px" v-model="randomData[3]" @blur="random()"></el-input>
                         <el-input size="small"
-                                  style="width:135px"></el-input>
+                                  style="width:290px" v-model="randomData[4]" @blur="random()"></el-input>
                     </div>
                     <div>
                         选填
                         <el-input size="small"
-                                  style="width:135px"></el-input>
+                                  style="width:290px" v-model="randomData[5]" @blur="random()"></el-input>
                         <el-input size="small"
-                                  style="width:135px"></el-input>
+                                  style="width:290px" v-model="randomData[6]" @blur="random()"></el-input>
                         <el-input size="small"
-                                  style="width:135px"></el-input>
+                                  style="width:290px" v-model="randomData[7]" @blur="random()"></el-input>
                         <el-input size="small"
-                                  style="width:135px"></el-input>
+                                  style="width:290px" v-model="randomData[8]" @blur="random()"></el-input>
                         <el-input size="small"
-                                  style="width:135px"></el-input>
+                                  style="width:290px" v-model="randomData[9]" @blur="random()"></el-input>
+
                     </div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="24">
+                <el-form-item label="最后关键词">
+            <span>
+              <span style="color: red">{{last}}</span>个字符
+            </span>
+            <span>
+              <font style="color: red">说明：</font>附加说明词。如Randomly/S-3XL/2ml/(Color: Nude)/Big Size…
+            </span>
+                    <br>
+                    <el-input size="small"
+                              v-model="wishForm.tailKeywords"
+                              style="width: 1500px"
+                              placeholder="--最多一个关键词--"
+                              @input="bottm1($event)"
+                    ></el-input>
                 </el-form-item>
             </el-col>
             <el-col :span="24">
@@ -569,19 +550,22 @@
                               style="width:150px;"></el-input>
                 </el-form-item>
             </el-col>
-            <el-dialog title="批量增加关键词"
+            <el-dialog title="批量增加必选关键词"
                        :visible.sync="dialogTableVisible">
                 <el-input size="small"
                           type="textarea"
                           :rows="20"
-                          placeholder="-多个必选关键词-"></el-input>
+                          placeholder="-多个必选关键词-"
+                          @change="mandatoryDate($event)"
+                ></el-input>
             </el-dialog>
-            <el-dialog title="批量增加关键词"
+            <el-dialog title="批量增加随机关键词"
                        :visible.sync="dialogTable">
                 <el-input size="small"
                           type="textarea"
                           :rows="20"
-                          placeholder="-多个随机关键词-"></el-input>
+                          placeholder="-多个随机关键词-"
+                          @change="mandatoryDate1($event)"></el-input>
             </el-dialog>
             <el-dialog title="多属性设置"
                        :visible.sync="outerVisible"
@@ -693,111 +677,103 @@
                     </template>
                   </el-table-column>
                 </el-table> -->
-                <table id="oTable"
-                       border="1px solid #ebeef5"
-                       cellpadding="9"
-                       style="border: 1px solid #ebeef5;background-color:#fff;color:#606266;width:100%;border-collapse:collapse;">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>
-                            <el-checkbox></el-checkbox>
-                        </th>
-                        <th>操作</th>
-                        <th>SKU</th>
-                        <th>数量</th>
-                        <th>价格</th>
-                        <th>图片地址</th>
-                        <th>图片</th>
-                        <th v-for="(item, index) in title"
-                            :key="index">
-                            <el-input clearable
-                                      v-model="item.label"></el-input>
-                            <i class="el-icon-delete"
-                               @click="titleDel(index)"></i>
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="(item, index) in tabDate"
-                        :key="index"
-                        style="text-align:center;">
-                        <td>{{index+1}}</td>
-                        <td>
-                            <el-checkbox></el-checkbox>
-                        </td>
-                        <td><i class="el-icon-delete"></i></td>
-                        <td>
-                            <el-input v-model="item.sku"></el-input>
-                        </td>
-                        <td>
-                            <el-input v-model="item.quantity"></el-input>
-                        </td>
-                        <td>
-                            <el-input v-model="item.retailPrice"></el-input>
-                        </td>
-                        <td>
-                            <el-input v-model="item.imageUrl"></el-input>
-                        </td>
-                        <td><img :src="item.imageUrl"
-                                 style="width:50px;height:50px;"></td>
-                        <td v-for="(item, index) in title"
-                            :key="index">
-                            <el-input v-model="item.value"></el-input>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <el-row style="margin-top: 20px">
+                <el-row>
                     <el-col :span="24">
-                        <el-col :span="2">
-                            <el-input placeholder="行数">
-
-                            </el-input>
-                        </el-col>
-                        <el-col :span="1"
-                                style="margin-left: 10px">
-                            <el-button type="primary">新增行</el-button>
-                        </el-col>
-                        <el-col :span="2">
-                            <el-input placeholder="数量"
-                                      style="margin-left: 25px">
-
-                            </el-input>
-                        </el-col>
-                        <el-col :span="1"
-                                style="margin-left: 36px">
-                            <el-button type="primary">数量确定</el-button>
-                        </el-col>
-                        <el-col :span="2"
-                                style="margin-left: 40px">
-                            <el-input placeholder="零售价">
-
-                            </el-input>
-                        </el-col>
-                        <el-col :span="1"
-                                style="margin-left: 12px">
-                            <el-button type="primary">价格确定</el-button>
-                        </el-col>
-                        <el-col :span="2"
-                                style="margin-left: 40px">
-                            <el-input placeholder="Does not apply">
-
-                            </el-input>
-                        </el-col>
-                        <el-col :span="2"
-                                style="margin-left: 10px">
-                            <el-button type="primary">UPC/EAN确定</el-button>
-                        </el-col>
-                        <el-col :span="1"
-                                style="margin-left: 5px">
-                            <el-button type="success">保存</el-button>
-                        </el-col>
-                        <el-col :span="1"
-                                style="margin-left: 12px">
-                            <el-button type="danger">删除行</el-button>
-                        </el-col>
+                        <table id="oTable"
+                               border="1px solid #ebeef5"
+                               cellpadding="9"
+                               style="border: 1px solid #ebeef5;background-color:#fff;color:#606266;width:52%;border-collapse:collapse;float: left;">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>
+                                    <el-checkbox></el-checkbox>
+                                </th>
+                                <th style="line-height: 40px;height: 40px;padding: 9px 0">操作</th>
+                                <th style="line-height: 40px;height: 40px;padding: 0">SKU</th>
+                                <th style="line-height: 40px;height: 40px;padding: 0">数量</th>
+                                <th style="line-height: 40px;height: 40px;padding: 0">价格</th>
+                                <th style="line-height: 40px;height: 40px;padding: 0">图片地址</th>
+                                <th style="line-height: 40px;height: 40px;padding: 0">图片</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="(item, index) in tabDate"
+                                :key="index"
+                                style="text-align:center;">
+                                <td>{{index+1}}</td>
+                                <td>
+                                    <el-checkbox></el-checkbox>
+                                </td>
+                                <td><i class="el-icon-delete"></i></td>
+                                <td>
+                                    <el-input v-model="item.sku"></el-input>
+                                </td>
+                                <td>
+                                    <el-input v-model="item.quantity"></el-input>
+                                </td>
+                                <td>
+                                    <el-input v-model="item.retailPrice"></el-input>
+                                </td>
+                                <td>
+                                    <el-input v-model="item.imageUrl"></el-input>
+                                </td>
+                                <td><img :src="item.imageUrl"
+                                         style="width:50px;height:50px;"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <table id=""
+                               border="1px solid #ebeef5"
+                               cellpadding="9"
+                               style="border: 1px solid #ebeef5;background-color:#fff;color:#606266;width:48%;border-collapse:collapse;float: left;">
+                            <thead>
+                            <tr>
+                                <th v-for="(item,index) in tite"
+                                    :key="index" style="position: relative;line-height: 40px">
+                                    <el-input clearable
+                                              v-model="tite[index]"></el-input>
+                                    <i class="el-icon-delete"
+                                       @click="titleDel(index)" style="position: absolute;right: 40px;top: 22px;z-index: 999"></i>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="(log, index) in title"
+                                :key="index"
+                                style="text-align:center;">
+                                <td  v-for="(item, index) in log.value"
+                                     :key="index" style="line-height: 53px">
+                                    <el-input v-model="log.value[index]"></el-input>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </el-col>
+                </el-row>
+               <el-row style="margin-top: 20px">
+                    <el-row style="margin-top:15px;">
+                        <el-col :span="2">
+                            <input placeholder="行数" v-model="rows"
+                                   style="width:80px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+                            <span class="xzz" @click="addClomun">新增行</span>
+                        </el-col>
+                        <el-col :span="3">
+                            <input placeholder="数量" v-model="num"
+                                   style="width:130px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+                            <span class="xzz1" @click="setNum">数量确定</span>
+                        </el-col>
+                        <el-col :span="3">
+                            <input placeholder="零售价" v-model="price"
+                                   style="width:130px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+                            <span class="xzz1" @click="setPrice">价格确定</span>
+                        </el-col>
+                        <el-col :span="4">
+                            <input placeholder="Does not apply" v-model="ship"
+                                   style="width:130px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+                            <span class="xzz1" @click="setShip">UPC/ENC确定</span>
+                        </el-col>
+                    </el-row>
                     <el-col :span="24"
                             style="margin-top: 20px;margin-bottom: 25px">
                         图片关联
@@ -805,17 +781,19 @@
                     <el-col :span="24">
                         <el-radio-group @change='radioBtn'
                                         v-model="radio">
-                            <el-radio v-for="(item, index) in title"
+                            <el-radio v-for="(item, index) in tite"
                                       :key="index"
-                                      :label="item.label"
-                                      :value="item.label"></el-radio>
+                                      :label="tite[index]"
+                                      :value="tite[index]"></el-radio>
                         </el-radio-group>
                     </el-col>
                 </el-row>
                 <div slot="footer"
                      class="dialog-footer">
+                    <el-button @click="keepData"
+                               type="primary">保 存</el-button>
                     <el-button @click="outerVisible = false"
-                               type="primary">取 消</el-button>
+                               type="info">取 消</el-button>
                 </div>
                 <el-dialog width="30%"
                            title="添加属性"
@@ -878,12 +856,26 @@
                 select1: '',
                 wishForm: {},
                 mainForm: {},
+                shoIS1:false,
                 dialogTableVisible: false,
                 dialogTable: false,
                 outerVisible: false,
                 innerVisible: false,
                 dialogFormVisible: false,
                 dialogFormVisible1: false,
+                foremost1:0,
+                bxtotal:0,
+                sjtotal:0,
+                bxlength:0,
+                sjlength:0,
+                tite:[],
+                rows:"",
+                num:"",
+                price:"",
+                ship:"",
+                mandatoryData:["","","","","",""],
+                randomData:["","","","","","","","","",""],
+                last:0,
                 tabDate: [],
                 skuifo: [],
                 qualityId: '',
@@ -900,22 +892,188 @@
             }
         },
         methods: {
+            keepData(){
+//                for(var i=0;i<this.tabDate.length;i++){
+//                    var obj={}
+//                    obj.columns={}
+//                    obj.pictureKey=this.radio
+//                    for(var k=0;k<this.title.length;k++){
+//                        if(i==k){
+//                            console.log(this.tite[k])
+////                            obj.columns[name]= content
+//                        }
+//                        console.log(this.title[k].value)
+//                    }
+//                    console.log(JSON.parse(this.tabDate[i].property))
+//                }
+                for(var i=0;i<this.title.length;i++){
+                    var obj={}
+                    obj.columns={}
+                    obj.pictureKey=this.radio
+                    for(var k=0;k<this.title[i].value.length;k++){
+                        obj.columns[this.tite[k]] = this.title[i].value[k];
+                    }
+                    this.tabDate[i].property=JSON.stringify(obj)
+                }
+                console.log(this.tabDate)
+            },
+            addClomun(){
+                for (let i = 0; i < this.rows; i++) {
+                    var obj={}
+                    obj.id="",
+                    obj.itemId=null,
+                    obj.sid="",
+                    obj.infoId=this.wishForm.infoId,
+                    obj.sku="",
+                    obj.quantity="",
+                    obj.retailPrice="",
+                    obj.imageUrl="",
+                    obj.property="",
+                    this.tabDate.push(obj)
+                    var lenth=0
+                    for(var k=0;k<this.title.length;k++){
+                        lenth=this.title[k].value.length
+                    }
+                    var aryd={
+                        label:[],
+                        value:[]
+                    }
+                    for(var j=0;j<lenth;j++){
+                        aryd.value.push(null)
+                    }
+                    this.title.push(aryd)
+                }
+            },
+            setNum(){
+                if (this.num) {
+                    for (let i = 0; i < this.tabDate.length; i++) {
+                        this.tabDate[i].quantity = this.num
+                    }
+                } else {
+                    return false
+                }
+            },
+            setPrice(){
+                if (this.price) {
+                    for (let i = 0; i < this.tabDate.length; i++) {
+                        this.tabDate[i].retailPrice = this.price
+                    }
+                } else {
+                    return false
+                }
+            },
+            setShip(){
+
+            },
+            mandatoryDate(e){
+                this.bxlength=0
+                this.bxtotal=0
+                var st1=0
+                let arde=e.split(/[(\r\n)\r\n]+/)
+                for(var i=0;i<arde.length;i++){
+                    var daee=arde[i]
+                    for(var j=0;j<this.mandatoryData.length;j++){
+                        this.mandatoryData[i]=daee
+                    }
+                }
+                for(var i=0;i<this.mandatoryData.length;i++){
+                    if(this.mandatoryData[i]!=""){
+                        this.bxlength++
+                        st1+=this.mandatoryData[i].length
+                    }
+                }
+                this.bxtotal=st1
+            },
+            mandatoryDate1(e){
+                this.sjlength=0
+                this.sjtotal=0
+                var st2=0
+                let arde1=e.split(/[(\r\n)\r\n]+/)
+                for(var i=0;i<arde1.length;i++){
+                    var daee=arde1[i]
+                    for(var j=0;j<this.randomData.length;j++){
+                        this.randomData[i]=daee
+                    }
+                }
+                for(var i=0;i<this.randomData.length;i++){
+                    if(this.randomData[i]!=""){
+                        this.sjlength++
+                        st2+=this.randomData[i].length
+                    }
+                }
+                this.sjtotal=st2
+            },
+            mandatory(e){
+                this.bxlength=0
+                this.bxtotal=0
+                var st1=0
+                for(var i=0;i<this.mandatoryData.length;i++){
+                    if(this.mandatoryData[i]!=""){
+                        this.bxlength++
+                        st1+=this.mandatoryData[i].length
+                    }
+                }
+                this.bxtotal=st1
+                console.log(this.mandatoryData)
+            },
+            random(e){
+                this.sjlength=0
+                this.sjtotal=0
+                var st2=0
+                for(var i=0;i<this.randomData.length;i++){
+                    if(this.randomData[i]!=""){
+                        this.sjlength++
+                        st2+=this.randomData[i].length
+                    }
+                }
+                this.sjtotal=st2
+            },
+            top1(e){
+                this.foremost1=e.length
+            },
+            bottm1(e){
+                this.last=e.length
+            },
+            sIs(){
+                this.shoIS1=!this.shoIS1
+            },
             radioBtn() {
                 console.log(this.radio)
             },
             addColumn() {
                 if (this.columns !== '') {
-                    const data = {
-                        label: '',
-                        value: ''
+//                    const data = {
+//                        label: '',
+//                        value: []
+//                    }
+//                    data.label = this.columns
+                    var str11=this.columns
+                    this.tite.push(str11)
+                    var desu=null
+                    var lenth=0
+                    for(var i=0;i<this.title.length;i++){
+                        this.title[i].value.push(desu)
+                        lenth=this.title[i].value.length
                     }
-                    data.label = this.columns
-                    this.title.push(data)
+//                    var aryd={
+//                        label:[],
+//                        value:[]
+//                    }
+//                    for(var i=0;i<lenth;i++){
+//                        aryd.value.push(null)
+//                    }
+//                    console.log(aryd)
+//                    this.title.push(aryd)
+                    console.log(this.title)
                     this.innerVisible = false
                 }
             },
             titleDel(index) {
-                this.title.splice(index, 1)
+                this.tite.splice(index, 1)
+                for(var i=0;i<this.title.length;i++){
+                    console.log(this.title[i].value)
+                    this.title[i].value.splice(index, 1)
+                }
             },
             revise(e, index) {
                 this.wishForm.extraPage[index] = e
@@ -1033,13 +1191,51 @@
                     this.wishForm.extraPage = this.wishForm.extraPage.split('\\n')
                     this.wishForm.extraPage.pop()
                     this.tableData = JSON.parse(res.data.data.basicInfo.specifics).specifics
-                    const proper = JSON.parse(res.data.data.skuInfo[0].property).columns
-                    for (const i in proper) {
-                        const obj = {
-                            label: i,
-                            value: proper[i]
+//                    const proper = JSON.parse(res.data.data.skuInfo[0].property).columns
+                    for(var i=0;i<this.tabDate.length;i++){
+                        const proper = JSON.parse(res.data.data.skuInfo[i].property).columns
+                        console.log(proper)
+                        var obj = {}
+                        obj.label = []
+                        obj.value = []
+                        for (var key in proper) {
+                            obj.label.push(key)
+                            obj.value.push(proper[key])
+                            console.log(obj)
                         }
                         this.title.push(obj)
+                    }
+                    console.log(this.title)
+                    this.tite=this.title[0].label
+                    this.wishForm.requiredKeywords=JSON.parse(this.wishForm.requiredKeywords)
+                    this.wishForm.randomKeywords=JSON.parse(this.wishForm.randomKeywords)
+                    if(this.wishForm.headKeywords){
+                        this.foremost1=this.wishForm.headKeywords.length
+                    }
+                    if(this.wishForm.tailKeywords){
+                        this.last=this.wishForm.tailKeywords.length
+                    }
+                    if(this.wishForm.requiredKeywords){
+                        this.mandatoryData= this.wishForm.requiredKeywords
+                    }
+                    if(this.wishForm.randomKeywords){
+                        this.randomData= this.wishForm.randomKeywords
+                    }
+                    if(this.wishForm.randomKeywords){
+                        for(var i=0;i<this.wishForm.randomKeywords.length;i++){
+                            if(this.wishForm.randomKeywords[i]!=""){
+                                this.sjlength++
+                                this.sjtotal+=this.wishForm.randomKeywords[i].length
+                            }
+                        }
+                    }
+                    if(this.wishForm.requiredKeywords){
+                        for(var i=0;i<this.wishForm.requiredKeywords.length;i++){
+                            if(this.wishForm.requiredKeywords[i]!=""){
+                                this.bxlength++
+                                this.bxtotal+=this.wishForm.requiredKeywords[i].length
+                            }
+                        }
                     }
                 })
             },
@@ -1086,7 +1282,6 @@
         mounted() {
             this.condition.id = this.$route.params.id
             this.getData()
-            console.log(this.$route.params.id)
         }
     }
 </script>
@@ -1171,5 +1366,29 @@
         font-weight: normal;
         margin-top: 15px;
         margin-left: 5px;
+    }
+    .xzz{
+        display: block;
+        float: left;
+        text-align: center;
+        line-height: 30px;
+        border: #ccc solid 1px;
+        cursor: pointer;
+        padding: 0 3px;
+        font-size: 13px;
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+    }
+    .xzz1{
+        display: block;
+        float: left;
+        text-align: center;
+        line-height: 30px;
+        border: #ccc solid 1px;
+        cursor: pointer;
+        padding: 0 8px;
+        font-size: 13px;
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
     }
 </style>

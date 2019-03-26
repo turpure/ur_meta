@@ -33,7 +33,7 @@
                                @click="viewPlat(scope.$index, scope.row)"
                                style="color: #409EFF;cursor:pointer;"></i>
                         </el-tooltip>
-                        <el-tooltip content="更新"">
+                        <el-tooltip content="更新">
                             <i @click="platEdit(scope.$index, scope.row)"
                                class="el-icon-edit"
                                style="color: #409EFF;cursor:pointer;margin-left: 15px"></i>
@@ -55,7 +55,7 @@
                 </el-table-column>
                 <el-table-column label="商品编码"
                                  header-align="center">
-                    <el-table-column prop="GoodsCode"
+                    <el-table-column prop="goodsCode"
                                      :render-header="renderHeaderPlat"
                                      width='150'
                                      align="center">
@@ -71,7 +71,7 @@
                 </el-table-column>
                 <el-table-column label="仓库"
                                  header-align="center">
-                    <el-table-column prop="StoreName"
+                    <el-table-column prop="storeName"
                                      :render-header="renderHeaderPlat"
                                      width='150'
                                      align="center">
@@ -103,7 +103,7 @@
                 </el-table-column>
                 <el-table-column label="商品名称"
                                  header-align="center">
-                    <el-table-column prop="GoodsName"
+                    <el-table-column prop="goodsName"
                                      :render-header="renderHeaderPlat"
                                      width='150'
                                      align="center">
@@ -111,7 +111,7 @@
                 </el-table-column>
                 <el-table-column label="主类目"
                                  header-align="center">
-                    <el-table-column prop=""
+                    <el-table-column prop="cate"
                                      :render-header="renderHeaderPlat"
                                      width='150'
                                      align="center">
@@ -127,7 +127,7 @@
                 </el-table-column>
                 <el-table-column label="供应商名称"
                                  header-align="center">
-                    <el-table-column prop="SupplierName"
+                    <el-table-column prop="supplierName"
                                      :render-header="renderHeaderPlat"
                                      width='150'
                                      align="center">
@@ -151,7 +151,7 @@
                 </el-table-column>
                 <el-table-column label="采购"
                                  header-align="center">
-                    <el-table-column prop="Purchaser"
+                    <el-table-column prop="purchaser"
                                      :render-header="renderHeaderPlat"
                                      width='150'
                                      align="center">
@@ -159,7 +159,7 @@
                 </el-table-column>
                 <el-table-column label="美工"
                                  header-align="center">
-                    <el-table-column prop="possessMan2"
+                    <el-table-column prop="possessman1"
                                      :render-header="renderHeaderPlat"
                                      width='150'
                                      align="center">
@@ -175,7 +175,7 @@
                 </el-table-column>
                 <el-table-column label="禁售平台"
                                  header-align="center">
-                    <el-table-column prop=""
+                    <el-table-column prop="dictionaryName"
                                      :render-header="renderHeaderPlat"
                                      width='150'
                                      align="center">
@@ -207,7 +207,7 @@
                 </el-table-column>
                 <el-table-column label="商品状态"
                                  header-align="center">
-                    <el-table-column prop="achieveStatus"
+                    <el-table-column prop="goodsStatus"
                                      :render-header="renderHeaderPlat"
                                      width='150'
                                      align="center">
@@ -408,6 +408,7 @@
             APIGenerateCode,
             APIPlat
     } from '../../api/product'
+    import {getAttributeInfoStoreName,getAttributeInfoCat} from '../../api/profit'
     import { getMenu } from '../../api/login'
     export default {
         data() {
@@ -424,7 +425,9 @@
                 time2: '',
                 allMenu: [],
                 goodsInfo:[],
+                repertory:[],
                 oaGoods:[],
+                mainCategory:[],
                 tableData: [
 
                 ],
@@ -585,414 +588,6 @@
                 })
             },
             //属性信息表头input框
-            renderHeader(h, { column, $index }) {
-                if ($index === 0) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '40px'
-                                }
-                            },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: '',
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            this.condition.goodsCode = value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.filter()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
-                } else if ($index === 1) {
-                    let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
-                    return h(
-                            'el-select',
-                            {
-                                props: {
-                                    placeholder: '请选择',
-                                    value: this.condition.stockUp,
-                                    size: 'mini',
-                                    clearable: true
-                                },
-                                on: {
-                                    input: value => {
-                                        this.condition.stockUp=value
-                                        this.$emit('input', value)
-                                    },
-                                    change: searchValue => {
-                                        this.filter()
-                                    }
-                                }
-                            },
-                            [
-                                filters.map(item => {
-                                    return h('el-option', {
-                                        props: {
-                                            value: item.text,
-                                            label: item.value
-                                        }
-                                    })
-                                })
-                            ]
-                    )
-                } else if ($index === 2) {
-                    let filters = [
-                        { text: '待处理', value: '待处理' },
-                        { text: '已完善', value: '已完善' },
-                        { text: '已导入', value: '已导入' }
-                    ]
-                    return h(
-                            'el-select',
-                            {
-                                props: {
-                                    placeholder: '请选择',
-                                    value: this.condition.achieveStatus,
-                                    size: 'mini',
-                                    clearable: true
-                                },
-                                on: {
-                                    input: value => {
-                                        this.condition.achieveStatus=value
-                                        this.$emit('input', value)
-                                    },
-                                    change: searchValue => {
-                                        this.filter()
-                                    }
-                                }
-                            },
-                            [
-                                filters.map(item => {
-                                    return h('el-option', {
-                                        props: {
-                                            value: item.text,
-                                            label: item.value
-                                        }
-                                    })
-                                })
-                            ]
-                    )
-                } else if ($index === 3) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '40px'
-                                }
-                            },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: this.condition.goodsName,
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            this.condition.goodsName=value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.filter()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
-                } else if ($index === 4) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '40px'
-                                }
-                            },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: this.condition.developer,
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            this.condition.developer=value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.filter()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
-                } else if($index === 5){
-                    return h('el-date-picker',{
-                        props:{
-                            value:this.time1,
-                            size:'mini',
-                            type:'daterange',
-                        },
-                        style:{
-                            width:'180px',
-                            padding:'2px',
-                        },
-                        on:{
-                            input:value=>{
-                                this.time1=value
-                                this.$emit('input', value)
-                            },
-                            change:value => {
-                                this.filter()
-                            }
-                        }
-                    })
-                } else if ($index === 6) {
-                    return h('el-date-picker',{
-                        props:{
-                            value:this.time2,
-                            size:'mini',
-                            type:'daterange',
-                        },
-                        style:{
-                            width:'180px',
-                            padding:'2px',
-                        },
-                        on:{
-                            input:value=>{
-                                this.time2=value
-                                this.$emit('input', value)
-                            },
-                            change:value => {
-                                this.filter()
-                            }
-                        }
-                    })
-                } else if ($index === 7) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '40px'
-                                }
-                            },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value:this.condition.aliasCnName,
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            this.condition.aliasCnName = value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.filter()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
-                } else if ($index === 8) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '40px'
-                                }
-                            },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: this.condition.aliasEnName,
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            this.condition.aliasEnName = value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.filter()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
-                } else if ($index === 9) {
-                    let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
-                    return h(
-                            'el-select',
-                            {
-                                props: {
-                                    placeholder: '请选择',
-                                    value: this.condition.isLiquid,
-                                    size: 'mini',
-                                    clearable: true
-                                },
-                                on: {
-                                    input: value => {
-                                        this.condition.isLiquid = value
-                                        this.$emit('input', value)
-                                    },
-                                    change: searchValue => {
-                                        this.filter()
-                                    }
-                                }
-                            },
-                            [
-                                filters.map(item => {
-                                    return h('el-option', {
-                                        props: {
-                                            value: item.text,
-                                            label: item.value
-                                        }
-                                    })
-                                })
-                            ]
-                    )
-                } else if ($index === 10) {
-                    let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
-                    return h(
-                            'el-select',
-                            {
-                                props: {
-                                    placeholder: '请选择',
-                                    value: this.condition.isPowder,
-                                    size: 'mini',
-                                    clearable: true
-                                },
-                                on: {
-                                    input: value => {
-                                        this.condition.isPowder = value
-                                        this.$emit('input', value)
-                                    },
-                                    change: searchValue => {
-                                        this.filter()
-                                    }
-                                }
-                            },
-                            [
-                                filters.map(item => {
-                                    return h('el-option', {
-                                        props: {
-                                            value: item.text,
-                                            label: item.value
-                                        }
-                                    })
-                                })
-                            ]
-                    )
-                } else if ($index === 11) {
-                    let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
-                    return h(
-                            'el-select',
-                            {
-                                props: {
-                                    placeholder: '请选择',
-                                    value: this.condition.isMagnetism,
-                                    size: 'mini',
-                                    clearable: true
-                                },
-                                on: {
-                                    input: value => {
-                                        this.condition.isMagnetism = value
-                                        this.$emit('input', value)
-                                    },
-                                    change: searchValue => {
-                                        this.filter()
-                                    }
-                                }
-                            },
-                            [
-                                filters.map(item => {
-                                    return h('el-option', {
-                                        props: {
-                                            value: item.text,
-                                            label: item.value
-                                        }
-                                    })
-                                })
-                            ]
-                    )
-                } else if ($index === 12) {
-                    let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
-                    return h(
-                            'el-select',
-                            {
-                                props: {
-                                    placeholder: '请选择',
-                                    value: this.condition.isCharged,
-                                    size: 'mini',
-                                    clearable: true
-                                },
-                                on: {
-                                    input: value => {
-                                        this.condition.isCharged = value
-                                        this.$emit('input', value)
-                                    },
-                                    change: searchValue => {
-                                        this.filter()
-                                    }
-                                }
-                            },
-                            [
-                                filters.map(item => {
-                                    return h('el-option', {
-                                        props: {
-                                            value: item.text,
-                                            label: item.value
-                                        }
-                                    })
-                                })
-                            ]
-                    )
-                } else if ($index === 13) {
-                    let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
-                    return h(
-                            'el-select',
-                            {
-                                props: {
-                                    placeholder: '请选择',
-                                    value: this.condition.isVar,
-                                    size: 'mini',
-                                    clearable: true
-                                },
-                                on: {
-                                    input: value => {
-                                        this.condition.isVar = value
-                                        this.$emit('input', value)
-                                    },
-                                    change: searchValue => {
-                                        this.filter()
-                                    }
-                                }
-                            },
-                            [
-                                filters.map(item => {
-                                    return h('el-option', {
-                                        props: {
-                                            value: item.text,
-                                            label: item.value
-                                        }
-                                    })
-                                })
-                            ]
-                    )
-                }
-            },
 
             //图片信息分页
             handleSizeChangePic(val) {
@@ -1026,399 +621,6 @@
                 })
             },
             //图片信息表头input框
-            renderHeaderPic(h, { column, $index }) {
-                if ($index === 0) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '40px'
-                                }
-                            },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: this.picture.goodsCode,
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            this.picture.goodsCode = value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.filter()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
-                } else if ($index === 1) {
-                    let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
-                    return h(
-                            'el-select',
-                            {
-                                props: {
-                                    placeholder: '请选择',
-                                    value: this.picture.stockUp,
-                                    size: 'mini',
-                                    clearable: true
-                                },
-                                on: {
-                                    input: value => {
-                                        this.picture.stockUp = value
-                                        this.$emit('input', value)
-                                    },
-                                    change: searchValue => {
-                                        this.filter()
-                                    }
-                                }
-                            },
-                            [
-                                filters.map(item => {
-                                    return h('el-option', {
-                                        props: {
-                                            value: item.text,
-                                            label: item.value
-                                        }
-                                    })
-                                })
-                            ]
-                    )
-                } else if ($index === 2) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '40px'
-                                }
-                            },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: this.picture.goodsName,
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            this.picture.goodsName = value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.filter()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
-                } else if ($index === 3) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '40px'
-                                }
-                            },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: this.picture.oaGoods.vendor1,
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            this.picture.oaGoods.vendor1 = value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.filter()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
-                } else if ($index === 4) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '40px'
-                                }
-                            },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: this.picture.oaGoods.vendor2,
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            this.picture.oaGoods.vendor2 = value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.filter()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
-                } else if ($index === 5) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '40px'
-                                }
-                            },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: this.picture.oaGoods.vendor3,
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            this.picture.oaGoods.vendor3 = value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.filter()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
-                } else if ($index === 6) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '40px'
-                                }
-                            },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: this.picture.oaGoods.origin1,
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            this.picture.oaGoods.origin1 = value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.filter()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
-                } else if ($index === 7) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '40px'
-                                }
-                            },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: this.picture.oaGoods.origin2,
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            this.picture.oaGoods.origin2 = value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.filter()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
-                } else if ($index === 8) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '40px'
-                                }
-                            },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: this.picture.oaGoods.origin3,
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            this.picture.oaGoods.origin3 = value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.filter()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
-                } else if ($index === 9) {
-                    let filters = [
-                        { text: '待处理', value: '待处理' },
-                        { text: '已完善', value: '已完善' }
-                    ]
-                    return h(
-                            'el-select',
-                            {
-                                props: {
-                                    placeholder: '请选择',
-                                    value: this.picture.picStatus,
-                                    size: 'mini',
-                                    clearable: true
-                                },
-                                on: {
-                                    input: value => {
-                                        this.picture.picStatus = value
-                                        this.$emit('input', value)
-                                    },
-                                    change: searchValue => {
-                                        this.filter()
-                                    }
-                                }
-                            },
-                            [
-                                filters.map(item => {
-                                    return h('el-option', {
-                                        props: {
-                                            value: item.text,
-                                            label: item.value
-                                        }
-                                    })
-                                })
-                            ]
-                    )
-                } else if ($index === 10) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '40px'
-                                }
-                            },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: this.picture.developer,
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            this.picture.developer = value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.filter()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
-                } else if ($index === 11) {
-                    return h('el-date-picker',{
-                        props:{
-                            value:this.time1,
-                            size:'mini',
-                            type:'daterange',
-                        },
-                        style:{
-                            width:'180px',
-                            padding:'2px',
-                        },
-                        on:{
-                            input:value=>{
-                                this.time1=value
-                                this.$emit('input', value)
-                            },
-                            change:value => {
-                                this.filter()
-                            }
-                        }
-                    })
-                } else if ($index === 12) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '40px'
-                                }
-                            },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: this.picture.possessman1,
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            this.picture.possessman1 = value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.filter()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
-                } else if ($index === 13) {
-                    let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
-                    return h(
-                            'el-select',
-                            {
-                                props: {
-                                    placeholder: '请选择',
-                                    value: this.picture.isVar,
-                                    size: 'mini',
-                                    clearable: true
-                                },
-                                on: {
-                                    input: value => {
-                                        this.picture.isVar = value
-                                        this.$emit('input', value)
-                                    },
-                                    change: searchValue => {
-                                        this.filter()
-                                    }
-                                }
-                            },
-                            [
-                                filters.map(item => {
-                                    return h('el-option', {
-                                        props: {
-                                            value: item.text,
-                                            label: item.value
-                                        }
-                                    })
-                                })
-                            ]
-                    )
-                }
-            },
 
             //平台信息分页
             handleSizeChangePlat(val) {
@@ -1555,23 +757,23 @@
                             ]
                     )
                 } else if ($index === 2) {
-                    let filters = [{ text: '1', value: '是' }, { text: '0', value: '否' }]
+                    let filters = this.repertory
                     return h(
                             'el-select',
                             {
                                 props: {
                                     placeholder: '请选择',
-                                    value: '',
+                                    value: this.platData.storeName,
                                     size: 'mini',
                                     clearable: true
                                 },
                                 on: {
                                     input: value => {
-                                        // this.condition2.stockUp=value
+                                         this.platData.storeName=value
                                         this.$emit('input', value)
                                     },
                                     change: searchValue => {
-                                        this.filter()
+//                                        this.filter()
                                     }
                                 }
                             },
@@ -1579,8 +781,8 @@
                                 filters.map(item => {
                                     return h('el-option', {
                                         props: {
-                                            value: item.text,
-                                            label: item.value
+                                            value: item,
+                                            label: item
                                         }
                                     })
                                 })
@@ -1619,7 +821,7 @@
                             ]
                     )
                 } else if ($index === 4) {
-                    let filters = [{ text: '1', value: '是' }, { text: '0', value: '否' }]
+                    let filters = [{ text: 'Y', value: 'Y' }, { text: 'N', value: 'N' }]
                     return h(
                             'el-select',
                             {
@@ -1651,7 +853,7 @@
                             ]
                     )
                 } else if ($index === 5) {
-                    let filters = [{ text: '1', value: '是' }, { text: '0', value: '否' }]
+                    let filters = [{ text: '未设置', value: '未设置' }, { text: 'eBay已完善', value: 'eBay已完善' }, { text: 'Wish已完善', value: 'Wish已完善' }, { text: 'Joom已完善', value: 'Joom已完善' }, { text: 'Wish已完善|eBay已完善', value: 'Wish已完善|eBay已完善' }, { text: 'Wish已完善|Joom已完善', value: 'Wish已完善|Joom已完善' }, { text: 'Joom已完善|eBay已完善', value: 'Joom已完善|eBay已完善'}, { text: 'Wish已完善|Joom已完善|eBay已完善', value: 'Wish已完善|Joom已完善|eBay已完善'}]
                     return h(
                             'el-select',
                             {
@@ -1710,19 +912,19 @@
                             ]
                     )
                 } else if ($index === 7) {
-                    let filters = [{ text: '1', value: '是' }, { text: '0', value: '否' }]
+                    let filters = this.mainCategory
                     return h(
                             'el-select',
                             {
                                 props: {
                                     placeholder: '请选择',
-                                    value: '',
+                                    value: this.platData.cate,
                                     size: 'mini',
                                     clearable: true
                                 },
                                 on: {
                                     input: value => {
-                                        // this.condition2.stockUp=value
+                                        this.platData.cate=value
                                         this.$emit('input', value)
                                     },
                                     change: searchValue => {
@@ -1734,8 +936,8 @@
                                 filters.map(item => {
                                     return h('el-option', {
                                         props: {
-                                            value: item.text,
-                                            label: item.value
+                                            value: item,
+                                            label: item
                                         }
                                     })
                                 })
@@ -2117,6 +1319,13 @@
                 this.allMenu = menu[0].children[2].tabs
             })
             this.getPlat()
+            //仓库
+            getAttributeInfoStoreName().then(response => {
+                this.repertory =  response.data.data
+            })
+            getAttributeInfoCat().then(response => {
+                this.mainCategory =  response.data.data
+            })
         }
     }
 </script>

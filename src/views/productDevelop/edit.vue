@@ -500,59 +500,71 @@
     </el-table>
     <el-row style="margin-top:15px;padding-left: 1%">
       <el-col :span="2">
-        <el-input v-model="rows"
-                  size="small"
-                  placeholder="行数"
-                  style="width:60px"></el-input>
-        <el-button size="small"
-                   @click="addClomun">新增行</el-button>
+        <input placeholder="行数" v-model="rowss"
+                  style="width:80px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+        <span class="xzz" @click="addClomun">新增行</span>
+        <!--<el-button size="small"-->
+                   <!--@click="addClomun">新增行</el-button>-->
       </el-col>
       <el-col :span="3">
-        <el-input v-model="costprice"
-                  size="small"
-                  placeholder="成本价￥"
-                  style="width:117px"></el-input>
-        <el-button size="small"
-                   @click="cosprice">成本确定</el-button>
+        <input placeholder="成本价￥" v-model="costprice"
+               style="width:126px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+        <span class="xzz1" @click="cosprice">成本确定</span>
+        <!--<el-input v-model="costprice"-->
+                  <!--size="small"-->
+                  <!--placeholder="成本价￥"-->
+                  <!--style="width:117px"></el-input>-->
+        <!--<el-button size="small"-->
+                   <!--@click="cosprice">成本确定</el-button>-->
       </el-col>
       <el-col :span="3">
-        <el-input v-model="weight"
-                  size="small"
-                  placeholder="重量g"
-                  style="width:117px"></el-input>
-        <el-button size="small"
-                   @click="weht">重量确定</el-button>
+        <input placeholder="重量g" v-model="weight"
+               style="width:126px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+        <span class="xzz1" @click="weht">重量确定</span>
+        <!--<el-input v-model="weight"-->
+                  <!--size="small"-->
+                  <!--placeholder="重量g"-->
+                  <!--style="width:117px"></el-input>-->
+        <!--<el-button size="small"-->
+                   <!--@click="weht">重量确定</el-button>-->
       </el-col>
       <el-col :span="3">
-        <el-input v-model="retailprice"
-                  size="small"
-                  placeholder="零售价$"
-                  style="width:117px"></el-input>
-        <el-button size="small"
-                   @click="price">价格确定</el-button>
+        <input placeholder="零售价$" v-model="retailprice"
+               style="width:126px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+        <span class="xzz1" @click="price">价格确定</span>
+        <!--<el-input v-model="retailprice"-->
+                  <!--size="small"-->
+                  <!--placeholder="零售价$"-->
+                  <!--style="width:117px"></el-input>-->
+        <!--<el-button size="small"-->
+                   <!--@click="price">价格确定</el-button>-->
       </el-col>
       <el-col :span="3">
-        <el-input v-model="joomretailprice"
-                  size="small"
-                  placeholder="joom零售价$"
-                  style="width:117px"></el-input>
-        <el-button size="small"
-                   @click="joomprice">价格确定</el-button>
+        <input placeholder="joom零售价$" v-model="joomretailprice"
+               style="width:126px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+        <span class="xzz1" @click="joomprice">价格确定</span>
+        <!--<el-input v-model="joomretailprice"-->
+                  <!--size="small"-->
+                  <!--placeholder="joom零售价$"-->
+                  <!--style="width:117px"></el-input>-->
+        <!--<el-button size="small"-->
+                   <!--@click="joomprice">价格确定</el-button>-->
       </el-col>
       <el-col :span="3">
-        <el-input v-model="transportationcost"
-                  size="small"
-                  placeholder="joom运费$"
-                  style="width:117px"></el-input>
-        <el-button size="small"
-                   @click="transport">价格确定</el-button>
+        <input placeholder="joom运费$" v-model="transportationcost"
+               style="width:126px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+        <span class="xzz1" @click="transport">价格确定</span>
+        <!--<el-input v-model="transportationcost"-->
+                  <!--size="small"-->
+                  <!--placeholder="joom运费$"-->
+                  <!--style="width:117px"></el-input>-->
+        <!--<el-button size="small"-->
+                   <!--@click="transport">价格确定</el-button>-->
       </el-col>
     </el-row>
      <div style="margin-top:15px;margin-left: 1%">
       <el-button size="small"
-                 type="success">一键生成SKU</el-button>
-      <el-button size="small"
-                 type="primary">保存当前数据</el-button>
+                 type="success" @click="oneKey()">一键生成SKU</el-button>
       <el-button size="small"
                  type="primary">保存并完善</el-button>
       <el-button size="small"
@@ -562,19 +574,22 @@
       <!--<el-button size="small"-->
                  <!--type="danger">删除行</el-button>-->
     </div>
-    <el-dialog title="批量增加关键词"
+    <el-dialog title="批量增加必选关键词"
                :visible.sync="dialogTableVisible">
       <el-input size="small"
                 type="textarea"
                 :rows="20"
-                placeholder="-多个必选关键词-"></el-input>
+                placeholder="-多个必选关键词-"
+                @change="mandatoryDate($event)"
+      ></el-input>
     </el-dialog>
-    <el-dialog title="批量增加关键词"
+    <el-dialog title="批量增加随机关键词"
                :visible.sync="dialogTable">
       <el-input size="small"
                 type="textarea"
                 :rows="20"
-                placeholder="-多个随机关键词-"></el-input>
+                placeholder="-多个随机关键词-"
+                @change="mandatoryDate1($event)"></el-input>
     </el-dialog>
     <el-col :span="24" style="background: #fff;position: fixed;bottom: 0px;border-top: #eee solid 1px">
       <el-col :span="24":offset="8">
@@ -594,6 +609,7 @@ export default {
       tableData: [],
       btn: '',
       rows: 1,
+      rowss: 1,
       IsF:["是","否"],
       costprice: null,
       weight: null,
@@ -724,6 +740,104 @@ export default {
     }
   },
   methods: {
+    formatTen(num) {
+      return num > 9 ? (num + "") : ("0" + num)
+    },
+    oneKey(){
+      var numBer=1
+      var dArry=[]
+      var strimg=[]
+      var result
+      for(var i=0;i<this.tableData.length;i++){
+        var strNum=""
+        var record=this.tableData[i]
+        var Identification=this.tableData[i].property1
+        if(i==0){
+          strNum+=this.editForm.goodsCode+this.formatTen(numBer++)
+          if(this.tableData[i].property2!=null && this.tableData[i].property2!=''){
+            strNum+="_"+ this.tableData[i].property2
+          }
+          if(this.tableData[i].property3!=null && this.tableData[i].property3!=''){
+            strNum+="_"+ this.tableData[i].property3
+          }
+          this.tableData[i].sku=strNum
+          dArry.push(JSON.parse(JSON.stringify(this.tableData[i])))
+//          strimg.push(this.tableData[i])
+        }else {
+          if(Identification==''){
+            Identification=null
+          }
+          for(var k=0;k<dArry.length;k++){
+            console.log(Identification,dArry[k].property1)
+            if(Identification==dArry[k].property1){
+              var sub=""
+              var cutting=dArry[k].sku.split("_")
+              sub+=cutting[0]
+              if(record.property2!=null && record.property2!=''){
+                sub+="_"+ record.property2
+              }
+              if(record.property3!=null && record.property3!=''){
+                sub+="_"+ record.property3
+              }
+              this.tableData[i].sku=sub
+
+            }else{
+              var sub1=""
+              sub1+=this.editForm.goodsCode+this.formatTen(numBer++)
+              if(this.tableData[i].property2!=null && this.tableData[i].property2!=''){
+                sub1+="_"+ this.tableData[i].property2
+              }
+              if(this.tableData[i].property3!=null && this.tableData[i].property3!=''){
+                sub1+="_"+ this.tableData[i].property3
+              }
+              this.tableData[i].sku=sub1;
+              result=JSON.parse(JSON.stringify(this.tableData[i]))
+              console.log(result)
+            }
+          }
+        }
+      }
+      dArry.push(result)
+      console.log(dArry)
+    },
+    mandatoryDate(e){
+      this.bxlength=0
+      this.bxtotal=0
+      var st1=0
+      let arde=e.split(/[(\r\n)\r\n]+/)
+      for(var i=0;i<arde.length;i++){
+        var daee=arde[i]
+        for(var j=0;j<this.mandatoryData.length;j++){
+          this.mandatoryData[i]=daee
+        }
+      }
+      for(var i=0;i<this.mandatoryData.length;i++){
+        if(this.mandatoryData[i]!=""){
+          this.bxlength++
+          st1+=this.mandatoryData[i].length
+        }
+      }
+      this.bxtotal=st1
+    },
+    mandatoryDate1(e){
+      this.sjlength=0
+      this.sjtotal=0
+      var st2=0
+      let arde1=e.split(/[(\r\n)\r\n]+/)
+      for(var i=0;i<arde1.length;i++){
+        var daee=arde1[i]
+        for(var j=0;j<this.randomData.length;j++){
+          this.randomData[i]=daee
+        }
+      }
+      for(var i=0;i<this.randomData.length;i++){
+        if(this.randomData[i]!=""){
+          this.sjlength++
+          st2+=this.randomData[i].length
+        }
+      }
+      this.sjtotal=st2
+    },
     attribute(){
       this.$router.push({
         path: `/v1/oa-goodsinfo/index`
@@ -842,31 +956,30 @@ export default {
     },
     //增加行
     addClomun() {
-      let data = {
-        id: null,
-        infoId: null,
-        sku: '',
-        property1: null,
-        property2: null,
-        property3: null,
-        Weight: null,
-        memo1: null,
-        memo2: null,
-        memo3: null,
-        memo4: null,
-        linkurl: null,
-        goodsskuid: null,
-        RetailPrice: null,
-        CostPrice: null,
-        stockNum: null,
-        did: null,
-        joomPrice: null,
-        joomShipping: null
+      for (let i = 0; i < this.rowss; i++) {
+        var obj={}
+        obj.id=null
+        obj.infoId=this.condition.id
+        obj.sku=''
+        obj.property1=null
+        obj.property2=null
+        obj.property3=null
+        obj.Weight=null
+        obj.memo1=null
+        obj.memo2=null
+        obj.memo3=null
+        obj.memo4=null
+        obj.linkurl=null
+        obj.goodsskuid=null
+        obj.RetailPrice=null
+        obj.CostPrice=null
+        obj.stockNum=null
+        obj.did=null
+        obj.joomPrice=null
+        obj.joomShipping=null
+        this.tableData.push(obj)
       }
-      for (let i = 0; i < this.rows; i++) {
-        this.tableData.push(data)
-      }
-      console.log(this.tableData)
+      console.log(this.obj)
     },
     //成本确定
     cosprice() {
@@ -1014,6 +1127,7 @@ export default {
     },
     random(e){
       this.sjlength=0
+      this.sjtotal=0
       var st2=0
       for(var i=0;i<this.randomData.length;i++){
         if(this.randomData[i]!=""){
@@ -1143,5 +1257,29 @@ section {
     margin-left: 20px;
     margin-bottom: 10px;
   }
+  .xzz{
+    display: block;
+    float: left;
+    text-align: center;
+    line-height: 30px;
+    border: #ccc solid 1px;
+    cursor: pointer;
+    padding: 0 3px;
+    font-size: 13px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+  }
+.xzz1{
+  display: block;
+  float: left;
+  text-align: center;
+  line-height: 30px;
+  border: #ccc solid 1px;
+  cursor: pointer;
+  padding: 0 8px;
+  font-size: 13px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
 </style>
 

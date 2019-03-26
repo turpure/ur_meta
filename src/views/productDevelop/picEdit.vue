@@ -1,7 +1,7 @@
 <template>
   <section class="toolbar">
     <el-row>
-      <el-col :span="24" style="position: fixed;z-index: 999;overflow: hidden;border-bottom: #ccc solid 1px; background: #eee;padding: 0">
+      <el-col :span="24" style="position: fixed;z-index: 999;overflow: hidden;border-bottom: #e4e7ed solid 1px; background: #eee;padding: 0">
         <span @click="attribute()" class="adClass">属性信息</span>
         <span @click="photo()" class="adClass actie">图片信息</span>
         <span @click="platform()" class="adClass">平台信息</span>
@@ -22,16 +22,16 @@
       <el-table-column type="selection"
                        width="55">
       </el-table-column>
-      <el-table-column prop=""
-                       label="操作">
-        <template slot-scope="scope">
-          <el-tooltip content="查看">
-            <i class="el-icon-view"
-               @click="view(scope.$index, scope.row)"
-               style="color: #409EFF;cursor:pointer;"></i>
-          </el-tooltip>
-        </template>
-      </el-table-column>
+      <!--<el-table-column prop=""-->
+                       <!--label="操作">-->
+        <!--<template slot-scope="scope">-->
+          <!--<el-tooltip content="查看">-->
+            <!--<i class="el-icon-view"-->
+               <!--@click="view(scope.$index, scope.row)"-->
+               <!--style="color: #409EFF;cursor:pointer;"></i>-->
+          <!--</el-tooltip>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
       <el-table-column prop="sku"
                        label="SKU">
         <template slot-scope="scope">
@@ -165,8 +165,8 @@ export default {
 .adClass{
   display: block;
   float: left;
-  padding: 15px 30px;
-  border-right: #cccccc solid 1px;
+  padding: 14px 30px;
+  border-right: 1px solid #e4e7ed;
   cursor: pointer;
 }
 .actie{

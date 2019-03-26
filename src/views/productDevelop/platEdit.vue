@@ -1,7 +1,7 @@
 <template>
   <section>
     <el-row>
-      <el-col :span="24" style="position: fixed;z-index: 999;overflow: hidden;border-bottom: #ccc solid 1px; background: #eee;padding: 0">
+      <el-col :span="24" style="position: fixed;z-index: 999;overflow: hidden;border-bottom: #e4e7ed solid 1px; background: #eee;padding: 0">
         <span @click="attribute()" class="adClass">属性信息</span>
         <span @click="photo()" class="adClass">图片信息</span>
         <span @click="platform()" class="adClass actie">平台信息</span>
@@ -9,7 +9,7 @@
     </el-row>
     <el-tabs v-model="activeName"
              type="card"
-             @tab-click="handleClick" style="margin-top: 50px">
+             @tab-click="handleClick" style="margin-top: 48px">
       <el-tab-pane label='Wish'
                    name='first'>
         <plat-wish></plat-wish>
@@ -64,7 +64,6 @@ export default {
     handleClick() {}
   },
   mounted() {
-    console.log(this.$route.params.id)
   }
 }
 </script>
@@ -82,8 +81,8 @@ section {
 .adClass{
   display: block;
   float: left;
-  padding: 15px 30px;
-  border-right: #cccccc solid 1px;
+  padding: 14px 30px;
+  border-right: 1px solid #e4e7ed;
   cursor: pointer;
 }
 .actie{
