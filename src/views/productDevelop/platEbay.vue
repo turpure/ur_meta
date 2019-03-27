@@ -8,23 +8,24 @@
                            type="primary">保存当前数据</el-button>
                 <el-button style="margin-left: 0"
                            type="success">保存并完善</el-button>
-                <el-select v-model="select"
+                <el-select v-model="depot"
                            placeholder="--所有仓储--">
-                    <el-option label="是"
-                               value="是"></el-option>
-                    <el-option label="否"
-                               value="否"></el-option>
+                    <el-option v-for="(item, key) in warehouse" :key='item.key' :label="item" :value="item"></el-option>
                 </el-select>
-                <el-select v-model="select"
-                           placeholder="--所有账号--">
+                <el-select placeholder="--所有账号--"
+                           clearable
+                           multiple
+                           collapse-tags
+                           v-model="accountNum"
+                           @change="forbidSale1($event)"
+                           style="width: 220px">
                     <el-button plain
-                               type="info">全选</el-button>
+                               type="info"
+                               @click="selectalld1">全选</el-button>
                     <el-button plain
-                               type="info">取消</el-button>
-                    <el-option label="是"
-                               value="是"></el-option>
-                    <el-option label="否"
-                               value="否"></el-option>
+                               type="info"
+                               @click="noselectd1">取消</el-button>
+                    <el-option v-for="(item, key) in accountNumber" :key='item.key' :label="item" :value="item"></el-option>
                 </el-select>
                 <el-button type="danger">导出所选账号</el-button>
             </el-col>
@@ -241,13 +242,15 @@
             <el-col :span="6">
                 <el-form-item label="刊登分类">
                     <el-input size="small"
-                              style="width:245px;"></el-input>
+                              style="width:245px;"
+                              v-model="wishForm.listedCate"></el-input>
                 </el-form-item>
             </el-col>
             <el-col :span="6">
                 <el-form-item label="刊登分类2">
                     <el-input size="small"
-                              style="width:245px;"></el-input>
+                              style="width:245px;"
+                              v-model="wishForm.listedSubcate"></el-input>
                 </el-form-item>
             </el-col>
             <el-col :span="6">
@@ -705,7 +708,7 @@
                                 <td>
                                     <el-checkbox></el-checkbox>
                                 </td>
-                                <td><i class="el-icon-delete"></i></td>
+                                <td><i class="el-icon-delete" @click="delIndex(index)"></i></td>
                                 <td>
                                     <el-input v-model="item.sku"></el-input>
                                 </td>
@@ -734,7 +737,7 @@
                                     <el-input clearable
                                               v-model="tite[index]"></el-input>
                                     <i class="el-icon-delete"
-                                       @click="titleDel(index)" style="position: absolute;right: 40px;top: 22px;z-index: 999"></i>
+                                       @click="titleDel(index)" style="position: absolute;right: 45px;top: 22px;z-index: 999;cursor: pointer"></i>
                                 </th>
                             </tr>
                             </thead>
@@ -755,22 +758,22 @@
                     <el-row style="margin-top:15px;">
                         <el-col :span="2">
                             <input placeholder="行数" v-model="rows"
-                                   style="width:80px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+                                   style="width:72px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
                             <span class="xzz" @click="addClomun">新增行</span>
                         </el-col>
                         <el-col :span="3">
                             <input placeholder="数量" v-model="num"
-                                   style="width:130px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+                                   style="width:120px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
                             <span class="xzz1" @click="setNum">数量确定</span>
                         </el-col>
                         <el-col :span="3">
                             <input placeholder="零售价" v-model="price"
-                                   style="width:130px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+                                   style="width:120px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
                             <span class="xzz1" @click="setPrice">价格确定</span>
                         </el-col>
                         <el-col :span="4">
                             <input placeholder="Does not apply" v-model="ship"
-                                   style="width:130px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+                                   style="width:120px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
                             <span class="xzz1" @click="setShip">UPC/ENC确定</span>
                         </el-col>
                     </el-row>
@@ -845,7 +848,8 @@
 </template>
 <script type="text/ecmascript-6">
     import { APIPlatInfo, APISaveWishInfo } from '../../api/product'
-    import { APISaveEbayInfo } from '../../api/platebay'
+    import { getPlatEbayAccount,getPlatEbayStore } from '../../api/profit'
+    import { APISaveEbayInfo} from '../../api/platebay'
     export default {
         data() {
             return {
@@ -854,6 +858,7 @@
                 title: [],
                 select: '',
                 select1: '',
+                depot:"",
                 wishForm: {},
                 mainForm: {},
                 shoIS1:false,
@@ -863,15 +868,19 @@
                 innerVisible: false,
                 dialogFormVisible: false,
                 dialogFormVisible1: false,
+                accountNum:"--所有账号",
                 foremost1:0,
                 bxtotal:0,
                 sjtotal:0,
                 bxlength:0,
                 sjlength:0,
                 tite:[],
+                warehouse:[],
                 rows:"",
                 num:"",
                 price:"",
+                accountNumber:[],
+                accountNumber1:[],
                 ship:"",
                 mandatoryData:["","","","","",""],
                 randomData:["","","","","","","","","",""],
@@ -885,13 +894,32 @@
                 radio2: 3,
                 activeName: 'first',
                 tableData: [],
+                unit1:"",
                 condition: {
+                    id: 5,
                     id: 5,
                     plat: 'ebay'
                 }
             }
         },
         methods: {
+            delIndex(index){
+                this.tabDate.splice(index, 1)
+                this.title.splice(index, 1)
+            },
+            forbidSale1(e){
+                this.unit1=e.join(',')
+            },
+            selectalld1() {
+                var ard1 = []
+                for (const item in this.accountNumber) {
+                    ard1.push(this.accountNumber[item])
+                }
+                this.accountNum = ard1
+            },
+            noselectd1() {
+                this.accountNum = []
+            },
             keepData(){
 //                for(var i=0;i<this.tabDate.length;i++){
 //                    var obj={}
@@ -963,7 +991,28 @@
                 }
             },
             setShip(){
-
+                if (this.ship) {
+                    var targetIndex=""
+                    var tii=this.tite
+                    for (var i = 0; i < tii.length; i++) {
+                        if(tii[i]=="UPC"){
+                            targetIndex=i
+                        }
+                    }
+                    for(var j = 0; j < this.title.length; j++){
+                        for(var k= 0; k <this.title[j].value.length; k++){
+                            if(k==targetIndex){
+                                this.title[j].value.splice(k,1,this.ship)
+//                                this.title[j].value[k]=this.ship
+//                                console.log(this.title[j].value[k])
+                            }
+                        }
+                    }
+                    this.title=this.title
+                    console.log(this.title)
+                } else {
+                    return false
+                }
             },
             mandatoryDate(e){
                 this.bxlength=0
@@ -1190,7 +1239,8 @@
                     this.wishForm.site == 0 ? (this.wishForm.site = '美国') : ''
                     this.wishForm.extraPage = this.wishForm.extraPage.split('\\n')
                     this.wishForm.extraPage.pop()
-                    this.tableData = JSON.parse(res.data.data.basicInfo.specifics).specifics
+                    this.tableData = JSON.parse(res.data.data.basicInfo.specifics)
+                    console.log(this.tableData)
 //                    const proper = JSON.parse(res.data.data.skuInfo[0].property).columns
                     for(var i=0;i<this.tabDate.length;i++){
                         const proper = JSON.parse(res.data.data.skuInfo[i].property).columns
@@ -1252,6 +1302,7 @@
                 const md=JSON.stringify(this.mandatoryData)
                 const mr=JSON.stringify(this.randomData)
                 const url=this.wishForm.extraPage.join('\\n')
+                var specificsData=JSON.stringify(this.tableData)
               const data = {
                 basicInfo: {
                     "nid": this.wishForm.nid,
@@ -1261,47 +1312,47 @@
                     "postCode": this.wishForm.postCode,
                     "prepareDay": this.wishForm.prepareDay,
                     "site": this.wishForm.site,
-                    "listedCate": "",
-                    "listedSubcate": "",
-                    "title": "test-save",
-                    "subTitle": "",
-                    "description": null,
-                    "quantity": 6,
-                    "nowPrice": "",
-                    "UPC": "",
-                    "EAN": "",
-                    "brand": "",
-                    "MPN": "",
-                    "color": "",
-                    "type": "",
-                    "material": "",
-                    "intendedUse": "",
-                    "unit": "",
-                    "bundleListing": "",
-                    "shape": "",
-                    "features": "",
-                    "regionManufacture": "",
-                    "reserveField": "",
-                    "inShippingMethod1": "23",
-                    "inFirstCost1": null,
-                    "inSuccessorCost1": null,
-                    "inShippingMethod2": "",
-                    "inFirstCost2": null,
-                    "inSuccessorCost2": null,
-                    "outShippingMethod1": "93",
-                    "outFirstCost1": null,
-                    "outSuccessorCost1": null,
-                    "outShipToCountry1": "",
-                    "outShippingMethod2": "",
-                    "outFirstCost2": null,
-                    "outSuccessorCost2": null,
-                    "outShipToCountry2": "",
+                    "listedCate": this.wishForm.listedCate,
+                    "listedSubcate": this.wishForm.listedSubcate,
+                    "title": this.wishForm.title,
+                    "subTitle": this.wishForm.subTitle,
+                    "description": this.wishForm.description,
+                    "quantity": this.wishForm.quantity,
+                    "nowPrice": this.wishForm.nowPrice,
+                    "UPC": this.wishForm.UPC,
+                    "EAN": this.wishForm.EAN,
+                    "brand": this.wishForm.brand,
+                    "MPN": this.wishForm.MPN,
+                    "color": this.wishForm.color,
+                    "type": this.wishForm.type,
+                    "material": this.wishForm.material,
+                    "intendedUse":this.wishForm.intendedUse,
+                    "unit": this.wishForm.unit,
+                    "bundleListing": this.wishForm.bundleListing,
+                    "shape": this.wishForm.shape,
+                    "features": this.wishForm.features,
+                    "regionManufacture": this.wishForm.regionManufacture,
+                    "reserveField": this.wishForm.reserveField,
+                    "inShippingMethod1": this.wishForm.inShippingMethod1,
+                    "inFirstCost1": this.wishForm.inFirstCost1,
+                    "inSuccessorCost1": this.wishForm.inSuccessorCost1,
+                    "inShippingMethod2": this.wishForm.inShippingMethod2,
+                    "inFirstCost2": this.wishForm.inFirstCost2,
+                    "inSuccessorCost2": this.wishForm.inSuccessorCost2,
+                    "outShippingMethod1": this.wishForm.outShippingMethod1,
+                    "outFirstCost1": this.wishForm.outFirstCost1,
+                    "outSuccessorCost1": this.wishForm.outSuccessorCost1,
+                    "outShipToCountry1": this.wishForm.outShipToCountry1,
+                    "outShippingMethod2": this.wishForm.outShippingMethod2,
+                    "outFirstCost2": this.wishForm.outFirstCost2,
+                    "outSuccessorCost2": this.wishForm.outSuccessorCost2,
+                    "outShipToCountry2": this.wishForm.outShipToCountry2,
                     "mainPage": this.wishForm.mainPage,
                     "extraPage": url,
                     "sku": this.wishForm.sku,
                     "infoId": this.wishForm.infoId,
-                    "specifics": "",
-                    "iBayTemplate": "pr110",
+                    "specifics": specificsData,
+                    "iBayTemplate": this.wishForm.iBayTemplate,
                     "headKeywords": this.wishForm.headKeywords,
                     "requiredKeywords": md,
                     "randomKeywords": mr,
@@ -1327,6 +1378,15 @@
         mounted() {
             this.condition.id = this.$route.params.id
             this.getData()
+            getPlatEbayAccount().then(response => {
+                for(var item in response.data.data){
+                    this.accountNumber.push(response.data.data[item])
+                }
+                console.log(this.accountNumber)
+            })
+            getPlatEbayStore().then(response => {
+                this.warehouse =  response.data.data
+            })
         }
     }
 </script>

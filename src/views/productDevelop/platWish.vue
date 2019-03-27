@@ -2,20 +2,27 @@
   <section>
     <el-col :span="24"
             class="toolbar"
-            style="position:fixed;bottom:0px;text-align:center;z-index:1000;padding-bottom:10px;">
+            style="position:fixed;bottom:0px;text-align:center;z-index:1000;padding-bottom:10px;padding-top: 10px">
       <el-col :span="10"
-              :offset="6">
+              :offset="5">
       <el-button type="primary"
                  @click="update"
                  style="margin-left: 0px">更新</el-button>
-      <el-dropdown @command="handleCommand"
-                   placement="top-start">
-        <el-button type="primary">标记完善<i class="el-icon-arrow-down el-icon--right"></i></el-button>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="a">Wish</el-dropdown-item>
-          <el-dropdown-item command="b">Joom</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+      <!--<el-dropdown @command="handleCommand"-->
+                   <!--placement="top-start">-->
+        <!--<el-button type="primary">标记完善<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i></el-button>-->
+        <!--<el-dropdown-menu slot="dropdown">-->
+          <!--<el-dropdown-item command="a">Wish</el-dropdown-item>-->
+          <!--<el-dropdown-item command="b">Joom</el-dropdown-item>-->
+        <!--</el-dropdown-menu>-->
+      <!--</el-dropdown>-->
+        <el-select v-model="tips"
+                   placeholder="--标记完善--">
+          <el-option label="Wish"
+                     value="Wish"></el-option>
+          <el-option label="Joom"
+                     value="Joom"></el-option>
+        </el-select>
       <el-button type="success">导出ibay模板</el-button>
       <el-select v-model="select"
                  placeholder="--请选择账号--">
@@ -24,7 +31,7 @@
         <el-option label="否"
                    value="否"></el-option>
       </el-select>
-      <el-button type="info">导出Joom模板</el-button>
+      <el-button type="danger">导出Joom模板</el-button>
       </el-col>
     </el-col>
     <el-col :span="24"
@@ -120,7 +127,7 @@
       <!--</el-row>-->
       <el-row>
         <el-col style="margin-bottom: 10px;margin-top: 5px" :span="24">
-          <span  @click="sIs()" style="padding: 10px 20px;background: #409EFF;color: #fff;cursor: pointer;display: block;width: 70px;padding-left:10px;text-align: center;margin-left: 15px"><i :class="[shoIS?'el-icon-minus':'el-icon-plus']" style="margin-right: 5px"></i>附加图</span>
+          <span  @click="sIs()" style="padding: 0 20px;background: #409EFF;color: #fff;cursor: pointer;display: block;width: 70px;padding-left:10px;text-align: center;margin-left: 15px"><i :class="[shoIS?'el-icon-minus':'el-icon-plus']" style="margin-right: 5px"></i>附加图</span>
         </el-col>
       </el-row>
       <el-row style="margin-left: 15px">
@@ -471,7 +478,7 @@
       <el-row style="margin-top:15px;">
         <el-col :span="2">
           <input placeholder="行数" v-model="rows"
-                 style="width:70px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+                 style="width:62px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
           <span class="xzz" @click="addClomun">新增行</span>
         </el-col>
         <el-col :span="3">
@@ -482,7 +489,7 @@
           <!--<el-button size="small"-->
                      <!--@click="setNum">数量确定</el-button>-->
           <input placeholder="数量" v-model="num"
-                 style="width:110px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+                 style="width:100px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
           <span class="xzz1" @click="setNum">数量确定</span>
         </el-col>
         <el-col :span="3">
@@ -493,7 +500,7 @@
           <!--<el-button size="small"-->
                      <!--@click="setPrice">价格确定</el-button>-->
           <input placeholder="价格" v-model="price"
-                 style="width:110px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+                 style="width:100px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
           <span class="xzz1" @click="setPrice">价格确定</span>
         </el-col>
         <el-col :span="3">
@@ -504,7 +511,7 @@
           <!--<el-button size="small"-->
                      <!--@click="setShip">运费确定</el-button>-->
           <input placeholder="运费" v-model="ship"
-                 style="width:110px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+                 style="width:100px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
           <span class="xzz1" @click="setShip">运费确定</span>
         </el-col>
         <el-col :span="3">
@@ -515,7 +522,7 @@
           <!--<el-button size="small"-->
                      <!--@click="setAdvice">建议零售价</el-button>-->
           <input placeholder="建议零售价" v-model="advicePrice"
-                 style="width:95px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+                 style="width:85px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
           <span class="xzz1" @click="setAdvice">建议零售价</span>
         </el-col>
         <el-col :span="3">
@@ -526,7 +533,7 @@
           <!--<el-button size="small"-->
                      <!--@click="setJoom">Joom零售价</el-button>-->
           <input placeholder="Joom零售价" v-model="joomPrice"
-                 style="width:95px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+                 style="width:82px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
           <span class="xzz1" @click="setJoom">Joom零售价</span>
         </el-col>
         <el-col :span="3">
@@ -537,7 +544,7 @@
           <!--<el-button size="small"-->
                      <!--@click="setTransport">Joom运费</el-button>-->
           <input placeholder="Joom运费" v-model="transport"
-                 style="width:105px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+                 style="width:95px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
           <span class="xzz1" @click="setTransport">Joom运费</span>
         </el-col>
         <el-col :span="3">
@@ -548,7 +555,7 @@
           <!--<el-button size="small"-->
                      <!--@click="setTime">运输时间</el-button>-->
           <input placeholder="运输时间" v-model="time"
-                 style="width:105px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+                 style="width:95px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
           <span class="xzz1" @click="setTime">运输时间</span>
         </el-col>
       </el-row>
@@ -601,6 +608,7 @@
         dialogTableVisible:false,
         dialogTable:false,
         dialogFormVisible1:false,
+        tips:"标记完善",
         num: null,
         foremost:0,
         price: null,

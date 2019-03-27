@@ -1149,7 +1149,9 @@ export default {
       })
     },
     //导入普源
-    passAll() {},
+    passAll() {
+
+    },
     //生成编码
     codeAll() {
       if (this.sels) {

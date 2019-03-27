@@ -9,7 +9,7 @@
     </el-row>
     <el-tabs v-model="activeName"
              type="card"
-             @tab-click="handleClick" style="margin-top: 48px">
+             @tab-click="handleClick" style="margin-top: 48px;">
       <el-tab-pane label='Wish'
                    name='first'>
         <plat-wish></plat-wish>

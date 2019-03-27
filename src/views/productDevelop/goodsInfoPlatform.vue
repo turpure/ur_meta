@@ -408,7 +408,7 @@
             APIGenerateCode,
             APIPlat
     } from '../../api/product'
-    import {getAttributeInfoStoreName,getAttributeInfoCat} from '../../api/profit'
+    import {getAttributeInfoStoreName,getAttributeInfoCat,getPlatGoodsStatus,getPlatCompletedPlat} from '../../api/profit'
     import { getMenu } from '../../api/login'
     export default {
         data() {
@@ -426,8 +426,11 @@
                 allMenu: [],
                 goodsInfo:[],
                 repertory:[],
+                productState:[],
                 oaGoods:[],
                 mainCategory:[],
+                goodsState:[],
+                perfectPlatform:[],
                 tableData: [
 
                 ],
@@ -853,7 +856,8 @@
                             ]
                     )
                 } else if ($index === 5) {
-                    let filters = [{ text: '未设置', value: '未设置' }, { text: 'eBay已完善', value: 'eBay已完善' }, { text: 'Wish已完善', value: 'Wish已完善' }, { text: 'Joom已完善', value: 'Joom已完善' }, { text: 'Wish已完善|eBay已完善', value: 'Wish已完善|eBay已完善' }, { text: 'Wish已完善|Joom已完善', value: 'Wish已完善|Joom已完善' }, { text: 'Joom已完善|eBay已完善', value: 'Joom已完善|eBay已完善'}, { text: 'Wish已完善|Joom已完善|eBay已完善', value: 'Wish已完善|Joom已完善|eBay已完善'}]
+//                    let filters = [{ text: '未设置', value: '未设置' }, { text: 'eBay已完善', value: 'eBay已完善' }, { text: 'Wish已完善', value: 'Wish已完善' }, { text: 'Joom已完善', value: 'Joom已完善' }, { text: 'Wish已完善|eBay已完善', value: 'Wish已完善|eBay已完善' }, { text: 'Wish已完善|Joom已完善', value: 'Wish已完善|Joom已完善' }, { text: 'Joom已完善|eBay已完善', value: 'Joom已完善|eBay已完善'}, { text: 'Wish已完善|Joom已完善|eBay已完善', value: 'Wish已完善|Joom已完善|eBay已完善'}]
+                    let filters=this.perfectPlatform
                     return h(
                             'el-select',
                             {
@@ -877,8 +881,8 @@
                                 filters.map(item => {
                                     return h('el-option', {
                                         props: {
-                                            value: item.text,
-                                            label: item.value
+                                            value: item,
+                                            label: item
                                         }
                                     })
                                 })
@@ -1251,7 +1255,7 @@
                             ]
                     )
                 } else if ($index === 19) {
-                    let filters = [{ text: '1', value: '是' }, { text: '0', value: '否' }]
+                    let filters = this.goodsState
                     return h(
                             'el-select',
                             {
@@ -1275,8 +1279,8 @@
                                 filters.map(item => {
                                     return h('el-option', {
                                         props: {
-                                            value: item.text,
-                                            label: item.value
+                                            value: item,
+                                            label: item
                                         }
                                     })
                                 })
@@ -1325,6 +1329,12 @@
             })
             getAttributeInfoCat().then(response => {
                 this.mainCategory =  response.data.data
+            })
+            getPlatGoodsStatus().then(response => {
+                this.goodsState =  response.data.data
+            })
+            getPlatCompletedPlat().then(response => {
+                this.perfectPlatform =  response.data.data
             })
         }
     }
