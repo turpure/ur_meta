@@ -127,7 +127,7 @@
       <!--</el-row>-->
       <el-row>
         <el-col style="margin-bottom: 10px;margin-top: 5px" :span="24">
-          <span  @click="sIs()" style="padding: 0 20px;background: #409EFF;color: #fff;cursor: pointer;display: block;width: 70px;padding-left:10px;text-align: center;margin-left: 15px"><i :class="[shoIS?'el-icon-minus':'el-icon-plus']" style="margin-right: 5px"></i>附加图</span>
+          <span  @click="sIs()" style="padding: 10px 20px;background: #409EFF;color: #fff;cursor: pointer;display: block;width: 70px;padding-left:10px;text-align: center;margin-left: 15px"><i :class="[shoIS?'el-icon-minus':'el-icon-plus']" style="margin-right: 5px"></i>附加图</span>
         </el-col>
       </el-row>
       <el-row style="margin-left: 15px">
