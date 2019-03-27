@@ -20,8 +20,11 @@
       <el-row style="margin-top: 0px">
         <el-col :span="8">
           <el-form-item label="" style="margin-bottom: 5px">
+            <a :href="editForm.picUrl"
+               target="_blank">
             <img :src='editForm.picUrl'
                  style="width: 450px;height: 405px;margin-left:30px;margin-top:10px;margin-bottom:0px;border-radius: 10px">
+              </a>
           </el-form-item>
         </el-col>
         <el-col :span="8" style="margin-top: 20px">
