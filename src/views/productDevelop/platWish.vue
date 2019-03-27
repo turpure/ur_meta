@@ -2,12 +2,12 @@
   <section>
     <el-col :span="24"
             class="toolbar"
-            style="position:fixed;bottom:0px;text-align:center;z-index:1000;padding-bottom:10px;padding-top: 10px">
-      <el-col :span="10"
+            style="position:fixed;bottom:0px;text-align:center;z-index:10;padding-bottom:8px;padding-top: 8px">
+      <el-col :span="11"
               :offset="5">
       <el-button type="primary"
                  @click="update"
-                 style="margin-left: 0px">更新</el-button>
+                 style="margin-left: 0px;float: left;margin-right: 10px">保存</el-button>
       <!--<el-dropdown @command="handleCommand"-->
                    <!--placement="top-start">-->
         <!--<el-button type="primary">标记完善<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i></el-button>-->
@@ -17,21 +17,22 @@
         <!--</el-dropdown-menu>-->
       <!--</el-dropdown>-->
         <el-select v-model="tips"
-                   placeholder="--标记完善--">
+                   placeholder="--保存完善--" style="float: left;width: 150px">
           <el-option label="Wish"
                      value="Wish"></el-option>
           <el-option label="Joom"
                      value="Joom"></el-option>
         </el-select>
-      <el-button type="success">导出ibay模板</el-button>
+        <span class="exportAccount" style="margin-right: 10px">保存完善</span>
+        <el-button type="success" style="float: left;margin-right: 10px">导出Wish模板</el-button>
       <el-select v-model="select"
-                 placeholder="--请选择账号--">
+                 placeholder="--请选择账号--" style="float: left;">
         <el-option label="是"
                    value="是"></el-option>
         <el-option label="否"
                    value="否"></el-option>
       </el-select>
-      <el-button type="danger">导出Joom模板</el-button>
+        <span class="exportAccount">导出Joom模板</span>
       </el-col>
     </el-col>
     <el-col :span="24"
@@ -608,7 +609,7 @@
         dialogTableVisible:false,
         dialogTable:false,
         dialogFormVisible1:false,
-        tips:"标记完善",
+        tips:"",
         num: null,
         foremost:0,
         price: null,
@@ -964,7 +965,7 @@
           const extraPic = res.data.data.basicInfo.extraImages
           const picture = extraPic.split('\n')[0]
           this.url = picture.split('\\n')
-          this.url.pop()
+//          this.url.pop()
           this.wishForm.requiredKeywords=JSON.parse(this.wishForm.requiredKeywords)
           this.wishForm.randomKeywords=JSON.parse(this.wishForm.randomKeywords)
 //          this.wishForm.mapPersons=this.wishForm.mapPersons.split(",")
@@ -1115,5 +1116,17 @@
   }
   .el-form-item{
     margin-bottom: 10px;
+  }
+  .exportAccount{
+    display: block;
+    float: left;
+    border: #dcdfe6 solid 1px;
+    height: 38px;
+    line-height: 38px;
+    border-left: none;
+    background: #fff;
+    padding: 0 14px;
+    font-size: 13px;
+    cursor: pointer;
   }
 </style>

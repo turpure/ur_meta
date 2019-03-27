@@ -1,15 +1,15 @@
 <template>
     <section>
         <el-col :span="24"
-                style="position: fixed; bottom:0; z-index:10;background: #f2f2f2;padding: 10px 0;border-top: #eee solid 1px;">
+                style="position: fixed; bottom:0; z-index:10;background: #f2f2f2;padding: 8px 0;border-top: #eee solid 1px;">
             <el-col :span="11"
                     :offset="5">
                 <el-button @click="keep()"
-                           type="primary">保存当前数据</el-button>
-                <el-button style="margin-left: 0"
+                           type="primary" style="float: left;margin-right:10px">保存当前数据</el-button>
+                <el-button style="margin-left: 0;float: left;margin-right:10px"
                            type="success">保存并完善</el-button>
                 <el-select v-model="depot"
-                           placeholder="--所有仓储--">
+                           placeholder="--所有仓储--" style="float: left;margin-right:10px">
                     <el-option v-for="(item, key) in warehouse" :key='item.key' :label="item" :value="item"></el-option>
                 </el-select>
                 <el-select placeholder="--所有账号--"
@@ -18,7 +18,7 @@
                            collapse-tags
                            v-model="accountNum"
                            @change="forbidSale1($event)"
-                           style="width: 220px">
+                           style="width: 220px;float: left;" class="selee">
                     <el-button plain
                                type="info"
                                @click="selectalld1">全选</el-button>
@@ -27,7 +27,8 @@
                                @click="noselectd1">取消</el-button>
                     <el-option v-for="(item, key) in accountNumber" :key='item.key' :label="item" :value="item"></el-option>
                 </el-select>
-                <el-button type="danger">导出所选账号</el-button>
+                <span class="exportAccount">导出所选账号</span>
+                <!--<el-button type="danger">导出所选账号</el-button>-->
             </el-col>
         </el-col>
         <el-col :span="24"
@@ -481,12 +482,14 @@
                 <el-form-item label="首件运费">
                     <el-input size="small"
                               placeholder="--USD--"
-                              style="width:150px;"></el-input>
+                              style="width:150px;"
+                              v-model="wishForm.inFirstCost1"></el-input>
                 </el-form-item>
                 <el-form-item label="续件运费">
                     <el-input size="small"
                               placeholder="--USD--"
-                              style="width:150px;"></el-input>
+                              style="width:150px;"
+                              v-model="wishForm.inSuccessorCost1"></el-input>
                 </el-form-item>
                 <el-form-item label="运输方式2">
                     <el-select size="small"
@@ -501,12 +504,14 @@
                 <el-form-item label="首件运费">
                     <el-input size="small"
                               placeholder="--USD--"
-                              style="width:150px;"></el-input>
+                              style="width:150px;"
+                              v-model="wishForm.inFirstCost2"></el-input>
                 </el-form-item>
                 <el-form-item label="续件运费">
                     <el-input size="small"
                               placeholder="--USD--"
-                              style="width:150px;"></el-input>
+                              style="width:150px;"
+                              v-model="wishForm.inSuccessorCost2"></el-input>
                 </el-form-item>
             </el-col>
             <el-col :span="12"
@@ -525,12 +530,14 @@
                 <el-form-item label="首件运费">
                     <el-input size="small"
                               placeholder="--USD--"
-                              style="width:150px;"></el-input>
+                              style="width:150px;"
+                              v-model="wishForm.outFirstCost1"></el-input>
                 </el-form-item>
                 <el-form-item label="续件运费">
                     <el-input size="small"
                               placeholder="--USD--"
-                              style="width:150px;"></el-input>
+                              style="width:150px;"
+                              v-model="wishForm.outSuccessorCost1"></el-input>
                 </el-form-item>
                 <el-form-item label="运输方式2">
                     <el-select size="small"
@@ -545,12 +552,14 @@
                 <el-form-item label="首件运费">
                     <el-input size="small"
                               placeholder="--USD--"
-                              style="width:150px;"></el-input>
+                              style="width:150px;"
+                              v-model="wishForm.outFirstCost2"></el-input>
                 </el-form-item>
                 <el-form-item label="续件运费">
                     <el-input size="small"
                               placeholder="--USD--"
-                              style="width:150px;"></el-input>
+                              style="width:150px;"
+                              v-model="wishForm.outSuccessorCost2"></el-input>
                 </el-form-item>
             </el-col>
             <el-dialog title="批量增加必选关键词"
@@ -1238,7 +1247,7 @@
                     this.tabDate = res.data.data.skuInfo
                     this.wishForm.site == 0 ? (this.wishForm.site = '美国') : ''
                     this.wishForm.extraPage = this.wishForm.extraPage.split('\\n')
-                    this.wishForm.extraPage.pop()
+//                    this.wishForm.extraPage.pop()
                     this.tableData = JSON.parse(res.data.data.basicInfo.specifics)
                     console.log(this.tableData)
 //                    const proper = JSON.parse(res.data.data.skuInfo[0].property).columns
@@ -1495,5 +1504,20 @@
         font-size: 13px;
         border-top-right-radius: 3px;
         border-bottom-right-radius: 3px;
+    }
+    .exportAccount{
+        display: block;
+        float: left;
+        border: #dcdfe6 solid 1px;
+        height: 38px;
+        line-height: 38px;
+        border-left: none;
+        background: #fff;
+        padding: 0 10px;
+        font-size: 13px;
+        cursor: pointer;
+    }
+    .selee .el-input__inner{
+        border-radius: 300px !important;
     }
 </style>
