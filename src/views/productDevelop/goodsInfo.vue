@@ -314,7 +314,7 @@
       <el-pagination background
                      @size-change="handleSizeChange"
                      @current-change="handleCurrentChange"
-                     :current-page="this.condition.currentPage"
+                     :current-page="this.condition.page"
                      :page-sizes="[10, 20, 30, 40]"
                      :page-size="this.condition.pageSize"
                      layout="total, sizes, prev, pager, next, jumper"
@@ -1101,7 +1101,7 @@ export default {
     },
     //属性信息分页
     handleCurrentChange(val) {
-      this.condition.currentPage = val
+      this.condition.page = val
       this.getData()
     },
     handleSizeChange(val) {
@@ -1188,7 +1188,7 @@ export default {
         this.tableData = res.data.data.items
         this.total = res.data.data._meta.totalCount
         this.condition.pageSize = res.data.data._meta.perPage
-        this.condition.currentPage = res.data.data._meta.currentPage
+        this.condition.page = res.data.data._meta.currentPage
       })
     },
     //属性信息表头input框
@@ -1607,7 +1607,7 @@ export default {
       this.getPic()
     },
     handleCurrentChangePic(val) {
-      this.picture.currentPage = val
+      this.picture.page = val
       this.getPic()
     },
     //图片信息查看

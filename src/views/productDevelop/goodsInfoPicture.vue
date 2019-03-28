@@ -233,7 +233,7 @@
             <el-pagination background
                            @size-change="handleSizeChangePic"
                            @current-change="handleCurrentChangePic"
-                           :current-page="this.picture.currentPage"
+                           :current-page="this.picture.page"
                            :page-sizes="[10, 20, 30, 40]"
                            :page-size="this.picture.pageSize"
                            layout="total, sizes, prev, pager, next, jumper"
@@ -387,7 +387,7 @@
                 this.getPic()
             },
             handleCurrentChangePic(val) {
-                this.picture.currentPage = val
+                this.picture.page = val
                 this.getPic()
             },
             //图片信息查看
@@ -409,7 +409,7 @@
                     this.pictureData = res.data.data.items
                     this.totalPic = res.data.data._meta.totalCount
                     this.picture.pageSize = res.data.data._meta.perPage
-                    this.picture.currentPage = res.data.data._meta.currentPage
+                    this.picture.page = res.data.data._meta.currentPage
                 })
             },
             //图片信息表头input框

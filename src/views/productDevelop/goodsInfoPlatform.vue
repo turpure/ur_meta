@@ -631,7 +631,7 @@
                 this.getPlat()
             },
             handleCurrentChangePlat(val) {
-                this.plat.currentPage = val
+                this.plat.page = val
                 this.getPlat()
             },
             //平台信息查看
