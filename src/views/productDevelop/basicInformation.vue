@@ -478,16 +478,18 @@
             )
           }
         },
-        mounted() {
-            getMenu().then(response => {
-                const res = response.data.data
-                const menu = res.filter(e => e.name === '产品中心')
-                let arr=menu[0].children
-                for(let i=0;i<arr.length;i++){
-                    if(arr[i].name=="基本信息"){
-                        this.allMenu=arr[i].tabs
-                    }
-                }
+        handleClick(tab, event) {
+          if (tab.label === 'Wish账号字典') {
+
+          }
+          if (tab.label === 'eBay账号字典') {
+            this.$router.push({
+              path: '/v1/basic-info/ebay'
+            })
+          }
+          if (tab.label === 'Joom账号字典') {
+            this.$router.push({
+              path: '/v1/basic-info/joom'
             })
           }
           if (tab.label === 'eBay运输方式') {
@@ -520,7 +522,12 @@
         getMenu().then(response => {
           const res = response.data.data
           const menu = res.filter(e => e.name === '产品中心')
-          this.allMenu = menu[0].children[4].tabs
+          const arr = menu[0].children
+          for (let i = 0; i < arr.length; i++) {
+            if (arr[i].name == '基本信息') {
+              this.allMenu = arr[i].tabs
+            }
+          }
         })
         this.getDateWish()
       }
