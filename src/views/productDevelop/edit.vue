@@ -946,7 +946,6 @@ export default {
     },
     del(index, row) {
       this.tableData.splice(index, 1)
-      console.log(this.tableData)
     },
     // 增加行
     addClomun() {
@@ -978,7 +977,6 @@ export default {
     // 成本确定
     cosprice() {
       if (this.costprice) {
-        console.log(this.costprice)
         for (let i = 0; i < this.tableData.length; i++) {
           this.tableData[i].costPrice = this.costprice
         }
@@ -1094,7 +1092,6 @@ export default {
         },
         skuInfo: this.tableData
       }
-      console.log(saveInfo)
       APISaveAttribute(saveInfo).then(res => {
         if (res.data.data[0] === 'success') {
           this.$message({

@@ -514,7 +514,7 @@
   </section>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
 import { getGoodscats } from '../../api/profit'
 import { checkList, checkPassList, checkPass, checkFailed, checkCancel, checkFailedList, goodsInfo } from '../../api/product'
 import { getMenu } from '../../api/login'
@@ -639,7 +639,12 @@ export default {
     getMenu().then(response => {
       const res = response.data.data
       const menu = res.filter(e => e.name === '产品中心')
-      this.allMenu = menu[0].children[1].tabs
+      let arr=menu[0].children
+      for(let i=0;i<arr.length;i++){
+        if(arr[i].name=="产品审批"){
+          this.allMenu=arr[i].tabs
+        }
+      }
     })
     this.getData()
     this.getPass()

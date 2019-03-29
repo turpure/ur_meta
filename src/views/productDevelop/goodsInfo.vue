@@ -1116,8 +1116,6 @@ export default {
 //        this.viewForm = res.data.data
         this.goodsInfo = res.data.data.basicInfo.goodsInfo
         this.oaGoods = res.data.data.basicInfo.oaGoods
-        console.log(this.goodsInfo)
-        console.log(this.oaGoods)
       })
     },
     //标记
@@ -2721,7 +2719,12 @@ export default {
     getMenu().then(response => {
       const res = response.data.data
       const menu = res.filter(e => e.name === '产品中心')
-      this.allMenu = menu[0].children[2].tabs
+      let arr=menu[0].children
+      for(let i=0;i<arr.length;i++){
+        if(arr[i].name=="产品资料"){
+          this.allMenu=arr[i].tabs
+        }
+      }
     })
     this.getData()
   }

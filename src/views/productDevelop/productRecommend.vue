@@ -900,7 +900,7 @@
   </section>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
 import { goodsList, goodsCreate, goodsDelete, goodsUpdate, goodsInfo, goodsClaim, forwardList, forwardCreate, forwardUpdate, forwardSubmit, reverseList, reverseCreate, reverseUpdate } from '../../api/product.js'
 import { getMember, getGoodscats } from '../../api/profit'
 import { getMenu } from '../../api/login'
@@ -1050,7 +1050,12 @@ export default {
     getMenu().then(response => {
       const res = response.data.data
       const menu = res.filter(e => e.name === '产品中心')
-      this.allMenu = menu[0].children[0].tabs
+      let arr=menu[0].children
+      for(let i=0;i<arr.length;i++){
+        if(arr[i].name=="产品开发"){
+          this.allMenu=arr[i].tabs
+        }
+      }
     })
     this.getData()
     this.getForward()
@@ -1113,6 +1118,7 @@ export default {
       this.editForm.nid = row.nid
       goodsInfo(this.editForm).then(res => {
         this.editForm = res.data.data
+        this.editForm.stockUp==1?this.editForm.stockUp=true:this.editForm.false
       })
       if (this.editForm.cate !== '') {
         const val = this.editForm.cate

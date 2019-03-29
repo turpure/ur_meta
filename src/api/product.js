@@ -464,6 +464,30 @@ export function APIWishInfo(param) {
     data
   })
 }
+export function APIShippingInfo(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/shipping-info',
+    method: 'post',
+    data
+  })
+}
+export function APIContrastInfo(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/contrast-info',
+    method: 'post',
+    data
+  })
+}
+export function APIRulesInfo(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/rules-info',
+    method: 'post',
+    data
+  })
+}
 export function APIDeleteJoom(param) {
   const data = { condition: param }
   return request({
@@ -480,10 +504,58 @@ export function APIDeleteEbay(param) {
     data
   })
 }
+export function APIDeleteShipping(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/delete-shipping',
+    method: 'post',
+    data
+  })
+}
+export function APIDeleteContrast(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/delete-contrast',
+    method: 'post',
+    data
+  })
+}
+export function APIDeleteRules(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/delete-rules',
+    method: 'post',
+    data
+  })
+}
 export function APIUpdateJoom(param) {
   const data = { condition: param }
   return request({
     url: '/basic-info/update-joom',
+    method: 'post',
+    data
+  })
+}
+export function APIUpdateShipping(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/update-shipping',
+    method: 'post',
+    data
+  })
+}
+export function APIUpdateContrast(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/update-contrast',
+    method: 'post',
+    data
+  })
+}
+export function APIUpdateRules(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/update-rules',
     method: 'post',
     data
   })
@@ -512,3 +584,52 @@ export function APIEbaySuffix(param) {
     data
   })
 }
+export function APIShippingService(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/shipping-service?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+export function APIJoomWish(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/joom-wish?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+export function APISysRules(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/sys-rules?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+export function APICreateShipping(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/create-shipping',
+    method: 'post',
+    data
+  })
+}
+export function APICreateContrast(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/create-contrast',
+    method: 'post',
+    data
+  })
+}
+export function APICreateRules(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/create-rules',
+    method: 'post',
+    data
+  })
+}
+

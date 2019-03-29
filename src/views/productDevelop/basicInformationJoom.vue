@@ -92,7 +92,7 @@
                     background
                     layout="prev, pager, next" style="margin: 20px 0;margin-left: 10px">
             </el-pagination>
-            <el-dialog title="" :visible.sync="dialogPicture">
+            <el-dialog title="Joom账号详情" :visible.sync="dialogPicture">
                 <el-row>
                     <table style="width: 100%;margin: auto;border-collapse:collapse;">
                         <thead style="background: #409EFF;border:#409EFF solid 1px ">
@@ -488,7 +488,12 @@
             getMenu().then(response => {
                 const res = response.data.data
                 const menu = res.filter(e => e.name === '产品中心')
-                this.allMenu = menu[0].children[4].tabs
+                let arr=menu[0].children
+                for(let i=0;i<arr.length;i++){
+                    if(arr[i].name=="基本信息"){
+                        this.allMenu=arr[i].tabs
+                    }
+                }
             })
             this.getDate()
         }
