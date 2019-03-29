@@ -215,308 +215,268 @@
 </template>
 
 <script type="text/ecmascript-6">
-    import { APIWishSuffix,APICreateWish,APIDeleteWish,APIWishInfo,APIUpdateWish  } from '../../api/product'
+    import { APIWishSuffix, APICreateWish, APIDeleteWish, APIWishInfo, APIUpdateWish } from '../../api/product'
     import { getMenu } from '../../api/login'
     export default {
-        data() {
-            return {
-                allMenu:[],
-                activeName: 'Wish账号字典',
-                date:[],
-                totalWish:0,
-                dialogPicture:false,
-                dialogPictureBj:false,
-                account:null,
-                freight:null,
-                delistWish:[],
-                masterGraph:null,
-                abbreviation:null,
-                Suffix:null,
-                contenWish:[],
-                condition:{
-                    "ibaySuffix": null,
-                    "shortName": null,
-                    "suffix": null,
-                    "mainImg": null,
-                    "parentCategory": null,
-                    "pageSize": 20,
-                    "page":1
-                }
+      data() {
+        return {
+          allMenu: [],
+          activeName: 'Wish账号字典',
+          date: [],
+          totalWish: 0,
+          dialogPicture: false,
+          dialogPictureBj: false,
+          account: null,
+          freight: null,
+          delistWish: [],
+          masterGraph: null,
+          abbreviation: null,
+          Suffix: null,
+          contenWish: [],
+          condition: {
+            'ibaySuffix': null,
+            'shortName': null,
+            'suffix': null,
+            'mainImg': null,
+            'parentCategory': null,
+            'pageSize': 20,
+            'page': 1
+          }
+        }
+      },
+      methods: {
+        saveWish() {
+          APIUpdateWish(this.contenWish).then(res => {
+            if (res.data.data) {
+              this.$message({
+                message: '添加成功',
+                type: 'success'
+              })
+              this.dialogPictureBj = false
+              this.getDateWish()
             }
+          })
         },
-        methods: {
-            saveWish(){
-                APIUpdateWish(this.contenWish).then(res => {
-                    if(res.data.data){
-                        this.$message({
-                            message: '添加成功',
-                            type: 'success'
-                        })
-                        this.dialogPictureBj = false
-                        this.getDateWish()
-                    }
-                })
-            },
-            editWish(index,row){
-                this.dialogPictureBj = true
-                let conId={
-                    id:row.id
+        editWish(index, row) {
+          this.dialogPictureBj = true
+          const conId = {
+            id: row.id
+          }
+          APIWishInfo(conId).then(res => {
+            if (res.data.message == 'success') {
+              this.contenWish = res.data.data
+            }
+          })
+        },
+        delWish(index, row) {
+          this.$confirm('确定删除?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          })
+            .then(() => {
+              const conId = {
+                id: row.id
+              }
+              APIDeleteWish(conId).then(res => {
+                if (res.data.message == 'success') {
+                  this.$message({
+                    message: '删除成功',
+                    type: 'success'
+                  })
+                  this.getDateWish()
                 }
-                APIWishInfo(conId).then(res => {
-                    if(res.data.message=="success"){
-                        this.contenWish=res.data.data
-                    }
+              })
+            })
+            .catch(() => {})
+        },
+        addDate() {
+          if (this.account) {
+            var condate = {
+              'ibaySuffix': this.account,
+              'shortName': this.abbreviation,
+              'suffix': this.Suffix,
+              'mainImg': this.masterGraph,
+              'parentCategory': null,
+              'rate': this.freight
+            }
+            APICreateWish(condate).then(res => {
+              if (res.data.data) {
+                this.$message({
+                  message: '添加成功',
+                  type: 'success'
                 })
-            },
-            delWish(index, row){
-                this.$confirm('确定删除?', '提示', {
-                            confirmButtonText: '确定',
-                            cancelButtonText: '取消',
-                            type: 'warning'
-                        })
-                        .then(() => {
-                            let conId={
-                                id:row.id
-                            }
-                            APIDeleteWish(conId).then(res => {
-                                if(res.data.message=="success"){
-                                    this.$message({
-                                        message: '删除成功',
-                                        type: 'success'
-                                    })
-                                    this.getDateWish()
-                                }
-                            })
-                        })
-                        .catch(() => {})
-            },
-            addDate(){
-                if(this.account){
-                    var condate={
-                            "ibaySuffix": this.account,
-                            "shortName": this.abbreviation,
-                            "suffix": this.Suffix,
-                            "mainImg": this.masterGraph,
-                            "parentCategory": null,
-                            "rate": this.freight
-                            }
-                    APICreateWish(condate).then(res => {
-                        if(res.data.data){
-                            this.$message({
-                                message: '添加成功',
-                                type: 'success'
-                            })
-                            this.condition.page=1
-                            this.condition.ibaySuffix=null
-                            this.condition.shortName=null
-                            this.condition.suffix=null
-                            this.condition.mainImg=null
-                            this.condition.parentCategory=null
-                            this.condition.pageSize=20
-                            this.getDateWish()
-                        }
-                    })
-                }else {
-                    this.$message.error('卖家名称不能为空')
-                }
-            },
-            viewWish(index, row) {
-                let conId={
-                    id:row.id
-                }
-                this.dialogPicture = true
-                APIWishInfo(conId).then(res => {
-                    if(res.data.message=="success"){
-                        this.delistWish=res.data.data
-                    }
-                })
-            },
-
-            handleSizeChange(val) {
-                this.condition.pageSize = val
+                this.condition.page = 1
+                this.condition.ibaySuffix = null
+                this.condition.shortName = null
+                this.condition.suffix = null
+                this.condition.mainImg = null
+                this.condition.parentCategory = null
+                this.condition.pageSize = 20
                 this.getDateWish()
-            },
-            handleCurrentChange(val) {
-                this.condition.page = val
-                this.getDateWish()
-            },
-            renderHeaderPic(h, { column, $index }) {
-                if ($index === 0) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '30px'
-                                }
-                            },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: this.condition.ibaySuffix,
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            this.condition.ibaySuffix = value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.getDateWish()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
-                } else if ($index === 1) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '30px'
-                                }
-                            },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: this.condition.shortName,
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            this.condition.shortName = value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.getDateWish()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
-                } else if ($index === 2) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '30px'
-                                }
-                            },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: this.condition.suffix,
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            this.condition.suffix = value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.getDateWish()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
-                } else if ($index === 3) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '30px'
-                                }
-                            },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: this.condition.rate,
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            this.condition.rate = value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.getDateWish()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
-                }else if ($index === 4) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '30px'
-                                }
-                            },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: this.condition.mainImg,
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            this.condition.mainImg = value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.getDateWish()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
-                }
-            },
-            handleClick(tab, event) {
-                if (tab.label === 'Wish账号字典') {
+              }
+            })
+          } else {
+            this.$message.error('卖家名称不能为空')
+          }
+        },
+        viewWish(index, row) {
+          const conId = {
+            id: row.id
+          }
+          this.dialogPicture = true
+          APIWishInfo(conId).then(res => {
+            if (res.data.message == 'success') {
+              this.delistWish = res.data.data
+            }
+          })
+        },
 
+        handleSizeChange(val) {
+          this.condition.pageSize = val
+          this.getDateWish()
+        },
+        handleCurrentChange(val) {
+          this.condition.page = val
+          this.getDateWish()
+        },
+        renderHeaderPic(h, { column, $index }) {
+          if ($index === 0) {
+            return h(
+              'div',
+              {
+                style: {
+                  height: '30px'
                 }
-                if (tab.label === 'eBay账号字典') {
-                    this.$router.push({
-                        path: '/v1/basic-info/ebay',
-                    })
-                }
-                if (tab.label === 'Joom账号字典') {
-                    this.$router.push({
-                        path: '/v1/basic-info/joom',
-                    })
-                }
-                if (tab.label === 'eBay运输方式') {
-                    this.$router.push({
-                        path: '/v1/basic-info/ys',
-                    })
-                }
-                if (tab.label === 'Joom对比Wish价格') {
-                    this.$router.push({
-                        path: '/v1/basic-info/jw',
-                    })
-                }
-                if (tab.label === '开发采购美工对应关系') {
-                    this.$router.push({
-                        path: '/v1/basic-info/art',
-                    })
-                }
-            },
-            getDateWish(){
-                APIWishSuffix(this.condition).then(res => {
-                    this.date = res.data.data.items
-                    this.totalWish = res.data.data._meta.totalCount
-                    this.condition.pageSize = res.data.data._meta.perPage
-                    this.condition.page = res.data.data._meta.currentPage
-                    console.log(this.date)
+              },
+              [
+                h('el-input', {
+                  props: {
+                    value: this.condition.ibaySuffix,
+                    size: 'mini',
+                    clearable: true
+                  },
+                  on: {
+                    input: value => {
+                      this.condition.ibaySuffix = value
+                      this.$emit('input', value)
+                    },
+                    change: value => {
+                      this.getDateWish()
+                    }
+                  }
                 })
-            },
+              ]
+            )
+          } else if ($index === 1) {
+            return h(
+              'div',
+              {
+                style: {
+                  height: '30px'
+                }
+              },
+              [
+                h('el-input', {
+                  props: {
+                    value: this.condition.shortName,
+                    size: 'mini',
+                    clearable: true
+                  },
+                  on: {
+                    input: value => {
+                      this.condition.shortName = value
+                      this.$emit('input', value)
+                    },
+                    change: value => {
+                      this.getDateWish()
+                    }
+                  }
+                })
+              ]
+            )
+          } else if ($index === 2) {
+            return h(
+              'div',
+              {
+                style: {
+                  height: '30px'
+                }
+              },
+              [
+                h('el-input', {
+                  props: {
+                    value: this.condition.suffix,
+                    size: 'mini',
+                    clearable: true
+                  },
+                  on: {
+                    input: value => {
+                      this.condition.suffix = value
+                      this.$emit('input', value)
+                    },
+                    change: value => {
+                      this.getDateWish()
+                    }
+                  }
+                })
+              ]
+            )
+          } else if ($index === 3) {
+            return h(
+              'div',
+              {
+                style: {
+                  height: '30px'
+                }
+              },
+              [
+                h('el-input', {
+                  props: {
+                    value: this.condition.rate,
+                    size: 'mini',
+                    clearable: true
+                  },
+                  on: {
+                    input: value => {
+                      this.condition.rate = value
+                      this.$emit('input', value)
+                    },
+                    change: value => {
+                      this.getDateWish()
+                    }
+                  }
+                })
+              ]
+            )
+          } else if ($index === 4) {
+            return h(
+              'div',
+              {
+                style: {
+                  height: '30px'
+                }
+              },
+              [
+                h('el-input', {
+                  props: {
+                    value: this.condition.mainImg,
+                    size: 'mini',
+                    clearable: true
+                  },
+                  on: {
+                    input: value => {
+                      this.condition.mainImg = value
+                      this.$emit('input', value)
+                    },
+                    change: value => {
+                      this.getDateWish()
+                    }
+                  }
+                })
+              ]
+            )
+          }
         },
         mounted() {
             getMenu().then(response => {
@@ -529,8 +489,41 @@
                     }
                 }
             })
-            this.getDateWish()
+          }
+          if (tab.label === 'eBay运输方式') {
+            this.$router.push({
+              path: '/v1/basic-info/ys'
+            })
+          }
+          if (tab.label === 'Joom对比Wish价格') {
+            this.$router.push({
+              path: '/v1/basic-info/jw'
+            })
+          }
+          if (tab.label === '开发采购美工对应关系') {
+            this.$router.push({
+              path: '/v1/basic-info/art'
+            })
+          }
+        },
+        getDateWish() {
+          APIWishSuffix(this.condition).then(res => {
+            this.date = res.data.data.items
+            this.totalWish = res.data.data._meta.totalCount
+            this.condition.pageSize = res.data.data._meta.perPage
+            this.condition.page = res.data.data._meta.currentPage
+            console.log(this.date)
+          })
         }
+      },
+      mounted() {
+        getMenu().then(response => {
+          const res = response.data.data
+          const menu = res.filter(e => e.name === '产品中心')
+          this.allMenu = menu[0].children[4].tabs
+        })
+        this.getDateWish()
+      }
     }
 </script>
 
