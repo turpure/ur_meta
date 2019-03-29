@@ -88,6 +88,14 @@ export function reverseList(param) {
     data
   })
 }
+export function reverseList1(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goods/backward-list?page=' + param.page2,
+    method: 'post',
+    data
+  })
+}
 export function reverseCreate(param) {
   const data = { condition: param }
   return request({
@@ -203,7 +211,7 @@ export function APIFinishAttribute(param) {
 export function APISaveAttribute(param) {
   const data = { condition: param }
   return request({
-    url: '/oa-goodsinfo/save-attribute-info',
+    url: '/oa-goodsinfo/save-attribute',
     method: 'post',
     data
   })

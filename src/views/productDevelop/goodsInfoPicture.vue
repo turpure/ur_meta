@@ -81,48 +81,66 @@
                                  header-align="center">
                     <el-table-column prop="oaGoods.vendor1"
                                      :render-header="renderHeaderPic"
-                                     width='150'
+                                     width='170'
                                      align="center">
+                        <template slot-scope="scope">
+                            <a :href="scope.row.oaGoods.vendor1" target="_blank">{{scope.row.oaGoods.vendor1 | cutOut }}</a>
+                        </template>
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="供应商链接2"
                                  header-align="center">
                     <el-table-column prop="oaGoods.vendor2"
                                      :render-header="renderHeaderPic"
-                                     width='150'
+                                     width='170'
                                      align="center">
+                        <template slot-scope="scope">
+                            <a :href="scope.row.oaGoods.vendor2" target="_blank">{{scope.row.oaGoods.vendor2 | cutOut }}</a>
+                        </template>
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="供应商链接3"
                                  header-align="center">
                     <el-table-column prop="oaGoods.vendor3"
                                      :render-header="renderHeaderPic"
-                                     width='150'
+                                     width='170'
                                      align="center">
+                        <template slot-scope="scope">
+                            <a :href="scope.row.oaGoods.vendor3" target="_blank">{{scope.row.oaGoods.vendor3 | cutOut }}</a>
+                        </template>
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="平台链接1"
                                  header-align="center">
                     <el-table-column prop="oaGoods.origin1"
                                      :render-header="renderHeaderPic"
-                                     width='150'
+                                     width='170'
                                      align="center">
+                        <template slot-scope="scope">
+                            <a :href="scope.row.oaGoods.origin1" target="_blank">{{scope.row.oaGoods.origin1 | cutOut }}</a>
+                        </template>
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="平台链接2"
                                  header-align="center">
                     <el-table-column prop="oaGoods.origin2"
                                      :render-header="renderHeaderPic"
-                                     width='150'
+                                     width='170'
                                      align="center">
+                        <template slot-scope="scope">
+                            <a :href="scope.row.oaGoods.origin2" target="_blank">{{scope.row.oaGoods.origin2 | cutOut }}</a>
+                        </template>
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="平台链接3"
                                  header-align="center">
                     <el-table-column prop="oaGoods.origin3"
                                      :render-header="renderHeaderPic"
-                                     width='150'
+                                     width='170'
                                      align="center">
+                        <template slot-scope="scope">
+                            <a :href="scope.row.oaGoods.origin3" target="_blank">{{scope.row.oaGoods.origin3 | cutOut }}</a>
+                        </template>
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="图片状态"
@@ -350,6 +368,13 @@
                 finish: {
                     id: []
                 }
+            }
+        },
+        filters: {
+            cutOut: function (value) {
+                if (!value) return ''
+                value = value.substring(0,21)
+                return value
             }
         },
         methods: {

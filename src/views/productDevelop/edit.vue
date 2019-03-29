@@ -1139,7 +1139,11 @@ export default {
         this.editForm.requiredKeywords = JSON.parse(this.editForm.requiredKeywords)
         this.editForm.randomKeywords = JSON.parse(this.editForm.randomKeywords)
         this.editForm.mapPersons = this.editForm.mapPersons.split(',')
-        this.editForm.dictionaryName = this.editForm.dictionaryName.split(',')
+        if(this.editForm.dictionaryName){
+          this.editForm.dictionaryName = this.editForm.dictionaryName.split(',')
+        }else {
+          this.editForm.dictionaryName = []
+        }
         if (this.editForm.headKeywords) {
           this.foremost = this.editForm.headKeywords.length
         }

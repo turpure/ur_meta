@@ -139,11 +139,17 @@
         </el-table-column>
       </el-table-column>
       <el-table-column label="供应商链接1" header-align="center">
-        <el-table-column prop="vendor1" :render-header="renderHeader" width='150' align="center">
+        <el-table-column prop="vendor1" :render-header="renderHeader" width='170' align="center">
+          <template slot-scope="scope">
+            <a :href="scope.row.vendor1" target="_blank">{{scope.row.vendor1 | cutOut }}</a>
+          </template>
         </el-table-column>
       </el-table-column>
       <el-table-column label="平台参考链接1" header-align="center">
-        <el-table-column prop="origin1" :render-header="renderHeader" width='150' align="center">
+        <el-table-column prop="origin1" :render-header="renderHeader" width='170' align="center">
+          <template slot-scope="scope">
+            <a :href="scope.row.origin1" target="_blank">{{scope.row.origin1 | cutOut }}</a>
+          </template>
         </el-table-column>
       </el-table-column>
       <el-table-column label="开发编号" header-align="center">
@@ -237,11 +243,17 @@
           </el-table-column>
         </el-table-column>
         <el-table-column label="供应商链接1" header-align="center">
-          <el-table-column prop="vendor1" :render-header="renderHeader1" width='150' align="center">
+          <el-table-column prop="vendor1" :render-header="renderHeader1" width='170' align="center">
+            <template slot-scope="scope">
+              <a :href="scope.row.vendor1" target="_blank">{{scope.row.vendor1 | cutOut }}</a>
+            </template>
           </el-table-column>
         </el-table-column>
         <el-table-column label="平台参考链接1" header-align="center">
-          <el-table-column prop="origin1" :render-header="renderHeader1" width='150' align="center">
+          <el-table-column prop="origin1" :render-header="renderHeader1" width='170' align="center">
+            <template slot-scope="scope">
+              <a :href="scope.row.origin1" target="_blank">{{scope.row.origin1 | cutOut }}</a>
+            </template>
           </el-table-column>
         </el-table-column>
         <el-table-column label="开发编号" header-align="center">
@@ -434,11 +446,17 @@
           </el-table-column>
         </el-table-column>
         <el-table-column label="供应商链接1" header-align="center">
-          <el-table-column prop="vendor1" :render-header="renderHeader2" width='150' align="center">
+          <el-table-column prop="vendor1" :render-header="renderHeader2" width='170' align="center">
+            <template slot-scope="scope">
+              <a :href="scope.row.vendor1" target="_blank">{{scope.row.vendor1 | cutOut }}</a>
+            </template>
           </el-table-column>
         </el-table-column>
         <el-table-column label="平台参考链接1" header-align="center">
-          <el-table-column prop="origin1" :render-header="renderHeader2" width='150' align="center">
+          <el-table-column prop="origin1" :render-header="renderHeader2" width='170' align="center">
+            <template slot-scope="scope">
+              <a :href="scope.row.origin1" target="_blank">{{scope.row.origin1 | cutOut }}</a>
+            </template>
           </el-table-column>
         </el-table-column>
         <el-table-column label="开发编号" header-align="center">
@@ -633,6 +651,13 @@ export default {
           { required: true, message: '开发员不能为空', trigger: 'blur' }
         ],
       }   
+    }
+  },
+  filters: {
+    cutOut: function (value) {
+      if (!value) return ''
+      value = value.substring(0,21)
+      return value
     }
   },
   mounted() {

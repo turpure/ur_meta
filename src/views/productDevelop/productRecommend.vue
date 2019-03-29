@@ -166,11 +166,17 @@
       </el-table-column>
     </el-table-column>
     <el-table-column label="供应商链接" header-align="center">
-      <el-table-column prop="vendor1" :render-header="renderHeader" width='150' align="center">
+      <el-table-column prop="vendor1" :render-header="renderHeader" width='170' align="center">
+        <template slot-scope="scope">
+          <a :href="scope.row.vendor1" target="_blank">{{scope.row.vendor1 | cutOut }}</a>
+        </template>
       </el-table-column>
     </el-table-column>
     <el-table-column label="平台参考链接" header-align="center">
-      <el-table-column prop="origin1" :render-header="renderHeader" width='150' align="center">
+      <el-table-column prop="origin1" :render-header="renderHeader" width='170' align="center">
+        <template slot-scope="scope">
+          <a :href="scope.row.origin1" target="_blank">{{scope.row.origin1 | cutOut }}</a>
+        </template>
       </el-table-column>
     </el-table-column>
     <el-table-column label="开发员" header-align="center">
@@ -483,11 +489,17 @@
         </el-table-column>
       </el-table-column>
       <el-table-column label="供应商链接1" header-align="center">
-        <el-table-column prop="vendor1" :render-header="renderHeader1" width='150' align="center">
+        <el-table-column prop="vendor1" :render-header="renderHeader1" width='170' align="center">
+          <template slot-scope="scope">
+            <a :href="scope.row.vendor1" target="_blank">{{scope.row.vendor1 | cutOut }}</a>
+          </template>
         </el-table-column>
       </el-table-column>
       <el-table-column label="平台参考链接1" header-align="center">
-        <el-table-column prop="origin1" :render-header="renderHeader1" width='150' align="center">
+        <el-table-column prop="origin1" :render-header="renderHeader1" width='170' align="center">
+          <template slot-scope="scope">
+            <a :href="scope.row.origin1" target="_blank">{{scope.row.origin1 | cutOut }}</a>
+          </template>
         </el-table-column>
       </el-table-column>
       <el-table-column label="开发编号" header-align="center">
@@ -824,11 +836,17 @@
         </el-table-column>
       </el-table-column>
       <el-table-column label="供应商链接1" header-align="center">
-        <el-table-column prop="vendor1" :render-header="renderHeader2" width='150' align="center">
+        <el-table-column prop="vendor1" :render-header="renderHeader2" width='170' align="center">
+          <template slot-scope="scope">
+            <a :href="scope.row.vendor1" target="_blank">{{scope.row.vendor1 | cutOut }}</a>
+          </template>
         </el-table-column>
       </el-table-column>
       <el-table-column label="平台参考链接1" header-align="center">
-        <el-table-column prop="origin1" :render-header="renderHeader2" width='150' align="center">
+        <el-table-column prop="origin1" :render-header="renderHeader2" width='170' align="center">
+          <template slot-scope="scope">
+            <a :href="scope.row.origin1" target="_blank">{{scope.row.origin1 | cutOut }}</a>
+          </template>
         </el-table-column>
       </el-table-column>
       <el-table-column label="开发编号" header-align="center">
@@ -901,7 +919,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-import { goodsList, goodsCreate, goodsDelete, goodsUpdate, goodsInfo, goodsClaim, forwardList, forwardCreate, forwardUpdate, forwardSubmit, reverseList, reverseCreate, reverseUpdate } from '../../api/product.js'
+import { goodsList, goodsCreate, goodsDelete, goodsUpdate, goodsInfo, goodsClaim, forwardList, forwardCreate, forwardUpdate, forwardSubmit, reverseList, reverseCreate, reverseUpdate,reverseList1 } from '../../api/product.js'
 import { getMember, getGoodscats } from '../../api/profit'
 import { getMenu } from '../../api/login'
 
@@ -999,7 +1017,6 @@ export default {
         img: '',
         cate: null,
         subCate: null,
-        introducer: '',
         vendor1: '',
         origin1: '',
         developer: '',
@@ -1044,6 +1061,13 @@ export default {
       tableData: [],
       tableData1: [],
       tableData2: []
+    }
+  },
+  filters: {
+    cutOut: function (value) {
+      if (!value) return ''
+      value = value.substring(0,21)
+      return value
     }
   },
   mounted() {
@@ -1118,7 +1142,6 @@ export default {
       this.editForm.nid = row.nid
       goodsInfo(this.editForm).then(res => {
         this.editForm = res.data.data
-        this.editForm.stockUp==1?this.editForm.stockUp=true:this.editForm.false
       })
       if (this.editForm.cate !== '') {
         const val = this.editForm.cate
@@ -1147,6 +1170,7 @@ export default {
       this.$refs.addForm.validate((valid)=>{
         if(valid){
           this.addForm.type = 'create'
+          this.addForm.flag='forward'
           forwardCreate(this.addForm).then(res => {
             if (res.data.code === 200) {
               this.$confirm('成功！', '提示', { type: 'success' }).then(() => {
@@ -1169,6 +1193,7 @@ export default {
       this.$refs.addForm.validate((valid)=>{
         if(valid){
           this.addForm.type = 'check'
+          this.addForm.flag='forward'
           forwardCreate(this.addForm).then(res => {
             if (res.data.code === 200) {
               this.$confirm('成功！', '提示', { type: 'success' }).then(() => {
@@ -1738,7 +1763,8 @@ export default {
       this.$refs.addForm.validate((valid)=>{
         if(valid){
           this.addForm.type = 'create'
-          reverseCreate(this.addForm).then(res => {
+          this.addForm.flag='backward'
+          forwardCreate(this.addForm).then(res => {
             if (res.data.code === 200) {
               this.$confirm('成功！', '提示', { type: 'success' }).then(() => {
                 this.dialogVisible2 = false
@@ -1760,7 +1786,8 @@ export default {
       this.$refs.addForm.validate((valid)=>{
         if(valid){
           this.addForm.type = 'check'
-          reverseCreate(this.addForm).then(res => {
+          this.addForm.flag='backward'
+          forwardCreate(this.addForm).then(res => {
             if (res.data.code === 200) {
               this.$confirm('成功！', '提示', { type: 'success' }).then(() => {
                 this.dialogVisible2 = false
@@ -1807,7 +1834,7 @@ export default {
       })
     },
     getReverse() {
-      reverseList(this.condition2).then(res => {
+      reverseList1(this.condition2).then(res => {
         this.tableData2 = res.data.data.items
         this.condition2.page2 = res.data.data._meta.currentPage
         this.condition2.pageSize2 = res.data.data._meta.perPage

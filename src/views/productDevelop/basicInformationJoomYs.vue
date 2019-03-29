@@ -267,7 +267,6 @@
         },
         methods: {
             addJoomTjEbayYs(){
-                if(this.transportYs){
                     var condate={
                         "servicesName": this.transportYs,
                         "type": this.attributeYs,
@@ -290,9 +289,6 @@
                             this.dialogPictureBjEbayYs = false
                         }
                     })
-                }else {
-                    this.$message.error('运输方式不能为空')
-                }
             },
             editEbayYs(index,row){
                 this.disLoginEbayYs = true
