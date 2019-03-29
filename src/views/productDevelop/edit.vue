@@ -843,7 +843,7 @@ export default {
       })
     },
     iSn(e){
-      console.log(e)
+
     },
     selectalld() {
       var ard = []
@@ -852,14 +852,12 @@ export default {
       }
       this.editForm.dictionaryName = ard
       this.dictionaryName1=ard.join(',')
-      console.log(this.dictionaryName1)
 //      this.member = this.allMember
     },
     noselectd() {
       this.editForm.dictionaryName = []
       this.dictionaryName1=""
 //      this.member = this.allMember
-      console.log(this.editForm)
     },
     selectalld1() {
       var ard1 = []
@@ -868,14 +866,12 @@ export default {
       }
       this.editForm.mapPersons = ard1
       this.mapPersons1=ard1.join(',')
-      console.log(this.editForm.mapPersons)
 //      this.member = this.allMember
     },
     noselectd1() {
       this.editForm.mapPersons = []
       this.mapPersons1=""
 //      this.member = this.allMember
-      console.log(this.editForm)
     },
     forbidSale(e){
       this.dictionaryName1=e.join(',')
@@ -905,7 +901,6 @@ export default {
     },
     childrenIndex(item){
       this.oaGoods.subCate=item
-      console.log(this.oaGoods)
     },
     pushVin(item){
       this.editForm.dictionaryName.push(item)
@@ -917,19 +912,15 @@ export default {
     },
     specIndex(e){
       this.editForm.packName=e
-      console.log(this.editForm.packName)
     },
     specificityIndex(e){
       this.editForm.attributeName=e
-      console.log(this.editForm.attributeName)
     },
     repertoryIndex(e){
       this.editForm.storeName=e
-      console.log(this.editForm.storeName)
     },
     seasonnIndex(e){
       this.editForm.season=e
-      console.log(this.editForm.season)
     },
     addzk(){
       this.jspt=!this.jspt
@@ -945,7 +936,6 @@ export default {
     },
     del(index, row) {
       this.tableData.splice(index, 1)
-      console.log(this.tableData)
     },
     //增加行
     addClomun() {
@@ -977,7 +967,6 @@ export default {
     //成本确定
     cosprice() {
       if (this.costprice) {
-        console.log(this.costprice)
         for (let i = 0; i < this.tableData.length; i++) {
           this.tableData[i].costPrice = this.costprice
         }
@@ -1093,7 +1082,6 @@ export default {
         },
         skuInfo: this.tableData
       }
-      console.log(saveInfo)
       APISaveAttribute(saveInfo).then(res => {
         if (res.data.data[0] === 'success') {
           this.$message({
@@ -1116,7 +1104,6 @@ export default {
         }
       }
       this.bxtotal=st1
-      console.log(this.mandatoryData)
     },
     random(e){
       this.sjlength=0
@@ -1154,7 +1141,6 @@ export default {
         if(this.editForm.randomKeywords){
           this.randomData= this.editForm.randomKeywords
         }
-        console.log(this.randomData)
         if(this.editForm.randomKeywords){
           for(var i=0;i<this.editForm.randomKeywords.length;i++){
             if(this.editForm.randomKeywords[i]!=""){
@@ -1194,11 +1180,9 @@ export default {
     })
     getAttributeInfoPlat().then(response => {
       this.violation =  response.data.data
-      console.log(this.violation)
     })
     getAttributeInfoSalesman().then(response => {
       this.mainSsale =  response.data.data
-      console.log(this.mainSsale)
     })
     getAttributeInfoCat().then(response => {
       this.mainCategory =  response.data.data

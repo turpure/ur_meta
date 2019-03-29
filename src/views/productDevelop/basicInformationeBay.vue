@@ -124,7 +124,7 @@
                     background
                     layout="prev, pager, next" style="margin: 20px 0;margin-left: 10px">
             </el-pagination>
-            <el-dialog title="" :visible.sync="dialogPictureEbay">
+            <el-dialog title="eBay账号详情" :visible.sync="dialogPictureEbay">
                 <el-row class="contentt" style="margin-top: 0">
                     <el-col :span="24" class="cTop">
                         <el-col :span="24" style="margin-bottom: 20px">
@@ -196,7 +196,7 @@
                     </el-col>
                 </el-row>
             </el-dialog>
-            <el-dialog title="添加Joom账号" :visible.sync="dialogPictureBjEbay">
+            <el-dialog title="添加eBay账号" :visible.sync="dialogPictureBjEbay">
                 <el-row class="contentt" style="margin-top: 0">
                     <el-col :span="24" class="cTop">
                         <el-col :span="24" style="margin-bottom: 20px">
@@ -272,7 +272,7 @@
                     <el-button type="primary" @click="addJoomTjEbay()">添 加</el-button>
                 </div>
             </el-dialog>
-            <el-dialog title="编辑Joom账号" :visible.sync="disLoginEbay">
+            <el-dialog title="编辑eBay账号" :visible.sync="disLoginEbay">
                 <el-row class="contentt" style="margin-top: 0">
                     <el-col :span="24" class="cTop">
                         <el-col :span="24" style="margin-bottom: 20px">
@@ -767,7 +767,12 @@
             getMenu().then(response => {
                 const res = response.data.data
                 const menu = res.filter(e => e.name === '产品中心')
-                this.allMenu = menu[0].children[4].tabs
+                let arr=menu[0].children
+                for(let i=0;i<arr.length;i++){
+                    if(arr[i].name=="基本信息"){
+                        this.allMenu=arr[i].tabs
+                    }
+                }
             })
             this.getDateEbay()
         }
