@@ -6,7 +6,7 @@
             </el-select>
         </el-form-item>
         <el-form-item label="批次号：" prop="goodsCode" :rules="[{required: true, message: '请填写字段', trigger: 'blur'}]">
-            <el-input v-model="condition.goodsCode" placeholder="--必填--" @change="myFunction()"></el-input>
+            <el-input v-model="condition.goodsCode" placeholder="--必填--" @change="myFunction()" ref="gName"></el-input>
         </el-form-item>
         <el-form-item>
             <el-button type="primary" class="input" @click="onSubmit()">提交</el-button>
@@ -45,6 +45,7 @@
                                     type: 'success'
                                 })
                                 this.condition.goodsCode=''
+                                this.$refs.gName.focus()
                             }else {
                                 this.$message.error(res.data.message)
                             }
