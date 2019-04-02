@@ -44,6 +44,7 @@
                                     message: '提交成功',
                                     type: 'success'
                                 })
+                                this.condition.goodsCode=''
                             }else {
                                 this.$message.error(res.data.message)
                             }
