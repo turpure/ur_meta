@@ -772,6 +772,15 @@ export function APICheck(param) {
     data
   })
 }
+export function APIExportDetail(param) {
+  const data = { condition: param }
+  return request({
+    url: '/supplier-order/export-detail',
+    method: 'post',
+    data,
+    responseType: 'arraybuffer'
+  })
+}
 //export function APIDelivery(param) {
 //  const data = { condition: param }
 //  return request({

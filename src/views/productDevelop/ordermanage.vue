@@ -4,15 +4,12 @@
             <el-row>
                 <el-col :span="24" style="margin-top: 15px">
                     <el-button type="primary" style="margin-left: 1%" @click="fhTemplate">发货单模板</el-button>
-                    <el-button type="primary" @click="synchronization">同步采购单</el-button>
-                    <el-select v-model="value" placeholder="请选择">
-                        <el-option
-                                v-for="item in options"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
-                        </el-option>
-                    </el-select>
+                    <el-button type="primary">同步采购单</el-button>
+                    <el-button type="primary">同步普源数据</el-button>
+                    <el-button type="primary">导入物流单号</el-button>
+                    <el-button type="primary">导入发货单</el-button>
+                    <el-button type="primary">审核单据</el-button>
+                    <el-button type="primary">导出采购单明细</el-button>
                 </el-col>
             </el-row>
             <el-table :data="tableData" class="elTablee" style="width: 98%;margin-left: 1%;margin-top: 10px">
@@ -37,7 +34,7 @@
                                 <el-dropdown-item><span @click="importWl(scope.$index, scope.row)">导入物流单号</span></el-dropdown-item>
                                 <el-dropdown-item>导入发货单</el-dropdown-item>
                                 <el-dropdown-item><span @click="toExamine(scope.$index, scope.row)">审核单据</span></el-dropdown-item>
-                                <el-dropdown-item>导出采购单明细</el-dropdown-item>
+                                <el-dropdown-item><span @click="importMx(scope.$index, scope.row)">导出采购单明细</span></el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
                     </template>
@@ -152,19 +149,12 @@
                     <el-button type="primary" @click="updae1()">确 定</el-button>
                 </div>
             </el-dialog>
-            <el-dialog title="同步采购单" :visible.sync="dialogTableVisible2">
-               同步采购单
-                <div slot="footer" class="dialog-footer">
-                    <el-button @click="dialogTableVisible2 = false">取 消</el-button>
-                    <el-button type="primary" @click="updae1()">确 定</el-button>
-                </div>
-            </el-dialog>
         </div>
     </section>
 </template>
 <script type="text/ecmascript-6">
     import { getMenu } from '../../api/login'
-    import {APIPaymentList,APISupplierRrderList,APIDeliveryTemplate,APISyncQuery,APIPay,APIDelivery,APIInputExpress,APICheck } from '../../api/product'
+    import {APIPaymentList,APISupplierRrderList,APIDeliveryTemplate,APISyncQuery,APIPay,APIDelivery,APIInputExpress,APICheck,APIExportDetail } from '../../api/product'
     export default {
         data() {
             return {
@@ -228,6 +218,49 @@
             }
         },
         methods: {
+            importMx(index,row){
+                const aryy2=[]
+                aryy2.push(row.id)
+                let obj2={
+                    ids:aryy2
+                }
+                APIExportDetail(obj2).then(res => {
+                    const blob = new Blob([res.data], {
+                        type: 'application/vnd.ms-excel;charset=UTF-8'
+                    })
+                    const downloadElement = document.createElement('a')
+                    const objectUrl = window.URL.createObjectURL(blob)
+                    downloadElement.href = objectUrl
+                    const date = new Date()
+                    const year = date.getFullYear()
+                    let month = date.getMonth() + 1
+                    let strDate = date.getDate()
+                    let hour = date.getHours()
+                    let minute = date.getMinutes()
+                    let second = date.getSeconds()
+                    if (month >= 1 && month <= 9) {
+                        month = '0' + month
+                    }
+                    if (strDate >= 0 && strDate <= 9) {
+                        strDate = '0' + strDate
+                    }
+                    if (hour >= 0 && hour <= 9) {
+                        hour = '0' + hour
+                    }
+                    if (minute >= 0 && minute <= 9) {
+                        minute = '0' + minute
+                    }
+                    if (second >= 0 && second <= 9) {
+                        second = '0' + second
+                    }
+                    const filename =
+                            '采购单明细' + year + month + strDate + hour + minute + second
+                    downloadElement.download = filename + '.xls'
+                    document.body.appendChild(downloadElement)
+                    downloadElement.click()
+                    document.body.removeChild(downloadElement)
+                })
+            },
             toExamine(index,row){
                 const aryy1=[]
                 aryy1.push(row.id)
@@ -244,9 +277,6 @@
                         this.$message.error(res.data.message)
                     }
                 })
-            },
-            synchronization(){
-                this.dialogTableVisible2=true
             },
             importWl(index,row){
                 const aryy=[]
