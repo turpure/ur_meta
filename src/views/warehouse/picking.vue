@@ -51,6 +51,9 @@
                             }
                         })
                     }
+                    if(!valid){
+                        this.$refs.gName.focus()
+                    }
                 })
             }
         },
