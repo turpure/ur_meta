@@ -756,6 +756,22 @@ export function APIPlatExportJoom(param) {
     responseType: 'arraybuffer'
   })
 }
+export function APIInputExpress(param) {
+  const data = { condition: param }
+  return request({
+    url: '/supplier-order/input-express',
+    method: 'post',
+    data
+  })
+}
+export function APICheck(param) {
+  const data = { condition: param }
+  return request({
+    url: '/supplier-order/check',
+    method: 'post',
+    data
+  })
+}
 //export function APIDelivery(param) {
 //  const data = { condition: param }
 //  return request({

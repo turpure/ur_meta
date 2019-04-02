@@ -4,7 +4,7 @@
             <el-row>
                 <el-col :span="24" style="margin-top: 15px">
                     <el-button type="primary" style="margin-left: 1%" @click="fhTemplate">发货单模板</el-button>
-                    <el-button type="primary">同步采购单</el-button>
+                    <el-button type="primary" @click="synchronization">同步采购单</el-button>
                     <el-select v-model="value" placeholder="请选择">
                         <el-option
                                 v-for="item in options"
@@ -36,7 +36,7 @@
                                 <el-dropdown-item><span @click="delivery(scope.$index, scope.row)">发货</span></el-dropdown-item>
                                 <el-dropdown-item><span @click="importWl(scope.$index, scope.row)">导入物流单号</span></el-dropdown-item>
                                 <el-dropdown-item>导入发货单</el-dropdown-item>
-                                <el-dropdown-item>审核单据</el-dropdown-item>
+                                <el-dropdown-item><span @click="toExamine(scope.$index, scope.row)">审核单据</span></el-dropdown-item>
                                 <el-dropdown-item>导出采购单明细</el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
@@ -152,12 +152,19 @@
                     <el-button type="primary" @click="updae1()">确 定</el-button>
                 </div>
             </el-dialog>
+            <el-dialog title="同步采购单" :visible.sync="dialogTableVisible2">
+               同步采购单
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="dialogTableVisible2 = false">取 消</el-button>
+                    <el-button type="primary" @click="updae1()">确 定</el-button>
+                </div>
+            </el-dialog>
         </div>
     </section>
 </template>
 <script type="text/ecmascript-6">
     import { getMenu } from '../../api/login'
-    import {APIPaymentList,APISupplierRrderList,APIDeliveryTemplate,APISyncQuery,APIPay,APIDelivery} from '../../api/product'
+    import {APIPaymentList,APISupplierRrderList,APIDeliveryTemplate,APISyncQuery,APIPay,APIDelivery,APIInputExpress,APICheck } from '../../api/product'
     export default {
         data() {
             return {
@@ -167,6 +174,7 @@
                 viewVisible: false,
                 dialogTableVisible:false,
                 dialogTableVisible1:false,
+                dialogTableVisible2:false,
                 total: null,
                 activeName: '供应商订单管理',
                 options4: [],
@@ -220,8 +228,42 @@
             }
         },
         methods: {
+            toExamine(index,row){
+                const aryy1=[]
+                aryy1.push(row.id)
+                let obj1={
+                    ids:aryy1
+                }
+                APICheck(obj1).then(res=>{
+                    if(res.data.code==200){
+                        this.$message({
+                            message: '成功',
+                            type: 'success'
+                        })
+                    }else {
+                        this.$message.error(res.data.message)
+                    }
+                })
+            },
+            synchronization(){
+                this.dialogTableVisible2=true
+            },
             importWl(index,row){
-
+                const aryy=[]
+                aryy.push(row.id)
+                let obj={
+                    ids:aryy
+                }
+                APIInputExpress(obj).then(res=>{
+                    if(res.data.code==200){
+                        this.$message({
+                            message: '成功',
+                            type: 'success'
+                        })
+                    }else {
+                        this.$message.error(res.data.message)
+                    }
+                })
             },
             delivery(index,row){
                 this.wlID=row.id

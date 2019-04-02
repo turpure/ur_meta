@@ -1,9 +1,7 @@
 <template>
     <el-form :model='condition' label-width="12rem" class="demo-ruleForm login-container" ref="condition">
         <el-form-item label="捡货人：" prop="suffix" :rules="[{required: true, message: '请填写字段', trigger: 'blur'}]">
-            <el-select v-model="condition.suffix" filterable multiple collapse-tags>
-                <el-button plain type="info" @click="selectall">全选</el-button>
-                <el-button plain type="info" @click="noselect">取消</el-button>
+            <el-select v-model="condition.suffix">
                 <el-option v-for="item in suffix" :key="item" :value="item"></el-option>
             </el-select>
         </el-form-item>
@@ -30,16 +28,6 @@
             }
         },
         methods: {
-            selectall() {
-                const allValues = []
-                for (const item of this.suffix) {
-                    allValues.push(item)
-                }
-                this.condition.suffix = allValues
-            },
-            noselect() {
-                this.condition.suffix = []
-            },
             onSubmit(form) {
                 this.$refs.condition.validate(valid => {
                     if(valid){
