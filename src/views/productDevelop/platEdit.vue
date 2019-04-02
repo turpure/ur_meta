@@ -59,7 +59,7 @@ export default {
       })
     },
     platform(){
-      sessionStorage.setItem('judge', "平台")
+      sessionStorage.setItem('judge', "平台信息")
       this.$router.push({
         path: `/v1/oa-goodsinfo/index`
       })
