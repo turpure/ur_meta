@@ -72,6 +72,9 @@
                 }
             }
         },
+        mounted(){
+          this.onSubmit()
+        },
         methods: {
             sortChange: function(column, prop, order) {
                 if(column.order=="ascending"){
