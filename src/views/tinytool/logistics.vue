@@ -14,7 +14,7 @@
                 <el-form-item prop="trackNo" label="跟踪号">
                     <el-input size="small" v-model="condition.trackNo" placeholder="请填写跟踪号"></el-input>
                 </el-form-item>
-                <el-form-item label="时间">
+                <el-form-item label="订单时间">
                     <el-date-picker size="small"
                                     v-model="date"
                                     @change="time"

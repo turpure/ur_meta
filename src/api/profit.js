@@ -527,6 +527,20 @@ export function getPlatEbayStore() {
     method: 'get'
   })
 }
+export function getPickMembe() {
+  return request({
+    url: 'warehouse-tools/pick-member',
+    method: 'get'
+  })
+}
+export function APIPick(param) {
+  const data = { condition: param }
+  return request({
+    url: 'warehouse-tools/pick',
+    method: 'post',
+    data
+  })
+}
 
 
 

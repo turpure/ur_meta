@@ -41,6 +41,8 @@ import logistics from '../views/tinytool/logistics.vue'
 import deadFee from '../views/settings/deadFee.vue'
 import operationFee from '../views/settings/operationFee.vue'
 import exchange from '../views/settings/exchange.vue'
+//仓库工具
+import picking from '../views/warehouse/picking.vue'
 // 反馈中心
 import requirements from '../views/feedback/requirements.vue'
 import news from '../views/feedback/news.vue'
@@ -224,6 +226,19 @@ const routes = [
         path: '/v1/settings/exchange',
         component: exchange,
         name: '美元设置'
+      }
+    ]
+  },
+  {
+    path: '/v1/warehouse-tools/index',
+    component: Home,
+    name: '仓库工具',
+    iconCls: 'el-icon-message',
+    children: [
+      {
+        path: '/v1/warehoue-tools/pick-index',
+        component: picking,
+        name: '拣货单'
       }
     ]
   },
