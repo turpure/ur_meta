@@ -353,6 +353,14 @@ export function getUkfic(param) {
     data
   })
 }
+export function getExpressTracking(param) {
+  const data = { condition: param }
+  return request({
+    url: '/tiny-tool/express-tracking',
+    method: 'post',
+    data
+  })
+}
 export function getUK(param) {
   const data = { condition: param }
   return request({
