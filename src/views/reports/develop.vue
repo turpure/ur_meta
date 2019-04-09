@@ -113,7 +113,7 @@
           <el-tab-pane label="业绩归属2人表"
                        name="second">
           </el-tab-pane>
-          <el-tab-pane label="死库明细1"
+          <el-tab-pane label="死库明细"
                        name="sikiu">
           </el-tab-pane>
         </el-tabs>
