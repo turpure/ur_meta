@@ -822,16 +822,16 @@
                                   class="item">
                         <span>{{oaGoods.origin3}}</span></el-form-item>
                     <el-form-item label="是否液体"
-                                  prop="isLiquid"
+                                  prop="IsLiquid"
                                   class="item"><span>{{goodsInfo.isLiquid}}</span></el-form-item>
                     <el-form-item label="是否粉末"
-                                  prop="isPowder"
+                                  prop="IsPowder"
                                   class="item"><span>{{goodsInfo.isPowder}}</span></el-form-item>
                     <el-form-item label="是否带磁"
                                   prop="isMagnetism"
                                   class="item"><span>{{goodsInfo.isMagnetism}}</span></el-form-item>
                     <el-form-item label="是否带电"
-                                  prop="isCharged"
+                                  prop="IsCharged"
                                   class="item"><span>{{goodsInfo.isCharged}}</span></el-form-item>
                     <el-form-item label="描述"
                                   prop="description"
