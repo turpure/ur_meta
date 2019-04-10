@@ -1,14 +1,14 @@
 <template>
     <section class="toolbar">
-        <el-tabs v-model="activeName"
-                 type="card"
-                 @tab-click="handleClick">
-            <el-tab-pane v-for="(item, index) in this.allMenu"
-                         :label="item.name"
-                         :name="item.name"
-                         :key="index">
-            </el-tab-pane>
-        </el-tabs>
+        <!--<el-tabs v-model="activeName"-->
+                 <!--type="card"-->
+                 <!--@tab-click="handleClick">-->
+            <!--<el-tab-pane v-for="(item, index) in this.allMenu"-->
+                         <!--:label="item.name"-->
+                         <!--:name="item.name"-->
+                         <!--:key="index">-->
+            <!--</el-tab-pane>-->
+        <!--</el-tabs>-->
         <div v-show="show.status">
             <!-- <div v-show="show.wait"> -->
             <el-col :span="24"
@@ -1154,41 +1154,41 @@
             }
         },
         methods: {
-            handleClick(tab, event) {
-                if (tab.label === '属性信息') {
-                    sessionStorage.setItem('judge', "属性信息")
-                    this.show['status'] = true
-                    this.getData()
-                } else {
-                    this.show['status'] = false
-                }
-                if (tab.label === '图片信息') {
-                    sessionStorage.setItem('judge', "图片信息")
-                    this.show['picture'] = true
-                    this.getPic()
-                } else {
-                    this.show['picture'] = false
-                }
-                if (tab.label === '平台信息') {
-                    sessionStorage.setItem('judge', "平台信息")
-                    this.show['plat'] = true
-                    this.getPlat()
-                    getAttributeInfoStoreName().then(response => {
-                        this.repertory =  response.data.data
-                    })
-                    getAttributeInfoCat().then(response => {
-                        this.mainCategory =  response.data.data
-                    })
-                    getPlatGoodsStatus().then(response => {
-                        this.goodsState =  response.data.data
-                    })
-                    getPlatCompletedPlat().then(response => {
-                        this.perfectPlatform =  response.data.data
-                    })
-                } else {
-                    this.show['plat'] = false
-                }
-            },
+//            handleClick(tab, event) {
+//                if (tab.label === '属性信息') {
+//                    sessionStorage.setItem('judge', "属性信息")
+//                    this.show['status'] = true
+//                    this.getData()
+//                } else {
+//                    this.show['status'] = false
+//                }
+//                if (tab.label === '图片信息') {
+//                    sessionStorage.setItem('judge', "图片信息")
+//                    this.show['picture'] = true
+//                    this.getPic()
+//                } else {
+//                    this.show['picture'] = false
+//                }
+//                if (tab.label === '平台信息') {
+//                    sessionStorage.setItem('judge', "平台信息")
+//                    this.show['plat'] = true
+//                    this.getPlat()
+//                    getAttributeInfoStoreName().then(response => {
+//                        this.repertory =  response.data.data
+//                    })
+//                    getAttributeInfoCat().then(response => {
+//                        this.mainCategory =  response.data.data
+//                    })
+//                    getPlatGoodsStatus().then(response => {
+//                        this.goodsState =  response.data.data
+//                    })
+//                    getPlatCompletedPlat().then(response => {
+//                        this.perfectPlatform =  response.data.data
+//                    })
+//                } else {
+//                    this.show['plat'] = false
+//                }
+//            },
             //属性信息分页
             handleCurrentChange(val) {
                 this.condition.page = val
@@ -2852,44 +2852,7 @@
                     }
                 }
             })
-            const judge=sessionStorage.getItem('judge')
-            if (judge === '属性信息') {
-                this.show['status'] = true
                 this.getData()
-                this.activeName="属性信息"
-            } else {
-                this.show['status'] = false
-            }
-            if (judge === '图片信息') {
-                this.show['picture'] = true
-                this.activeName="图片信息"
-                this.getPic()
-            } else {
-                this.show['picture'] = false
-            }
-            if (judge === '平台信息') {
-                this.show['plat'] = true
-                this.activeName="平台信息"
-                this.getPlat()
-                getAttributeInfoStoreName().then(response => {
-                    this.repertory =  response.data.data
-                })
-                getAttributeInfoCat().then(response => {
-                    this.mainCategory =  response.data.data
-                })
-                getPlatGoodsStatus().then(response => {
-                    this.goodsState =  response.data.data
-                })
-                getPlatCompletedPlat().then(response => {
-                    this.perfectPlatform =  response.data.data
-                })
-            } else {
-                this.show['plat'] = false
-            }
-            if(!judge){
-                this.show['status'] = true
-                this.getData()
-            }
         }
     }
 </script>

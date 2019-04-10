@@ -1,15 +1,15 @@
 <template>
   <section>
-    <el-row>
-      <el-col :span="24" style="position: fixed;z-index: 999;overflow: hidden;border-bottom: #e4e7ed solid 1px; background: #eee">
-          <span @click="attribute(log.name)" class="adClass" :class="log.name=='属性信息'?'actie':''" v-for="(log,index) in allMenu" :key="index">{{log.name}}</span>
-      </el-col>
-    </el-row>
+    <!--<el-row>-->
+      <!--<el-col :span="24" style="position: fixed;z-index: 999;overflow: hidden;border-bottom: #e4e7ed solid 1px; background: #eee">-->
+          <!--<span @click="attribute(log.name)" class="adClass" :class="log.name=='属性信息'?'actie':''" v-for="(log,index) in allMenu" :key="index">{{log.name}}</span>-->
+      <!--</el-col>-->
+    <!--</el-row>-->
     <el-form :model="editForm"
              :inline="true"
              label-width="100px"
              ref="editForm">
-      <el-row style="margin-top: 50px;margin-bottom: 0px">
+      <el-row style="margin-top: 10px;margin-bottom: 0px">
         <el-col :span="24"
                 style="padding: 0;margin-left: 15px;">
           <h3 class="toolbar essential" style="margin-top: 15px;margin-bottom: 10px">基本信息</h3>
