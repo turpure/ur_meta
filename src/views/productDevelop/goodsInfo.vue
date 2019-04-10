@@ -46,8 +46,8 @@
                         </el-tooltip>
                         <el-tooltip content="更新">
                             <!--<router-link :to="'/'+scope.row.id"-->
-                                         <!--style="color: #409EFF">-->
-                                <i class="el-icon-edit" style="color: #409EFF;cursor:pointer;" @click="upte(scope.$index, scope.row)"></i>
+                            <!--style="color: #409EFF">-->
+                            <i class="el-icon-edit" style="color: #409EFF;cursor:pointer;" @click="upte(scope.$index, scope.row)"></i>
                             <!--</router-link>-->
                         </el-tooltip>
                         <el-tooltip content="导入普源">
@@ -399,8 +399,8 @@
                                      width='150'
                                      align="center">
                         <template slot-scope="scope">
-                        <a :class="!scope.row.goodsName?'clasRed':''">{{scope.row.goodsName?scope.row.goodsName:"未设置"}}</a>
-                         </template>
+                            <a :class="!scope.row.goodsName?'clasRed':''">{{scope.row.goodsName?scope.row.goodsName:"未设置"}}</a>
+                        </template>
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="供应商链接1"
@@ -835,9 +835,9 @@
             <el-dialog title='查看'
                        :visible.sync="dialogPlat">
                 <el-form
-                         label-position="left"
-                         label-width="110px"
-                         ref="platForm">
+                        label-position="left"
+                        label-width="110px"
+                        ref="platForm">
                     <el-form-item label="供应商链接1"
                                   prop=""
                                   class="item">
@@ -1155,39 +1155,39 @@
         },
         methods: {
             handleClick(tab, event) {
-              if (tab.label === '属性信息') {
-                  sessionStorage.setItem('judge', "属性信息")
-                  this.show['status'] = true
-                  this.getData()
-              } else {
-                this.show['status'] = false
-              }
-              if (tab.label === '图片信息') {
-                  sessionStorage.setItem('judge', "图片信息")
-                  this.show['picture'] = true
-                  this.getPic()
-              } else {
-                this.show['picture'] = false
-              }
-              if (tab.label === '平台信息') {
-                  sessionStorage.setItem('judge', "平台信息")
-                  this.show['plat'] = true
-                  this.getPlat()
-                  getAttributeInfoStoreName().then(response => {
-                      this.repertory =  response.data.data
-                  })
-                  getAttributeInfoCat().then(response => {
-                      this.mainCategory =  response.data.data
-                  })
-                  getPlatGoodsStatus().then(response => {
-                      this.goodsState =  response.data.data
-                  })
-                  getPlatCompletedPlat().then(response => {
-                      this.perfectPlatform =  response.data.data
-                  })
-              } else {
-                this.show['plat'] = false
-              }
+                if (tab.label === '属性信息') {
+                    sessionStorage.setItem('judge', "属性信息")
+                    this.show['status'] = true
+                    this.getData()
+                } else {
+                    this.show['status'] = false
+                }
+                if (tab.label === '图片信息') {
+                    sessionStorage.setItem('judge', "图片信息")
+                    this.show['picture'] = true
+                    this.getPic()
+                } else {
+                    this.show['picture'] = false
+                }
+                if (tab.label === '平台信息') {
+                    sessionStorage.setItem('judge', "平台信息")
+                    this.show['plat'] = true
+                    this.getPlat()
+                    getAttributeInfoStoreName().then(response => {
+                        this.repertory =  response.data.data
+                    })
+                    getAttributeInfoCat().then(response => {
+                        this.mainCategory =  response.data.data
+                    })
+                    getPlatGoodsStatus().then(response => {
+                        this.goodsState =  response.data.data
+                    })
+                    getPlatCompletedPlat().then(response => {
+                        this.perfectPlatform =  response.data.data
+                    })
+                } else {
+                    this.show['plat'] = false
+                }
             },
             //属性信息分页
             handleCurrentChange(val) {
@@ -2259,7 +2259,7 @@
                                     },
                                     on: {
                                         input: value => {
-                                             this.plat.goodsCode = value
+                                            this.plat.goodsCode = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {

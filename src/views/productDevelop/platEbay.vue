@@ -717,7 +717,7 @@
                                 <td>
                                     <el-checkbox></el-checkbox>
                                 </td>
-                                <td><i class="el-icon-delete" @click="delIndex(index)"></i></td>
+                                <td><i class="el-icon-delete" @click="delIndex(index,item.id)"></i></td>
                                 <td>
                                     <el-input v-model="item.sku"></el-input>
                                 </td>
@@ -856,7 +856,7 @@
     </section>
 </template>
 <script type="text/ecmascript-6">
-    import { APIPlatInfo, APISaveWishInfo,APIPlatExportEbay,APIShippingEbay,APIFinishPlat } from '../../api/product'
+    import { APIPlatInfo, APISaveWishInfo,APIPlatExportEbay,APIShippingEbay,APIFinishPlat,APIDeleteVariant } from '../../api/product'
     import { getPlatEbayAccount,getPlatEbayStore,getEbaySite } from '../../api/profit'
     import { APISaveEbayInfo} from '../../api/platebay'
     export default {
@@ -1000,9 +1000,24 @@
                     this.$message.error('请选择账号')
                 }
             },
-            delIndex(index){
-                this.tabDate.splice(index, 1)
-                this.title.splice(index, 1)
+            delIndex(index,row){
+                let arrId = []
+                arrId.push(row.id)
+                let aryId={
+                    id:arrId
+                }
+                APIDeleteVariant(aryId).then(res => {
+                    if (res.data.code === 200) {
+                        this.$message({
+                            message: '删除成功',
+                            type: 'success'
+                        })
+                        this.tabDate.splice(index, 1)
+                        this.title.splice(index, 1)
+                    } else {
+                        this.$message.error('删除失败')
+                    }
+                })
             },
             forbidSale1(e){
                 this.unit1=e.join(',')

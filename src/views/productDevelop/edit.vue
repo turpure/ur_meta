@@ -691,7 +691,7 @@
   </section>
 </template>
 <script type="text/ecmascript-6">
-import { APIAttributeInfo, APISaveAttribute, APIAttribute,APISaveFinishAttribute } from '../../api/product'
+import { APIAttributeInfo, APISaveAttribute, APIAttribute,APISaveFinishAttribute,APIDeleteVariant } from '../../api/product'
 import { getMember, getGoodscats, getAttributeInfoPackName, getAttributeInfoSpecialAttribute, getAttributeInfoStoreName, getAttributeInfoSeason, getAttributeInfoPlat, getAttributeInfoSalesman, getAttributeInfoCat, getAttributeInfoSubCat } from '../../api/profit'
 import { getMenu } from '../../api/login'
 export default {
@@ -944,7 +944,23 @@ export default {
       this.editForm.dictionaryName.splice(index, 1)
     },
     del(index, row) {
-      this.tableData.splice(index, 1)
+      let arrId = []
+      arrId.push(row.id)
+      let aryId={
+        id:arrId
+      }
+      APIDeleteVariant(aryId).then(res => {
+        if (res.data.code === 200) {
+          this.$message({
+            message: '删除成功',
+            type: 'success'
+          })
+          this.tableData.splice(index, 1)
+//          this.getData()
+        } else {
+          this.$message.error('删除失败')
+        }
+      })
     },
     // 增加行
     addClomun() {
