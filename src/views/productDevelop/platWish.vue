@@ -1064,7 +1064,7 @@
         data.basicInfo.randomKeywords=mr
         data.skuInfo = this.tableData
         APISaveWishInfo(data).then(res => {
-          if (res.data.data[0] === 'success') {
+          if (res.data.code == 200) {
             this.$message({
               message: '保存成功',
               type: 'success'
@@ -1086,7 +1086,7 @@
           data.plat = ['joom']
         }
         APIFinishPlat(data).then(res => {
-          if (res.data.data[0] === 'success') {
+          if (res.data.code == 200) {
             this.$message({
               message: '保存成功',
               type: 'success'

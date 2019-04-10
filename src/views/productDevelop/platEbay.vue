@@ -7,7 +7,7 @@
                 <el-button @click="keep()"
                            type="primary" style="float: left;margin-right:10px">保存当前数据</el-button>
                 <el-button style="margin-left: 0;float: left;margin-right:10px"
-                           type="success">保存并完善</el-button>
+                           type="success" @click="keepWs()">保存并完善</el-button>
                 <el-select v-model="depot"
                            placeholder="--所有仓储--" style="float: left;margin-right:10px">
                     <el-option v-for="(item, key) in warehouse" :key='item.key' :label="item" :value="item"></el-option>
@@ -521,7 +521,7 @@
                     </el-col>
                     <el-col :span="19">
                         <el-select style="width: 95%"
-                                   v-model="wishForm.inshippingMethod1"
+                                   v-model="wishForm.inShippingMethod1"
                                    placeholder="--境内物流选择--">
                             <el-option v-for="(item, key) in ebayInFir" :key='item.key' :label="item.servicesName" :value="item.servicesName"></el-option>
                         </el-select>
@@ -555,7 +555,7 @@
                     </el-col>
                     <el-col :span="19">
                         <el-select style="width: 95%"
-                                   v-model="wishForm.inshippingMethod2"
+                                   v-model="wishForm.inShippingMethod2"
                                    placeholder="--境内物流选择--">
                             <el-option v-for="(item, key) in ebayInSec" :key='item.key' :label="item.servicesName" :value="item.servicesName"></el-option>
                         </el-select>
@@ -592,7 +592,7 @@
                     </el-col>
                     <el-col :span="19">
                         <el-select style="width: 95%"
-                                   v-model="wishForm.outshippingMethod1"
+                                   v-model="wishForm.outShippingMethod1"
                                    placeholder="--境外物流选择--">
                             <el-option v-for="(item, key) in ebayOutFir" :key='item.key' :label="item.servicesName" :value="item.servicesName"></el-option>
                         </el-select>
@@ -626,7 +626,7 @@
                     </el-col>
                     <el-col :span="19">
                         <el-select style="width: 95%"
-                                   v-model="wishForm.outshippingMethod2"
+                                   v-model="wishForm.outShippingMethod2"
                                    placeholder="--境外物流选择--">
                             <!--<el-option v-for="(item, key) in ebayOutFir" :key='item.key' :label="item.servicesName" :value="item.servicesName"></el-option>-->
                         </el-select>
@@ -856,7 +856,7 @@
     </section>
 </template>
 <script type="text/ecmascript-6">
-    import { APIPlatInfo, APISaveWishInfo,APIPlatExportEbay,APIShippingEbay } from '../../api/product'
+    import { APIPlatInfo, APISaveWishInfo,APIPlatExportEbay,APIShippingEbay,APIFinishPlat } from '../../api/product'
     import { getPlatEbayAccount,getPlatEbayStore,getEbaySite } from '../../api/profit'
     import { APISaveEbayInfo} from '../../api/platebay'
     export default {
@@ -931,6 +931,23 @@
             }
         },
         methods: {
+            keepWs(){
+                const data = {
+                    id: this.wishForm.infoId,
+                    plat: []
+                }
+                data.plat = ['ebay']
+                APIFinishPlat(data).then(res => {
+                    if (res.data.code ==200) {
+                        this.$message({
+                            message: '保存成功',
+                            type: 'success'
+                        })
+                    } else {
+                        this.$message.error(res.data.message)
+                    }
+                })
+            },
             siteEbay(e){
                 this.wishForm.site=e
                 this.OutFirebEbay()
@@ -1373,18 +1390,27 @@
                 this.ShippingOutFir.site=this.wishForm.site
                 APIShippingEbay(this.ShippingOutFir).then(response=>{
                     this.ebayOutFir =  response.data.data.items
+                    if(response.data.data.items.length==0){
+                        this.wishForm.outShippingMethod1=null
+                    }
                 })
             },
             InFirEbay(){
                 this.ShippingInFir.site=this.wishForm.site
                 APIShippingEbay(this.ShippingInFir).then(response=>{
                     this.ebayInFir =  response.data.data.items
+                    if(response.data.data.items.length==0){
+                        this.wishForm.inShippingMethod1=null
+                    }
                 })
             },
             InSecEbay(){
                 this.ShippingSec.site=this.wishForm.site
                 APIShippingEbay(this.ShippingSec).then(response=>{
                     this.ebayInSec =  response.data.data.items
+                    if(response.data.data.items.length==0){
+                        this.wishForm.inShippingMethod2=null
+                    }
                 })
             },
             keep() {
