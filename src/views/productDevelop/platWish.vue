@@ -669,7 +669,29 @@
     },
     methods: {
       keepPerfect(){
-
+        if(this.tips){
+          const data = {
+            id: this.wishForm.infoId,
+            plat: []
+          }
+          if (this.tips == 'wish') {
+            data.plat = ['wish']
+          } else {
+            data.plat = ['joom']
+          }
+          APIFinishPlat(data).then(res => {
+            if (res.data.code ==200) {
+              this.$message({
+                message: '保存成功',
+                type: 'success'
+              })
+            } else {
+              this.$message.error(res.data.message)
+            }
+          })
+        }else {
+          this.$message.error('请选择要保存的模板')
+        }
       },
       exportJoom(){
         if(this.joom){
@@ -679,7 +701,7 @@
           }
           APIPlatExportJoom(objStr1).then(res => {
             const blob = new Blob([res.data], {
-              type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
+              type: 'data:text/csv;charset=utf-8'
             })
             const downloadElement = document.createElement('a')
             const objectUrl = window.URL.createObjectURL(blob)

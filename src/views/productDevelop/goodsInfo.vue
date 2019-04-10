@@ -521,60 +521,60 @@
                         label-width="110px"
                         ref="picForm">
                     <el-form-item label="图片"
-                                  prop="goodsInfo.picUrl"
+                                  prop="goodsInfoPic.picUrl"
                                   class="item1">
-                        <img :src='goodsInfo.picUrl'
+                        <img :src='goodsInfoPic.picUrl'
                              style="width: 150px;height: 100px;">
                     </el-form-item>
                     <el-form-item label="图片地址"
                                   prop="picUrl"
                                   class="item">
-                        <span><a :href="goodsInfo.picUrl" target="_blank" class="classa">{{goodsInfo.picUrl}}</a></span>
+                        <span><a :href="goodsInfoPic.picUrl" target="_blank" class="classa">{{goodsInfoPic.picUrl}}</a></span>
                     </el-form-item>
                     <el-form-item label="商品名称"
                                   prop="GoodsName"
                                   class="item">
-                        <span>{{goodsInfo.goodsName?goodsInfo.goodsName:'未设置'}}</span></el-form-item>
+                        <span>{{goodsInfoPic.goodsName?goodsInfoPic.goodsName:'未设置'}}</span></el-form-item>
                     <el-form-item label="商品编码"
                                   prop="GoodsCode"
                                   class="item">
-                        <span>{{goodsInfo.goodsCode}}</span>
+                        <span>{{goodsInfoPic.goodsCode}}</span>
                     </el-form-item>
                     <el-form-item label="是否备货"
                                   prop="stockUp"
                                   class="item">
-                        <span>{{goodsInfo.stockUp}}</span>
+                        <span>{{goodsInfoPic.stockUp}}</span>
                     </el-form-item>
                     <el-form-item label="供应商名称"
                                   prop="supplierName"
-                                  class="item"><span>{{goodsInfo.supplierName?goodsInfo.supplierName:'未设置'}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfoPic.supplierName?goodsInfoPic.supplierName:'未设置'}}</span></el-form-item>
                     <el-form-item label="中文申报名"
                                   prop="aliasCnName"
-                                  class="item"><span>{{goodsInfo.aliasCnName?goodsInfo.aliasCnName:'未设置'}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfoPic.aliasCnName?goodsInfoPic.aliasCnName:'未设置'}}</span></el-form-item>
                     <el-form-item label="英文申报名"
                                   prop="aliasEnName"
-                                  class="item"><span>{{goodsInfo.aliasEnName?goodsInfo.aliasEnName:'未设置'}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfoPic.aliasEnName?goodsInfoPic.aliasEnName:'未设置'}}</span></el-form-item>
                     <el-form-item label="规格"
                                   prop=""
-                                  class="item"><span>{{goodsInfo.packName?goodsInfo.packName:'未设置'}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfoPic.packName?goodsInfoPic.packName:'未设置'}}</span></el-form-item>
                     <el-form-item label="季节"
                                   prop="season"
-                                  class="item"><span>{{goodsInfo.season?goodsInfo.season:'未设置'}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfoPic.season?goodsInfoPic.season:'未设置'}}</span></el-form-item>
                     <el-form-item label="仓库"
                                   prop="storeName"
-                                  class="item"><span>{{goodsInfo.storeName?goodsInfo.storeName:'未设置'}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfoPic.storeName?goodsInfoPic.storeName:'未设置'}}</span></el-form-item>
                     <el-form-item label="是否液体"
                                   prop="isLiquid"
-                                  class="item"><span>{{goodsInfo.isLiquid}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfoPic.isLiquid}}</span></el-form-item>
                     <el-form-item label="是否粉末"
                                   prop="isPowder"
-                                  class="item"><span>{{goodsInfo.isPowder}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfoPic.isPowder}}</span></el-form-item>
                     <el-form-item label="是否带磁"
                                   prop="isMagnetism"
-                                  class="item"><span>{{goodsInfo.isMagnetism}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfoPic.isMagnetism}}</span></el-form-item>
                     <el-form-item label="是否带电"
                                   prop="isCharged"
-                                  class="item"><span>{{goodsInfo.isCharged}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfoPic.isCharged}}</span></el-form-item>
                 </el-form>
             </el-dialog>
             <el-pagination background
@@ -841,31 +841,31 @@
                     <el-form-item label="供应商链接1"
                                   prop=""
                                   class="item">
-                        <span><a :href="oaGoods.vendor1" target="_blank" class="classa">{{oaGoodsPlat.vendor1?oaGoodsPlat.vendor1:'未设置'}}</a></span>
+                        <span><a :href="oaGoodsPlat.vendor1" target="_blank" class="classa">{{oaGoodsPlat.vendor1?oaGoodsPlat.vendor1:'未设置'}}</a></span>
                     </el-form-item>
                     <el-form-item label="供应商链接2"
                                   prop=""
                                   class="item">
-                        <span><a :href="oaGoods.vendor2" target="_blank" class="classa">{{oaGoodsPlat.vendor2?oaGoodsPlat.vendor2:'未设置'}}</a></span>
+                        <span><a :href="oaGoodsPlat.vendor2" target="_blank" class="classa">{{oaGoodsPlat.vendor2?oaGoodsPlat.vendor2:'未设置'}}</a></span>
                     </el-form-item>
                     <el-form-item label="供应商链接3"
                                   prop=""
                                   class="item">
-                        <span><a :href="oaGoods.vendor3" target="_blank" class="classa">{{oaGoodsPlat.vendor3?oaGoodsPlat.vendor3:'未设置'}}</a></span>
+                        <span><a :href="oaGoodsPlat.vendor3" target="_blank" class="classa">{{oaGoodsPlat.vendor3?oaGoodsPlat.vendor3:'未设置'}}</a></span>
                     </el-form-item>
                     <el-form-item label="平台参考链接1"
                                   prop=""
                                   class="item">
-                        <span><a :href="oaGoods.origin1" target="_blank" class="classa">{{oaGoodsPlat.origin1?oaGoodsPlat.origin1:'未设置'}}</a></span>
+                        <span><a :href="oaGoodsPlat.origin1" target="_blank" class="classa">{{oaGoodsPlat.origin1?oaGoodsPlat.origin1:'未设置'}}</a></span>
                     </el-form-item>
                     <el-form-item label="平台参考链接2"
                                   prop=""
                                   class="item">
-                        <span><a :href="oaGoods.origin2" target="_blank" class="classa">{{oaGoodsPlat.origin2?oaGoodsPlat.origin2:'未设置'}}</a></span></el-form-item>
+                        <span><a :href="oaGoodsPlat.origin2" target="_blank" class="classa">{{oaGoodsPlat.origin2?oaGoodsPlat.origin2:'未设置'}}</a></span></el-form-item>
                     <el-form-item label="平台参考链接3"
                                   prop=""
                                   class="item">
-                        <span><a :href="oaGoods.origin3" target="_blank" class="classa">{{oaGoodsPlat.origin3?oaGoodsPlat.origin3:'未设置'}}</a></span></el-form-item>
+                        <span><a :href="oaGoodsPlat.origin3" target="_blank" class="classa">{{oaGoodsPlat.origin3?oaGoodsPlat.origin3:'未设置'}}</a></span></el-form-item>
                     <el-form-item label="是否液体"
                                   prop="IsLiquid"
                                   class="item"><span>{{goodsInfoPlat.isLiquid?goodsInfoPlat.isLiquid:'未设置'}}</span></el-form-item>
@@ -928,7 +928,7 @@
                     <el-form-item label="图片"
                                   prop="picUrl"
                                   class="item">
-                        <span><a :href="goodsInfo.picUrl" target="_blank" class="classa">{{goodsInfoPlat.picUrl?goodsInfoPlat.picUrl:'未设置'}}</a></span>
+                        <span><a :href="goodsInfoPlat.picUrl" target="_blank" class="classa">{{goodsInfoPlat.picUrl?goodsInfoPlat.picUrl:'未设置'}}</a></span>
                     </el-form-item>
                     <el-form-item label="Goodsid"
                                   prop="goodsid"
@@ -1050,6 +1050,8 @@
                 oaGoods:[],
                 goodsInfoPlat:[],
                 oaGoodsPlat:[],
+                goodsInfoPic:[],
+                oaGoodsPic:[],
                 tableData: [
                 ],
                 picId:{
@@ -1789,7 +1791,7 @@
                 this.dialogPicture = true
                 this.picId.id = row.id
                 APIPicturePreview(this.picId).then(res => {
-                    this.goodsInfo = res.data.data
+                    this.goodsInfoPic = res.data.data
                 })
             },
             picEdit(index, row) {

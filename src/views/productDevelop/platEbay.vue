@@ -209,18 +209,16 @@
                     <h3 class="toolbar essential">站点组</h3>
                     <el-form-item label="站点"
                                   style="margin-bottom: 5px;margin-top: 5px">
-                        <!--<el-select size="small"-->
-                        <!--v-model="select"-->
-                        <!--style="width:245px;">-->
-                        <!--<el-option label="美国站"-->
-                        <!--value="美国站"></el-option>-->
-                        <!--<el-option label="中国站"-->
-                        <!--value="中国站"></el-option>-->
-                        <!--</el-select>-->
-                        <el-input size="small"
-                                  style="width:245px;"
-                                  v-model="wishForm.site"
-                                  :disabled="true"></el-input>
+                        <el-select size="small"
+                        v-model="wishForm.site"
+                                   @change="siteEbay($event)"
+                        style="width:245px;">
+                            <el-option v-for="(item, key) in ebaySite" :key='item.key' :label="item.siteName" :value="item.siteName"></el-option>
+                        </el-select>
+                        <!--<el-input size="small"-->
+                                  <!--style="width:245px;"-->
+                                  <!--v-model="wishForm.site"-->
+                                  <!--:disabled="true"></el-input>-->
                     </el-form-item>
                 </el-col>
                 <el-col :span="24">
@@ -523,12 +521,9 @@
                     </el-col>
                     <el-col :span="19">
                         <el-select style="width: 95%"
-                                   v-model="select"
+                                   v-model="wishForm.inshippingMethod1"
                                    placeholder="--境内物流选择--">
-                            <el-option label="是"
-                                       value="是"></el-option>
-                            <el-option label="否"
-                                       value="否"></el-option>
+                            <el-option v-for="(item, key) in ebayInFir" :key='item.key' :label="item.servicesName" :value="item.servicesName"></el-option>
                         </el-select>
                     </el-col>
                 </el-col>
@@ -560,12 +555,9 @@
                     </el-col>
                     <el-col :span="19">
                         <el-select style="width: 95%"
-                                   v-model="select"
+                                   v-model="wishForm.inshippingMethod2"
                                    placeholder="--境内物流选择--">
-                            <el-option label="是"
-                                       value="是"></el-option>
-                            <el-option label="否"
-                                       value="否"></el-option>
+                            <el-option v-for="(item, key) in ebayInSec" :key='item.key' :label="item.servicesName" :value="item.servicesName"></el-option>
                         </el-select>
                     </el-col>
                 </el-col>
@@ -600,12 +592,9 @@
                     </el-col>
                     <el-col :span="19">
                         <el-select style="width: 95%"
-                                   v-model="select"
+                                   v-model="wishForm.outshippingMethod1"
                                    placeholder="--境外物流选择--">
-                            <el-option label="是"
-                                       value="是"></el-option>
-                            <el-option label="否"
-                                       value="否"></el-option>
+                            <el-option v-for="(item, key) in ebayOutFir" :key='item.key' :label="item.servicesName" :value="item.servicesName"></el-option>
                         </el-select>
                     </el-col>
                 </el-col>
@@ -637,12 +626,9 @@
                     </el-col>
                     <el-col :span="19">
                         <el-select style="width: 95%"
-                                   v-model="select"
+                                   v-model="wishForm.outshippingMethod2"
                                    placeholder="--境外物流选择--">
-                            <el-option label="是"
-                                       value="是"></el-option>
-                            <el-option label="否"
-                                       value="否"></el-option>
+                            <!--<el-option v-for="(item, key) in ebayOutFir" :key='item.key' :label="item.servicesName" :value="item.servicesName"></el-option>-->
                         </el-select>
                     </el-col>
                 </el-col>
@@ -870,8 +856,8 @@
     </section>
 </template>
 <script type="text/ecmascript-6">
-    import { APIPlatInfo, APISaveWishInfo,APIPlatExportEbay } from '../../api/product'
-    import { getPlatEbayAccount,getPlatEbayStore } from '../../api/profit'
+    import { APIPlatInfo, APISaveWishInfo,APIPlatExportEbay,APIShippingEbay } from '../../api/product'
+    import { getPlatEbayAccount,getPlatEbayStore,getEbaySite } from '../../api/profit'
     import { APISaveEbayInfo} from '../../api/platebay'
     export default {
         data() {
@@ -884,6 +870,7 @@
                 depot:"",
                 wishForm: {},
                 mainForm: {},
+                ebaySite:[],
                 shoIS1:false,
                 dialogTableVisible: false,
                 dialogTable: false,
@@ -918,6 +905,24 @@
                 activeName: 'first',
                 tableData: [],
                 unit1:"",
+                ShippingInFir:{
+                    pageSize:200,
+                    type:'InFir',
+                    site:''
+                },
+                ShippingSec:{
+                    pageSize:200,
+                    type:'InSec',
+                    site:''
+                },
+                ShippingOutFir :{
+                    pageSize:200,
+                    type:'OutFir',
+                    site:''
+                },
+                ebayInFir:[],
+                ebayInSec:[],
+                ebayOutFir:[],
                 condition: {
                     id: 5,
                     id: 5,
@@ -926,6 +931,12 @@
             }
         },
         methods: {
+            siteEbay(e){
+                this.wishForm.site=e
+                this.OutFirebEbay()
+                this.InFirEbay()
+                this.InSecEbay()
+            },
             exportEbay(){
                 if(this.accountNum!=""){
                     let objStr={
@@ -1301,8 +1312,8 @@
                 APIPlatInfo(this.condition).then(res => {
                     this.wishForm = res.data.data.basicInfo
                     this.tabDate = res.data.data.skuInfo
-                    this.wishForm.site == 0 ? (this.wishForm.site = '美国') : this.wishForm.site
                     this.wishForm.extraPage = this.wishForm.extraPage.split('\\n')
+                    this.wishForm.site==0?this.wishForm.site="美国":this.wishForm.site==3?this.wishForm.site="英国":this.wishForm.site==15?this.wishForm.site="澳大利亚":this.wishForm.site=this.wishForm.site
                     if(this.wishForm.extraPage[this.wishForm.extraPage.length - 1]==''){
                         this.wishForm.extraPage.pop()
                     }
@@ -1356,6 +1367,24 @@
                             }
                         }
                     }
+                })
+            },
+            OutFirebEbay(){
+                this.ShippingOutFir.site=this.wishForm.site
+                APIShippingEbay(this.ShippingOutFir).then(response=>{
+                    this.ebayOutFir =  response.data.data.items
+                })
+            },
+            InFirEbay(){
+                this.ShippingInFir.site=this.wishForm.site
+                APIShippingEbay(this.ShippingInFir).then(response=>{
+                    this.ebayInFir =  response.data.data.items
+                })
+            },
+            InSecEbay(){
+                this.ShippingSec.site=this.wishForm.site
+                APIShippingEbay(this.ShippingSec).then(response=>{
+                    this.ebayInSec =  response.data.data.items
                 })
             },
             keep() {
@@ -1458,6 +1487,14 @@
             getPlatEbayStore().then(response => {
                 this.warehouse =  response.data.data
             })
+            getEbaySite().then(response=>{
+                this.ebaySite =  response.data.data
+            })
+            setTimeout(()=>{
+                this.OutFirebEbay()
+                this.InFirEbay()
+                this.InSecEbay()
+            },1000)
         }
     }
 </script>
