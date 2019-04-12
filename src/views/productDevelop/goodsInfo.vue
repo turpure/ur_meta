@@ -1019,7 +1019,8 @@
             APIPlat,
             APIDeleteVariant,
             APIPicturePreview,
-            APIFinishPicture
+            APIFinishPicture,
+            APIAttributeToShopElf
     } from '../../api/product'
     import {getAttributeInfoStoreName,getAttributeInfoCat,getPlatGoodsStatus,getPlatCompletedPlat} from '../../api/profit'
     import { getMenu } from '../../api/login'
@@ -1192,6 +1193,7 @@
             //属性信息分页
             handleCurrentChange(val) {
                 this.condition.page = val
+                sessionStorage.setItem('sepageInfo', val)
                 this.getData()
             },
             handleSizeChange(val) {
@@ -1240,6 +1242,21 @@
             },
             //导入普源
             passAll() {
+                if (this.sels) {
+                    let dataTe = {
+                        id: this.sels.map(e => e.id)
+                    }
+                    APIAttributeToShopElf(dataTe).then(res => {
+                        if (res.data.code === 200) {
+                            this.$message({
+                                message: '成功',
+                                type: 'success'
+                            })
+                        } else {
+                            this.$message.error(res.data.message)
+                        }
+                    })
+                }
             },
             //生成编码
             codeAll() {
@@ -2852,7 +2869,11 @@
                     }
                 }
             })
-                this.getData()
+            const seePage=sessionStorage.getItem("sepageInfo")
+            if(seePage){
+                this.condition.page=Number(seePage)
+            }
+            this.getData()
         }
     }
 </script>
