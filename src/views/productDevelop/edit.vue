@@ -764,7 +764,8 @@ export default {
       oaGoods: {},
       dictionaryName1: '',
       mapPersons1: '',
-      allMenu:[]
+      allMenu:[],
+      sels:[]
     }
   },
   methods: {
@@ -772,7 +773,7 @@ export default {
       this.sels = sels
     },
     passAll() {
-      if (this.sels) {
+      if (this.sels.length!=0) {
         let dataTe = {
           id: this.sels.map(e => e.id)
         }
@@ -786,6 +787,8 @@ export default {
             this.$message.error(res.data.message)
           }
         })
+      }else{
+        this.$message.error('请选择')
       }
     },
     formatTen(num) {
