@@ -197,11 +197,6 @@ export default {
       if(sessionStorage.getItem('judge')){
         sessionStorage.removeItem('judge')
       }
-      if(index=='v1/oa-goodsinfo/index'){
-         this.$router.push({
-          path: `/v1/oa-goodsinfo/goodsInfoPicture`
-         })
-      }
       sessionStorage.removeItem('sepage')
       sessionStorage.removeItem('sepagePic')
       sessionStorage.removeItem('sepageInfo')
