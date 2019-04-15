@@ -606,12 +606,23 @@ export default {
         }
       }else{
         let arrTk={}
-        arrTk.member=this.condition.member
+        let admin = ''
         arrTk.dateRange=this.condition.dateRange
         arrTk.dateRangeType=this.condition.dateType
         arrTk.role='purchaser'
         arrTk.pageSize=1000000
         arrTk.type='otherDeadFee'
+        const username = sessionStorage.getItem('user')
+        for (let i = 0; i < this.res.length; i++) {
+         admin = this.res[i].username
+        }
+        if (username === admin || isAdmin() === true) {
+           arrTk.member=this.condition.member
+        } else {
+          arrTk.member = this.member.map(m => {
+           return m.username
+         })
+       }
         APIReportExport(arrTk).then(res => {
           const blob = new Blob([res.data], {
             type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'

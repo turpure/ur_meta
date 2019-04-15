@@ -1248,6 +1248,7 @@ export default {
           if (typeof console !== 'undefined') console.log(e, wbout)
         }
       } else if (this.activeName === '退款订单明细') {
+        console.log(this.condition.member)
         let arrTk={}
         arrTk.department=this.condition.department
         arrTk.secDepartment=this.condition.secDepartment
@@ -1260,7 +1261,8 @@ export default {
         arrTk.storename=this.condition.store
         arrTk.pageSize=1000000
         arrTk.type='order'
-        APIReportExport(arrTk).then(res => {
+        const myform = this.myForm(arrTk)
+        APIReportExport(myform).then(res => {
           const blob = new Blob([res.data], {
             type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
           })
@@ -1358,7 +1360,8 @@ export default {
         arrTk.storename=this.condition.store
         arrTk.pageSize=1000000
         arrTk.type='goods'
-        APIReportExport(arrTk).then(res => {
+        const myform = this.myForm(arrTk)
+        APIReportExport(myform).then(res => {
           const blob = new Blob([res.data], {
             type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
           })
@@ -1433,7 +1436,8 @@ export default {
         arrTk.storename=this.condition.store
         arrTk.pageSize=1000000
         arrTk.type='salesDeadFee'
-        APIReportExport(arrTk).then(res => {
+        const myform = this.myForm(arrTk)
+        APIReportExport(myform).then(res => {
           const blob = new Blob([res.data], {
             type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
           })
@@ -1499,7 +1503,8 @@ export default {
         arrTk.storename=this.condition.store
         arrTk.pageSize=1000000
         arrTk.type='extra'
-        APIReportExport(arrTk).then(res => {
+        const myform = this.myForm(arrTk)
+        APIReportExport(myform).then(res => {
           const blob = new Blob([res.data], {
             type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
           })

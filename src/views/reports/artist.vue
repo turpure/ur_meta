@@ -896,7 +896,7 @@ export default {
           if (
                   isAdmin() === true &&
                   this.formInline.region.length === 0 &&
-                  myform.member === 0
+                  myform.member.length === 0
           ) {
             myform.member = this.member.map(m => {
               return m.username
@@ -963,7 +963,7 @@ export default {
             if (
                     isAdmin() === true &&
                     this.formInline.region.length === 0 &&
-                    myform.member === 0
+                    myform.member.length === 0
             ) {
               myform.member = this.member.map(m => {
                 return m.username
@@ -1170,13 +1170,53 @@ export default {
         this.$toExcel({ th, data, fileName, fileType, sheetName })
       }else{
         let arrTk={}
-        arrTk.department=this.formInline.region
-        arrTk.member=this.condition.member
+        // arrTk.department=this.formInline.region
+        // arrTk.member=this.condition.member
         arrTk.dateRange=this.condition.dateRange
         arrTk.dateRangeType=this.condition.dateType
         arrTk.role='possessMan'
         arrTk.pageSize=1000000
         arrTk.type='otherDeadFee'
+         let admin = ''
+          const username = sessionStorage.getItem('user')
+          for (let i = 0; i < this.res.length; i++) {
+            admin = this.res[i].username
+          }
+          if (isAdmin() === true && this.formInline.region.length === 0 && this.condition.member.length === 0) {
+            console.log(1)
+            arrTk.member = this.member.map(m => {
+              return m.username
+            })
+          } else if (this.formInline.region.length !== 0 && this.condition.member.length === 0) {
+            console.log(2)
+            const val = this.formInline.region
+            let res = []
+            let person = []
+            res = this.allMember
+            for (let i = 0; i < val.length; i++) {
+              person = res.filter(
+                      ele =>
+                      (ele.department === val[i] || ele.parent_depart === val[i]) &&
+                      ele.position === '美工'
+              )
+              this.member.concat(person)
+            }
+            arrTk.member = this.member.map(m => {
+              return m.username
+            })
+          } else if (username === admin && this.formInline.region.length === 0 && this.condition.member.length === 0) {
+            console.log(3)
+            arrTk.member = this.member.map(m => {
+              return m.username
+            })
+          } else if (isAdmin() === false && username !== admin) {
+            console.log(4)
+            arrTk.member = this.member.map(m => {
+              return m.username
+            })
+          }else{
+            arrTk.member=this.condition.member
+          }
         APIReportExport(arrTk).then(res => {
           const blob = new Blob([res.data], {
             type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
