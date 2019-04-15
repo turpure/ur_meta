@@ -50,7 +50,7 @@ import news from '../views/feedback/news.vue'
 import goodsNav from '../views/productDevelop/goodsNav.vue'
 import productRecommend from '../views/productDevelop/productRecommend.vue'
 import productApprove from '../views/productDevelop/productApprove.vue'
-import goodsInfo from '../views/productDevelop/goodsInfo.vue'
+import goodsInfoPit from '../views/productDevelop/goodsInfo.vue'
 import goodsInfoPicture from '../views/productDevelop/goodsInfoPicture.vue'
 import goodsInfoPlatform from '../views/productDevelop/goodsInfoPlatform.vue'
 import edit from '../views/productDevelop/edit.vue'
@@ -352,8 +352,8 @@ const routes = [
         name: '产品资料',
         children: [
           {
-            path: '/v1/oa-goodsinfo/index',
-            component: goodsInfo,
+            path: '/v1/oa-goodsinfo/goodsInfoPit',
+            component: goodsInfoPit,
             name: '属性信息'
           },
           {
