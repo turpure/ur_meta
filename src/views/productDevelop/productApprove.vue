@@ -1,6 +1,6 @@
 <template>
   <section class="toolbar">
-    <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+    <el-tabs v-model="activeName" type="card" @tab-click="handleClick" style='background-color:#fff'>
       <el-tab-pane v-for="(item, index) in this.allMenu" :label="item.name" :name="item.name" :key="index">
       </el-tab-pane>
     </el-tabs>
@@ -648,7 +648,7 @@ export default {
       time1: [],
       time2: [],
       show: {
-        wait: true,
+        wait: false,
         pass: false,
         unPass: false
       },
@@ -771,6 +771,24 @@ export default {
         if(arr[i].name=="产品审批"){
           this.allMenu=arr[i].tabs
         }
+      }
+      if (this.allMenu[0].name== '待审批列表') {
+        this.show['wait'] = true
+        this.getData()
+      } else {
+        this.show['wait'] = false
+      }
+      if (this.allMenu[0].name== '已审批列表') {
+        this.show['pass'] = true
+        this.getPass()
+      } else {
+        this.show['pass'] = false
+      }
+      if (this.allMenu[0].name== '未通过列表') {
+        this.show['unPass'] = true
+        this.getFailed()
+      } else {
+        this.show['unPass'] = false
       }
     })
     this.getData()
