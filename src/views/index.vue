@@ -681,11 +681,11 @@
                                label="角色"></el-table-column>
               <el-table-column prop="lastAmt"
                                align="center"
-                               label="上月毛利"
+                               label="上月销售额"
                                sortable="custom"></el-table-column>
               <el-table-column prop="amt"
                                align="center"
-                               label="本月毛利"
+                               label="本月销售额"
                                sortable="custom"></el-table-column>
               <el-table-column prop="rate"
                                align="center"
@@ -736,11 +736,11 @@
                                label="角色"></el-table-column>
               <el-table-column prop="lastAmt"
                                align="center"
-                               label="上月毛利"
+                               label="上月销售额"
                                sortable="custom"></el-table-column>
               <el-table-column prop="amt"
                                align="center"
-                               label="本月毛利"
+                               label="本月销售额"
                                sortable="custom"></el-table-column>
               <el-table-column prop="rate"
                                align="center"
@@ -785,10 +785,10 @@
                                sortable></el-table-column>
               <el-table-column prop="lastAmt"
                                align="center"
-                               label="上月毛利"
+                               label="上月销售额"
                                sortable="custom"></el-table-column>
               <el-table-column prop="amt"
-                               label="本月毛利"
+                               label="本月销售额"
                                align="center"
                                sortable="custom">
               </el-table-column>
@@ -840,13 +840,13 @@
               <el-table-column prop="role"
                                align="center"
                                label="角色"></el-table-column>
-              <el-table-column prop="lastAmt "
+              <el-table-column prop="lastAmt"
                                align="center"
-                               label="上月毛利"
+                               label="上月销售额"
                                sortable="custom"></el-table-column>
               <el-table-column prop="amt"
                                align="center"
-                               label="本月毛利"
+                               label="本月销售额"
                                sortable="custom"></el-table-column>
               <el-table-column prop="rate"
                                align="center"

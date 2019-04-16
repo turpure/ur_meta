@@ -800,13 +800,13 @@
                         </el-radio-group>
                     </el-col>
                 </el-row>
-                <div slot="footer"
+                <!-- <div slot="footer"
                      class="dialog-footer">
                     <el-button @click="keepData"
                                type="primary">保 存</el-button>
                     <el-button @click="outerVisible = false"
                                type="info">取 消</el-button>
-                </div>
+                </div> -->
                 <el-dialog width="30%"
                            title="添加属性"
                            :visible.sync="innerVisible"
@@ -862,7 +862,7 @@
     export default {
         data() {
             return {
-                radio: 'Color',
+                radio: '',
                 columns: '',
                 title: [],
                 select: '',
@@ -1373,6 +1373,7 @@
                             this.title.push(obj)
                             console.log(this.title)
                         }
+                        this.radio=res.data.data.skuInfo[0].property.pictureKey
                         this.tite=this.title[0].label
                     }else {
                         let arrDe=["Color","Size","款式3","UPC"]
