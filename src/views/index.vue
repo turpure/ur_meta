@@ -679,11 +679,11 @@
               <el-table-column prop="role"
                                align="center"
                                label="角色"></el-table-column>
-              <el-table-column prop="amt"
+              <el-table-column prop="lastAmt"
                                align="center"
                                label="上月毛利"
                                sortable="custom"></el-table-column>
-              <el-table-column prop="lastAmt"
+              <el-table-column prop="amt"
                                align="center"
                                label="本月毛利"
                                sortable="custom"></el-table-column>
@@ -734,11 +734,11 @@
               <el-table-column prop="role"
                                align="center"
                                label="角色"></el-table-column>
-              <el-table-column prop="amt"
+              <el-table-column prop="lastAmt"
                                align="center"
                                label="上月毛利"
                                sortable="custom"></el-table-column>
-              <el-table-column prop="lastAmt"
+              <el-table-column prop="amt"
                                align="center"
                                label="本月毛利"
                                sortable="custom"></el-table-column>
@@ -783,11 +783,11 @@
                                label="部门"
                                align="center"
                                sortable></el-table-column>
-              <el-table-column prop="amt"
+              <el-table-column prop="lastAmt"
                                align="center"
                                label="上月毛利"
                                sortable="custom"></el-table-column>
-              <el-table-column prop="lastAmt"
+              <el-table-column prop="amt"
                                label="本月毛利"
                                align="center"
                                sortable="custom">
@@ -840,11 +840,11 @@
               <el-table-column prop="role"
                                align="center"
                                label="角色"></el-table-column>
-              <el-table-column prop="amt"
+              <el-table-column prop="lastAmt "
                                align="center"
                                label="上月毛利"
                                sortable="custom"></el-table-column>
-              <el-table-column prop="lastAmt"
+              <el-table-column prop="amt"
                                align="center"
                                label="本月毛利"
                                sortable="custom"></el-table-column>
