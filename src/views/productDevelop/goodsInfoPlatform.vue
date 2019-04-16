@@ -185,7 +185,7 @@
                                      align="center">
                     </el-table-column>
                 </el-table-column>
-                <el-table-column label="是否是采集数据"
+                <el-table-column label="是否采集数据"
                                  header-align="center">
                     <el-table-column prop=""
                                      :render-header="renderHeaderPlat"

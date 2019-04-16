@@ -6,7 +6,7 @@
     </el-tabs>
   <div v-show="show.product">
   <el-col :span="24" style="padding:10px 20px;">
-    <el-button plain @click='dialogVisible=true'>新增产品</el-button>
+    <el-button plain @click='showCp'>新增产品</el-button>
     <el-button plain @click="delAll">批量删除</el-button>
   </el-col>
   <!-- 新增对话框 -->
@@ -226,7 +226,7 @@
     </div>
     <div v-show="show.forward">
       <el-col :span="24" style="padding:10px 20px;">
-        <el-button plain @click='dialogVisible1 = true'>新增产品</el-button>
+        <el-button plain @click='showZx'>新增产品</el-button>
         <el-button plain>批量导入</el-button>
         <el-button plain @click="delAll1">批量删除</el-button>
         <el-button plain>下载模板</el-button>
@@ -234,37 +234,37 @@
       </el-col>
     <!-- 新增对话框 -->
     <el-dialog title='新增' :visible.sync="dialogVisible1">
-      <el-form :model="addForm" :rules="rules" label-width="110px" label-position="left" class="demo-ruleForm" ref="addForm">
+      <el-form :model="addForm1" :rules="rules" label-width="110px" label-position="left" class="demo-ruleForm" ref="addForm1">
         <el-form-item label="图片" prop='img'>
-          <el-input size="small" v-model="addForm.img" placeholder="必填"></el-input>
+          <el-input size="small" v-model="addForm1.img" placeholder="必填"></el-input>
         </el-form-item>
         <el-form-item label="主类目" prop='cate'>
-          <el-select size="small" v-model="addForm.cate" @change="productcategory" style="width:100%;" placeholder="请选择父类">
+          <el-select size="small" v-model="addForm1.cate" @change="productcategory1" style="width:100%;" placeholder="请选择父类">
             <el-option v-for="item in cate" :value="item.CategoryName" :key="item.CategoryName"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="子类目" prop='subCate' placeholder="请选择父类">
-          <el-select size="small" v-model="addForm.subCate" :disabled="this.disabled" style="width:100%;">
+          <el-select size="small" v-model="addForm1.subCate" :disabled="this.disabled" style="width:100%;">
             <el-option v-for="item in subCate" :value="item.CategoryName" :key="item.CategoryName"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="供应商链接1" prop='vendor1' :rules="[{required: true, message: '不能为空', trigger: 'blur'}]">
-          <el-input size="small" v-model="addForm.vendor1" placeholder="必填"></el-input>
+          <el-input size="small" v-model="addForm1.vendor1" placeholder="必填"></el-input>
         </el-form-item>
         <el-form-item label="供应商链接2" prop='vendor2'>
-          <el-input size="small" v-model="addForm.vendor2"></el-input>
+          <el-input size="small" v-model="addForm1.vendor2"></el-input>
         </el-form-item>
         <el-form-item label="供应商链接3" prop='vendor3'>
-          <el-input size="small" v-model="addForm.vendor3"></el-input>
+          <el-input size="small" v-model="addForm1.vendor3"></el-input>
         </el-form-item>
         <el-form-item label="平台参考链接1" prop='origin1'>
-          <el-input size="small" v-model="addForm.origin1" placeholder="选填"></el-input>
+          <el-input size="small" v-model="addForm1.origin1" placeholder="选填"></el-input>
         </el-form-item>
         <el-form-item label="平台参考链接2" prop='origin2'>
-          <el-input size="small" v-model="addForm.origin2" placeholder="选填"></el-input>
+          <el-input size="small" v-model="addForm1.origin2" placeholder="选填"></el-input>
         </el-form-item>
         <el-form-item label="平台参考链接3" prop='origin3'>
-          <el-input size="small" v-model="addForm.origin3" placeholder="选填"></el-input>
+          <el-input size="small" v-model="addForm1.origin3" placeholder="选填"></el-input>
         </el-form-item>
         <!-- <el-form-item label="开发员" prop='developer'>
           <el-select size="small" v-model="addForm.developer" style="width:100%;">
@@ -272,25 +272,25 @@
           </el-select>
         </el-form-item> -->
         <el-form-item label="售价($)" prop='salePrice'>
-          <el-input size="small" v-model="addForm.salePrice" placeholder="选填"></el-input>
+          <el-input size="small" v-model="addForm1.salePrice" placeholder="选填"></el-input>
         </el-form-item>
         <el-form-item label="预估月销量" prop='hopeSale'>
-          <el-input size="small" v-model="addForm.hopeSale" placeholder="选填"></el-input>
+          <el-input size="small" v-model="addForm1.hopeSale" placeholder="选填"></el-input>
         </el-form-item>
         <el-form-item label="预估利润率(%)" prop='hopeRate'>
-          <el-input size="small" v-model="addForm.hopeRate" placeholder="选填"></el-input>
+          <el-input size="small" v-model="addForm1.hopeRate" placeholder="选填"></el-input>
         </el-form-item>
         <el-form-item label="预估重量(克)" prop='hopeWeight'>
-          <el-input size="small" v-model="addForm.hopeWeight" placeholder="选填"></el-input>
+          <el-input size="small" v-model="addForm1.hopeWeight" placeholder="选填"></el-input>
         </el-form-item>
         <el-form-item label="预估成本(￥)" prop='hopeCost'>
-          <el-input size="small" v-model="addForm.hopeCost" placeholder="选填"></el-input>
+          <el-input size="small" v-model="addForm1.hopeCost" placeholder="选填"></el-input>
         </el-form-item>
         <el-form-item label="预估月毛利($)" prop='hopeMonthProfit'>
-          <el-input size="small" v-model="addForm.hopeMonthProfit" disabled placeholder="自动计算"></el-input>
+          <el-input size="small" v-model="addForm1.hopeMonthProfit" disabled placeholder="自动计算"></el-input>
         </el-form-item>
         <el-form-item label="">
-          <el-checkbox-group v-model="addForm.stockUp">
+          <el-checkbox-group v-model="addForm1.stockUp">
             <el-checkbox label="是否备货" true-label="是" false-label="否" name="type"></el-checkbox>
           </el-checkbox-group>
         </el-form-item>
@@ -576,7 +576,7 @@
     </div>
     <div v-show="show.reverse">
       <el-col :span="24" style="padding:10px 20px;">
-        <el-button plain @click='dialogVisible2 = true'>新增产品</el-button>
+        <el-button plain @click='showNx'>新增产品</el-button>
         <el-button plain>批量导入</el-button>
         <el-button plain @click="delAll2">批量删除</el-button>
         <el-button plain>下载模板</el-button>
@@ -584,63 +584,63 @@
       </el-col>
       <!-- 新增对话框 -->
     <el-dialog title='新增' :visible.sync="dialogVisible2">
-      <el-form :model="addForm" :rules="rules" label-width="110px" label-position="left" class="demo-ruleForm" ref="addForm">
+      <el-form :model="addForm2" :rules="rules" label-width="110px" label-position="left" class="demo-ruleForm" ref="addForm2">
         <el-form-item label="图片" prop='img'>
-          <el-input size="small" v-model="addForm.img" placeholder="必填"></el-input>
+          <el-input size="small" v-model="addForm2.img" placeholder="必填"></el-input>
         </el-form-item>
         <el-form-item label="主类目" prop='cate'>
-          <el-select size="small" v-model="addForm.cate" @change="productcategory" style="width:100%;">
+          <el-select size="small" v-model="addForm2.cate" @change="productcategory2" style="width:100%;">
             <el-option v-for="item in cate" :value="item.CategoryName" :key="item.CategoryName"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="子类目" prop='subCate'>
-          <el-select size="small" v-model="addForm.subCate" :disabled="this.disabled" style="width:100%;">
+          <el-select size="small" v-model="addForm2.subCate" :disabled="this.disabled" style="width:100%;">
             <el-option v-for="item in subCate" :value="item.CategoryName" :key="item.CategoryName"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="供应商链接1" prop='vendor1'>
-          <el-input size="small" v-model="addForm.vendor1"></el-input>
+          <el-input size="small" v-model="addForm2.vendor1"></el-input>
         </el-form-item>
         <el-form-item label="供应商链接2" prop='vendor2'>
-          <el-input size="small" v-model="addForm.vendor2"></el-input>
+          <el-input size="small" v-model="addForm2.vendor2"></el-input>
         </el-form-item>
         <el-form-item label="供应商链接3" prop='vendor3'>
-          <el-input size="small" v-model="addForm.vendor3"></el-input>
+          <el-input size="small" v-model="addForm2.vendor3"></el-input>
         </el-form-item>
         <el-form-item label="平台参考链接1" prop='origin1'>
-          <el-input size="small" v-model="addForm.origin1"></el-input>
+          <el-input size="small" v-model="addForm2.origin1"></el-input>
         </el-form-item>
         <el-form-item label="平台参考链接2" prop='origin2'>
-          <el-input size="small" v-model="addForm.origin2"></el-input>
+          <el-input size="small" v-model="addForm2.origin2"></el-input>
         </el-form-item>
         <el-form-item label="平台参考链接3" prop='origin3'>
-          <el-input size="small" v-model="addForm.origin3"></el-input>
+          <el-input size="small" v-model="addForm2.origin3"></el-input>
         </el-form-item>
-        <el-form-item label="开发员" prop='developer'>
+        <!-- <el-form-item label="开发员" prop='developer'>
           <el-select size="small" v-model="addForm.developer" style="width:100%;">
             <el-option v-for="item in developer" :value="item.username" :key="item.username"></el-option>
           </el-select>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="售价($)" prop='salePrice'>
-          <el-input size="small" v-model="addForm.salePrice" placeholder="选填"></el-input>
+          <el-input size="small" v-model="addForm2.salePrice" placeholder="选填"></el-input>
         </el-form-item>
         <el-form-item label="预估月销量" prop='hopeSale'>
-          <el-input size="small" v-model="addForm.hopeSale" placeholder="选填"></el-input>
+          <el-input size="small" v-model="addForm2.hopeSale" placeholder="选填"></el-input>
         </el-form-item>
         <el-form-item label="预估利润率(%)" prop='hopeRate'>
-          <el-input size="small" v-model="addForm.hopeRate" placeholder="选填"></el-input>
+          <el-input size="small" v-model="addForm2.hopeRate" placeholder="选填"></el-input>
         </el-form-item>
         <el-form-item label="预估重量(克)" prop='hopeWeight'>
-          <el-input size="small" v-model="addForm.hopeWeight" placeholder="选填"></el-input>
+          <el-input size="small" v-model="addForm2.hopeWeight" placeholder="选填"></el-input>
         </el-form-item>
         <el-form-item label="预估成本(￥)" prop='hopeCost'>
-          <el-input size="small" v-model="addForm.hopeCost" placeholder="选填"></el-input>
+          <el-input size="small" v-model="addForm2.hopeCost" placeholder="选填"></el-input>
         </el-form-item>
         <el-form-item label="预估月毛利($)" prop='hopeMonthProfit'>
-          <el-input size="small" v-model="addForm.hopeMonthProfit" disabled placeholder="自动计算"></el-input>
+          <el-input size="small" v-model="addForm2.hopeMonthProfit" disabled placeholder="自动计算"></el-input>
         </el-form-item>
         <el-form-item label="售价($)">
-          <el-checkbox-group v-model="addForm.stockUp">
+          <el-checkbox-group v-model="addForm2.stockUp">
             <el-checkbox label="是否备货" true-label="是" false-label="否" name="type"></el-checkbox>
           </el-checkbox-group>
         </el-form-item>
@@ -1031,6 +1031,26 @@ export default {
         developer: '',
         introReason: ''
       },
+      addForm1:{
+        img: '',
+        cate: null,
+        subCate: null,
+        vendor1: '',
+        origin1: '',
+        developer: '',
+        introReason: '',
+        stockUp:'否'
+      },
+      addForm2:{
+        img: '',
+        cate: null,
+        subCate: null,
+        vendor1: '',
+        origin1: '',
+        developer: '',
+        introReason: '',
+        stockUp:'否'
+      },
       viewForm: {
         nid: null,
       },
@@ -1102,6 +1122,20 @@ export default {
     })
   },
   methods:{
+    showNx(){
+      Object.keys(this.addForm2).map(key => this.addForm2[key] = null)
+      this.addForm2.stockUp='否'
+      this.dialogVisible2=true 
+    },
+    showZx(){
+      Object.keys(this.addForm1).map(key => this.addForm1[key] = null)
+      this.addForm1.stockUp='否'
+      this.dialogVisible1=true 
+    },
+    showCp(){
+     Object.keys(this.addForm).map(key => this.addForm[key] = null)
+      this.dialogVisible=true
+    },
     empty(row, column, cellValue, index) {
       if (cellValue === 0) {
         return '否'
@@ -1193,11 +1227,13 @@ export default {
       })
     },
     submitForm1() {
-      this.$refs.addForm.validate((valid)=>{
+      this.$refs.addForm1.validate((valid)=>{
         if(valid){
-          this.addForm.type = 'create'
-          this.addForm.flag='forward'
-          forwardCreate(this.addForm).then(res => {
+          this.addForm1.type = 'create'
+          this.addForm1.flag='forward'
+          this.addForm1.hopeMonthProfit=Number(this.addForm1.hopeSale)*Number(this.addForm1.salePrice)*Number(this.addForm1.hopeRate)
+          console.log(this.addForm1.stockUp)
+          forwardCreate(this.addForm1).then(res => {
             if (res.data.code === 200) {
               this.dialogVisible1 = false
               this.getForward()
@@ -1212,17 +1248,18 @@ export default {
             }
           })
         } else {
-          console.log('error submit!!')
+          console.log('error submit12!!')
           return false
         }
       })
     },
     submitFormCheck() {
-      this.$refs.addForm.validate((valid)=>{
+      this.$refs.addForm1.validate((valid)=>{
         if(valid){
-          this.addForm.type = 'check'
-          this.addForm.flag='forward'
-          forwardCreate(this.addForm).then(res => {
+          this.addForm1.type = 'check'
+          this.addForm1.flag='forward'
+          this.addForm1.hopeMonthProfit=Number(this.addForm1.hopeSale)*Number(this.addForm1.salePrice)*Number(this.addForm1.hopeRate)
+          forwardCreate(this.addForm1).then(res => {
             if (res.data.code === 200) {
               this.dialogVisible1 = false
               this.getForward()
@@ -1249,6 +1286,7 @@ export default {
           if(this.editForm.stockUp!=="是" && this.editForm.stockUp!=="否"){
             this.editForm.stockUp?this.editForm.stockUp="是":this.editForm.stockUp="否"
           }
+          this.editForm.hopeMonthProfit=Number(this.editForm.hopeSale)*Number(this.editForm.salePrice)*Number(this.editForm.hopeRate)
           forwardUpdate(this.editForm).then(res => {
             if (res.data.code === 200) {
               this.dialogVisibleEdit1 = false
@@ -1276,6 +1314,7 @@ export default {
           if(this.editForm.stockUp!=="是" && this.editForm.stockUp!=="否"){
             this.editForm.stockUp?this.editForm.stockUp="是":this.editForm.stockUp="否"
           }
+          this.editForm.hopeMonthProfit=Number(this.editForm.hopeSale)*Number(this.editForm.salePrice)*Number(this.editForm.hopeRate)
           forwardUpdate(this.editForm).then(res => {
             if (res.data.code === 200) {
               this.dialogVisibleEdit1 = false
@@ -1837,11 +1876,12 @@ export default {
       })
     },
     submitForm2() {
-      this.$refs.addForm.validate((valid)=>{
+      this.$refs.addForm2.validate((valid)=>{
         if(valid){
-          this.addForm.type = 'create'
-          this.addForm.flag='backward'
-          forwardCreate(this.addForm).then(res => {
+          this.addForm2.type = 'create'
+          this.addForm2.flag='backward'
+          this.addForm2.hopeMonthProfit=Number(this.addForm2.hopeSale)*Number(this.addForm2.salePrice)*Number(this.addForm2.hopeRate)
+          forwardCreate(this.addForm2).then(res => {
             if (res.data.code === 200) {
               this.dialogVisible2 = false
               this.getReverse()
@@ -1862,11 +1902,12 @@ export default {
       })
     },
     submitFormCheck2() {
-      this.$refs.addForm.validate((valid)=>{
+      this.$refs.addForm2.validate((valid)=>{
         if(valid){
-          this.addForm.type = 'check'
-          this.addForm.flag='backward'
-          forwardCreate(this.addForm).then(res => {
+          this.addForm2.type = 'check'
+          this.addForm2.flag='backward'
+          this.addForm2.hopeMonthProfit=Number(this.addForm2.hopeSale)*Number(this.addForm2.salePrice)*Number(this.addForm2.hopeRate)
+          forwardCreate(this.addForm2).then(res => {
             if (res.data.code === 200) {
               this.dialogVisible2 = false
               this.getReverse()
@@ -1893,6 +1934,7 @@ export default {
           if(this.editForm.stockUp!=="是" && this.editForm.stockUp!=="否"){
             this.editForm.stockUp?this.editForm.stockUp="是":this.editForm.stockUp="否"
           }
+          this.editForm.hopeMonthProfit=Number(this.editForm.hopeSale)*Number(this.editForm.salePrice)*Number(this.editForm.hopeRate)
           forwardUpdate(this.editForm).then(res => {
             if (res.data.code === 200) {
               this.dialogVisibleEdit2 = false
@@ -1920,6 +1962,7 @@ export default {
           if(this.editForm.stockUp!=="是" && this.editForm.stockUp!=="否"){
             this.editForm.stockUp?this.editForm.stockUp="是":this.editForm.stockUp="否"
           }
+          this.editForm.hopeMonthProfit=Number(this.editForm.hopeSale)*Number(this.editForm.salePrice)*Number(this.editForm.hopeRate)
           forwardUpdate(this.editForm).then(res => {
             if (res.data.code === 200) {
               this.dialogVisibleEdit2 = false
@@ -2462,6 +2505,26 @@ export default {
         this.disabled = true
       }
     },
+     productcategory1() {
+      if (this.addForm1.cate !== '') {
+        this.disabled = false
+        const val = this.addForm1.cate
+        const res = this.category
+        this.subCate = res.filter(e => e.CategoryParentName === val)
+      } else if (this.addForm1.cate === '') {
+        this.disabled = true
+      }
+    },
+     productcategory2() {
+      if (this.addForm2.cate !== '') {
+        this.disabled = false
+        const val = this.addForm2.cate
+        const res = this.category
+        this.subCate = res.filter(e => e.CategoryParentName === val)
+      } else if (this.addForm2.cate === '') {
+        this.disabled = true
+      }
+    },
     getSubcate() {
       if (this.editForm.cate !== '') {
         const val = this.editForm.cate
@@ -2841,12 +2904,26 @@ export default {
 .el-button{
   margin-left: 0px;
 }
-  .clasRed{
-    color: red;
+ .clasRed{
+    color: #f56c6c;
+    border: rgba(245,108,108,.2) solid 1px;
+    background: rgba(245,108,108,.1);
+    width: 65%;
+    margin: auto;
+    line-height: 32px;
+    display: block;
+    border-radius: 5px;
   }
-  .clasGreen{
-    color: #0E9A00;
-  }
+.clasGreen{
+  color: #0E9A00;
+  border-radius: 5px;
+  width: 65%;
+  margin: auto;
+  line-height: 32px;
+  display: block;
+  border: rgba(3, 82, 38, 0.2) solid 1px;
+  background: rgba(33, 170, 95, 0.1);
+}
   .classa{
     color: #337ab7;
     text-decoration: none;
