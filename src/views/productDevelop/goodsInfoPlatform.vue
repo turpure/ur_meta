@@ -105,10 +105,10 @@
                                  header-align="center">
                     <el-table-column prop="completeStatus"
                                      :render-header="renderHeaderPlat"
-                                     width='200'
+                                     width='180'
                                      >
                         <template slot-scope="scope">
-                            <a :class="!scope.row.completeStatus?'clasRed':''">{{scope.row.completeStatus?scope.row.completeStatus:'未设置'}}</a>
+                            <a :class="!scope.row.completeStatus?'clasRed':''" style="text-align:center;display:block;width:100%;">{{scope.row.completeStatus?scope.row.completeStatus:'未设置'}}</a>
                         </template>
                     </el-table-column>
                 </el-table-column>
@@ -1801,8 +1801,8 @@
                                     placeholder: '请选择',
                                     value: this.plat.completeStatus,
                                     size: 'mini',
-                                    // multiple:true,
-                                    // collapseTags:true,
+                                    multiple:true,
+                                    collapseTags:true,
                                     clearable: true
                                 },
                                 on: {
