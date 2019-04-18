@@ -704,7 +704,7 @@ export default {
     return {
       tableData: [],
       btn: '',
-      rows: null,
+      rows: 1,
       rowss: 1,
       IsF: ['是', '否'],
       costprice: null,

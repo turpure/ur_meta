@@ -694,17 +694,17 @@
                         <table id="oTable"
                                border="1px solid #ebeef5"
                                cellpadding="9"
-                               style="border: 1px solid #ebeef5;background-color:#fff;color:#606266;width:52%;border-collapse:collapse;float: left;">
+                               style="border: 1px solid #ebeef5;background-color:#fff;color:#606266;width:55%;border-collapse:collapse;float: left;">
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>
+                                <!-- <th>
                                     <el-checkbox></el-checkbox>
-                                </th>
+                                </th> -->
                                 <th style="line-height: 40px;height: 40px;padding: 9px 0">操作</th>
                                 <th style="line-height: 40px;height: 40px;padding: 0">SKU</th>
-                                <th style="line-height: 40px;height: 40px;padding: 0">数量</th>
-                                <th style="line-height: 40px;height: 40px;padding: 0">价格</th>
+                                <th style="line-height: 40px;height: 40px;padding: 0" width='12%'>数量</th>
+                                <th style="line-height: 40px;height: 40px;padding: 0" width='12%'>价格</th>
                                 <th style="line-height: 40px;height: 40px;padding: 0">图片地址</th>
                                 <th style="line-height: 40px;height: 40px;padding: 0">图片</th>
                             </tr>
@@ -714,9 +714,9 @@
                                 :key="index"
                                 style="text-align:center;">
                                 <td>{{index+1}}</td>
-                                <td>
+                                <!-- <td>
                                     <el-checkbox></el-checkbox>
-                                </td>
+                                </td> -->
                                 <td><i class="el-icon-delete" @click="delIndex(index,item.id)"></i></td>
                                 <td>
                                     <el-input v-model="item.sku"></el-input>
@@ -738,7 +738,7 @@
                         <table id=""
                                border="1px solid #ebeef5"
                                cellpadding="9"
-                               style="border: 1px solid #ebeef5;background-color:#fff;color:#606266;width:48%;border-collapse:collapse;float: left;">
+                               style="border: 1px solid #ebeef5;background-color:#fff;color:#606266;width:45%;border-collapse:collapse;float: left;">
                             <thead>
                             <tr>
                                 <th v-for="(item,index) in tite"
@@ -886,7 +886,7 @@
                 sjlength:0,
                 tite:[],
                 warehouse:[],
-                rows:"",
+                rows:1,
                 num:"",
                 price:"",
                 accountNumber:[],
@@ -1079,7 +1079,6 @@
                     }else {
                         lenth=4
                     }
-                    console.log(lenth)
                     var aryd={
                         label:[],
                         value:[]
@@ -1088,7 +1087,6 @@
                         aryd.value.push(null)
                     }
                     this.title.push(aryd)
-                    console.log(this.title)
                 }
             },
             setNum(){

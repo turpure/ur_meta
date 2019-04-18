@@ -383,7 +383,7 @@
     <el-dialog title="多属性"
                :visible.sync="dialogVisible"
                width="90%">
-      <el-table :data="tableData">
+      <el-table :data="tableData" border>
         <el-table-column type="selection"
                          width="30"
                          align="center"
@@ -634,7 +634,7 @@
     data() {
       return {
         url: [],
-        rows: null,
+        rows: 1,
         dialogTableVisible:false,
         dialogTable:false,
         dialogFormVisible1:false,
