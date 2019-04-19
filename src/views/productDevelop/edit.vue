@@ -1005,8 +1005,8 @@ export default {
         obj.memo2 = null
         obj.memo3 = null
         obj.memo4 = null
-        obj.linkurl = null
-        obj.goodsskuid = null
+        obj.linkUrl = null
+        obj.goodsSkuId = null
         obj.retailPrice = null
         obj.costPrice = null
         obj.stockNum = null
