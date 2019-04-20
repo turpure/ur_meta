@@ -124,7 +124,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .congf {
   background: #f2f2f2;
   padding-top: 15px;
