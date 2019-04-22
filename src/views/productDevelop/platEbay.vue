@@ -554,9 +554,9 @@
       </el-col>
       <el-col :span="12" style="margin-bottom: 30px;">
         <h4 class="adres">境内运输方式</h4>
-        <el-col :span="12">
-          <el-col :span="5" style="margin-top: 10px;text-align: center">运输方式1</el-col>
-          <el-col :span="19">
+        <el-col :span="10">
+          <el-col :span="7" style="margin-top: 10px;text-align: center">运输方式1</el-col>
+          <el-col :span="17">
             <el-select
               style="width: 95%"
               v-model="wishForm.inShippingMethod1"
@@ -571,21 +571,21 @@
             </el-select>
           </el-col>
         </el-col>
-        <el-col :span="12">
-          <el-col :span="5" style="margin-top: 10px;text-align: center">首件运费</el-col>
-          <el-col :span="19">
+        <el-col :span="7">
+          <el-col :span="8" style="margin-top: 10px;text-align: center">首件运费</el-col>
+          <el-col :span="16">
             <el-input placeholder="--USD--" style="width: 95%" v-model="wishForm.inFirstCost1"></el-input>
           </el-col>
         </el-col>
-        <el-col :span="12" style="margin-top: 15px">
-          <el-col :span="5" style="margin-top: 10px;text-align: center">续件运费</el-col>
-          <el-col :span="19">
+        <el-col :span="7">
+          <el-col :span="8" style="margin-top: 10px;text-align: center">续件运费</el-col>
+          <el-col :span="16">
             <el-input placeholder="--USD--" style="width: 95%" v-model="wishForm.inSuccessorCost1"></el-input>
           </el-col>
         </el-col>
-        <el-col :span="12" style="margin-top: 15px">
-          <el-col :span="5" style="margin-top: 10px;text-align: center">运输方式2</el-col>
-          <el-col :span="19">
+        <el-col :span="10" style="margin-top: 15px">
+          <el-col :span="7" style="margin-top: 10px;text-align: center">运输方式2</el-col>
+          <el-col :span="17">
             <el-select
               style="width: 95%"
               v-model="wishForm.inShippingMethod2"
@@ -600,24 +600,24 @@
             </el-select>
           </el-col>
         </el-col>
-        <el-col :span="12" style="margin-top: 15px">
-          <el-col :span="5" style="margin-top: 10px;text-align: center">首件运费</el-col>
-          <el-col :span="19">
+        <el-col :span="7" style="margin-top: 15px">
+          <el-col :span="8" style="margin-top: 10px;text-align: center">首件运费</el-col>
+          <el-col :span="16">
             <el-input placeholder="--USD--" style="width: 95%" v-model="wishForm.inFirstCost2"></el-input>
           </el-col>
         </el-col>
-        <el-col :span="12" style="margin-top: 15px">
-          <el-col :span="5" style="margin-top: 10px;text-align: center">续件运费</el-col>
-          <el-col :span="19">
+        <el-col :span="7" style="margin-top: 15px">
+          <el-col :span="8" style="margin-top: 10px;text-align: center">续件运费</el-col>
+          <el-col :span="16">
             <el-input placeholder="--USD--" style="width: 95%" v-model="wishForm.inSuccessorCost2"></el-input>
           </el-col>
         </el-col>
       </el-col>
       <el-col :span="12">
         <h4 class="adres">境外运输方式</h4>
-        <el-col :span="12">
-          <el-col :span="5" style="margin-top: 10px;text-align: center">运输方式1</el-col>
-          <el-col :span="19">
+        <el-col :span="10">
+          <el-col :span="7" style="margin-top: 10px;text-align: center">运输方式1</el-col>
+          <el-col :span="17">
             <el-select
               style="width: 95%"
               v-model="wishForm.outShippingMethod1"
@@ -632,21 +632,21 @@
             </el-select>
           </el-col>
         </el-col>
-        <el-col :span="12">
-          <el-col :span="5" style="margin-top: 10px;text-align: center">首件运费</el-col>
-          <el-col :span="19">
+        <el-col :span="7">
+          <el-col :span="8" style="margin-top: 10px;text-align: center">首件运费</el-col>
+          <el-col :span="16">
             <el-input placeholder="--USD--" style="width: 95%" v-model="wishForm.outFirstCost1"></el-input>
           </el-col>
         </el-col>
-        <el-col :span="12" style="margin-top: 15px">
-          <el-col :span="5" style="margin-top: 10px;text-align: center">续件运费</el-col>
-          <el-col :span="19">
+        <el-col :span="7">
+          <el-col :span="8" style="margin-top: 10px;text-align: center">续件运费</el-col>
+          <el-col :span="16">
             <el-input placeholder="--USD--" style="width: 95%" v-model="wishForm.outSuccessorCost1"></el-input>
           </el-col>
         </el-col>
-        <el-col :span="12" style="margin-top: 15px">
-          <el-col :span="5" style="margin-top: 10px;text-align: center">运输方式2</el-col>
-          <el-col :span="19">
+        <el-col :span="10" style="margin-top: 15px">
+          <el-col :span="7" style="margin-top: 10px;text-align: center">运输方式2</el-col>
+          <el-col :span="17">
             <el-select
               style="width: 95%"
               v-model="wishForm.outShippingMethod2"
@@ -656,15 +656,15 @@
             </el-select>
           </el-col>
         </el-col>
-        <el-col :span="12" style="margin-top: 15px">
-          <el-col :span="5" style="margin-top: 10px;text-align: center">首件运费</el-col>
-          <el-col :span="19">
+        <el-col :span="7" style="margin-top: 15px">
+          <el-col :span="8" style="margin-top: 10px;text-align: center">首件运费</el-col>
+          <el-col :span="16">
             <el-input placeholder="--USD--" style="width: 95%" v-model="wishForm.outFirstCost2"></el-input>
           </el-col>
         </el-col>
-        <el-col :span="12" style="margin-top: 15px">
-          <el-col :span="5" style="margin-top: 10px;text-align: center">续件运费</el-col>
-          <el-col :span="19">
+        <el-col :span="7" style="margin-top: 15px">
+          <el-col :span="8" style="margin-top: 10px;text-align: center">续件运费</el-col>
+          <el-col :span="16">
             <el-input placeholder="--USD--" style="width: 95%" v-model="wishForm.outSuccessorCost2"></el-input>
           </el-col>
         </el-col>
@@ -972,6 +972,24 @@ export default {
       this.OutFirebEbay();
       this.InFirEbay();
       this.InSecEbay();
+      setTimeout(()=>{
+        if(this.ebayInFir.length!=0){
+          console.log(this.ebayInFir[0])
+          this.wishForm.inShippingMethod1=this.ebayInFir[0].servicesName
+        }else{
+          this.wishForm.inShippingMethod1=null
+        }
+        if(this.ebayOutFir.length!=0){
+          this.wishForm.outShippingMethod1=this.ebayOutFir[0].servicesName
+        }else{
+          this.wishForm.outShippingMethod1=null
+        }
+        if(this.ebayInSec.length!=0){
+          this.wishForm.inShippingMethod2=this.ebayInSec[0].servicesName
+        }else{
+          this.wishForm.inShippingMethod2=null
+        }
+      },500)
     },
     exportEbay() {
       if (this.accountNum != "") {

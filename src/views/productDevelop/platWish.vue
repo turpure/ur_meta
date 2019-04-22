@@ -481,7 +481,7 @@
         <input
           placeholder="Joom零售价"
           v-model="joomPrice"
-          style="width:48%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
+          style="width:47%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
         >
         <span class="xzz1" @click="setJoom">Joom零售价</span>
       </el-col>
