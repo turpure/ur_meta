@@ -63,19 +63,19 @@
       <el-row>
         <el-col :span="24">
           <el-col :span="12">
-            <el-col :span="2" class="textZt">SKU</el-col>
+            <el-col :span="3" class="textZt">SKU</el-col>
             <el-col :span="21">
               <el-input v-model="wishForm.sku"></el-input>
             </el-col>
-            <el-col :span="2" class="textZt" style="margin-top: 15px">是否备货</el-col>
+            <el-col :span="3" class="textZt" style="margin-top: 15px">是否备货</el-col>
             <el-col :span="21" style="margin-top: 15px">
               <el-input v-model="wishForm.stockUp" :disabled="true"></el-input>
             </el-col>
-            <el-col :span="2" class="textZt" style="margin-top: 15px">主图</el-col>
+            <el-col :span="3" class="textZt" style="margin-top: 15px">主图</el-col>
             <el-col :span="21" style="margin-top: 15px">
               <el-input v-model="wishForm.mainImage"></el-input>
             </el-col>
-            <el-col :span="2" class="textZt" style="margin-top: 15px"></el-col>
+            <el-col :span="3" class="textZt" style="margin-top: 15px"></el-col>
           </el-col>
           <el-col :span="10" style="margin-left: 25px">
             <a
@@ -481,7 +481,7 @@
         <input
           placeholder="Joom零售价"
           v-model="joomPrice"
-          style="width:47%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
+          style="width:46%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
         >
         <span class="xzz1" @click="setJoom">Joom零售价</span>
       </el-col>
