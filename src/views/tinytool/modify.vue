@@ -53,7 +53,12 @@
         <span class="searchMod" @click="searchMod">搜索</span>
       </el-col>
     </el-row>
-    <el-table :data="tableData" style="width:100%">
+    <el-table
+      :data="tableData"
+      style="width:100%"
+      v-loading="listLoading"
+      element-loading-text="正在加载中..."
+    >
       <el-table-column prop="sellerUserid" label="账号"></el-table-column>
       <el-table-column prop="itemId" label="itemId"></el-table-column>
       <el-table-column prop="salesName" label="销售员"></el-table-column>
@@ -85,6 +90,7 @@ export default {
   data() {
     return {
       tableData: [],
+      listLoading: false,
       totalPic: null,
       condition: {
         salesName: null,
@@ -113,7 +119,9 @@ export default {
       this.searchMod();
     },
     searchMod() {
+      this.listLoading = true;
       getEbayVirtualStore(this.condition).then(res => {
+        this.listLoading = false;
         this.tableData = res.data.data.items;
         this.totalPic = res.data.data._meta.totalCount;
         this.condition.pageSize = res.data.data._meta.perPage;
