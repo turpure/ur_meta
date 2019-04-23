@@ -316,7 +316,7 @@
                 <input
                   placeholder="Does not apply"
                   v-model="ship"
-                  style="width:120px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
+                  style="width:50%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
                 >
                 <span class="xzz1" @click="setShip">UPC/ENC确定</span>
               </el-col>

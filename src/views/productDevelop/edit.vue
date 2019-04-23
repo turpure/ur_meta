@@ -491,7 +491,7 @@
                  <!--:label="item.label"-->
                  <!--:value="item.value"></el-option>-->
     <!--</el-select>-->
-    <el-table :data="tableData" border style="width: 98%;margin-left: 1%" @selection-change="selsChange">
+    <el-table :data="tableData" border style="width: 98%;margin-left: 1%" @selection-change="selsChange" max-height="300">
       <el-table-column type="selection"
                        align="center"
                        header-align="center"></el-table-column>
@@ -596,7 +596,7 @@
     <el-row style="margin-top:15px;padding-left: 1%">
       <el-col :span="2">
         <input placeholder="行数" v-model="rows"
-                  style="width:55%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+                  style="width:54%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
         <span class="xzz" @click="addClomun">新增行</span>
         <!--<el-button size="small"-->
                    <!--@click="addClomun">新增行</el-button>-->
