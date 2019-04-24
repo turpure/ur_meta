@@ -2,7 +2,7 @@
   <section>
     <el-col
       :span="24"
-      style="position: fixed; bottom:0; z-index:999;background: #f2f2f2;padding: 8px 0;border-top: #eee solid 1px;"
+      style="position: fixed; bottom:0; z-index:999;background: #f2f2f2;padding: 15px 0; padding-top:12px; border-top: #eee solid 1px;"
     >
       <el-col :span="12" :offset="5">
         <el-button @click="keep()" type="primary" style="float: left;margin-right:10px">保存当前数据</el-button>
@@ -11,7 +11,7 @@
           type="success"
           @click="keepWs()"
         >保存并完善</el-button>
-        <el-select v-model="depot" placeholder="--所有仓储--" style="float: left;margin-right:10px">
+        <el-select v-model="depot" placeholder="--所有仓储--" style="float: left;margin-right:10px;width:170px;">
           <el-option v-for="(item, key) in warehouse" :key="item.key" :label="item" :value="item"></el-option>
         </el-select>
         <el-select
@@ -552,7 +552,7 @@
       <el-col :span="24" style="padding: 0">
         <h3 class="toolbar essential">物流设置</h3>
       </el-col>
-      <el-col :span="12" style="margin-bottom: 30px;">
+      <el-col :span="12" style="margin-bottom: 40px;">
         <h4 class="adres">境内运输方式</h4>
         <el-col :span="10">
           <el-col :span="7" style="margin-top: 10px;text-align: center">运输方式1</el-col>

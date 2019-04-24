@@ -778,8 +778,10 @@ export default {
       this.sels = sels
     },
     passAll() {
+        let arrI=[]
+        arrI.push(this.editForm.id)
         let dataTe = {
-          id: this.editForm.id
+          id: arrI
         }
         APIAttributeToShopElf(dataTe).then(res => {
           if (res.data.code === 200) {

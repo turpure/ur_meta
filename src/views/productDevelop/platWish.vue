@@ -3,7 +3,7 @@
     <el-col
       :span="24"
       class="toolbar"
-      style="position:fixed;bottom:0px;text-align:center;z-index:10;padding-bottom:8px;padding-top: 8px"
+      style="position:fixed;bottom:0px;text-align:center;z-index:10;padding-bottom:15px;padding-top: 12px"
     >
       <el-col :span="12" :offset="5">
         <el-button

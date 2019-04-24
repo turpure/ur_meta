@@ -4,49 +4,49 @@
       <el-col :span="4" class="congfel">
         <el-col :span="8" style="text-align:center;line-height:32px;">销售员</el-col>
         <el-col :span="15">
-          <el-input size="small" v-model="condition.salesName"></el-input>
+          <el-input size="small" v-model="condition.salesName" clearable></el-input>
         </el-col>
       </el-col>
       <el-col :span="4" class="congfel">
         <el-col :span="8" style="text-align:center;line-height:32px;">itemId</el-col>
         <el-col :span="15">
-          <el-input size="small" v-model="condition.itemId"></el-input>
+          <el-input size="small" v-model="condition.itemId" clearable></el-input>
         </el-col>
       </el-col>
       <el-col :span="4" class="congfel">
         <el-col :span="8" style="text-align:center;line-height:32px;">主SKU</el-col>
         <el-col :span="15">
-          <el-input size="small" v-model="condition.parentSku"></el-input>
+          <el-input size="small" v-model="condition.parentSku" clearable></el-input>
         </el-col>
       </el-col>
       <el-col :span="4" class="congfel">
         <el-col :span="8" style="text-align:center;line-height:32px;">子SKU</el-col>
         <el-col :span="15">
-          <el-input size="small" v-model="condition.sku"></el-input>
+          <el-input size="small" v-model="condition.sku" clearable></el-input>
         </el-col>
       </el-col>
       <el-col :span="4" class="congfel">
         <el-col :span="8" style="text-align:center;line-height:32px;">账号</el-col>
         <el-col :span="15">
-          <el-input size="small" v-model="condition.sellerUserid"></el-input>
+          <el-input size="small" v-model="condition.sellerUserid" clearable></el-input>
         </el-col>
       </el-col>
       <el-col :span="4" class="congfel">
         <el-col :span="8" style="text-align:center;line-height:32px;">发货仓库</el-col>
         <el-col :span="15">
-          <el-input size="small" v-model="condition.deliveryStorename"></el-input>
+          <el-input size="small" v-model="condition.deliveryStorename" clearable></el-input>
         </el-col>
       </el-col>
       <el-col :span="4" class="congfel">
         <el-col :span="8" style="text-align:center;line-height:32px;">在线数量</el-col>
         <el-col :span="15">
-          <el-input size="small" v-model="condition.inventory"></el-input>
+          <el-input size="small" v-model="condition.inventory" clearable></el-input>
         </el-col>
       </el-col>
       <el-col :span="4" class="congfel">
         <el-col :span="8" style="text-align:center;line-height:32px;">可用库存</el-col>
         <el-col :span="15">
-          <el-input size="small" v-model="condition.useNum"></el-input>
+          <el-input size="small" v-model="condition.useNum" clearable></el-input>
         </el-col>
       </el-col>
       <el-col :span="1">
@@ -75,7 +75,7 @@
       <el-table-column prop="deliveryStorename" label="发货仓库"></el-table-column>
       <el-table-column prop="updateDate" label="更新时间"></el-table-column>
     </el-table>
-    <div class="botoomTatal" v-if="tableData.length!=0">
+    <div class="botoomTatal" v-if="shiwIS">
       当前总共 {{totalPic}} 条数据
     </div>
     <!-- <el-pagination
@@ -98,6 +98,7 @@ import { getEbayVirtualStore } from "../../api/profit";
 export default {
   data() {
     return {
+      shiwIS:false,
       tableData: [],
       tableHeight:window.innerHeight -201,
       listLoading: false,
@@ -151,7 +152,6 @@ export default {
          'useNum',
          'deliveryStorename',
          'updateDate',
-
        ]
     },
     handleSizeChangePic(val) {
@@ -164,10 +164,12 @@ export default {
     },
     searchMod() {
       this.listLoading = true;
+      this.shiwIS=false;
       getEbayVirtualStore(this.condition).then(res => {
         this.listLoading = false;
         this.tableData = res.data.data.items;
         this.totalPic = res.data.data._meta.totalCount;
+        this.shiwIS=true;
         // this.condition.pageSize = res.data.data._meta.perPage;
         // this.condition.page = res.data.data._meta.currentPage;
       });
