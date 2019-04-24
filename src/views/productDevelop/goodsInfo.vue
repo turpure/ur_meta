@@ -1281,6 +1281,7 @@ export default {
             message: "成功",
             type: "success"
           });
+          this.getData();
         } else {
           this.$message.error(res.data.message);
         }
@@ -1313,6 +1314,7 @@ export default {
               message: "成功",
               type: "success"
             });
+            this.getData();
           } else {
             this.$message.error(res.data.message);
           }
