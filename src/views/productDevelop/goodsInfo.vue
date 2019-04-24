@@ -1289,8 +1289,9 @@ export default {
     },
     //批量标记
     markAll() {
-      this.finish.id = this.sels.map(e => e.id);
-      APIFinishAttribute(this.finish).then(res => {
+      if (this.sels.length != 0) {
+       this.finish.id = this.sels.map(e => e.id);
+       APIFinishAttribute(this.finish).then(res => {
         if (res.data.code === 200) {
           this.$message({
             message: "标记成功",
@@ -1300,7 +1301,10 @@ export default {
         } else {
           this.$message.error(res.data.message);
         }
-      });
+       }); 
+      }else{
+       this.$message.error("未选择");
+      }
     },
     //导入普源
     passAll() {

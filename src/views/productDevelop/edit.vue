@@ -625,8 +625,8 @@
       </el-col>
       <el-col :span="3">
         <input placeholder="零售价$" v-model="retailprice"
-               style="width:55%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
-        <span class="xzz1" @click="price">价格确定</span>
+               style="width:50%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+        <span class="xzz1" @click="price">零售价确定</span>
         <!--<el-input v-model="retailprice"-->
                   <!--size="small"-->
                   <!--placeholder="零售价$"-->
@@ -634,10 +634,10 @@
         <!--<el-button size="small"-->
                    <!--@click="price">价格确定</el-button>-->
       </el-col>
-      <el-col :span="3">
+      <el-col :span="4">
         <input placeholder="joom零售价$" v-model="joomretailprice"
-               style="width:55%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
-        <span class="xzz1" @click="joomprice">价格确定</span>
+               style="width:53%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+        <span class="xzz1" @click="joomprice">Joom价格确定</span>
         <!--<el-input v-model="joomretailprice"-->
                   <!--size="small"-->
                   <!--placeholder="joom零售价$"-->
@@ -645,10 +645,10 @@
         <!--<el-button size="small"-->
                    <!--@click="joomprice">价格确定</el-button>-->
       </el-col>
-      <el-col :span="3">
+      <el-col :span="4">
         <input placeholder="joom运费$" v-model="transportationcost"
-               style="width:55%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
-        <span class="xzz1" @click="transport">价格确定</span>
+               style="width:53%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+        <span class="xzz1" @click="transport">Joom运费确定</span>
         <!--<el-input v-model="transportationcost"-->
                   <!--size="small"-->
                   <!--placeholder="joom运费$"-->
@@ -982,6 +982,7 @@ export default {
             type: 'success'
           })
           this.tableData.splice(index, 1)
+          this.skuTotal = this.tableData.length
 //          this.getData()
         } else {
           this.$message.error('删除失败')
