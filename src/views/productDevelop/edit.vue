@@ -190,16 +190,17 @@
           <h3 class="toolbar essential" style="margin-top: 15px;margin-bottom: 10px">主信息</h3>
         </el-col>
         <el-col :span="24" style="margin-top: 10px;margin-bottom: 15px">
-          <el-col :span="7">
+          <el-col :span="6">
             <el-col :span="5" style="text-align: center;margin-top: 8px;">
               禁售平台
             </el-col>
             <el-col :span="19">
               <el-select
-                      style="width:98%"
+                      style="width:97%"
                       multiple
                       filterable
                       allow-create
+                      collapse-tags
                       default-first-option
                       v-model="editForm.dictionaryName"
                       @change="forbidSale($event)">
@@ -219,9 +220,10 @@
             </el-col>
             <el-col :span="19">
               <el-select
-                      style="width:98%"
+                      style="width:95%"
                       multiple
                       filterable
+                      collapse-tags
                       allow-create
                       default-first-option
                       v-model="editForm.mapPersons"
@@ -256,13 +258,13 @@
           <!--</el-select>-->
           <!--</el-form-item>-->
           <!--</el-col>-->
-          <el-col :span="5">
+          <el-col :span="6">
             <el-col :span="5" style="text-align: center;margin-top: 8px;">
               主类目
             </el-col>
             <el-col :span="19">
               <el-select
-                      style="width:230px"
+                      style="width:95%"
                       v-model="oaGoods.cate"
                       @change="mainIndex($event)">
                 <el-option v-for="(item, key) in mainCategory" :key='item.key' :label="item" :value="item"></el-option>
@@ -275,7 +277,7 @@
             </el-col>
             <el-col :span="19">
               <el-select
-                      style="width: 98%"
+                      style="width: 95%"
                       v-model="oaGoods.subCate"
                       @change="childrenIndex($event)">
                 <el-option v-for="(item, key) in childrenCategory" :key='item.key' :label="item" :value="item"></el-option>

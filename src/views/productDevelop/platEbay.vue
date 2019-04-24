@@ -11,7 +11,7 @@
           type="success"
           @click="keepWs()"
         >保存并完善</el-button>
-        <el-select v-model="depot" placeholder="--所有仓储--" style="float: left;margin-right:10px;width:170px;">
+        <el-select v-model="depot" placeholder="--所有仓储--" style="float: left;margin-right:10px;width:130px;">
           <el-option v-for="(item, key) in warehouse" :key="item.key" :label="item" :value="item"></el-option>
         </el-select>
         <el-select
@@ -574,13 +574,13 @@
         <el-col :span="7">
           <el-col :span="8" style="margin-top: 10px;text-align: center">首件运费</el-col>
           <el-col :span="16">
-            <el-input placeholder="--USD--" style="width: 95%" v-model="wishForm.inFirstCost1"></el-input>
+            <el-input :placeholder="currencyCode" style="width: 95%" v-model="wishForm.inFirstCost1"></el-input>
           </el-col>
         </el-col>
         <el-col :span="7">
           <el-col :span="8" style="margin-top: 10px;text-align: center">续件运费</el-col>
           <el-col :span="16">
-            <el-input placeholder="--USD--" style="width: 95%" v-model="wishForm.inSuccessorCost1"></el-input>
+            <el-input :placeholder="currencyCode" style="width: 95%" v-model="wishForm.inSuccessorCost1"></el-input>
           </el-col>
         </el-col>
         <el-col :span="10" style="margin-top: 15px">
@@ -603,13 +603,13 @@
         <el-col :span="7" style="margin-top: 15px">
           <el-col :span="8" style="margin-top: 10px;text-align: center">首件运费</el-col>
           <el-col :span="16">
-            <el-input placeholder="--USD--" style="width: 95%" v-model="wishForm.inFirstCost2"></el-input>
+            <el-input :placeholder="currencyCode" style="width: 95%" v-model="wishForm.inFirstCost2"></el-input>
           </el-col>
         </el-col>
         <el-col :span="7" style="margin-top: 15px">
           <el-col :span="8" style="margin-top: 10px;text-align: center">续件运费</el-col>
           <el-col :span="16">
-            <el-input placeholder="--USD--" style="width: 95%" v-model="wishForm.inSuccessorCost2"></el-input>
+            <el-input :placeholder="currencyCode" style="width: 95%" v-model="wishForm.inSuccessorCost2"></el-input>
           </el-col>
         </el-col>
       </el-col>
@@ -635,13 +635,13 @@
         <el-col :span="7">
           <el-col :span="8" style="margin-top: 10px;text-align: center">首件运费</el-col>
           <el-col :span="16">
-            <el-input placeholder="--USD--" style="width: 95%" v-model="wishForm.outFirstCost1"></el-input>
+            <el-input :placeholder="currencyCode" style="width: 95%" v-model="wishForm.outFirstCost1"></el-input>
           </el-col>
         </el-col>
         <el-col :span="7">
           <el-col :span="8" style="margin-top: 10px;text-align: center">续件运费</el-col>
           <el-col :span="16">
-            <el-input placeholder="--USD--" style="width: 95%" v-model="wishForm.outSuccessorCost1"></el-input>
+            <el-input :placeholder="currencyCode" style="width: 95%" v-model="wishForm.outSuccessorCost1"></el-input>
           </el-col>
         </el-col>
         <el-col :span="10" style="margin-top: 15px">
@@ -659,13 +659,13 @@
         <el-col :span="7" style="margin-top: 15px">
           <el-col :span="8" style="margin-top: 10px;text-align: center">首件运费</el-col>
           <el-col :span="16">
-            <el-input placeholder="--USD--" style="width: 95%" v-model="wishForm.outFirstCost2"></el-input>
+            <el-input :placeholder="currencyCode" style="width: 95%" v-model="wishForm.outFirstCost2"></el-input>
           </el-col>
         </el-col>
         <el-col :span="7" style="margin-top: 15px">
           <el-col :span="8" style="margin-top: 10px;text-align: center">续件运费</el-col>
           <el-col :span="16">
-            <el-input placeholder="--USD--" style="width: 95%" v-model="wishForm.outSuccessorCost2"></el-input>
+            <el-input :placeholder="currencyCode" style="width: 95%" v-model="wishForm.outSuccessorCost2"></el-input>
           </el-col>
         </el-col>
       </el-col>
@@ -881,6 +881,7 @@ export default {
       radio: "",
       columns: "",
       title: [],
+      currencyCode:'--USD--',
       select: "",
       select1: "",
       depot: "",
@@ -974,7 +975,6 @@ export default {
       this.InSecEbay();
       setTimeout(()=>{
         if(this.ebayInFir.length!=0){
-          console.log(this.ebayInFir[0])
           this.wishForm.inShippingMethod1=this.ebayInFir[0].servicesName
         }else{
           this.wishForm.inShippingMethod1=null
@@ -988,6 +988,11 @@ export default {
           this.wishForm.inShippingMethod2=this.ebayInSec[0].servicesName
         }else{
           this.wishForm.inShippingMethod2=null
+        }
+        for(let i=0;i<this.ebaySite.length;i++){
+          if(this.ebaySite[i].name==e){
+            this.currencyCode=`--${this.ebaySite[i].currencyCode}--`
+          }
         }
       },500)
     },
@@ -1595,6 +1600,11 @@ export default {
       this.OutFirebEbay();
       this.InFirEbay();
       this.InSecEbay();
+      for(let i=0;i<this.ebaySite.length;i++){
+          if(this.ebaySite[i].name==this.wishForm.site){
+            this.currencyCode=`--${this.ebaySite[i].currencyCode}--`
+          }
+      }
     }, 1000);
   }
 };
