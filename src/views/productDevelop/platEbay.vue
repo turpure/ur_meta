@@ -4,14 +4,14 @@
       :span="24"
       style="position: fixed; bottom:0; z-index:999;background: #f2f2f2;padding: 15px 0; padding-top:12px; border-top: #eee solid 1px;"
     >
-      <el-col :span="12" :offset="5">
+      <el-col :span="13" :offset="5">
         <el-button @click="keep()" type="primary" style="float: left;margin-right:10px">保存当前数据</el-button>
         <el-button
           style="margin-left: 0;float: left;margin-right:10px"
           type="success"
           @click="keepWs()"
         >保存并完善</el-button>
-        <el-select v-model="depot" placeholder="--所有仓储--" style="float: left;margin-right:10px;width:130px;">
+        <el-select v-model="depot" placeholder="--所有仓储--" style="float: left;margin-right:10px;width:140px;">
           <el-option v-for="(item, key) in warehouse" :key="item.key" :label="item" :value="item"></el-option>
         </el-select>
         <el-select
@@ -211,7 +211,7 @@
                 id="oTable"
                 border="1px solid #ebeef5"
                 cellpadding="9"
-                style="border: 1px solid #ebeef5;background-color:#fff;color:#606266;width:55%;border-collapse:collapse;float: left;"
+                style="border: 1px solid #ebeef5;background-color:#fff;color:#606266;width:57%;border-collapse:collapse;float: left;"
               >
                 <thead>
                   <tr>
@@ -222,7 +222,7 @@
                     <th style="line-height: 40px;height: 40px;padding: 9px 0">操作</th>
                     <th style="line-height: 40px;height: 40px;padding: 0">SKU</th>
                     <th style="line-height: 40px;height: 40px;padding: 0" width="12%">数量</th>
-                    <th style="line-height: 40px;height: 40px;padding: 0" width="12%">价格</th>
+                    <th style="line-height: 40px;height: 40px;padding: 0" width="14%">价格</th>
                     <th style="line-height: 40px;height: 40px;padding: 0">图片地址</th>
                     <th style="line-height: 40px;height: 40px;padding: 0">图片</th>
                   </tr>
@@ -258,7 +258,7 @@
                 id
                 border="1px solid #ebeef5"
                 cellpadding="9"
-                style="border: 1px solid #ebeef5;background-color:#fff;color:#606266;width:44.5%;border-collapse:collapse;float: left;"
+                style="border: 1px solid #ebeef5;background-color:#fff;color:#606266;width:42.5%;border-collapse:collapse;float: left;"
               >
                 <thead>
                   <tr>
@@ -288,7 +288,7 @@
           </el-row>
           <el-row style="margin-top: 1px" v-if='showattribute1'>
             <el-row style="margin-top:15px;">
-              <el-col :span="2">
+              <el-col :span="3">
                 <input
                   placeholder="行数"
                   v-model="rows"
@@ -296,7 +296,7 @@
                 >
                 <span class="xzz" @click="addClomun">新增行</span>
               </el-col>
-              <el-col :span="3">
+              <el-col :span="4">
                 <input
                   placeholder="数量"
                   v-model="num"
@@ -304,7 +304,7 @@
                 >
                 <span class="xzz1" @click="setNum">数量确定</span>
               </el-col>
-              <el-col :span="3">
+              <el-col :span="4">
                 <input
                   placeholder="零售价"
                   v-model="price"
@@ -312,7 +312,7 @@
                 >
                 <span class="xzz1" @click="setPrice">价格确定</span>
               </el-col>
-              <el-col :span="4">
+              <el-col :span="5">
                 <input
                   placeholder="Does not apply"
                   v-model="ship"
@@ -377,7 +377,7 @@
         <el-col :span="22" style="margin-left: 100px;margin-top: 10px">
           <el-input
             v-model="wishForm.headKeywords"
-            style="width:100%"
+            style="width:96%"
             placeholder="--一个关键词--"
             @input="top1($event)"
           ></el-input>
@@ -398,15 +398,15 @@
         <el-col :span="23">
           <div style="margin-left: 70px;">
             必填
-            <el-input style="width:32%" v-model="mandatoryData[0]" @blur="mandatory()"></el-input>
-            <el-input style="width:32%" v-model="mandatoryData[1]" @blur="mandatory()"></el-input>
-            <el-input style="width:32%" v-model="mandatoryData[2]" @blur="mandatory()"></el-input>
+            <el-input style="width:31.8%" v-model="mandatoryData[0]" @blur="mandatory()"></el-input>
+            <el-input style="width:31.8%" v-model="mandatoryData[1]" @blur="mandatory()"></el-input>
+            <el-input style="width:31.8%" v-model="mandatoryData[2]" @blur="mandatory()"></el-input>
           </div>
           <div style="margin-left: 70px;margin-top: 5px">
             选填
-            <el-input style="width:32%" v-model="mandatoryData[3]" @blur="mandatory()"></el-input>
-            <el-input style="width:32%" v-model="mandatoryData[4]" @blur="mandatory()"></el-input>
-            <el-input style="width:32%" v-model="mandatoryData[5]" @blur="mandatory()"></el-input>
+            <el-input style="width:31.8%" v-model="mandatoryData[3]" @blur="mandatory()"></el-input>
+            <el-input style="width:31.8%" v-model="mandatoryData[4]" @blur="mandatory()"></el-input>
+            <el-input style="width:31.8%" v-model="mandatoryData[5]" @blur="mandatory()"></el-input>
           </div>
         </el-col>
       </el-col>
@@ -425,19 +425,19 @@
         <el-col :span="23">
           <div style="margin-left: 70px">
             必填
-            <el-input style="width:19.1%" v-model="randomData[0]" @blur="random()"></el-input>
-            <el-input style="width:19.1%" v-model="randomData[1]" @blur="random()"></el-input>
-            <el-input style="width:19.1%" v-model="randomData[2]" @blur="random()"></el-input>
-            <el-input style="width:19.1%" v-model="randomData[3]" @blur="random()"></el-input>
-            <el-input style="width:19.3%" v-model="randomData[4]" @blur="random()"></el-input>
+            <el-input style="width:19%" v-model="randomData[0]" @blur="random()"></el-input>
+            <el-input style="width:19%" v-model="randomData[1]" @blur="random()"></el-input>
+            <el-input style="width:19%" v-model="randomData[2]" @blur="random()"></el-input>
+            <el-input style="width:19%" v-model="randomData[3]" @blur="random()"></el-input>
+            <el-input style="width:19%" v-model="randomData[4]" @blur="random()"></el-input>
           </div>
           <div style="margin-left: 70px;margin-top: 5px">
             选填
-            <el-input style="width:19.1%" v-model="randomData[5]" @blur="random()"></el-input>
-            <el-input style="width:19.1%" v-model="randomData[6]" @blur="random()"></el-input>
-            <el-input style="width:19.1%" v-model="randomData[7]" @blur="random()"></el-input>
-            <el-input style="width:19.1%" v-model="randomData[8]" @blur="random()"></el-input>
-            <el-input style="width:19.3%" v-model="randomData[9]" @blur="random()"></el-input>
+            <el-input style="width:19%" v-model="randomData[5]" @blur="random()"></el-input>
+            <el-input style="width:19%" v-model="randomData[6]" @blur="random()"></el-input>
+            <el-input style="width:19%" v-model="randomData[7]" @blur="random()"></el-input>
+            <el-input style="width:19%" v-model="randomData[8]" @blur="random()"></el-input>
+            <el-input style="width:19%" v-model="randomData[9]" @blur="random()"></el-input>
           </div>
         </el-col>
       </el-col>
@@ -454,7 +454,7 @@
         <el-col :span="22" style="margin-left: 100px;margin-top: 10px;margin-bottom: 20px">
           <el-input
             v-model="wishForm.tailKeywords"
-            style="width: 100%"
+            style="width: 96%"
             placeholder="--最多一个关键词--"
             @input="bottm1($event)"
           ></el-input>
@@ -467,7 +467,7 @@
             size="small"
             v-model="wishForm.description"
             type="textarea"
-            style="width:100%;margin-left: 27px"
+            style="width:96%;margin-left: 27px"
           ></el-input>
         </el-col>
       </el-col>
@@ -555,7 +555,7 @@
       <el-col :span="12" style="margin-bottom: 40px;">
         <h4 class="adres">境内运输方式</h4>
         <el-col :span="10">
-          <el-col :span="7" style="margin-top: 10px;text-align: center">运输方式1</el-col>
+          <el-col :span="7" style="margin-top: 10px;text-align: center" class="font12">运输方式1</el-col>
           <el-col :span="17">
             <el-select
               style="width: 95%"
@@ -572,19 +572,19 @@
           </el-col>
         </el-col>
         <el-col :span="7">
-          <el-col :span="8" style="margin-top: 10px;text-align: center">首件运费</el-col>
+          <el-col :span="8" style="margin-top: 10px;text-align: center" class="font12">首件运费</el-col>
           <el-col :span="16">
             <el-input :placeholder="currencyCode" style="width: 95%" v-model="wishForm.inFirstCost1"></el-input>
           </el-col>
         </el-col>
         <el-col :span="7">
-          <el-col :span="8" style="margin-top: 10px;text-align: center">续件运费</el-col>
+          <el-col :span="8" style="margin-top: 10px;text-align: center" class="font12">续件运费</el-col>
           <el-col :span="16">
             <el-input :placeholder="currencyCode" style="width: 95%" v-model="wishForm.inSuccessorCost1"></el-input>
           </el-col>
         </el-col>
         <el-col :span="10" style="margin-top: 15px">
-          <el-col :span="7" style="margin-top: 10px;text-align: center">运输方式2</el-col>
+          <el-col :span="7" style="margin-top: 10px;text-align: center" class="font12">运输方式2</el-col>
           <el-col :span="17">
             <el-select
               style="width: 95%"
@@ -601,13 +601,13 @@
           </el-col>
         </el-col>
         <el-col :span="7" style="margin-top: 15px">
-          <el-col :span="8" style="margin-top: 10px;text-align: center">首件运费</el-col>
+          <el-col :span="8" style="margin-top: 10px;text-align: center" class="font12">首件运费</el-col>
           <el-col :span="16">
             <el-input :placeholder="currencyCode" style="width: 95%" v-model="wishForm.inFirstCost2"></el-input>
           </el-col>
         </el-col>
         <el-col :span="7" style="margin-top: 15px">
-          <el-col :span="8" style="margin-top: 10px;text-align: center">续件运费</el-col>
+          <el-col :span="8" style="margin-top: 10px;text-align: center" class="font12">续件运费</el-col>
           <el-col :span="16">
             <el-input :placeholder="currencyCode" style="width: 95%" v-model="wishForm.inSuccessorCost2"></el-input>
           </el-col>
@@ -616,7 +616,7 @@
       <el-col :span="12">
         <h4 class="adres">境外运输方式</h4>
         <el-col :span="10">
-          <el-col :span="7" style="margin-top: 10px;text-align: center">运输方式1</el-col>
+          <el-col :span="7" style="margin-top: 10px;text-align: center" class="font12">运输方式1</el-col>
           <el-col :span="17">
             <el-select
               style="width: 95%"
@@ -633,19 +633,19 @@
           </el-col>
         </el-col>
         <el-col :span="7">
-          <el-col :span="8" style="margin-top: 10px;text-align: center">首件运费</el-col>
+          <el-col :span="8" style="margin-top: 10px;text-align: center" class="font12">首件运费</el-col>
           <el-col :span="16">
             <el-input :placeholder="currencyCode" style="width: 95%" v-model="wishForm.outFirstCost1"></el-input>
           </el-col>
         </el-col>
         <el-col :span="7">
-          <el-col :span="8" style="margin-top: 10px;text-align: center">续件运费</el-col>
+          <el-col :span="8" style="margin-top: 10px;text-align: center" class="font12">续件运费</el-col>
           <el-col :span="16">
             <el-input :placeholder="currencyCode" style="width: 95%" v-model="wishForm.outSuccessorCost1"></el-input>
           </el-col>
         </el-col>
         <el-col :span="10" style="margin-top: 15px">
-          <el-col :span="7" style="margin-top: 10px;text-align: center">运输方式2</el-col>
+          <el-col :span="7" style="margin-top: 10px;text-align: center" class="font12">运输方式2</el-col>
           <el-col :span="17">
             <el-select
               style="width: 95%"
@@ -657,13 +657,13 @@
           </el-col>
         </el-col>
         <el-col :span="7" style="margin-top: 15px">
-          <el-col :span="8" style="margin-top: 10px;text-align: center">首件运费</el-col>
+          <el-col :span="8" style="margin-top: 10px;text-align: center" class="font12">首件运费</el-col>
           <el-col :span="16">
             <el-input :placeholder="currencyCode" style="width: 95%" v-model="wishForm.outFirstCost2"></el-input>
           </el-col>
         </el-col>
         <el-col :span="7" style="margin-top: 15px">
-          <el-col :span="8" style="margin-top: 10px;text-align: center">续件运费</el-col>
+          <el-col :span="8" style="margin-top: 10px;text-align: center" class="font12">续件运费</el-col>
           <el-col :span="16">
             <el-input :placeholder="currencyCode" style="width: 95%" v-model="wishForm.outSuccessorCost2"></el-input>
           </el-col>
@@ -1730,5 +1730,10 @@ section {
 }
 .selee .el-input__inner {
   border-radius: 300px !important;
+}
+@media screen and (max-width: 1440px){
+   .font12{
+     font-size: 12px;
+   }
 }
 </style>
