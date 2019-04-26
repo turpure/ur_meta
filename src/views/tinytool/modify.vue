@@ -77,7 +77,7 @@
       :height="tableHeight"
       v-scrollBar:slim
       :max-height="tableHeight"
-      v-if="tableData.length!=0"
+      v-if="showIFif"
       element-loading-text="正在加载中..."
     >
       <el-table-column prop="salesName" label="销售员"></el-table-column>
@@ -126,6 +126,7 @@ export default {
       member: [],
       account: [],
       store: [],
+      showIFif:false,
       resJl: [],
       condition: {
         salesName: null,
@@ -154,7 +155,6 @@ export default {
       this.resJl = res.filter(
         ele => (ele.department === "运营一部" || ele.parent_department === "运营一部") && ele.position=="经理"
       );
-      console.log(this.resJl)
     });
     getAccount().then(response => {
       this.account = response.data.data;
@@ -206,6 +206,7 @@ export default {
       this.searchMod();
     },
     searchMod() {
+      this.showIFif=true
       this.listLoading = true;
       this.shiwIS = false;
       if (this.condition.salesName) {

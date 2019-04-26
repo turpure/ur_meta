@@ -878,6 +878,46 @@ export function APIMineInfo(param) {
     data
   })
 }
+export function APICreatePaypal(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/create-paypal',
+    method: 'post',
+    data
+  })
+}
+export function APIPaypal(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/paypal?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+export function APIPaypalInfo(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/paypal-info',
+    method: 'post',
+    data
+  })
+}
+export function APIUpdatePaypal(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/update-paypal',
+    method: 'post',
+    data
+  })
+}
+export function APIDeletePaypal(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/delete-paypal',
+    method: 'post',
+    data
+  })
+}
 //export function APIDelivery(param) {
 //  const data = { condition: param }
 //  return request({

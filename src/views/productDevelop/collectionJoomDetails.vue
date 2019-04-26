@@ -22,7 +22,7 @@
           </el-col>
         </el-col>
         <el-col :span="8" class="top15">
-          <el-col :span="4" class="titCenter" >标签</el-col>
+          <el-col :span="4" class="titCenter">标签</el-col>
           <el-col :span="18">
             <el-input clearable></el-input>
           </el-col>
@@ -38,7 +38,12 @@
         <el-col :span="8" class="top15">
           <el-col :span="4" class="titCenter">主类目</el-col>
           <el-col :span="18">
-            <el-select v-model="editForm.cat" clearable @change="productcategory" style="width:100%;">
+            <el-select
+              v-model="editForm.cat"
+              clearable
+              @change="productcategory"
+              style="width:100%;"
+            >
               <el-option v-for="item in cate" :value="item" :key="item"></el-option>
             </el-select>
           </el-col>
@@ -66,6 +71,208 @@
         </el-col>
       </el-col>
     </div>
+    <el-col :span="24" style="padding: 0;">
+      <h3 class="toolbar essential">图片信息</h3>
+    </el-col>
+    <div class="w98">
+      <el-col :span="24" style="margin-top:15px;">
+        <el-col :span="4" style="margin-left: 15px">
+          <a
+            :href="editForm.mainImage"
+            target="_blank"
+            style="display: block; width: 95%;height: 205px"
+          >
+            <img :src="editForm.mainImage" style="display: block; width: 95%;height: 205px">
+          </a>
+        </el-col>
+        <el-col :span="12">
+          <el-col :span="3" class="textZt">主图</el-col>
+          <el-col :span="21">
+            <el-input v-model="editForm.mainImage"></el-input>
+          </el-col>
+          <el-col :span="3" class="textZt" style="margin-top: 15px"></el-col>
+        </el-col>
+      </el-col>
+      <el-col style="margin-bottom: 10px;margin-top: 10px" :span="24">
+        <span
+          @click="sIs()"
+          style="padding: 10px 20px;background: #409EFF;color: #fff;cursor: pointer;display: block;width: 70px;padding-left:10px;text-align: center;margin-left: 15px"
+        >
+          <i :class="[shoIS?'el-icon-minus':'el-icon-plus']" style="margin-right: 5px"></i>附加图
+        </span>
+      </el-col>
+      <el-col :span="24">
+        <el-col
+          :span="12"
+          style="margin-top: 15px;margin-bottom: 2px"
+          v-for="(item,index) in url"
+          :key="index"
+          v-show="shoIS"
+        >
+          <el-col :span="19">
+            <el-col :span="24">
+              <el-input v-model="url[index]" @input="revise($event,index)"></el-input>
+            </el-col>
+            <el-col>
+              <p class="sx" @click="botIndex(index)">
+                <i class="el-icon-arrow-down"></i>下移动
+              </p>
+              <p class="sx" @click="topIndex(index)">
+                <i class="el-icon-arrow-up"></i>上移动
+              </p>
+              <p class="sx" @click="delDz(index)">
+                <i class="el-icon-delete"></i>删除
+              </p>
+              <p class="ss">#{{index+1}}</p>
+            </el-col>
+          </el-col>
+          <el-col :span="3" style="margin-left: 15px">
+            <a :href="url[index]" target="_blank">
+              <img :src="url[index]" style="display: block;width: 90px;height: 90px">
+            </a>
+          </el-col>
+        </el-col>
+      </el-col>
+    </div>
+    <el-col :span="24" style="padding: 0;">
+      <h3 class="toolbar essential">多属性信息</h3>
+    </el-col>
+    <el-col style="margin-top:5px;">
+      <el-table :data="tableData" border style="width:98%;margin-left:1%;margin-top:15px;">
+        <!-- <el-table-column type="selection" width="30" align="center" header-align="center"></el-table-column> -->
+        <el-table-column type="index" width="50" align="center" header-align="center"></el-table-column>
+        <el-table-column label="操作" width="50" header-align="center" align="center">
+          <template slot-scope="scope">
+            <el-tooltip content="删除">
+              <i
+                class="el-icon-delete"
+                @click="del(scope.$index, scope.row)"
+                style="color:#409EFF;cursor:pointer;"
+              ></i>
+            </el-tooltip>
+          </template>
+        </el-table-column>
+        <el-table-column label="唯一编码" prop="childId" header-align="center" min-width="130">
+          <template slot-scope="scope">
+            <el-input size="small" v-model="scope.row.childId"></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column label="颜色" prop="color" header-align="center">
+          <template slot-scope="scope">
+            <el-input size="small" v-model="scope.row.color"></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column label="尺码" prop="proSize" header-align="center">
+          <template slot-scope="scope">
+            <el-input size="small" v-model="scope.row.proSize"></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column label="库存" prop="quantity" header-align="center">
+          <template slot-scope="scope">
+            <el-input size="small" v-model="scope.row.quantity"></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column label="价格" prop="price" header-align="center">
+          <template slot-scope="scope">
+            <el-input size="small" v-model="scope.row.price"></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column label="MSR价格" prop="msrPrice" header-align="center">
+          <template slot-scope="scope">
+            <el-input size="small" v-model="scope.row.msrPrice"></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column label="运费" prop="shipping" header-align="center">
+          <template slot-scope="scope">
+            <el-input size="small" v-model="scope.row.shipping"></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column label="重量" prop="shippingWeight" header-align="center">
+          <template slot-scope="scope">
+            <el-input size="small" v-model="scope.row.shippingWeight"></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column label="配送时长" prop="shippingTime" header-align="center">
+          <template slot-scope="scope">
+            <el-input size="small" v-model="scope.row.shippingTime"></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column label="主图" prop="varMainImage" header-align="center" min-width="100">
+          <template slot-scope="scope">
+            <el-input size="small" v-model="scope.row.varMainImage"></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column label="图片" prop="varMainImage" header-align="center">
+          <template slot-scope="scope">
+            <img
+              :src="scope.row.varMainImage"
+              style="width:50px;height:50px;display: block;margin: auto"
+            >
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-col>
+    <div class="w98">
+      <el-col :span="24" style="margin-top:10px;">
+        <el-col :span="3">
+          <el-col :span="14">
+            <el-input placeholder="新增行数" class="font12"></el-input>
+          </el-col>
+          <el-col :span="9" class="boderrtb font12">
+            行数确定
+          </el-col>
+        </el-col>
+        <el-col :span="3">
+          <el-col :span="14">
+            <el-input placeholder="库存设置" class="font12"></el-input>
+          </el-col>
+          <el-col :span="9" class="boderrtb font12">
+            库存确定
+          </el-col>
+        </el-col>
+        <el-col :span="3">
+          <el-col :span="14">
+            <el-input placeholder="设置价格" class="font12"></el-input>
+          </el-col>
+          <el-col :span="9" class="boderrtb font12">
+            价格确定
+          </el-col>
+        </el-col>
+        <el-col :span="3">
+          <el-col :span="14">
+            <el-input placeholder="运费设置" class="font12"></el-input>
+          </el-col>
+          <el-col :span="9" class="boderrtb font12">
+            运费确定
+          </el-col>
+        </el-col>
+        <el-col :span="3">
+          <el-col :span="14">
+            <el-input placeholder="零售价" class="font12"></el-input>
+          </el-col>
+          <el-col :span="9" class="boderrtb font12">
+            零售确定
+          </el-col>
+        </el-col>
+        <el-col :span="3">
+          <el-col :span="14">
+            <el-input placeholder="运输时间" class="font12"></el-input>
+          </el-col>
+          <el-col :span="9" class="boderrtb font12">
+            配送确定
+          </el-col>
+        </el-col>
+        <el-col :span="3">
+          <el-col :span="14">
+            <el-input placeholder="重量设置" class="font12"></el-input>
+          </el-col>
+          <el-col :span="9" class="boderrtb font12">
+            重量确定
+          </el-col>
+        </el-col>
+      </el-col>
+    </div>
+    <el-col style="width:100%;height:70px;"></el-col>
   </div>
 </template>
 
@@ -85,22 +292,36 @@ export default {
       editForm: [],
       category: [],
       disabled: true,
+      shoIS: false,
       cate: [],
+      url: [],
+      tableData: [],
       subCate: [],
-      condition:{
-        id:null
+      condition: {
+        id: null
       }
     };
   },
   methods: {
-    getData(){
+    showAttribute() {
+      this.showattribute = !this.showattribute;
+    },
+    sIs() {
+      this.shoIS = !this.shoIS;
+    },
+    getData() {
       APIMineInfo(this.condition).then(res => {
-        if(res.data.code==200){
-          this.editForm=res.data.data.basicInfo
-        }else{
+        if (res.data.code == 200) {
+          this.editForm = res.data.data.basicInfo;
+          this.tableData = res.data.data.detailsInfo;
+          for (var item in res.data.data.images) {
+            this.url.push(res.data.data.images[item]);
+          }
+          this.url.pop();
+        } else {
           this.$message.error(res.data.message);
         }
-      })
+      });
     },
     productcategory() {
       if (this.editForm.cat !== "") {
@@ -256,6 +477,21 @@ export default {
   font-size: 13px;
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
+}
+.m15 {
+  margin-top: 15px;
+}
+.boderrtb{
+  border: 1px solid #dcdfe6;
+  border-left: none;
+  line-height: 38px;
+  text-align: center;
+  cursor: pointer;
+}
+@media screen and (max-width: 1500px) {
+  .font12 {
+    font-size: 12px;
+  }
 }
 @media screen and (max-width: 1300px) {
   .titCenter {

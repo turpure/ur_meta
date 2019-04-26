@@ -61,6 +61,7 @@ import supplierManagement from '../views/productDevelop/supplierManagement.vue'
 import supplierProduct from '../views/productDevelop/supplierProduct.vue'
 import basicInformation from '../views/productDevelop/basicInformation.vue'
 import basicInformationeBay from '../views/productDevelop/basicInformationeBay.vue'
+import basicInformationpaypal from '../views/productDevelop/basicInformationPay.vue'
 import basicInformationJoom from '../views/productDevelop/basicInformationJoom.vue'
 import basicInformationJoomYs from '../views/productDevelop/basicInformationJoomYs.vue'
 import basicInformationJw from '../views/productDevelop/basicInformationJw.vue'
@@ -434,6 +435,11 @@ const routes = [
         path: '/v1/basic-info/joom',
         component: basicInformationJoom,
         name: 'joom'
+      },
+      {
+        path: '/v1/basic-info/paypal',
+        component: basicInformationpaypal,
+        name: 'paypal'
       },
       {
         path: '/v1/basic-info/ys',
