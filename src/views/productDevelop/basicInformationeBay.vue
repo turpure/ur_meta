@@ -53,7 +53,6 @@
                 prop="storeCountry"
                 :render-header="renderHeaderPicEbay"
                 align="center"
-                width="100"
               ></el-table-column>
             </el-table-column>
             <el-table-column label="eBay编码" header-align="center">
@@ -61,7 +60,6 @@
                 prop="nameCode"
                 :render-header="renderHeaderPicEbay"
                 align="center"
-                width="120"
               ></el-table-column>
             </el-table-column>
             <el-table-column label="主图" header-align="center">
@@ -69,7 +67,6 @@
                 prop="mainImg"
                 :render-header="renderHeaderPicEbay"
                 align="center"
-                width="120"
               ></el-table-column>
             </el-table-column>
             <el-table-column label="刊登风格" header-align="center">
@@ -77,7 +74,6 @@
                 prop="ibayTemplate"
                 :render-header="renderHeaderPicEbay"
                 align="center"
-                width="120"
               ></el-table-column>
             </el-table-column>
             <el-table-column label="大额PayPal" header-align="center">

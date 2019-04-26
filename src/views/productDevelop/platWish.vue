@@ -5,7 +5,7 @@
       class="toolbar"
       style="position:fixed;bottom:0px;text-align:center;z-index:10;padding-bottom:15px;padding-top: 12px"
     >
-      <el-col :span="13" :offset="5">
+      <el-col :span="14" :offset="5">
         <el-button
           type="primary"
           @click="update"

@@ -11,7 +11,7 @@
           type="success"
           @click="keepWs()"
         >保存并完善</el-button>
-        <el-select v-model="depot" placeholder="--所有仓储--" style="float: left;margin-right:10px;width:140px;" @change="warehouseXz($event)">
+        <el-select v-model="depot" placeholder="--所有仓储--" style="float: left;margin-right:10px;width:16%;" @change="warehouseXz($event)">
           <el-option v-for="(item, key) in warehouse" :key="item.key" :label="item" :value="item"></el-option>
         </el-select>
         <el-select
