@@ -862,6 +862,22 @@ export function APIDeleteAttribute(param) {
     data,
   })
 }
+export function APIMineList(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data-mine/mine-list',
+    method: 'post',
+    data
+  })
+}
+export function APIMineInfo(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data-mine/mine-info',
+    method: 'post',
+    data
+  })
+}
 //export function APIDelivery(param) {
 //  const data = { condition: param }
 //  return request({

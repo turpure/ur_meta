@@ -71,7 +71,9 @@ import ordermanage from '../views/productDevelop/ordermanage.vue'
 import ord1 from '../views/productDevelop/ord1.vue'
 import ord2 from '../views/productDevelop/ord2.vue'
 import paymentDetail from '../views/productDevelop/paymentDetail.vue'
-
+//数据采集
+import collection from '../views/productDevelop/collection.vue'
+import collectionJoom from '../views/productDevelop/collectionJoom.vue'
 const routes = [
   {
     path: '/login',
@@ -386,6 +388,18 @@ const routes = [
             path: '/plat/:id',
             component: platEdit,
             name: 'platTable'
+          },
+        ]
+      },
+      {
+        path: '/v1/oa-data-mine/index',
+        component: collection,
+        name: '数据采集',
+        children: [
+          {
+            path: '/v1/oa-data-mine/collectionJoom',
+            component: collectionJoom,
+            name: 'Joom'
           },
         ]
       },
