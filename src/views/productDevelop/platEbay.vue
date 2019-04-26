@@ -560,6 +560,7 @@
           <el-col :span="17">
             <el-select
               style="width: 95%"
+              clearable
               v-model="wishForm.inShippingMethod1"
               placeholder="--境内物流选择--"
             >
@@ -589,6 +590,7 @@
           <el-col :span="17">
             <el-select
               style="width: 95%"
+              clearable
               v-model="wishForm.inShippingMethod2"
               placeholder="--境内物流选择--"
             >
@@ -621,6 +623,7 @@
           <el-col :span="17">
             <el-select
               style="width: 95%"
+              clearable
               v-model="wishForm.outShippingMethod1"
               placeholder="--境外物流选择--"
             >
@@ -650,6 +653,7 @@
           <el-col :span="17">
             <el-select
               style="width: 95%"
+              clearable
               v-model="wishForm.outShippingMethod2"
               placeholder="--境外物流选择--"
             >

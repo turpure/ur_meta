@@ -231,7 +231,7 @@ export default {
           });
         } else {
           if (this.res.length != 0) {
-            this.condition.salesName = this.res[0].salesName;
+            this.condition.salesName = this.res[0].username;
             getEbayVirtualStore(this.condition).then(res => {
               this.listLoading = false;
               this.tableData = res.data.data.items;

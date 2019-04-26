@@ -6,7 +6,7 @@
           <el-table :data="pictureData" @selection-change="selsChange" :height="tableHeight">
             <el-table-column type="selection" fixed align="center" header-align="center"></el-table-column>
             <el-table-column type="index" fixed align="center" header-align="center"></el-table-column>
-            <el-table-column label="操作" fixed header-align="center" width="80">
+            <el-table-column label="操作" fixed header-align="center" width="108">
               <template slot-scope="scope">
                 <el-tooltip content="查看">
                   <i
@@ -17,16 +17,30 @@
                 </el-tooltip>
                 <el-tooltip content="更新">
                   <i
-                    @click="picEdit(scope.$index, scope.row)"
+                    @click="joomId(scope.$index, scope.row)"
                     class="el-icon-edit"
                     style="color: #409EFF;cursor:pointer;"
                   ></i>
                 </el-tooltip>
-                <el-tooltip content="标记已完善">
+                <el-tooltip content="转至开发">
                   <i
-                    class="el-icon-star-on"
+                    class="el-icon-rank"
                     style="color: #409EFF;cursor:pointer;"
                     @click="signPerfect(scope.$index, scope.row)"
+                  ></i>
+                </el-tooltip>
+                <el-tooltip content="关联产品">
+                  <i
+                    class="el-icon-share"
+                    style="color: #409EFF;cursor:pointer;"
+                    @click="signPerfect(scope.$index, scope.row)"
+                  ></i>
+                </el-tooltip>
+                <el-tooltip content="删除">
+                  <i
+                    class="el-icon-delete"
+                    style="color: #409EFF;cursor:pointer;"
+                    @click="del(scope.$index, scope.row)"
                   ></i>
                 </el-tooltip>
               </template>
@@ -143,11 +157,11 @@
         background
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="condition.page"
-        :page-size="condition.pageSize"
+        :current-page="this.condition.page"
+        :page-sizes="[10, 20, 30, 40]"
+        :page-size="this.condition.pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
         :total="this.total"
-        layout="prev, pager, next"
-        style="margin: 20px 0;margin-left: 10px"
       ></el-pagination>
       <el-dialog title="数据详情" :visible.sync="dialogPicture" width="70%">
         <el-row>
@@ -251,6 +265,11 @@ export default {
     };
   },
   methods: {
+    joomId(idnex,row){
+      this.$router.push({
+          path: `/joom/${row.id}`
+        });
+    },
     selsChange(sels) {
       this.sels = sels;
     },

@@ -212,6 +212,9 @@ export default {
       if(sessionStorage.getItem('judge')){
         sessionStorage.removeItem('judge')
       }
+      if(sessionStorage.getItem('judgeCollection')){
+        sessionStorage.removeItem('judgeCollection')
+      }
       if (index === '/index') {
         this.collapsed = false
         sessionStorage.removeItem('acTi')

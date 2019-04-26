@@ -74,6 +74,8 @@ import paymentDetail from '../views/productDevelop/paymentDetail.vue'
 //数据采集
 import collection from '../views/productDevelop/collection.vue'
 import collectionJoom from '../views/productDevelop/collectionJoom.vue'
+import joomId from '../views/productDevelop/collectionJoomDetails.vue'
+
 const routes = [
   {
     path: '/login',
@@ -400,6 +402,11 @@ const routes = [
             path: '/v1/oa-data-mine/collectionJoom',
             component: collectionJoom,
             name: 'Joom'
+          },
+          {
+            path: '/joom/:id',
+            component: joomId,
+            name: 'joomId'
           },
         ]
       },

@@ -22,8 +22,13 @@ export default {
     };
   },
   methods: {
-    handleClick(tab, event) {
-     
+   handleClick(tab, event) {
+      if (tab.label === "Joom") {
+        sessionStorage.setItem("judgeCollection", "属性信息");
+        this.$router.push({
+         path: `/v1/oa-data-mine/collectionJoom`
+        });
+      }
     }
   },
   watch: {
@@ -40,28 +45,28 @@ export default {
           this.activeName = "Wish";
           sessionStorage.setItem("judgeCollection", "Wish");
           this.$router.push({
-            path: `/v1/oa-goodsinfo/goodsInfoPicture`
+            path: `/v1/oa-data-mine/collectionWish`
           });
         }
         if (this.allMenu[0].name == "Ebay") {
           this.activeName = "Ebay";
           sessionStorage.setItem("judgeCollection", "Ebay");
           this.$router.push({
-            path: `/v1/oa-goodsinfo/goodsInfoPlatform`
+            path: `/v1/oa-data-mine/collectionEbay`
           });
         }
         if (this.allMenu[0].name == "Amazone") {
           this.activeName = "Amazone";
           sessionStorage.setItem("judgeCollection", "Amazone");
           this.$router.push({
-            path: `/v1/oa-goodsinfo/goodsInfoPlatform`
+            path: `/v1/oa-data-mine/collectionAmazone`
           });
         }
          if (this.allMenu[0].name == "Aliexpress") {
           this.activeName = "Aliexpress";
           sessionStorage.setItem("judgeCollection", "Aliexpress");
           this.$router.push({
-            path: `/v1/oa-goodsinfo/goodsInfoPlatform`
+            path: `/v1/oa-data-mine/collectionAliexpress`
           });
         }
       }
