@@ -18,19 +18,19 @@
         <el-col :span="8" class="top15">
           <el-col :span="4" class="titCenter">标题</el-col>
           <el-col :span="18">
-            <el-input></el-input>
+            <el-input v-model="editForm.goodsCode" clearable></el-input>
           </el-col>
         </el-col>
         <el-col :span="8" class="top15">
-          <el-col :span="4" class="titCenter">标签</el-col>
+          <el-col :span="4" class="titCenter" >标签</el-col>
           <el-col :span="18">
-            <el-input></el-input>
+            <el-input clearable></el-input>
           </el-col>
         </el-col>
         <el-col :span="8" class="top15">
           <el-col :span="4" class="titCenter">商品编码</el-col>
           <el-col :span="18">
-            <el-input></el-input>
+            <el-input v-model="editForm.goodsCode" clearable></el-input>
           </el-col>
         </el-col>
       </el-col>
@@ -54,7 +54,7 @@
         <el-col :span="8" class="top15">
           <el-col :span="4" class="titCenter">特殊属性</el-col>
           <el-col :span="18">
-            <el-select v-model="editForm.spAttribute" style="width: 100%">
+            <el-select v-model="editForm.spAttribute" clearable style="width: 100%">
               <el-option
                 v-for="(item, key) in specificity"
                 :key="item.key"

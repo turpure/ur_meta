@@ -4,14 +4,14 @@
       :span="24"
       style="position: fixed; bottom:0; z-index:999;background: #f2f2f2;padding: 15px 0; padding-top:12px; border-top: #eee solid 1px;"
     >
-      <el-col :span="13" :offset="5">
+      <el-col :span="14" :offset="5">
         <el-button @click="keep()" type="primary" style="float: left;margin-right:10px">保存当前数据</el-button>
         <el-button
           style="margin-left: 0;float: left;margin-right:10px"
           type="success"
           @click="keepWs()"
         >保存并完善</el-button>
-        <el-select v-model="depot" placeholder="--所有仓储--" style="float: left;margin-right:10px;width:140px;">
+        <el-select v-model="depot" placeholder="--所有仓储--" style="float: left;margin-right:10px;width:140px;" @change="warehouseXz($event)">
           <el-option v-for="(item, key) in warehouse" :key="item.key" :label="item" :value="item"></el-option>
         </el-select>
         <el-select
@@ -21,7 +21,7 @@
           collapse-tags
           v-model="accountNum"
           @change="forbidSale1($event)"
-          style="width: 220px;float: left;"
+          style="width: 250px;float: left;"
           class="selee"
         >
           <el-button plain type="info" @click="selectalld1">全选</el-button>
@@ -900,13 +900,14 @@ export default {
       innerVisible: false,
       dialogFormVisible: false,
       dialogFormVisible1: false,
-      accountNum: "--所有账号",
+      accountNum: null,
       foremost1: 0,
       bxtotal: 0,
       sjtotal: 0,
       bxlength: 0,
       sjlength: 0,
       tite: [],
+      resAcc:[],
       warehouse: [],
       rows: 1,
       num: "",
@@ -953,6 +954,15 @@ export default {
     };
   },
   methods: {
+    warehouseXz(e){
+      this.accountNumber=[]
+      for(let i=0;i<this.resAcc.length;i++){
+        if(this.resAcc[i].storeCountry==e){
+          this.accountNumber.push(this.resAcc[i].ebaySuffix)
+          this.accountNum=[]
+        }
+      }
+    },
     showAttribute1(){
         this.showattribute1 = !this.showattribute1;
     },
@@ -1392,13 +1402,13 @@ export default {
         this.wishForm = res.data.data.basicInfo;
         this.tabDate = res.data.data.skuInfo;
         this.wishForm.extraPage = this.wishForm.extraPage.split("\\n");
-        this.wishForm.site == 0
-          ? (this.wishForm.site = "美国")
-          : this.wishForm.site == 3
-          ? (this.wishForm.site = "英国")
-          : this.wishForm.site == 15
-          ? (this.wishForm.site = "澳大利亚")
-          : (this.wishForm.site = this.wishForm.site);
+        // this.wishForm.site == 0
+        //   ? (this.wishForm.site = "美国")
+        //   : this.wishForm.site == 3
+        //   ? (this.wishForm.site = "英国")
+        //   : this.wishForm.site == 15
+        //   ? (this.wishForm.site = "澳大利亚")
+        //   : (this.wishForm.site = this.wishForm.site);
         if (this.wishForm.extraPage[this.wishForm.extraPage.length - 1] == "") {
           this.wishForm.extraPage.pop();
         }
@@ -1515,6 +1525,11 @@ export default {
         specifics: this.tableData
       };
       var specificsData = JSON.stringify(objStr);
+      for(let n=0;n<this.ebaySite.length;n++){
+        if(this.wishForm.site==this.ebaySite[n].name){
+         this.wishForm.site=this.ebaySite[n].code
+        }
+      }
       const data = {
         basicInfo: {
           nid: this.wishForm.nid,
@@ -1581,6 +1596,11 @@ export default {
             message: "保存成功",
             type: "success"
           });
+          for(let s=0;s<this.ebaySite.length;s++){
+            if(this.wishForm.site==this.ebaySite[s].code){
+            this.wishForm.site=this.ebaySite[s].name
+           }
+          }
         } else {
           this.$message.error(res.data.message);
         }
@@ -1591,9 +1611,10 @@ export default {
     this.condition.id = this.$route.params.id;
     this.getData();
     getPlatEbayAccount().then(response => {
-      for (var item in response.data.data) {
-        this.accountNumber.push(response.data.data[item]);
-      }
+      this.resAcc= response.data.data
+      // for (var item in response.data.data) {
+      //   this.accountNumber.push(response.data.data[item]);
+      // }
     });
     getPlatEbayStore().then(response => {
       this.warehouse = response.data.data;
@@ -1602,14 +1623,15 @@ export default {
       this.ebaySite = response.data.data;
     });
     setTimeout(() => {
+      for(let i=0;i<this.ebaySite.length;i++){
+          if(this.ebaySite[i].code==this.wishForm.site){
+            this.currencyCode=`--${this.ebaySite[i].currencyCode}--`
+            this.wishForm.site=this.ebaySite[i].name
+          }
+      }
       this.OutFirebEbay();
       this.InFirEbay();
       this.InSecEbay();
-      for(let i=0;i<this.ebaySite.length;i++){
-          if(this.ebaySite[i].name==this.wishForm.site){
-            this.currencyCode=`--${this.ebaySite[i].currencyCode}--`
-          }
-      }
     }, 1000);
   }
 };
