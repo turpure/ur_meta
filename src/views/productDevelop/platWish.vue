@@ -1213,7 +1213,6 @@ export default {
         skuInfo: []
       };
       data.basicInfo = this.wishForm;
-      console.log(this.url)
       var url="";
       for(var y=0;y<this.url.length;y++){
         if(y==this.url.length - 1){
@@ -1271,7 +1270,6 @@ export default {
         if (this.url[this.url.length - 1] == "") {
           this.url.pop();
         }
-        console.log(this.url)
         //          this.url.pop()
         this.wishForm.requiredKeywords = JSON.parse(
           this.wishForm.requiredKeywords

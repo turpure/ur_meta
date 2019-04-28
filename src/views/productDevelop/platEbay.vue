@@ -1604,13 +1604,13 @@ export default {
             message: "保存成功",
             type: "success"
           });
-          for(let s=0;s<this.ebaySite.length;s++){
-            if(this.wishForm.site==this.ebaySite[s].code){
-            this.wishForm.site=this.ebaySite[s].name
-           }
-          }
         } else {
           this.$message.error(res.data.message);
+        }
+        for(let s=0;s<this.ebaySite.length;s++){
+          if(this.wishForm.site==this.ebaySite[s].code){
+           this.wishForm.site=this.ebaySite[s].name
+           }
         }
       });
     }
@@ -1620,6 +1620,9 @@ export default {
     this.getData();
     getPlatEbayAccount().then(response => {
       this.resAcc= response.data.data
+      for(let k=0;k<response.data.data.length;k++){
+         this.accountNumber.push(response.data.data[k].ebaySuffix);
+      }
       // for (var item in response.data.data) {
       //   this.accountNumber.push(response.data.data[item]);
       // }
