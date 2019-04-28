@@ -2,18 +2,62 @@
   <section>
     <div>
       <el-row>
-        <el-col :span="24" style="padding:10px 20px;">
-          <el-col :span='5'>
-            <el-input v-model="collectionNumber" style="width:97%;" clearable></el-input>
+        <el-col :span="24" style="padding:15px 15px;">
+          <el-col :span="6">
+            <el-input
+              placeholder="15090-18415021(多个用逗号隔开)"
+              v-model="collectionNumber"
+              style="width:97%;"
+              clearable
+            ></el-input>
           </el-col>
-          <el-col :span='2'>
+          <el-col :span="2">
             <span class="dsblock fon12 dsblockGreen" @click="collection">开始采集</span>
           </el-col>
-          <el-col :span='3'>
+          <el-col :span="3">
             <span class="dsblock fon12 dsblockred">批量导出joom-csv</span>
           </el-col>
-          <el-col :span='2'>
+          <el-col :span="2">
             <span class="dsblock fon12 dsblockcse">批量标记完善</span>
+          </el-col>
+          <el-col :span="5">
+            <el-col :span="7">
+              <el-select v-model="sign">
+                <el-option v-for="item in options" :key="item" :label="item" :value="item"></el-option>
+              </el-select>
+            </el-col>
+            <el-col :span="10">
+              <el-input placeholder="设置价格" class="fon12 bodinput" v-model="price"></el-input>
+            </el-col>
+            <el-col :span="7" class="boderrtb">
+              <span @click="modifyprice()" class="dsblock fon12 dack">确定</span>
+            </el-col>
+          </el-col>
+          <el-col :span="6">
+            <el-col :span="9">
+              <el-select
+                v-model="cate"
+                placeholder="-主类目-"
+                class="fon12"
+                @change="mainIndex($event)"
+              >
+                <el-option
+                  v-for="item in mainCategory"
+                  :key="item"
+                  :label="item"
+                  :value="item"
+                  class="fon12"
+                ></el-option>
+              </el-select>
+            </el-col>
+            <el-col :span="9">
+              <el-select v-model="subCate">
+                <el-option v-for="item in childrenCategory" :key="item" :label="item" :value="item"></el-option>
+              </el-select>
+            </el-col>
+            <el-col :span="6">
+              <span class="qCategory">确定类目</span>
+            </el-col>
           </el-col>
         </el-col>
         <el-col :span="24">
@@ -119,7 +163,11 @@
                 width="150"
                 align="center"
               >
-                <template slot-scope="scope">{{scope.row.detailStatus}}</template>
+                <template slot-scope="scope">
+                  <a
+                    :class="scope.row.detailStatus=='未完善'?'clasRed1':'clasGreen1'"
+                  >{{scope.row.detailStatus}}</a>
+                </template>
               </el-table-column>
             </el-table-column>
             <el-table-column label="开发状态" header-align="center">
@@ -129,7 +177,11 @@
                 width="150"
                 align="center"
               >
-                <template slot-scope="scope">{{scope.row.devStatus}}</template>
+              <template slot-scope="scope">
+               <a
+                :class="scope.row.devStatus=='未开发'?'clasRed1':scope.row.devStatus=='开发中'?'classc':scope.row.devStatus=='已开发'?'clasGreen1':'classl'"
+              >{{scope.row.devStatus}}</a>
+              </template>
               </el-table-column>
             </el-table-column>
             <el-table-column label="主类目" header-align="center">
@@ -250,13 +302,14 @@
 </template>
 
 <script type="text/ecmascript-6">
-import { APIMineList, APIMineInfo,APICjMine } from "../../api/product";
+import { APIMineList, APIMineInfo, APICjMine } from "../../api/product";
 import { getMenu } from "../../api/login";
 import {
   getAttributeInfoStoreName,
   getAttributeInfoCat,
   getPlatGoodsStatus,
-  getPlatCompletedPlat
+  getPlatCompletedPlat,
+  getAttributeInfoSubCat
 } from "../../api/profit";
 export default {
   data() {
@@ -264,13 +317,19 @@ export default {
       allMenu: [],
       activeName: "",
       pictureData: [],
-      collectionNumber:null,
-      tableHeight: window.innerHeight - 195,
+      collectionNumber: null,
+      tableHeight: window.innerHeight - 200,
       total: 0,
       dialogPicture: false,
       dialogPictureBj: false,
+      options: ["=", "+", "-", "*", "/"],
+      price: null,
+      sign: "=",
+      cate: null,
+      subCate: null,
       disLogin: false,
       mainCategory: [],
+      childrenCategory: [],
       conten: [],
       delist: [],
       condition: {
@@ -280,25 +339,38 @@ export default {
     };
   },
   methods: {
-     collection(){
-       console.log(1)
-      if(this.collectionNumber){
-        let objStr={
-          proId:this.collectionNumber
+    mainIndex(item) {
+      this.childrenCategory = [];
+      for (var key in this.screen) {
+        if (this.screen[key] == item) {
+          this.childrenCategory.push(key);
         }
-         APICjMine(objStr).then(res => {
-            if (res.data.code == 200) {
-              this.$message({
-                message: "采集成功",
-                type: "success"
-              });
+      }
+      if (this.childrenCategory.length != 0) {
+        this.subCate = this.childrenCategory[0];
+      } else {
+        this.subCate = "";
+      }
+    },
+    collection() {
+      console.log(1);
+      if (this.collectionNumber) {
+        let objStr = {
+          proId: this.collectionNumber
+        };
+        APICjMine(objStr).then(res => {
+          if (res.data.code == 200) {
+            this.$message({
+              message: "采集成功",
+              type: "success"
+            });
+            this.getDate();
+            setTimeout(() => {
               this.getDate();
-              setTimeout(()=>{
-               this.getDate();
-              },1000)
-            }else{
-              this.$message.error(res.data.message)
-            }
+            }, 1000);
+          } else {
+            this.$message.error(res.data.message);
+          }
         });
       }
     },
@@ -340,10 +412,10 @@ export default {
       this.dialogPicture = true;
       APIMineInfo(conId).then(res => {
         if (res.data.message == "success") {
-          if(res.data.data.basicInfo){
+          if (res.data.data.basicInfo) {
             this.delist = res.data.data.basicInfo;
-          }else{
-            this.delist=[]
+          } else {
+            this.delist = [];
           }
         }
       });
@@ -738,6 +810,9 @@ export default {
     getAttributeInfoCat().then(response => {
       this.mainCategory = response.data.data;
     });
+    getAttributeInfoSubCat().then(response => {
+      this.screen = response.data.data;
+    });
   }
 };
 </script>
@@ -766,7 +841,7 @@ export default {
 .font14 {
   font-size: 14px;
 }
-.dsblock{
+.dsblock {
   width: 95%;
   display: block;
   border: #ccc solid 1px;
@@ -775,20 +850,81 @@ export default {
   border-radius: 5px;
   cursor: pointer;
 }
-.dsblockGreen{
+.dsblockGreen {
   background: #008d4c;
   color: #fff;
   border: #008d4c solid 1px;
 }
-.dsblockred{
+.dsblockred {
   background: #d73925;
   border: #d73925 solid 1px;
   color: #fff;
 }
-.dsblockcse{
+.dsblockcse {
   background: #e08e0b;
   border: #e08e0b solid 1px;
   color: #fff;
+}
+.dack {
+  border: #ccc solid 1px;
+  background: #eee;
+  border-left: none;
+  width: 92%;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.bodinput input {
+  border-radius: 0;
+}
+.qCategory {
+  display: block;
+  width: 100%;
+  line-height: 38px;
+  text-align: center;
+  cursor: pointer;
+  border: #ccc solid 1px;
+  background: #eee;
+  border-left: none;
+}
+.clasRed1 {
+  color: #f56c6c;
+  border: rgba(245, 108, 108, 0.2) solid 1px;
+  background: rgba(245, 108, 108, 0.1);
+  width: 65%;
+  margin: auto;
+  line-height: 32px;
+  display: block;
+  border-radius: 5px;
+}
+.clasGreen1 {
+  color: #0e9a00;
+  border-radius: 5px;
+  width: 65%;
+  margin: auto;
+  line-height: 32px;
+  display: block;
+  border: rgba(3, 82, 38, 0.2) solid 1px;
+  background: rgba(33, 170, 95, 0.1);
+}
+.classc{
+  color: #e6a23c;
+  background-color:rgba(230,162,60,.1);
+  border:rgba(214, 132, 8, 0.2) solid 1px;
+  width: 65%;
+  margin: auto;
+  line-height: 32px;
+  display: block;
+  border-radius: 5px;
+}
+.classl{
+  color: #409EFF;
+  background-color:rgba(64,158,255,.1);
+  border:1px solid rgba(64,158,255,.2);
+  width: 65%;
+  margin: auto;
+  line-height: 32px;
+  display: block;
+  border-radius: 5px;
 }
 @media screen and (max-width: 1450px) {
   .fon12 {
