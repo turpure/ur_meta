@@ -603,7 +603,7 @@
       </el-col>
       <el-col :span="4">
         <input placeholder="成本价￥" v-model="costprice"
-               style="width:55%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+               style="width:52%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
         <span class="xzz1" @click="cosprice">成本确定</span>
         <!--<el-input v-model="costprice"-->
                   <!--size="small"-->
@@ -614,7 +614,7 @@
       </el-col>
       <el-col :span="4">
         <input placeholder="重量g" v-model="weight"
-               style="width:55%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+               style="width:50%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
         <span class="xzz1" @click="weht">重量确定</span>
         <!--<el-input v-model="weight"-->
                   <!--size="small"-->
@@ -636,7 +636,7 @@
       </el-col>
       <el-col :span="5">
         <input placeholder="joom零售价$" v-model="joomretailprice"
-               style="width:53%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+               style="width:51%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
         <span class="xzz1" @click="joomprice">Joom价确定</span>
         <!--<el-input v-model="joomretailprice"-->
                   <!--size="small"-->
@@ -647,7 +647,7 @@
       </el-col>
       <el-col :span="4">
         <input placeholder="joom运费$" v-model="transportationcost"
-               style="width:53%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+               style="width:52%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
         <span class="xzz1" @click="transport">运费确定</span>
         <!--<el-input v-model="transportationcost"-->
                   <!--size="small"-->

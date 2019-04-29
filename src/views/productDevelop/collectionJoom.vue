@@ -130,7 +130,13 @@
                 :render-header="renderHeaderPic"
                 width="160"
                 align="center"
-              ></el-table-column>
+              >
+                <template slot-scope="scope">
+                  <a
+                    :class="scope.row.progress=='采集失败'?'clasRed1':scope.row.progress=='采集成功'?'clasGreen1':'classc'"
+                  >{{scope.row.progress}}</a>
+                </template>
+              </el-table-column>
             </el-table-column>
             <el-table-column label="创建人" header-align="center">
               <el-table-column
@@ -144,7 +150,7 @@
               <el-table-column
                 prop="createTime"
                 :render-header="renderHeaderPic"
-                width="200"
+                width="220"
                 align="center"
               ></el-table-column>
             </el-table-column>
@@ -152,7 +158,7 @@
               <el-table-column
                 prop="updateTime"
                 :render-header="renderHeaderPic"
-                width="200"
+                width="220"
                 align="center"
               ></el-table-column>
             </el-table-column>
@@ -639,8 +645,8 @@ export default {
         this.$router.push({
           path: `/joom/${row.id}`
         });
-      }else{
-        this.$message.error('采集成功以后才能编辑');
+      } else {
+        this.$message.error("采集成功以后才能编辑");
       }
     },
     selsChange(sels) {
@@ -754,29 +760,38 @@ export default {
           ]
         );
       } else if ($index === 2) {
+        let filters = [
+          { text: "采集成功", value: "采集成功" },
+          { text: "待采集", value: "待采集" },
+          { text: "采集失败", value: "采集失败" }
+        ];
         return h(
-          "div",
+          "el-select",
           {
-            style: {
-              height: "30px"
+            props: {
+              placeholder: "请选择",
+              value: this.condition.progress,
+              size: "mini",
+              clearable: true
+            },
+            on: {
+              input: value => {
+                this.condition.progress = value;
+                this.$emit("input", value);
+              },
+              change: searchValue => {
+                this.filter();
+              }
             }
           },
           [
-            h("el-input", {
-              props: {
-                value: this.condition.progress,
-                size: "mini",
-                clearable: true
-              },
-              on: {
-                input: value => {
-                  this.condition.progress = value;
-                  this.$emit("input", value);
-                },
-                change: value => {
-                  this.filter();
+            filters.map(item => {
+              return h("el-option", {
+                props: {
+                  value: item.text,
+                  label: item.value
                 }
-              }
+              });
             })
           ]
         );
@@ -815,7 +830,7 @@ export default {
             type: "daterange"
           },
           style: {
-            width: "180px",
+            width: "200px",
             padding: "2px"
           },
           on: {
@@ -836,7 +851,7 @@ export default {
             type: "daterange"
           },
           style: {
-            width: "180px",
+            width: "200px",
             padding: "2px"
           },
           on: {

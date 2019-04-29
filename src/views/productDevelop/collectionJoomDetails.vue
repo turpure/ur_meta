@@ -128,7 +128,7 @@
           </el-col>
           <el-col :span="3" style="margin-left: 15px">
             <a :href="url[index]" target="_blank">
-              <img :src="url[index]" style="display: block;width: 90px;height: 90px">
+              <img :src="url[index]" style="display: block;width: 98%;height: 90px">
             </a>
           </el-col>
         </el-col>
@@ -779,7 +779,7 @@ export default {
 }
 @media screen and (max-width: 1300px) {
   .titCenter {
-    font-size: 13px;
+    font-size: 12px;
   }
 }
 </style>
