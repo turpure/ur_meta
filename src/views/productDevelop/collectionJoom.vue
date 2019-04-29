@@ -128,7 +128,7 @@
               <el-table-column
                 prop="progress"
                 :render-header="renderHeaderPic"
-                width="150"
+                width="160"
                 align="center"
               ></el-table-column>
             </el-table-column>
@@ -403,6 +403,8 @@ export default {
       sign: "=",
       cate: null,
       subCate: null,
+      time1: null,
+      time2: null,
       finish: {
         id: null
       },
@@ -413,6 +415,17 @@ export default {
       conten: [],
       delist: [],
       condition: {
+        proId: null,
+        platForm: null,
+        progress: null,
+        creator: null,
+        createTime: null,
+        updateTime: null,
+        detailStaus: null,
+        cat: null,
+        subCat: null,
+        devStatus: null,
+        pyGoodsCode: null,
         pageSize: 10,
         page: 1
       }
@@ -911,13 +924,13 @@ export default {
           {
             props: {
               placeholder: "请选择",
-              value: this.condition.cate,
+              value: this.condition.cat,
               size: "mini",
               clearable: true
             },
             on: {
               input: value => {
-                this.condition.cate = value;
+                this.condition.cat = value;
                 this.$emit("input", value);
               },
               change: searchValue => {
@@ -947,13 +960,13 @@ export default {
           [
             h("el-input", {
               props: {
-                value: this.condition.subCate,
+                value: this.condition.subCat,
                 size: "mini",
                 clearable: true
               },
               on: {
                 input: value => {
-                  this.condition.subCate = value;
+                  this.condition.subCat = value;
                   this.$emit("input", value);
                 },
                 change: value => {
@@ -1018,6 +1031,37 @@ export default {
           ]
         );
       }
+    },
+    formatTen(num) {
+      return num > 9 ? num + "" : "0" + num;
+    },
+    formatDate(date) {
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+      const hour = date.getHours();
+      const minute = date.getMinutes();
+      const second = date.getSeconds();
+      return year + "-" + this.formatTen(month) + "-" + this.formatTen(day);
+    },
+    filter() {
+      if (this.time1 !== null && this.time1.length !== 0) {
+        this.condition.createTime = [
+          this.formatDate(this.time1[0]),
+          this.formatDate(this.time1[1])
+        ];
+      } else {
+        this.condition.createTime = [];
+      }
+      if (this.time2 !== null && this.time2.length !== 0) {
+        this.condition.updateTime = [
+          this.formatDate(this.time2[0]),
+          this.formatDate(this.time2[1])
+        ];
+      } else {
+        this.condition.updateTime = [];
+      }
+      this.getDate();
     },
     handleClick(tab, event) {},
     getDate() {
