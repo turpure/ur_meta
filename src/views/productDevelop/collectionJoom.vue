@@ -635,9 +635,13 @@ export default {
       }
     },
     joomId(idnex, row) {
-      this.$router.push({
-        path: `/joom/${row.id}`
-      });
+      if (row.progress != "采集失败") {
+        this.$router.push({
+          path: `/joom/${row.id}`
+        });
+      }else{
+        this.$message.error('采集成功以后才能编辑');
+      }
     },
     selsChange(sels) {
       this.sels = sels;
