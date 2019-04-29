@@ -291,7 +291,7 @@
 
 <script type="text/ecmascript-6">
 import { getMenu } from "../../api/login";
-import { APIMineInfo, APIMineSave } from "../../api/product";
+import { APIMineInfo, APIMineSave,APIDeleteDetail,APISaveAndFinish,APIMineExport } from "../../api/product";
 import {
   getAttributeInfoSpecialAttribute,
   getAttributeInfoCat,
@@ -326,18 +326,91 @@ export default {
     };
   },
   methods: {
+    exportJoom(){
+      const arrId=[]
+      arrId.push(this.condition.id)
+       let objStr1 = {
+          id: arrId
+        };
+        APIMineExport(objStr1).then(res => {
+          const blob = new Blob([res.data], {
+            type: "data:text/csv;charset=utf-8"
+          });
+          const downloadElement = document.createElement("a");
+          const objectUrl = window.URL.createObjectURL(blob);
+          downloadElement.href = objectUrl;
+          const date = new Date();
+          const year = date.getFullYear();
+          let month = date.getMonth() + 1;
+          let strDate = date.getDate();
+          let hour = date.getHours();
+          let minute = date.getMinutes();
+          let second = date.getSeconds();
+          if (month >= 1 && month <= 9) {
+            month = "0" + month;
+          }
+          if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+          }
+          if (hour >= 0 && hour <= 9) {
+            hour = "0" + hour;
+          }
+          if (minute >= 0 && minute <= 9) {
+            minute = "0" + minute;
+          }
+          if (second >= 0 && second <= 9) {
+            second = "0" + second;
+          }
+          const filename =
+            "joom_" + year + month + strDate + hour + minute + second;
+          downloadElement.download = filename + ".csv";
+          document.body.appendChild(downloadElement);
+          downloadElement.click();
+          document.body.removeChild(downloadElement);
+        });
+    },
+    keepWs(){
+       let imgStr = {
+        extraImage1: this.url[0],
+        extraImage2: this.url[1],
+        extraImage3: this.url[2],
+        extraImage4: this.url[3],
+        extraImage5: this.url[4],
+        extraImage6: this.url[5],
+        extraImage7: this.url[6],
+        extraImage8: this.url[7],
+        extraImage9: this.url[8],
+        extraImage10: this.url[9],
+        mainImage: this.editForm.mainImage
+      };
+      let data = {
+        basicInfo: this.editForm,
+        images: imgStr,
+        detailsInfo: this.tableData
+      };
+      APISaveAndFinish(data).then(res => {
+        if (res.data.code == 200) {
+          this.$message({
+            message: "保存成功",
+            type: "success"
+          });
+        } else {
+          this.$message.error(res.data.message);
+        }
+      });
+    },
     keep() {
       let imgStr = {
-        extraImage1:this.url[0],
-        extraImage2:this.url[1],
-        extraImage3:this.url[2],
-        extraImage4:this.url[3],
-        extraImage5:this.url[4],
-        extraImage6:this.url[5],
-        extraImage7:this.url[6],
-        extraImage8:this.url[7],
-        extraImage9:this.url[8],
-        extraImage10:this.url[9],
+        extraImage1: this.url[0],
+        extraImage2: this.url[1],
+        extraImage3: this.url[2],
+        extraImage4: this.url[3],
+        extraImage5: this.url[4],
+        extraImage6: this.url[5],
+        extraImage7: this.url[6],
+        extraImage8: this.url[7],
+        extraImage9: this.url[8],
+        extraImage10: this.url[9],
         mainImage: this.editForm.mainImage
       };
       let data = {
@@ -348,9 +421,9 @@ export default {
       APIMineSave(data).then(res => {
         if (res.data.code == 200) {
           this.$message({
-              message: "保存成功",
-              type: "success"
-            });
+            message: "保存成功",
+            type: "success"
+          });
         } else {
           this.$message.error(res.data.message);
         }
@@ -429,24 +502,24 @@ export default {
       }
     },
     del(index, row) {
-      //       let arrId = []
-      //       arrId.push(row.id)
-      //       let aryId={
-      //         id:arrId
-      //       }
-      //       APIDeleteVariant(aryId).then(res => {
-      //         if (res.data.code === 200) {
-      //           this.$message({
-      //             message: '删除成功',
-      //             type: 'success'
-      //           })
-      //           this.tableData.splice(index, 1)
-      //           this.skuTotal = this.tableData.length
-      // //          this.getData()
-      //         } else {
-      //           this.$message.error('删除失败')
-      //         }
-      //       })
+      let arrId = [];
+      arrId.push(row.id);
+      let aryId = {
+        id: arrId
+      };
+      APIDeleteDetail(aryId).then(res => {
+        if (res.data.code === 200) {
+          this.$message({
+            message: "删除成功",
+            type: "success"
+          });
+          this.tableData.splice(index, 1);
+          this.skuTotal = this.tableData.length;
+          //          this.getData()
+        } else {
+          this.$message.error(res.data.message);
+        }
+      });
     },
     botOm(arr, index1, index2, direction) {
       if (direction == "down") {

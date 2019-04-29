@@ -229,6 +229,65 @@
         layout="total, sizes, prev, pager, next, jumper"
         :total="this.total"
       ></el-pagination>
+      <el-dialog :visible.sync="dialogRelation" width="80%">
+        <div>第1-{{relationTotal}}条,共{{relationTotal}}条</div>
+        <el-row style="margin-top:10px;">
+          <el-col :span="24">
+            <el-col :span="5">
+              <el-input v-model="codeRelation" disabled style="width:98%"></el-input>
+            </el-col>
+            <el-col :span="5">
+              <el-input v-model="codeRelationinput" placeholder="--普源商品编码--" style="width:98%"></el-input>
+            </el-col>
+            <el-col :span="8">
+              <el-button type="success" @click="keepRelation">保存</el-button>
+            </el-col>
+          </el-col>
+          <el-col :span="24">
+            <el-table
+              :data="variations"
+              border
+              style="width:100%;margin-top:10px;"
+              max-height="500"
+            >
+              <el-table-column type="index" width="50" align="center" header-align="center"></el-table-column>
+              <el-table-column label="唯一编码" prop="childId" header-align="center">
+                <template slot-scope="scope">
+                  <el-input size="small" v-model="scope.row.childId" disabled></el-input>
+                </template>
+              </el-table-column>
+              <el-table-column label="颜色" prop="color" header-align="center">
+                <template slot-scope="scope">
+                  <el-input size="small" v-model="scope.row.color" disabled></el-input>
+                </template>
+              </el-table-column>
+              <el-table-column label="尺码/型号" prop="proSize" header-align="center">
+                <template slot-scope="scope">
+                  <el-input size="small" v-model="scope.row.proSize" disabled></el-input>
+                </template>
+              </el-table-column>
+              <el-table-column label="普源SKU" prop="pySku" header-align="center">
+                <template slot-scope="scope">
+                  <el-input size="small" v-model="scope.row.pySku"></el-input>
+                </template>
+              </el-table-column>
+              <el-table-column label="主图" prop="mainImage" header-align="center" min-width="100">
+                <template slot-scope="scope">
+                  <el-input size="small" v-model="scope.row.mainImage" disabled></el-input>
+                </template>
+              </el-table-column>
+              <el-table-column label="图片" prop="mainImage" header-align="center">
+                <template slot-scope="scope">
+                  <img
+                    :src="scope.row.mainImage"
+                    style="width:50px;height:50px;display: block;margin: auto"
+                  >
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-col>
+        </el-row>
+      </el-dialog>
       <el-dialog title="数据详情" :visible.sync="dialogPicture" width="70%">
         <el-row>
           <table style="width: 100%;margin: auto;border-collapse:collapse;">
@@ -312,7 +371,8 @@ import {
   APIMineSetPrice,
   APISetCat,
   APIDeleteMine,
-  APIbindShopSku
+  APIbindShopSku,
+  APISaveShopSku
 } from "../../api/product";
 import { getMenu } from "../../api/login";
 import {
@@ -329,6 +389,10 @@ export default {
       activeName: "",
       pictureData: [],
       collectionNumber: null,
+      dialogRelation: false,
+      codeRelation: null,
+      codeRelationinput: null,
+      relationTotal: 0,
       tableHeight: window.innerHeight - 205,
       total: 0,
       sels: [],
@@ -343,6 +407,7 @@ export default {
         id: null
       },
       disLogin: false,
+      variations: [],
       mainCategory: [],
       childrenCategory: [],
       conten: [],
@@ -354,7 +419,25 @@ export default {
     };
   },
   methods: {
-    relation(index,row){
+    keepRelation() {
+      let relationObj = {
+        goodsCode: this.codeRelation,
+        pyGoodsCode: this.codeRelationinput,
+        variations: this.variations
+      };
+      APISaveShopSku(relationObj).then(res => {
+        if (res.data.code == 200) {
+          this.$message({
+            message: "保存成功",
+            type: "success"
+          });
+          this.dialogRelation = false;
+        } else {
+          this.$message.error(res.data.message);
+        }
+      });
+    },
+    relation(index, row) {
       const ary = [];
       ary.push(row.id);
       let objtr = {
@@ -362,11 +445,10 @@ export default {
       };
       APIbindShopSku(objtr).then(res => {
         if (res.data.code == 200) {
-          this.$message({
-            message: "成功",
-            type: "success"
-          });
-          this.getDate();
+          this.dialogRelation = true;
+          this.variations = res.data.data.variations;
+          this.relationTotal = this.variations.length;
+          this.codeRelation = res.data.data.goodsCode;
         } else {
           this.$message.error(res.data.message);
         }
@@ -554,8 +636,8 @@ export default {
         type: "warning"
       })
         .then(() => {
-          let arrDel=[]
-          arrDel.push(row.id)
+          let arrDel = [];
+          arrDel.push(row.id);
           let conId = {
             id: arrDel
           };
@@ -566,7 +648,7 @@ export default {
                 type: "success"
               });
               this.getDate();
-            }else{
+            } else {
               this.$message.error(res.data.message);
             }
           });
@@ -585,7 +667,7 @@ export default {
           } else {
             this.delist = [];
           }
-        }else{
+        } else {
           this.$message.error(res.data.message);
         }
       });
@@ -937,9 +1019,7 @@ export default {
         );
       }
     },
-    handleClick(tab, event) {
-      
-    },
+    handleClick(tab, event) {},
     getDate() {
       APIMineList(this.condition).then(res => {
         this.pictureData = res.data.data.items;

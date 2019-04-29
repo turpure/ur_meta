@@ -983,10 +983,34 @@ export function APIMineSave(param) {
     data
   })
 }
+export function APISaveAndFinish(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data-mine/save-and-finish',
+    method: 'post',
+    data
+  })
+}
 export function APIbindShopSku(param) {
   const data = { condition: param }
   return request({
     url: '/oa-data-mine/bind-shop-sku',
+    method: 'post',
+    data
+  })
+}
+export function APIDeleteDetail(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data-mine/delete-detail',
+    method: 'post',
+    data
+  })
+}
+export function APISaveShopSku(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data-mine/save-shop-sku',
     method: 'post',
     data
   })
