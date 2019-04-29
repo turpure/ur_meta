@@ -7,7 +7,7 @@
       <el-col :span="10" :offset="6">
         <el-button @click="keep()" type="primary">保存当前数据</el-button>
         <el-button type="success" @click="keepWs()">保存并完善</el-button>
-        <el-button @click="keep()" type="warning">导出Joom模板</el-button>
+        <el-button @click="exportJoom()" type="warning">导出Joom模板</el-button>
       </el-col>
     </el-col>
     <el-col :span="24" style="padding: 0;">
@@ -291,7 +291,7 @@
 
 <script type="text/ecmascript-6">
 import { getMenu } from "../../api/login";
-import { APIMineInfo } from "../../api/product";
+import { APIMineInfo, APIMineSave } from "../../api/product";
 import {
   getAttributeInfoSpecialAttribute,
   getAttributeInfoCat,
@@ -326,6 +326,36 @@ export default {
     };
   },
   methods: {
+    keep() {
+      let imgStr = {
+        extraImage1:this.url[0],
+        extraImage2:this.url[1],
+        extraImage3:this.url[2],
+        extraImage4:this.url[3],
+        extraImage5:this.url[4],
+        extraImage6:this.url[5],
+        extraImage7:this.url[6],
+        extraImage8:this.url[7],
+        extraImage9:this.url[8],
+        extraImage10:this.url[9],
+        mainImage: this.editForm.mainImage
+      };
+      let data = {
+        basicInfo: this.editForm,
+        images: imgStr,
+        detailsInfo: this.tableData
+      };
+      APIMineSave(data).then(res => {
+        if (res.data.code == 200) {
+          this.$message({
+              message: "保存成功",
+              type: "success"
+            });
+        } else {
+          this.$message.error(res.data.message);
+        }
+      });
+    },
     modifyweight() {
       if (this.weight) {
         for (let i = 0; i < this.tableData.length; i++) {
@@ -369,16 +399,20 @@ export default {
             this.tableData[i].price = this.price;
           }
           if (this.sign == "+") {
-            this.tableData[i].price = Number(this.tableData[i].price) + Number(this.price);
+            this.tableData[i].price =
+              Number(this.tableData[i].price) + Number(this.price);
           }
           if (this.sign == "-") {
-            this.tableData[i].price = Number(this.tableData[i].price) - Number(this.price);
+            this.tableData[i].price =
+              Number(this.tableData[i].price) - Number(this.price);
           }
           if (this.sign == "*") {
-            this.tableData[i].price = Number(this.tableData[i].price) * Number(this.price);
+            this.tableData[i].price =
+              Number(this.tableData[i].price) * Number(this.price);
           }
           if (this.sign == "/") {
-            this.tableData[i].price = Number(this.tableData[i].price) / Number(this.price);
+            this.tableData[i].price =
+              Number(this.tableData[i].price) / Number(this.price);
           }
         }
       } else {
@@ -462,7 +496,7 @@ export default {
         obj.id = null;
         obj.childId = null;
         obj.color = null;
-        obj.mid = null;
+        obj.mid = this.editForm.id;
         obj.msrPrice = null;
         obj.parentId = null;
         obj.price = null;
@@ -652,7 +686,7 @@ export default {
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
 }
-.spBlock{
+.spBlock {
   display: block;
 }
 .m15 {

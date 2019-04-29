@@ -15,10 +15,10 @@
             <span class="dsblock fon12 dsblockGreen" @click="collection">开始采集</span>
           </el-col>
           <el-col :span="3">
-            <span class="dsblock fon12 dsblockred">批量导出joom-csv</span>
+            <span class="dsblock fon12 dsblockred" @click="exportJoom">批量导出joom-csv</span>
           </el-col>
           <el-col :span="2">
-            <span class="dsblock fon12 dsblockcse">批量标记完善</span>
+            <span class="dsblock fon12 dsblockcse" @click="markAll">批量标记完善</span>
           </el-col>
           <el-col :span="5">
             <el-col :span="7">
@@ -56,7 +56,7 @@
               </el-select>
             </el-col>
             <el-col :span="6">
-              <span class="qCategory">确定类目</span>
+              <span class="qCategory" @click="defineCategory">确定类目</span>
             </el-col>
           </el-col>
         </el-col>
@@ -84,14 +84,14 @@
                   <i
                     class="el-icon-rank"
                     style="color: #409EFF;cursor:pointer;"
-                    @click="signPerfect(scope.$index, scope.row)"
+                    @click="goDevelopment(scope.$index, scope.row)"
                   ></i>
                 </el-tooltip>
                 <el-tooltip content="关联产品">
                   <i
                     class="el-icon-share"
                     style="color: #409EFF;cursor:pointer;"
-                    @click="signPerfect(scope.$index, scope.row)"
+                    @click="relation(scope.$index, scope.row)"
                   ></i>
                 </el-tooltip>
                 <el-tooltip content="删除">
@@ -112,7 +112,7 @@
               <el-table-column
                 prop="proId"
                 :render-header="renderHeaderPic"
-                width="150"
+                width="330"
                 align="center"
               ></el-table-column>
             </el-table-column>
@@ -177,11 +177,11 @@
                 width="150"
                 align="center"
               >
-              <template slot-scope="scope">
-               <a
-                :class="scope.row.devStatus=='未开发'?'clasRed1':scope.row.devStatus=='开发中'?'classc':scope.row.devStatus=='已开发'?'clasGreen1':'classl'"
-              >{{scope.row.devStatus}}</a>
-              </template>
+                <template slot-scope="scope">
+                  <a
+                    :class="scope.row.devStatus=='未开发'?'clasRed1':scope.row.devStatus=='开发中'?'classc':scope.row.devStatus=='已开发'?'clasGreen1':'classl'"
+                  >{{scope.row.devStatus}}</a>
+                </template>
               </el-table-column>
             </el-table-column>
             <el-table-column label="主类目" header-align="center">
@@ -302,7 +302,18 @@
 </template>
 
 <script type="text/ecmascript-6">
-import { APIMineList, APIMineInfo, APICjMine } from "../../api/product";
+import {
+  APIMineList,
+  APIMineInfo,
+  APICjMine,
+  APISendToDevelop,
+  APIMineExport,
+  APIMineFinish,
+  APIMineSetPrice,
+  APISetCat,
+  APIDeleteMine,
+  APIbindShopSku
+} from "../../api/product";
 import { getMenu } from "../../api/login";
 import {
   getAttributeInfoStoreName,
@@ -318,8 +329,9 @@ export default {
       activeName: "",
       pictureData: [],
       collectionNumber: null,
-      tableHeight: window.innerHeight - 200,
+      tableHeight: window.innerHeight - 205,
       total: 0,
+      sels: [],
       dialogPicture: false,
       dialogPictureBj: false,
       options: ["=", "+", "-", "*", "/"],
@@ -327,6 +339,9 @@ export default {
       sign: "=",
       cate: null,
       subCate: null,
+      finish: {
+        id: null
+      },
       disLogin: false,
       mainCategory: [],
       childrenCategory: [],
@@ -339,6 +354,157 @@ export default {
     };
   },
   methods: {
+    relation(index,row){
+      const ary = [];
+      ary.push(row.id);
+      let objtr = {
+        id: ary
+      };
+      APIbindShopSku(objtr).then(res => {
+        if (res.data.code == 200) {
+          this.$message({
+            message: "成功",
+            type: "success"
+          });
+          this.getDate();
+        } else {
+          this.$message.error(res.data.message);
+        }
+      });
+    },
+    defineCategory() {
+      if (this.sels.length != 0) {
+        if (this.cate && this.subCate) {
+          let objCat = {
+            id: this.sels.map(e => e.id),
+            cat: this.cate,
+            subCat: this.subCate
+          };
+          APISetCat(objCat).then(res => {
+            if (res.data.code === 200) {
+              this.$message({
+                message: "设置成功",
+                type: "success"
+              });
+              this.getDate();
+            } else {
+              this.$message.error(res.data.message);
+            }
+          });
+        } else {
+          this.$message.error("未选择类目");
+        }
+      } else {
+        this.$message.error("未选择");
+      }
+    },
+    modifyprice() {
+      if (this.sels.length != 0) {
+        if (this.price) {
+          let objTr = {
+            id: this.sels.map(e => e.id),
+            price: this.price,
+            operator: this.sign
+          };
+          APIMineSetPrice(objTr).then(res => {
+            if (res.data.code === 200) {
+              this.$message({
+                message: "设置成功",
+                type: "success"
+              });
+              this.getDate();
+            } else {
+              this.$message.error(res.data.message);
+            }
+          });
+        } else {
+          this.$message.error("未设置价格");
+        }
+      } else {
+        this.$message.error("未选择");
+      }
+    },
+    markAll() {
+      if (this.sels.length != 0) {
+        this.finish.id = this.sels.map(e => e.id);
+        APIMineFinish(this.finish).then(res => {
+          if (res.data.code === 200) {
+            this.$message({
+              message: "标记成功",
+              type: "success"
+            });
+            this.getDate();
+          } else {
+            this.$message.error(res.data.message);
+          }
+        });
+      } else {
+        this.$message.error("未选择");
+      }
+    },
+    exportJoom() {
+      if (this.sels.length != 0) {
+        let objStr1 = {
+          id: this.sels.map(e => e.id)
+        };
+        APIMineExport(objStr1).then(res => {
+          const blob = new Blob([res.data], {
+            type: "data:text/csv;charset=utf-8"
+          });
+          const downloadElement = document.createElement("a");
+          const objectUrl = window.URL.createObjectURL(blob);
+          downloadElement.href = objectUrl;
+          const date = new Date();
+          const year = date.getFullYear();
+          let month = date.getMonth() + 1;
+          let strDate = date.getDate();
+          let hour = date.getHours();
+          let minute = date.getMinutes();
+          let second = date.getSeconds();
+          if (month >= 1 && month <= 9) {
+            month = "0" + month;
+          }
+          if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+          }
+          if (hour >= 0 && hour <= 9) {
+            hour = "0" + hour;
+          }
+          if (minute >= 0 && minute <= 9) {
+            minute = "0" + minute;
+          }
+          if (second >= 0 && second <= 9) {
+            second = "0" + second;
+          }
+          const filename =
+            "joom_" + year + month + strDate + hour + minute + second;
+          downloadElement.download = filename + ".csv";
+          document.body.appendChild(downloadElement);
+          downloadElement.click();
+          document.body.removeChild(downloadElement);
+        });
+      } else {
+        this.$message.error("未选择");
+      }
+    },
+    goDevelopment(index, row) {
+      const ary = [];
+      ary.push(row.id);
+      let objtr = {
+        id: ary
+      };
+      APISendToDevelop(objtr).then(res => {
+        if (res.data.code == 200) {
+          this.$message({
+            message: "成功",
+            type: "success"
+          });
+          this.getDate();
+        } else {
+          this.$message.error(res.data.message);
+        }
+      });
+    },
     mainIndex(item) {
       this.childrenCategory = [];
       for (var key in this.screen) {
@@ -349,11 +515,10 @@ export default {
       if (this.childrenCategory.length != 0) {
         this.subCate = this.childrenCategory[0];
       } else {
-        this.subCate = "";
+        this.subCate = null;
       }
     },
     collection() {
-      console.log(1);
       if (this.collectionNumber) {
         let objStr = {
           proId: this.collectionNumber
@@ -382,7 +547,6 @@ export default {
     selsChange(sels) {
       this.sels = sels;
     },
-    edit(index, row) {},
     del(index, row) {
       this.$confirm("确定删除?", "提示", {
         confirmButtonText: "确定",
@@ -390,16 +554,20 @@ export default {
         type: "warning"
       })
         .then(() => {
+          let arrDel=[]
+          arrDel.push(row.id)
           let conId = {
-            id: row.id
+            id: arrDel
           };
-          APIDeleteJoom(conId).then(res => {
-            if (res.data.message == "success") {
+          APIDeleteMine(conId).then(res => {
+            if (res.data.code == 200) {
               this.$message({
                 message: "删除成功",
                 type: "success"
               });
               this.getDate();
+            }else{
+              this.$message.error(res.data.message);
             }
           });
         })
@@ -411,12 +579,14 @@ export default {
       };
       this.dialogPicture = true;
       APIMineInfo(conId).then(res => {
-        if (res.data.message == "success") {
+        if (res.data.code == 200) {
           if (res.data.data.basicInfo) {
             this.delist = res.data.data.basicInfo;
           } else {
             this.delist = [];
           }
+        }else{
+          this.$message.error(res.data.message);
         }
       });
     },
@@ -768,33 +938,7 @@ export default {
       }
     },
     handleClick(tab, event) {
-      if (tab.label === "Wish账号字典") {
-        this.$router.push({
-          path: "/v1/basic-info/ebay-suffix"
-        });
-      }
-      if (tab.label === "eBay账号字典") {
-        this.$router.push({
-          path: "/v1/basic-info/ebay"
-        });
-      }
-      if (tab.label === "Joom账号字典") {
-      }
-      if (tab.label === "eBay运输方式") {
-        this.$router.push({
-          path: "/v1/basic-info/ys"
-        });
-      }
-      if (tab.label === "Joom对比Wish价格") {
-        this.$router.push({
-          path: "/v1/basic-info/jw"
-        });
-      }
-      if (tab.label === "开发采购美工对应关系") {
-        this.$router.push({
-          path: "/v1/basic-info/art"
-        });
-      }
+      
     },
     getDate() {
       APIMineList(this.condition).then(res => {
@@ -906,20 +1050,20 @@ export default {
   border: rgba(3, 82, 38, 0.2) solid 1px;
   background: rgba(33, 170, 95, 0.1);
 }
-.classc{
+.classc {
   color: #e6a23c;
-  background-color:rgba(230,162,60,.1);
-  border:rgba(214, 132, 8, 0.2) solid 1px;
+  background-color: rgba(230, 162, 60, 0.1);
+  border: rgba(214, 132, 8, 0.2) solid 1px;
   width: 65%;
   margin: auto;
   line-height: 32px;
   display: block;
   border-radius: 5px;
 }
-.classl{
-  color: #409EFF;
-  background-color:rgba(64,158,255,.1);
-  border:1px solid rgba(64,158,255,.2);
+.classl {
+  color: #409eff;
+  background-color: rgba(64, 158, 255, 0.1);
+  border: 1px solid rgba(64, 158, 255, 0.2);
   width: 65%;
   margin: auto;
   line-height: 32px;
