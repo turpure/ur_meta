@@ -1015,6 +1015,20 @@ export function APISaveShopSku(param) {
     data
   })
 }
+export function APIScanningLog(param) {
+  const data = { condition: param }
+  return request({
+    url: '/warehouse-tools/scanning-log?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+export function APIPickMember() {
+  return request({
+    url: '/warehouse-tools/pick-member',
+    method: 'get'
+  })
+}
 //export function APIDelivery(param) {
 //  const data = { condition: param }
 //  return request({

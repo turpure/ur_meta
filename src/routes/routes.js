@@ -244,7 +244,7 @@ const routes = [
     iconCls: 'el-icon-message',
     children: [
       {
-        path: '/v1/warehoue-tools/pick-index',
+        path: '/v1/warehouse-tools/pick-tools',
         component: picking,
         name: '拣货单'
       }

@@ -621,9 +621,17 @@ export default {
     },
     collection() {
       if (this.collectionNumber) {
-        let objStr = {
-          proId: this.collectionNumber
-        };
+        if (this.collectionNumber.indexOf("，") > -1) {
+          const strObj = this.collectionNumber.split("，");
+          this.collectionNumber = strObj.join(",");
+          var objStr = {
+            proId: this.collectionNumber
+          };
+        } else {
+          var objStr = {
+            proId: this.collectionNumber
+          };
+        }
         APICjMine(objStr).then(res => {
           if (res.data.code == 200) {
             this.$message({
@@ -638,6 +646,8 @@ export default {
             this.$message.error(res.data.message);
           }
         });
+      } else {
+        this.$message.error("未输入商品编号");
       }
     },
     joomId(idnex, row) {
