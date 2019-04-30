@@ -267,11 +267,11 @@
                       :key="index"
                       style="position: relative;line-height: 40px"
                     >
-                      <el-input clearable v-model="tite[index]"></el-input>
+                      <el-input v-model="tite[index]"></el-input>
                       <i
                         class="el-icon-delete"
                         @click="titleDel(index)"
-                        style="position: absolute;right: 45px;top: 22px;z-index: 99;cursor: pointer"
+                        style="position: absolute;right: 13%;top: 22px;z-index: 99;cursor: pointer"
                       ></i>
                     </th>
                   </tr>

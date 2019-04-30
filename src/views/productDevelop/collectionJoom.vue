@@ -18,7 +18,7 @@
             <span class="dsblock fon12 dsblockred" @click="exportJoom">批量导出joom-csv</span>
           </el-col>
           <el-col :span="2">
-            <span class="dsblock fon12 dsblockcse" @click="markAll">批量标记完善</span>
+            <span class="dsblock fon12 dsblockcse" @click="markAll">批量完善</span>
           </el-col>
           <el-col :span="5">
             <el-col :span="7">
@@ -56,7 +56,7 @@
               </el-select>
             </el-col>
             <el-col :span="6">
-              <span class="qCategory" @click="defineCategory">确定类目</span>
+              <span class="qCategory fon12" @click="defineCategory">确定类目</span>
             </el-col>
           </el-col>
         </el-col>

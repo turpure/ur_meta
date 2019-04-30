@@ -227,7 +227,7 @@
             <el-input placeholder="新增行数" class="font12" size="small" v-model="rows"></el-input>
           </el-col>
           <el-col :span="9" class="boderrtb font12">
-            <span @click="addClomun()" class="spBlock">行数确定</span>
+            <span @click="addClomun()" class="spBlock">行数</span>
           </el-col>
         </el-col>
         <el-col :span="3">
@@ -235,7 +235,7 @@
             <el-input placeholder="库存设置" class="font12" size="small" v-model="stock"></el-input>
           </el-col>
           <el-col :span="9" class="boderrtb font12">
-            <span @click="modifystock()" class="spBlock">库存确定</span>
+            <span @click="modifystock()" class="spBlock">库存</span>
           </el-col>
         </el-col>
         <el-col :span="5">
@@ -248,7 +248,7 @@
             <el-input placeholder="设置价格" class="font12" size="small" v-model="price"></el-input>
           </el-col>
           <el-col :span="7" class="boderrtb font12">
-            <span @click="modifyprice()" class="spBlock">价格确定</span>
+            <span @click="modifyprice()" class="spBlock">价格</span>
           </el-col>
         </el-col>
         <el-col :span="3">
@@ -256,7 +256,7 @@
             <el-input placeholder="运费设置" class="font12" size="small" v-model="freight"></el-input>
           </el-col>
           <el-col :span="9" class="boderrtb font12">
-            <span @click="modifyfreight()" class="spBlock">运费确定</span>
+            <span @click="modifyfreight()" class="spBlock">运费</span>
           </el-col>
         </el-col>
         <el-col :span="3">
@@ -264,7 +264,7 @@
             <el-input placeholder="零售价" class="font12" size="small" v-model="retail"></el-input>
           </el-col>
           <el-col :span="9" class="boderrtb font12">
-            <span @click="modifyretail()" class="spBlock">零售确定</span>
+            <span @click="modifyretail()" class="spBlock">零售</span>
           </el-col>
         </el-col>
         <el-col :span="3">
@@ -272,7 +272,7 @@
             <el-input placeholder="运输时间" class="font12" size="small" v-model="delivery"></el-input>
           </el-col>
           <el-col :span="9" class="boderrtb font12">
-            <span @click="modifydelivery()" class="spBlock">配送确定</span>
+            <span @click="modifydelivery()" class="spBlock">配送</span>
           </el-col>
         </el-col>
         <el-col :span="3">
@@ -280,7 +280,7 @@
             <el-input placeholder="重量设置" class="font12" size="small" v-model="weight"></el-input>
           </el-col>
           <el-col :span="9" class="boderrtb font12">
-            <span @click="modifyweight" class="spBlock">重量确定</span>
+            <span @click="modifyweight" class="spBlock">重量</span>
           </el-col>
         </el-col>
       </el-col>
