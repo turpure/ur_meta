@@ -42,7 +42,7 @@
       </el-form>
     </div>
     <div v-if="recordTab">
-      <el-table :data="tabdate" :height="tableHeight" class="elTable">
+      <el-table :data="tabdate" :height="tableHeight">
         <el-table-column type="index" fixed align="center" header-align="center"></el-table-column>
         <el-table-column label="拣货人" header-align="center">
           <el-table-column prop="picker" :render-header="renderHeaderPic" align="center"></el-table-column>
@@ -53,14 +53,30 @@
         <el-table-column label="批次号" header-align="center">
           <el-table-column prop="batchNumber" :render-header="renderHeaderPic" align="center"></el-table-column>
         </el-table-column>
-        <el-table-column label="完成时间" header-align="center">
-          <el-table-column prop="isDone" :render-header="renderHeaderPic" align="center"></el-table-column>
+        <el-table-column label="完成状态" header-align="center">
+          <el-table-column prop="isDone" :render-header="renderHeaderPic" align="center">
+            <template slot-scope="scope">
+              <a
+                :class="scope.row.isDone=='0'?'clasRed1':'clasGreen1'"
+              >{{scope.row.isDone==0?'未完成':'已完成'}}</a>
+            </template>
+          </el-table-column>
         </el-table-column>
         <el-table-column label="扫描时间" header-align="center">
-          <el-table-column prop="createdTime" :render-header="renderHeaderPic" width="200" align="center"></el-table-column>
+          <el-table-column
+            prop="createdTime"
+            :render-header="renderHeaderPic"
+            width="200"
+            align="center"
+          ></el-table-column>
         </el-table-column>
         <el-table-column label="完成时间" header-align="center">
-          <el-table-column prop="updatedTime" :render-header="renderHeaderPic" width="200" align="center"></el-table-column>
+          <el-table-column
+            prop="updatedTime"
+            :render-header="renderHeaderPic"
+            width="200"
+            align="center"
+          ></el-table-column>
         </el-table-column>
       </el-table>
       <el-pagination
@@ -253,29 +269,37 @@ export default {
           ]
         );
       } else if ($index === 3) {
+        let filters = [
+          { text: "0", value: "未完成" },
+          { text: "1", value: "已完成" }
+        ];
         return h(
-          "div",
+          "el-select",
           {
-            style: {
-              height: "30px"
+            props: {
+              placeholder: "请选择",
+              value: this.reccondition.isDone,
+              size: "mini",
+              clearable: true
+            },
+            on: {
+              input: value => {
+                this.reccondition.isDone = value;
+                this.$emit("input", value);
+              },
+              change: searchValue => {
+                this.filter();
+              }
             }
           },
           [
-            h("el-input", {
-              props: {
-                value: this.reccondition.isDone,
-                size: "mini",
-                clearable: true
-              },
-              on: {
-                input: value => {
-                  this.reccondition.isDone = value;
-                  this.$emit("input", value);
-                },
-                change: value => {
-                  this.filter();
+            filters.map(item => {
+              return h("el-option", {
+                props: {
+                  value: item.text,
+                  label: item.value
                 }
-              }
+              });
             })
           ]
         );
@@ -411,6 +435,30 @@ export default {
       margin-left: 3rem;
     }
   }
+}
+.clasRed1 {
+  color: #f56c6c;
+  border: rgba(245, 108, 108, 0.2) solid 1px;
+  background: rgba(245, 108, 108, 0.1);
+  width: 50%;
+  margin: auto;
+  line-height: 32px;
+  display: block;
+  border-radius: 5px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+.clasGreen1 {
+  color: #0e9a00;
+  border-radius: 5px;
+  width: 50%;
+  margin: auto;
+  line-height: 32px;
+  display: block;
+  border: rgba(3, 82, 38, 0.2) solid 1px;
+  background: rgba(33, 170, 95, 0.1);
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 </style>
 
