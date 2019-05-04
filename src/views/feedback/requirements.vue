@@ -55,7 +55,9 @@
         >
         <el-table-column prop="priority" :render-header="renderHeader" align="center" width="142">
             <template slot-scope="scope">
+              <el-tooltip placement="top" :content="scope.row.priority==1?'仅建议':scope.row.priority==2?'不重要不紧急':scope.row.priority==3?'重要不紧急':scope.row.priority==4?'紧急不重要':'重要且紧急'">
               <el-rate v-model="scope.row.priority" disabled></el-rate>
+              </el-tooltip>
             </template>
          </el-table-column>   
         </el-table-column>
@@ -295,7 +297,9 @@
         >
         <el-table-column prop="priority" :render-header="renderHeader2" align="center" width="142">
             <template slot-scope="scope">
+              <el-tooltip placement="top" :content="scope.row.priority==1?'仅建议':scope.row.priority==2?'不重要不紧急':scope.row.priority==3?'重要不紧急':scope.row.priority==4?'紧急不重要':'重要且紧急'">
               <el-rate v-model="scope.row.priority" disabled></el-rate>
+              </el-tooltip>
             </template>
          </el-table-column>   
         </el-table-column>
@@ -524,7 +528,9 @@
         >
         <el-table-column prop="priority" :render-header="renderHeader1" align="center" width="142">
             <template slot-scope="scope">
+              <el-tooltip placement="top" :content="scope.row.priority==1?'仅建议':scope.row.priority==2?'不重要不紧急':scope.row.priority==3?'重要不紧急':scope.row.priority==4?'紧急不重要':'重要且紧急'">
               <el-rate v-model="scope.row.priority" disabled></el-rate>
+              </el-tooltip>
             </template>
          </el-table-column>   
         </el-table-column>
@@ -755,7 +761,9 @@
         >
         <el-table-column prop="priority" :render-header="renderHeader3" align="center" width="142">
             <template slot-scope="scope">
+              <el-tooltip placement="top" :content="scope.row.priority==1?'仅建议':scope.row.priority==2?'不重要不紧急':scope.row.priority==3?'重要不紧急':scope.row.priority==4?'紧急不重要':'重要且紧急'">
               <el-rate v-model="scope.row.priority" disabled></el-rate>
+              </el-tooltip>
             </template>
          </el-table-column>   
         </el-table-column>

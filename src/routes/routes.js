@@ -44,7 +44,7 @@ import operationFee from '../views/settings/operationFee.vue'
 import exchange from '../views/settings/exchange.vue'
 //仓库工具
 import picking from '../views/warehouse/picking.vue'
-import splitcargo from '../views/warehouse/splitcargo.vue'
+import splitcargo from '../views/warehouse/splitCargo.vue'
 // 反馈中心
 import requirements from '../views/feedback/requirements.vue'
 import news from '../views/feedback/news.vue'
