@@ -266,10 +266,11 @@
                       :active=this.detailForm.schedule
                       finish-status="success">
               <el-step title="待审核"></el-step>
-              <el-step :title='this.detailForm.schedule<=2?"已驳回":"处理中"'></el-step>
-              <el-step title="处理中"></el-step>
+              <el-step :title='this.detailForm.schedule<=1?"已驳回":"已通过"'></el-step>
+              <!-- <el-step title="已驳回" v-if="this.detailForm.schedule<=1"></el-step> -->
+              <el-step title="处理中" v-if="this.detailForm.schedule!=1"></el-step>
               <!-- <el-step title="处理中"></el-step> -->
-              <el-step title="处理完成"></el-step>
+              <el-step title="处理完成" v-if="this.detailForm.schedule!=1"></el-step>
             </el-steps>
           </el-form-item>
           <el-form-item label="优先级"
@@ -420,8 +421,11 @@
                            align="center"></el-table-column>
         </el-table-column>
         <el-table-column label="操作"
-                         width="240">
+                         width="300">
           <template slot-scope="scope">
+            <el-button type="primary"
+                       size="small"
+                       @click="handlAddlDeal(scope.$index, scope.row)">详情</el-button>
             <el-button size="small"
                        @click="handleEditAudit(scope.$index, scope.row)">修改</el-button>
             <el-button type="success"
@@ -498,6 +502,67 @@
           <el-button type="primary"
                      @click.native="editSubmit('Audit')"
                      :loading="editAuditLoading">提交</el-button>
+        </div>
+      </el-dialog>
+       <!--审核详情界面-->
+      <el-dialog title="详情"
+                 :visible.sync="addFormVisibleDeal"
+                 :close-on-click-modal="false">
+        <el-form :model="detailAddForm"
+                 label-width="80px"
+                 label-position="left"
+                 ref="detailDealForm">
+          <el-form-item label="名称"
+                        prop="name">
+            <span>{{detailAddForm.name}}</span>
+            <!-- <el-tag :type="tags[detailForm.priority]['type']">{{tags[detailForm.priority]['name']}}</el-tag> -->
+          </el-form-item>
+          <el-form-item label="类别"
+                        prop="type">
+            <span>{{types[detailAddForm.type]}}</span>
+          </el-form-item>
+          <el-form-item label="状态"
+                        prop="schedule">
+            <el-steps :space="100"
+                      :active=this.detailAddForm.schedule
+                      finish-status="success">
+              <el-step title="待审核"></el-step>
+              <el-step :title='this.detailAddForm.schedule<=1?"已驳回":"已通过"'></el-step>
+              <!-- <el-step title="已驳回" v-if="this.detailForm.schedule<=1"></el-step> -->
+              <el-step title="处理中" v-if="this.detailForm.schedule!=1"></el-step>
+              <el-step title="处理完成" v-if="this.detailForm.schedule!=1"></el-step>
+              <!-- <el-step :title='this.detailAddForm.schedule<=2?"已驳回":"处理中"'></el-step> -->
+              <!-- <el-step title="处理中"></el-step> -->
+              <!-- <el-step title="处理中"></el-step> -->
+              <!-- <el-step title="处理完成"></el-step> -->
+            </el-steps>
+          </el-form-item>
+          <el-form-item label="优先级"
+                        prop="priority">
+            <el-rate show-text
+                     disabled
+                     :texts='text'
+                     v-model="this.detailAddForm.priority"
+                     :colors="['#99A9BF', '#F7BA2A', '#FF9900']"
+                     :max="5"
+                     style="margin-top:8px;" />
+          </el-form-item>
+          <el-form-item label="创建人"
+                        prop="creator">
+            <span>{{detailAddForm.creator}}</span>
+          </el-form-item>
+          <el-form-item label="详情"
+                        prop="detail">
+            <!-- 从数据库读取展示 -->
+            <div v-html="str"
+                 class="ql-editor">
+              {{str}}
+            </div>
+          </el-form-item>
+        </el-form>
+        <div slot="footer"
+             class="dialog-footer">
+          <el-button @click.native="addFormVisibleDeal = false">关闭</el-button>
         </div>
       </el-dialog>
       <!--审核分页工具条-->
@@ -756,10 +821,14 @@
                       :active=this.detailDealForm.schedule
                       finish-status="success">
               <el-step title="待审核"></el-step>
-              <el-step :title='this.detailDealForm.schedule<=2?"已驳回":"处理中"'></el-step>
-              <el-step title="处理中"></el-step>
+              <el-step :title='this.detailAddForm.schedule<=1?"已驳回":"已通过"'></el-step>
+              <!-- <el-step title="已驳回" v-if="this.detailForm.schedule<=1"></el-step> -->
+              <el-step title="处理中" v-if="this.detailForm.schedule!=1"></el-step>
+              <el-step title="处理完成" v-if="this.detailForm.schedule!=1"></el-step>
+              <!-- <el-step :title='this.detailDealForm.schedule<=2?"已驳回":"处理中"'></el-step> -->
               <!-- <el-step title="处理中"></el-step> -->
-              <el-step title="处理完成"></el-step>
+              <!-- <el-step title="处理中"></el-step> -->
+              <!-- <el-step title="处理完成"></el-step> -->
             </el-steps>
           </el-form-item>
           <el-form-item label="优先级"
@@ -944,6 +1013,7 @@ export default {
       requirementsDeal: [],
       detailForm: {},
       detailDealForm: {},
+      detailAddForm:{},
       addFormVisible: false, // 新增界面是否显示
       editFormVisible: false, // 编辑界面是否显示
       editFormVisibleDeal: false,
@@ -951,6 +1021,7 @@ export default {
       detailFormVisible: false,
       detailFormVisibleDeal: false,
       listLoading: false,
+      addFormVisibleDeal:false,
       auditLoading: false,
       dealLoading: false,
       addLoading: false,
@@ -1242,6 +1313,9 @@ export default {
       row.schedule = parseInt(row.schedule)
       row.priority = parseInt(row.priority)
       this.detailForm = Object.assign({}, row)
+      if(this.detailForm.schedule!=4){
+        this.detailForm.schedule=Number(this.detailForm.schedule)-1
+      }
       for (let i = 0; i < this.requirements.length; i++) {
         if (this.requirements[i].id === row.id) {
           this.detailForm.detail = this.requirements[i].detail.replace(
@@ -1252,11 +1326,32 @@ export default {
       }
       this.str = this.escapeStringHTML(this.detailForm.detail)
     },
+    handlAddlDeal(index, row) {
+      this.addFormVisibleDeal = true
+      row.schedule = parseInt(row.schedule)
+      row.priority = parseInt(row.priority)
+      this.detailAddForm = Object.assign({}, row)
+      if(this.detailAddForm.schedule!=4){
+        this.detailAddForm.schedule=Number(this.detailAddForm.schedule)-1
+      }
+      for (let i = 0; i < this.requirements.length; i++) {
+        if (this.requirements[i].id === row.id) {
+          this.detailAddForm.detail = this.requirements[i].detail.replace(
+            /""/g,
+            this.requirements[i].img
+          )
+        }
+      }
+      this.str = this.escapeStringHTML(this.detailAddForm.detail)
+    },
     handleDetailDeal(index, row) {
       this.detailFormVisibleDeal = true
       row.schedule = parseInt(row.schedule)
       row.priority = parseInt(row.priority)
       this.detailDealForm = Object.assign({}, row)
+      if(this.detailDealForm.schedule!=4){
+        this.detailDealForm.schedule=Number(this.detailDealForm.schedule)-1
+      }
       for (let i = 0; i < this.requirements.length; i++) {
         if (this.requirements[i].id === row.id) {
           this.detailDealForm.detail = this.requirements[i].detail.replace(
