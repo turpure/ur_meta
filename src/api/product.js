@@ -1023,6 +1023,28 @@ export function APIScanningLog(param) {
     data
   })
 }
+export function APISortLog(param) {
+  const data = { condition: param }
+  return request({
+    url: '/warehouse-tools/sort-log?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+export function APISortkMember() {
+  return request({
+    url: '/warehouse-tools/sort-member',
+    method: 'get'
+  })
+}
+export function APISort(param) {
+  const data = { condition: param }
+  return request({
+    url: 'warehouse-tools/sort',
+    method: 'post',
+    data
+  })
+}
 export function APIPickMember() {
   return request({
     url: '/warehouse-tools/pick-member',
