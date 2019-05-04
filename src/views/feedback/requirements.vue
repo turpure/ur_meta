@@ -45,6 +45,7 @@
           label="创建时间"
           :formatter="formatter"
           width="140"
+          sortable
         ></el-table-column>
         <el-table-column
           prop="priority"
@@ -52,6 +53,7 @@
           header-align="center"
           label="重要程度"
           width="142"
+          sortable
         >
         <el-table-column prop="priority" :render-header="renderHeader" align="center" width="142">
             <template slot-scope="scope">
@@ -286,13 +288,14 @@
         <el-table-column prop="id" label="id" v-if="false"></el-table-column>
         <!-- <el-table-column type="selection" width="55"></el-table-column> -->
         <el-table-column type="index" width="45" align="center"></el-table-column>
-        <el-table-column prop="createdDate" label="创建时间" :formatter="formatter" width="140"></el-table-column>
+        <el-table-column prop="createdDate" label="创建时间" :formatter="formatter" width="140" sortable></el-table-column>
         <el-table-column
           prop="priority"
           align="center"
           header-align="center"
           label="重要程度"
           width="142"
+          sortable
         >
         <el-table-column prop="priority" :render-header="renderHeader2" align="center" width="142">
             <template slot-scope="scope">
@@ -519,6 +522,7 @@
           label="创建时间"
           :formatter="formatter"
           width="140"
+          sortable
         ></el-table-column>
         <el-table-column
           prop="priority"
@@ -526,6 +530,7 @@
           header-align="center"
           label="重要程度"
           width="142"
+          sortable
         >
         <el-table-column prop="priority" :render-header="renderHeader1" align="center" width="142">
             <template slot-scope="scope">
@@ -754,6 +759,7 @@
           label="创建时间"
           :formatter="formatter"
           width="140"
+          sortable
         ></el-table-column>
        <el-table-column
           prop="priority"
@@ -761,6 +767,7 @@
           header-align="center"
           label="重要程度"
           width="142"
+          sortable
         >
         <el-table-column prop="priority" :render-header="renderHeader3" align="center" width="142">
             <template slot-scope="scope">
@@ -1114,18 +1121,30 @@ export default {
         if (this.activeName === "新需求") {
           this.condition.sortOrder = "DESC";
           this.condition.sortProperty = column.prop;
-        } else {
+        } else if(this.activeName === "待审核") {
+          // this.deal.sortOrder = "DESC";
+          // this.deal.sortProperty = column.prop;
+        }else if(this.activeName === "处理中") {
           this.deal.sortOrder = "DESC";
           this.deal.sortProperty = column.prop;
+        }else{
+          this.finish.sortOrder = "DESC";
+          this.finish.sortProperty = column.prop;
         }
         this.getRequire(this.activeName);
       } else {
         if (this.activeName === "新需求") {
           this.condition.sortOrder = "ASC";
           this.condition.sortProperty = column.prop;
-        } else {
+        } else if(this.activeName === "待审核") {
+          // this.deal.sortOrder = "ASC";
+          // this.deal.sortProperty = column.prop;
+        }else if(this.activeName === "处理中") {
           this.deal.sortOrder = "ASC";
           this.deal.sortProperty = column.prop;
+        }else{
+          this.finish.sortOrder = "ASC";
+          this.finish.sortProperty = column.prop;
         }
         this.getRequire(this.activeName);
       }
@@ -1549,6 +1568,9 @@ export default {
       if (name === "新需求") {
         getRequirementsIndex(this.condition).then(response => {
           const res = response.data.data;
+          for(let i=0;i<res.items.length;i++){
+            res.items[i].priority=Number(res.items[i].priority)
+          }
           this.requirements = res.items;
           this.total = res._meta.totalCount;
           this.condition.page = res._meta.currentPage;
@@ -1557,6 +1579,9 @@ export default {
       } else if (name === "待审核") {
         getRequirementsExamine(this.examine).then(response => {
           const res = response.data.data;
+          for(let i=0;i<res.items.length;i++){
+            res.items[i].priority=Number(res.items[i].priority)
+          }
           this.requirementsAudit = res.items;
           this.auditTotal = res._meta.totalCount;
           this.examine.page = res._meta.currentPage;
@@ -1565,6 +1590,9 @@ export default {
       } else if (name === "处理中") {
         getRequirementsDeal(this.deal).then(response => {
           const res = response.data.data;
+          for(let i=0;i<res.items.length;i++){
+            res.items[i].priority=Number(res.items[i].priority)
+          }
           this.requirementsDeal = res.items;
           this.dealTotal = res._meta.totalCount;
           this.deal.page = res._meta.currentPage;
@@ -1573,6 +1601,9 @@ export default {
       } else if (name === "已完成") {
         getRequirementsFinish(this.finish).then(response => {
           const res = response.data.data;
+          for(let i=0;i<res.items.length;i++){
+            res.items[i].priority=Number(res.items[i].priority)
+          }
           this.requirementsFinish = res.items;
           this.finishTotal = res._meta.totalCount;
           this.finish.page = res._meta.currentPage;
