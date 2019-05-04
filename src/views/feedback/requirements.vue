@@ -206,9 +206,8 @@
           </el-form-item>
           <el-form-item label="状态" prop="schedule">
             <el-steps :space="100" :active="this.detailForm.schedule" finish-status="success">
-              <el-step title="待审核"></el-step>
-              <el-step :title="this.detailForm.schedule<=1?'已驳回':'已通过'"></el-step>
-              <!-- <el-step title="已驳回" v-if="this.detailForm.schedule<=1"></el-step> -->
+              <el-step title="待审核" v-if="this.detailForm.schedule!=1"></el-step>
+              <el-step title="已驳回" v-if="this.detailForm.schedule==1"></el-step>
               <el-step title="处理中" v-if="this.detailForm.schedule!=1"></el-step>
               <!-- <el-step title="处理中"></el-step> -->
               <el-step title="处理完成" v-if="this.detailForm.schedule!=1"></el-step>
@@ -434,8 +433,10 @@
           </el-form-item>
           <el-form-item label="状态" prop="schedule">
             <el-steps :space="100" :active="this.detailAddForm.schedule" finish-status="success">
-              <el-step title="待审核"></el-step>
-              <el-step :title="this.detailAddForm.schedule<=1?'已驳回':'已通过'"></el-step>
+              <el-step title="待审核" v-if="this.detailAddForm.schedule!=1"></el-step>
+              <el-step title="已驳回" v-if="this.detailAddForm.schedule==1"></el-step>
+              <!-- <el-step title="待审核"></el-step>
+              <el-step :title="this.detailAddForm.schedule<=1?'已驳回':'已通过'"></el-step> -->
               <!-- <el-step title="已驳回" v-if="this.detailForm.schedule<=1"></el-step> -->
               <el-step title="处理中" v-if="this.detailAddForm.schedule!=1"></el-step>
               <el-step title="处理完成" v-if="this.detailAddForm.schedule!=1"></el-step>
@@ -669,8 +670,10 @@
           </el-form-item>
           <el-form-item label="状态" prop="schedule">
             <el-steps :space="100" :active="this.detailDealForm.schedule" finish-status="success">
-              <el-step title="待审核"></el-step>
-              <el-step :title="this.detailDealForm.schedule<=1?'已驳回':'已通过'"></el-step>
+              <el-step title="待审核" v-if="this.detailDealForm.schedule!=1"></el-step>
+              <el-step title="已驳回" v-if="this.detailDealForm.schedule==1"></el-step>
+              <!-- <el-step title="待审核"></el-step>
+              <el-step :title="this.detailDealForm.schedule<=1?'已驳回':'已通过'"></el-step> -->
               <!-- <el-step title="已驳回" v-if="this.detailForm.schedule<=1"></el-step> -->
               <el-step title="处理中" v-if="this.detailDealForm.schedule!=1"></el-step>
               <el-step title="处理完成" v-if="this.detailDealForm.schedule!=1"></el-step>
@@ -866,8 +869,10 @@
           </el-form-item>
           <el-form-item label="状态" prop="schedule">
             <el-steps :space="100" :active="this.detailfinishForm.schedule" finish-status="success">
-              <el-step title="待审核"></el-step>
-              <el-step :title="this.detailfinishForm.schedule<=1?'已驳回':'已通过'"></el-step>
+              <el-step title="待审核" v-if="this.detailfinishForm.schedule!=1"></el-step>
+              <el-step title="已驳回" v-if="this.detailfinishForm.schedule==1"></el-step>
+              <!-- <el-step title="待审核"></el-step>
+              <el-step :title="this.detailfinishForm.schedule<=1?'已驳回':'已通过'"></el-step> -->
               <!-- <el-step title="已驳回" v-if="this.detailForm.schedule<=1"></el-step> -->
               <el-step title="处理中" v-if="this.detailfinishForm.schedule!=1"></el-step>
               <el-step title="处理完成" v-if="this.detailfinishForm.schedule!=1"></el-step>
