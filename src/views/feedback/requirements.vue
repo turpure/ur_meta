@@ -1529,6 +1529,7 @@ export default {
         processingPerson: []
       };
       this.addForm = Object.assign({}, form);
+      this.content='';
       this.addFormVisible = true;
     },
     // 详情

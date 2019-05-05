@@ -927,11 +927,59 @@
       <el-card class="box-card1">
         <div slot="header"
              class="clearfix-list">
+          <h2>更新日志</h2>
+        </div>
+      <div class="contentBox">
+        <div class="contentBox01">
+          <!-- <div class="contentBoxLeft">
+            <div class="texta">
+              <a class="titlea">2019-15-12</a>
+              <span class="blueround"></span>    
+            </div>
+          </div> -->
+          <div class="contentBoxRight">
+            <div class="text01">
+            <span class="blueround"></span>    
+             <p class="titlep">手机投屏</p>
+             <a class="titlea">2019-15-12</a>
+             <p class='cp'>手机投屏直播新增文字手机投屏直播新增文字功能手机投屏直播新增文字功能功能手机投屏直播新增文字功能</p>
+            </div>
+             <div class="text01">
+            <span class="blueround"></span>    
+             <p class="titlep">手机投屏</p>
+             <a class="titlea">2019-15-12</a>
+             <p class='cp'>手机投屏直播新增文字手机投屏直播新增文字功能手机投屏直播新增文字功能功能手机投屏直播新增文字功能</p>
+            </div>
+            <div class="text01">
+            <span class="blueround"></span>    
+             <p class="titlep">手机投屏</p>
+             <a class="titlea">2019-15-12</a>
+             <p class='cp'>手机投屏直播新增文字手机投屏直播新增文字功能手机投屏直播新增文字功能功能手机投屏直播新增文字功能</p>
+            </div>
+            <div class="text01">
+            <span class="blueround"></span>    
+             <p class="titlep">手机投屏</p>
+             <a class="titlea">2019-15-12</a>
+             <p class='cp'>手机投屏直播新增文字手机投屏直播新增文字功能手机投屏直播新增文字功能功能手机投屏直播新增文字功能</p>
+            </div>
+            <div class="text01">
+            <span class="blueround"></span>    
+             <p class="titlep">手机投屏</p>
+             <a class="titlea">2019-15-12</a>
+             <p class='cp'>手机投屏直播新增文字手机投屏直播新增文字功能手机投屏直播新增文字功能功能手机投屏直播新增文字功能</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      </el-card>
+      <!-- <el-card class="box-card1">
+        <div slot="header"
+             class="clearfix-list">
           <h2>活动栏</h2>
         </div>
-        <!-- <img src="../assets/1.5.jpg"
-             style="height:400px;width:95%;padding:15px;"> -->
-      </el-card>
+        <img src="../assets/1.5.jpg"
+             style="height:400px;width:95%;padding:15px;">
+      </el-card> -->
       <el-dialog :visible.sync="dialogVisible">
         <el-form :model="newsDetailList"
                  label-width="80px"
@@ -1248,6 +1296,64 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+.blueround{
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #007aff;
+  position: absolute;
+  left: -8.5%;
+  top: 15px;
+  z-index: 999;
+}
+.text01{
+  width: 100%;
+  position: relative;
+}
+.titlea{
+  display: block;
+  padding-top: 12px;
+  text-align: center;
+  position: absolute;
+  left: -35%;
+  top: 0;
+  font-size: 16px;
+  color: #303133;
+}
+.contentBox{
+  width: 95%;
+  overflow: hidden;
+  margin: auto;
+}
+.contentBox01{
+  width: 100%;
+  overflow: hidden;
+}
+.contentBoxLeft{
+  width: 25%;
+  float: left;
+}
+.contentBoxRight{
+  width: 70%;
+  float: right;
+  border-left: #ccc solid 1px;
+  margin-left: 25%;
+  padding-left: 5%;
+  padding-top: 15px;
+  min-height: 420px;
+}
+.cp{
+  line-height: 25px;
+  font-size: 14px;
+}
+.titlep{
+  font-size: 16px;
+  padding: 0;
+  margin: 0;
+  padding-top: 10px;
+  font-weight: bold;
+}
 .clearfix-table {
   height: 21px;
   line-height: 0px;
@@ -1264,7 +1370,7 @@ export default {
 }
 .box-card {
   width: 30%;
-  height: 400px;
+  height: 390px;
   overflow-y: scroll;
   float: right;
   margin-top: 3%;
@@ -1308,9 +1414,10 @@ export default {
 }
 .box-card1 {
   width: 30%;
-  height: 485px;
+  height: 495px;
   float: right;
   margin-top: 10px;
+  overflow-y: scroll;
 }
 a {
   color: #428bac;
@@ -1337,4 +1444,5 @@ h2:hover {
 .text {
   font-size: 18px;
 }
+
 </style>
