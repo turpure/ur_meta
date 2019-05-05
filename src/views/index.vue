@@ -938,35 +938,11 @@
             </div>
           </div> -->
           <div class="contentBoxRight">
-            <div class="text01">
+            <div class="text01" v-for="(item, index) in logList" :key='index'>
             <span class="blueround"></span>    
-             <p class="titlep">手机投屏</p>
-             <a class="titlea">2019-15-12</a>
-             <p class='cp'>手机投屏直播新增文字手机投屏直播新增文字功能手机投屏直播新增文字功能功能手机投屏直播新增文字功能</p>
-            </div>
-             <div class="text01">
-            <span class="blueround"></span>    
-             <p class="titlep">手机投屏</p>
-             <a class="titlea">2019-15-12</a>
-             <p class='cp'>手机投屏直播新增文字手机投屏直播新增文字功能手机投屏直播新增文字功能功能手机投屏直播新增文字功能</p>
-            </div>
-            <div class="text01">
-            <span class="blueround"></span>    
-             <p class="titlep">手机投屏</p>
-             <a class="titlea">2019-15-12</a>
-             <p class='cp'>手机投屏直播新增文字手机投屏直播新增文字功能手机投屏直播新增文字功能功能手机投屏直播新增文字功能</p>
-            </div>
-            <div class="text01">
-            <span class="blueround"></span>    
-             <p class="titlep">手机投屏</p>
-             <a class="titlea">2019-15-12</a>
-             <p class='cp'>手机投屏直播新增文字手机投屏直播新增文字功能手机投屏直播新增文字功能功能手机投屏直播新增文字功能</p>
-            </div>
-            <div class="text01">
-            <span class="blueround"></span>    
-             <p class="titlep">手机投屏</p>
-             <a class="titlea">2019-15-12</a>
-             <p class='cp'>手机投屏直播新增文字手机投屏直播新增文字功能手机投屏直播新增文字功能功能手机投屏直播新增文字功能</p>
+             <p class="titlep">{{item.title}}</p>
+             <a class="titlea">{{item.createdDate | cutOut}}</a>
+             <p class='cp'>{{item.details}}</p>
             </div>
           </div>
         </div>
@@ -1015,6 +991,7 @@ import {
   getDevAmt
 } from '../api/api'
 import { compareUp, compareDown } from '../api/tools'
+import { updateLog } from "../api/product";
 import { getMenu } from '../api/login'
 
 export default {
@@ -1030,6 +1007,10 @@ export default {
         page: 1,
         pageSize: 10
       },
+      logdata:{
+        page: 1,
+        pageSize: 100000
+      },
       newsDetailList: {},
       allMenu: [],
       titleMenu: [],
@@ -1037,6 +1018,7 @@ export default {
       newsList: [],
       tableHeight: null,
       permission: [],
+      logList:[],
       shanghaiTable: [],
       zhengzhouTable: [],
       departTable: [],
@@ -1256,6 +1238,13 @@ export default {
       return 'success'
     }
   },
+   filters: {
+    cutOut: function(value) {
+      if (!value) return "";
+      value = value.substring(0, 10);
+      return value;
+    }
+  },
   mounted() {
     getMenu().then(response => {
       const res = response.data.data
@@ -1263,6 +1252,13 @@ export default {
       this.allMenu = menu[0].tabs[1].tabs
       this.titleMenu = menu[0].tabs
     })
+    updateLog(this.logdata).then(res => {
+        if (res.data.code == 200) {
+          this.logList = res.data.data.items;
+        } else {
+          this.$message.error(res.data.message);
+        }
+    });
     getAmt().then(res => {
       this.saleSh = res.data.data
     })
@@ -1320,6 +1316,41 @@ export default {
   top: 0;
   font-size: 16px;
   color: #303133;
+}
+@media screen and (max-width: 1600px) {
+ .blueround{
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #007aff;
+  position: absolute;
+  left: -9%;
+  top: 15px;
+  z-index: 999;
+ }
+ .titlea{
+  display: block;
+  padding-top: 12px;
+  text-align: center;
+  position: absolute;
+  left: -38%;
+  top: 0;
+  font-size: 16px;
+  color: #303133;
+ }
+}
+@media screen and (max-width: 1400px) {
+  .titlea{
+  display: block;
+  padding-top: 12px;
+  text-align: center;
+  position: absolute;
+  left: -43%;
+  top: 0;
+  font-size: 16px;
+  color: #303133;
+ }
 }
 .contentBox{
   width: 95%;
