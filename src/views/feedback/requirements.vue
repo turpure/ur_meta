@@ -1220,22 +1220,22 @@ export default {
   },
   methods: {
     time(time) {
-      let hour,minute,second
+      let hour, minute, second;
       let date = new Date(time);
       if (date.getHours() >= 0 && date.getHours() <= 9) {
         hour = "0" + date.getHours();
-      }else{
-        hour = date.getHours()
+      } else {
+        hour = date.getHours();
       }
       if (date.getMinutes() >= 0 && date.getMinutes() <= 9) {
         minute = "0" + date.getMinutes();
-      }else{
-        minute = date.getMinutes()
+      } else {
+        minute = date.getMinutes();
       }
       if (date.getSeconds() >= 0 && date.getSeconds() <= 9) {
         second = "0" + date.getSeconds();
-      }else{
-        second = date.getSeconds()
+      } else {
+        second = date.getSeconds();
       }
       const date_value =
         date.getFullYear() +
@@ -1249,7 +1249,7 @@ export default {
         minute +
         ":" +
         second;
-      this.editAuditForm.deadline=date_value
+      this.editAuditForm.deadline = date_value;
     },
     // 排序
     sortNumber(column, prop, order) {
@@ -1461,36 +1461,36 @@ export default {
           });
         });
       } else if (name === "Audit") {
-        if(this.editAuditForm.processingPerson.length==0){
-          this.$message.error('请选择处理人');
-        }else if(!this.editAuditForm.deadline){
-          this.$message.error('请选择预估完成时间');
-        }else{
+        if (this.editAuditForm.processingPerson.length == 0) {
+          this.$message.error("请选择处理人");
+        } else if (!this.editAuditForm.deadline) {
+          this.$message.error("请选择预估完成时间");
+        } else {
           this.$confirm("确认提交吗？", "提示", {}).then(() => {
-          this.editAuditLoading = true;
-          this.editAuditForm.processingPerson = this.editAuditForm.processingPerson
-            .filter(ele => ele.length > 0)
-            .join(",");
-          this.editAuditForm.img =
-            this.mycontent.match(/data:([^"]*)/g) ||
-            this.mycontent.match(/http:([^"]*)/g);
-          this.editAuditForm.detail = this.mycontent.replace(
-            /data:([^"]*)/g,
-            ""
-          );
-          editRequirements(this.editAuditForm).then(response => {
-            this.editFormVisibleAudit = false;
-            const req = response.data.data;
-            this.editAuditLoading = false;
-            this.requirements = this.requirements.map(ele => {
-              if (parseInt(ele.id) === req.id) {
-                return req;
-              }
-              return ele;
+            this.editAuditLoading = true;
+            this.editAuditForm.processingPerson = this.editAuditForm.processingPerson
+              .filter(ele => ele.length > 0)
+              .join(",");
+            this.editAuditForm.img =
+              this.mycontent.match(/data:([^"]*)/g) ||
+              this.mycontent.match(/http:([^"]*)/g);
+            this.editAuditForm.detail = this.mycontent.replace(
+              /data:([^"]*)/g,
+              ""
+            );
+            editRequirements(this.editAuditForm).then(response => {
+              this.editFormVisibleAudit = false;
+              const req = response.data.data;
+              this.editAuditLoading = false;
+              this.requirements = this.requirements.map(ele => {
+                if (parseInt(ele.id) === req.id) {
+                  return req;
+                }
+                return ele;
+              });
+              this.getRequire(this.activeName);
             });
-            this.getRequire(this.activeName);
           });
-        });
         }
       } else {
         this.$confirm("确认提交吗？", "提示", {}).then(() => {
@@ -1632,7 +1632,7 @@ export default {
         ","
       );
       if (this.editAuditForm.processingPerson[0] == "") {
-          this.editAuditForm.processingPerson.shift();
+        this.editAuditForm.processingPerson.shift();
       }
       for (let i = 0; i < this.requirements.length; i++) {
         if (this.requirements[i].id === row.id) {
@@ -1687,23 +1687,53 @@ export default {
     },
     // 审核
     handleSuccess(index, row) {
-      // this.auditLoading = true;
-      this.auditSuccess.ids = [this.shId];
-      const condition = {};
-      condition["condition"] = this.auditSuccess;
-      getExamine(condition).then(response => {
-        if (response.data.code == 200) {
-          this.editFormVisibleAudit = false;
-          // this.auditLoading = false;
-          this.$message({
-            message: "审核通过",
-            type: "success"
+      if (this.editAuditForm.processingPerson.length == 0) {
+        this.$message.error("请选择处理人");
+      } else if (!this.editAuditForm.deadline) {
+        this.$message.error("请选择预估完成时间");
+      } else {
+        this.$confirm("确认提交吗？", "提示", {}).then(() => {
+          this.editAuditLoading = true;
+          this.editAuditForm.processingPerson = this.editAuditForm.processingPerson
+            .filter(ele => ele.length > 0)
+            .join(",");
+          this.editAuditForm.img =
+            this.mycontent.match(/data:([^"]*)/g) ||
+            this.mycontent.match(/http:([^"]*)/g);
+          this.editAuditForm.detail = this.mycontent.replace(
+            /data:([^"]*)/g,
+            ""
+          );
+          editRequirements(this.editAuditForm).then(response => {
+            const req = response.data.data;
+            this.editAuditLoading = false;
+            this.requirements = this.requirements.map(ele => {
+              if (parseInt(ele.id) === req.id) {
+                return req;
+              }
+              return ele;
+            });
+            this.auditSuccess.ids = [this.shId];
+            const condition = {};
+            condition["condition"] = this.auditSuccess;
+            getExamine(condition).then(response => {
+              if (response.data.code == 200) {
+                this.editFormVisibleAudit = false;
+                // this.auditLoading = false;
+                this.$message({
+                  message: "审核通过",
+                  type: "success"
+                });
+                this.editFormVisibleAudit = false;
+                this.getRequire(this.activeName);
+              } else {
+                this.$message.error(response.data.message);
+              }
+            });
           });
-          this.getRequire(this.activeName);
-        } else {
-          this.$message.error(response.data.message);
-        }
-      });
+        });
+      }
+      // this.auditLoading = true;
     },
     handleReject(index, row) {
       // this.dealLoading = true;
