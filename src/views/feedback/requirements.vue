@@ -38,7 +38,7 @@
                          header-align="center"
         width="55"></el-table-column>-->
         <el-table-column type="index" align="center" header-align="center" width="45"></el-table-column>
-         <el-table-column
+        <el-table-column
           prop="createdDate"
           align="center"
           header-align="center"
@@ -55,13 +55,16 @@
           width="142"
           sortable
         >
-        <el-table-column prop="priority" :render-header="renderHeader" align="center" width="142">
+          <el-table-column prop="priority" :render-header="renderHeader" align="center" width="142">
             <template slot-scope="scope">
-              <el-tooltip placement="top" :content="scope.row.priority==1?'仅建议':scope.row.priority==2?'不重要不紧急':scope.row.priority==3?'重要不紧急':scope.row.priority==4?'紧急不重要':'重要且紧急'">
-              <el-rate v-model="scope.row.priority" disabled></el-rate>
+              <el-tooltip
+                placement="top"
+                :content="scope.row.priority==1?'仅建议':scope.row.priority==2?'不重要不紧急':scope.row.priority==3?'重要不紧急':scope.row.priority==4?'紧急不重要':'重要且紧急'"
+              >
+                <el-rate v-model="scope.row.priority" disabled></el-rate>
               </el-tooltip>
             </template>
-         </el-table-column>   
+          </el-table-column>
         </el-table-column>
         <el-table-column label="创建人" prop="creator" sortable header-align="center">
           <el-table-column prop="creator" :render-header="renderHeader" align="center"></el-table-column>
@@ -106,6 +109,20 @@
             </template>
           </el-table-column>
         </el-table-column>
+        <el-table-column
+          prop="deadline"
+          align="center"
+          header-align="center"
+          label="预计完成时间"
+          sortable
+        ></el-table-column>
+        <el-table-column
+          prop="createdDays"
+          align="center"
+          header-align="center"
+          label="已创建时间(天)"
+          sortable
+        ></el-table-column>
         <el-table-column label="操作" header-align="center" width="220">
           <template slot-scope="scope">
             <el-button type="primary" size="small" @click="handleDetail(scope.$index, scope.row)">详情</el-button>
@@ -267,12 +284,12 @@
           <el-form-item>
             <el-button size="small" plain @click="searchRequirements">查询</el-button>
           </el-form-item>
-          <el-form-item>
+          <!-- <el-form-item>
             <el-button size="small" plain @click="auditSuccessAll">批量通过</el-button>
           </el-form-item>
           <el-form-item>
             <el-button size="small" plain @click="auditFailedAll">批量驳回</el-button>
-          </el-form-item>
+          </el-form-item>-->
         </el-form>
       </el-col>
       <!--审核列表-->
@@ -288,7 +305,13 @@
         <el-table-column prop="id" label="id" v-if="false"></el-table-column>
         <!-- <el-table-column type="selection" width="55"></el-table-column> -->
         <el-table-column type="index" width="45" align="center"></el-table-column>
-        <el-table-column prop="createdDate" label="创建时间" :formatter="formatter" width="140" sortable></el-table-column>
+        <el-table-column
+          prop="createdDate"
+          label="创建时间"
+          :formatter="formatter"
+          width="140"
+          sortable
+        ></el-table-column>
         <el-table-column
           prop="priority"
           align="center"
@@ -297,20 +320,28 @@
           width="142"
           sortable
         >
-        <el-table-column prop="priority" :render-header="renderHeader2" align="center" width="142">
+          <el-table-column
+            prop="priority"
+            :render-header="renderHeader2"
+            align="center"
+            width="142"
+          >
             <template slot-scope="scope">
-              <el-tooltip placement="top" :content="scope.row.priority==1?'仅建议':scope.row.priority==2?'不重要不紧急':scope.row.priority==3?'重要不紧急':scope.row.priority==4?'紧急不重要':'重要且紧急'">
-              <el-rate v-model="scope.row.priority" disabled></el-rate>
+              <el-tooltip
+                placement="top"
+                :content="scope.row.priority==1?'仅建议':scope.row.priority==2?'不重要不紧急':scope.row.priority==3?'重要不紧急':scope.row.priority==4?'紧急不重要':'重要且紧急'"
+              >
+                <el-rate v-model="scope.row.priority" disabled></el-rate>
               </el-tooltip>
             </template>
-         </el-table-column>   
+          </el-table-column>
         </el-table-column>
         <el-table-column label="创建人" prop="creator" sortable header-align="center">
           <el-table-column prop="creator" :render-header="renderHeader2" align="center"></el-table-column>
         </el-table-column>
         <!-- <el-table-column label="创建人" prop="creator" header-align="center" sortable>
           <el-table-column prop="creator" :render-header="renderHeader2" align="center"></el-table-column>
-        </el-table-column> -->
+        </el-table-column>-->
         <el-table-column label="名称" prop="name" header-align="center" sortable>
           <el-table-column prop="name" :render-header="renderHeader2" align="center">
             <template slot-scope="scope">
@@ -343,20 +374,38 @@
         >
           <el-table-column prop="processingPerson" :render-header="renderHeader2" align="center"></el-table-column>
         </el-table-column>
-        <el-table-column label="操作" width="300">
+        <el-table-column
+          prop="deadline"
+          align="center"
+          header-align="center"
+          label="预计完成时间"
+          sortable
+        ></el-table-column>
+        <el-table-column
+          prop="createdDays"
+          align="center"
+          header-align="center"
+          label="已创建时间(天)"
+          sortable
+        ></el-table-column>
+        <el-table-column label="操作" width="160">
           <template slot-scope="scope">
             <el-button
               type="primary"
               size="small"
               @click="handlAddlDeal(scope.$index, scope.row)"
             >详情</el-button>
-            <el-button size="small" @click="handleEditAudit(scope.$index, scope.row)">修改</el-button>
             <el-button
+              size="small"
+              @click="handleEditAudit(scope.$index, scope.row)"
+              type="success"
+            >审核</el-button>
+            <!-- <el-button
               type="success"
               size="small"
               @click="handleSuccess(scope.$index, scope.row)"
             >通过</el-button>
-            <el-button type="danger" size="small" @click="handleReject(scope.$index, scope.row)">驳回</el-button>
+            <el-button type="danger" size="small" @click="handleReject(scope.$index, scope.row)">驳回</el-button>-->
           </template>
         </el-table-column>
       </el-table>
@@ -396,8 +445,17 @@
             <el-checkbox-group v-model="editAuditForm.processingPerson">
               <el-checkbox label="周朋许" name="processingPerson"></el-checkbox>
               <el-checkbox label="叶先钱" name="processingPerson"></el-checkbox>
-              <el-checkbox label="朱洪涛" name="processingPerson"></el-checkbox>
+              <el-checkbox label="史伟" name="processingPerson"></el-checkbox>
             </el-checkbox-group>
+          </el-form-item>
+          <el-form-item label="预估时间" prop="deadline">
+            <el-date-picker
+              v-model="editAuditForm.deadline"
+              type="datetime"
+              placeholder="选择日期"
+              @change="time"
+            ></el-date-picker>
+            <!-- <el-input v-model="editAuditForm.deadline" auto-complete="off"></el-input> -->
           </el-form-item>
           <el-form-item label="详情">
             <quill-editor
@@ -416,7 +474,9 @@
             type="primary"
             @click.native="editSubmit('Audit')"
             :loading="editAuditLoading"
-          >提交</el-button>
+          >保存</el-button>
+          <el-button type="danger" @click="handleReject()">驳回</el-button>
+          <el-button type="success" @click="handleSuccess()">通过</el-button>
         </div>
       </el-dialog>
       <!--审核详情界面-->
@@ -439,7 +499,7 @@
               <el-step title="待审核" v-if="this.detailAddForm.schedule!=1"></el-step>
               <el-step title="已驳回" v-if="this.detailAddForm.schedule==1"></el-step>
               <!-- <el-step title="待审核"></el-step>
-              <el-step :title="this.detailAddForm.schedule<=1?'已驳回':'已通过'"></el-step> -->
+              <el-step :title="this.detailAddForm.schedule<=1?'已驳回':'已通过'"></el-step>-->
               <!-- <el-step title="已驳回" v-if="this.detailForm.schedule<=1"></el-step> -->
               <el-step title="处理中" v-if="this.detailAddForm.schedule!=1"></el-step>
               <el-step title="处理完成" v-if="this.detailAddForm.schedule!=1"></el-step>
@@ -532,13 +592,21 @@
           width="142"
           sortable
         >
-        <el-table-column prop="priority" :render-header="renderHeader1" align="center" width="142">
+          <el-table-column
+            prop="priority"
+            :render-header="renderHeader1"
+            align="center"
+            width="142"
+          >
             <template slot-scope="scope">
-              <el-tooltip placement="top" :content="scope.row.priority==1?'仅建议':scope.row.priority==2?'不重要不紧急':scope.row.priority==3?'重要不紧急':scope.row.priority==4?'紧急不重要':'重要且紧急'">
-              <el-rate v-model="scope.row.priority" disabled></el-rate>
+              <el-tooltip
+                placement="top"
+                :content="scope.row.priority==1?'仅建议':scope.row.priority==2?'不重要不紧急':scope.row.priority==3?'重要不紧急':scope.row.priority==4?'紧急不重要':'重要且紧急'"
+              >
+                <el-rate v-model="scope.row.priority" disabled></el-rate>
               </el-tooltip>
             </template>
-         </el-table-column>   
+          </el-table-column>
         </el-table-column>
         <el-table-column label="创建人" prop="creator" header-align="center" sortable>
           <el-table-column prop="creator" :render-header="renderHeader1" align="center"></el-table-column>
@@ -587,6 +655,20 @@
             </template>
           </el-table-column>
         </el-table-column>
+        <el-table-column
+          prop="deadline"
+          align="center"
+          header-align="center"
+          label="预计完成时间"
+          sortable
+        ></el-table-column>
+        <el-table-column
+          prop="createdDays"
+          align="center"
+          header-align="center"
+          label="已创建时间(天)"
+          sortable
+        ></el-table-column>
         <el-table-column label="操作" header-align="center" width="220">
           <template slot-scope="scope">
             <el-button
@@ -639,7 +721,7 @@
             <el-checkbox-group v-model="editDealForm.processingPerson">
               <el-checkbox label="周朋许" name="processingPerson"></el-checkbox>
               <el-checkbox label="叶先钱" name="processingPerson"></el-checkbox>
-              <el-checkbox label="朱洪涛" name="processingPerson"></el-checkbox>
+              <el-checkbox label="史伟" name="processingPerson"></el-checkbox>
             </el-checkbox-group>
           </el-form-item>
           <el-form-item label="详情">
@@ -678,7 +760,7 @@
               <el-step title="待审核" v-if="this.detailDealForm.schedule!=1"></el-step>
               <el-step title="已驳回" v-if="this.detailDealForm.schedule==1"></el-step>
               <!-- <el-step title="待审核"></el-step>
-              <el-step :title="this.detailDealForm.schedule<=1?'已驳回':'已通过'"></el-step> -->
+              <el-step :title="this.detailDealForm.schedule<=1?'已驳回':'已通过'"></el-step>-->
               <!-- <el-step title="已驳回" v-if="this.detailForm.schedule<=1"></el-step> -->
               <el-step title="处理中" v-if="this.detailDealForm.schedule!=1"></el-step>
               <el-step title="处理完成" v-if="this.detailDealForm.schedule!=1"></el-step>
@@ -761,7 +843,7 @@
           width="140"
           sortable
         ></el-table-column>
-       <el-table-column
+        <el-table-column
           prop="priority"
           align="center"
           header-align="center"
@@ -769,13 +851,21 @@
           width="142"
           sortable
         >
-        <el-table-column prop="priority" :render-header="renderHeader3" align="center" width="142">
+          <el-table-column
+            prop="priority"
+            :render-header="renderHeader3"
+            align="center"
+            width="142"
+          >
             <template slot-scope="scope">
-              <el-tooltip placement="top" :content="scope.row.priority==1?'仅建议':scope.row.priority==2?'不重要不紧急':scope.row.priority==3?'重要不紧急':scope.row.priority==4?'紧急不重要':'重要且紧急'">
-              <el-rate v-model="scope.row.priority" disabled></el-rate>
+              <el-tooltip
+                placement="top"
+                :content="scope.row.priority==1?'仅建议':scope.row.priority==2?'不重要不紧急':scope.row.priority==3?'重要不紧急':scope.row.priority==4?'紧急不重要':'重要且紧急'"
+              >
+                <el-rate v-model="scope.row.priority" disabled></el-rate>
               </el-tooltip>
             </template>
-         </el-table-column>   
+          </el-table-column>
         </el-table-column>
         <el-table-column label="创建人" prop="creator" header-align="center" sortable>
           <el-table-column prop="creator" :render-header="renderHeader3" align="center"></el-table-column>
@@ -832,6 +922,20 @@
             </template>
           </el-table-column>
         </el-table-column>-->
+        <el-table-column
+          prop="deadline"
+          align="center"
+          header-align="center"
+          label="预计完成时间"
+          sortable
+        ></el-table-column>
+        <el-table-column
+          prop="createdDays"
+          align="center"
+          header-align="center"
+          label="已创建时间(天)"
+          sortable
+        ></el-table-column>
         <el-table-column label="操作" header-align="center" width="148">
           <template slot-scope="scope">
             <el-button
@@ -879,7 +983,7 @@
               <el-step title="待审核" v-if="this.detailfinishForm.schedule!=1"></el-step>
               <el-step title="已驳回" v-if="this.detailfinishForm.schedule==1"></el-step>
               <!-- <el-step title="待审核"></el-step>
-              <el-step :title="this.detailfinishForm.schedule<=1?'已驳回':'已通过'"></el-step> -->
+              <el-step :title="this.detailfinishForm.schedule<=1?'已驳回':'已通过'"></el-step>-->
               <!-- <el-step title="已驳回" v-if="this.detailForm.schedule<=1"></el-step> -->
               <el-step title="处理中" v-if="this.detailfinishForm.schedule!=1"></el-step>
               <el-step title="处理完成" v-if="this.detailfinishForm.schedule!=1"></el-step>
@@ -1083,6 +1187,7 @@ export default {
       editLoading: false,
       editDealLoading: false,
       editAuditLoading: false,
+      shId: null,
       // 新增界面数据
       addForm: {
         id: 0,
@@ -1114,6 +1219,38 @@ export default {
     }
   },
   methods: {
+    time(time) {
+      var hour,minute,second
+      var date = new Date(time);
+      if (date.getHours() >= 0 && date.getHours() <= 9) {
+        hour = "0" + date.getHours();
+      }else{
+        hour = date.getHours()
+      }
+      if (date.getMinutes() >= 0 && date.getMinutes() <= 9) {
+        minute = "0" + date.getMinutes();
+      }else{
+        minute = date.getMinutes()
+      }
+      if (date.getSeconds() >= 0 && date.getSeconds() <= 9) {
+        second = "0" + date.getSeconds();
+      }else{
+        second = date.getSeconds()
+      }
+      var date_value =
+        date.getFullYear() +
+        "-" +
+        (date.getMonth() + 1) +
+        "-" +
+        date.getDate() +
+        " " +
+        hour +
+        ":" +
+        minute +
+        ":" +
+        second;
+      this.editAuditForm.deadline=date_value
+    },
     // 排序
     sortNumber(column, prop, order) {
       // debugger
@@ -1121,13 +1258,13 @@ export default {
         if (this.activeName === "新需求") {
           this.condition.sortOrder = "DESC";
           this.condition.sortProperty = column.prop;
-        } else if(this.activeName === "待审核") {
+        } else if (this.activeName === "待审核") {
           // this.deal.sortOrder = "DESC";
           // this.deal.sortProperty = column.prop;
-        }else if(this.activeName === "处理中") {
+        } else if (this.activeName === "处理中") {
           this.deal.sortOrder = "DESC";
           this.deal.sortProperty = column.prop;
-        }else{
+        } else {
           this.finish.sortOrder = "DESC";
           this.finish.sortProperty = column.prop;
         }
@@ -1136,13 +1273,13 @@ export default {
         if (this.activeName === "新需求") {
           this.condition.sortOrder = "ASC";
           this.condition.sortProperty = column.prop;
-        } else if(this.activeName === "待审核") {
+        } else if (this.activeName === "待审核") {
           // this.deal.sortOrder = "ASC";
           // this.deal.sortProperty = column.prop;
-        }else if(this.activeName === "处理中") {
+        } else if (this.activeName === "处理中") {
           this.deal.sortOrder = "ASC";
           this.deal.sortProperty = column.prop;
-        }else{
+        } else {
           this.finish.sortOrder = "ASC";
           this.finish.sortProperty = column.prop;
         }
@@ -1261,7 +1398,7 @@ export default {
         this.handleSizeChange(this.auditTotal);
       } else if (name === "Deal") {
         this.handleSizeChange(this.dealTotal);
-      }else if (name === "finish") {
+      } else if (name === "finish") {
         this.handleSizeChange(this.finishTotal);
       } else {
         this.handleSizeChange(this.total);
@@ -1324,7 +1461,13 @@ export default {
           });
         });
       } else if (name === "Audit") {
-        this.$confirm("确认提交吗？", "提示", {}).then(() => {
+        console.log(this.editAuditForm.processingPerson)
+        if(this.editAuditForm.processingPerson.length<=1){
+          this.$message.error('请选择处理人');
+        }else if(!this.editAuditForm.deadline){
+          this.$message.error('请选择预估完成时间');
+        }else{
+          this.$confirm("确认提交吗？", "提示", {}).then(() => {
           this.editAuditLoading = true;
           this.editAuditForm.processingPerson = this.editAuditForm.processingPerson
             .filter(ele => ele.length > 0)
@@ -1349,6 +1492,7 @@ export default {
             this.getRequire(this.activeName);
           });
         });
+        }
       } else {
         this.$confirm("确认提交吗？", "提示", {}).then(() => {
           this.editLoading = true;
@@ -1482,6 +1626,7 @@ export default {
     },
     handleEditAudit(index, row) {
       this.editFormVisibleAudit = true;
+      this.shId = row.id;
       row.priority = parseInt(row.priority);
       this.editAuditForm = Object.assign({}, row);
       this.editAuditForm.processingPerson = this.editAuditForm.processingPerson.split(
@@ -1540,36 +1685,46 @@ export default {
     },
     // 审核
     handleSuccess(index, row) {
-      this.auditLoading = true;
-      this.auditSuccess.ids = [row.id];
+      // this.auditLoading = true;
+      this.auditSuccess.ids = [this.shId];
       const condition = {};
       condition["condition"] = this.auditSuccess;
       getExamine(condition).then(response => {
-        this.auditLoading = false;
-        this.$message({
-          message: "审核通过",
-          type: "success"
-        });
-        this.getRequire(this.activeName);
+        if (response.data.code == 200) {
+          this.editFormVisibleAudit = false;
+          // this.auditLoading = false;
+          this.$message({
+            message: "审核通过",
+            type: "success"
+          });
+          this.getRequire(this.activeName);
+        } else {
+          this.$message.error(response.data.message);
+        }
       });
     },
     handleReject(index, row) {
-      this.dealLoading = true;
-      this.auditFailed.ids = [row.id];
+      // this.dealLoading = true;
+      this.auditFailed.ids = [this.shId];
       const condition = {};
       condition["condition"] = this.auditFailed;
       getExamine(condition).then(response => {
-        this.dealLoading = false;
-        this.$message.error("审核不通过");
-        this.getRequire(this.activeName);
+        if (response.data.code == 200) {
+          this.editFormVisibleAudit = false;
+          // this.dealLoading = false;
+          this.$message.error("审核不通过");
+          this.getRequire(this.activeName);
+        } else {
+          this.$message.error(response.data.message);
+        }
       });
     },
     getRequire(name) {
       if (name === "新需求") {
         getRequirementsIndex(this.condition).then(response => {
           const res = response.data.data;
-          for(let i=0;i<res.items.length;i++){
-            res.items[i].priority=Number(res.items[i].priority)
+          for (let i = 0; i < res.items.length; i++) {
+            res.items[i].priority = Number(res.items[i].priority);
           }
           this.requirements = res.items;
           this.total = res._meta.totalCount;
@@ -1579,8 +1734,8 @@ export default {
       } else if (name === "待审核") {
         getRequirementsExamine(this.examine).then(response => {
           const res = response.data.data;
-          for(let i=0;i<res.items.length;i++){
-            res.items[i].priority=Number(res.items[i].priority)
+          for (let i = 0; i < res.items.length; i++) {
+            res.items[i].priority = Number(res.items[i].priority);
           }
           this.requirementsAudit = res.items;
           this.auditTotal = res._meta.totalCount;
@@ -1590,8 +1745,8 @@ export default {
       } else if (name === "处理中") {
         getRequirementsDeal(this.deal).then(response => {
           const res = response.data.data;
-          for(let i=0;i<res.items.length;i++){
-            res.items[i].priority=Number(res.items[i].priority)
+          for (let i = 0; i < res.items.length; i++) {
+            res.items[i].priority = Number(res.items[i].priority);
           }
           this.requirementsDeal = res.items;
           this.dealTotal = res._meta.totalCount;
@@ -1601,8 +1756,8 @@ export default {
       } else if (name === "已完成") {
         getRequirementsFinish(this.finish).then(response => {
           const res = response.data.data;
-          for(let i=0;i<res.items.length;i++){
-            res.items[i].priority=Number(res.items[i].priority)
+          for (let i = 0; i < res.items.length; i++) {
+            res.items[i].priority = Number(res.items[i].priority);
           }
           this.requirementsFinish = res.items;
           this.finishTotal = res._meta.totalCount;
@@ -1653,7 +1808,7 @@ export default {
             })
           ]
         );
-      }else if ($index === 1) {
+      } else if ($index === 1) {
         return h(
           "div",
           {
@@ -1812,7 +1967,7 @@ export default {
     },
     renderHeader1(h, { column, $index }) {
       if ($index === 0) {
-         const filters = [
+        const filters = [
           { text: 1, value: "仅建议" },
           { text: 2, value: "不重要不紧急" },
           { text: 3, value: "重要不紧急" },
@@ -1852,7 +2007,7 @@ export default {
             })
           ]
         );
-      }else if ($index === 1) {
+      } else if ($index === 1) {
         return h(
           "div",
           {
@@ -2039,7 +2194,7 @@ export default {
     },
     renderHeader3(h, { column, $index }) {
       if ($index === 0) {
-         const filters = [
+        const filters = [
           { text: 1, value: "仅建议" },
           { text: 2, value: "不重要不紧急" },
           { text: 3, value: "重要不紧急" },
@@ -2079,7 +2234,7 @@ export default {
             })
           ]
         );
-      }else if ($index === 1) {
+      } else if ($index === 1) {
         return h(
           "div",
           {
@@ -2224,7 +2379,7 @@ export default {
             })
           ]
         );
-      } 
+      }
     },
     renderHeader2(h, { column, $index }) {
       if ($index === 0) {
