@@ -1220,8 +1220,8 @@ export default {
   },
   methods: {
     time(time) {
-      var hour,minute,second
-      var date = new Date(time);
+      let hour,minute,second
+      let date = new Date(time);
       if (date.getHours() >= 0 && date.getHours() <= 9) {
         hour = "0" + date.getHours();
       }else{
@@ -1237,7 +1237,7 @@ export default {
       }else{
         second = date.getSeconds()
       }
-      var date_value =
+      const date_value =
         date.getFullYear() +
         "-" +
         (date.getMonth() + 1) +
@@ -1461,8 +1461,7 @@ export default {
           });
         });
       } else if (name === "Audit") {
-        console.log(this.editAuditForm.processingPerson)
-        if(this.editAuditForm.processingPerson.length<=1){
+        if(this.editAuditForm.processingPerson.length==0){
           this.$message.error('请选择处理人');
         }else if(!this.editAuditForm.deadline){
           this.$message.error('请选择预估完成时间');
@@ -1632,6 +1631,9 @@ export default {
       this.editAuditForm.processingPerson = this.editAuditForm.processingPerson.split(
         ","
       );
+      if (this.editAuditForm.processingPerson[0] == "") {
+          this.editAuditForm.processingPerson.shift();
+      }
       for (let i = 0; i < this.requirements.length; i++) {
         if (this.requirements[i].id === row.id) {
           this.editAuditForm.detail = this.requirements[i].detail.replace(
