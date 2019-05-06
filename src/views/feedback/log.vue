@@ -27,6 +27,10 @@
         </template>
       </el-table-column>
     </el-table>
+     <div class="block toolbar">
+      <el-pagination background @size-change='handleSizeChange' @current-change='handleCurrentChange' :current-page="this.data.page" :page-size="this.data.pageSize" :page-sizes="[10,20,30,40]" layout="total,sizes,prev,pager,next,jumper" :total="this.totalCount">
+      </el-pagination>
+    </div>
     <!-- 新增界面 -->
     <el-dialog title="新增" :visible.sync="addFormVisible" :close-on-click-modal="false">
       <el-form :model="addForm" label-width="80px" label-position="left" ref="addForm">
@@ -163,12 +167,15 @@ export default {
       );
     },
     formatter(row, column) {
-      return row.createDate ? row.createDate.substring(0, 16) : "";
+      return row.createdDate ? row.createdDate.substring(0, 16) : "";
     },
     getData() {
       updateLog(this.data).then(res => {
         if (res.data.code == 200) {
           this.logList = res.data.data.items;
+          this.data.page = res.data.data._meta.currentPage
+          this.data.pageSize = res.data.data._meta.perPage
+          this.totalCount = res.data.data._meta.totalCount
         } else {
           this.$message.error(res.data.message);
         }
