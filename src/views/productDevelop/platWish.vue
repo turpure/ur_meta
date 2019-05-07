@@ -5,7 +5,7 @@
       class="toolbar"
       style="position:fixed;bottom:0px;text-align:center;z-index:10;padding-bottom:15px;padding-top: 12px"
     >
-      <el-col :span="15" :offset="5">
+      <el-col :span="15" class="leftmedia">
         <el-button
           type="primary"
           @click="update"
@@ -1412,5 +1412,18 @@ export default {
   font-size: 13px;
   cursor: pointer;
   background: linear-gradient(to bottom, #f5f7fa 0%, #f5f7fa 45%, #d4d4d4 100%);
+}
+.leftmedia{
+  margin-left: 21%;
+}
+@media screen and (max-width: 1600px){
+   .leftmedia{
+     margin-left: 18%;
+   }
+}
+@media screen and (max-width: 1300px){
+   .leftmedia{
+     margin-left: 12%;
+   }
 }
 </style>

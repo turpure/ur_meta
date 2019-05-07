@@ -264,7 +264,8 @@
                          min-width="105"
                          sortable></el-table-column>
       </el-table>
-      <div class="block toolbar">
+      <div class="block toolbar" style="overflow:hidden">
+        <div style="float:left;margin-top:5px;">
         <el-pagination background
                        @size-change='handleSizeChangeDead'
                        @current-change='handleCurrentChangeDead'
@@ -274,6 +275,13 @@
                        layout="total,sizes,prev,pager,next,jumper"
                        :total="this.totalpur">
         </el-pagination>
+        </div>
+        <div style="float:right">
+          <p style="margin:0;font-size:14px;margin-right:25px;margin-top:8px;">死库金额总计:<span style="color:red">{{totalPrice}}</span></p>
+        </div>
+        <div style="float:right">
+          <p style="margin:0;font-size:14px;margin-right:25px;margin-top:8px;">当前页死库金额:<span style="color:red">{{currentPrice}}</span></p>
+        </div>
       </div>
     </div>
   </div>
@@ -290,6 +298,8 @@ import { isAdmin } from '../../api/api'
 export default {
   data() {
     return {
+      totalPrice:0,
+      currentPrice:0,
       tableHeight: 0,
       isA: true,
       text: '显示输入框',
@@ -421,6 +431,12 @@ export default {
               this.totalpur = response.data.data._meta.totalCount
               this.dead.page = response.data.data._meta.currentPage
               this.dead.pageSize = response.data.data._meta.perPage
+              let strNum=0;
+              for(let i=0;i<this.tableData1.length;i++){
+                  strNum=strNum+Number(this.tableData1[i].aveAmount)
+              }
+              this.totalPrice=response.data.data.extra.totalAveAmount
+              this.currentPrice=strNum
             })
           } else {
             this.dead.member = this.member.map(m => {
@@ -433,6 +449,12 @@ export default {
               this.totalpur = response.data.data._meta.totalCount
               this.dead.page = response.data.data._meta.currentPage
               this.dead.pageSize = response.data.data._meta.perPage
+              let strNum=0;
+              for(let i=0;i<this.tableData1.length;i++){
+                  strNum=strNum+Number(this.tableData1[i].aveAmount)
+              }
+              this.totalPrice=response.data.data.extra.totalAveAmount
+              this.currentPrice=strNum
             })
           }
     },

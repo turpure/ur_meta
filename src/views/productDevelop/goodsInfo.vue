@@ -1319,31 +1319,31 @@ export default {
     markAll() {
       if (this.sels.length != 0) {
         for (let i = 0; i < this.sels.length; i++) {
-          if (this.sels[i].goodsName == null) {
+          if (this.sels[i].goodsName == null || this.sels[i].goodsName=='') {
             this.$message.error("未完善商品名称,不可标记");
             return;
           }
-          if (this.sels[i].aliasCnName == null) {
+          if (this.sels[i].aliasCnName == null || this.sels[i].aliasCnName=='') {
             this.$message.error("未完善中文申报名,不可标记");
             return;
           }
-          if (this.sels[i].aliasEnName == null) {
+          if (this.sels[i].aliasEnName == null || this.sels[i].aliasEnName=='') {
             this.$message.error("未完善英文申报名,不可标记");
             return;
           }
-          if (this.sels[i].supplierName == null) {
+          if (this.sels[i].supplierName == null || this.sels[i].supplierName=='') {
             this.$message.error("未完善供应商名称,不可标记");
             return;
           }
-          if (this.sels[i].packName == null) {
+          if (this.sels[i].packName == null || this.sels[i].packName=='') {
             this.$message.error("未完善包装规格,不可标记");
             return;
           }
-          if (this.sels[i].storeName == null) {
+          if (this.sels[i].storeName == null || this.sels[i].storeName=='') {
             this.$message.error("未完善仓库,不可标记");
             return;
           }
-          if (this.sels[i].description == null) {
+          if (this.sels[i].description == null || this.sels[i].description=='') {
             this.$message.error("未完善描述,不可标记");
             return;
           }
