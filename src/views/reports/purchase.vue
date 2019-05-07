@@ -84,7 +84,7 @@
       </div>
     </div>
     <el-row>
-      <el-col :span="20">
+      <el-col :span="19">
         <el-tabs v-model="activeName"
                  type="card"
                  @tab-click="handleClick">
@@ -277,10 +277,8 @@
         </el-pagination>
         </div>
         <div style="float:right">
-          <p style="margin:0;font-size:14px;margin-right:25px;margin-top:8px;">死库金额总计:<span style="color:red">{{totalPrice}}</span></p>
-        </div>
-        <div style="float:right">
-          <p style="margin:0;font-size:14px;margin-right:25px;margin-top:8px;">当前页死库金额:<span style="color:red">{{currentPrice}}</span></p>
+          <p style="margin:0;font-size:14px;margin-right:18px;margin-top:5px;">分摊死库合计:<span style="color:red">{{totalPrice}}</span></p>
+          <p style="margin:0;font-size:14px;margin-right:18px;margin-top:3px;margin-bottom:5px;">当前页分摊死库:<span style="color:red">{{currentPrice}}</span></p>
         </div>
       </div>
     </div>
@@ -325,7 +323,7 @@ export default {
         role: 'purchaser',
         member: [],
         page: 1,
-        pageSize: 20
+        pageSize: 10
       },
       member: [],
       dateType: [{ id: 1, type: '发货时间' }, { id: 0, type: '交易时间' }],

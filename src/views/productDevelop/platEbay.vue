@@ -1762,6 +1762,21 @@ section {
      font-size: 12px;
    }
 }
+@media screen and (max-width: 1350px){
+   .sx {
+    background: #eee;
+    text-align: center;
+    line-height: 34px;
+    margin-left: 15px;
+    margin-top: 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    width: 60px;
+    float: right;
+    font-size: 13px;
+    border: #eee solid 1px;
+  }
+}
 @media screen and (max-width: 1200px){
    .leftmedia{
      margin-left: 9%;

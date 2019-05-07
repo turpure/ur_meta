@@ -559,10 +559,8 @@
       </el-pagination>
       </div>
       <div style="float:right">
-          <p style="margin:0;font-size:14px;margin-right:25px;margin-top:8px;">死库金额总计:<span style="color:red">{{totalPrice}}</span></p>
-      </div>
-      <div style="float:right">
-          <p style="margin:0;font-size:14px;margin-right:25px;margin-top:8px;">当前页死库金额:<span style="color:red">{{currentPrice}}</span></p>
+        <p style="margin:0;font-size:14px;margin-right:18px;margin-top:3px;">分摊金额合计:<span style="color:red">{{totalPrice}}</span></p>
+        <p style="margin:0;font-size:14px;margin-right:18px;margin-top:3px;margin-bottom:5px;">当前页分摊金额:<span style="color:red">{{currentPrice}}</span></p>
       </div>
     </div>
     <!-- 杂费明细 -->

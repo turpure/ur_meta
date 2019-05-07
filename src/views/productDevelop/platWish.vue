@@ -423,40 +423,40 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-row style="margin-top:15px;margin-left:1%;" v-if="showattribute">
-      <el-col :span="2">
+    <el-row style="margin-left:1%;" v-if="showattribute">
+      <div style="width:120px;overflow:hidden;float:left;margin-top:15px;">
         <input
           placeholder="行数"
           v-model="rows"
           style="width:53%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
         >
         <span class="xzz" @click="addClomun">新增行</span>
-      </el-col>
-      <el-col :span="3">
+      </div>
+      <div style="width:180px;overflow:hidden;float:left;margin-top:15px;">
         <input
           placeholder="数量"
           v-model="num"
           style="width:54%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
         >
         <span class="xzz1" @click="setNum">数量确定</span>
-      </el-col>
-      <el-col :span="3">
+      </div>
+      <div style="width:180px;overflow:hidden;float:left;margin-top:15px;">
         <input
           placeholder="价格"
           v-model="price"
           style="width:54%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
         >
         <span class="xzz1" @click="setPrice">价格确定</span>
-      </el-col>
-      <el-col :span="3">
+      </div>
+      <div style="width:180px;overflow:hidden;float:left;margin-top:15px;">
         <input
           placeholder="运费"
           v-model="ship"
           style="width:54%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
         >
         <span class="xzz1" @click="setShip">运费确定</span>
-      </el-col>
-      <el-col :span="3">
+      </div>
+      <div style="width:180px;overflow:hidden;float:left;margin-top:15px;">
         <!--<el-input v-model="advicePrice"-->
         <!--size="small"-->
         <!--placeholder="建议零售价"-->
@@ -469,8 +469,8 @@
           style="width:54%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
         >
         <span class="xzz1" @click="setAdvice">零售确定</span>
-      </el-col>
-      <el-col :span="3">
+      </div>
+      <div style="width:180px;overflow:hidden;float:left;margin-top:15px;">
         <!--<el-input v-model="joomPrice"-->
         <!--size="small"-->
         <!--placeholder="Joom零售价"-->
@@ -483,8 +483,8 @@
           style="width:50%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
         >
         <span class="xzz1" @click="setJoom">Joom确定</span>
-      </el-col>
-      <el-col :span="3">
+      </div>
+      <div style="width:180px;overflow:hidden;float:left;margin-top:15px;">
         <!--<el-input v-model="transport"-->
         <!--size="small"-->
         <!--placeholder="Joom运费"-->
@@ -497,8 +497,8 @@
           style="width:50%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
         >
         <span class="xzz1" @click="setTransport">Joom运费</span>
-      </el-col>
-      <el-col :span="3">
+      </div>
+      <div style="width:180px;overflow:hidden;float:left;margin-top:15px;">
         <!--<el-input v-model="time"-->
         <!--size="small"-->
         <!--placeholder="运输时间"-->
@@ -511,7 +511,7 @@
           style="width:55%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
         >
         <span class="xzz1" @click="setTime">时间确定</span>
-      </el-col>
+      </div>
     </el-row>
     <!-- 多属性设置对话框 -->
     <el-dialog title="多属性" :visible.sync="dialogVisible" width="90%">
@@ -1420,6 +1420,21 @@ export default {
    .leftmedia{
      margin-left: 18%;
    }
+}
+@media screen and (max-width: 1350px){
+   .sx {
+    background: #eee;
+    text-align: center;
+    line-height: 34px;
+    margin-left: 15px;
+    margin-top: 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    width: 60px;
+    float: right;
+    font-size: 13px;
+    border: #eee solid 1px;
+  }
 }
 @media screen and (max-width: 1300px){
    .leftmedia{
