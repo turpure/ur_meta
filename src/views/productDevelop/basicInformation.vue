@@ -60,6 +60,7 @@
                     <el-table :data="date"
                               border
                               class="elTable"
+                              :height="tableHeight"
                               style="width: 100%">
                         <el-table-column type="index"
                                          fixed
@@ -134,7 +135,7 @@
                     :page-size="condition.pageSize"
                     :total="this.totalWish"
                     background
-                    layout="prev, pager, next" style="margin: 20px 0;margin-left: 10px">
+                    layout="prev, pager, next" style="margin: 20px 0;margin-left: 10px;margin-bottom:0">
             </el-pagination>
             <el-dialog title="Wish账号详情" :visible.sync="dialogPicture">
                <el-row>
@@ -305,6 +306,7 @@
         },
       data() {
         return {
+          tableHeight: window.innerHeight - 275,
           allMenu: [],
           activeName: 'Wish账号字典',
           date: [],

@@ -1339,7 +1339,7 @@ export default {
   padding-top: 12px;
   text-align: center;
   position: absolute;
-  left: -35%;
+  left: -37%;
   top: 0;
   font-size: 16px;
   color: #303133;
@@ -1352,7 +1352,7 @@ export default {
     border-radius: 50%;
     background: #007aff;
     position: absolute;
-    left: -9%;
+    left: -9.5%;
     top: 16px;
     z-index: 999;
   }
@@ -1373,7 +1373,7 @@ export default {
     padding-top: 12px;
     text-align: center;
     position: absolute;
-    left: -43%;
+    left: -45.5%;
     top: 0;
     font-size: 16px;
     color: #303133;
@@ -1393,10 +1393,10 @@ export default {
   float: left;
 }
 .contentBoxRight {
-  width: 70%;
+  width: 68%;
   float: right;
   border-left: #d2d4da solid 1px;
-  margin-left: 25%;
+  margin-left: 27%;
   padding-left: 5%;
   padding-top: 15px;
   min-height: 420px;
