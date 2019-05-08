@@ -1573,7 +1573,34 @@ export default {
             })
           ]
         );
-      } else if ($index === 9) {
+      } else if($index === 8) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition1.checkStatus,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition1.checkStatus = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filter();
+                }
+              }
+            })
+          ]
+        );
+      }else if ($index === 9) {
         return h(
           "div",
           {
@@ -1707,6 +1734,33 @@ export default {
           [
             h("el-input", {
               props: {
+                value: this.condition1.hopeCost,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition1.hopeCost = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filter();
+                }
+              }
+            })
+          ]
+        );
+      } else if ($index === 15) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
                 value: this.condition1.hopeRate,
                 size: "mini",
                 clearable: true
@@ -1723,7 +1777,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 15) {
+      } else if ($index === 16) {
         return h(
           "div",
           {
@@ -1750,7 +1804,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 16) {
+      } else if ($index === 17) {
         return h(
           "div",
           {
@@ -1777,34 +1831,7 @@ export default {
             })
           ]
         );
-      } else {
-        return h(
-          "div",
-          {
-            style: {
-              height: "40px"
-            }
-          },
-          [
-            h("el-input", {
-              props: {
-                value: this.condition1.checkStatus,
-                size: "mini",
-                clearable: true
-              },
-              on: {
-                input: value => {
-                  this.condition1.checkStatus = value;
-                  this.$emit("input", value);
-                },
-                change: value => {
-                  this.filter();
-                }
-              }
-            })
-          ]
-        );
-      }
+      } 
     },
     getPass() {
       checkPassList(this.condition1).then(res => {
@@ -2089,7 +2116,34 @@ export default {
             })
           ]
         );
-      } else if ($index === 9) {
+      } else if($index === 8) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition2.introReason,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition2.introReason = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filter();
+                }
+              }
+            })
+          ]
+        );
+      }else if ($index === 9) {
         return h(
           "div",
           {
@@ -2338,33 +2392,6 @@ export default {
               on: {
                 input: value => {
                   this.condition2.hopeMonthProfit = value;
-                  this.$emit("input", value);
-                },
-                change: value => {
-                  this.filter();
-                }
-              }
-            })
-          ]
-        );
-      } else {
-        return h(
-          "div",
-          {
-            style: {
-              height: "40px"
-            }
-          },
-          [
-            h("el-input", {
-              props: {
-                value: this.condition2.introReason,
-                size: "mini",
-                clearable: true
-              },
-              on: {
-                input: value => {
-                  this.condition2.introReason = value;
                   this.$emit("input", value);
                 },
                 change: value => {
@@ -2720,7 +2747,34 @@ export default {
             })
           ]
         );
-      } else if ($index === 10) {
+      } else if($index === 9) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition.introReason,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition.introReason = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filter();
+                }
+              }
+            })
+          ]
+        );
+      }else if ($index === 10) {
         return h(
           "div",
           {
@@ -2854,6 +2908,33 @@ export default {
           [
             h("el-input", {
               props: {
+                value: this.condition.hopeCost,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition.hopeCost = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filter();
+                }
+              }
+            })
+          ]
+        );
+      }else if ($index === 16) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
                 value: this.condition.hopeRate,
                 size: "mini",
                 clearable: true
@@ -2870,7 +2951,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 16) {
+      } else if ($index === 17) {
         return h(
           "div",
           {
@@ -2897,7 +2978,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 17) {
+      } else if ($index === 18) {
         return h(
           "div",
           {
@@ -2924,34 +3005,7 @@ export default {
             })
           ]
         );
-      } else {
-        return h(
-          "div",
-          {
-            style: {
-              height: "40px"
-            }
-          },
-          [
-            h("el-input", {
-              props: {
-                value: this.condition.introReason,
-                size: "mini",
-                clearable: true
-              },
-              on: {
-                input: value => {
-                  this.condition.introReason = value;
-                  this.$emit("input", value);
-                },
-                change: value => {
-                  this.filter();
-                }
-              }
-            })
-          ]
-        );
-      }
+      } 
     },
     getData() {
       checkList(this.condition).then(res => {
