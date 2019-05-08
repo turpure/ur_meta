@@ -882,7 +882,7 @@
             <div class="contentBoxRight">
               <div class="text01" v-for="(item, index) in logList" :key="index">
                 <span class="blueround"></span>
-                <p class="titlep">{{item.title}}</p>
+                <p class="titlep" :class="index==0?'clasRed':''">{{item.title}}</p>
                 <a class="titlea">{{item.createdDate | cutOut}}</a>
                 <p class="cp">{{item.details}}</p>
               </div>
@@ -1639,6 +1639,9 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+.clasRed{
+  color: red;
+}
 .colorRed{
   color: red;
 }
