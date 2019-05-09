@@ -170,6 +170,18 @@
         <el-table-column label="子类目" header-align="center">
           <el-table-column prop="subCate" :render-header="renderHeader" width="150" align="center"></el-table-column>
         </el-table-column>
+        <el-table-column label="产品状态" header-align="center">
+          <el-table-column
+            prop="checkStatus"
+            :render-header="renderHeader"
+            width="150"
+            align="center"
+          >
+            <template slot-scope="scope">
+              <a class="clasRed">{{scope.row.checkStatus}}</a>
+            </template>
+          </el-table-column>
+        </el-table-column>
         <el-table-column label="供应商链接1" header-align="center">
           <el-table-column prop="vendor1" :render-header="renderHeader" width="170" align="center">
             <template slot-scope="scope">
@@ -218,18 +230,6 @@
             width="150"
             align="center"
           ></el-table-column>
-        </el-table-column>
-        <el-table-column label="产品状态" header-align="center">
-          <el-table-column
-            prop="checkStatus"
-            :render-header="renderHeader"
-            width="150"
-            align="center"
-          >
-            <template slot-scope="scope">
-              <a class="clasRed">{{scope.row.checkStatus}}</a>
-            </template>
-          </el-table-column>
         </el-table-column>
         <el-table-column label="创建时间" header-align="center">
           <el-table-column
@@ -2612,7 +2612,34 @@ export default {
             })
           ]
         );
-      } else if ($index === 4) {
+      }else if ($index === 4) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition.checkStatus,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition.checkStatus = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filter();
+                }
+              }
+            })
+          ]
+        );
+      } else if ($index === 5) {
         return h(
           "div",
           {
@@ -2639,7 +2666,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 5) {
+      } else if ($index === 6) {
         return h(
           "div",
           {
@@ -2666,7 +2693,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 6) {
+      } else if ($index === 7) {
         return h(
           "div",
           {
@@ -2693,7 +2720,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 7) {
+      } else if ($index === 8) {
         return h(
           "div",
           {
@@ -2720,7 +2747,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 8) {
+      } else if ($index === 9) {
         return h(
           "div",
           {
@@ -2747,7 +2774,7 @@ export default {
             })
           ]
         );
-      } else if($index === 9) {
+      } else if($index === 10) {
         return h(
           "div",
           {
@@ -2765,33 +2792,6 @@ export default {
               on: {
                 input: value => {
                   this.condition.introReason = value;
-                  this.$emit("input", value);
-                },
-                change: value => {
-                  this.filter();
-                }
-              }
-            })
-          ]
-        );
-      }else if ($index === 10) {
-        return h(
-          "div",
-          {
-            style: {
-              height: "40px"
-            }
-          },
-          [
-            h("el-input", {
-              props: {
-                value: this.condition.checkStatus,
-                size: "mini",
-                clearable: true
-              },
-              on: {
-                input: value => {
-                  this.condition.checkStatus = value;
                   this.$emit("input", value);
                 },
                 change: value => {
