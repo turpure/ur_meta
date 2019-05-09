@@ -283,15 +283,15 @@
                   <el-input size="small" v-model="scope.row.pySku"></el-input>
                 </template>
               </el-table-column>
-              <el-table-column label="图片" prop="mainImage" header-align="center" min-width="100">
+              <el-table-column label="图片" prop="varMainImage" header-align="center" min-width="100">
                 <template slot-scope="scope">
-                  <el-input size="small" v-model="scope.row.mainImage" disabled></el-input>
+                  <el-input size="small" v-model="scope.row.varMainImage" disabled></el-input>
                 </template>
               </el-table-column>
-              <el-table-column label="图片" prop="mainImage" header-align="center">
+              <el-table-column label="图片" prop="varMainImage" header-align="center">
                 <template slot-scope="scope">
                   <img
-                    :src="scope.row.mainImage"
+                    :src="scope.row.varMainImage"
                     style="width:50px;height:50px;display: block;margin: auto"
                   >
                 </template>
