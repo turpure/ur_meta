@@ -692,7 +692,7 @@
       <el-button size="small"
                  type="warning" @click="passAll">导入普源</el-button>
       <el-button size="small"
-                 type="danger">生成采购单</el-button>
+                 type="danger" @click="createOrder" :disabled="orderTrue">生成采购单</el-button>
       <!--<el-button size="small"-->
                  <!--type="danger">删除行</el-button>-->
     </div>
@@ -723,7 +723,7 @@
   </section>
 </template>
 <script type="text/ecmascript-6">
-import { APIAttributeInfo, APISaveAttribute, APIAttribute,APISaveFinishAttribute,APIDeleteVariant,APIAttributeToShopElf  } from '../../api/product'
+import { APIAttributeInfo, APISaveAttribute, APIAttribute,APISaveFinishAttribute,APIDeleteVariant,APIAttributeToShopElf,APIMakePurchasingOrder  } from '../../api/product'
 import { getMember, getGoodscats, getAttributeInfoPackName, getAttributeInfoSpecialAttribute, getAttributeInfoStoreName, getAttributeInfoSeason, getAttributeInfoPlat, getAttributeInfoSalesman, getAttributeInfoCat, getAttributeInfoSubCat } from '../../api/profit'
 import { getMenu } from '../../api/login'
 export default {
@@ -743,6 +743,7 @@ export default {
       dialogTable: false,
       sjlength: 0,
       bxlength: 0,
+      orderTrue:false,
       jspt: false,
       cate: [],
       last: 0,
@@ -820,6 +821,34 @@ export default {
             this.$message.error(res.data.message)
           }
         })
+    },
+    createOrder(){
+      if(!this.orderTrue){
+        let numberStr=0
+        for(let i=0;i<this.tableData.length;i++){
+          numberStr+=Number(this.tableData[i].stockNum)
+        }
+        if(numberStr>50 || numberStr==0){
+          this.$message.error('备货数量不能大于50或者等于0')
+          return
+        }else{
+          let arrIdr=[]
+          arrIdr.push(this.editForm.id)
+          let dataTeod = {
+            id: arrIdr
+          }
+          APIMakePurchasingOrder(dataTeod).then(res => {
+            if (res.data.code === 200) {
+              this.$message({
+                message: '成功',
+                type: 'success'
+              })
+            } else {
+              this.$message.error(res.data.message)
+            }
+          })
+        }
+      }
     },
     formatTen(num) {
       return num > 9 ? (num + '') : ('0' + num)
@@ -1343,6 +1372,7 @@ export default {
         if(this.editForm.storeName==null){
           this.editForm.storeName='义乌仓'
         }
+        this.editForm.stockUp=='否'?this.orderTrue=true:this.orderTrue=false
         this.editForm.requiredKeywords = JSON.parse(this.editForm.requiredKeywords)
         this.editForm.randomKeywords = JSON.parse(this.editForm.randomKeywords)
         if(this.editForm.dictionaryName){
