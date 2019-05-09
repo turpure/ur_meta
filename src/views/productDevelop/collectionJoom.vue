@@ -105,7 +105,13 @@
             </el-table-column>
             <el-table-column prop="picUrl" fixed label="商品图片" header-align="center" width="90">
               <template slot-scope="scope">
+                <a
+                :href="'https://www.joom.com/en/products/'+scope.row.proId"
+                target="_blank"
+                style="display: block; width: 70px;height: 60px"
+              >
                 <img :src="scope.row.mainImage" style="width: 70px;height: 60px">
+                </a>
               </template>
             </el-table-column>
             <el-table-column label="商品编号" header-align="center">
