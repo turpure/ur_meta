@@ -1340,6 +1340,9 @@ export default {
         this.oaGoods = res.data.data.basicInfo.oaGoods
         this.dictionaryName1 = this.editForm.dictionaryName
         this.mapPersons1 = this.editForm.mapPersons
+        if(this.editForm.storeName==null){
+          this.editForm.storeName='义乌仓'
+        }
         this.editForm.requiredKeywords = JSON.parse(this.editForm.requiredKeywords)
         this.editForm.randomKeywords = JSON.parse(this.editForm.randomKeywords)
         if(this.editForm.dictionaryName){

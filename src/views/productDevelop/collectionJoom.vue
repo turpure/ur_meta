@@ -277,7 +277,7 @@
                   <el-input size="small" v-model="scope.row.pySku"></el-input>
                 </template>
               </el-table-column>
-              <el-table-column label="主图" prop="mainImage" header-align="center" min-width="100">
+              <el-table-column label="图片" prop="mainImage" header-align="center" min-width="100">
                 <template slot-scope="scope">
                   <el-input size="small" v-model="scope.row.mainImage" disabled></el-input>
                 </template>
