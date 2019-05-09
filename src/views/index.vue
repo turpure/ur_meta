@@ -37,14 +37,14 @@
                   <el-table-column prop="depart" label="部门" sortable="custom" align="center"></el-table-column>
                   <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
                   <el-table-column prop="lastProfit" label="上月毛利"  sortable="custom" align="center"></el-table-column>
-                  <el-table-column prop="lastAve" label="上月平均毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="lastAve" label="上月本平台平均毛利" sortable="custom" align="center"></el-table-column>
                   <el-table-column prop="lastDiff" label="上月毛利差额" sortable="custom" align="center">
                     <template slot-scope="scope">
                       <span :class="scope.row.lastDiff<0?'colorRed':''">{{scope.row.lastDiff}}</span>
                      </template> 
                   </el-table-column>
                   <el-table-column prop="thisProfit" label="本月毛利" sortable="custom" align="center"></el-table-column>
-                  <el-table-column prop="thisAve" label="本月平均毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="thisAve" label="本月本平台平均毛利" sortable="custom" align="center"></el-table-column>
                   <el-table-column prop="thisDiff" label="本月毛利差额" sortable="custom" align="center">
                     <template slot-scope="scope">
                       <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
@@ -81,14 +81,14 @@
                   <el-table-column prop="depart" label="部门" sortable="custom" align="center"></el-table-column>
                   <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
                   <el-table-column prop="lastProfit" label="上月毛利"  sortable="custom" align="center"></el-table-column>
-                  <el-table-column prop="lastAve" label="上月平均毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="lastAve" label="上月本平台平均毛利" sortable="custom" align="center"></el-table-column>
                   <el-table-column prop="lastDiff" label="上月毛利差额" sortable="custom" align="center">
                     <template slot-scope="scope">
                       <span :class="scope.row.lastDiff<0?'colorRed':''">{{scope.row.lastDiff}}</span>
                      </template> 
                   </el-table-column>
                   <el-table-column prop="thisProfit" label="本月毛利" sortable="custom" align="center"></el-table-column>
-                  <el-table-column prop="thisAve" label="本月平均毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="thisAve" label="本月本平台平均毛利" sortable="custom" align="center"></el-table-column>
                   <el-table-column prop="thisDiff" label="本月毛利差额" sortable="custom" align="center">
                     <template slot-scope="scope">
                       <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
@@ -125,14 +125,14 @@
                   <el-table-column prop="depart" label="部门" sortable="custom" align="center"></el-table-column>
                   <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
                   <el-table-column prop="lastProfit" label="上月毛利"  sortable="custom" align="center"></el-table-column>
-                  <el-table-column prop="lastAve" label="上月平均毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="lastAve" label="上月本平台平均毛利" sortable="custom" align="center"></el-table-column>
                   <el-table-column prop="lastDiff" label="上月毛利差额" sortable="custom" align="center">
                     <template slot-scope="scope">
                       <span :class="scope.row.lastDiff<0?'colorRed':''">{{scope.row.lastDiff}}</span>
                      </template> 
                   </el-table-column>
                   <el-table-column prop="thisProfit" label="本月毛利" sortable="custom" align="center"></el-table-column>
-                  <el-table-column prop="thisAve" label="本月平均毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="thisAve" label="本月本平台平均毛利" sortable="custom" align="center"></el-table-column>
                   <el-table-column prop="thisDiff" label="本月毛利差额" sortable="custom" align="center">
                     <template slot-scope="scope">
                       <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
@@ -169,14 +169,14 @@
                   <el-table-column prop="depart" label="部门" sortable="custom" align="center"></el-table-column>
                   <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
                   <el-table-column prop="lastProfit" label="上月毛利"  sortable="custom" align="center"></el-table-column>
-                  <el-table-column prop="lastAve" label="上月平均毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="lastAve" label="上月本平台平均毛利" sortable="custom" align="center"></el-table-column>
                   <el-table-column prop="lastDiff" label="上月毛利差额" sortable="custom" align="center">
                     <template slot-scope="scope">
                       <span :class="scope.row.lastDiff<0?'colorRed':''">{{scope.row.lastDiff}}</span>
                      </template> 
                   </el-table-column>
                   <el-table-column prop="thisProfit" label="本月毛利" sortable="custom" align="center"></el-table-column>
-                  <el-table-column prop="thisAve" label="本月平均毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="thisAve" label="本月本平台平均毛利" sortable="custom" align="center"></el-table-column>
                   <el-table-column prop="thisDiff" label="本月毛利差额" sortable="custom" align="center">
                     <template slot-scope="scope">
                       <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
@@ -213,14 +213,14 @@
                   <el-table-column prop="depart" label="部门" sortable="custom" align="center"></el-table-column>
                   <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
                   <el-table-column prop="lastProfit" label="上月毛利"  sortable="custom" align="center"></el-table-column>
-                  <el-table-column prop="lastAve" label="上月平均毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="lastAve" label="上月本平台平均毛利" sortable="custom" align="center"></el-table-column>
                   <el-table-column prop="lastDiff" label="上月毛利差额" sortable="custom" align="center">
                     <template slot-scope="scope">
                       <span :class="scope.row.lastDiff<0?'colorRed':''">{{scope.row.lastDiff}}</span>
                      </template> 
                   </el-table-column>
                   <el-table-column prop="thisProfit" label="本月毛利" sortable="custom" align="center"></el-table-column>
-                  <el-table-column prop="thisAve" label="本月平均毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="thisAve" label="本月本平台平均毛利" sortable="custom" align="center"></el-table-column>
                   <el-table-column prop="thisDiff" label="本月毛利差额" sortable="custom" align="center">
                     <template slot-scope="scope">
                       <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
@@ -257,14 +257,14 @@
                   <el-table-column prop="depart" label="部门" sortable="custom" align="center"></el-table-column>
                   <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
                   <el-table-column prop="lastProfit" label="上月毛利"  sortable="custom" align="center"></el-table-column>
-                  <el-table-column prop="lastAve" label="上月平均毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="lastAve" label="上月本平台平均毛利" sortable="custom" align="center"></el-table-column>
                   <el-table-column prop="lastDiff" label="上月毛利差额" sortable="custom" align="center">
                     <template slot-scope="scope">
                       <span :class="scope.row.lastDiff<0?'colorRed':''">{{scope.row.lastDiff}}</span>
                      </template> 
                   </el-table-column>
                   <el-table-column prop="thisProfit" label="本月毛利" sortable="custom" align="center"></el-table-column>
-                  <el-table-column prop="thisAve" label="本月平均毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="thisAve" label="本月本平台平均毛利" sortable="custom" align="center"></el-table-column>
                   <el-table-column prop="thisDiff" label="本月毛利差额" sortable="custom" align="center">
                     <template slot-scope="scope">
                       <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
