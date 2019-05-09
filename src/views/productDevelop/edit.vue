@@ -421,6 +421,7 @@
           <el-col :span="22">
             <el-input
                     type="textarea"
+                    :rows="6"
                     v-model="editForm.description"
                     style="width:96%;margin-left: 27px"></el-input>
           </el-col>
