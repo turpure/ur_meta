@@ -61,16 +61,16 @@ export default {
             path: `/v1/oa-data-mine/collectionEbay`
           });
         }
-        if (this.allMenu[0].name == "Amazone") {
-          this.activeName = "Amazone";
-          sessionStorage.setItem("judgeCollection", "Amazone");
+        if (this.allMenu[0].name == "Amazone采集") {
+          this.activeName = "Amazone采集";
+          sessionStorage.setItem("judgeCollection", "Amazone采集");
           this.$router.push({
             path: `/v1/oa-data-mine/collectionAmazone`
           });
         }
-         if (this.allMenu[0].name == "Aliexpress") {
-          this.activeName = "Aliexpress";
-          sessionStorage.setItem("judgeCollection", "Aliexpress");
+         if (this.allMenu[0].name == "Aliexpress采集") {
+          this.activeName = "Aliexpress采集";
+          sessionStorage.setItem("judgeCollection", "Aliexpress采集");
           this.$router.push({
             path: `/v1/oa-data-mine/collectionAliexpress`
           });
@@ -114,16 +114,16 @@ export default {
         //     path: `/v1/oa-goodsinfo/goodsInfoPlatform`
         //   });
         }
-        if (this.allMenu[0].name == "Amazone") {
-          this.activeName = "Amazone";
-          sessionStorage.setItem("judgeCollection", "Amazone");
+        if (this.allMenu[0].name == "Amazone采集") {
+          this.activeName = "Amazone采集";
+          sessionStorage.setItem("judgeCollection", "Amazone采集");
         //   this.$router.push({
         //     path: `/v1/oa-goodsinfo/goodsInfoPlatform`
         //   });
         }
-        if (this.allMenu[0].name == "Aliexpress") {
-          this.activeName = "Aliexpress";
-          sessionStorage.setItem("judgeCollection", "Aliexpress");
+        if (this.allMenu[0].name == "Aliexpress采集") {
+          this.activeName = "Aliexpress采集";
+          sessionStorage.setItem("judgeCollection", "Aliexpress采集");
         //   this.$router.push({
         //     path: `/v1/oa-goodsinfo/goodsInfoPlatform`
         //   });

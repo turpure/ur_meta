@@ -450,7 +450,7 @@ export default {
             message: "保存成功",
             type: "success"
           });
-          this.dialogRelation = false;
+          // this.dialogRelation = false;
         } else {
           this.$message.error(res.data.message);
         }
