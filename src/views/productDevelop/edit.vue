@@ -540,7 +540,7 @@
       </el-table-column>
       <el-table-column label="SKU"
                        prop="sku"
-                       min-width="160"
+                       min-width="150"
                        header-align="center">
         <template slot-scope="scope">
           <el-input size="small"
