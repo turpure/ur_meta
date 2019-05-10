@@ -268,7 +268,7 @@ export default {
   margin-top: -20px;
   margin-right: 70px;
 }
-@media screen and (max-width: 1359px) {
+@media screen and (max-width: 1360px) {
   .menuCon .el-submenu__title{
     padding: 0 5px;
   }
