@@ -1386,13 +1386,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: this.picture.possessman1,
+                                        value: this.picture.possessMan1,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            this.picture.possessman1 = value
+                                            this.picture.possessMan1 = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
