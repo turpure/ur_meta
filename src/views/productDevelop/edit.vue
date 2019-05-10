@@ -528,6 +528,7 @@
       </el-table-column>
       <el-table-column label="操作"
                        header-align="center"
+                       width="50"
                        align="center">
         <template slot-scope="scope">
           <el-tooltip content="删除">
@@ -539,6 +540,7 @@
       </el-table-column>
       <el-table-column label="SKU"
                        prop="sku"
+                       min-width="160"
                        header-align="center">
         <template slot-scope="scope">
           <el-input size="small"
