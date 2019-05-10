@@ -1628,9 +1628,10 @@
             //平台信息更新
             platEdit(index, row) {
                 sessionStorage.setItem('judge', "平台信息")
-                this.$router.push({
+                let Logistics=this.$router.resolve({
                     path: `/plat/${row.id}`
-                })
+                })     
+                window.open(Logistics.href);
             },
             //平台信息获取数据
             getPlat() {
