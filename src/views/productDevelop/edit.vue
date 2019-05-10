@@ -832,16 +832,18 @@ export default {
           this.$message.error('备货数量不能大于50或者等于0')
           return
         }else{
-          let arrIdr=[]
-          arrIdr.push(this.editForm.id)
+          // let arrIdr=[]
+          // arrIdr.push(this.editForm.id)
           let dataTeod = {
-            id: arrIdr
+            id: this.editForm.id
           }
           APIMakePurchasingOrder(dataTeod).then(res => {
             if (res.data.code === 200) {
               this.$message({
-                message: '成功',
-                type: 'success'
+                showClose: true,
+                message: res.data.data[0],
+                type: 'success',
+                duration: 50 * 1000
               })
             } else {
               this.$message.error(res.data.message)

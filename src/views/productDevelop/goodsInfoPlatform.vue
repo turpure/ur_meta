@@ -419,7 +419,7 @@
                            @size-change="handleSizeChangePlat"
                            @current-change="handleCurrentChangePlat"
                            :current-page="this.plat.page"
-                           :page-sizes="[10, 20, 30, 40]"
+                           :page-sizes="[10, 20, 40,100,200]"
                            :page-size="this.plat.pageSize"
                            layout="total, sizes, prev, pager, next, jumper"
                            :total="this.totalPlat">
