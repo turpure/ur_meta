@@ -191,7 +191,7 @@
             </el-table>
             <!-- 图片信息查看对话框 -->
             <el-dialog title='查看'
-                       :visible.sync="dialogPicture">
+                       :visible.sync="dialogPicture" width="70%">
                 <el-form
                         label-position="left"
                         label-width="110px"
