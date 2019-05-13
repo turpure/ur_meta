@@ -134,12 +134,11 @@
           <el-table-column
             prop="dictionaryName"
             :render-header="renderHeaderPlat"
-            width="150"
-            align="center"
+            width="220"
           >
             <template slot-scope="scope">
               <a
-                :class="!scope.row.dictionaryName?'clasRed':''"
+                :class="!scope.row.dictionaryName?'clasRed':''" style="text-align:center;display:block;width:100%;"
               >{{scope.row.dictionaryName?scope.row.dictionaryName:'未设置'}}</a>
             </template>
           </el-table-column>
@@ -477,7 +476,8 @@ import {
   getAttributeInfoStoreName,
   getAttributeInfoCat,
   getPlatGoodsStatus,
-  getPlatCompletedPlat
+  getPlatCompletedPlat,
+  getForbidPlat
 } from "../../api/profit";
 import { getMenu } from "../../api/login";
 export default {
@@ -490,6 +490,7 @@ export default {
       total: null,
       totalPic: null,
       totalPlat: null,
+      violation:[],
       activeName: "属性信息",
       sels: [],
       time1: "",
@@ -1959,29 +1960,36 @@ export default {
           ]
         );
       } else if ($index === 6) {
+        let filters = this.violation;
         return h(
-          "div",
+          "el-select",
           {
-            style: {
-              height: "40px"
+            props: {
+              placeholder: "请选择",
+              value: this.plat.dictionaryName,
+              size: "mini",
+              multiple: true,
+              collapseTags: true,
+              clearable: true
+            },
+            on: {
+              input: value => {
+                this.plat.dictionaryName = value;
+                this.$emit("input", value);
+              },
+              change: searchValue => {
+                this.filter();
+              }
             }
           },
           [
-            h("el-input", {
-              props: {
-                value: this.plat.dictionaryName,
-                size: "mini",
-                clearable: true
-              },
-              on: {
-                input: value => {
-                  this.plat.dictionaryName = value;
-                  this.$emit("input", value);
-                },
-                change: value => {
-                  this.filter();
+            filters.map(item => {
+              return h("el-option", {
+                props: {
+                  value: item,
+                  label: item
                 }
-              }
+              });
             })
           ]
         );
@@ -2412,6 +2420,9 @@ export default {
     APIJoomName().then(response => {
       this.joomArr = response.data.data;
     });
+    getForbidPlat().then(response => {
+      this.violation = response.data.data
+    })
   }
 };
 </script>
