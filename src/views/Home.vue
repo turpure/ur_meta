@@ -140,18 +140,28 @@ export default {
       }
     }
   },
+  computed: {
+      ...mapGetters(['menu'])
+  },
   mounted() {
     this.$store.dispatch('GetUserInfo').then(() => {
       this.sysUserName = this.$store.getters.name
       this.image = this.$store.getters.avatar
     })
-    getMenu().then(response => {
+    const ifmenu = sessionStorage.getItem('ifmenu')
+    if(!ifmenu){
+      getMenu().then(response => {
       let arrDat=response.data.data
       this.GetMenu(arrDat)
       this.allMenu = response.data.data
       this.allMenu.splice(0, 1)
-      this.showMenu()
-    })
+      let checkedIdStr = JSON.stringify(this.allMenu);
+      sessionStorage.setItem('ifmenu',checkedIdStr)
+     })
+    }else{
+      this.allMenu=JSON.parse(sessionStorage.getItem("ifmenu"));
+    }
+    this.showMenu()
     if(this.$route.path=='/index'){
       this.collapsed = false
     }
