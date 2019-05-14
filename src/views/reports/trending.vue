@@ -665,11 +665,10 @@ export default {
               this.options.legend.data = lineName
               this.options.xAxis[0].data = date
               this.options.series = series
-              console.log(series)
               this.$refs.prochart.drawAreaStack(this.options)
             })
-            this.options.title.text = '利润走势($)'
-            this.options.yAxis[0].axisLabel.formatter = '{value} $'
+            this.options.title.text = '利润走势'
+            this.options.yAxis[0].axisLabel.formatter = '{value}'
         }
         }
       })
