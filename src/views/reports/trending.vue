@@ -667,8 +667,8 @@ export default {
               this.options.series = series
               this.$refs.prochart.drawAreaStack(this.options)
             })
-            this.options.title.text = '利润走势'
-            this.options.yAxis[0].axisLabel.formatter = '{value}'
+            this.options.title.text = '利润走势(￥)'
+            this.options.yAxis[0].axisLabel.formatter = '{value} ￥'
         }
         }
       })
