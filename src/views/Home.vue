@@ -11,10 +11,10 @@
       </el-col>
       <el-col :span="15" class="menuCon">
         <el-menu :default-active="activeIndex" @select="handleSelect" class="el-menu-demo" mode="horizontal" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" router>
-          <el-menu-item index="/index" style="line-height:5rem;"><font size="3">主页</font></el-menu-item>
+          <el-menu-item index="/index" style="line-height:5rem;"><font class="typeface">主页</font></el-menu-item>
           <el-submenu v-for="(item,position) in allMenu" :index="generateIndex(-1,position)" :key="generateIndex(-1,position)">
             <template slot="title">
-              <font size="3">{{item.name}}</font>
+              <font class="typeface">{{item.name}}</font>
             </template>
             <el-menu-item v-for="(child,index) in item.children" :index="child.route" :key="generateIndex(position,index)">{{child.name}}</el-menu-item>
           </el-submenu>
@@ -294,6 +294,9 @@ export default {
 
 <style lang="scss" scoped >
 @import "~scss_vars";
+ .typeface{
+  font-size: 16px;
+ } 
 .pan-item {
   width: 100px;
   height: 100px;
@@ -577,5 +580,10 @@ export default {
     }
   }
  }
+}
+@media (max-width: 1200px){
+ .typeface{
+  font-size: 15px;
+ } 
 }
 </style>
