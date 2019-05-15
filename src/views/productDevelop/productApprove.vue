@@ -2428,7 +2428,7 @@ export default {
       return year + "-" + this.formatTen(month) + "-" + this.formatTen(day);
     },
     filter() {
-      if (this.activeName === "待审批列表") {
+      if (this.activeName === "/v1/check/check-list") {
         if (this.time1 !== null && this.time1.length !== 0) {
           this.condition.createDate = [
             this.formatDate(this.time1[0]),
@@ -2446,7 +2446,7 @@ export default {
           this.condition.updateDate = [];
         }
         this.getData();
-      } else if (this.activeName === "已审批列表") {
+      } else if (this.activeName === "/v1/check/pass-list") {
         if (this.time1 !== null && this.time1.length !== 0) {
           this.condition1.createDate = [
             this.formatDate(this.time1[0]),
