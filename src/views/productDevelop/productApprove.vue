@@ -9,7 +9,7 @@
       <el-tab-pane
         v-for="(item, index) in this.allMenu"
         :label="item.name"
-        :name="item.name"
+        :name="item.route"
         :key="index"
       ></el-tab-pane>
     </el-tabs>
@@ -991,23 +991,23 @@ export default {
           this.allMenu = arr[i].tabs;
         }
       }
-      if (this.allMenu[0].name == "待审批列表") {
+      if (this.allMenu[0].route == "/v1/check/check-list") {
         this.show["wait"] = true;
-        this.activeName = "待审批列表";
+        this.activeName = this.allMenu[0].route;
         this.getData();
       } else {
         this.show["wait"] = false;
       }
-      if (this.allMenu[0].name == "已审批列表") {
+      if (this.allMenu[0].route == "/v1/check/pass-list") {
         this.show["pass"] = true;
-        this.activeName = "已审批列表";
+        this.activeName = this.allMenu[0].route;;
         this.getPass();
       } else {
         this.show["pass"] = false;
       }
-      if (this.allMenu[0].name == "未通过列表") {
+      if (this.allMenu[0].route == "/v1/check/failed-list") {
         this.show["unPass"] = true;
-        this.activeName = "未通过列表";
+        this.activeName = this.allMenu[0].route;;
         this.getFailed();
       } else {
         this.show["unPass"] = false;
@@ -1183,19 +1183,19 @@ export default {
       }
     },
     handleClick(tab, event) {
-      if (tab.label === "待审批列表") {
+      if (tab.name === "/v1/check/check-list") {
         this.show["wait"] = true;
         this.getData();
       } else {
         this.show["wait"] = false;
       }
-      if (tab.label === "已审批列表") {
+      if (tab.name === "/v1/check/pass-list") {
         this.show["pass"] = true;
         this.getPass();
       } else {
         this.show["pass"] = false;
       }
-      if (tab.label === "未通过列表") {
+      if (tab.name === "/v1/check/failed-list") {
         this.show["unPass"] = true;
         this.getFailed();
       } else {
