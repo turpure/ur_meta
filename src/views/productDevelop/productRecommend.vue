@@ -1473,7 +1473,6 @@ export default {
       }
     },
     handleClick(tab, event) {
-      console.log(tab)
       if (tab.name === "/v1/oa-goods/list") {
         this.show["product"] = true;
         this.getData();
