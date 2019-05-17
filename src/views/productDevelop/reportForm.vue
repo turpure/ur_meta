@@ -903,21 +903,25 @@ export default {
       });
     },
     markAll() {
-      let finish = {
+      if(this.sels.length!=0){
+        let finish = {
         id: null
-      };
-      finish.id = this.sels.map(e => e.id);
-      APIFormExtend(finish).then(res => {
-        if (res.data.code == 200) {
-          this.$message({
-            message: "成功",
-            type: "success"
-          });
-          this.getPlat();
-        } else {
-          this.$message.error(res.data.message);
-        }
-      });
+        };
+        finish.id = this.sels.map(e => e.id);
+        APIFormExtend(finish).then(res => {
+          if (res.data.code == 200) {
+            this.$message({
+              message: "成功",
+              type: "success"
+            });
+            this.getPlat();
+          } else {
+            this.$message.error(res.data.message);
+          }
+        });
+      }else{
+        this.$message.error('请选择产品');
+      }
     },
     handleSizeChangePlat(val) {
       this.plat.pageSize = val;
