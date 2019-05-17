@@ -1095,7 +1095,7 @@ export function APILogDelete(param) {
 export function APIProduct(param) {
   const data = { condition: param }
   return request({
-    url: '/oa-data/product?page=' + param.page,
+    url: '/oa-data/sales?page=' + param.page,
     method: 'post',
     data
   })

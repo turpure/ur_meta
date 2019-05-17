@@ -605,6 +605,9 @@
       ></el-pagination>
     </div>
     <div v-show="show.stockUp">
+      <el-col :span="24" style="padding:10px 20px;">
+      <el-button @click="exportExcel" type="primary">导出表格</el-button>
+      </el-col>
       <el-col :span="24" style="padding: 0;">
         <h3
           class="toolbar essential"
@@ -665,6 +668,9 @@
       </el-table>
     </div>
     <div v-show="show.nostockUp">
+      <el-col :span="24" style="padding:10px 20px;">
+      <el-button @click="noexportExcel" type="primary">导出表格</el-button>
+      </el-col>
       <el-col :span="24" style="padding: 0;">
         <h3
           class="toolbar essential"
@@ -826,7 +832,7 @@ export default {
         page: 1
       },
       //备货
-      tableHeightstock: window.innerHeight - 170,
+      tableHeightstock: window.innerHeight - 230,
       stockdata: [],
       skuTotal: 0,
       //不备货
@@ -1973,6 +1979,36 @@ export default {
       }
     },
     //备货
+    exportExcel(){
+         const th = [
+          '开发员',
+          '备货产品款数',
+          '出单产品款数',
+          '出单率(%)',
+          '旺款数量',
+          '旺款率(%)',
+          '爆款数量',
+          '爆款率(%)',
+          '本月可用备货款数',
+          '下月可用备货款数',
+        ]
+        const filterVal = [
+          'developer',
+          'number',
+          'orderNum',
+          'orderRate',
+          'hotStyleNum',
+          'hotRate',
+          'exuStyleNum',
+          'exuRate',
+          'stockNumThisMonth',
+          'stockNumLastMonth',
+        ]
+        const Filename = '备货产品表现'
+        const data = this.stockdata.map(v => filterVal.map(k => v[k]))
+        const [fileName, fileType, sheetName] = [Filename, 'xls']
+        this.$toExcel({ th, data, fileName, fileType, sheetName })
+    },
     getStock() {
       APIStock().then(res => {
         this.stockdata = res.data.data;
@@ -1980,6 +2016,36 @@ export default {
       });
     },
     //不备货
+    noexportExcel(){
+         const th = [
+          '开发员',
+          '备货产品款数',
+          '出单产品款数',
+          '出单率(%)',
+          '旺款数量',
+          '旺款率(%)',
+          '爆款数量',
+          '爆款率(%)',
+          '本月可用备货款数',
+          '下月可用备货款数',
+        ]
+        const filterVal = [
+          'developer',
+          'number',
+          'orderNum',
+          'orderRate',
+          'hotStyleNum',
+          'hotRate',
+          'exuStyleNum',
+          'exuRate',
+          'stockNumThisMonth',
+          'stockNumLastMonth',
+        ]
+        const Filename = '不备货产品表现'
+        const data = this.nostockdata.map(v => filterVal.map(k => v[k]))
+        const [fileName, fileType, sheetName] = [Filename, 'xls']
+        this.$toExcel({ th, data, fileName, fileType, sheetName })
+    },
     getnoStock() {
       APInoStock().then(res => {
         this.nostockdata = res.data.data;
