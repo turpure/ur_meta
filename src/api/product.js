@@ -1120,6 +1120,14 @@ export function APInoStock() {
     method: 'get'
   })
 }
+export function APIFormExtend(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data/extend',
+    method: 'post',
+    data
+  })
+}
 //export function APIDelivery(param) {
 //  const data = { condition: param }
 //  return request({

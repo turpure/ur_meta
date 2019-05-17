@@ -8,6 +8,7 @@
       style="width:98%;margin:auto"
       v-loading="listLoading"
       v-show="showIFif"
+      class="elTableForm"
       element-loading-text="正在标记中..."
       empty-text="当前无标记到数据"
     >
