@@ -43,7 +43,7 @@ import prescription from '../views/tinytool/prescription.vue'
 import deadFee from '../views/settings/deadFee.vue'
 import operationFee from '../views/settings/operationFee.vue'
 import exchange from '../views/settings/exchange.vue'
-//仓库工具
+// 仓库工具
 import picking from '../views/warehouse/picking.vue'
 import splitcargo from '../views/warehouse/splitCargo.vue'
 // 反馈中心
@@ -75,12 +75,12 @@ import ordermanage from '../views/productDevelop/ordermanage.vue'
 import ord1 from '../views/productDevelop/ord1.vue'
 import ord2 from '../views/productDevelop/ord2.vue'
 import paymentDetail from '../views/productDevelop/paymentDetail.vue'
-//数据采集
+// 数据采集
 import collection from '../views/productDevelop/collection.vue'
 import collectionJoom from '../views/productDevelop/collectionJoom.vue'
 import joomId from '../views/productDevelop/collectionJoomDetails.vue'
 import joomRelation from '../views/productDevelop/joomRelation.vue'
-//报表中心
+// 报表中心
 import reportForm from '../views/productDevelop/reportForm.vue'
 import formEdit from '../views/productDevelop/formEdit.vue'
 

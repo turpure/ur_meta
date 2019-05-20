@@ -29,7 +29,7 @@ export function getMember() {
     method: 'get'
   })
 }
-//全部开发
+// 全部开发
 export function getDeveloper() {
   return request({
     url: '/oa-goods/developer',
@@ -466,35 +466,35 @@ export function APISkuCount(param) {
     data
   })
 }
-//获取属性信息包装规格
+// 获取属性信息包装规格
 export function getAttributeInfoPackName() {
   return request({
     url: 'oa-goodsinfo/attribute-info-pack-name',
     method: 'get'
   })
 }
-//获取属性信息特殊属性
+// 获取属性信息特殊属性
 export function getAttributeInfoSpecialAttribute() {
   return request({
     url: 'oa-goodsinfo/attribute-info-special-attribute',
     method: 'get'
   })
 }
-//获取属性信息仓库
+// 获取属性信息仓库
 export function getAttributeInfoStoreName() {
   return request({
     url: 'oa-goodsinfo/attribute-info-store-name',
     method: 'get'
   })
 }
-//获取属性信息季节
+// 获取属性信息季节
 export function getAttributeInfoSeason() {
   return request({
     url: 'oa-goodsinfo/attribute-info-season',
     method: 'get'
   })
 }
-//获取属性信息禁售平台
+// 获取属性信息禁售平台
 export function getAttributeInfoPlat() {
   return request({
     url: 'oa-goodsinfo/attribute-info-plat',
@@ -507,49 +507,49 @@ export function getForbidPlat() {
     method: 'get'
   })
 }
-//获取属性信息对应销售
+// 获取属性信息对应销售
 export function getAttributeInfoSalesman() {
   return request({
     url: 'oa-goodsinfo/attribute-info-salesman',
     method: 'get'
   })
 }
-//获取属性信息主类目
+// 获取属性信息主类目
 export function getAttributeInfoCat() {
   return request({
     url: 'oa-goodsinfo/attribute-info-cat',
     method: 'get'
   })
 }
-//获取属性信息子类目
+// 获取属性信息子类目
 export function getAttributeInfoSubCat() {
   return request({
     url: 'oa-goodsinfo/attribute-info-sub-cat',
     method: 'get'
   })
 }
-//获取平台信息产品状态
+// 获取平台信息产品状态
 export function getPlatGoodsStatus() {
   return request({
     url: 'oa-goodsinfo/plat-goods-status',
     method: 'get'
   })
 }
-//获取平台信息完善的平台
+// 获取平台信息完善的平台
 export function getPlatCompletedPlat() {
   return request({
     url: 'oa-goodsinfo/plat-completed-plat',
     method: 'get'
   })
 }
-//获取平台信息所有账号
+// 获取平台信息所有账号
 export function getPlatEbayAccount() {
   return request({
     url: 'oa-goodsinfo/plat-ebay-account',
     method: 'get'
   })
 }
-//获取平台信息所有仓储
+// 获取平台信息所有仓储
 export function getPlatEbayStore() {
   return request({
     url: 'oa-goodsinfo/plat-ebay-store',
@@ -570,7 +570,7 @@ export function APIPick(param) {
     data
   })
 }
-//获取平台信息站点
+// 获取平台信息站点
 export function getEbaySite() {
   return request({
     url: 'oa-goodsinfo/ebay-site',
@@ -591,6 +591,3 @@ export function getExpressExpired() {
     method: 'get'
   })
 }
-
-
-

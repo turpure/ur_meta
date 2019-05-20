@@ -19,9 +19,9 @@
                 <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" height="800">
                   <el-table-column prop="order" label="排名" sortable="custom" align="center" width="75">
                     <template slot-scope="scope">
-                      <img src="./j1.png" style="width: 31px;height: 38px;" v-if="scope.row.order==1">
-                      <img src="./j2.png" style="width: 31px;height: 38px;" v-if="scope.row.order==2">
-                      <img src="./j3.png" style="width: 31px;height: 38px;" v-if="scope.row.order==3">
+                      <img src="../assets/j1.png" style="width: 31px;height: 38px;" v-if="scope.row.order==1">
+                      <img src="../assets/j2.png" style="width: 31px;height: 38px;" v-if="scope.row.order==2">
+                      <img src="../assets/j3.png" style="width: 31px;height: 38px;" v-if="scope.row.order==3">
                       <span v-if="scope.row.order>3">{{scope.row.order}}</span>
                     </template>
                   </el-table-column>
@@ -30,7 +30,7 @@
                     <template slot-scope="scope">
                        <div class="poImg" :class="[scope.row.order==1?'poImg1':scope.row.order==2?'poImg2':scope.row.order==3?'poImg3':'']">
                         <img :src="scope.row.img" style="width: 60px;height: 60px;border-radius:50%;" v-if="scope.row.img!=null">
-                        <img src="./header.png" style="width: 60px;height: 60px;border-radius:50%;" v-if="scope.row.img==null">
+                        <img src="../assets/header.png" style="width: 60px;height: 60px;border-radius:50%;" v-if="scope.row.img==null">
                       </div>
                     </template>
                   </el-table-column>
@@ -63,9 +63,9 @@
                  <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" height="800">
                   <el-table-column prop="order" label="排名" sortable="custom" align="center" width="75">
                     <template slot-scope="scope">
-                      <img src="./j1.png" style="width: 31px;height: 38px;" v-if="scope.row.order==1">
-                      <img src="./j2.png" style="width: 31px;height: 38px;" v-if="scope.row.order==2">
-                      <img src="./j3.png" style="width: 31px;height: 38px;" v-if="scope.row.order==3">
+                      <img src="../assets/j1.png" style="width: 31px;height: 38px;" v-if="scope.row.order==1">
+                      <img src="../assets/j2.png" style="width: 31px;height: 38px;" v-if="scope.row.order==2">
+                      <img src="../assets/j3.png" style="width: 31px;height: 38px;" v-if="scope.row.order==3">
                       <span v-if="scope.row.order>3">{{scope.row.order}}</span>
                     </template>
                   </el-table-column>
@@ -74,7 +74,7 @@
                     <template slot-scope="scope">
                        <div class="poImg" :class="[scope.row.order==1?'poImg1':scope.row.order==2?'poImg2':scope.row.order==3?'poImg3':'']">
                         <img :src="scope.row.img" style="width: 60px;height: 60px;border-radius:50%;" v-if="scope.row.img!=null">
-                        <img src="./header.png" style="width: 60px;height: 60px;border-radius:50%;" v-if="scope.row.img==null">
+                        <img src="../assets/header.png" style="width: 60px;height: 60px;border-radius:50%;" v-if="scope.row.img==null">
                       </div>
                     </template>
                   </el-table-column>
@@ -107,9 +107,9 @@
                 <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" height="800">
                   <el-table-column prop="order" label="排名" sortable="custom" align="center" width="75">
                     <template slot-scope="scope">
-                      <img src="./j1.png" style="width: 31px;height: 38px;" v-if="scope.row.order==1">
-                      <img src="./j2.png" style="width: 31px;height: 38px;" v-if="scope.row.order==2">
-                      <img src="./j3.png" style="width: 31px;height: 38px;" v-if="scope.row.order==3">
+                      <img src="../assets/j1.png" style="width: 31px;height: 38px;" v-if="scope.row.order==1">
+                      <img src="../assets/j2.png" style="width: 31px;height: 38px;" v-if="scope.row.order==2">
+                      <img src="../assets/j3.png" style="width: 31px;height: 38px;" v-if="scope.row.order==3">
                       <span v-if="scope.row.order>3">{{scope.row.order}}</span>
                     </template>
                   </el-table-column>
@@ -118,7 +118,7 @@
                     <template slot-scope="scope">
                        <div class="poImg" :class="[scope.row.order==1?'poImg1':scope.row.order==2?'poImg2':scope.row.order==3?'poImg3':'']">
                         <img :src="scope.row.img" style="width: 60px;height: 60px;border-radius:50%;" v-if="scope.row.img!=null">
-                        <img src="./header.png" style="width: 60px;height: 60px;border-radius:50%;" v-if="scope.row.img==null">
+                        <img src="../assets/header.png" style="width: 60px;height: 60px;border-radius:50%;" v-if="scope.row.img==null">
                       </div>
                     </template>
                   </el-table-column>
@@ -151,9 +151,9 @@
                 <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" height="800">
                   <el-table-column prop="order" label="排名" sortable="custom" align="center" width="75">
                     <template slot-scope="scope">
-                      <img src="./j1.png" style="width: 31px;height: 38px;" v-if="scope.row.order==1">
-                      <img src="./j2.png" style="width: 31px;height: 38px;" v-if="scope.row.order==2">
-                      <img src="./j3.png" style="width: 31px;height: 38px;" v-if="scope.row.order==3">
+                      <img src="../assets/j1.png" style="width: 31px;height: 38px;" v-if="scope.row.order==1">
+                      <img src="../assets/j2.png" style="width: 31px;height: 38px;" v-if="scope.row.order==2">
+                      <img src="../assets/j3.png" style="width: 31px;height: 38px;" v-if="scope.row.order==3">
                       <span v-if="scope.row.order>3">{{scope.row.order}}</span>
                     </template>
                   </el-table-column>
@@ -162,7 +162,7 @@
                     <template slot-scope="scope">
                        <div class="poImg" :class="[scope.row.order==1?'poImg1':scope.row.order==2?'poImg2':scope.row.order==3?'poImg3':'']">
                         <img :src="scope.row.img" style="width: 60px;height: 60px;border-radius:50%;" v-if="scope.row.img!=null">
-                        <img src="./header.png" style="width: 60px;height: 60px;border-radius:50%;" v-if="scope.row.img==null">
+                        <img src="../assets/header.png" style="width: 60px;height: 60px;border-radius:50%;" v-if="scope.row.img==null">
                       </div>
                     </template>
                   </el-table-column>
@@ -195,9 +195,9 @@
                 <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" height="800">
                   <el-table-column prop="order" label="排名" sortable="custom" align="center" width="75">
                     <template slot-scope="scope">
-                      <img src="./j1.png" style="width: 31px;height: 38px;" v-if="scope.row.order==1">
-                      <img src="./j2.png" style="width: 31px;height: 38px;" v-if="scope.row.order==2">
-                      <img src="./j3.png" style="width: 31px;height: 38px;" v-if="scope.row.order==3">
+                      <img src="../assets/j1.png" style="width: 31px;height: 38px;" v-if="scope.row.order==1">
+                      <img src="../assets/j2.png" style="width: 31px;height: 38px;" v-if="scope.row.order==2">
+                      <img src="../assets/j3.png" style="width: 31px;height: 38px;" v-if="scope.row.order==3">
                       <span v-if="scope.row.order>3">{{scope.row.order}}</span>
                     </template>
                   </el-table-column>
@@ -206,7 +206,7 @@
                     <template slot-scope="scope">
                        <div class="poImg" :class="[scope.row.order==1?'poImg1':scope.row.order==2?'poImg2':scope.row.order==3?'poImg3':'']">
                         <img :src="scope.row.img" style="width: 60px;height: 60px;border-radius:50%;" v-if="scope.row.img!=null">
-                        <img src="./header.png" style="width: 60px;height: 60px;border-radius:50%;" v-if="scope.row.img==null">
+                        <img src="../assets/header.png" style="width: 60px;height: 60px;border-radius:50%;" v-if="scope.row.img==null">
                       </div>
                     </template>
                   </el-table-column>
@@ -239,9 +239,9 @@
                 <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" height="800">
                   <el-table-column prop="order" label="排名" sortable="custom" align="center" width="75">
                     <template slot-scope="scope">
-                      <img src="./j1.png" style="width: 31px;height: 38px;" v-if="scope.row.order==1">
-                      <img src="./j2.png" style="width: 31px;height: 38px;" v-if="scope.row.order==2">
-                      <img src="./j3.png" style="width: 31px;height: 38px;" v-if="scope.row.order==3">
+                      <img src="../assets/j1.png" style="width: 31px;height: 38px;" v-if="scope.row.order==1">
+                      <img src="../assets/j2.png" style="width: 31px;height: 38px;" v-if="scope.row.order==2">
+                      <img src="../assets/j3.png" style="width: 31px;height: 38px;" v-if="scope.row.order==3">
                       <span v-if="scope.row.order>3">{{scope.row.order}}</span>
                     </template>
                   </el-table-column>
@@ -250,7 +250,7 @@
                     <template slot-scope="scope">
                        <div class="poImg" :class="[scope.row.order==1?'poImg1':scope.row.order==2?'poImg2':scope.row.order==3?'poImg3':'']">
                         <img :src="scope.row.img" style="width: 60px;height: 60px;border-radius:50%;" v-if="scope.row.img!=null">
-                        <img src="./header.png" style="width: 60px;height: 60px;border-radius:50%;" v-if="scope.row.img==null">
+                        <img src="../assets/header.png" style="width: 60px;height: 60px;border-radius:50%;" v-if="scope.row.img==null">
                       </div>
                     </template>
                   </el-table-column>
@@ -1655,19 +1655,19 @@ export default {
 .poImg1{
   width: 80px;
   height: 80px;
-  background: url(./touguan.png) no-repeat center;
+  background: url(../assets/touguan.png) no-repeat center;
   background-size: 100% 100%;
 }
 .poImg2{
   width: 80px;
   height: 80px;
-  background: url(./toukuang1.png) no-repeat center;
+  background: url(../assets/toukuang1.png) no-repeat center;
   background-size: 100% 100%;
 }
 .poImg3{
   width: 80px;
   height: 80px;
-  background: url(./toukuang2.png) no-repeat center;
+  background: url(../assets/toukuang2.png) no-repeat center;
   background-size: 100% 100%;
 }
 .blueround {
