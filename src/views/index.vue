@@ -2127,24 +2127,28 @@ export default {
     handleTitle(n, index) {
       if (n === "今日爆款") {
         this.showTitle["baokuan"] = true;
+        this.activeTitle='今日爆款'
         this.indexTabactive = index;
       } else {
         this.showTitle["baokuan"] = false;
       }
       if (n === "利润增长表") {
         this.showTitle["zengzhang"] = true;
+        this.activeTitle='利润增长表'
         this.indexTabactive = index;
       } else {
         this.showTitle["zengzhang"] = false;
       }
       if (n === "销售额增长表") {
         this.showTitle["sale"] = true;
+        this.activeTitle='销售额增长表'
         this.indexTabactive = index;
       } else {
         this.showTitle["sale"] = false;
       }
       if (n === "销售排名") {
         this.showTitle["pming"] = true;
+        this.activeTitle='销售排名'
         this.indexTabactive = index;
       } else {
         this.showTitle["pming"] = false;
@@ -2415,7 +2419,7 @@ export default {
 .left-box {
   width: 69%;
   float: left;
-  margin-top: 2%;
+  margin-top: 1.5%;
   height: 900px;
 }
 .box-card {
@@ -2423,7 +2427,7 @@ export default {
   height: 390px;
   overflow-y: scroll;
   float: right;
-  margin-top: 2%;
+  margin-top: 1.5%;
   .post-left-box {
     position: relative;
     float: left;
