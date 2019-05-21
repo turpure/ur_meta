@@ -1455,6 +1455,19 @@ export default {
     getData() {
       APIGoodsInfo(this.condition).then(res => {
         this.tableData = res.data.data.items;
+        for(let i=0;i<this.tableData.length;i++){
+          var strData=this.tableData[i].picUrl
+          var replaceStr;
+          var reg=/([\s\S]+)(.(jpg_)?\d{2}x\d+)([\s\S]+)/g
+          var result=reg.exec(strData);
+          if(result){
+            if(result[1].charAt(result[1].length-1)=='.'){
+              result[1] = result[1].substring(0, result[1].length - 1); 
+            }
+           replaceStr=result[1]+result[result.length-1]
+           this.tableData[i].picUrl=replaceStr
+          }
+        }
         this.total = res.data.data._meta.totalCount;
         this.condition.pageSize = res.data.data._meta.perPage;
         this.condition.page = res.data.data._meta.currentPage;

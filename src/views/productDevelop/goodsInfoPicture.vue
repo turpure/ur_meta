@@ -1048,6 +1048,19 @@
             getPic() {
                 APIPictureList(this.picture).then(res => {
                     this.pictureData = res.data.data.items
+                    for(let i=0;i<this.pictureData.length;i++){
+                    var strData=this.pictureData[i].picUrl
+                    var replaceStr;
+                    var reg=/([\s\S]+)(.(jpg_)?\d{2}x\d+)([\s\S]+)/g
+                    var result=reg.exec(strData);
+                    if(result){
+                        if(result[1].charAt(result[1].length-1)=='.'){
+                        result[1] = result[1].substring(0, result[1].length - 1); 
+                        }
+                        replaceStr=result[1]+result[result.length-1]
+                        this.pictureData[i].picUrl=replaceStr
+                        }
+                    }
                     this.totalPic = res.data.data._meta.totalCount
                     this.picture.pageSize = res.data.data._meta.perPage
                     this.picture.page = res.data.data._meta.currentPage

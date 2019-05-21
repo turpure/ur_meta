@@ -32,6 +32,7 @@ import goods from '../views/tinytool/goods.vue'
 import uk from '../views/tinytool/uk.vue'
 import au from '../views/tinytool/au.vue'
 import ukfic from '../views/tinytool/ukfic.vue'
+import ukfic2 from '../views/tinytool/ukfic2.vue'
 import order from '../views/tinytool/order.vue'
 import paypal from '../views/tinytool/paypal.vue'
 import risk from '../views/tinytool/risk.vue'
@@ -315,6 +316,11 @@ const routes = [
         path: '/v1/tiny-tool/uk-fic',
         component: ukfic,
         name: 'UK虚拟仓定价器'
+      },
+      {
+        path: '/v1/tiny-tool/uk-fic2',
+        component: ukfic2,
+        name: '欧洲虚拟仓定价器'
       },
       {
         path: '/v1/tiny-tool/uk',
