@@ -734,7 +734,7 @@ export default {
           "div",
           {
             style: {
-              height: "30px"
+              height: "40px"
             }
           },
           [
@@ -761,7 +761,7 @@ export default {
           "div",
           {
             style: {
-              height: "30px"
+              height: "40px"
             }
           },
           [
@@ -824,7 +824,7 @@ export default {
           "div",
           {
             style: {
-              height: "30px"
+              height: "40px"
             }
           },
           [
@@ -854,8 +854,7 @@ export default {
             type: "daterange"
           },
           style: {
-            width: "200px",
-            padding: "2px"
+            width: "200px"
           },
           on: {
             input: value => {
@@ -875,8 +874,7 @@ export default {
             type: "daterange"
           },
           style: {
-            width: "200px",
-            padding: "2px"
+            width: "200px"
           },
           on: {
             input: value => {
@@ -1024,7 +1022,7 @@ export default {
           "div",
           {
             style: {
-              height: "30px"
+              height: "40px"
             }
           },
           [
@@ -1051,7 +1049,7 @@ export default {
           "div",
           {
             style: {
-              height: "30px"
+              height: "40px"
             }
           },
           [
