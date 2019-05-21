@@ -200,7 +200,7 @@
         <el-table-column prop="img" fixed label="图片" header-align="center" width="90">
           <template slot-scope="scope">
             <el-tooltip placement="right" :open-delay='10' class="exxHover" popper-class="page-login-toolTipClass">
-              <div slot="content"><img :src="scope.row.img" style="width: 180px;height: 180px;"></div>
+              <div slot="content"><img :src="scope.row.img" style="width: 300px;height: 300px;"></div>
               <img :src="scope.row.img" style="width: 70px;height: 60px">
             </el-tooltip>
             <!-- <img :src="scope.row.img" style="width: 70px;height: 60px"> -->
@@ -606,7 +606,7 @@
         <el-table-column prop="img" fixed label="图片" header-align="center" width='90'>
           <template slot-scope="scope">
             <el-tooltip placement="right" :open-delay='10' class="exxHover" popper-class="page-login-toolTipClass">
-              <div slot="content"><img :src="scope.row.img" style="width: 180px;height: 180px;"></div>
+              <div slot="content"><img :src="scope.row.img" style="width: 300px;height: 300px;"></div>
               <img :src="scope.row.img" style="width: 70px;height: 60px">
             </el-tooltip>
             <!-- <img :src="scope.row.img" style="width: 70px;height: 60px"> -->
@@ -1059,7 +1059,7 @@
         <el-table-column prop="img" fixed label="图片" header-align="center" width="90">
           <template slot-scope="scope">
             <el-tooltip placement="right" :open-delay='10' class="exxHover" popper-class="page-login-toolTipClass">
-              <div slot="content"><img :src="scope.row.img" style="width: 180px;height: 180px;"></div>
+              <div slot="content"><img :src="scope.row.img" style="width: 300px;height: 300px;"></div>
               <img :src="scope.row.img" style="width: 70px;height: 60px">
             </el-tooltip>
             <!-- <img :src="scope.row.img" style="width: 70px;height: 60px"> -->

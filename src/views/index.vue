@@ -65,7 +65,6 @@
                 <el-table-column
                   prop="username"
                   label="销售员"
-                  sortable="custom"
                   align="center"
                   width="100"
                 ></el-table-column>
@@ -91,7 +90,6 @@
                 <el-table-column
                   prop="depart"
                   label="部门"
-                  sortable="custom"
                   align="center"
                   width="100"
                 ></el-table-column>
@@ -198,7 +196,6 @@
                 <el-table-column
                   prop="username"
                   label="销售员"
-                  sortable="custom"
                   align="center"
                   width="100"
                 ></el-table-column>
@@ -224,7 +221,6 @@
                 <el-table-column
                   prop="depart"
                   label="部门"
-                  sortable="custom"
                   align="center"
                   width="100"
                 ></el-table-column>
@@ -331,7 +327,6 @@
                 <el-table-column
                   prop="username"
                   label="销售员"
-                  sortable="custom"
                   align="center"
                   width="100"
                 ></el-table-column>
@@ -357,7 +352,6 @@
                 <el-table-column
                   prop="depart"
                   label="部门"
-                  sortable="custom"
                   align="center"
                   width="100"
                 ></el-table-column>
@@ -464,7 +458,6 @@
                 <el-table-column
                   prop="username"
                   label="销售员"
-                  sortable="custom"
                   align="center"
                   width="100"
                 ></el-table-column>
@@ -490,7 +483,6 @@
                 <el-table-column
                   prop="depart"
                   label="部门"
-                  sortable="custom"
                   align="center"
                   width="100"
                 ></el-table-column>
@@ -597,7 +589,6 @@
                 <el-table-column
                   prop="username"
                   label="销售员"
-                  sortable="custom"
                   align="center"
                   width="100"
                 ></el-table-column>
@@ -623,7 +614,6 @@
                 <el-table-column
                   prop="depart"
                   label="部门"
-                  sortable="custom"
                   align="center"
                   width="100"
                 ></el-table-column>
@@ -730,7 +720,6 @@
                 <el-table-column
                   prop="username"
                   label="销售员"
-                  sortable="custom"
                   align="center"
                   width="100"
                 ></el-table-column>
@@ -756,7 +745,6 @@
                 <el-table-column
                   prop="depart"
                   label="部门"
-                  sortable="custom"
                   align="center"
                   width="100"
                 ></el-table-column>

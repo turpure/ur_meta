@@ -64,7 +64,7 @@
         <el-table-column prop="picUrl" fixed label="主图" header-align="center" width="90">
           <template slot-scope="scope">
              <el-tooltip placement="right" :open-delay='10' class="exxHover" popper-class="page-login-toolTipClass">
-              <div slot="content"><img :src="scope.row.picUrl" style="width: 180px;height: 180px;"></div>
+              <div slot="content"><img :src="scope.row.picUrl" style="width: 300px;height: 300px;"></div>
               <img :src="scope.row.picUrl" style="width: 70px;height: 60px">
             </el-tooltip>
             <!-- <img :src="scope.row.picUrl" style="width: 70px;height: 60px"> -->
