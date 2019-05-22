@@ -309,7 +309,7 @@ export default {
       const val = this.formInline.region;
       res = this.allMember;
       let per = [];
-      if (val !== "") {
+      if (val.length != 0) {
         for (let i = 0; i < val.length; i++) {
           per = res.filter(
             ele =>
@@ -318,7 +318,7 @@ export default {
           );
           this.member = this.member.concat(per);
         }
-      } else {
+      } else if (val.length == 0) {
         this.member = res;
       }
     },
