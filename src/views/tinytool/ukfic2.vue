@@ -130,10 +130,8 @@ export default {
       value=Number(value)
       console.log(value);
       if (value && Number.isInteger(value)) {
-        console.log(1)
         return value + ".00";
       } else {
-        console.log(2)
         if (value || value != 0) {
           value = value.toFixed(2);
           return value;

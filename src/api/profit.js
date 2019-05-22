@@ -440,6 +440,38 @@ export function getRefund(param) {
     data
   })
 }
+export function getRefundAnalysisPlat(param) {
+  const data = { condition: param }
+  return request({
+    url: '/report/refund-analysis-plat',
+    method: 'post',
+    data
+  })
+}
+export function getRefundAnalysisSuffix(param) {
+  const data = { condition: param }
+  return request({
+    url: '/report/refund-analysis-suffix',
+    method: 'post',
+    data
+  })
+}
+export function getRefundAnalysisExpress(param) {
+  const data = { condition: param }
+  return request({
+    url: '/report/refund-analysis-express',
+    method: 'post',
+    data
+  })
+}
+export function getRefundAnalysisGoods(param) {
+  const data = { condition: param }
+  return request({
+    url: '/report/refund-analysis-goods',
+    method: 'post',
+    data
+  })
+}
 export function getDeadFee(param) {
   const data = { condition: param }
   return request({
