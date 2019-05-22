@@ -888,6 +888,7 @@ export default {
         this.showTable["report"] = true;
         this.showTable["dead"] = false;
         this.showTable["extra"] = false;
+        this.onSubmit(this.condition);
       } else if (tab.label === "死库明细") {
         this.showTable["sell"] = false;
         this.showTable["order"] = false;
