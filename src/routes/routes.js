@@ -10,6 +10,7 @@ import artist from '../views/reports/artist.vue'
 import account from '../views/reports/account.vue'
 import trending from '../views/reports/trending.vue'
 import introduce from '../views/reports/introduce.vue'
+import limit from '../views/reports/limit.vue'
 // 数据中心
 import stock from '../views/data/stock.vue'
 import pcost from '../views/data/pcost.vue'
@@ -127,6 +128,11 @@ const routes = [
         path: '/v1/report/introduce',
         component: introduce,
         name: '推荐人毛利报表'
+      },
+      {
+        path: '/v1/report/dev-limit',
+        component: limit,
+        name: '开发款数限制'
       },
       {
         path: '/v1/report/account',

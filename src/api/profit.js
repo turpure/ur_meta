@@ -142,6 +142,15 @@ export function getPurchase(param) {
   })
 }
 
+export function getDevLimit(param) {
+  const data = { condition: param }
+  return request({
+    url: '/report/dev-limit',
+    method: 'post',
+    data
+  })
+}
+
 export function getPossess(param) {
   const data = { condition: param }
   return request({
