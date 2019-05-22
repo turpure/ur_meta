@@ -448,12 +448,12 @@
       </el-col>
       <el-col :span="12">
         <el-card>
-          <div ref="ordLogistics" :style="{width: '100%', height: '400px'}"></div>
+          <div ref="ordProduct" :style="{width: '100%', height: '400px'}"></div>
         </el-card>
       </el-col>
       <el-col :span="12">
         <el-card>
-          <div ref="ordProduct" :style="{width: '100%', height: '400px'}"></div>
+          <div ref="ordLogistics" :style="{width: '100%', height: '400px'}"></div>
         </el-card>
       </el-col>
     </div>
@@ -567,6 +567,7 @@ export default {
         title: {
           text: "平台退款金额占比",
           subtext: "",
+          top:15,
           x: "center"
         },
         tooltip: {
@@ -600,6 +601,7 @@ export default {
         title: {
           text: "账号退款金额占比",
           subtext: "",
+          top:15,
           x: "center"
         },
         tooltip: {
@@ -635,6 +637,7 @@ export default {
         title: {
           text: "产品退款次数占比",
           subtext: "",
+          top:15,
           x: "center"
         },
         tooltip: {
@@ -670,6 +673,7 @@ export default {
         title: {
           text: "物流退款次数占比",
           subtext: "",
+          top:15,
           x: "center"
         },
         tooltip: {
@@ -1729,11 +1733,11 @@ export default {
           arry.push(orderpie[i].name);
           selected[orderpie[i].name] = i < 10;
         }
-        this.options2.legend.data = arry;
-        this.options2.series[0].data = orderpie;
-        this.options2.legend.selected = selected;
+        this.options3.legend.data = arry;
+        this.options3.series[0].data = orderpie;
+        this.options3.legend.selected = selected;
         let ordLogistics = this.$echarts.init(this.$refs.ordLogistics);
-        ordLogistics.setOption(this.options2);
+        ordLogistics.setOption(this.options3);
       });
       let objary = Object.assign({}, from)
       objary.type='goods'
@@ -1745,11 +1749,11 @@ export default {
           arry.push(orderpie[i].name);
           selected[orderpie[i].name] = i < 10;
         }
-        this.options3.legend.data = arry;
-        this.options3.series[0].data = orderpie;
-        this.options3.legend.selected = selected;
+        this.options2.legend.data = arry;
+        this.options2.series[0].data = orderpie;
+        this.options2.legend.selected = selected;
         let ordProduct = this.$echarts.init(this.$refs.ordProduct);
-        ordProduct.setOption(this.options3);
+        ordProduct.setOption(this.options2);
       });
     },
     getGoods() {
