@@ -659,11 +659,9 @@ export default {
               series.push(sery)
             })
             this.option.legend.data = lineName
-            console.log(lineName)
             this.option.xAxis[0].data = date
             this.option.series = serie
             this.options.legend.data = lineNames
-            console.log(lineNames)
             this.options.xAxis[0].data = dates
             this.options.series = series
             const _this = this
