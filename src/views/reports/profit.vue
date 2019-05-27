@@ -146,6 +146,7 @@
       @sort-change="sortNumber"
       show-summary
       :summary-method="getSummaries"
+      height="740"
       style="width: 100%;zoom:0.9;font-size:12px;"
     >
       <el-table-column prop="developer" width="60" label="开发员" :formatter="empty"></el-table-column>
@@ -247,17 +248,17 @@
       ></el-table-column>
     </el-table>
     <div class="toolbar">
-        <el-pagination
-          background
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="this.condition.page"
-          :page-sizes="[10, 20, 30, 40]"
-          :page-size="this.condition.pageSize"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="this.total"
-        ></el-pagination>
-      </div>
+      <el-pagination
+        background
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="this.condition.page"
+        :page-sizes="[10, 20, 30, 40]"
+        :page-size="this.condition.pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="this.total"
+      ></el-pagination>
+    </div>
   </div>
 </template>
 
@@ -282,7 +283,7 @@ export default {
       showis1: true,
       showis2: false,
       viewForm: [],
-      goodsState:[],
+      goodsState: [],
       tableData1: [],
       dead: {
         dateType: [],
@@ -310,7 +311,7 @@ export default {
       searchValue: "",
       listLoading: false,
       department: [],
-      total:0,
+      total: 0,
       res: [],
       member: [],
       dateRange: [],
@@ -322,9 +323,9 @@ export default {
         developer: [],
         dateType: 1,
         dateRange: [],
-        goodsStatus:[],
-        page:1,
-        pageSize:20
+        goodsStatus: [],
+        page: 1,
+        pageSize: 20
       },
       tableMap: {
         first: {
@@ -528,12 +529,15 @@ export default {
         if (valid) {
           this.listLoading = true;
           if (myform.developer.length > 0) {
+            if(myform.goodsStatus.length==0){
+              myform.goodsStatus=this.goodsState
+            }
             getDevGoodsProfit(myform).then(response => {
               this.listLoading = false;
               this.tableData = response.data.data.items;
               this.total = response.data.data._meta.totalCount;
-        this.condition.page = response.data.data._meta.currentPage;
-        this.condition.pageSize = response.data.data._meta.perPage;
+              this.condition.page = response.data.data._meta.currentPage;
+              this.condition.pageSize = response.data.data._meta.perPage;
             });
           } else if (
             myform.developer.length == 0 &&
@@ -542,12 +546,15 @@ export default {
             myform.developer = this.member.map(m => {
               return m.username;
             });
+            if(myform.goodsStatus.length==0){
+              myform.goodsStatus=this.goodsState
+            }
             getDevGoodsProfit(myform).then(response => {
               this.listLoading = false;
               this.tableData = response.data.data.items;
               this.total = response.data.data._meta.totalCount;
-        this.condition.page = response.data.data._meta.currentPage;
-        this.condition.pageSize = response.data.data._meta.perPage;
+              this.condition.page = response.data.data._meta.currentPage;
+              this.condition.pageSize = response.data.data._meta.perPage;
             });
           } else if (
             this.formInline.region.length !== 0 &&
@@ -567,12 +574,15 @@ export default {
             myform.developer = this.member.map(m => {
               return m.username;
             });
+            if(myform.goodsStatus.length==0){
+              myform.goodsStatus=this.goodsState
+            }
             getDevGoodsProfit(myform).then(response => {
               this.listLoading = false;
               this.tableData = response.data.data.items;
               this.total = response.data.data._meta.totalCount;
-        this.condition.page = response.data.data._meta.currentPage;
-        this.condition.pageSize = response.data.data._meta.perPage;
+              this.condition.page = response.data.data._meta.currentPage;
+              this.condition.pageSize = response.data.data._meta.perPage;
             });
           }
         }
