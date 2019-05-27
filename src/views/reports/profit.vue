@@ -503,6 +503,7 @@ export default {
       let ret;
       this.$refs.condition.validate(valid => {
         if (valid) {
+          this.listLoading = true;
           if (myform.developer.length > 0) {
             getDevGoodsProfit(myform).then(response => {
               this.listLoading = false;
