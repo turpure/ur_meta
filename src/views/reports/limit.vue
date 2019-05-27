@@ -143,7 +143,7 @@
         sortable="custom"
       ></el-table-column>
       <el-table-column
-        width="130"
+        width="120"
         prop="soldNumber"
         label="出单数"
         :formatter="empty"
@@ -168,7 +168,7 @@
       <el-table-column
         width="130"
         prop="monthAmt"
-        label="月销售额"
+        label="月销售额(￥)"
         :formatter="empty"
         sortable="custom"
       >
@@ -177,7 +177,7 @@
       <el-table-column
         width="130"
         prop="monthProfit"
-        label="月利润"
+        label="月利润(￥)"
         :formatter="empty"
         sortable="custom"
       >
@@ -186,16 +186,16 @@
       <el-table-column
         width="130"
         prop="profitRate"
-        label="利润率"
+        label="利润率(%)"
         :formatter="empty"
         sortable="custom"
       >
-        <template slot-scope="scope">{{scope.row.profitRate | cutOut}}</template>
+        <template slot-scope="scope">{{(scope.row.profitRate*10000/100).toFixed(2)}}</template>
       </el-table-column>
       <el-table-column
-        width="140"
+        width="145"
         prop="avgProfit"
-        label="平均利润/款"
+        label="平均利润/款(￥)"
         :formatter="empty"
         sortable="custom"
       >
