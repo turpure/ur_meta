@@ -193,7 +193,7 @@
         <template slot-scope="scope">{{scope.row.profitRate | cutOut}}</template>
       </el-table-column>
       <el-table-column
-        width="150"
+        width="140"
         prop="avgProfit"
         label="平均利润/款"
         :formatter="empty"
