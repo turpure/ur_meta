@@ -60,7 +60,7 @@
           <el-form-item label="产品状态" class="input">
             <el-select
               size="small"
-              v-model="condition.product"
+              v-model="condition.goodsStatus"
               style="width:180px;"
               multiple
               collapse-tags
@@ -246,6 +246,18 @@
         sortable="custom"
       ></el-table-column>
     </el-table>
+    <div class="toolbar">
+        <el-pagination
+          background
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="this.condition.page"
+          :page-sizes="[10, 20, 30, 40]"
+          :page-size="this.condition.pageSize"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="this.total"
+        ></el-pagination>
+      </div>
   </div>
 </template>
 
@@ -298,6 +310,7 @@ export default {
       searchValue: "",
       listLoading: false,
       department: [],
+      total:0,
       res: [],
       member: [],
       dateRange: [],
@@ -309,7 +322,9 @@ export default {
         developer: [],
         dateType: 1,
         dateRange: [],
-        product:[]
+        goodsStatus:[],
+        page:1,
+        pageSize:20
       },
       tableMap: {
         first: {
@@ -349,6 +364,14 @@ export default {
     };
   },
   methods: {
+    handleCurrentChange(val) {
+      this.condition.page = val;
+      this.onSubmit(this.condition);
+    },
+    handleSizeChange(val) {
+      this.condition.pageSize = val;
+      this.onSubmit(this.condition);
+    },
     exportExcelMx() {
       const th = [
         "销售员",
@@ -507,7 +530,10 @@ export default {
           if (myform.developer.length > 0) {
             getDevGoodsProfit(myform).then(response => {
               this.listLoading = false;
-              this.tableData = response.data.data;
+              this.tableData = response.data.data.items;
+              this.total = response.data.data._meta.totalCount;
+        this.condition.page = response.data.data._meta.currentPage;
+        this.condition.pageSize = response.data.data._meta.perPage;
             });
           } else if (
             myform.developer.length == 0 &&
@@ -518,7 +544,10 @@ export default {
             });
             getDevGoodsProfit(myform).then(response => {
               this.listLoading = false;
-              this.tableData = response.data.data;
+              this.tableData = response.data.data.items;
+              this.total = response.data.data._meta.totalCount;
+        this.condition.page = response.data.data._meta.currentPage;
+        this.condition.pageSize = response.data.data._meta.perPage;
             });
           } else if (
             this.formInline.region.length !== 0 &&
@@ -540,7 +569,10 @@ export default {
             });
             getDevGoodsProfit(myform).then(response => {
               this.listLoading = false;
-              this.tableData = response.data.data;
+              this.tableData = response.data.data.items;
+              this.total = response.data.data._meta.totalCount;
+        this.condition.page = response.data.data._meta.currentPage;
+        this.condition.pageSize = response.data.data._meta.perPage;
             });
           }
         }
