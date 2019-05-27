@@ -306,7 +306,8 @@ export default {
   },
   methods: {
     exportExcel() {
-      const th = [
+      if(this.tableData.length!=0){
+        const th = [
         "开发员",
         "已有商品数(非清仓)",
         "最多可拥有商品数",
@@ -338,6 +339,7 @@ export default {
       const data = this.tableData.map(v => filterVal.map(k => v[k]));
       const [fileName, fileType, sheetName] = [Filename, "xls"];
       this.$toExcel({ th, data, fileName, fileType, sheetName });
+      }
     },
     selectalld() {
       const allValues = [];
