@@ -122,7 +122,7 @@
       </div>
     </div>
     <el-col :span="24" style="padding:10px 20px;">
-      <el-button @click="exportExcel" type="primary">导出表格</el-button>
+      <el-button @click="exportExcel(condition)" type="primary">导出表格</el-button>
     </el-col>
     <el-dialog title="查看明细" :visible.sync="dialogTableVisible">
       <el-table :data="viewForm">
@@ -277,6 +277,7 @@ import {
   getProfitDetail,
   getPlatGoodsStatus
 } from "../../api/profit";
+import { APIDevExportProfit } from "../../api/product";
 import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 import { isAdmin } from "../../api/api";
 
@@ -331,7 +332,9 @@ export default {
         dateRange: [],
         goodsStatus: [],
         page: 1,
-        pageSize: 20
+        pageSize: 20,
+        sortField: null,
+        sortOrder: null
       },
       tableMap: {
         first: {
@@ -411,55 +414,59 @@ export default {
       const [fileName, fileType, sheetName] = [Filename, "xls"];
       this.$toExcel({ th, data, fileName, fileType, sheetName });
     },
-    exportExcel() {
-      const th = [
-        "开发员",
-        "产品编码",
-        "开发日期",
-        "产品状态",
-        "销量",
-        "销售额",
-        "总利润",
-        "利润率",
-        "eBay销量",
-        "eBay利润",
-        "Wish销量",
-        "Wish利润",
-        "SMT销量",
-        "SMT利润",
-        "Joom销量",
-        "Joom利润",
-        "Amazon销量",
-        "Amazon利润",
-        "时间类型",
-        "订单时间"
-      ];
-      const filterVal = [
-        "developer",
-        "goodsCode",
-        "devDate",
-        "goodsStatus",
-        "sold",
-        "amt",
-        "profit",
-        "rate",
-        "ebaySold",
-        "ebayProfit",
-        "wishSold",
-        "wishProfit",
-        "smtSold",
-        "smtProfit",
-        "joomSold",
-        "joomProfit",
-        "amazonSold",
-        "amazonProfit",
-        "dateFlag",
-        "orderTime"
-      ];
-      const Filename = "开发产品利润表";
-      const data = this.tableData.map(v => filterVal.map(k => v[k]));
-      const [fileName, fileType, sheetName] = [Filename, "xls"];
-      this.$toExcel({ th, data, fileName, fileType, sheetName });
+    exportExcel(myform) {
+      let obj = {
+        developer: myform.developer,
+        goodsStatus: myform.goodsStatus,
+        dateRange: myform.dateRange,
+        developer: myform.developer,
+        dateType: myform.dateType,
+        pageSize: 100000
+      };
+      if (obj.developer.length == 0 && this.formInline.region.length === 0) {
+        obj.developer = this.member.map(m => {
+          return m.username;
+        });
+      } else if (
+        this.formInline.region.length !== 0 &&
+        obj.developer.length === 0
+      ) {
+        const val = this.formInline.region;
+        const res = this.allMember;
+        for (let i = 0; i < val.length; i++) {
+          const per = res.filter(
+            ele =>
+              (ele.department === val[i] || ele.parent_department === val[i]) &&
+              ele.position === "开发"
+          );
+          this.member.concat(per);
+        }
+        obj.developer = this.member.map(m => {
+          return m.username;
+        });
+      }
+      if (obj.goodsStatus.length == 0) {
+        obj.goodsStatus = this.goodsState;
+      }
+      APIDevExportProfit(obj).then(res => {
+        const blob = new Blob([res.data], {
+          type:
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+        });
+        var file = res.headers["content-disposition"]
+          .split(";")[1]
+          .split("filename=")[1];
+        var filename = JSON.parse(file);
+        const downloadElement = document.createElement("a");
+        const objectUrl = window.URL.createObjectURL(blob);
+        downloadElement.href = objectUrl;
+        // const filename =
+        //   "Wish_" + year + month + strDate + hour + minute + second;
+        downloadElement.download = filename;
+        document.body.appendChild(downloadElement);
+        downloadElement.click();
+        document.body.removeChild(downloadElement);
+      });
     },
     view1(index, row) {
       this.dialogTableVisible = true;
@@ -541,8 +548,8 @@ export default {
         if (valid) {
           this.listLoading = true;
           if (myform.developer.length > 0) {
-            if(myform.goodsStatus.length==0){
-              myform.goodsStatus=this.goodsState
+            if (myform.goodsStatus.length == 0) {
+              myform.goodsStatus = this.goodsState;
             }
             getDevGoodsProfit(myform).then(response => {
               this.listLoading = false;
@@ -558,8 +565,8 @@ export default {
             myform.developer = this.member.map(m => {
               return m.username;
             });
-            if(myform.goodsStatus.length==0){
-              myform.goodsStatus=this.goodsState
+            if (myform.goodsStatus.length == 0) {
+              myform.goodsStatus = this.goodsState;
             }
             getDevGoodsProfit(myform).then(response => {
               this.listLoading = false;
@@ -586,8 +593,8 @@ export default {
             myform.developer = this.member.map(m => {
               return m.username;
             });
-            if(myform.goodsStatus.length==0){
-              myform.goodsStatus=this.goodsState
+            if (myform.goodsStatus.length == 0) {
+              myform.goodsStatus = this.goodsState;
             }
             getDevGoodsProfit(myform).then(response => {
               this.listLoading = false;
@@ -643,19 +650,20 @@ export default {
     },
     // 数字排序
     sortNumber(column, prop, order) {
-      const data = this.tableData;
-      if (column.order === "descending") {
-        this.tableData = data.sort(compareDown(data, column.prop));
-      } else {
-        this.tableData = data.sort(compareUp(data, column.prop));
+      if(order==null){
+        this.condition.sortField=null;
+        this.condition.sortOrder=null;
+        this.onSubmit(this.condition);
       }
-    },
-    sortNumber1(column, prop, order) {
-      const data = this.tableData1;
-      if (column.order === "descending") {
-        this.tableData1 = data.sort(compareDown(data, column.prop));
-      } else {
-        this.tableData1 = data.sort(compareUp(data, column.prop));
+      if (column.order == "ascending") {
+        this.condition.sortOrder = "ASC";
+        this.condition.sortField = column.prop;
+        this.onSubmit(this.condition);
+      }
+      if (column.order == "descending") {
+        this.condition.sortOrder = "DESC";
+        this.condition.sortField = column.prop;
+        this.onSubmit(this.condition);
       }
     }
   },
