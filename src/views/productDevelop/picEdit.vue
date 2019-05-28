@@ -42,7 +42,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="linkUrl"
-      width="580"
+      width="570"
                         header-align="center" 
                        label="图片库地址">
         <template slot-scope="scope">
