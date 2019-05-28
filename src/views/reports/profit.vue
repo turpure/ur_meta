@@ -129,12 +129,18 @@
         <el-table-column property="saleMen" label="销售员"></el-table-column>
         <el-table-column property="goodsCode" label="产品编码"></el-table-column>
         <el-table-column property="sold" label="销量"></el-table-column>
-        <el-table-column property="amt" label="销售额"></el-table-column>
-        <el-table-column property="profit" label="总利润"></el-table-column>
-        <el-table-column property="rate" label="利润率"></el-table-column>
+        <el-table-column property="amt" label="销售额(￥)">
+          <template slot-scope="scope">{{scope.row.amt | cutOut}}</template>
+        </el-table-column>
+        <el-table-column property="profit" label="总利润(￥)">
+          <template slot-scope="scope">{{scope.row.profit | cutOut}}</template>
+        </el-table-column>
+        <el-table-column property="rate" label="利润率(%)">
+          <template slot-scope="scope">{{(scope.row.rate*10000/100).toFixed(2)}}</template>
+        </el-table-column>
       </el-table>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button @click="dialogTableVisible = false">取 消</el-button>
         <el-button type="primary" @click="exportExcelMx()">导出明细</el-button>
       </div>
     </el-dialog>
@@ -363,6 +369,12 @@ export default {
         ]
       }
     };
+  },
+  filters: {
+    cutOut: function(value) {
+      value = Number(value).toFixed(2);
+      return value;
+    }
   },
   methods: {
     handleCurrentChange(val) {
