@@ -14,7 +14,7 @@
             <el-input
               placeholder="sku"
               v-model="condition.sku"
-              style="width:120px;"
+              style="width:160px;"
               size="small"
               clearable
             ></el-input>
@@ -24,7 +24,7 @@
               size="small"
               clearable
               v-model="condition.salerName"
-              style="width:120px;"
+              style="width:160px;"
               placeholder="开发员"
             >
               <el-option
@@ -41,7 +41,7 @@
               size="small"
               clearable
               v-model="condition.purchaser"
-              style="width:120px;"
+              style="width:160px;"
               placeholder="采购员"
             >
               <el-option
@@ -58,7 +58,7 @@
               size="small"
               clearable
               v-model="condition.trend"
-              style="width:120px;"
+              style="width:160px;"
               placeholder="销售趋势"
             >
               <el-option
@@ -75,7 +75,7 @@
               size="small"
               clearable
               v-model="condition.isPurchaser"
-              style="width:120px;"
+              style="width:160px;"
               placeholder="是否采购"
             >
               <el-option
@@ -92,7 +92,7 @@
               size="small"
               clearable
               v-model="condition.isShipping"
-              style="width:120px;"
+              style="width:160px;"
               placeholder="是否发货"
             >
               <el-option
@@ -106,6 +106,9 @@
           </el-form-item>
           <el-form-item>
             <el-button size="small" type="primary" @click="onSubmit(condition)">查询</el-button>
+          </el-form-item>
+          <el-form-item>
+            <el-button size="small" type="primary" @click="exportExcel(condition)">导出</el-button>
           </el-form-item>
         </el-form>
       </transition>
@@ -159,12 +162,13 @@
 
 <script type="text/ecmascript-6">
 import { getMember, getUkRealReplenish } from "../../api/profit";
+import { APIExportReplenish  } from "../../api/product";
 import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 
 export default {
   data() {
     return {
-      tableHeight:window.innerHeight -85,
+      tableHeight:window.innerHeight -130,
       tableData: [],
       goodsState: [],
       member: [],
@@ -187,6 +191,28 @@ export default {
     };
   },
   methods: {
+    exportExcel(from){
+      from.type='auReal'
+       APIExportReplenish(from).then(res => {
+        const blob = new Blob([res.data], {
+          type:
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+        });
+        var file = res.headers["content-disposition"]
+          .split(";")[1]
+          .split("filename=")[1];
+        var filename = JSON.parse(file);
+        const downloadElement = document.createElement("a");
+        const objectUrl = window.URL.createObjectURL(blob);
+        downloadElement.href = objectUrl;
+        // const filename =
+        //   "Wish_" + year + month + strDate + hour + minute + second;
+        downloadElement.download = filename;
+        document.body.appendChild(downloadElement);
+        downloadElement.click();
+        document.body.removeChild(downloadElement);
+      });
+    },
     sortNumber(column, prop, order) {
       const data = this.tableData;
       if (column.order === "descending") {

@@ -38,6 +38,7 @@ import ukfic2 from '../views/tinytool/ukfic2.vue'
 import order from '../views/tinytool/order.vue'
 import paypal from '../views/tinytool/paypal.vue'
 import risk from '../views/tinytool/risk.vue'
+import fixPrice from '../views/tinytool/fixPrice.vue'
 import edition from '../views/tinytool/edition.vue'
 import logistics from '../views/tinytool/logistics.vue'
 import modify from '../views/tinytool/modify.vue'
@@ -320,6 +321,11 @@ const routes = [
         path: '/v1/tiny-tool/goods-picture',
         component: goods,
         name: '产品一览表'
+      },
+      {
+        path: '/v1/tiny-tool/fix-price',
+        component: fixPrice,
+        name: '海外仓定价器'
       },
       {
         path: '/v1/tiny-tool/fyndiqz-upload',
