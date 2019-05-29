@@ -42,6 +42,8 @@ import edition from '../views/tinytool/edition.vue'
 import logistics from '../views/tinytool/logistics.vue'
 import modify from '../views/tinytool/modify.vue'
 import prescription from '../views/tinytool/prescription.vue'
+import ukxn from '../views/tinytool/ukxn.vue'
+import ukzc from '../views/tinytool/ukzc.vue'
 // 设置中心
 import deadFee from '../views/settings/deadFee.vue'
 import operationFee from '../views/settings/operationFee.vue'
@@ -373,6 +375,16 @@ const routes = [
         path: '/v1/tiny-tool/ebay-virtual-store',
         component: modify,
         name: 'eBay海外仓修改在线数量'
+      },
+      {
+        path: '/v1/tiny-tool/uk-replenish',
+        component: ukxn,
+        name: 'uk虚拟仓补货'
+      },
+      {
+        path: '/v1/tiny-tool/au-real-replenish',
+        component: ukzc,
+        name: 'uk真仓补货'
       },
       {
         path: '/v1/tiny-tool/express-expired',
