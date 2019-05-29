@@ -88,7 +88,12 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-button size="small" type="primary" @click="onSubmit(condition)" style="margin-left:10px;">查询</el-button>
+            <el-button
+              size="small"
+              type="primary"
+              @click="onSubmit(condition)"
+              style="margin-left:10px;"
+            >查询</el-button>
           </el-form-item>
           <el-form-item>
             <el-button size="small" type="primary" @click="exportExcel(condition)">导出</el-button>
@@ -125,34 +130,43 @@
       <el-table-column prop="purchaseNum" label="采购数量" sortable="custom"></el-table-column>
       <el-table-column prop="price" label="单价" sortable="custom"></el-table-column>
     </el-table>
-    <div class="toolbar">
-      <el-pagination
-        background
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="this.condition.page"
-        :page-sizes="[10, 20, 30, 40]"
-        :page-size="this.condition.pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="this.total"
-      ></el-pagination>
+    <div class="toolbar" style="overflow:hidden">
+      <div style="float:left;">
+        <el-pagination
+          background
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="this.condition.page"
+          :page-sizes="[10, 20, 30, 40]"
+          :page-size="this.condition.pageSize"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="this.total"
+        ></el-pagination>
+      </div>
+      <div style="float:right">
+        <p style="margin:0;font-size:15px;margin-right:18px;margin-top:7px;">
+          采购成本:
+          <span style="color:red">{{totalPrice}}</span>
+        </p>
+      </div>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
 import { getMember, getUkReplenish } from "../../api/profit";
-import { APIExportReplenish  } from "../../api/product";
+import { APIExportReplenish } from "../../api/product";
 import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 
 export default {
   data() {
     return {
-      tableHeight:window.innerHeight -130,
+      tableHeight: window.innerHeight - 130,
       tableData: [],
       goodsState: [],
       member: [],
       total: null,
+      totalPrice: 0,
       purchaser: [],
       trend: ["持续上升", "波动上升", "持续下降", "波动下降", "维持不变"],
       isPurchaser: ["是", "否"],
@@ -169,9 +183,9 @@ export default {
     };
   },
   methods: {
-    exportExcel(from){
-      from.type='uk'
-       APIExportReplenish(from).then(res => {
+    exportExcel(from) {
+      from.type = "uk";
+      APIExportReplenish(from).then(res => {
         const blob = new Blob([res.data], {
           type:
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
@@ -208,20 +222,23 @@ export default {
       this.onSubmit(this.condition);
     },
     onSubmit(form) {
-      this.listLoading=true
+      this.listLoading = true;
       getUkReplenish(form).then(response => {
-        this.listLoading=false
+        this.listLoading = false;
         this.tableData = response.data.data.items;
         this.total = response.data.data._meta.totalCount;
         this.condition.page = response.data.data._meta.currentPage;
         this.condition.pageSize = response.data.data._meta.perPage;
+        this.totalPrice = response.data.data.extra.totalPurCost;
       });
     }
   },
   mounted() {
     getMember().then(response => {
       const res = response.data.data;
-      this.allMember = this.member = res.filter(ele => ele.position === "开发" && ele.department === "运营一部开发组");
+      this.allMember = this.member = res.filter(
+        ele => ele.position === "开发" && ele.department === "运营一部开发组"
+      );
       this.purchaser = res.filter(ele => ele.position === "采购");
       this.res = res.filter(ele => ele.position === "主管");
     });

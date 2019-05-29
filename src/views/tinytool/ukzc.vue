@@ -145,7 +145,8 @@
       <el-table-column prop="purchnum" label="采购数量" sortable="custom"></el-table-column>
       <el-table-column prop="shipnum" label="发货数量" sortable="custom"></el-table-column>
     </el-table>
-    <div class="toolbar">
+    <div class="toolbar" style="overflow:hidden">
+      <div style="float:left;">
       <el-pagination
         background
         @size-change="handleSizeChange"
@@ -156,6 +157,19 @@
         layout="total, sizes, prev, pager, next, jumper"
         :total="this.total"
       ></el-pagination>
+      </div>
+      <div style="float:right">
+        <p style="margin:0;font-size:14px;margin-right:18px;margin-top:7px;">
+          采购成本:
+          <span style="color:red">{{totalPrice}}</span>
+        </p>
+      </div>
+      <div style="float:right">
+        <p style="margin:0;font-size:14px;margin-right:18px;margin-top:7px;">
+          发货重量:
+          <span style="color:red">{{totalPrice1}}</span>
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -171,6 +185,8 @@ export default {
       tableHeight:window.innerHeight -130,
       tableData: [],
       goodsState: [],
+      totalPrice1:0,
+      totalPrice:0,
       member: [],
       total: null,
       purchaser: [],
@@ -237,6 +253,8 @@ export default {
         this.total = response.data.data._meta.totalCount;
         this.condition.page = response.data.data._meta.currentPage;
         this.condition.pageSize = response.data.data._meta.perPage;
+        this.totalPrice = response.data.data.extra.totalPurCost;
+        this.totalPrice1 = response.data.data.extra.totalShipWeight;
       });
     }
   },
