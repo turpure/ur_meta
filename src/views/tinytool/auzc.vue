@@ -138,9 +138,9 @@
       <el-table-column prop="trend" label="走势"></el-table-column>
       <el-table-column prop="saleNumDailyAve" label="日均销量" sortable="custom"></el-table-column>
       <el-table-column prop="399hopeusenum" label="金皖399预计可用" sortable="custom"></el-table-column>
-      <el-table-column prop="auHopeusenum" label="万邑通AU预计可用库存" sortable="custom"></el-table-column>
+      <el-table-column prop="auHopeusenum" label="万邑通UK预计可用库存" sortable="custom"></el-table-column>
       <el-table-column prop="totalhopeusenum" label="预计可用库存" sortable="custom"></el-table-column>
-      <el-table-column prop="auHopeSaleDays" label="万邑通AU预计可用天数" sortable="custom"></el-table-column>
+      <el-table-column prop="auHopeSaleDays" label="万邑通UK预计可用天数" sortable="custom"></el-table-column>
       <el-table-column prop="hopeSaleDays" label="预计可卖天数" sortable="custom"></el-table-column>
       <el-table-column prop="purchnum" label="采购数量" sortable="custom"></el-table-column>
       <el-table-column prop="shipnum" label="发货数量" sortable="custom"></el-table-column>
