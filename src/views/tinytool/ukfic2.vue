@@ -35,7 +35,7 @@
       :header-cell-style="getRowClass"
     >
       <el-table-column label="根据售价获取毛利率" align="center">
-        <el-table-column prop="country" :label="国家" width="80" align="center"></el-table-column>
+        <el-table-column prop="country" label="国家" width="80" align="center"></el-table-column>
         <el-table-column prop="transport" label="物流方式" align="center"></el-table-column>
         <el-table-column prop="cost" label="物流费(￥)" width="110" align="center">
           <template slot-scope="scope">
