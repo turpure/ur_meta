@@ -26,6 +26,9 @@
     <div v-show="show.ukzc">
       <ukzc></ukzc>
     </div>
+    <div v-show="show.auzc">
+      <auzc></auzc>
+    </div>
   </section>
 </template>
 
@@ -44,6 +47,7 @@ import uk from "./uk.vue";
 import au from "./au.vue";
 import ukxn from "./ukxn.vue";
 import ukzc from "./ukzc.vue";
+import auzc from "./auzc.vue";
 export default {
   components: {
     ukfic2,
@@ -51,7 +55,8 @@ export default {
     uk,
     au,
     ukxn,
-    ukzc
+    ukzc,
+    auzc
   },
   data() {
     return {
@@ -63,7 +68,8 @@ export default {
         uk: false,
         au: false,
         ukxn: false,
-        ukzc: false
+        ukzc: false,
+        auzc:false
       }
     };
   },
@@ -101,6 +107,11 @@ export default {
         this.show["ukzc"] = true;
       } else {
         this.show["ukzc"] = false;
+      }
+      if (tab.name === "/v1/tiny-tool/uk-real-replenish") {
+        this.show["auzc"] = true;
+      } else {
+        this.show["auzc"] = false;
       }
     }
   },

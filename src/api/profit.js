@@ -674,3 +674,12 @@ export function getUkRealReplenish(param) {
     data
   })
 }
+export function getAuRealReplenish(param) {
+  const data = { condition: param }
+  return request({
+    url: '/tiny-tool/uk-real-replenish?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+

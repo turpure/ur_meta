@@ -1,5 +1,5 @@
 <template>
-  <!-- <div>UK虚拟仓</div>     -->
+  <!-- <div>UK真仓</div>     -->
   <div class="toolbar">
     <div class="demo-block demo-box demo-zh-CN demo-transition">
       <transition name="el-fade-in-linear">
@@ -14,7 +14,7 @@
             <el-input
               placeholder="sku"
               v-model="condition.sku"
-              style="width:170px;"
+              style="width:160px;"
               size="small"
               clearable
             ></el-input>
@@ -24,7 +24,7 @@
               size="small"
               clearable
               v-model="condition.salerName"
-              style="width:170px;"
+              style="width:160px;"
               placeholder="开发员"
             >
               <el-option
@@ -41,7 +41,7 @@
               size="small"
               clearable
               v-model="condition.purchaser"
-              style="width:170px;"
+              style="width:160px;"
               placeholder="采购员"
             >
               <el-option
@@ -58,7 +58,7 @@
               size="small"
               clearable
               v-model="condition.trend"
-              style="width:170px;"
+              style="width:160px;"
               placeholder="销售趋势"
             >
               <el-option
@@ -75,7 +75,7 @@
               size="small"
               clearable
               v-model="condition.isPurchaser"
-              style="width:170px;"
+              style="width:160px;"
               placeholder="是否采购"
             >
               <el-option
@@ -87,8 +87,25 @@
               ></el-option>
             </el-select>
           </el-form-item>
+          <el-form-item label="是否发货" class="input">
+            <el-select
+              size="small"
+              clearable
+              v-model="condition.isShipping"
+              style="width:160px;"
+              placeholder="是否发货"
+            >
+              <el-option
+                v-for="(item,index) in isShipping"
+                :index="index"
+                :key="item"
+                :label="item"
+                :value="item"
+              ></el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item>
-            <el-button size="small" type="primary" @click="onSubmit(condition)" style="margin-left:10px;">查询</el-button>
+            <el-button size="small" type="primary" @click="onSubmit(condition)">查询</el-button>
           </el-form-item>
           <el-form-item>
             <el-button size="small" type="primary" @click="exportExcel(condition)">导出</el-button>
@@ -110,6 +127,8 @@
       <el-table-column prop="SKUName" label="SKU名称"></el-table-column>
       <el-table-column prop="goodsCode" label="商品编码"></el-table-column>
       <el-table-column prop="goodsstatus" label="状态"></el-table-column>
+      <el-table-column prop="price" label="价格" sortable="custom"></el-table-column>
+      <el-table-column prop="weight" label="重量(g)" sortable="custom"></el-table-column>
       <el-table-column prop="purchaser" label="采购"></el-table-column>
       <el-table-column prop="suppliername" label="供应商"></el-table-column>
       <el-table-column prop="saleNum3days" label="3天销量" sortable="custom"></el-table-column>
@@ -118,12 +137,13 @@
       <el-table-column prop="saleNum30days" label="30天销量" sortable="custom"></el-table-column>
       <el-table-column prop="trend" label="走势"></el-table-column>
       <el-table-column prop="saleNumDailyAve" label="日均销量" sortable="custom"></el-table-column>
-      <el-table-column prop="hopeUseNum" label="义乌仓库存" sortable="custom"></el-table-column>
-      <el-table-column prop="amount" label="义乌仓采购未审核" sortable="custom"></el-table-column>
-      <el-table-column prop="totalHopeUN" label="预计可用库存" sortable="custom"></el-table-column>
+      <el-table-column prop="399hopeusenum" label="金皖399预计可用" sortable="custom"></el-table-column>
+      <el-table-column prop="auHopeusenum" label="万邑通AU预计可用库存" sortable="custom"></el-table-column>
+      <el-table-column prop="totalhopeusenum" label="预计可用库存" sortable="custom"></el-table-column>
+      <el-table-column prop="auHopeSaleDays" label="万邑通AU预计可用天数" sortable="custom"></el-table-column>
       <el-table-column prop="hopeSaleDays" label="预计可卖天数" sortable="custom"></el-table-column>
-      <el-table-column prop="purchaseNum" label="采购数量" sortable="custom"></el-table-column>
-      <el-table-column prop="price" label="单价" sortable="custom"></el-table-column>
+      <el-table-column prop="purchnum" label="采购数量" sortable="custom"></el-table-column>
+      <el-table-column prop="shipnum" label="发货数量" sortable="custom"></el-table-column>
     </el-table>
     <div class="toolbar">
       <el-pagination
@@ -141,7 +161,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-import { getMember, getUkReplenish } from "../../api/profit";
+import { getMember, getAuRealReplenish } from "../../api/profit";
 import { APIExportReplenish  } from "../../api/product";
 import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 
@@ -155,6 +175,7 @@ export default {
       total: null,
       purchaser: [],
       trend: ["持续上升", "波动上升", "持续下降", "波动下降", "维持不变"],
+      isShipping:["是", "否"],
       isPurchaser: ["是", "否"],
       condition: {
         sku: "",
@@ -162,6 +183,7 @@ export default {
         purchaser: "",
         trend: "",
         isPurchaser: "",
+        isShipping:'',
         pageSize: 20,
         page: 1
       },
@@ -170,7 +192,7 @@ export default {
   },
   methods: {
     exportExcel(from){
-      from.type='uk'
+      from.type='ukReal'
        APIExportReplenish(from).then(res => {
         const blob = new Blob([res.data], {
           type:
@@ -209,7 +231,7 @@ export default {
     },
     onSubmit(form) {
       this.listLoading=true
-      getUkReplenish(form).then(response => {
+      getAuRealReplenish(form).then(response => {
         this.listLoading=false
         this.tableData = response.data.data.items;
         this.total = response.data.data._meta.totalCount;

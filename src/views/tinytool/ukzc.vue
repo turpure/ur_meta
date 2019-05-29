@@ -1,5 +1,5 @@
 <template>
-  <!-- <div>采购毛利润报表</div>     -->
+  <!-- <div>AU真仓</div>     -->
   <div class="toolbar">
     <div class="demo-block demo-box demo-zh-CN demo-transition">
       <transition name="el-fade-in-linear">
