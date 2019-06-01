@@ -523,6 +523,14 @@ export function getRefundAnalysisGoods(param) {
     data
   })
 }
+export function getRefundExpressRate(param) {
+  const data = { condition: param }
+  return request({
+    url: '/report/refund-express-rate',
+    method: 'post',
+    data
+  })
+}
 export function getDeadFee(param) {
   const data = { condition: param }
   return request({
