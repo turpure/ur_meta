@@ -266,6 +266,7 @@ export default {
         yAxis: [
           {
             type: "value",
+            inverse:true,
             axisLabel: {
               formatter: "{value} $"
             }
