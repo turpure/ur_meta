@@ -107,7 +107,8 @@
               style="width:10rem;"
               placeholder="起始月"
               @change="settime"
-            ></el-date-picker>-
+            ></el-date-picker>
+            -
             <el-date-picker
               size="small"
               v-model="time2"
@@ -407,19 +408,19 @@ export default {
     getRowClass({ row, column, rowIndex, columnIndex }) {
       const indexDel = this.list.length;
       if (rowIndex === 0 && columnIndex <= 3) {
-        return "background: #f0f9eb;color:#67c23a";
+        return "background: rgb(236, 245, 255);color:#666";
       }
       if (rowIndex === 0 && columnIndex === 5) {
-        return "background: #C0C4CC;color:#fff";
+        return "background: #C0C4CC;color:#666";
       }
       if (rowIndex === 0 && columnIndex === 4) {
-        return "background: #909399;color:#fff";
+        return "background: rgb(248, 209, 158);color:#666";
       }
       if (rowIndex === 1 && columnIndex >= indexDel) {
-        return "background: #C0C4CC;color:#fff";
+        return "background: #C0C4CC;color:#666";
       }
       if (rowIndex === 1 && columnIndex < indexDel) {
-        return "background: #909399;color:#fff";
+        return "background: rgb(248, 209, 158);color:#666";
       }
     },
     settime(e) {
