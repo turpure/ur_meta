@@ -373,6 +373,8 @@
       @sort-change="sortNumber"
       max-height="670"
       v-show="showTable.order"
+      show-summary
+      :summary-method="getSummaries1"
     >
       <el-table-column prop="suffix" label="账号" sortable align="center"></el-table-column>
       <el-table-column prop="salesman" label="销售员" sortable align="center"></el-table-column>
@@ -383,10 +385,11 @@
       <el-table-column prop="orderId" label="店铺单号" sortable align="center"></el-table-column>
       <el-table-column prop="mergeBillId" label="合并单号" sortable align="center"></el-table-column>
       <el-table-column prop="storeName" label="仓库" sortable align="center"></el-table-column>
-      <el-table-column prop="refund" label="退款$" sortable="custom" align="center"></el-table-column>
+      <el-table-column prop="refund" label="退款$" sortable="custom" align="center" width="100"></el-table-column>
       <el-table-column
         prop="refundZn"
         label="退款￥"
+         width="100"
         sortable="custom"
         :formatter="empty"
         align="center"
@@ -753,6 +756,8 @@ export default {
       kefu: [],
       totalPrice: 0,
       currentPrice: 0,
+      tksj:0,
+      tkjq:0,
       total: null,
       total2: null,
       total3: null,
@@ -1726,6 +1731,26 @@ export default {
         ) / 100;
       return sums;
     },
+    getSummaries1(param) {
+      const { columns, data } = param;
+      const sums = [];
+      const fileds = columns.map(item => item.property);
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = "合计";
+          return;
+        }
+        if (index === 9) {
+          sums[index] = this.tksj;
+          return;
+        }
+        if (index === 10) {
+          sums[index] = this.tkjq;
+          return;
+        }
+      });
+      return sums;
+    },
     // 折叠导航栏
     collapse: function() {
       this.collapsed = !this.collapsed;
@@ -1742,6 +1767,9 @@ export default {
         this.total = res.data.data._meta.totalCount;
         this.condition.page = res.data.data._meta.currentPage;
         this.condition.pageSize = res.data.data._meta.perPage;
+        this.tksj=res.data.data.extra.totalRefundUs;
+        this.tkjq=res.data.data.extra.totalRefundZn;
+        console.log(this.tksj)
       });
     },
     analysis(from) {
