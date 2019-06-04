@@ -373,8 +373,6 @@
       @sort-change="sortNumber"
       max-height="670"
       v-show="showTable.order"
-      show-summary
-      :summary-method="getSummaries1"
     >
       <el-table-column prop="suffix" label="账号" sortable align="center"></el-table-column>
       <el-table-column prop="salesman" label="销售员" sortable align="center"></el-table-column>
@@ -400,7 +398,8 @@
       <el-table-column prop="orderTime" label="交易时间" align="center"></el-table-column>
       <el-table-column prop="refundTime" label="退款时间" align="center"></el-table-column>
     </el-table>
-    <div class="block toolbar" v-show="showTable.order">
+    <div class="block toolbar" v-show="showTable.order" style="overflow:hidden">
+      <div style="float:left;margin-top:1px;">
       <el-pagination
         background
         @size-change="handleSizeChange"
@@ -411,6 +410,19 @@
         layout="total,sizes,prev,pager,next,jumper"
         :total="this.total"
       ></el-pagination>
+      </div>
+       <div style="float:right">
+        <p style="margin:0;font-size:14px;margin-right:18px;margin-top:8px;">
+          退款合计($):
+          <span style="color:red">{{tksj}}</span>
+        </p>
+        </div>
+        <div style="float:right">
+        <p style="margin:0;font-size:14px;margin-right:18px;margin-top:8px;">
+          退款合计(￥):
+          <span style="color:red">{{tkjq}}</span>
+        </p>
+      </div>
     </div>
     <!-- 退款产品明细 -->
     <el-table
@@ -1769,7 +1781,6 @@ export default {
         this.condition.pageSize = res.data.data._meta.perPage;
         this.tksj=res.data.data.extra.totalRefundUs;
         this.tkjq=res.data.data.extra.totalRefundZn;
-        console.log(this.tksj)
       });
     },
     analysis(from) {
