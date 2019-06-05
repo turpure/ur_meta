@@ -1841,7 +1841,9 @@ export default {
       });
       let objVat = Object.assign({}, from);
       if(objVat.account.length==0){
-        objVat.account=this.account
+        objVat.account=this.account.map(m => {
+              return m.store;
+            });
       }
       getRefundExpressRate(objVat).then(res => {
         const ordArr = res.data.data;
