@@ -1868,36 +1868,6 @@ export default {
         });
       }
       getRefundExpressRate(objVat).then(res => {
-        const ordArr = res.data.data;
-        var arr = [];
-        var options4 = {
-          title: {
-            text: "物流退款率"
-          },
-          tooltip: {
-            trigger: "item",
-            formatter: function(params) {
-                  var res = params.name+'<br/>';
-                  var myseries = ordArr;
-                      res=params.data.name +'：发货总量:'+params.data.value1+'：退款比例:'+params.data.value2;
-               return res;
-              }
-          },
-          series: [
-            {
-              name: "物流退款率",
-              type: "wordCloud",
-              size: ["80%", "80%"],
-              textRotation: [0, 45, 90, -45],
-              textPadding: 0,
-              autoSize: {
-                enable: true,
-                minSize: 14
-              },
-              data: []
-            }
-          ]
-        };
         function createRandomItemStyle() {
           return {
             normal: {
@@ -1912,12 +1882,60 @@ export default {
             }
           };
         }
-
+        const ordArr = res.data.data;
+        var arr = [];
+        var options4 = {
+          title: {
+            text: "物流退款率"
+          },
+          tooltip: {
+            trigger: "item",
+            formatter: function(params) {
+              var res = params.name + "<br/>";
+              var myseries = ordArr;
+              res =
+                params.data.name +
+                "：发货总量:" +
+                params.data.value1 +
+                "：退款比例:" +
+                params.data.value2;
+              return res;
+            }
+          },
+          series: [
+            {
+              name: "物流退款率",
+              type: "wordCloud",
+              size: ["80%", "80%"],
+              textRotation: [0, 45, 90, -45],
+              textPadding: 0,
+              autoSize: {
+                enable: true,
+                minSize: 14
+              },
+              textStyle: {
+                normal: {
+                  color: function() {
+                    return (
+                      "rgb(" +
+                      [
+                        Math.round(Math.random() * 160),
+                        Math.round(Math.random() * 160),
+                        Math.round(Math.random() * 160)
+                      ].join(",") +
+                      ")"
+                    );
+                  }
+                }
+              },
+              data: []
+            }
+          ]
+        };
         for (let i = 0; i < ordArr.length; i++) {
           let obj = {
             name: ordArr[i].expressName,
             value: ordArr[i].totalCount * ordArr[i].expressRate,
-            itemStyle: createRandomItemStyle(),
             value1: ordArr[i].totalCount,
             value2: ordArr[i].expressRate
           };
