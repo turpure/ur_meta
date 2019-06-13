@@ -676,7 +676,7 @@ export default {
     },
     // 数字排序
     sortNumber(column, prop, order) {
-      if(order==null){
+      if(column.order==null){
         this.condition.sort=null;
         this.onSubmit(this.condition);
       }
