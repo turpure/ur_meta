@@ -148,11 +148,11 @@ export default {
   position: absolute;
   top: 50%;
   left: 50%;
-  margin-left: -200px;
-  margin-top: -200px;
+  margin-left: -210px;
+  margin-top: -225px;
   width: 380px;
-  padding: 15px 35px 15px 35px;
-  background: rgba($color: #000000, $alpha: 0.1);
+  padding: 25px 35px 25px 35px;
+  background: rgba($color: #000, $alpha: 0.1);
   border: 1px solid #eee;
   // box-shadow: 0 0 25px #cac6c6;
   .title {
@@ -168,12 +168,12 @@ export default {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: url(../assets/bgbanner.jpg) no-repeat center;
+  background: url(../assets/bgban.png) no-repeat center;
   background-size: cover;
 }
 .bgTop{
   width: 100%;
-  padding-bottom: 15px;
+  padding-bottom: 25px;
 }
 .bgTop img{
   display: block;
