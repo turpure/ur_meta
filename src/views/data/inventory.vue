@@ -117,12 +117,20 @@
         <el-table-column property="storeName" label="仓库"></el-table-column>
         <el-table-column property="salerName" label="开发员"></el-table-column>
         <el-table-column property="useNum" label="可用库存数量"></el-table-column>
-        <el-table-column property="costmoney" label="可用库存金额"></el-table-column>
+        <el-table-column property="costmoney" label="可用库存金额">
+          <template slot-scope="scope">{{scope.row['costmoney'] | cutOut}}</template>
+        </el-table-column>
         <el-table-column property="notInStore" label="在途数量"></el-table-column>
-        <el-table-column property="notInCostmoney" label="在途金额"></el-table-column>
+        <el-table-column property="notInCostmoney" label="在途金额">
+          <template slot-scope="scope">{{scope.row['notInCostmoney'] | cutOut}}</template>
+        </el-table-column>
         <el-table-column property="hopeUseNum" label="总库存数量"></el-table-column>
-        <el-table-column property="totalCostmoney" label="总库存金额"></el-table-column>
-        <el-table-column property="30DayCostmoney" label="近30天出库金额"></el-table-column>
+        <el-table-column property="totalCostmoney" label="总库存金额">
+          <template slot-scope="scope">{{scope.row['totalCostmoney'] | cutOut}}</template>
+        </el-table-column>
+        <el-table-column property="30DayCostmoney" label="近30天出库金额">
+          <template slot-scope="scope">{{scope.row['30DayCostmoney'] | cutOut}}</template>
+        </el-table-column>
         <el-table-column property="sellDays" label="库存周转(天)"></el-table-column>
       </el-table>
       <div slot="footer" class="dialog-footer">
@@ -152,7 +160,7 @@ export default {
     cutOut: function(value) {
       if(value!=0){
        value = Number(value).toFixed(2);
-       return value;  
+       return value;
       }else{
         return 0;  
       }
