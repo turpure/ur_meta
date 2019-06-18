@@ -755,3 +755,11 @@ export function getStockDeveloperDetail(param) {
   })
 }
 
+export function getKeywordAnalysis(param) {
+  const data = { condition: param }
+  return request({
+    url: '/tiny-tool/keyword-analysis',
+    method: 'post',
+    data
+  })
+}

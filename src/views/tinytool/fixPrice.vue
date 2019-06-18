@@ -29,6 +29,9 @@
     <div v-show="show.auzc">
       <auzc></auzc>
     </div>
+    <div v-show="show.bidding">
+      <bidding></bidding>
+    </div>
     <div v-show="show.modify">
       <modify></modify>
     </div>
@@ -51,6 +54,7 @@ import au from "./au.vue";
 import ukxn from "./ukxn.vue";
 import ukzc from "./ukzc.vue";
 import auzc from "./auzc.vue";
+import bidding from "./bidding.vue";
 import modify from "./modify.vue";
 export default {
   components: {
@@ -61,6 +65,7 @@ export default {
     ukxn,
     ukzc,
     auzc,
+    bidding,
     modify
   },
   data() {
@@ -75,6 +80,7 @@ export default {
         ukxn: false,
         ukzc: false,
         auzc:false,
+        bidding:false,
         modify:false
       }
     };
@@ -118,6 +124,11 @@ export default {
         this.show["auzc"] = true;
       } else {
         this.show["auzc"] = false;
+      }
+      if (tab.name === "/v1/tiny-tool/keyword-analysis") {
+        this.show["bidding"] = true;
+      } else {
+        this.show["bidding"] = false;
       }
       if (tab.name === "/v1/tiny-tool/ebay-virtual-store") {
         this.show["modify"] = true;

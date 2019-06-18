@@ -55,6 +55,7 @@ import prescription from '../views/tinytool/prescription.vue'
 import ukxn from '../views/tinytool/ukxn.vue'
 import ukzc from '../views/tinytool/ukzc.vue'
 import joomtool from '../views/tinytool/joomtool.vue'
+import bidding from '../views/tinytool/bidding.vue'
 // 设置中心
 import deadFee from '../views/settings/deadFee.vue'
 import operationFee from '../views/settings/operationFee.vue'
@@ -381,6 +382,11 @@ const routes = [
         path: '/v1/tiny-tool/fyndiqz-upload',
         component: fyndiqzUpload,
         name: '产品上传'
+      },
+      {
+        path: '/v1/tiny-tool/keyword-analysis',
+        component: bidding,
+        name: '竞品分析'
       },
       {
         path: '/v1/tiny-tool/uk-fic',
