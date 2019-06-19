@@ -11,7 +11,7 @@
           :model="condition"
           :inline="true"
           ref="condition"
-          label-width="8rem"
+          label-width="5.8rem"
           class="demo-form-inline"
           v-show="show"
         >
@@ -21,7 +21,7 @@
               v-model="formInline.region"
               multiple
               collapse-tags
-              style="width:215px;"
+              style="width:170px;"
               placeholder="部门"
               @change="choosed"
             >
@@ -39,7 +39,7 @@
           <el-form-item label="开发员" class="input">
             <el-select
               v-model="condition.developer"
-              style="width:215px;"
+              style="width:170px;"
               multiple
               collapse-tags
               size="small"
@@ -60,7 +60,7 @@
             <el-select
               size="small"
               v-model="condition.goodsStatus"
-              style="width:215px;"
+              style="width:180px;"
               multiple
               collapse-tags
               placeholder="产品状态"
@@ -74,17 +74,16 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="标准利润" class="input">
+          <!-- <el-form-item label="标准利润" class="input">
             <el-input v-model="condition.minAvgNumber" size="small" style="width:215px;"></el-input>
           </el-form-item>
           <el-form-item label="最低开发款数" class="input">
             <el-input v-model="condition.minNumber" size="small" style="width:215px;"></el-input>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item label="时间类型" class="input" prop="dateType">
             <el-radio-group v-model="condition.dateType">
               <el-radio
                 border
-                 style="width:102px;"
                 v-for="(item,index) in dateType"
                 :index="index"
                 :key="item.id"
@@ -158,7 +157,7 @@
       @sort-change="sortNumber"
       show-summary
       :summary-method="getSummaries"
-      height="695"
+      height="740"
       style="width: 100%;zoom:0.9;font-size:12px;"
     >
       <el-table-column prop="developer" width="60" label="开发员" :formatter="empty"></el-table-column>
@@ -360,9 +359,7 @@ export default {
         goodsStatus: [],
         page: 1,
         pageSize: 20,
-        sort: '-profit',
-        minNumber:'200',
-        minAvgNumber:'300'
+        sort: '-profit'
       },
       tableMap: {
         first: {
