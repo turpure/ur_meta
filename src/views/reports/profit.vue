@@ -11,7 +11,7 @@
           :model="condition"
           :inline="true"
           ref="condition"
-          label-width="5.8rem"
+          label-width="8rem"
           class="demo-form-inline"
           v-show="show"
         >
@@ -21,7 +21,7 @@
               v-model="formInline.region"
               multiple
               collapse-tags
-              style="width:170px;"
+              style="width:215px;"
               placeholder="部门"
               @change="choosed"
             >
@@ -38,12 +38,11 @@
           </el-form-item>
           <el-form-item label="开发员" class="input">
             <el-select
-              size="small"
               v-model="condition.developer"
-              filterable
-              style="width:170px;"
+              style="width:215px;"
               multiple
               collapse-tags
+              size="small"
               placeholder="开发员"
             >
               <el-button plain type="info" @click="selectallm">全选</el-button>
@@ -61,7 +60,7 @@
             <el-select
               size="small"
               v-model="condition.goodsStatus"
-              style="width:180px;"
+              style="width:215px;"
               multiple
               collapse-tags
               placeholder="产品状态"
@@ -75,10 +74,17 @@
               ></el-option>
             </el-select>
           </el-form-item>
+          <el-form-item label="标准利润" class="input">
+            <el-input v-model="condition.minAvgNumber" size="small" style="width:215px;"></el-input>
+          </el-form-item>
+          <el-form-item label="最低开发款数" class="input">
+            <el-input v-model="condition.minNumber" size="small" style="width:215px;"></el-input>
+          </el-form-item>
           <el-form-item label="时间类型" class="input" prop="dateType">
             <el-radio-group v-model="condition.dateType">
               <el-radio
                 border
+                 style="width:102px;"
                 v-for="(item,index) in dateType"
                 :index="index"
                 :key="item.id"
@@ -99,7 +105,7 @@
               value-format="yyyy-MM-dd"
               type="daterange"
               align="right"
-              style="width:250px;"
+              style="width:215px;"
               unlink-panels
               range-separator="至"
               start-placeholder="开始日期"
@@ -152,7 +158,7 @@
       @sort-change="sortNumber"
       show-summary
       :summary-method="getSummaries"
-      height="740"
+      height="695"
       style="width: 100%;zoom:0.9;font-size:12px;"
     >
       <el-table-column prop="developer" width="60" label="开发员" :formatter="empty"></el-table-column>
@@ -164,7 +170,7 @@
         </template>
       </el-table-column>
       <el-table-column
-        width="100"
+        width="98"
         prop="goodsCode"
         label="产品编码"
         :formatter="empty"
@@ -172,14 +178,14 @@
       ></el-table-column>
       <el-table-column width="100" prop="devDate" label="开发日期" sortable="custom" :formatter="formatter"></el-table-column>
       <el-table-column
-        width="100"
+        width="98"
         prop="goodsStatus"
         label="产品状态"
         :formatter="empty"
         sortable="custom"
       ></el-table-column>
       <el-table-column width="75" prop="sold" label="销量" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column width="95" prop="amt" label="销售额" :formatter="empty" sortable="custom">
+      <el-table-column width="92" prop="amt" label="销售额" :formatter="empty" sortable="custom">
         <template slot-scope="scope">{{scope.row.amt | cutOut1}}</template>
       </el-table-column>
       <el-table-column width="90" prop="profit" label="总利润" :formatter="empty" sortable="custom">
@@ -354,7 +360,9 @@ export default {
         goodsStatus: [],
         page: 1,
         pageSize: 20,
-        sort: '-profit'
+        sort: '-profit',
+        minNumber:'200',
+        minAvgNumber:'300'
       },
       tableMap: {
         first: {
