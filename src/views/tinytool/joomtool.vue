@@ -369,12 +369,12 @@ export default {
       }
     },
     handleClick(tab, event) {
-      if (tab.name === "/v1/tiny-tool/joom-tracking-log") {
+      if (tab.name === "/v1/tiny-tool/joom-tool/update-tracking") {
         this.show["frist"] = true;
       } else {
         this.show["frist"] = false;
       }
-      if (tab.name === "/v1/tiny-tool/joom-null-express-fare") {
+      if (tab.name === "/v1/tiny-tool/joom-tracking-log") {
         this.show["last"] = true;
       } else {
         this.show["last"] = false;
