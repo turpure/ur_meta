@@ -84,12 +84,50 @@
         :total="this.total"
       ></el-pagination>
     </div>
+    <div class="tree" v-show="show.tree">
+       <el-table :data="tabtree" :height="tableHeight" class="elTable">
+        <el-table-column type="index" fixed align="center" header-align="center"></el-table-column>
+        <el-table-column label="SKU" header-align="center">
+          <el-table-column prop="sku" :render-header="renderHeadertree" align="center"></el-table-column>
+        </el-table-column>
+        <el-table-column label="订单编号" header-align="center">
+          <el-table-column prop="tradeNid" :render-header="renderHeadertree" align="center"></el-table-column>
+        </el-table-column>
+        <el-table-column label="账号简称" header-align="center">
+          <el-table-column prop="suffix" :render-header="renderHeadertree" align="center"></el-table-column>
+        </el-table-column>
+        <el-table-column label="物流名称" header-align="center">
+          <el-table-column prop="expressName" :render-header="renderHeadertree" align="center"></el-table-column>
+        </el-table-column>
+        <el-table-column label="配送国家" header-align="center">
+          <el-table-column prop="shipToCountryCode" :render-header="renderHeadertree" align="center"></el-table-column>
+        </el-table-column>
+        <el-table-column label="交易时间" header-align="center">
+          <el-table-column
+            prop="orderTime"
+            :render-header="renderHeadertree"
+            width="200"
+            align="center"
+          ></el-table-column>
+        </el-table-column>
+      </el-table>
+      <el-pagination
+        background
+        @size-change="handleSizeChangetree"
+        @current-change="handleCurrentChangetree"
+        :current-page="this.recconditiontree.page"
+        :page-sizes="[20, 30, 40]"
+        :page-size="this.recconditiontree.pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="this.totaltree"
+      ></el-pagination>
+    </div>
   </div>
 </template>
 
 <script>
 import { uploadJoom, getHeaders } from "../../api/api";
-import { APITralog, APISortkMember,APISort,APIDownJoom } from "../../api/product";
+import { APITralog, APISortkMember,APISort,APIDownJoom,APIExpressFare } from "../../api/product";
 import { getMenu } from "../../api/login";
 import XLSX from "xlsx";
 
@@ -100,13 +138,16 @@ export default {
       tableHeight: window.innerHeight - 135,
       allMenu: [],
       tabdate: [],
+      tabtree:[],
       pickingTab: true,
       recordTab: false,
       pickName: [],
-       goodsCode: "",
+      goodsCode: "",
       total: 0,
+      totaltree:0,
       time1: null,
       time2: null,
+      time1tree:null,
       reccondition: {
         pageSize: 20,
         page: 1,
@@ -118,6 +159,16 @@ export default {
         createDate: [],
         updateDate: []
       },
+      recconditiontree: {
+        pageSize: 20,
+        currentPage: 1,
+        tradeNid: null,
+        suffix: null,
+        orderTIme: null,
+        expressName: null,
+        sku: null,
+        shipToCountryCode: null
+      },
       condition: {
         suffix: [],
         goodsCode: ""
@@ -127,13 +178,14 @@ export default {
       allMenu:[],
       show:{
         frist:true,
-        last:false
+        last:false,
+        tree:false
       },
       headers: Object()
     };
   },
   methods: {
-     handleSizeChange(val) {
+    handleSizeChange(val) {
       this.reccondition.pageSize = val;
       this.getPic();
     },
@@ -141,12 +193,28 @@ export default {
       this.reccondition.page = val;
       this.getPic();
     },
+    handleSizeChangetree(val) {
+      this.recconditiontree.pageSize = val;
+      this.gettree();
+    },
+    handleCurrentChangetree(val) {
+      this.recconditiontree.currentPage = val;
+      this.gettree();
+    },
     getPic() {
       APITralog(this.reccondition).then(response => {
         this.tabdate = response.data.data.items;
         this.total = response.data.data._meta.totalCount;
         this.reccondition.pageSize = response.data.data._meta.perPage;
         this.reccondition.page = response.data.data._meta.currentPage;
+      });
+    },
+    gettree() {
+      APIExpressFare(this.recconditiontree).then(response => {
+        this.tabtree = response.data.data.items;
+        this.totaltree = response.data.data._meta.totalCount;
+        this.recconditiontree.pageSize = response.data.data._meta.perPage;
+        this.recconditiontree.currentPage = response.data.data._meta.currentPage;
       });
     },
     formatTen(num) {
@@ -179,6 +247,17 @@ export default {
         this.reccondition.updateDate = [];
       }
       this.getPic();
+    },
+    filtertree() {
+      if (this.time1tree !== null && this.time1tree.length !== 0) {
+        this.recconditiontree.orderTime = [
+          this.formatDate(this.time1tree[0]),
+          this.formatDate(this.time1tree[1])
+        ];
+      } else {
+        this.recconditiontree.orderTime = [];
+      }
+      this.gettree();
     },
     renderHeaderPic(h, { column, $index }) {
       if ($index === 0) {
@@ -368,6 +447,165 @@ export default {
         });
       }
     },
+    renderHeadertree(h, { column, $index }) {
+      if ($index === 0) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "30px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.recconditiontree.sku,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.recconditiontree.sku = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filtertree();
+                }
+              }
+            })
+          ]
+        );
+      } else if ($index === 1) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "30px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.recconditiontree.tradeNid,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.recconditiontree.tradeNid = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filtertree();
+                }
+              }
+            })
+          ]
+        );
+      } else if ($index === 2) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "30px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.recconditiontree.suffix,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.recconditiontree.suffix = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filtertree();
+                }
+              }
+            })
+          ]
+        );
+      } else if ($index === 3) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "30px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.recconditiontree.expressName,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.recconditiontree.expressName = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filtertree();
+                }
+              }
+            })
+          ]
+        );
+      } else if ($index === 4) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "30px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.recconditiontree.shipToCountryCode,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.recconditiontree.shipToCountryCode = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filtertree();
+                }
+              }
+            })
+          ]
+        );
+      }else if ($index === 5) {
+        return h("el-date-picker", {
+          props: {
+            value: this.time1tree,
+            size: "mini",
+            type: "daterange"
+          },
+          style: {
+            width: "180px",
+            padding: "2px"
+          },
+          on: {
+            input: value => {
+              this.time1tree = value;
+              this.$emit("input", value);
+            },
+            change: value => {
+              this.filtertree();
+            }
+          }
+        });
+      }
+    },
     handleClick(tab, event) {
       if (tab.name === "/v1/tiny-tool/joom-tool/update-tracking") {
         this.show["frist"] = true;
@@ -378,6 +616,11 @@ export default {
         this.show["last"] = true;
       } else {
         this.show["last"] = false;
+      }
+      if (tab.name === "/v1/tiny-tool/joom-null-express-fare") {
+        this.show["tree"] = true;
+      } else {
+        this.show["tree"] = false;
       }
     },
     uploadSuccess(response, file, fileList) {
@@ -416,6 +659,7 @@ export default {
   },
   mounted() {
     this.getPic();
+    this.gettree();
     this.action = uploadJoom();
     this.headers = getHeaders();
     getMenu().then(response => {
