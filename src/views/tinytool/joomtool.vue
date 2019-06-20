@@ -33,7 +33,7 @@
       </div>
     </div>
     <div class="last" v-show="show.last">
-       <el-table :data="tabdate" :height="tableHeight">
+      <el-table :data="tabdate" :height="tableHeight">
         <el-table-column type="index" fixed align="center" header-align="center"></el-table-column>
         <el-table-column label="上传人" header-align="center">
           <el-table-column prop="creator" :render-header="renderHeaderPic" align="center"></el-table-column>
@@ -85,7 +85,7 @@
       ></el-pagination>
     </div>
     <div class="tree" v-show="show.tree">
-       <el-table :data="tabtree" :height="tableHeight" class="elTable">
+      <el-table :data="tabtree" :height="tableHeight" class="elTable" v-loading="listLoading">
         <el-table-column type="index" fixed align="center" header-align="center"></el-table-column>
         <el-table-column label="SKU" header-align="center">
           <el-table-column prop="sku" :render-header="renderHeadertree" align="center"></el-table-column>
@@ -100,7 +100,11 @@
           <el-table-column prop="expressName" :render-header="renderHeadertree" align="center"></el-table-column>
         </el-table-column>
         <el-table-column label="配送国家" header-align="center">
-          <el-table-column prop="shipToCountryCode" :render-header="renderHeadertree" align="center"></el-table-column>
+          <el-table-column
+            prop="shipToCountryCode"
+            :render-header="renderHeadertree"
+            align="center"
+          ></el-table-column>
         </el-table-column>
         <el-table-column label="交易时间" header-align="center">
           <el-table-column
@@ -108,6 +112,7 @@
             :render-header="renderHeadertree"
             width="200"
             align="center"
+            :formatter="formatter"
           ></el-table-column>
         </el-table-column>
       </el-table>
@@ -127,7 +132,13 @@
 
 <script>
 import { uploadJoom, getHeaders } from "../../api/api";
-import { APITralog, APISortkMember,APISort,APIDownJoom,APIExpressFare } from "../../api/product";
+import {
+  APITralog,
+  APISortkMember,
+  APISort,
+  APIDownJoom,
+  APIExpressFare
+} from "../../api/product";
 import { getMenu } from "../../api/login";
 import XLSX from "xlsx";
 
@@ -138,16 +149,17 @@ export default {
       tableHeight: window.innerHeight - 135,
       allMenu: [],
       tabdate: [],
-      tabtree:[],
+      tabtree: [],
       pickingTab: true,
       recordTab: false,
+      listLoading: false,
       pickName: [],
       goodsCode: "",
       total: 0,
-      totaltree:0,
+      totaltree: 0,
       time1: null,
       time2: null,
-      time1tree:null,
+      time1tree: null,
       reccondition: {
         pageSize: 20,
         page: 1,
@@ -174,17 +186,20 @@ export default {
         goodsCode: ""
       },
       action: "upload",
-      activeName:'',
-      allMenu:[],
-      show:{
-        frist:true,
-        last:false,
-        tree:false
+      activeName: "",
+      allMenu: [],
+      show: {
+        frist: true,
+        last: false,
+        tree: false
       },
       headers: Object()
     };
   },
   methods: {
+    formatter(row, column) {
+      return row.orderTime ? row.orderTime.substring(0, 19) : "";
+    },
     handleSizeChange(val) {
       this.reccondition.pageSize = val;
       this.getPic();
@@ -210,11 +225,14 @@ export default {
       });
     },
     gettree() {
+      this.listLoading = true;
       APIExpressFare(this.recconditiontree).then(response => {
+        this.listLoading = false;
         this.tabtree = response.data.data.items;
         this.totaltree = response.data.data._meta.totalCount;
         this.recconditiontree.pageSize = response.data.data._meta.perPage;
-        this.recconditiontree.currentPage = response.data.data._meta.currentPage;
+        this.recconditiontree.currentPage =
+          response.data.data._meta.currentPage;
       });
     },
     formatTen(num) {
@@ -403,7 +421,7 @@ export default {
             })
           ]
         );
-      }else if ($index === 5) {
+      } else if ($index === 5) {
         return h("el-date-picker", {
           props: {
             value: this.time1,
@@ -583,7 +601,7 @@ export default {
             })
           ]
         );
-      }else if ($index === 5) {
+      } else if ($index === 5) {
         return h("el-date-picker", {
           props: {
             value: this.time1tree,
