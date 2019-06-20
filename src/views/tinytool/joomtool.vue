@@ -5,7 +5,7 @@
       <el-tab-pane
         v-for="(item, index) in this.allMenu"
         :label="item.name"
-        :name="item.name"
+        :name="item.route"
         :key="index"
       ></el-tab-pane>
     </el-tabs>
@@ -90,6 +90,7 @@
 <script>
 import { uploadJoom, getHeaders } from "../../api/api";
 import { APITralog, APISortkMember,APISort,APIDownJoom } from "../../api/product";
+import { getMenu } from "../../api/login";
 import XLSX from "xlsx";
 
 export default {
@@ -122,11 +123,8 @@ export default {
         goodsCode: ""
       },
       action: "upload",
-      activeName:'joom物流单号更改',
-      allMenu:[
-        {"name":'joom物流单号更改'},
-        {"name":'物流单号更改日志'}
-      ],
+      activeName:'',
+      allMenu:[],
       show:{
         frist:true,
         last:false
@@ -371,12 +369,12 @@ export default {
       }
     },
     handleClick(tab, event) {
-      if (tab.name === "joom物流单号更改") {
+      if (tab.name === "/v1/tiny-tool/joom-tracking-log") {
         this.show["frist"] = true;
       } else {
         this.show["frist"] = false;
       }
-      if (tab.name === "物流单号更改日志") {
+      if (tab.name === "/v1/tiny-tool/joom-null-express-fare") {
         this.show["last"] = true;
       } else {
         this.show["last"] = false;
@@ -420,6 +418,17 @@ export default {
     this.getPic();
     this.action = uploadJoom();
     this.headers = getHeaders();
+    getMenu().then(response => {
+      const res = response.data.data;
+      const menu = res.filter(e => e.route === "/v1/tiny-tool/options");
+      const arr = menu[0].children;
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i].route == "/v1/tiny-tool/joom-tool") {
+          this.allMenu = arr[i].tabs;
+        }
+      }
+      this.activeName = this.allMenu[0].route;
+    });
   }
 };
 </script>
