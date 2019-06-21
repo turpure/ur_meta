@@ -45,9 +45,14 @@
       </el-table-column>
       <el-table-column width="120" prop="costPrice" label="平均单价(￥)" :formatter="empty" header-align="center" align="center"></el-table-column>
       <el-table-column min-width="100" prop="weight" label="重量(g)" :formatter="empty" header-align="center" align="center"></el-table-column>
-      <el-table-column min-width="400" prop="url" label="链接" :formatter="empty" header-align="center" align="center">
+      <el-table-column min-width="400" prop="url" label="UK链接" :formatter="empty" header-align="center" align="center">
         <template slot-scope="scope">
           <a :href="scope.row.url" target="_blank">{{scope.row.url}}</a>
+        </template>
+      </el-table-column>
+      <el-table-column min-width="400" prop="url" label="AU链接" :formatter="empty" header-align="center" align="center">
+        <template slot-scope="scope">
+          <a :href="scope.row.url2" target="_blank">{{scope.row.url2}}</a>
         </template>
       </el-table-column>
       <!-- <infinite-loading
