@@ -8,7 +8,7 @@
         label-width="5.8rem"
         class="demo-form-inline"
       >
-        <el-form-item label="关键词" class="input">
+        <!-- <el-form-item label="关键词" class="input">
           <el-input
             placeholder="关键词"
             v-model="condition.keyword"
@@ -16,31 +16,36 @@
             size="small"
             clearable
           ></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item>
-          <el-button size="small" type="primary" @click="onSubmit(condition)">查询</el-button>
-          <el-button size="small" type="success" @click="add()">添加</el-button>
+          <!-- <el-button size="small" type="primary" @click="onSubmit(condition)">查询</el-button> -->
+          <el-button size="small" type="success" @click="add()" style="margin-left:20px;">添加</el-button>
           <el-button size="small" type="success" @click="pyAdd()">普源添加</el-button>
         </el-form-item>
       </el-form>
     </el-row>
     <el-table border :height="tableHeight" :data="tableData" :header-row-style="thClass">
-      <el-table-column min-width="60" prop="keyword" label="关键词" :formatter="empty"></el-table-column>
-      <el-table-column label="操作" width="95">
+      <el-table-column label="操作" width="95" header-align="center" align="center">
         <template slot-scope="scope">
           <el-button
             type="primary"
             size="small"
             @click="mark(scope.$index, scope.row)"
-            style="margin-left:10px;"
           >编辑</el-button>
         </template>
       </el-table-column>
-      <el-table-column min-width="100" prop="goodsCode" label="商品编码" :formatter="empty"></el-table-column>
-      <el-table-column min-width="100" prop="goodsName" label="商品名称" :formatter="empty"></el-table-column>
-      <el-table-column min-width="100" prop="costPrice" label="平均单价(￥)" :formatter="empty"></el-table-column>
-      <el-table-column min-width="100" prop="weight" label="重量(g)" :formatter="empty"></el-table-column>
-      <el-table-column min-width="400" prop="url" label="链接" :formatter="empty">
+      <el-table-column width="180" prop="keyword" label="关键词" :formatter="empty" header-align="center" align="center">
+        <el-table-column prop="keyword" :render-header="renderHeaderPicEbay" align="center" width="180"></el-table-column>
+      </el-table-column>
+      <el-table-column width="180" prop="goodsCode" label="商品编码" :formatter="empty" header-align="center" align="center">
+        <el-table-column prop="goodsCode" :render-header="renderHeaderPicEbay" align="center" width="180"></el-table-column>
+      </el-table-column>
+      <el-table-column width="180" prop="goodsName" label="商品名称" :formatter="empty" header-align="center" align="center">
+        <el-table-column prop="goodsName" :render-header="renderHeaderPicEbay" align="center" width="180"></el-table-column>
+      </el-table-column>
+      <el-table-column width="120" prop="costPrice" label="平均单价(￥)" :formatter="empty" header-align="center" align="center"></el-table-column>
+      <el-table-column min-width="100" prop="weight" label="重量(g)" :formatter="empty" header-align="center" align="center"></el-table-column>
+      <el-table-column min-width="400" prop="url" label="链接" :formatter="empty" header-align="center" align="center">
         <template slot-scope="scope">
           <a :href="scope.row.url" target="_blank">{{scope.row.url}}</a>
         </template>
@@ -240,7 +245,11 @@ export default {
       condition: {
         keyword: null,
         pageSize: 20,
-        currentPage: 1
+        currentPage: 1,
+        goodsCode: null,
+        goodsName: null,
+        costPrice: null,
+        weight: null
       },
       total: 0,
       totalcob: 0,
@@ -275,6 +284,90 @@ export default {
     };
   },
   methods: {
+   renderHeaderPicEbay(h, { column, $index }) {
+      if ($index === 0) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "30px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition.keyword,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition.keyword = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.onSubmit();
+                }
+              }
+            })
+          ]
+        );
+      } else if ($index === 1) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "30px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition.goodsCode,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition.goodsCode = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.onSubmit();
+                }
+              }
+            })
+          ]
+        );
+      } else if ($index === 2) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "30px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition.goodsName,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition.goodsName = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.onSubmit();
+                }
+              }
+            })
+          ]
+        );
+      }
+    },
     pyAdd() {
       this.dialogPytj = true;
     },
