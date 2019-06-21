@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <div>
     <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
       <el-tab-pane
         v-for="(item, index) in this.allMenu"
@@ -8,7 +8,7 @@
         :key="index"
       ></el-tab-pane>
     </el-tabs>
-    <div v-show="show.ukfic2">
+    <!-- <div v-show="show.ukfic2">
       <ukfic2></ukfic2>
     </div>
     <div v-show="show.ukfic">
@@ -34,8 +34,9 @@
     </div>
     <div v-show="show.modify">
       <modify></modify>
-    </div>
-  </section>
+    </div> -->
+    <router-view></router-view>
+  </div>
 </template>
 
 <script type="text/ecmascript-6">
@@ -91,49 +92,58 @@ export default {
     },
     handleClick(tab, event) {
       if (tab.name === "/v1/tiny-tool/uk-fic2") {
-        this.show["ukfic2"] = true;
-      } else {
-        this.show["ukfic2"] = false;
+        sessionStorage.setItem("fixname", "/v1/tiny-tool/uk-fic2");
+        this.$router.push({
+          path: `/v1/tiny-tool/uk-fic2`
+        });
       }
       if (tab.name === "/v1/tiny-tool/uk-fic") {
-        this.show["ukfic"] = true;
-      } else {
-        this.show["ukfic"] = false;
+      sessionStorage.setItem("fixname", "/v1/tiny-tool/uk-fic");
+       this.$router.push({
+          path: `/v1/tiny-tool/uk-fic`
+        });
       }
       if (tab.name === "/v1/tiny-tool/uk") {
-        this.show["uk"] = true;
-      } else {
-        this.show["uk"] = false;
+       sessionStorage.setItem("fixname", "/v1/tiny-tool/uk"); 
+       this.$router.push({
+          path: `/v1/tiny-tool/uk`
+        });
       }
       if (tab.name === "/v1/tiny-tool/au") {
-        this.show["au"] = true;
-      } else {
-        this.show["au"] = false;
+       sessionStorage.setItem("fixname", "/v1/tiny-tool/au"); 
+       this.$router.push({
+          path: `/v1/tiny-tool/au`
+        });
       }
       if (tab.name === "/v1/tiny-tool/uk-replenish") {
-        this.show["ukxn"] = true;
-      } else {
-        this.show["ukxn"] = false;
+       sessionStorage.setItem("fixname", "/v1/tiny-tool/uk-replenish"); 
+       this.$router.push({
+          path: `/v1/tiny-tool/uk-replenish`
+        });
       }
       if (tab.name === "/v1/tiny-tool/au-real-replenish") {
-        this.show["ukzc"] = true;
-      } else {
-        this.show["ukzc"] = false;
+       sessionStorage.setItem("fixname", "/v1/tiny-tool/au-real-replenish"); 
+       this.$router.push({
+          path: `/v1/tiny-tool/au-real-replenish`
+        });
       }
       if (tab.name === "/v1/tiny-tool/uk-real-replenish") {
-        this.show["auzc"] = true;
-      } else {
-        this.show["auzc"] = false;
+        sessionStorage.setItem("fixname", "/v1/tiny-tool/uk-real-replenish"); 
+        this.$router.push({
+          path: `/v1/tiny-tool/uk-real-replenish`
+        });
       }
       if (tab.name === "/v1/tiny-tool/keyword-analysis") {
-        this.show["bidding"] = true;
-      } else {
-        this.show["bidding"] = false;
+        sessionStorage.setItem("fixname", "/v1/tiny-tool/keyword-analysis");
+        this.$router.push({
+          path: `/v1/tiny-tool/keyword-analysis`
+        });
       }
       if (tab.name === "/v1/tiny-tool/ebay-virtual-store") {
-        this.show["modify"] = true;
-      } else {
-        this.show["modify"] = false;
+        sessionStorage.setItem("fixname", "/v1/tiny-tool/ebay-virtual-store");
+        this.$router.push({
+          path: `/v1/tiny-tool/ebay-virtual-store`
+        });
       }
     }
   },
@@ -147,7 +157,12 @@ export default {
           this.allMenu = arr[i].tabs;
         }
       }
-      this.activeName = this.allMenu[0].route;
+      const fatName = sessionStorage.getItem("fixname");
+      if (fatName) {
+        this.activeName = fatName;
+      }else{
+        this.activeName = this.allMenu[0].route;
+      }
     });
   }
 };
