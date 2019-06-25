@@ -35,10 +35,10 @@
         </template>
       </el-table-column>
       <el-table-column width="180" prop="keyword" label="关键词1" :formatter="empty" header-align="center" align="center">
-        <el-table-column prop="keyword" :render-header="renderHeaderPicEbay" align="center" width="180"></el-table-column>
+        <el-table-column prop="keyword" :render-header="renderHeaderPicEbay" align="center" width="180" :formatter="empty"></el-table-column>
       </el-table-column>
       <el-table-column width="180" prop="keyword2" label="关键词2" :formatter="empty" header-align="center" align="center">
-        <el-table-column prop="keyword2" :render-header="renderHeaderPicEbay" align="center" width="180"></el-table-column>
+        <el-table-column prop="keyword2" :render-header="renderHeaderPicEbay" align="center" width="180" :formatter="empty"></el-table-column>
       </el-table-column>
       <el-table-column width="180" prop="goodsCode" label="商品编码" :formatter="empty" header-align="center" align="center">
         <el-table-column prop="goodsCode" :render-header="renderHeaderPicEbay" align="center" width="180"></el-table-column>
@@ -53,22 +53,22 @@
       <el-table-column min-width="100" prop="weight" label="重量(g)" :formatter="empty" header-align="center" align="center"></el-table-column>
       <el-table-column prop="ukUrl" label="关键词1UK链接" :formatter="empty" header-align="center" align="center" width="200">
         <template slot-scope="scope">
-          <a :href="scope.row.url" target="_blank">{{scope.row.ukUrl | cutOut}}</a>
+          <a :href="scope.row.ukUrl" target="_blank">{{scope.row.ukUrl | cutOut}}</a>
         </template>
       </el-table-column>
       <el-table-column  prop="ukUrl2" label="关键词2UK链接" :formatter="empty" header-align="center" align="center" width="200">
         <template slot-scope="scope">
-          <a :href="scope.row.url" target="_blank">{{scope.row.ukUrl2 | cutOut}}</a>
+          <a :href="scope.row.ukUrl2" target="_blank">{{scope.row.ukUrl2 | cutOut}}</a>
         </template>
       </el-table-column>
       <el-table-column prop="auUrl" label="关键词1AU链接" :formatter="empty" header-align="center" align="center" width="200">
         <template slot-scope="scope">
-          <a :href="scope.row.url2" target="_blank">{{scope.row.auUrl | cutOut}}</a>
+          <a :href="scope.row.auUrl" target="_blank">{{scope.row.auUrl | cutOut}}</a>
         </template>
       </el-table-column>
       <el-table-column prop="auUrl2" label="关键词2AU链接" :formatter="empty" header-align="center" align="center" width="200">
         <template slot-scope="scope">
-          <a :href="scope.row.url2" target="_blank">{{scope.row.auUrl2 | cutOut}}</a>
+          <a :href="scope.row.auUrl2" target="_blank">{{scope.row.auUrl2 | cutOut}}</a>
         </template>
       </el-table-column>
       <!-- <infinite-loading
@@ -241,7 +241,7 @@
             border
             :data="viweTable"
             :header-row-style="thClass"
-            v-show="viweTable.length!=0"
+            v-show="flagTd"
             v-loading="listLoading"
           >
             <el-table-column min-width="100" prop="goodsCode" label="商品编码" :formatter="empty" header-align="center" align="center"></el-table-column>
@@ -302,6 +302,7 @@ export default {
       dialogPictureBjEbaytj: false,
       dialogPytj: false,
       flag: true,
+      flagTd:false,
       condition: {
         keyword: null,
         pageSize: 20,
@@ -499,6 +500,7 @@ export default {
       this.dialogPytj = true;
     },
     searchPy() {
+      this.flagTd=true
       this.listLoading=true
       getKeywordList(this.cob).then(response => {
         this.listLoading=false
