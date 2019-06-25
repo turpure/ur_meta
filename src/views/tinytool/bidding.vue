@@ -50,7 +50,7 @@
           <a :href="scope.row.url" target="_blank">{{scope.row.url}}</a>
         </template>
       </el-table-column>
-      <el-table-column min-width="400" prop="url" label="AU链接" :formatter="empty" header-align="center" align="center">
+      <el-table-column min-width="400" prop="url2" label="AU链接" :formatter="empty" header-align="center" align="center">
         <template slot-scope="scope">
           <a :href="scope.row.url2" target="_blank">{{scope.row.url2}}</a>
         </template>
