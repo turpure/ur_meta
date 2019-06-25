@@ -152,6 +152,7 @@
           <el-col :span="18">
             <el-select
                     v-model="editForm.attributeName"
+                    clearable
                     style="width: 100%"
                     @change="specificityIndex($event)">
               <el-option v-for="(item, key) in specificity" :key='item.key' :label="item" :value="item"></el-option>
@@ -179,6 +180,7 @@
           <el-col :span="18">
             <el-select
                       style="width:100%"
+                      clearable
                       v-model="oaGoods.cate"
                       @change="mainIndex($event)">
                 <el-option v-for="(item, key) in mainCategory" :key='item.key' :label="item" :value="item"></el-option>
@@ -192,6 +194,7 @@
           <el-col :span="18">
             <el-select
                       style="width: 100%"
+                      clearable
                       v-model="oaGoods.subCate"
                       @change="childrenIndex($event)">
                 <el-option v-for="(item, key) in childrenCategory" :key='item.key' :label="item" :value="item"></el-option>
@@ -205,6 +208,7 @@
           <el-col :span="18">
             <el-select
                     v-model="editForm.season"
+                    clearable
                     style="width: 100%"
                     @change="seasonnIndex($event)">
               <el-option v-for="(item, key) in seasonn" :key='item.key' :label="item" :value="item"></el-option>
