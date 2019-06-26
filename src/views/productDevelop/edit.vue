@@ -98,7 +98,7 @@
           <el-col :span="18">
             <el-input
                     v-model="editForm.purchaser"
-                    style=""></el-input>
+                    style="" disabled></el-input>
           </el-col>
         </el-col>
         <el-col :span="8" style="margin-top: 20px">
