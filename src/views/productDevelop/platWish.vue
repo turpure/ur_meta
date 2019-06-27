@@ -340,11 +340,11 @@
         <el-button style="margin-left:17px;float:left" type="primary" @click="showAttribute">
           <i :class="[showattribute?'el-icon-minus':'el-icon-plus']" style="margin-right: 5px"></i>多属性设置
         </el-button>
-        <el-input style="float:left;width:100px;margin-left:10px;" placeholder="中文" v-model="ordColor"></el-input>
-        <el-input style="float:left;width:100px;margin-left:5px;" placeholder="英文" v-model="newColor"></el-input>
+        <el-input style="float:left;width:100px;margin-left:10px;" placeholder="替换前" v-model="ordColor"></el-input>
+        <el-input style="float:left;width:100px;margin-left:5px;" placeholder="替换后" v-model="newColor"></el-input>
         <el-button type="success" style="float:left;width:100px;margin-left:5px;" @click="replaceColor">替换颜色</el-button>
-        <el-input style="float:left;width:100px;margin-left:10px;" placeholder="中文" v-model="ordSize"></el-input>
-        <el-input style="float:left;width:100px;margin-left:5px;" placeholder="英文" v-model="newSize"></el-input>
+        <el-input style="float:left;width:100px;margin-left:10px;" placeholder="替换前" v-model="ordSize"></el-input>
+        <el-input style="float:left;width:100px;margin-left:5px;" placeholder="替换后" v-model="newSize"></el-input>
         <el-button type="danger" style="float:left;width:100px;margin-left:5px;" @click="replaceSize">替换尺寸</el-button>
     </el-col>
     </el-row>
