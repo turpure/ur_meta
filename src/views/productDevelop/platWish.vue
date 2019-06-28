@@ -760,7 +760,8 @@ import {
   APIPlatExportWish,
   APIPlatExportJoom,
   APIDeleteVariant,
-  APIDeleteEbaySku
+  APIDeleteEbaySku,
+  APISaveFinishPlat
 } from "../../api/product";
 export default {
   props: {
@@ -843,25 +844,57 @@ export default {
     },
     keepPerfect() {
       if (this.tips) {
-        const data = {
-          id: this.wishForm.infoId,
-          plat: []
-        };
-        if (this.tips == "Wish") {
+      const md = JSON.stringify(this.mandatoryData);
+      const mr = JSON.stringify(this.randomData);
+      const data = {
+        id: this.wishForm.infoId,
+        basicInfo: {},
+        plat: [],
+        skuInfo: []
+      };
+      data.basicInfo = this.wishForm;
+      var url="";
+      for(var y=0;y<this.url.length;y++){
+        if(y==this.url.length - 1){
+          url+=this.url[y];
+        }else{
+         url+=(this.url[y]+ "\n");
+        }
+      }
+       if (this.tips == "Wish") {
           data.plat = ["wish"];
         } else {
           data.plat = ["joom"];
         }
-        APIFinishPlat(data).then(res => {
-          if (res.data.code == 200) {
-            this.$message({
-              message: "保存成功",
-              type: "success"
-            });
-          } else {
-            this.$message.error(res.data.message);
-          }
-        });
+      data.basicInfo.extraImages = url;
+      data.basicInfo.id = this.condition.id;
+      data.basicInfo.requiredKeywords = md;
+      data.basicInfo.randomKeywords = mr;
+      data.skuInfo = this.tableData;
+      APISaveFinishPlat(data).then(res => {
+        if (res.data.code == 200) {
+          this.$message({
+            message: "保存成功",
+            type: "success"
+          });
+        } else {
+          this.$message.error("保存失败");
+        }
+      });
+        // const data = {
+        //   id: this.wishForm.infoId,
+        //   plat: []
+        // };
+        // APIFinishPlat(data).then(res => {
+        //   if (res.data.code == 200) {
+        //     this.$message({
+        //       message: "保存成功",
+        //       type: "success"
+        //     });
+        //   } else {
+        //     this.$message.error(res.data.message);
+        //   }
+        // });
       } else {
         this.$message.error("请选择要保存的模板");
       }
