@@ -202,6 +202,7 @@
       <!--<font size="3">下移动</font>-->
       <!--</el-button>-->
       <!--</el-col>-->
+      <el-row>
       <el-col :span="24" style="padding: 0;">
         <h3 class="toolbar essential">主信息</h3>
       </el-col>
@@ -330,12 +331,13 @@
           <el-input v-model="wishForm.shippingTime" style="width:100%"></el-input>
         </el-col>
       </el-col>
+      </el-row>
     </el-form>
     <el-col :span="24" style="padding: 0;margin-left: 15px">
       <h3 class="toolbar essential">多属性设置</h3>
     </el-col>
-    <!-- <el-button @click="dialogVisible = true" style="margin-left:35px;" type="primary">多属性设置</el-button> -->
     <el-row>
+    <!-- <el-button @click="dialogVisible = true" style="margin-left:35px;" type="primary">多属性设置</el-button> -->
       <el-col :span="24">
         <el-button style="margin-left:17px;float:left" type="primary" @click="showAttribute">
           <i :class="[showattribute?'el-icon-minus':'el-icon-plus']" style="margin-right: 5px"></i>多属性设置
