@@ -864,9 +864,9 @@ export default {
         }
       }
        if (this.tips == "Wish") {
-          data.plat = ["wish"];
+          data.plat = "wish";
         } else {
-          data.plat = ["joom"];
+          data.plat = "joom";
         }
       data.basicInfo.extraImages = url;
       data.basicInfo.id = this.condition.id;
