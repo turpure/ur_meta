@@ -1051,7 +1051,7 @@ export default {
         }
       }
       const data = {
-        id:this.wishForm.nid,
+        id:this.wishForm.infoId,
         plat:'ebay',
         basicInfo: {
           nid: this.wishForm.nid,
