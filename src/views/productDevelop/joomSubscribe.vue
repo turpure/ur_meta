@@ -19,12 +19,22 @@
       border
       class="elTableForm"
       :header-cell-style="getRowClass"
-      :height="tableHeightstock"
       style="width: 98%;margin:auto;margin-top:5px;"
     >
       <el-table-column type="index" fixed align="center" width="80" header-align="center"></el-table-column>
+      <el-table-column label="操作" fixed header-align="center" width="108">
+        <template slot-scope="scope">
+          <el-tooltip content="查看">
+            <i
+              class="el-icon-view"
+              @click="viewPic(scope.$index, scope.row)"
+              style="color: #409EFF;cursor:pointer;margin-left:35px;"
+            ></i>
+          </el-tooltip>
+        </template>
+      </el-table-column>
       <el-table-column label="类目" header-align="center" align="center" prop="cateName"></el-table-column>
-      <el-table-column label="类目ID" header-align="center" align="center" prop="cateId"></el-table-column>
+      <!-- <el-table-column label="类目ID" header-align="center" align="center" prop="cateId"></el-table-column> -->
       <el-table-column label="创建人" header-align="center" align="center" prop="creator"></el-table-column>
       <el-table-column label="创建时间" header-align="center" align="center" prop="createdDate"></el-table-column>
     </el-table>
@@ -52,6 +62,12 @@ export default {
     this.getData();
   },
   methods: {
+    viewPic(index,row) {
+      let Logistics = this.$router.resolve({
+        path: `/joomSubscribeId/${row.cateId}`
+      });
+      window.open(Logistics.href);
+    },
     getData() {
       getSubscribeJoomList().then(response => {
         this.tableDate = response.data.data;

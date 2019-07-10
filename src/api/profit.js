@@ -812,3 +812,12 @@ export function getSubscribeJoomList() {
     method: 'get'
   })
 }
+
+export function APIJoomCateProduct(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data-mine/joom-cate-product',
+    method: 'post',
+    data
+  })
+}

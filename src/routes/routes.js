@@ -99,6 +99,7 @@ import collectionJoom from '../views/productDevelop/collectionJoom.vue'
 import joomId from '../views/productDevelop/collectionJoomDetails.vue'
 import joomRelation from '../views/productDevelop/joomRelation.vue'
 import joomSubscribe from '../views/productDevelop/joomSubscribe.vue'
+import joomSubscribeId from '../views/productDevelop/joomSubscribeId.vue'
 // 报表中心
 import reportForm from '../views/productDevelop/reportForm.vue'
 import formEdit from '../views/productDevelop/formEdit.vue'
@@ -551,6 +552,11 @@ const routes = [
             path: '/joom/:id',
             component: joomId,
             name: 'joomId'
+          },
+          {
+            path: '/joomSubscribeId/:id',
+            component: joomSubscribeId,
+            name: 'joomSubscribeId'
           },
           {
             path: '/joomRelation/:id',
