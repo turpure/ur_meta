@@ -77,6 +77,16 @@
             width="155"
           ></el-table-column>
         </el-table>
+        <el-pagination
+          background
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="this.condition.page"
+          :page-sizes="[20, 30, 40]"
+          :page-size="this.condition.pageSize"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="this.total"
+        ></el-pagination>
       </el-col>
     </el-row>
   </div>
@@ -87,19 +97,33 @@ import { APIJoomCateProduct } from "../../api/profit";
 export default {
   data() {
     return {
-      toolTipClass: 'page-login-toolTipClass',
-      tableHeight: window.innerHeight - 130,
+      toolTipClass: "page-login-toolTipClass",
+      tableHeight: window.innerHeight - 153,
+      total: 0,
       tableData: [],
       condition: {
-        cateId: null
+        cateId: null,
+        pageSize: 20,
+        page: 1
       }
     };
   },
   methods: {
+    handleSizeChange(val) {
+      this.condition.pageSize = val;
+      this.relation();
+    },
+    handleCurrentChange(val) {
+      this.condition.page = val;
+      this.relation();
+    },
     relation() {
-      APIJoomCateProduct(this.condition).then(res => {
-        if (res.data.code == 200) {
-          this.tableData = res.data.data;
+      APIJoomCateProduct(this.condition).then(response => {
+        if (response.data.code == 200) {
+          this.tableData = response.data.data.items;
+          this.total = response.data.data._meta.totalCount;
+          this.condition.pageSize = response.data.data._meta.perPage;
+          this.condition.page = response.data.data._meta.currentPage;
         } else {
           this.$message.error(res.data.message);
         }
