@@ -789,3 +789,19 @@ export function getkeywordExport(param) {
     responseType: 'arraybuffer'
   })
 }
+
+export function getJoomCate() {
+  return request({
+    url: 'oa-data-mine/joom-cate',
+    method: 'get'
+  })
+}
+
+export function getSubscribeJoomCate(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data-mine/subscribe-joom-cate',
+    method: 'post',
+    data
+  })
+}

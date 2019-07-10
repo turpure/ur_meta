@@ -98,6 +98,7 @@ import collection from '../views/productDevelop/collection.vue'
 import collectionJoom from '../views/productDevelop/collectionJoom.vue'
 import joomId from '../views/productDevelop/collectionJoomDetails.vue'
 import joomRelation from '../views/productDevelop/joomRelation.vue'
+import joomSubscribe from '../views/productDevelop/joomSubscribe.vue'
 // 报表中心
 import reportForm from '../views/productDevelop/reportForm.vue'
 import formEdit from '../views/productDevelop/formEdit.vue'
@@ -540,6 +541,11 @@ const routes = [
             path: '/v1/oa-data-mine/collectionJoom',
             component: collectionJoom,
             name: 'Joom'
+          },
+          {
+            path: '/v1/oa-data-mine/joom-cate-mine-index',
+            component: joomSubscribe,
+            name: 'Joom订阅'
           },
           {
             path: '/joom/:id',
