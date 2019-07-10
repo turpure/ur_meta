@@ -14,24 +14,56 @@
         <span class="dsblock fon12 dsblockGreen" @click="collection">开始订阅</span>
       </el-col>
     </el-col>
+    <el-table
+      :data="tableDate"
+      border
+      class="elTableForm"
+      :header-cell-style="getRowClass"
+      :height="tableHeightstock"
+      style="width: 98%;margin:auto;margin-top:5px;"
+    >
+      <el-table-column type="index" fixed align="center" width="80" header-align="center"></el-table-column>
+      <el-table-column label="类目" header-align="center" align="center" prop="cateName"></el-table-column>
+      <el-table-column label="类目ID" header-align="center" align="center" prop="cateId"></el-table-column>
+      <el-table-column label="创建人" header-align="center" align="center" prop="creator"></el-table-column>
+      <el-table-column label="创建时间" header-align="center" align="center" prop="createdDate"></el-table-column>
+    </el-table>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-import { getJoomCate, getSubscribeJoomCate } from "../../api/profit";
+import {
+  getJoomCate,
+  getSubscribeJoomCate,
+  getSubscribeJoomList
+} from "../../api/profit";
 export default {
   data() {
     return {
       joomId: null,
-      joomCate: []
+      joomCate: [],
+      tableDate: []
     };
   },
   mounted() {
     getJoomCate().then(response => {
       this.joomCate = response.data.data;
     });
+    this.getData();
   },
   methods: {
+    getData() {
+      getSubscribeJoomList().then(response => {
+        this.tableDate = response.data.data;
+      });
+    },
+    getRowClass({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex == 0) {
+        return "color:#337ab7";
+      } else {
+        return "";
+      }
+    },
     collection() {
       let nid = null;
       for (let item in this.joomCate) {
@@ -48,6 +80,7 @@ export default {
             message: "成功",
             type: "success"
           });
+          this.getData();
         } else {
           this.$message.error(res.data.message);
         }

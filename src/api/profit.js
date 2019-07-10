@@ -805,3 +805,10 @@ export function getSubscribeJoomCate(param) {
     data
   })
 }
+
+export function getSubscribeJoomList() {
+  return request({
+    url: 'oa-data-mine/subscribe-joom-list',
+    method: 'get'
+  })
+}
