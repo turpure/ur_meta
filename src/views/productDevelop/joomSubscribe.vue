@@ -1,13 +1,13 @@
 <template>
   <div>
     <el-col :span="24" style="padding:15px 15px;">
-      <el-col :span="8">
+      <el-col :span="6">
         <el-select
           v-model="joomId"
           placeholder="--类目ID--"
           style="float: left;margin-right:10px;width:98%;"
         >
-          <el-option v-for="(item, key) in joomCate" :key="item.key" :label="key" :value="key"></el-option>
+          <el-option v-for="(item, key) in joomCate" :key="item.key" :label="item" :value="item"></el-option>
         </el-select>
       </el-col>
       <el-col :span="2">
@@ -33,8 +33,14 @@ export default {
   },
   methods: {
     collection() {
+      let nid = null;
+      for (let item in this.joomCate) {
+        if (this.joomId == this.joomCate[item]) {
+          nid = item;
+        }
+      }
       let obj = {
-        cateId: this.joomId
+        cateId: nid
       };
       getSubscribeJoomCate(obj).then(res => {
         if (res.data.code === 200) {
