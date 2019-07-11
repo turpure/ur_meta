@@ -5,56 +5,17 @@
         <el-table
           :data="tableData"
           border
-          style="width:100%;margin-top:0px;"
+          style="width:99%;margin-top:0px;margin:auto;"
           :height="tableHeight"
           :header-cell-style="getRowClass"
         >
-          <el-table-column type="index" width="50" align="center" header-align="center"></el-table-column>
-          <el-table-column
-            label="产品编号"
-            prop="productId"
-            header-align="center"
-            align="center"
-            width="200"
-          >
+          <el-table-column type="index" width="50" align="center" header-align="center" fixed></el-table-column>
+          <el-table-column label="商品图片" prop="mainImage" header-align="center" width="110" fixed>
             <template slot-scope="scope">
               <a
                 :href="'https://www.joom.com/en/products/'+scope.row.productId"
                 target="_blank"
-                class="classa"
-              >{{scope.row.productId}}</a>
-            </template>
-          </el-table-column>
-          <el-table-column
-            label="类目ID"
-            prop="cateId"
-            header-align="center"
-            align="center"
-            width="200"
-          >
-          </el-table-column>
-          <el-table-column
-            label="产品名称"
-            prop="productName"
-            header-align="center"
-            align="center"
-            width="200"
-          >
-            <template slot-scope="scope">
-              <a
-                :href="'https://www.joom.com/en/products/'+scope.row.productId"
-                target="_blank"
-                class="classa"
-              >{{scope.row.productName}}</a>
-            </template>
-          </el-table-column>
-          <el-table-column label="价格" prop="price" header-align="center" align="center" width="130"></el-table-column>
-          <el-table-column label="主图" prop="mainImage" header-align="center" width="130">
-            <template slot-scope="scope">
-              <a
-                :href="'https://www.joom.com/en/products/'+scope.row.productId"
-                target="_blank"
-                style="display: block; width: 80px;height: 80px"
+                style="display: block; width: 60px;height: 60px"
               >
                 <el-tooltip
                   placement="right"
@@ -67,12 +28,43 @@
                   </div>
                   <img
                     :src="scope.row.mainImage"
-                    style="width: 80px;height: 80px;margin-left:15px;"
+                    style="width: 60px;height: 60px;margin-left:15px;"
                   />
                 </el-tooltip>
               </a>
             </template>
           </el-table-column>
+          <el-table-column
+            label="产品名称"
+            prop="productName"
+            header-align="center"
+            align="left"
+            width="310"
+          >
+            <template slot-scope="scope">
+              <a
+                :href="'https://www.joom.com/en/products/'+scope.row.productId"
+                target="_blank"
+                class="classared"
+              >{{scope.row.productName}}</a>
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="类目名称"
+            prop="cateName"
+            header-align="center"
+            align="center"
+            width="250"
+          >
+            <template slot-scope="scope">
+              <a
+                :href="'https://www.joom.com/en/search/c.'+scope.row.productId"
+                target="_blank"
+                class="classa"
+              >{{scope.row.cateName}}</a>
+            </template>
+          </el-table-column>
+          <el-table-column label="价格" prop="price" header-align="center" align="center" width="130"></el-table-column>
           <el-table-column
             label="评分"
             prop="rating"
@@ -85,7 +77,7 @@
             prop="storeId"
             header-align="center"
             align="center"
-            width="170"
+            width="210"
           ></el-table-column>
           <el-table-column
             label="创建时间"
@@ -106,7 +98,7 @@
             prop="productCreatedTime"
             header-align="center"
             align="center"
-            width="155"
+            width="150"
           ></el-table-column>
         </el-table>
         <el-pagination
@@ -183,8 +175,19 @@ export default {
   margin: auto;
   margin-top: 10px;
 }
-.classa{
-  color: black
+.classa {
+  color: black;
+  text-decoration: none;
+}
+.classared {
+  color: #fff;
+  text-decoration: none;
+  background: #f78989;
+  display: block;
+  padding: 10px 5px;
+  width: 90%;
+  margin: auto;
+  border-radius: 6px;
 }
 </style>
 
