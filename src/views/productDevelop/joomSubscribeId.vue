@@ -2,7 +2,13 @@
   <div class="joomCat">
     <el-row style="margin-top:10px;">
       <el-col :span="24">
-        <el-table :data="tableData" border style="width:100%;margin-top:0px;" :height="tableHeight">
+        <el-table
+          :data="tableData"
+          border
+          style="width:100%;margin-top:0px;"
+          :height="tableHeight"
+          :header-cell-style="getRowClass"
+        >
           <el-table-column type="index" width="50" align="center" header-align="center"></el-table-column>
           <el-table-column
             label="产品编号"
@@ -10,35 +16,61 @@
             header-align="center"
             align="center"
             width="200"
-          ></el-table-column>
+          >
+            <template slot-scope="scope">
+              <a
+                :href="'https://www.joom.com/en/products/'+scope.row.productId"
+                target="_blank"
+                class="classa"
+              >{{scope.row.productId}}</a>
+            </template>
+          </el-table-column>
           <el-table-column
             label="类目ID"
             prop="cateId"
             header-align="center"
             align="center"
             width="200"
-          ></el-table-column>
+          >
+          </el-table-column>
           <el-table-column
             label="产品名称"
             prop="productName"
             header-align="center"
             align="center"
             width="200"
-          ></el-table-column>
+          >
+            <template slot-scope="scope">
+              <a
+                :href="'https://www.joom.com/en/products/'+scope.row.productId"
+                target="_blank"
+                class="classa"
+              >{{scope.row.productName}}</a>
+            </template>
+          </el-table-column>
           <el-table-column label="价格" prop="price" header-align="center" align="center" width="130"></el-table-column>
           <el-table-column label="主图" prop="mainImage" header-align="center" width="130">
             <template slot-scope="scope">
-              <el-tooltip
-                placement="right"
-                :open-delay="10"
-                class="exxHover"
-                popper-class="page-login-toolTipClass"
+              <a
+                :href="'https://www.joom.com/en/products/'+scope.row.productId"
+                target="_blank"
+                style="display: block; width: 80px;height: 80px"
               >
-                <div slot="content">
-                  <img :src="scope.row.mainImage" style="width: 300px;height: 300px;" />
-                </div>
-                <img :src="scope.row.mainImage" style="width: 80px;height: 80px;margin-left:15px;" />
-              </el-tooltip>
+                <el-tooltip
+                  placement="right"
+                  :open-delay="10"
+                  class="exxHover"
+                  popper-class="page-login-toolTipClass"
+                >
+                  <div slot="content">
+                    <img :src="scope.row.mainImage" style="width: 300px;height: 300px;" />
+                  </div>
+                  <img
+                    :src="scope.row.mainImage"
+                    style="width: 80px;height: 80px;margin-left:15px;"
+                  />
+                </el-tooltip>
+              </a>
             </template>
           </el-table-column>
           <el-table-column
@@ -109,6 +141,13 @@ export default {
     };
   },
   methods: {
+    getRowClass({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex == 0) {
+        return "color:#337ab7";
+      } else {
+        return "";
+      }
+    },
     handleSizeChange(val) {
       this.condition.pageSize = val;
       this.relation();
@@ -143,6 +182,9 @@ export default {
   overflow: hidden;
   margin: auto;
   margin-top: 10px;
+}
+.classa{
+  color: black
 }
 </style>
 
