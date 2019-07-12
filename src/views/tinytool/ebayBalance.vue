@@ -26,10 +26,13 @@
         :current-page="this.reccondition.page"
         :page-sizes="[50, 100, 200]"
         :page-size="this.reccondition.pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
+        layout="total, sizes,slot, prev, pager, next, jumper"
         :total="this.total"
         style="padding-top:5px;padding-bottom:5px;"
-      ></el-pagination>
+      >
+      <el-button type="text"
+                       @click="showAll">显示全部</el-button>
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -55,6 +58,9 @@ export default {
     };
   },
   methods: {
+    showAll() {
+      this.handleSizeChange(this.total)
+    },
     exportExcel() {
       APIExportEbayBalance(this.reccondition).then(res => {
         const blob = new Blob([res.data], {
@@ -220,7 +226,7 @@ export default {
             type: "daterange"
           },
           style: {
-            width: "180px",
+            width: "200px",
             padding: "2px"
           },
           on: {
