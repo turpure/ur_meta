@@ -9,6 +9,12 @@
         <el-table-column label="账号名称" header-align="center" prop="accountName" sortable="custom">
           <el-table-column prop="accountName" :render-header="renderHeaderPic" align="center"></el-table-column>
         </el-table-column>
+        <el-table-column label="销售" header-align="center" prop="accountName" sortable="custom">
+          <el-table-column prop="username" :render-header="renderHeaderPic" align="center"></el-table-column>
+        </el-table-column>
+        <el-table-column label="部门" header-align="center" prop="accountName" sortable="custom">
+          <el-table-column prop="department" :render-header="renderHeaderPic" align="center"></el-table-column>
+        </el-table-column>
         <el-table-column label="余额" header-align="center" sortable="custom" prop="balance">
           <el-table-column prop="balance" :render-header="renderHeaderPic" align="center"></el-table-column>
         </el-table-column>
@@ -51,6 +57,8 @@ export default {
         page: 1,
         accountName: null,
         balance: null,
+        username:null,
+        department:null,
         currency: null,
         sort: null,
         updatedDate: []
@@ -175,6 +183,60 @@ export default {
           [
             h("el-input", {
               props: {
+                value: this.reccondition.username,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.reccondition.username = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filter();
+                }
+              }
+            })
+          ]
+        );
+      } else if ($index === 2) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "30px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.reccondition.department,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.reccondition.department = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filter();
+                }
+              }
+            })
+          ]
+        );
+      } else if ($index === 3) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "30px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
                 value: this.reccondition.balance,
                 size: "mini",
                 clearable: true
@@ -191,7 +253,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 2) {
+      } else if ($index === 4) {
         return h(
           "div",
           {
@@ -218,7 +280,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 3) {
+      } else if ($index === 5) {
         return h("el-date-picker", {
           props: {
             value: this.time1,
