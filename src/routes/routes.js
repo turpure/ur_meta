@@ -57,6 +57,7 @@ import ukzc from '../views/tinytool/ukzc.vue'
 import auzc from '../views/tinytool/auzc.vue'
 import joomtool from '../views/tinytool/joomtool.vue'
 import bidding from '../views/tinytool/bidding.vue'
+import ebayBalance from '../views/tinytool/ebayBalance.vue'
 // 设置中心
 import deadFee from '../views/settings/deadFee.vue'
 import operationFee from '../views/settings/operationFee.vue'
@@ -447,6 +448,11 @@ const routes = [
         path: '/v1/tiny-tool/declared-value',
         component: order,
         name: '修改订单申报价'
+      },
+      {
+        path: '/v1/tiny-tool/ebay-balance',
+        component: ebayBalance,
+        name: 'ebay账号余额'
       },
       {
         path: '/v1/tiny-tool/exception-pay-pal',

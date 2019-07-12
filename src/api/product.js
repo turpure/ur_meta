@@ -1181,3 +1181,11 @@ export function APISaveFinishPlat(param) {
   })
 }
 
+export function APIEbayBalance(param) {
+  const data = { condition: param }
+  return request({
+    url: '/tiny-tool/ebay-balance?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
