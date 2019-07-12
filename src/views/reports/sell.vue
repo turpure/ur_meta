@@ -231,7 +231,7 @@
         align="center"
       ></el-table-column>
       <el-table-column
-        min-width="130"
+        min-width="138"
         prop="salemoney"
         label="成交价$"
         :formatter="empty"
@@ -371,7 +371,7 @@
     <el-table
       :data="tableData1"
       @sort-change="sortNumber"
-      max-height="645"
+      height="645"
       border
       class="elTable"
       v-show="showTable.order"
@@ -433,7 +433,7 @@
     <el-table
       :data="tableData2"
       @sort-change="sortNumber"
-      max-height="645"
+      height="645"
       v-show="showTable.goods"
       border
       class="elTable"
@@ -498,18 +498,24 @@
       </el-col>
     </div>
     <!-- 死库明细 -->
-    <el-table :data="tableData3" @sort-change="sortNumber" max-height="645" v-show="showTable.dead" border class="elTable" :header-cell-style="getRowClass" style="width: 100%;font-size:13px;" v-loading="load3">
+    <el-table :data="tableData3" @sort-change="sortNumber" height="645" v-show="showTable.dead" border class="elTable" :header-cell-style="getRowClass" style="width: 100%;font-size:13px;" v-loading="load3">
       <el-table-column prop="plat" label="平台" sortable align="center" width="100" fixed></el-table-column>
       <el-table-column prop="suffix" label="账号" sortable align="center" width="100" fixed></el-table-column>
       <el-table-column prop="salesman" label="销售员" sortable align="center" width="100" fixed></el-table-column>
-      <el-table-column prop="importDate" label="导入时间" sortable align="center" :formatter="formatterData" width="125"></el-table-column>
+      <el-table-column prop="importDate" label="导入时间" sortable align="center"  width="125">
+        <template slot-scope="scope">{{scope.row.importDate | cutOutDate}}</template>
+      </el-table-column>
       <el-table-column prop="type" label="清仓类型" sortable align="center" width="125"></el-table-column>
       <el-table-column prop="storeName" label="出货仓库" sortable align="center" width="100"></el-table-column>
       <el-table-column prop="goodsCode" label="商品编码" sortable align="center" width="100"></el-table-column>
       <el-table-column prop="goodsName" label="商品名称" sortable align="center" width="150"></el-table-column>
       <el-table-column prop="sku" label="sku" sortable align="center" width="120"></el-table-column>
-      <el-table-column prop="createDate" label="开发时间" sortable align="center" :formatter="formatterData" width="125"></el-table-column>
-      <el-table-column prop="lastPurchaseDate" label="最后采购时间" sortable align="center" :formatter="formatterData" width="125"></el-table-column>
+      <el-table-column prop="createDate" label="开发时间" sortable align="center" width="125">
+        <template slot-scope="scope">{{scope.row.createDate | cutOutDate}}</template>
+      </el-table-column>
+      <el-table-column prop="lastPurchaseDate" label="最后采购时间" sortable align="center" width="125">
+        <template slot-scope="scope">{{scope.row.lastPurchaseDate | cutOutDate}}</template>
+      </el-table-column>
       <el-table-column prop="checkNumber" label="盘点数量" sortable align="center" width="100"></el-table-column>
       <el-table-column prop="preCheckPrice" label="盘点前单价" sortable align="center" width="120"></el-table-column>
       <el-table-column prop="deadPrice" label="盘少单价（死库）" sortable align="center" width="150"></el-table-column>
@@ -549,9 +555,10 @@
     <el-table
       :data="tableData4"
       @sort-change="sortNumber"
-      max-height="645"
+      height="645"
       v-show="showTable.extra"
-       border class="elTable"
+      border 
+      class="elTable"
       :header-cell-style="getRowClass" 
       style="width: 100%;font-size:13px;" 
       v-loading="load4"
@@ -963,12 +970,13 @@ export default {
     cutOut: function(value) {
       value = Number(value).toFixed(2);
       return value;
-    }
+    },
+    cutOutDate(value){
+      value = value.substring(0, 16);
+      return value;
+    },
   },
   methods: {
-    formatterData(row, column){
-      return row.importDate ? row.importDate.substring(0, 16) : row.createdDate ?row.createdDate.substring(0, 16):row.lastPurchaseDate ?row.lastPurchaseDate.substring(0, 16):'';
-    },
     getRowClass({ row, column, rowIndex, columnIndex }) {
       if (rowIndex == 0) {
         return "color:#337ab7;background:#f5f7fa";
