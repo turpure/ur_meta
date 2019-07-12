@@ -1,18 +1,21 @@
 <template>
   <div>
     <div>
-      <el-table :data="tabdate" :height="tableHeight" class="elTable">
+      <el-col :span="24" style="padding:10px 20px;">
+        <el-button @click="exportExcel()" type="primary">导出表格</el-button>
+      </el-col>
+      <el-table :data="tabdate" :height="tableHeight" class="elTable" @sort-change="sortNumber">
         <el-table-column type="index" fixed align="center" header-align="center"></el-table-column>
-        <el-table-column label="账号名称" header-align="center">
+        <el-table-column label="账号名称" header-align="center" prop="accountName" sortable="custom">
           <el-table-column prop="accountName" :render-header="renderHeaderPic" align="center"></el-table-column>
         </el-table-column>
-        <el-table-column label="余额" header-align="center">
+        <el-table-column label="余额" header-align="center" sortable="custom" prop="balance">
           <el-table-column prop="balance" :render-header="renderHeaderPic" align="center"></el-table-column>
         </el-table-column>
-        <el-table-column label="货币" header-align="center">
+        <el-table-column label="货币" header-align="center" sortable="custom" prop="currency">
           <el-table-column prop="currency" :render-header="renderHeaderPic" align="center"></el-table-column>
         </el-table-column>
-        <el-table-column label="更新时间" header-align="center">
+        <el-table-column label="更新时间" header-align="center" sortable="custom" prop="updatedDate">
           <el-table-column prop="updatedDate" :render-header="renderHeaderPic" align="center"></el-table-column>
         </el-table-column>
       </el-table>
@@ -21,35 +24,72 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="this.reccondition.page"
-        :page-sizes="[20, 30, 40]"
+        :page-sizes="[50, 100, 200]"
         :page-size="this.reccondition.pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="this.total"
+        style="padding-top:5px;padding-bottom:5px;"
       ></el-pagination>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-import { APIEbayBalance } from "../../api/product";
+import { APIEbayBalance,APIExportEbayBalance } from "../../api/product";
 export default {
   data() {
     return {
-      tableHeight: window.innerHeight - 95,
+      tableHeight: window.innerHeight - 157,
       total: 0,
       time1: null,
-      tabdate:[],
+      tabdate: [],
       reccondition: {
-        pageSize: 20,
+        pageSize: null,
         page: 1,
         accountName: null,
-        balance	: null,
+        balance: null,
         currency: null,
+        sort: null,
         updatedDate: []
-      },
+      }
     };
   },
   methods: {
+    exportExcel() {
+      APIExportEbayBalance(this.reccondition).then(res => {
+        const blob = new Blob([res.data], {
+          type:
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+        });
+        var file = res.headers["content-disposition"]
+          .split(";")[1]
+          .split("filename=")[1];
+        var filename = JSON.parse(file);
+        const downloadElement = document.createElement("a");
+        const objectUrl = window.URL.createObjectURL(blob);
+        downloadElement.href = objectUrl;
+        // const filename =
+        //   "eBay_" + year + month + strDate + hour + minute + second;
+        downloadElement.download = filename;
+        document.body.appendChild(downloadElement);
+        downloadElement.click();
+        document.body.removeChild(downloadElement);
+      });
+    },
+    sortNumber(column, prop, order) {
+      if (column.order == null) {
+        this.reccondition.sort = null;
+        this.getPic();
+      }
+      if (column.order == "ascending") {
+        this.reccondition.sort = column.prop;
+        this.getPic();
+      }
+      if (column.order == "descending") {
+        this.reccondition.sort = "-" + column.prop;
+        this.getPic();
+      }
+    },
     handleSizeChange(val) {
       this.reccondition.pageSize = val;
       this.getPic();
@@ -87,6 +127,7 @@ export default {
       } else {
         this.reccondition.updatedDate = [];
       }
+      this.reccondition.pageSize=null
       this.getPic();
     },
     renderHeaderPic(h, { column, $index }) {

@@ -203,13 +203,13 @@
                          label="导入时间"
                          sortable
                          align="center"
-                         min-width="120">
+                         width="125">
                          <template slot-scope="scope">{{scope.row.importDate | cutOutDate}}</template>
                          </el-table-column>
         <el-table-column prop="type"
                          label="清仓类型"
                          align="center"
-                         min-width="105"
+                         width="105"
                          sortable></el-table-column>
         <!-- <el-table-column prop="developer"
                          label="开发1"
@@ -236,60 +236,60 @@
         <el-table-column prop="goodsCode"
                          label="商品编码"
                          align="center"
-                         min-width="100"
+                         width="100"
                          sortable></el-table-column>
         <el-table-column prop="sku"
                          label="SKU"
                          align="center"
-                         min-width="115"
+                         width="115"
                          sortable></el-table-column>
         <el-table-column prop="goodsName"
                          label="商品名称"
                          align="center"
-                         min-width="125"
+                         width="130"
                          sortable></el-table-column>
         <el-table-column prop="createDate"
                          label="商品创建时间"
                          align="center"
-                         min-width="130"
+                         width="130"
                          sortable>
                          <template slot-scope="scope">{{scope.row.createDate | cutOutDate}}</template>
                          </el-table-column>
         <el-table-column prop="createDate2"
                          label="时间辅助"
                          align="center"
-                         min-width="100"
+                         width="100"
                          sortable></el-table-column>                 
         <el-table-column prop="lastPurchaseDate"
                          label="最后采购时间"
                          align="center"
-                         min-width="130"
+                         width="130"
                          sortable>
                          <template slot-scope="scope">{{scope.row.lastPurchaseDate | cutOutDate}}</template>
                          </el-table-column>
         <el-table-column prop="checkNumber"
                          label="盘点数量"
-                         min-width="100"
+                         width="100"
                          sortable="custom"
                          align="center"></el-table-column>
         <el-table-column prop="preCheckPrice"
                          label="盘前价格"
-                         min-width="100"
+                         width="100"
                          align="center"
                          sortable="custom"></el-table-column>
         <el-table-column prop="deadPrice"
                          label="盘少价格（死库）"
                          sortable="custom"
                          align="center"
-                         min-width="155"></el-table-column>
+                         width="155"></el-table-column>
         <el-table-column prop="aftCheckPrice"
                          label="盘后价格"
                          sortable="custom"
                          align="center"
-                         min-width="100"></el-table-column>
+                         width="100"></el-table-column>
         <el-table-column prop="aveAmount"
                          label="分摊死库"
-                         min-width="105"
+                         width="105"
                          align="center"
                          sortable></el-table-column>
       </el-table>
