@@ -16,7 +16,11 @@
           <el-table-column prop="department" :render-header="renderHeaderPic" align="center"></el-table-column>
         </el-table-column>
         <el-table-column label="余额" header-align="center" sortable="custom" prop="balance">
-          <el-table-column prop="balance" :render-header="renderHeaderPic" align="center"></el-table-column>
+          <el-table-column prop="balance" :render-header="renderHeaderPic" align="center">
+            <template slot-scope="scope">
+              <span :class="scope.row.balance<0?'clasRedd':''">{{scope.row.balance}}</span>
+            </template>
+          </el-table-column>
         </el-table-column>
         <el-table-column label="货币" header-align="center" sortable="custom" prop="currency">
           <el-table-column prop="currency" :render-header="renderHeaderPic" align="center"></el-table-column>
@@ -48,7 +52,7 @@ import { APIEbayBalance,APIExportEbayBalance } from "../../api/product";
 export default {
   data() {
     return {
-      tableHeight: window.innerHeight - 157,
+      tableHeight: window.innerHeight - 158,
       total: 0,
       time1: null,
       tabdate: [],
@@ -358,6 +362,9 @@ export default {
   background: rgba(33, 170, 95, 0.1);
   margin-top: 8px;
   margin-bottom: 8px;
+}
+.clasRedd{
+  color: red;
 }
 </style>
 
