@@ -39,13 +39,13 @@
     </el-form>
     <el-row v-loading="listLoading"
             element-loading-text="正在加载中...">
-      <el-col :span="6"
+      <div 
               class="mix"
               v-for="item in this.tableData"
               :key="item.rowId">
         <a :href="item.url"
            target="_blank"
-           style="text-decoration:none;">
+           style="text-decoration:none;paddint-top:8px;">
           <img :src=item.imgUrl
                :alt="item.imgName">
           <p>
@@ -58,13 +58,12 @@
             {{item.country}}<br>{{item.category}}
           </font>
         </a>
-      </el-col>
+      </div>
     </el-row>
     <el-col :span="24"
-            class="toolbar"
+            class="toolbar posbottom"
             v-show="total>0">
-      <div class="pagination-container"
-           align="right">
+      <div class="pagination-container">
         <el-pagination background
                        @size-change="handleSizeChange"
                        @current-change="handleCurrentChange"
@@ -174,32 +173,38 @@ export default {
 
 <style lang="scss" scoped>
 .el-form-item {
-  margin: 0.5rem;
+  margin: 0.8rem;
 }
 .el-row {
   max-height: 64rem;
   overflow: auto;
   .mix:hover {
     border-radius: 1rem;
-    border: 0.2rem solid #03c4eb;
+    border: 1px solid #03c4eb;
   }
   .mix {
+    width: 18.9%;
     background: #fff;
     border-radius: 2px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     display: inline-block;
     height: 13.5rem;
-    margin: 1rem;
+    margin-left: 0.9%;
     position: relative;
     transition: all 0.2s ease-in-out;
-    margin-top: 1.5rem;
+    padding-top: 1rem;
+    margin-top: 15px;
     text-align: center;
+    border: #ffffff solid 1px;
     overflow: hidden;
-    width: 24rem;
     p {
       margin: 0 0 1rem;
     }
   }
+}
+.posbottom{
+  position: fixed;
+  bottom: 0;
 }
 </style>
 

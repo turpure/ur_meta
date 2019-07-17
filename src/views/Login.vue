@@ -189,7 +189,7 @@ export default {
   background-size: cover;
 }
 .bgTop {
-  margin-left: 90px;
+  margin-left: 82px;
   margin-top:240px;
 }
 .bgTop img {

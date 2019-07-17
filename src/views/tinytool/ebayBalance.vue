@@ -1,8 +1,64 @@
 <template>
   <div>
     <div>
-      <el-col :span="24" style="padding:10px 20px;">
-        <el-button @click="exportExcel()" type="primary">导出表格</el-button>
+      <el-col :span="24" style="padding:15px 10px;">
+        <el-select
+          v-model="reccondition.department"
+          multiple
+          collapse-tags
+          placeholder="部门"
+          size="small"
+        >
+          <el-button plain type="info" @click="selectalld">全选</el-button>
+          <el-button plain type="info" @click="noselectd">取消</el-button>
+          <el-option
+            v-for="(item,index) in department"
+            :index="index"
+            :key="item"
+            :label="item"
+            :value="item"
+          ></el-option>
+        </el-select>
+        <el-select
+          size="small"
+          v-model="reccondition.accountName"
+          filterable
+          multiple
+          collapse-tags
+          placeholder="账号"
+          style="margin-left:8px;"
+        >
+          <el-button plain type="info" @click="selectall">全选</el-button>
+          <el-button plain type="info" @click="noselect">取消</el-button>
+          <el-option
+            v-for="(item,index) in account"
+            :index="index"
+            :key="item.id"
+            :label="item.store"
+            :value="item.store"
+          ></el-option>
+        </el-select>
+        <el-select
+          size="small"
+          v-model="reccondition.username"
+          filterable
+          multiple
+          collapse-tags
+          placeholder="销售员"
+          style="margin-left:8px;"
+        >
+          <el-button plain type="info" @click="selectallm">全选</el-button>
+          <el-button plain type="info" @click="noselectm">取消</el-button>
+          <el-option
+            v-for="(item,index) in member"
+            :index="index"
+            :key="item.username"
+            :label="item.username"
+            :value="item.username"
+          ></el-option>
+        </el-select>
+        <el-button @click="search()" type="primary" style="margin-left:8px;" size="small">查询</el-button>
+        <el-button @click="exportExcel()" type="primary" size="small">导出表格</el-button>
       </el-col>
       <el-table :data="tabdate" :height="tableHeight" class="elTable" @sort-change="sortNumber">
         <el-table-column type="index" fixed align="center" header-align="center"></el-table-column>
@@ -21,7 +77,9 @@
         <el-table-column label="余额" header-align="center" sortable="custom" prop="balance">
           <el-table-column prop="balance" :render-header="renderHeaderPic" align="center">
             <template slot-scope="scope">
-              <span :class="scope.row.balance>0?'clasRedd':scope.row.balance<0?'clasGreen':''">{{scope.row.balance}}</span>
+              <span
+                :class="scope.row.balance>0?'clasRedd':scope.row.balance<0?'clasGreen':''"
+              >{{scope.row.balance}}</span>
             </template>
           </el-table-column>
         </el-table-column>
@@ -43,39 +101,65 @@
         :total="this.total"
         style="padding-top:5px;padding-bottom:5px;"
       >
-      <el-button type="text"
-                       @click="showAll">显示全部</el-button>
+        <el-button type="text" @click="showAll">显示全部</el-button>
       </el-pagination>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-import { APIEbayBalance,APIExportEbayBalance } from "../../api/product";
+import { APIEbayBalance, APIExportEbayBalance } from "../../api/product";
+import { getSection, getAccount, getMember } from "../../api/profit";
 export default {
   data() {
     return {
-      tableHeight: window.innerHeight - 158,
+      tableHeight: window.innerHeight - 157,
       total: 0,
       time1: null,
       tabdate: [],
+      department: ["运营一部", "运营六部", "郑州分部"],
+      member: [],
       reccondition: {
         pageSize: null,
         page: 1,
-        accountName: null,
+        accountName: [],
         balance: null,
-        username:null,
-        department:null,
+        username: [],
+        department: [],
         currency: null,
         sort: null,
-        balanceTime:null,
+        balanceTime: null,
         updatedDate: []
       }
     };
   },
   methods: {
+    search(){
+      this.getPic();
+    },
+    selectall() {
+      const allValues = [];
+      for (const item of this.account) {
+        allValues.push(item.store);
+      }
+      this.reccondition.accountName = allValues;
+    },
+    noselect() {
+      this.reccondition.accountName = [];
+    },
+    selectalld() {
+      const allValues = [];
+      for (const item of this.department) {
+        allValues.push(item.department);
+      }
+      this.reccondition.department = allValues;
+      this.member = this.allMember;
+    },
+    noselectd() {
+      this.reccondition.department = [];
+    },
     showAll() {
-      this.handleSizeChange(this.total)
+      this.handleSizeChange(this.total);
     },
     exportExcel() {
       APIExportEbayBalance(this.reccondition).then(res => {
@@ -149,7 +233,7 @@ export default {
       } else {
         this.reccondition.updatedDate = [];
       }
-      this.reccondition.pageSize=null
+      this.reccondition.pageSize = null;
       this.getPic();
     },
     renderHeaderPic(h, { column, $index }) {
@@ -341,6 +425,20 @@ export default {
   },
   mounted() {
     this.getPic();
+    getMember().then(response => {
+      const res = response.data.data;
+      this.allMember = this.member = res.filter(ele => ele.position === "销售");
+      this.kefu = res.filter(ele => ele.position === "eBay客服");
+    });
+    getAccount().then(response => {
+      this.account = response.data.data;
+    });
+    // getSection().then(response => {
+    //   const res = response.data.data;
+    //   this.department = res.filter(
+    //     ele => ele.department && ele.type === "业务"
+    //   );
+    // });
   }
 };
 </script>
@@ -394,13 +492,13 @@ export default {
   margin-top: 8px;
   margin-bottom: 8px;
 }
-.clasRedd{
+.clasRedd {
   font-weight: bold;
   color: red;
 }
-.clasGreen{
+.clasGreen {
   font-weight: bold;
-  color: #0e9a00
+  color: #0e9a00;
 }
 </style>
 
