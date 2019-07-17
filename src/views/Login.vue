@@ -11,7 +11,7 @@
       <!-- <h3 class="title">UR管理中心</h3> -->
       <div class="floatLeft">
         <div class="bgTop">
-          <img src="../assets/yrlogo.png" />
+          <img src="../assets/yrlogo1.png" />
         </div>
       </div>
       <div class="floatRight">
@@ -47,7 +47,7 @@
       <el-form-item style="width:100%;">
         <el-button
           type="primary"
-          style="width:90%;margin-left:5%;margin-top:30px;margin-bottom:80px;height:50px;"
+          style="width:85%;margin-left:7.5%;margin-top:30px;margin-bottom:80px;height:50px;"
           @click.native.prevent="handleSubmit2"
           @keyup.enter.native="handleSubmit2"
           :loading="logining"
@@ -164,11 +164,11 @@ export default {
   position: absolute;
   top: 50%;
   left: 50%;
-  margin-left: -500px;
+  margin-left: -475px;
   margin-top: -292px;
-  width: 1000px;
+  width: 950px;
   // padding: 25px 35px 25px 35px;
-  background: rgba($color: #fff, $alpha: 0.1);
+  background:#409EFF;
   // border: 1px solid #eee;
   // box-shadow: 0 0 25px #cac6c6;
   .title {
@@ -178,7 +178,7 @@ export default {
   }
   .remember {
     margin: 10px 5% 35px 0px;
-    margin-left: 5%;
+    margin-left: 7.5%;
   }
 }
 .bg {
@@ -201,7 +201,7 @@ export default {
 }
 .floatRight{
   float: right;
-  width: 500px;
+  width: 475px;
   background: #fff;
 }
 .loginGo{
@@ -214,7 +214,7 @@ export default {
   padding-top: 110px;
 }
 .margin90{
-  width: 90%;
+  width: 85%;
   margin: auto;
   margin-bottom: 20px;
 }
