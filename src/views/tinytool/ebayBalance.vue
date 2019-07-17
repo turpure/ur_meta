@@ -21,7 +21,7 @@
         <el-table-column label="余额" header-align="center" sortable="custom" prop="balance">
           <el-table-column prop="balance" :render-header="renderHeaderPic" align="center">
             <template slot-scope="scope">
-              <span :class="scope.row.balance<0?'clasRedd':''">{{scope.row.balance}}</span>
+              <span :class="scope.row.balance>0?'clasRedd':scope.row.balance<0?'clasGreen':''">{{scope.row.balance}}</span>
             </template>
           </el-table-column>
         </el-table-column>
@@ -395,7 +395,12 @@ export default {
   margin-bottom: 8px;
 }
 .clasRedd{
+  font-weight: bold;
   color: red;
+}
+.clasGreen{
+  font-weight: bold;
+  color: #0e9a00
 }
 </style>
 
