@@ -363,7 +363,7 @@ export function getIntroduce(param) {
 export function getBrand(param) {
   const data = { condition: param }
   return request({
-    url: '/tiny-tool/brand',
+    url: '/tiny-tool/brand?page=' + param.page,
     method: 'post',
     data
   })

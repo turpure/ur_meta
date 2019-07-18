@@ -217,6 +217,8 @@ export default {
     },
     noselectd() {
       this.reccondition.department = [];
+      this.member = this.member1;
+      this.account = this.account1;
     },
     showAll() {
       this.handleSizeChange(this.total);
@@ -512,7 +514,7 @@ export default {
           account.push(response.data.data[i].store);
         }
       }
-      this.department = unique1(depart);
+      this.department = unique1(depart).reverse();
       this.member = unique1(member);
       this.member1 = unique1(member);
       this.account = account;
