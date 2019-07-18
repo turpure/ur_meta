@@ -253,7 +253,7 @@ export default {
 }
 .xm1{
   position: absolute;
-  right: -10px;
+  right: 0;
   top: -100px;
   display: block;
 }
