@@ -11,7 +11,7 @@
       <!-- <h3 class="title">UR管理中心</h3> -->
       <div class="floatLeft">
         <div class="bgTop">
-          <img src="../assets/yrlogo1.png" />
+          <img src="../assets/yrlogo1.e1e1767.png" />
         </div>
       </div>
       <div class="floatRight">
