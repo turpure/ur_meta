@@ -8,6 +8,9 @@
       label-width="0px"
       class="demo-ruleForm login-container"
     >
+      <img src="../assets/xiongmao1.png" class="xm1" v-show="if1" />
+      <img src="../assets/xiongmao2.png" class="xm2" v-show="if2" />
+      <img src="../assets/xiongmao3.png" class="xm1" v-show="if3" />
       <!-- <h3 class="title">UR管理中心</h3> -->
       <div class="floatLeft">
         <div class="bgTop">
@@ -18,7 +21,7 @@
         <p class="loginGo">欢迎登录</p>
         <span class="bgheight"></span>
         <el-form-item prop="username" class="margin90">
-        <el-input type="text" v-model="ruleForm2.username" auto-complete="off" placeholder="账号">
+        <el-input type="text" v-model="ruleForm2.username" auto-complete="off" placeholder="账号" @focus="ifshow1">
           <i slot="prefix" class="eladate">
             <img
               src="../assets/logoHeader.png"
@@ -33,6 +36,7 @@
           v-model="ruleForm2.password"
           auto-complete="off"
           @keyup.enter.native="handleSubmit2"
+          @focus="ifshow2"
           placeholder="密码"
         >
           <i slot="prefix" class="eladate">
@@ -63,6 +67,9 @@ export default {
   data() {
     return {
       logining: false,
+      if1:true,
+      if2:false,
+      if3:false,
       ruleForm2: {
         username: "",
         password: ""
@@ -85,6 +92,16 @@ export default {
     this.getCookie();
   },
   methods: {
+    ifshow1(){
+      this.if1=false
+      this.if2=true
+      this.if3=false
+    },
+    ifshow2(){
+      this.if1=false
+      this.if2=false
+      this.if3=true
+    },
     // 设置cookie
     setCookie(c_name, c_pwd, exdays) {
       var exdate = new Date();
@@ -233,5 +250,17 @@ export default {
   text-align: center;
   color: #fff;
   margin-top: 215px;
+}
+.xm1{
+  position: absolute;
+  right: -10px;
+  top: -100px;
+  display: block;
+}
+.xm2{
+  position: absolute;
+  right: -10px;
+  top: -120px;
+  display: block;
 }
 </style>
