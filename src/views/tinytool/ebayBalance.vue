@@ -33,9 +33,9 @@
           <el-option
             v-for="(item,index) in account"
             :index="index"
-            :key="item.id"
-            :label="item.store"
-            :value="item.store"
+            :key="item"
+            :label="item"
+            :value="item"
           ></el-option>
         </el-select>
         <el-select
@@ -52,15 +52,15 @@
           <el-option
             v-for="(item,index) in member"
             :index="index"
-            :key="item.username"
-            :label="item.username"
-            :value="item.username"
+            :key="item"
+            :label="item"
+            :value="item"
           ></el-option>
         </el-select>
         <el-button @click="search()" type="primary" style="margin-left:8px;" size="small">查询</el-button>
         <el-button @click="exportExcel()" type="primary" size="small">导出表格</el-button>
       </el-col>
-      <el-table :data="tabdate" :height="tableHeight" class="elTable" @sort-change="sortNumber">
+      <el-table :data="tabdate" :height="tableHeight" class="elTable" @sort-change="sortNumber" v-loading="load1">
         <el-table-column type="index" fixed align="center" header-align="center"></el-table-column>
         <el-table-column label="账号名称" header-align="center" prop="accountName" sortable="custom">
           <el-table-column prop="accountName" :render-header="renderHeaderPic" align="center"></el-table-column>
@@ -109,16 +109,17 @@
 
 <script type="text/ecmascript-6">
 import { APIEbayBalance, APIExportEbayBalance } from "../../api/product";
-import { getSection, getAccount, getMember } from "../../api/profit";
+import { getEbayBalanceConditon } from "../../api/profit";
 export default {
   data() {
     return {
       tableHeight: window.innerHeight - 160,
       total: 0,
       time1: null,
+      load1:false,
       tabdate: [],
-      account:[],
-      department: ["运营一部", "运营六部", "郑州分部"],
+      account: [],
+      department: [],
       member: [],
       reccondition: {
         pageSize: null,
@@ -145,7 +146,7 @@ export default {
     noselectm() {
       this.reccondition.username = [];
     },
-    search(){
+    search() {
       this.getPic();
     },
     selectall() {
@@ -216,7 +217,9 @@ export default {
       this.getPic();
     },
     getPic() {
+      this.load1=true
       APIEbayBalance(this.reccondition).then(response => {
+        this.load1=false
         this.tabdate = response.data.data.items;
         this.total = response.data.data._meta.totalCount;
         this.reccondition.pageSize = response.data.data._meta.perPage;
@@ -436,13 +439,33 @@ export default {
   },
   mounted() {
     this.getPic();
-    getMember().then(response => {
-      const res = response.data.data;
-      this.allMember = this.member = res.filter(ele => ele.position === "销售");
-      this.kefu = res.filter(ele => ele.position === "eBay客服");
-    });
-    getAccount().then(response => {
-      this.account = response.data.data;
+    function unique1(arr) {
+      var hash = [];
+      for (var i = 0; i < arr.length; i++) {
+        if (hash.indexOf(arr[i]) == -1) {
+          hash.push(arr[i]);
+        }
+      }
+      return hash;
+    }
+    getEbayBalanceConditon().then(response => {
+      let depart = [];
+      let member = [];
+      let account = [];
+      for (let i = 0; i < response.data.data.length; i++) {
+        if(response.data.data[i].department!=null){
+          depart.push(response.data.data[i].department);
+        }
+        if(response.data.data[i].username!=null){
+          member.push(response.data.data[i].username);
+        }
+        if(response.data.data[i].store!=null){
+          account.push(response.data.data[i].store);
+        }
+      }
+      this.department=unique1(depart)
+      this.member=unique1(member)
+      this.account = account
     });
     // getSection().then(response => {
     //   const res = response.data.data;

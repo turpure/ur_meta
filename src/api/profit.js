@@ -821,3 +821,10 @@ export function APIJoomCateProduct(param) {
     data
   })
 }
+
+export function getEbayBalanceConditon() {
+  return request({
+    url: '/tiny-tool/ebay-balance-condition',
+    method: 'get'
+  })
+}
