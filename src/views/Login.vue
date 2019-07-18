@@ -21,7 +21,7 @@
         <p class="loginGo">欢迎登录</p>
         <span class="bgheight"></span>
         <el-form-item prop="username" class="margin90">
-        <el-input type="text" v-model="ruleForm2.username" auto-complete="off" placeholder="账号" @focus="ifshow1">
+        <el-input type="text" v-model="ruleForm2.username" auto-complete="off" placeholder="账号" @focus="ifshow1" @blur="ifshow3">
           <i slot="prefix" class="eladate">
             <img
               src="../assets/logoHeader.png"
