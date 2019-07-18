@@ -37,6 +37,7 @@
           auto-complete="off"
           @keyup.enter.native="handleSubmit2"
           @focus="ifshow2"
+          @blur="ifshow3"
           placeholder="密码"
         >
           <i slot="prefix" class="eladate">
@@ -101,6 +102,11 @@ export default {
       this.if1=false
       this.if2=false
       this.if3=true
+    },
+    ifshow3(){
+      this.if1=true
+      this.if2=false
+      this.if3=false
     },
     // 设置cookie
     setCookie(c_name, c_pwd, exdays) {
