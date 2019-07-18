@@ -8,6 +8,7 @@
           collapse-tags
           placeholder="部门"
           size="small"
+          @change="choosed"
         >
           <el-button plain type="info" @click="selectalld">全选</el-button>
           <el-button plain type="info" @click="noselectd">取消</el-button>
@@ -60,7 +61,13 @@
         <el-button @click="search()" type="primary" style="margin-left:8px;" size="small">查询</el-button>
         <el-button @click="exportExcel()" type="primary" size="small">导出表格</el-button>
       </el-col>
-      <el-table :data="tabdate" :height="tableHeight" class="elTable" @sort-change="sortNumber" v-loading="load1">
+      <el-table
+        :data="tabdate"
+        :height="tableHeight"
+        class="elTable"
+        @sort-change="sortNumber"
+        v-loading="load1"
+      >
         <el-table-column type="index" fixed align="center" header-align="center"></el-table-column>
         <el-table-column label="账号名称" header-align="center" prop="accountName" sortable="custom">
           <el-table-column prop="accountName" :render-header="renderHeaderPic" align="center"></el-table-column>
@@ -116,11 +123,14 @@ export default {
       tableHeight: window.innerHeight - 160,
       total: 0,
       time1: null,
-      load1:false,
+      load1: false,
       tabdate: [],
+      date: [],
       account: [],
+      account1: [],
       department: [],
       member: [],
+      member1: [],
       reccondition: {
         pageSize: null,
         page: 1,
@@ -136,6 +146,44 @@ export default {
     };
   },
   methods: {
+    choosed() {
+      const val = this.reccondition.department;
+      let per = [];
+      const secDep = [];
+      const user = [];
+      if (val.length !== 0) {
+        for (let i = 0; i < val.length; i++) {
+          // 账号
+          for (let k = 0; k < this.date.length; k++) {
+            if (this.date[k].department === val[i]) {
+              secDep.push(this.date[k].store);
+            }
+          }
+        }
+        for (let i = 0; i < val.length; i++) {
+          // 人员
+          for (let k = 0; k < this.date.length; k++) {
+            if (this.date[k].department === val[i]) {
+              user.push(this.date[k].username);
+            }
+          }
+        }
+        function unique1(arr) {
+          var hash = [];
+          for (var i = 0; i < arr.length; i++) {
+            if (hash.indexOf(arr[i]) == -1) {
+              hash.push(arr[i]);
+            }
+          }
+          return hash;
+        }
+        this.account = unique1(secDep);
+        this.member = unique1(user);
+      } else {
+        this.member = this.member1;
+        this.account = this.account1;
+      }
+    },
     selectallm() {
       const allValues = [];
       for (const item of this.member) {
@@ -217,9 +265,9 @@ export default {
       this.getPic();
     },
     getPic() {
-      this.load1=true
+      this.load1 = true;
       APIEbayBalance(this.reccondition).then(response => {
-        this.load1=false
+        this.load1 = false;
         this.tabdate = response.data.data.items;
         this.total = response.data.data._meta.totalCount;
         this.reccondition.pageSize = response.data.data._meta.perPage;
@@ -449,23 +497,26 @@ export default {
       return hash;
     }
     getEbayBalanceConditon().then(response => {
+      this.date = response.data.data;
       let depart = [];
       let member = [];
       let account = [];
       for (let i = 0; i < response.data.data.length; i++) {
-        if(response.data.data[i].department!=null){
+        if (response.data.data[i].department != null) {
           depart.push(response.data.data[i].department);
         }
-        if(response.data.data[i].username!=null){
+        if (response.data.data[i].username != null) {
           member.push(response.data.data[i].username);
         }
-        if(response.data.data[i].store!=null){
+        if (response.data.data[i].store != null) {
           account.push(response.data.data[i].store);
         }
       }
-      this.department=unique1(depart)
-      this.member=unique1(member)
-      this.account = account
+      this.department = unique1(depart);
+      this.member = unique1(member);
+      this.member1 = unique1(member);
+      this.account = account;
+      this.account1 = account;
     });
     // getSection().then(response => {
     //   const res = response.data.data;
