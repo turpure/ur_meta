@@ -113,10 +113,11 @@ import { getSection, getAccount, getMember } from "../../api/profit";
 export default {
   data() {
     return {
-      tableHeight: window.innerHeight - 157,
+      tableHeight: window.innerHeight - 160,
       total: 0,
       time1: null,
       tabdate: [],
+      account:[],
       department: ["运营一部", "运营六部", "郑州分部"],
       member: [],
       reccondition: {
@@ -134,6 +135,16 @@ export default {
     };
   },
   methods: {
+    selectallm() {
+      const allValues = [];
+      for (const item of this.member) {
+        allValues.push(item.username);
+      }
+      this.reccondition.username = allValues;
+    },
+    noselectm() {
+      this.reccondition.username = [];
+    },
     search(){
       this.getPic();
     },
