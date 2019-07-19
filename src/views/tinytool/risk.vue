@@ -32,7 +32,12 @@
       </el-form>
       <el-table :data="this.tableData"
                 v-loading="loading"
-                element-loading-text="正在加载中...">
+                element-loading-text="正在加载中..."
+                :height="tabheight"
+                border 
+                class="elTableee"
+                :header-cell-style="getRowClass" 
+                style="width: 100%;font-size:13px;">
         <el-table-column label="订单编号"
                          prop="tradeNid"></el-table-column>
         <el-table-column label="交易时间"
@@ -345,6 +350,13 @@ export default {
     this.getOrder(this.activeName)
   },
   methods: {
+    getRowClass({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex == 0) {
+        return "color:#337ab7;background:#f5f7fa";
+      } else {
+        return "";
+      }
+    },
     time() {
       if (this.date !== null) {
         this.condition.beginDate = this.date[0]

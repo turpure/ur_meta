@@ -755,6 +755,15 @@ export function APIPlatExportWish(param) {
     responseType: 'arraybuffer'
   })
 }
+export function APIPlatExportShopify(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/plat-export-shopify',
+    method: 'post',
+    data,
+    responseType: 'arraybuffer'
+  })
+}
 export function APIDevExportProfit(param) {
   const data = { condition: param }
   return request({
