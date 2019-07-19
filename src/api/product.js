@@ -746,6 +746,12 @@ export function APIJoomName(param) {
     data
   })
 }
+export function APIShopifyName() {
+  return request({
+    url: '/oa-goodsinfo/shopify-accounts',
+    method: 'get'
+  })
+}
 export function APIPlatExportWish(param) {
   const data = { condition: param }
   return request({

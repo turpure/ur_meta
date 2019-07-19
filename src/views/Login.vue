@@ -208,7 +208,7 @@ export default {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: url(../assets/bgban.png) no-repeat center;
+  background: url(../assets/bgban3.png) no-repeat center;
   background-size: cover;
 }
 .bgTop {
