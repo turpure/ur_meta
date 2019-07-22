@@ -82,7 +82,6 @@
         <el-table-column prop="wlCompany"
                          label="物流公司"
                          :formatter="empty"
-                         align="center"
                          sortable>
           <template slot-scope="scope">
             <span v-if="scope.row.wlCompany=='汇总'"
@@ -95,7 +94,6 @@
         <el-table-column prop="eBay"
                          label="eBay￥"
                          :formatter="empty"
-                         align="center"
                          sortable="custom">
           <template slot-scope="scope">
             <span v-if="scope.row.wlCompany=='汇总'"
@@ -108,7 +106,6 @@
         <el-table-column prop="Wish"
                          label="Wish￥"
                          :formatter="empty"
-                         align="center"
                          sortable="custom">
           <template slot-scope="scope">
             <span v-if="scope.row.wlCompany=='汇总'"
@@ -121,7 +118,6 @@
         <el-table-column prop="Amazon"
                          label="Amazon￥"
                          :formatter="empty"
-                         align="center"
                          sortable="custom">
           <template slot-scope="scope">
             <span v-if="scope.row.wlCompany=='汇总'"
@@ -134,7 +130,6 @@
         <el-table-column prop="SMT"
                          label="SMT￥"
                          :formatter="empty"
-                         align="center"
                          sortable="custom">
           <template slot-scope="scope">
             <span v-if="scope.row.wlCompany=='汇总'"
@@ -147,7 +142,6 @@
         <el-table-column prop="Shopee"
                          label="Shopee￥"
                          :formatter="empty"
-                         align="center"
                          sortable="custom">
           <template slot-scope="scope">
             <span v-if="scope.row.wlCompany=='汇总'"
@@ -160,7 +154,6 @@
         <el-table-column prop="Joom"
                          label="Joom￥"
                          :formatter="empty"
-                         align="center"
                          sortable="custom">
           <template slot-scope="scope">
             <span v-if="scope.row.wlCompany=='汇总'"
@@ -173,7 +166,6 @@
         <el-table-column prop="total"
                          label="合计￥"
                          :formatter="empty"
-                         align="center"
                          sortable="custom">
           <template slot-scope="scope">
             <span v-if="scope.row.wlCompany=='汇总'"
@@ -186,7 +178,6 @@
         <el-table-column prop="fare"
                          label="实际费用￥"
                          :formatter="empty"
-                         align="center"
                          sortable="custom">
           <template slot-scope="scope">
             <span v-if="scope.row.wlCompany=='汇总'"
