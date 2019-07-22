@@ -178,11 +178,11 @@
         <el-pagination background
                        @size-change="handleSizeChange"
                        @current-change="handleCurrentChange"
-                       :current-page="currentPage"
+                       :current-page="this.condition.page"
                        :page-sizes="[100, 200, 500,1000,this.total]"
-                       :page-size="pageSize"
+                       :page-size="this.condition.pageSize"
                        layout="total, sizes, prev, pager, next, jumper"
-                       :total="total">
+                       :total="this.total">
         </el-pagination>
       </div>
     </el-col>
@@ -216,8 +216,8 @@ export default {
         plat: '',
         suffix: [],
         saler: '',
-        start: 1,
-        limit: 100
+        page: 1,
+        pageSize: 100
       }
     }
   },
@@ -250,38 +250,25 @@ export default {
       }
     },
     handleSizeChange(val) {
-      this.pageSize = val
-      this.currentPage = 1
-      this.condition.limit = this.pageSize * this.currentPage
-      this.listLoading = true
-      getPsales(this.condition).then(response => {
-        this.listLoading = false
-        this.tableData = response.data.data.items
-        this.total = Number(response.data.data.totalCount)
-      })
+      this.condition.pageSize = val
+      this.getData()
     },
     handleCurrentChange(val) {
-      this.currentPage = val
-      this.condition.start = (this.currentPage - 1) * this.pageSize + 1
-      this.condition.limit = this.pageSize
-      this.listLoading = true
-      getPsales(this.condition).then(response => {
-        this.listLoading = false
-        this.tableData = response.data.data.items
-        this.total = Number(response.data.data.totalCount)
-      })
+      this.condition.page = val
+      this.getData()
     },
     onSubmit() {
-      this.show = true
+      this.getData()
+    },
+    getData(){
       this.listLoading = true
-      this.pageSize = 100
-      this.currentPage = 1
-      this.condition.start = 0
-      this.condition.limit = 100
+      this.show=true
       getPsales(this.condition).then(response => {
         this.listLoading = false
         this.tableData = response.data.data.items
-        this.total = Number(response.data.data.totalCount)
+        this.total = response.data.data._meta.totalCount;
+        this.condition.page = response.data.data._meta.currentPage;
+        this.condition.pageSize = response.data.data._meta.perPage;
       })
     },
     // 导出
