@@ -713,6 +713,9 @@
     .elTableee td{
       padding: 12px 0 !important;
     }
+    .elTableeee td{
+      padding: 8px 0 !important;
+    }
     // .el-input__inner{
     //   padding: 0 10px;
     // }
