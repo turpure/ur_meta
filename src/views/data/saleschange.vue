@@ -133,7 +133,7 @@
               :header-cell-style="getRowClass"
               style="width:100%">
       <el-table-column prop="suffix"
-                       width="210" 
+                       width="220" 
                        label="账号简称"
                        sortable
                        align="center"></el-table-column>
@@ -177,7 +177,7 @@
                        sortable="custom"
                        align="center"></el-table-column>
       <el-table-column prop="amtDiff"
-                       width="170" 
+                       width="160" 
                        label="销售额变化(￥)"
                        sortable="custom"
                        align="center"></el-table-column>

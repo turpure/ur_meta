@@ -8,9 +8,9 @@
       label-width="0px"
       class="demo-ruleForm login-container"
     >
-      <img src="../assets/xiongmao1.png" class="xm1" v-show="if1" />
+      <!-- <img src="../assets/xiongmao1.png" class="xm1" v-show="if1" />
       <img src="../assets/xiongmao2.png" class="xm2" v-show="if2" />
-      <img src="../assets/xiongmao3.png" class="xm1" v-show="if3" />
+      <img src="../assets/xiongmao3.png" class="xm1" v-show="if3" /> -->
       <!-- <h3 class="title">UR管理中心</h3> -->
       <div class="floatLeft">
         <div class="bgTop">
@@ -208,7 +208,7 @@ export default {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: url(../assets/bgban3.png) no-repeat center;
+  background: url(../assets/bgban.png) no-repeat center;
   background-size: cover;
 }
 .bgTop {
