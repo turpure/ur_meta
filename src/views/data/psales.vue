@@ -90,47 +90,51 @@
                 :header-cell-style="getRowClass"
                 style="width: 100%;font-size:13px;zoom:0.97">
         <el-table-column width="100"
-                         prop="GoodsCode"
+                         prop="goodsCode"
                          label="商品编码"
                          align="center"
                          :formatter="empty"
                          sortable></el-table-column>
         <el-table-column width="120"
-                         prop="GoodsName"
+                         prop="goodsName"
                          label="商品名称"
                          align="center"
                          :formatter="empty"
                          sortable></el-table-column>
         <el-table-column width="100"
-                         prop="GoodsSKUStatus"
+                         prop="goodsSKUStatus"
                          label="商品状态"
                          align="center"
                          :formatter="empty"
                          sortable></el-table-column>
         <el-table-column width="80"
-                         prop="CategoryName"
+                         prop="categoryName"
                          label="类目"
                          align="center"
                          :formatter="empty"
                          sortable></el-table-column>
         <el-table-column width="80"
-                         prop="SalerName"
+                         prop="salerName"
                          label="归属1"
                          align="center"
                          :formatter="empty"
                          sortable></el-table-column>
         <el-table-column width="80"
-                         prop="SalerName2"
+                         prop="salerName2"
                          label="归属2"
                          align="center"
                          :formatter="empty"
                          sortable></el-table-column>
         <el-table-column width="100"
-                         prop="CreateDate"
+                         prop="createDate"
                          label="创建日期"
                          align="center"
                          :formatter="empty"
-                         sortable></el-table-column>
+                         sortable>
+                         <template slot-scope="scope">
+                           {{scope.row.createDate | cutOut}}
+                         </template>
+                         </el-table-column>
         <el-table-column width="110"
                          prop="jinyitian"
                          align="center"
@@ -236,6 +240,12 @@ export default {
         pageSize: 100
       }
     }
+  },
+  filters: {
+    cutOut: function(value) {
+      value = value.substring(0, 11);
+      return value;
+    },
   },
   methods: {
     getRowClass({ row, column, rowIndex, columnIndex }) {
