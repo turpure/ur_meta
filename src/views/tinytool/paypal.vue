@@ -3,7 +3,7 @@
     <el-form :inline="true"
              class="toolbar"
              :model="condition"
-             label-width="60px">
+             label-width="50px">
       <el-form-item label="日期">
         <el-date-picker size="small"
                         v-model="date"
@@ -27,7 +27,7 @@
               :header-cell-style="getRowClass" 
               border
               cellpadding="9"
-              style="border: 1px solid #ebeef5;background-color:#fff;color:#606266;width:99%;border-collapse:collapse;margin:auto">
+              style="border: 1px solid #ebeef5;background-color:#fff;color:#606266;width:99%;border-collapse:collapse;margin-left:0.2%">
       <el-table-column label="itemId"
                        prop="itemId" align="center">
         <template slot-scope="scope">

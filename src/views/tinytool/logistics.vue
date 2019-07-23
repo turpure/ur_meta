@@ -67,7 +67,7 @@ import { getExpressTracking } from "../../api/profit";
 export default {
   data() {
     return {
-      tabheight:window.innerHeight -205,
+      tabheight:window.innerHeight -196,
       listLoading: false,
       tableData1: [],
       date: null,
@@ -149,6 +149,7 @@ export default {
 <style lang="scss" scoped>
 .toolbar {
   padding: 10px;
+  padding-bottom: 0
 }
 </style>
 
