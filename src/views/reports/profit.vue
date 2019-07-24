@@ -129,7 +129,7 @@
     <el-col :span="24" style="padding:10px 10px;">
       <el-button @click="exportExcel(condition)" type="primary">导出表格</el-button>
     </el-col>
-    <el-dialog title="查看明细" :visible.sync="dialogTableVisible">
+    <el-dialog title="查看明细" :visible.sync="dialogTableVisible" width="55%">
       <el-table :data="viewForm" @sort-change="sortNumber1" border class="elTableee" :header-cell-style="getRowClass" max-height="530">
         <el-table-column property="saleMen" label="销售员" align="center"></el-table-column>
         <el-table-column property="goodsCode" label="产品编码" align="center"></el-table-column>

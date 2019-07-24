@@ -440,10 +440,26 @@ export function APIJoomSuffix(param) {
     data
   })
 }
+export function APIShopifyList(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/shopify-list?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
 export function APICreateJoom(param) {
   const data = { condition: param }
   return request({
     url: '/basic-info/create-joom',
+    method: 'post',
+    data
+  })
+}
+export function APIShopifySave(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/shopify-save',
     method: 'post',
     data
   })
@@ -460,6 +476,14 @@ export function APIJoomInfo(param) {
   const data = { condition: param }
   return request({
     url: '/basic-info/joom-info',
+    method: 'post',
+    data
+  })
+}
+export function APIShopifyInfo(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/shopify-info',
     method: 'post',
     data
   })
@@ -508,6 +532,14 @@ export function APIDeleteJoom(param) {
   const data = { condition: param }
   return request({
     url: '/basic-info/delete-joom',
+    method: 'post',
+    data
+  })
+}
+export function APIDeleteShopify(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/shopify-delete',
     method: 'post',
     data
   })
