@@ -139,7 +139,7 @@
                 <p class="basp">主类目</p>
               </el-col>
               <el-col :span="21">
-                <el-select size="small" v-model="cate" @change="getSubcate" style="width:100%;">
+                <el-select v-model="cate" @change="getSubcate" style="width:100%;">
                   <el-option v-for="item in cateName" :value="item" :key="item"></el-option>
                 </el-select>
               </el-col>
@@ -149,7 +149,7 @@
                 <p class="basp">子类目</p>
               </el-col>
               <el-col :span="21">
-                <el-select size="small" v-model="subCate" style="width:100%;">
+                <el-select v-model="subCate" style="width:100%;">
                   <el-option v-for="item in subCateName" :value="item" :key="item"></el-option>
                 </el-select>
               </el-col>
