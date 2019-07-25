@@ -13,7 +13,7 @@
         <el-col :span="24" style="margin-top: 20px">
           <el-table :data="date" border class="elTable" style="width: 98.5%">
             <el-table-column type="index" fixed align="center" width="80" header-align="center"></el-table-column>
-            <el-table-column label="操作" fixed header-align="center" width="80">
+            <el-table-column label="操作" fixed align="center" width="80">
               <template slot-scope="scope">
                 <el-tooltip content="查看">
                   <i
@@ -161,7 +161,7 @@
           <el-button type="primary" @click="addShopify()">添 加</el-button>
         </div>
       </el-dialog>
-      <el-dialog title="编辑Joom账号" :visible.sync="disLogin">
+      <el-dialog title="编辑shopify账号" :visible.sync="disLogin">
         <el-row class="contentt" style="margin-top: 0">
           <el-col :span="24" class="cTop">
             <el-col :span="24" style="margin-bottom: 20px">
