@@ -582,7 +582,6 @@ export default {
         this.text = "显示输入框";
         const height = document.getElementById("app").clientHeight;
         this.tabheight=window.innerHeight -25
-        console.log(this.tabheight)
       } else if (this.show === true) {
         this.text = "隐藏输入框";
         const height = document.getElementById("app").clientHeight;

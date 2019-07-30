@@ -14,7 +14,7 @@
       ></el-tab-pane>
     </el-tabs>
     <div v-show="show.sale">
-      <el-col :span="24" style="padding:10px 20px;">
+      <el-col :span="24" style="padding:10px 15px;">
         <el-button type="success" @click="markAll">批量标记推广完成</el-button>
       </el-col>
       <!-- 销售列表 -->

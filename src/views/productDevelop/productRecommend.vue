@@ -15,8 +15,8 @@
     </el-tabs>
     <div v-show="show.product">
       <el-col :span="24" style="padding:10px 15px;">
-        <el-button type="success" @click="showCp">新增产品</el-button>
-        <el-button type="danger" @click="delAll">批量删除</el-button>
+        <el-button type="success" @click="showCp" class="mr5">新增产品</el-button>
+        <el-button type="danger" @click="delAll" class="mr5">批量删除</el-button>
       </el-col>
       <!-- 新增对话框 -->
       <el-dialog title="新增" :visible.sync="dialogVisible">
@@ -312,11 +312,11 @@
     </div>
     <div v-show="show.forward">
       <el-col :span="24" style="padding:10px 15px;">
-        <el-button type="success" @click="showZx">新增产品</el-button>
-        <el-button type="warning">批量导入</el-button>
-        <el-button type="danger" @click="delAll1">批量删除</el-button>
-        <el-button type="primary">下载模板</el-button>
-        <el-button type="info" @click="claimAll1">批量提交审批</el-button>
+        <el-button type="success" @click="showZx" class="mr5">新增产品</el-button>
+        <el-button type="warning" class="mr5">批量导入</el-button>
+        <el-button type="danger" @click="delAll1" class="mr5">批量删除</el-button>
+        <el-button type="primary" class="mr5">下载模板</el-button>
+        <el-button type="danger" @click="claimAll1" class="mr5">批量提交审批</el-button>
       </el-col>
       <!-- 新增对话框 -->
       <el-dialog title="新增" :visible.sync="dialogVisible1">
@@ -770,11 +770,11 @@
     </div>
     <div v-show="show.reverse">
       <el-col :span="24" style="padding:10px 15px;">
-        <el-button type="success" @click="showNx">新增产品</el-button>
-        <el-button type="warning">批量导入</el-button>
-        <el-button type="danger" @click="delAll2">批量删除</el-button>
-        <el-button type="primary">下载模板</el-button>
-        <el-button type="info" @click="claimAll2">批量提交审批</el-button>
+        <el-button type="success" @click="showNx" class="mr5">新增产品</el-button>
+        <el-button type="warning" class="mr5">批量导入</el-button>
+        <el-button type="danger" @click="delAll2" class="mr5">批量删除</el-button>
+        <el-button type="primary" class="mr5">下载模板</el-button>
+        <el-button type="danger" @click="claimAll2" class="mr5">批量提交审批</el-button>
       </el-col>
       <!-- 新增对话框 -->
       <el-dialog title="新增" :visible.sync="dialogVisible2">
@@ -3785,5 +3785,8 @@ export default {
   border: 1px solid #dcdfe6;
   line-height: 40px;
   border-radius: 5px;
+}
+.mr5{
+  margin-right: 5px;
 }
 </style>

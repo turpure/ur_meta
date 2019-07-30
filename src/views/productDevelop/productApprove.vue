@@ -15,9 +15,9 @@
     </el-tabs>
     <div v-show="show.wait">
       <el-col :span="24" style="padding:10px 15px;">
-        <el-button type="success" @click="passAll">批量通过</el-button>
-        <el-button type="danger" @click="unPassAll">批量未通过</el-button>
-        <el-button type="warning" @click="cancelAll">批量作废</el-button>
+        <el-button type="success" @click="passAll" class="mr5">批量通过</el-button>
+        <el-button type="danger" @click="unPassAll" class="mr5">批量未通过</el-button>
+        <el-button type="warning" @click="cancelAll" class="mr5">批量作废</el-button>
       </el-col>
       <el-dialog title="未通过备注" :visible.sync="dialogFormVisible1">
         <el-input v-model="wtgpz"></el-input>
@@ -3157,6 +3157,9 @@ export default {
 }
 .imgChover:hover .imgHover{
   display: block;
+}
+.mr5{
+  margin-right: 5px;
 }
 </style>
 <style>

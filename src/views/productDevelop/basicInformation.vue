@@ -718,13 +718,13 @@
         font-size: 14px;
     }
     .elTable td{
-        padding: 16px 0 !important;
+        padding: 12px 0 !important;
     }
     .elTableee td{
-      padding: 12px 0 !important;
+      padding: 11px 0 !important;
     }
     .elTableeee td{
-      padding: 8px 0 !important;
+      padding: 11px 0 !important;
     }
     // .el-input__inner{
     //   padding: 0 10px;
