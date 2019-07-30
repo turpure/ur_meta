@@ -26,7 +26,7 @@
           router
         >
           <el-menu-item index="/index" style="line-height:5rem;">
-            <font class="typeface" style="padding:0 12px 0 10px;"><i class="el-icon-menu" style="color:#fff;margin-right:5px;margin-top:-3px;"></i>主页</font>
+            <font class="typeface" style="padding:0 12px 0 10px;"><i class="el-icon-menu ishowHome" style="color:#fff;margin-right:5px;margin-top:-3px;"></i>主页</font>
           </el-menu-item>
           <el-submenu
             v-for="(item,position) in allMenu"
@@ -34,7 +34,7 @@
             :key="generateIndex(-1,position)"
           >
             <template slot="title">
-              <font class="typeface"><i :class='position==0?"el-icon-goods":position==1?"el-icon-tickets":position==2?"el-icon-share":position==3?"el-icon-rank":position==4?"el-icon-news":position==5?"el-icon-rank":position==6?"el-icon-setting":"el-icon-edit-outline"' style="color:#fff;margin-right:8px;margin-top:-2px;"></i>{{item.name}}</font>
+              <font class="typeface"><i class="ishowHome" :class='position==0?"el-icon-goods":position==1?"el-icon-tickets":position==2?"el-icon-share":position==3?"el-icon-rank":position==4?"el-icon-news":position==5?"el-icon-rank":position==6?"el-icon-setting":"el-icon-edit-outline"' style="color:#fff;margin-right:8px;margin-top:-2px;"></i>{{item.name}}</font>
             </template>
             <el-menu-item
               v-for="(child,index) in item.children"
@@ -747,6 +747,9 @@ export default {
   }
   .none1920{
     display: none;
+  }
+  .ishowHome{
+    display: none
   }
 }
 </style>
