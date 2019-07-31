@@ -20,7 +20,7 @@
           @select="handleSelect"
           class="el-menu-demo"
           mode="horizontal"
-          background-color="#337ab7"
+          background-color="#3c8dbc"
           text-color="#fff"
           active-text-color="#ffd04b"
           router
@@ -547,7 +547,7 @@ export default {
     .header {
       height: 5rem;
       line-height: 5rem;
-      background-color: #337ab7;
+      background-color: #3c8dbc;
       color: #fff;
       .el-col-3 {
         height: 5rem;

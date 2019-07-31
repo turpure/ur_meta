@@ -202,39 +202,41 @@
       show-summary
       :summary-method="getSummaries"
       :height="tableHeight"
-      :max-height="tableHeight"
       v-show="showTable.sell"
       border 
       class="elTableee"
       :header-cell-style="getRowClass" 
-      style="width: 100%;zoom:0.53;"
+      style="width: 100%;font-size:13px;"
     >
       <el-table-column
-        min-width="100"
+        width="80"
         prop="pingtai"
         label="平台"
+        fixed
         :formatter="empty"
         sortable
         align="center"
       ></el-table-column>
       <el-table-column
-        min-width="100"
+        width="165"
         prop="suffix"
         label="账号"
+        fixed
         :formatter="empty"
         sortable
         align="center"
       ></el-table-column>
       <el-table-column
-        min-width="120"
+        width="100"
         prop="salesman"
         label="销售员"
+        fixed
         :formatter="empty"
         sortable
         align="center"
       ></el-table-column>
       <el-table-column
-        min-width="142"
+        width="100"
         prop="salemoney"
         label="成交价$"
         :formatter="empty"
@@ -242,7 +244,7 @@
         align="center"
       ></el-table-column>
       <el-table-column
-        min-width="160"
+        width="100"
         prop="salemoneyzn"
         label="成交价￥"
         :formatter="empty"
@@ -250,7 +252,7 @@
         align="center"
       ></el-table-column>
       <el-table-column
-        min-width="190"
+        width="125"
         prop="ebayFeeebay"
         label="eBay成交费$"
         :formatter="empty"
@@ -258,7 +260,7 @@
         align="center"
       ></el-table-column>
       <el-table-column
-        min-width="200"
+        width="130"
         prop="ebayfeeznebay"
         label="eBay成交费￥"
         :formatter="empty"
@@ -266,7 +268,7 @@
         align="center"
       ></el-table-column>
       <el-table-column
-        min-width="170"
+        width="110"
         prop="ppFee"
         label="PP成交费$"
         :formatter="empty"
@@ -274,7 +276,7 @@
         align="center"
       ></el-table-column>
       <el-table-column
-        min-width="180"
+        width="115"
         prop="ppFeezn"
         label="PP成交费￥"
         :formatter="empty"
@@ -282,7 +284,7 @@
         align="center"
       ></el-table-column>
       <el-table-column
-        min-width="170"
+        width="110"
         prop="costmoney"
         label="商品成本￥"
         :formatter="empty"
@@ -290,7 +292,7 @@
         align="center"
       ></el-table-column>
       <el-table-column
-        min-width="170"
+        width="110"
         prop="expressFare"
         label="运费成本￥"
         :formatter="empty"
@@ -298,7 +300,7 @@
         align="center"
       ></el-table-column>
       <el-table-column
-        min-width="170"
+        width="110"
         prop="inpackagemoney"
         label="包装成本￥"
         :formatter="empty"
@@ -306,7 +308,7 @@
         align="center"
       ></el-table-column>
       <el-table-column
-        min-width="140"
+        min-width="100"
         prop="storename"
         label="发货仓库"
         :formatter="empty"
@@ -314,7 +316,7 @@
         align="center"
       ></el-table-column>
       <el-table-column
-        min-width="170"
+        width="110"
         prop="refund"
         label="退款金额￥"
         :formatter="empty"
@@ -322,7 +324,7 @@
         align="center"
       ></el-table-column>
       <el-table-column
-        min-width="140"
+        width="100"
         prop="refundrate"
         label="退款率%"
         :formatter="empty"
@@ -330,7 +332,7 @@
         align="center"
       ></el-table-column>
       <el-table-column
-        min-width="170"
+        width="110"
         prop="diefeeZn"
         label="死库处理￥"
         :formatter="empty"
@@ -338,7 +340,7 @@
         align="center"
       ></el-table-column>
       <el-table-column
-        min-width="170"
+        width="110"
         prop="insertionFee"
         label="店铺杂费￥"
         :formatter="empty"
@@ -346,7 +348,7 @@
         align="center"
       ></el-table-column>
       <el-table-column
-        min-width="170"
+        width="110"
         prop="saleOpeFeeZn"
         label="运营杂费￥"
         :formatter="empty"
@@ -354,7 +356,7 @@
         align="center"
       ></el-table-column>
       <el-table-column
-        min-width="143"
+        width="100"
         prop="grossprofit"
         label="毛利￥"
         :formatter="empty"
@@ -362,7 +364,7 @@
         align="center"
       ></el-table-column>
       <el-table-column
-        min-width="140"
+        width="100"
         prop="grossprofitRate"
         label="毛利率%"
         :formatter="empty"
@@ -982,7 +984,7 @@ export default {
   methods: {
     getRowClass({ row, column, rowIndex, columnIndex }) {
       if (rowIndex == 0) {
-        return "color:#337ab7;background:#f5f7fa";
+        return "color:#3c8dbc;background:#f5f7fa";
       } else {
         return "";
       }
@@ -1195,11 +1197,11 @@ export default {
       if (this.show === false) {
         this.text = "显示输入框";
         const height = document.getElementById("app").clientHeight;
-        this.tableHeight = height + 560 + "px";
+        this.tableHeight = height - 145 + "px";
       } else if (this.show === true) {
         this.text = "隐藏输入框";
         const height = document.getElementById("app").clientHeight;
-        this.tableHeight = height + 340 + "px";
+        this.tableHeight = height - 260;
       }
     },
     changeActive() {
@@ -1289,7 +1291,7 @@ export default {
         this.getExtra();
       } else {
         const height = document.documentElement.clientHeight;
-        this.tableHeight = height + 340;
+        this.tableHeight = height - 260;
         this.showTable["sell"] = true;
         this.showTable["order"] = false;
         this.showTable["goods"] = false;
