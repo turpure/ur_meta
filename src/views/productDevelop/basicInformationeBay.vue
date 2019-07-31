@@ -54,7 +54,7 @@
                 prop="storeCountry"
                 :render-header="renderHeaderPicEbay"
                 align="center"
-                min-width="180"
+                min-width="175"
               ></el-table-column>
             </el-table-column>
             <el-table-column label="eBay编码" header-align="center">
@@ -72,7 +72,7 @@
               ></el-table-column>
             </el-table-column>
             <el-table-column label="大额PayPal" header-align="center">
-              <el-table-column prop="high" :render-header="renderHeaderPicEbay" align="center" min-width="190"></el-table-column>
+              <el-table-column prop="high" :render-header="renderHeaderPicEbay" align="center" min-width="195"></el-table-column>
             </el-table-column>
             <el-table-column label="小额PayPal" header-align="center">
               <el-table-column prop="low" :render-header="renderHeaderPicEbay" align="center" min-width="195"></el-table-column>
