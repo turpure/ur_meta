@@ -191,7 +191,7 @@ export default {
         email: ""
       },
       dialogVisible: false,
-      activeIndex: "",
+      activeIndex: "/index",
       allMenu: [],
       asideMenu: { position: 0, menu: [{ name: "", children: [] }] },
       openeds: ["1"],
