@@ -1,14 +1,14 @@
 <template>
   <el-row class="container">
     <el-col :span="24" class="header">
-      <div class="homeLogo" v-show="!collapsed">
-        <img src="../assets/yrlogo3.png" />
+      <div class="homeLogo">
+        <img src="../assets/yrlogo4.png" style="float:left;margin-top:3px;width:98%;" />
       </div>
-      <div class="logoTitle" v-show="!collapsed">UR管理中心</div>
-      <el-col class="logo" :class="!collapsed?'logo-collapse-width':'logo-width'">
-        <img src="../assets/yrlogo3.png" style="float:left;margin-left:20px;margin-top:8px;" />
-        <span style="diaplay:block;float:left;margin-left:12px;">{{!collapsed?'':sysName}}</span>
-      </el-col>
+      <!-- <div class="logoTitle" v-show="!collapsed">UR管理中心</div> -->
+      <!-- <el-col class="logo" :class="!collapsed?'logo-collapse-width':'logo-width'"> -->
+        <!-- <img src="../assets/yrlogo4.png" style="float:left;margin-top:3px;width:98%;" /> -->
+        <!-- <span style="diaplay:block;float:left;margin-left:12px;">{{!collapsed?'':sysName}}</span> -->
+      <!-- </el-col> -->
       <!-- <el-col :span="1">
         <div class="tools" @click.prevent="collapse">
           <i class="fa fa-align-justify"></i>
@@ -135,12 +135,12 @@
             :index="generateIndex(-1, asideMenu.position)"
             :key="generateIndex(-1, asideMenu.position)"
           >
-            <template slot="title">{{item.name}}</template>
+            <template slot="title" style="padding-left:0px;">{{item.name}}</template>
             <el-menu-item
               v-for="(child,index) in item.children"
               :index="child.route"
               :key="generateIndex(asideMenu.position,index)"
-              style="line-height:46px;height:46px;"
+              style="line-height:46px;height:46px;padding-left:15px;"
             >{{child.name}}</el-menu-item>
           </el-submenu>
         </el-menu>
@@ -481,7 +481,7 @@ export default {
       }
       .el-menu-item {
         min-width: 15rem;
-        padding-left: 5rem !important;
+        padding-left: 4rem !important;
       }
       .data-scroll-width {
         width: 15rem;
@@ -583,7 +583,7 @@ export default {
         border-right-style: solid;
       }
       .logo-width {
-        width: 20rem;
+        width: 18rem;
       }
       .logo-collapse-width {
         width: 0rem;
@@ -603,19 +603,19 @@ export default {
       bottom: 0rem;
       overflow: hidden;
       aside {
-        flex: 0 0 20rem;
-        width: 20rem;
+        flex: 0 0 18rem;
+        width: 18rem;
         overflow-y: auto;
         overflow-x: hidden;
         .el-menu {
           height: 100%;
         }
         .el-menu-item {
-          min-width: 20rem;
-          padding-left: 5rem !important;
+          min-width: 18rem;
+          padding-left: 4rem !important;
         }
         .data-scroll-width {
-          width: 20rem;
+          width: 18rem;
         }
         .collapsed {
           .item {
@@ -630,8 +630,8 @@ export default {
         }
       }
       .menu-expanded {
-        flex: 0 0 20rem;
-        width: 20rem;
+        flex: 0 0 18rem;
+        width: 18rem;
       }
       .content-container1 {
         flex: 1;
@@ -639,7 +639,7 @@ export default {
         right: 0rem;
         top: 0rem;
         bottom: 0rem;
-        left: 20rem;
+        left: 18rem;
         overflow: auto;
         padding: 0rem !important; //二次修改
         .grid-content .bg-purple-light {
@@ -672,11 +672,14 @@ export default {
 }
 .homeLogo {
   float: left;
+  width: 18rem;
+  height: 100%;
+  border-right: #ccc solid 1px;
 }
 .homeLogo img {
   display: block;
   margin-top: 8px;
-  margin-left: 20px;
+  // margin-left: 20px;
 }
 .logoTitle {
   float: left;

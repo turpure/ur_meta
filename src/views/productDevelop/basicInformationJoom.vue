@@ -521,6 +521,6 @@
         font-size: 14px;
     }
     .elTable td{
-        padding: 12px 0 !important;
+        padding: 8px 0 !important;
     }
 </style>
