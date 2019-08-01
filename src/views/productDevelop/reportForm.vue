@@ -641,18 +641,18 @@
         style="width: 98%;margin:auto;margin-top:5px;"
       >
         <el-table-column type="index" fixed align="center" width="80" header-align="center"></el-table-column>
-        <el-table-column label="开发员" header-align="right" align="right" prop="developer"></el-table-column>
-        <el-table-column label="备货产品款数" header-align="right" align="right" prop="number"></el-table-column>
-        <el-table-column label="出单产品款数" header-align="right" align="right" prop="orderNum"></el-table-column>
-        <el-table-column label="出单率(%)" header-align="right" align="right" prop="orderRate" >
+        <el-table-column label="开发员" header-align="center" align="center" prop="developer"></el-table-column>
+        <el-table-column label="备货产品款数" header-align="center" align="center" prop="number"></el-table-column>
+        <el-table-column label="出单产品款数" header-align="center" align="center" prop="orderNum"></el-table-column>
+        <el-table-column label="出单率(%)" header-align="center" align="center" prop="orderRate" >
           <template slot-scope="scope">{{scope.row.orderRate | cutOut100}}</template>
         </el-table-column>
-        <el-table-column label="旺款数量" header-align="right" align="right" prop="exuStyleNum"></el-table-column>
-        <el-table-column label="旺款率(%)" header-align="right" align="right" prop="exuRate">
+        <el-table-column label="旺款数量" header-align="center" align="center" prop="exuStyleNum"></el-table-column>
+        <el-table-column label="旺款率(%)" header-align="center" align="center" prop="exuRate">
           <template slot-scope="scope">{{scope.row.exuRate | cutOut100}}</template>
         </el-table-column>
-        <el-table-column label="爆款数量" header-align="right" align="right" prop="hotStyleNum"></el-table-column>
-        <el-table-column label="爆款率(%)" header-align="right" align="right" prop="hotRate">
+        <el-table-column label="爆款数量" header-align="center" align="center" prop="hotStyleNum"></el-table-column>
+        <el-table-column label="爆款率(%)" header-align="center" align="center" prop="hotRate">
           <template slot-scope="scope">{{scope.row.hotRate | cutOut100}}</template>
         </el-table-column>
         <el-table-column
@@ -753,10 +753,18 @@
     <div v-show="show.limit">
       <limit></limit>
     </div>
+    <div v-show="show.saleProduct">
+      <saleProduct></saleProduct>
+    </div>
+    <div v-show="show.productStock">
+      <productStock></productStock>
+    </div>
   </section>
 </template>
 <script type="text/ecmascript-6">
 import limit from "../reports/limit.vue";
+import saleProduct from "./saleProduct.vue";
+import productStock from "./productStock.vue";
 import {
   APIProduct,
   APIPlat,
@@ -775,7 +783,9 @@ import {
 import { getMenu } from "../../api/login";
 export default {
   components: {
-    limit
+    limit,
+    saleProduct,
+    productStock
   },
   data() {
     return {
@@ -867,11 +877,13 @@ export default {
       nostockdata: [],
       noskuTotal: 0,
       show: {
-        sale: true,
+        sale: false,
         wish: false,
         stockUp: false,
         nostockUp: false,
         limit:false,
+        saleProduct:false,
+        productStock:false,
       }
     };
   },
@@ -917,6 +929,16 @@ export default {
         this.show["limit"] = true;
       } else {
         this.show["limit"] = false;
+      }
+      if (tab.name === "/v1/oa-data/sales-perform") {
+        this.show["saleProduct"] = true;
+      } else {
+        this.show["saleProduct"] = false;
+      }
+      if (tab.name === "/v1/oa-data/stock-perform") {
+        this.show["productStock"] = true;
+      } else {
+        this.show["productStock"] = false;
       }
     },
     //销售
@@ -2229,6 +2251,27 @@ export default {
         this.getnoStock();
       } else {
         this.show["nostockUp"] = false;
+      }
+      if (this.allMenu[0].route === "/v1/report/dev-limit") {
+        this.show["limit"] = true;
+        this.activeName = this.allMenu[0].route;
+        this.getnoStock();
+      } else {
+        this.show["limit"] = false;
+      }
+      if (this.allMenu[0].route === "/v1/oa-data/sales-perform") {
+        this.show["saleProduct"] = true;
+        this.activeName = this.allMenu[0].route;
+        this.getnoStock();
+      } else {
+        this.show["saleProduct"] = false;
+      }
+      if (this.allMenu[0].route === "/v1/oa-data/stock-perform") {
+        this.show["productStock"] = true;
+        this.activeName = this.allMenu[0].route;
+        this.getnoStock();
+      } else {
+        this.show["productStock"] = false;
       }
       //销售
       this.getPlat();
