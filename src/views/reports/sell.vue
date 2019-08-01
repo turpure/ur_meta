@@ -1449,44 +1449,54 @@ export default {
     exportExcel() {
       /* generate workbook object from table */
       if (this.activeName === "毛利润报表") {
-        var wb = XLSX.utils.table_to_book(
-          document.querySelector("#sale-table"),
-          {
-            raw: true
-          }
-        );
-        var lastRow = wb.Sheets.Sheet1["!ref"].match(/\d+$/)[0];
-        for (var ele in wb.Sheets.Sheet1) {
-          var rowNumber = ele.replace(/[^0-9]+/g, "");
-          if (rowNumber === lastRow) {
-            delete wb.Sheets.Sheet1[ele];
-            continue;
-          }
-          const row = wb.Sheets.Sheet1[ele];
-          try {
-            if (!isNaN(row["v"]) && row["v"] !== "") {
-              row["t"] = "n";
-              row["v"] = Number(row["v"]);
-            }
-          } catch (err) {
-            console.log(err);
-          }
-        }
-        /* get binary string as output */
-        const filename = "销售毛利润报表";
-        var wbout = XLSX.write(wb, {
-          bookType: "xls",
-          bookSST: true,
-          type: "array"
-        });
-        try {
-          FileSaver.saveAs(
-            new Blob([wbout], { type: "application/octet-stream" }),
-            filename + ".xls"
-          );
-        } catch (e) {
-          if (typeof console !== "undefined") console.log(e, wbout);
-        }
+        const th = [
+          "平台",
+          "账号",
+          "销售员",
+          "成交价$",
+          "成交价￥",
+          "eBay成交费$",
+          "eBay成交费￥",
+          "PP成交费$",
+          "pp成交费￥",
+          "商品成本￥",
+          "运费成本￥",
+          "包装成本￥",
+          "发货仓库",
+          "退款金额￥",
+          "退款率%",
+          "死库处理￥",
+          "店铺杂费￥",
+          "运营杂费￥",
+          "毛利",
+          "毛利率%"
+        ];
+        const filterVal = [
+          "pingtai",
+          "suffix",
+          "salesman",
+          "salemoney",
+          "salemoneyzn",
+          "ebayFeeebay",
+          "ebayfeeznebay",
+          "ppFee",
+          "ppFeezn",
+          "costmoney",
+          "expressFare",
+          "inpackagemoney",
+          "storename",
+          "refund",
+          "refundrate",
+          "diefeeZn",
+          "insertionFee",
+          "saleOpeFeeZn",
+          "grossprofit",
+          "grossprofitRate"
+        ];
+        const Filename = "销售毛利润报表";
+        const data = this.tableData.map(v => filterVal.map(k => v[k]));
+        const [fileName, fileType, sheetName] = [Filename, "xls"];
+        this.$toExcel({ th, data, fileName, fileType, sheetName });
       } else if (this.activeName === "退款订单明细") {
         let arrTk = {};
         arrTk.department = this.condition.department;
