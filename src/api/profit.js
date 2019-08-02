@@ -712,6 +712,14 @@ export function getUkReplenish(param) {
     data
   })
 }
+export function getUkVirtual(param) {
+  const data = { condition: param }
+  return request({
+    url: '/tiny-tool/uk-virtual-replenish?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
 export function getUkRealReplenish(param) {
   const data = { condition: param }
   return request({
