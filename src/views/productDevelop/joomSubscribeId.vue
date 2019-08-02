@@ -54,7 +54,7 @@
             prop="cateName"
             header-align="center"
             align="center"
-            width="250"
+            width="230"
           >
             <template slot-scope="scope">
               <a
@@ -64,20 +64,20 @@
               >{{scope.row.cateName}}</a>
             </template>
           </el-table-column>
-          <el-table-column label="价格" prop="price" header-align="center" align="center" width="130"></el-table-column>
+          <el-table-column label="价格" prop="price" header-align="center" align="center" width="110"></el-table-column>
           <el-table-column
             label="评分"
             prop="rating"
             header-align="center"
             align="center"
-            width="130"
+            width="110"
           ></el-table-column>
           <el-table-column
             label="店铺ID"
             prop="storeId"
             header-align="center"
             align="center"
-            width="210"
+            width="205"
           ></el-table-column>
           <el-table-column
             label="创建时间"
@@ -95,10 +95,17 @@
           ></el-table-column>
           <el-table-column
             label="上架时间"
-            prop="productCreatedTime"
+            prop="proCreatedDate"
             header-align="center"
             align="center"
             width="150"
+          ></el-table-column>
+          <el-table-column
+            label="评论数"
+            prop="reviewsCount"
+            header-align="center"
+            align="center"
+            width="100"
           ></el-table-column>
         </el-table>
         <el-pagination
