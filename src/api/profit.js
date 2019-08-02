@@ -824,7 +824,7 @@ export function getSubscribeJoomList() {
 export function APIJoomCateProduct(param) {
   const data = { condition: param }
   return request({
-    url: '/oa-data-mine/joom-cate-product?page=' + param.page,
+    url: '/oa-data-mine/joom-cate-product?page=' + param.page + '&sort=' + param.sort,
     method: 'post',
     data
   })
