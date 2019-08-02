@@ -270,11 +270,6 @@ export default {
       if ($index === 0) {
         return h(
           "div",
-          {
-            style: {
-              height: "30px"
-            }
-          },
           [
             h("el-input", {
               props: {
@@ -297,11 +292,6 @@ export default {
       } else if ($index === 1) {
         return h(
           "div",
-          {
-            style: {
-              height: "30px"
-            }
-          },
           [
             h("el-input", {
               props: {
@@ -324,11 +314,6 @@ export default {
       } else if ($index === 2) {
         return h(
           "div",
-          {
-            style: {
-              height: "30px"
-            }
-          },
           [
             h("el-input", {
               props: {
@@ -351,11 +336,6 @@ export default {
       } else if ($index === 3) {
         return h(
           "div",
-          {
-            style: {
-              height: "30px"
-            }
-          },
           [
             h("el-input", {
               props: {
@@ -378,11 +358,6 @@ export default {
       } else if ($index === 4) {
         return h(
           "div",
-          {
-            style: {
-              height: "30px"
-            }
-          },
           [
             h("el-input", {
               props: {
