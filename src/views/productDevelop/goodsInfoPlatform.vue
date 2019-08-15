@@ -23,12 +23,25 @@
         <el-option v-for="(item, key) in joomArr" :key="item.key" :label="item" :value="item"></el-option>
       </el-select>
       <el-input
-              placeholder="请选择产品或填写商品编码(多个用逗号隔开)"
+              placeholder="请填写商品编码(多个用逗号隔开)"
               v-model="joomName"
-              style="width:320px;margin-left:10px;float: left"
+              style="width:250px;margin-left:10px;float: left"
               clearable
       ></el-input>
       <span class="exportAccount" @click="exportJoom">导出Joom模板</span>
+      <el-select
+        placeholder="--请选择账号--"
+        clearable
+        multiple
+        collapse-tags
+        v-model="vova"
+        style="float: left;width:252px;margin-left:10px;"
+      >
+        <el-button plain type="info" @click="selectalld3">全选</el-button>
+        <el-button plain type="info" @click="noselectd3">取消</el-button>
+        <el-option v-for="(item, key) in vovaArr" :key="item.key" :label="item" :value="item"></el-option>
+      </el-select>
+      <span class="exportAccount" @click="exportVova">导出vova模板</span>
       <span class="signPerfectWish" @click='keepPerfect("wish")'>标记Wish完善</span>
       <span class="signPerfectEbay" @click='keepPerfect("ebay")'>标记eBay完善</span>
       <span class="signPerfectJoom" @click='keepPerfect("joom")'>标记Joom完善</span>
@@ -479,7 +492,9 @@ import {
   APIPicturePreview,
   APIFinishPicture,
   APIPlatExportJoom,
-  APIFinishPlat
+  APIPlatExportVova,
+  APIFinishPlat,
+  APIVovaName
 } from "../../api/product";
 import {
   getAttributeInfoStoreName,
@@ -500,6 +515,8 @@ export default {
       totalPic: null,
       totalPlat: null,
       violation:[],
+      vovaArr:[],
+      vova:null,
       activeName: "属性信息",
       sels: [],
       time1: "",
@@ -620,6 +637,16 @@ export default {
     }
   },
   methods: {
+    selectalld3() {
+      var ard1 = [];
+      for (const item in this.vovaArr) {
+        ard1.push(this.vovaArr[item]);
+      }
+      this.vova = ard1;
+    },
+    noselectd3() {
+      this.vova = [];
+    },
     //            handleClick(tab, event) {
     //                if (tab.label === '属性信息') {
     //                    sessionStorage.setItem('judge', "属性信息")
@@ -706,6 +733,45 @@ export default {
         }           
       } else {
         this.$message.error("未选择账号");
+      }
+    },
+    exportVova(){
+      let vovaAry=[]
+      for(let i=0;i<this.sels.length;i++){
+           vovaAry.push(this.sels[i].id)
+      }
+      if(vovaAry.length!=0){
+        let objStr={}
+        if (this.vova!='') {
+        objStr = {
+          id: vovaAry,
+          account: this.vova
+        };
+        }else{
+          objStr = {
+            id: vovaAry,
+            account: this.vovaArr
+          };
+        }
+        APIPlatExportVova(objStr).then(res => {
+          const blob = new Blob([res.data], {
+            type:
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+          });
+          var file = res.headers["content-disposition"].split(";")[1].split("filename=")[1];
+          var filename=JSON.parse(file)
+          const downloadElement = document.createElement("a");
+          const objectUrl = window.URL.createObjectURL(blob);
+          downloadElement.href = objectUrl;
+          // const filename =
+          //   "Wish_" + year + month + strDate + hour + minute + second;
+          downloadElement.download = filename;
+          document.body.appendChild(downloadElement);
+          downloadElement.click();
+          document.body.removeChild(downloadElement);
+        }); 
+      }else{
+        this.$message.error("请选择产品");
       }
     },
     selectalld1() {
@@ -2477,6 +2543,9 @@ export default {
     getForbidPlat().then(response => {
       this.violation = response.data.data
     })
+    APIVovaName().then(response => {
+      this.vovaArr = response.data.data;
+    });
   }
 };
 </script>
