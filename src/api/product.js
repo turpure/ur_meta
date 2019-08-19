@@ -1289,3 +1289,12 @@ export function APIStockPerform(param) {
   })
 }
 
+export function APIGlobalMarket(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data/global-market',
+    method: 'post',
+    data
+  })
+}
+

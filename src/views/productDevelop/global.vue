@@ -16,26 +16,26 @@
             </el-select>
           </div>
           <div class="floet01">
+            <span>账号</span>
+            <el-select
+              v-model="condition.saler"
+              placeholder="请选择"
+              size="small"
+              class="m10"
+              style="width:160px;"
+            >
+              <el-option v-for="item in developer" :value="item" :key="item"></el-option>
+            </el-select>
+          </div>
+          <div class="floet01">
+            <span>商品编码</span>
+            <el-input placeholder="请输入商品编码" size="small" style="width:135px;margin-left:10px;" v-model="condition.goodsCode"></el-input>
+          </div>
+          <div class="floet01">
             <span style="color:red">订单时间</span>
             <el-date-picker
               size="small"
               v-model="condition.orderDate"
-              value-format="yyyy-MM-dd"
-              type="daterange"
-              align="right"
-              unlink-panels
-              range-separator="至"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-              class="m10 m210"
-              :picker-options="pickerOptions2"
-            ></el-date-picker>
-          </div>
-          <div class="floet01">
-            <span>开发时间</span>
-            <el-date-picker
-              size="small"
-              v-model="condition.devDate"
               value-format="yyyy-MM-dd"
               type="daterange"
               align="right"
@@ -68,7 +68,7 @@
   </section>
 </template>
 <script type="text/ecmascript-6">
-import { getDevPerform } from "../../api/product";
+import { APIGlobalMarket } from "../../api/product";
 import { getDeveloper } from "../../api/profit";
 import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 export default {
@@ -85,19 +85,20 @@ export default {
       listLoading: false,
       dateType: [{ id: 0, type: "交易时间" }, { id: 1, type: "发货时间" }],
       condition: {
-        dateFlag: 0,
+        plat: null,
+        suffix: null,
         orderDate: [],
-        devDate: []
+        goodsCode:null
       },
       options1: {
         title: {
           top:20,  
-          text: "各开发产品款数",
+          text: "各国销售量占比",
           x: "center"
         },
         tooltip: {
           trigger: "item",
-          formatter: "{a} <br/>{b} : {c}"
+          formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
         legend: {
           type: "scroll",
@@ -123,7 +124,7 @@ export default {
         calculable: true,
         series: [
           {
-            name: "各开发产品款数",
+            name: "访问来源",
             type: "pie",
             radius : '60%',
             data: []
@@ -133,7 +134,7 @@ export default {
       options2: {
         title: {
           top:20,  
-          text: "各开发销售额($)",
+          text: "各国销售额占比($)",
           x: "center"
         },
         tooltip: {
@@ -164,7 +165,7 @@ export default {
         calculable: true,
         series: [
           {
-            name: "各开发销售额($)",
+            name: "访问来源",
             type: "pie",
             radius : '60%',
             data:[] 
@@ -201,16 +202,16 @@ export default {
   methods: {
     getdata() {
       this.listLoading = true;
-      getDevPerform(this.condition).then(response => {
+      APIGlobalMarket(this.condition).then(response => {
         this.listLoading = false;
-        var dataArr1=response.data.data.devData
+        var dataArr1=response.data.data
         var arr1Name=[]
         var arr1Data=[]
         for(let i=0;i<dataArr1.length;i++){
-            arr1Name.push(dataArr1[i].salerName)
+            arr1Name.push(dataArr1[i].CountryName)
             var obj={
-                value:dataArr1[i].num,
-                name:dataArr1[i].salerName
+                value:dataArr1[i].l_qty,
+                name:dataArr1[i].CountryName
             }
             arr1Data.push(obj)
         }
@@ -218,14 +219,14 @@ export default {
         this.options1.series[0].data = arr1Data;
         let or1 = this.$echarts.init(this.$refs.or1);
         or1.setOption(this.options1);
-        var dataArr2=response.data.data.orderData
+        var dataArr2=response.data.data
         var arr2Name=[]
         var arr2Data=[]
         for(let i=0;i<dataArr2.length;i++){
-            arr2Name.push(dataArr2[i].salerName)
+            arr2Name.push(dataArr2[i].CountryName)
             var obj={
-                value:dataArr2[i].amt,
-                name:dataArr2[i].salerName
+                value:dataArr2[i].l_AMT,
+                name:dataArr2[i].CountryName
             }
             arr2Data.push(obj)
         }
@@ -312,6 +313,6 @@ export default {
   margin-left: 10px;
 }
 .m210 {
-  width: 230px;
+  width: 220px;
 }
 </style>
