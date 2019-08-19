@@ -1298,3 +1298,21 @@ export function APIGlobalMarket(param) {
   })
 }
 
+export function APICatPerform(param) {
+  const data = { }
+  return request({
+    url: '/oa-data/cat-perform',
+    method: 'post',
+    data
+  })
+}
+
+export function APIDataCat(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data/cat',
+    method: 'post',
+    data
+  })
+}
+

@@ -6,13 +6,24 @@
           <div class="floet01">
             <span>主类目</span>
             <el-select
-              v-model="condition.saler"
+              v-model="condition.cat"
               placeholder="请选择"
               size="small"
               class="m10"
               style="width:110px;"
             >
-              <el-option v-for="item in developer" :value="item" :key="item"></el-option>
+              <el-option v-for="item in mainCategory" :value="item" :key="item"></el-option>
+            </el-select>
+          </div>
+          <div class="floet01">
+            <span>交易类型</span>
+            <el-select
+              v-model="condition.value"
+              placeholder="请选择"
+              size="small"
+              style="width:150px;margin-left:10px;"
+            >
+              <el-option v-for="item in options" :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </div>
           <div class="floet01">
@@ -48,10 +59,35 @@
             ></el-date-picker>
           </div>
           <div class="floet01">
-            <el-button size="small" type="primary" @click="getdata()">查询</el-button>
+            <el-button size="small" type="primary" @click="getTableData()">查询</el-button>
           </div>
         </div>
       </el-col>
+      <div style="margin-top:15px;">
+        <el-table
+        :data="tableData"
+        border
+        class="elTableForm"
+        :summary-method="getSummaries"
+        :header-cell-style="getRowClass"
+        show-summary
+        v-show="tableTrue"
+         v-loading="listLoadingTable"
+        style="width: 100%;margin:auto;margin-top:15px;"
+      >
+        <el-table-column type="index" fixed align="center" width="80" header-align="center"></el-table-column>
+        <el-table-column label="主类目/子分类" header-align="center" align="center" prop="CategoryParentName"></el-table-column>
+        <el-table-column label="产品总款数" header-align="center" align="center" prop="catCodeNum"></el-table-column>
+        <el-table-column label="非清仓款数" header-align="center" align="center" prop="non_catCodeNum"></el-table-column>
+        <el-table-column label="非清仓款数占比%" header-align="center" align="center" prop="numRate"></el-table-column>
+        <el-table-column label="销量" header-align="center" align="center" prop="l_qty"></el-table-column>
+        <el-table-column label="非清仓销量" header-align="center" align="center" prop="non_l_qty"></el-table-column>
+        <el-table-column label="销量占比" header-align="center" align="center" prop="qtyRate"></el-table-column>
+        <el-table-column label="销售额（$）" header-align="center" align="center" prop="l_AMT"></el-table-column>
+        <el-table-column label="非清仓销售额（$）" header-align="center" align="center" prop="non_l_AMT"></el-table-column>
+        <el-table-column label="销售额占比(%)" header-align="center" align="center" prop="amtRate"></el-table-column>
+      </el-table>
+      </div>
       <el-col :span="24" style="margin-top:1px;">
         <el-col :span="12">
           <el-card>
@@ -68,31 +104,35 @@
   </section>
 </template>
 <script type="text/ecmascript-6">
-import { getDevPerform } from "../../api/product";
-import { getDeveloper } from "../../api/profit";
+import { APICatPerform,APIDataCat } from "../../api/product";
+import { getAttributeInfoCat } from "../../api/profit";
 import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 export default {
   data() {
     return {
-      tableHeightstock: window.innerHeight - 214,
-      options: [],
+      tableHeightstock: window.innerHeight - 174,
+      options: ['交易时间','发货时间'],
       total: null,
       developer: [],
+      tableData:[],
+      mainCategory:[],
+      listLoadingTable:false,
+      tableTrue:false,
       sty: {
         width: "100%",
         height: window.innerHeight - 168 + "px"
       },
       listLoading: false,
-      dateType: [{ id: 0, type: "交易时间" }, { id: 1, type: "发货时间" }],
       condition: {
-        dateFlag: 0,
+        cat: null,
+        dateFlag:'交易时间',
         orderDate: [],
         devDate: []
       },
       options1: {
         title: {
           top:20,  
-          text: "各开发产品款数",
+          text: "30天-类目款数",
           x: "center"
         },
         tooltip: {
@@ -123,7 +163,7 @@ export default {
         calculable: true,
         series: [
           {
-            name: "各开发产品款数",
+            name: "访问来源",
             type: "pie",
             radius : '60%',
             data: []
@@ -133,7 +173,7 @@ export default {
       options2: {
         title: {
           top:20,  
-          text: "各开发销售额($)",
+          text: "30天-类目销售额($)",
           x: "center"
         },
         tooltip: {
@@ -164,7 +204,7 @@ export default {
         calculable: true,
         series: [
           {
-            name: "各开发销售额($)",
+            name: "访问来源",
             type: "pie",
             radius : '60%',
             data:[] 
@@ -201,16 +241,16 @@ export default {
   methods: {
     getdata() {
       this.listLoading = true;
-      getDevPerform(this.condition).then(response => {
+      APICatPerform(this.condition).then(response => {
         this.listLoading = false;
-        var dataArr1=response.data.data.devData
+        var dataArr1=response.data.data
         var arr1Name=[]
         var arr1Data=[]
         for(let i=0;i<dataArr1.length;i++){
-            arr1Name.push(dataArr1[i].salerName)
+            arr1Name.push(dataArr1[i].category)
             var obj={
                 value:dataArr1[i].num,
-                name:dataArr1[i].salerName
+                name:dataArr1[i].category
             }
             arr1Data.push(obj)
         }
@@ -218,14 +258,14 @@ export default {
         this.options1.series[0].data = arr1Data;
         let or1 = this.$echarts.init(this.$refs.or1);
         or1.setOption(this.options1);
-        var dataArr2=response.data.data.orderData
+        var dataArr2=response.data.data
         var arr2Name=[]
         var arr2Data=[]
         for(let i=0;i<dataArr2.length;i++){
-            arr2Name.push(dataArr2[i].salerName)
+            arr2Name.push(dataArr2[i].category)
             var obj={
                 value:dataArr2[i].amt,
-                name:dataArr2[i].salerName
+                name:dataArr2[i].category
             }
             arr2Data.push(obj)
         }
@@ -234,16 +274,56 @@ export default {
         let or2 = this.$echarts.init(this.$refs.or2);
         or2.setOption(this.options2);
       });
-    }
+    },
+    getRowClass({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex == 0) {
+        return "color:#337ab7";
+      } else {
+        return "";
+      }
+    },
+    getSummaries(param) {
+      const { columns, data } = param;
+      const sums = [];
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = "合计";
+          return;
+        }
+        const values = data.map(item => Number(item[column.property]));
+        if (!values.every(value => isNaN(value))) {
+          sums[index] = values.reduce((prev, curr) => {
+            const value = Number(curr);
+            if (!isNaN(value)) {
+              return prev + curr;
+            } else {
+              return prev;
+            }
+          }, 0);
+        } else {
+          sums[index] = "N/A";
+        }
+      });
+
+      return sums;
+    },
+    getTableData(){
+      this.condition.dateFlag=='交易时间'?this.condition.dateFlag=0:this.condition.dateFlag=1
+      this.tableTrue=true
+      this.listLoadingTable=true
+      APIDataCat(this.condition).then(response => {
+        this.tableData=response.data.data.items
+        this.listLoadingTable=false
+      })
+    },
   },
   mounted() {
     this.condition.orderDate = [
       getMonthDate("lastMonth").start,
       getMonthDate("lastMonth").end
     ];
-    getDeveloper().then(response => {
-      const possessMan = response.data.data;
-      this.developer = possessMan;
+    getAttributeInfoCat().then(response => {
+      this.mainCategory = response.data.data;
     });
     this.getdata();
   }

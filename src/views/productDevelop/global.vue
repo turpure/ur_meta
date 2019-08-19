@@ -6,25 +6,37 @@
           <div class="floet01">
             <span>平台</span>
             <el-select
-              v-model="condition.saler"
-              placeholder="请选择"
               size="small"
-              class="m10"
-              style="width:110px;"
+              v-model="condition.plat"
+              clearable
+              style="width:120px;"
+              placeholder="平台"
             >
-              <el-option v-for="item in developer" :value="item" :key="item"></el-option>
+              <el-option
+                v-for="(item,index) in plat"
+                :index="index"
+                :key="item.plat"
+                :label="item.plat"
+                :value="item.plat"
+              ></el-option>
             </el-select>
           </div>
           <div class="floet01">
             <span>账号</span>
             <el-select
-              v-model="condition.saler"
-              placeholder="请选择"
               size="small"
-              class="m10"
+              v-model="condition.suffix"
+              filterable
               style="width:160px;"
+              placeholder="账号"
             >
-              <el-option v-for="item in developer" :value="item" :key="item"></el-option>
+              <el-option
+                v-for="(item,index) in account"
+                :index="index"
+                :key="item.id"
+                :label="item.store"
+                :value="item.store"
+              ></el-option>
             </el-select>
           </div>
           <div class="floet01">
@@ -69,13 +81,15 @@
 </template>
 <script type="text/ecmascript-6">
 import { APIGlobalMarket } from "../../api/product";
-import { getDeveloper } from "../../api/profit";
+import { getPlatform,getAccount } from "../../api/profit";
 import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 export default {
   data() {
     return {
       tableHeightstock: window.innerHeight - 214,
       options: [],
+      plat:[],
+      account:[],
       total: null,
       developer: [],
       sty: {
@@ -238,14 +252,16 @@ export default {
     }
   },
   mounted() {
+    getPlatform().then(response => {
+      this.plat = response.data.data;
+    });
+    getAccount().then(response => {
+      this.account = response.data.data;
+    });
     this.condition.orderDate = [
       getMonthDate("lastMonth").start,
       getMonthDate("lastMonth").end
     ];
-    getDeveloper().then(response => {
-      const possessMan = response.data.data;
-      this.developer = possessMan;
-    });
     this.getdata();
   }
 };
