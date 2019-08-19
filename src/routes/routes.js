@@ -104,6 +104,8 @@ import nostockUp from '../views/productDevelop/nostockUp.vue'
 import limite from '../views/productDevelop/limite.vue'
 import productStock from '../views/productDevelop/productStock.vue'
 import productShow from '../views/productDevelop/productShow.vue'
+import saleProduct from '../views/productDevelop/saleProduct.vue'
+import global from '../views/productDevelop/global.vue'
 // 数据采集
 import collection from '../views/productDevelop/collection.vue'
 import collectionJoom from '../views/productDevelop/collectionJoom.vue'
@@ -695,6 +697,21 @@ const routes = [
             path: '/v1/oa-data/product-perform',
             component: productShow,
             name: '产品表现'
+          },
+          {
+            path: '/v1/oa-data/sales-perform',
+            component: saleProduct,
+            name: '销售产品表现'
+          },
+          {
+            path: '/v1/oa-data/stock-perform',
+            component: productStock,
+            name: '备货产品库存'
+          },
+          {
+            path: '/v1/oa-data/global-market',
+            component: global,
+            name: '全球市场分析'
           },
           {
             path: '/v1/oa-data/nonstock',
