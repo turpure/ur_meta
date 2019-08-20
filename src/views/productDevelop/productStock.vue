@@ -8,6 +8,7 @@
             <el-select
               v-model="condition.salerName"
               placeholder="请选择"
+              clearable
               size="small"
               style="width:150px;margin-left:10px;"
             >
@@ -16,7 +17,7 @@
           </div>
           <div class="floet01">
             <span>商品编码</span>
-            <el-input placeholder="请输入商品编码" size="small" style="width:180px;margin-left:10px;" v-model="condition.goodsCode"></el-input>
+            <el-input placeholder="请输入商品编码" size="small" style="width:180px;margin-left:10px;" v-model="condition.goodsCode" clearable></el-input>
           </div>
           <div class="floet01">
             <span>开发时间</span>
@@ -26,6 +27,7 @@
               value-format="yyyy-MM-dd"
               type="daterange"
               align="right"
+              clearable
               unlink-panels
               range-separator="至"
               start-placeholder="开始日期"

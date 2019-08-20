@@ -1316,3 +1316,12 @@ export function APIDataCat(param) {
   })
 }
 
+export function APISalesPerform(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data/sales-perform',
+    method: 'post',
+    data
+  })
+}
+

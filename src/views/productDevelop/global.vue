@@ -27,6 +27,7 @@
               size="small"
               v-model="condition.suffix"
               filterable
+              clearable
               style="width:160px;"
               placeholder="账号"
             >
@@ -41,13 +42,14 @@
           </div>
           <div class="floet01">
             <span>商品编码</span>
-            <el-input placeholder="请输入商品编码" size="small" style="width:135px;margin-left:10px;" v-model="condition.goodsCode"></el-input>
+            <el-input placeholder="请输入商品编码" size="small" style="width:135px;margin-left:10px;" v-model="condition.goodsCode" clearable></el-input>
           </div>
           <div class="floet01">
             <span style="color:red">订单时间</span>
             <el-date-picker
               size="small"
               v-model="condition.orderDate"
+              clearable
               value-format="yyyy-MM-dd"
               type="daterange"
               align="right"

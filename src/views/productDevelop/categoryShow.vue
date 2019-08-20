@@ -9,6 +9,7 @@
               v-model="condition.cat"
               placeholder="请选择"
               size="small"
+              clearable
               class="m10"
               style="width:110px;"
             >
@@ -21,6 +22,7 @@
               v-model="condition.value"
               placeholder="请选择"
               size="small"
+              clearable
               style="width:150px;margin-left:10px;"
             >
               <el-option v-for="item in options" :key="item" :label="item" :value="item"></el-option>
@@ -30,6 +32,7 @@
             <span style="color:red">订单时间</span>
             <el-date-picker
               size="small"
+              clearable
               v-model="condition.orderDate"
               value-format="yyyy-MM-dd"
               type="daterange"
@@ -49,6 +52,7 @@
               v-model="condition.devDate"
               value-format="yyyy-MM-dd"
               type="daterange"
+              clearable
               align="right"
               unlink-panels
               range-separator="至"
