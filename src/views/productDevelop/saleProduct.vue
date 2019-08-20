@@ -22,6 +22,7 @@
               v-model="condition.saler"
               filterable
               multiple
+              style="width:150px;"
               collapse-tags
               placeholder="销售员"
             >
@@ -54,7 +55,7 @@
             ></el-date-picker>
           </div>
           <div class="floet01">
-            <el-button size="small" type="primary">查询</el-button>
+            <el-button size="small" type="primary" @click="getData">查询</el-button>
           </div>
           <div class="floet01">
             <el-button size="small" type="success">导出表格</el-button>
@@ -69,6 +70,7 @@
         :summary-method="getSummaries"
         :header-cell-style="getRowClass"
         show-summary
+        v-loading="listLoading"
         :height="tableHeightstock"
         style="width: 98%;margin:auto;margin-top:15px;"
       >
@@ -107,6 +109,7 @@ export default {
       tableHeightstock: window.innerHeight - 180,
       options: ["备货", "不备货"],
       member:[],
+      listLoading:false,
       condition: {
         isStock:null,
         saler: [],
@@ -196,8 +199,10 @@ export default {
       return sums;
     },
     getData() {
+      this.listLoading=true
       APISalesPerform(this.condition).then(res => {
         this.tableData = res.data.data;
+        this.listLoading=false
       });
     }
   },
