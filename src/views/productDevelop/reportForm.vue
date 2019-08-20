@@ -99,6 +99,12 @@ export default {
         });
       } else {
       }
+      if (tab.name === "/v1/oa-data/dev-data") {
+        this.$router.push({
+          path: `/v1/oa-data/dev-data`
+        });
+      } else {
+      }
     }
   },
   mounted() {
@@ -182,6 +188,12 @@ export default {
         this.activeName = this.allMenu[0].route;
         this.$router.push({
           path: `/v1/oa-data/stock-perform`
+        });
+      }
+      if (this.allMenu[0].route === "/v1/oa-data/dev-data") {
+        this.activeName = this.allMenu[0].route;
+        this.$router.push({
+          path: `/v1/oa-data/dev-data`
         });
       }
     });

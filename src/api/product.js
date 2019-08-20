@@ -1325,3 +1325,12 @@ export function APISalesPerform(param) {
   })
 }
 
+export function APIDevData(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data/dev-data',
+    method: 'post',
+    data
+  })
+}
+

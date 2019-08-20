@@ -46,6 +46,7 @@
               type="daterange"
               clearable
               align="right"
+              disabled
               unlink-panels
               range-separator="至"
               start-placeholder="开始日期"
