@@ -231,7 +231,7 @@ export default {
             sums[index] = (arr[5]/arr[2]*100).toFixed(2);
         }
         if(index==8){
-            sums[index] = (arr[7]/arr[2]).toFixed(2);
+            sums[index] = (arr[7]/arr[2]*100).toFixed(2);
         }
       });
 
