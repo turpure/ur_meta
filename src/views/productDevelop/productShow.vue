@@ -119,7 +119,7 @@
 <script type="text/ecmascript-6">
 import { getProductPerform } from "../../api/product";
 import { getDeveloper } from "../../api/profit";
-import { compareUp, compareDown, getMonthDate } from "../../api/tools";
+import { compareUp, compareDown, getMonthDate,getNextDate } from "../../api/tools";
 export default {
   data() {
     return {
@@ -230,9 +230,11 @@ export default {
     }
   },
   mounted() {
+    var startData = getMonthDate("lastMonth").start;
+    var endData = getMonthDate("lastMonth").end;
     this.condition.orderDate = [
-      getMonthDate("lastMonth").start,
-      getMonthDate("lastMonth").end
+      getNextDate(startData, -1),
+      getNextDate(endData, -1)
     ];
     getDeveloper().then(response => {
       const possessMan = response.data.data;
