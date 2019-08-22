@@ -317,9 +317,9 @@ export default {
       this.listLoadingTable=true
       APIDataCat(this.condition).then(response => {
         this.tableData=response.data.data.items
+        this.condition.dateFlag==0?this.condition.dateFlag='交易时间':this.condition.dateFlag='发货时间'
         this.listLoadingTable=false
       })
-      this.condition.dateFlag==0?this.condition.dateFlag='交易时间':this.condition.dateFlag='发货时间'
     },
   },
   mounted() {
