@@ -19,7 +19,7 @@
           <div class="floet01">
             <span>交易类型</span>
             <el-select
-              v-model="condition.value"
+              v-model="condition.dateFlag"
               placeholder="请选择"
               size="small"
               clearable
@@ -67,7 +67,7 @@
           </div>
         </div>
       </el-col>
-      <div style="margin-top:15px;">
+      <div>
         <el-table
         :data="tableData"
         border
@@ -141,7 +141,7 @@ export default {
         },
         tooltip: {
           trigger: "item",
-          formatter: "{a} <br/>{b} : {c}"
+          formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
         legend: {
           type: "scroll",
@@ -319,6 +319,7 @@ export default {
         this.tableData=response.data.data.items
         this.listLoadingTable=false
       })
+      this.condition.dateFlag==0?this.condition.dateFlag='交易时间':this.condition.dateFlag='发货时间'
     },
   },
   mounted() {

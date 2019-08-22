@@ -59,7 +59,7 @@
             <el-button size="small" type="primary" @click="getData">查询</el-button>
           </div>
           <div class="floet01">
-            <el-button size="small" type="success">导出表格</el-button>
+            <el-button size="small" type="success" @click="exportExcel">导出表格</el-button>
           </div>
         </div>
       </el-col>
@@ -80,15 +80,15 @@
         <el-table-column label="销售产品款数" header-align="center" align="center" prop="number"></el-table-column>
         <el-table-column label="出单产品款数" header-align="center" align="center" prop="orderNum"></el-table-column>
         <el-table-column label="出单率(%)" header-align="center" align="center" prop="orderRate">
-          <template slot-scope="scope">{{scope.row.orderRate | cutOut100}}</template>
+          <template slot-scope="scope">{{scope.row.orderRate}}</template>
         </el-table-column>
         <el-table-column label="爆款数" header-align="center" align="center" prop="hotStyleNum"></el-table-column>
         <el-table-column label="爆款率(%)" header-align="center" align="center" prop="hotStyleRate">
-          <template slot-scope="scope">{{scope.row.hotStyleRate | cutOut100}}</template>
+          <template slot-scope="scope">{{scope.row.hotStyleRate}}</template>
         </el-table-column>
         <el-table-column label="旺款数" header-align="center" align="center" prop="exuStyleNum"></el-table-column>
         <el-table-column label="旺款率(%)" header-align="center" align="center" prop="exuStyleRate">
-          <template slot-scope="scope">{{scope.row.exuStyleRate | cutOut100}}</template>
+          <template slot-scope="scope">{{scope.row.exuStyleRate}}</template>
         </el-table-column>
       </el-table>
       </el-col>
@@ -157,6 +157,34 @@ export default {
     }
   },
   methods: {
+    exportExcel() {
+      if(this.tableData.length!=0){
+        const th = [
+        "销售员",
+        "销售产品款数",
+        "出单产品款数",
+        "出单率(%)",
+        "爆款数",
+        "爆款率(%)",
+        "旺款数",
+        "旺款率(%)"
+      ];
+      const filterVal = [
+        "salerName",
+        "number",
+        "orderNum",
+        "orderRate",
+        "hotStyleNum",
+        "hotStyleRate",
+        "exuStyleNum",
+        "exuStyleRate"
+      ];
+      const Filename = "销售产品表现";
+      const data = this.tableData.map(v => filterVal.map(k => v[k]));
+      const [fileName, fileType, sheetName] = [Filename, "xls"];
+      this.$toExcel({ th, data, fileName, fileType, sheetName });
+      }
+    },
     selectallm() {
       const allValues = [];
       for (const item of this.member) {
