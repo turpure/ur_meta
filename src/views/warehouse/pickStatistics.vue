@@ -19,6 +19,9 @@
             :picker-options="pickerOptions2"
           ></el-date-picker>
         </div>
+        <div class="floet01">
+          <el-button size="small" type="primary" @click="getData()">查询</el-button>
+        </div>
       </div>
     </el-col>
     <el-col :span="24" style="margin-top:1px;">
@@ -146,7 +149,7 @@ export default {
           }
         ];
         this.options2.legend.data = name;
-        console.log(this.options2.legend.data)
+        console.log(this.options2.legend.data);
         this.options2.xAxis[0].data = name;
         this.options2.series = sery;
         this.options2.yAxis[0].axisLabel.formatter = "{value}";
