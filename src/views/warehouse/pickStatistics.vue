@@ -54,7 +54,8 @@ export default {
       listLoading: false,
       options1: {
         title: {
-          text: "单品拣货统计"
+          text: "单品拣货统计",
+          top:10
         },
         tooltip: {
           trigger: "axis",
@@ -103,7 +104,8 @@ export default {
       },
       options2: {
         title: {
-          text: "多品拣货统计"
+          text: "多品拣货统计",
+          top:10
         },
         tooltip: {
           trigger: "axis",

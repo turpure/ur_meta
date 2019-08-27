@@ -15,14 +15,94 @@
                 @click="handleTitle(item.name,index)"
               >
                 <i
-                  :class="index==0?'el-icon-rank':index==1?'el-icon-tickets':index==2?'el-icon-document':index==3?'el-icon-date':''"
+                  :class="index==0?'el-icon-rank':index==1?'el-icon-tickets':index==2?'el-icon-document':index==3?'el-icon-date':'el-icon-tickets'"
                 ></i>
                 {{item.name}}
               </p>
             </div>
           </div>
           <div class="tabs-container tab-index-pan tswj" v-show="showTitle.wj">
-            
+            <div class="bigDemo">
+              <div class="rightDemo">
+                <span class="span20">10%</span>
+                <div class="indexbImg b1" @click="zoomIn"></div>
+                <div class="indexbImg b2" @click="four"></div>
+                <div class="indexbImg b3" @click="three"></div>
+                <div class="indexbImg b4" @click="two"></div>
+                <div class="indexbImg b5" @click="one"></div>
+                <div class="indexbImg b6"></div>
+                <div class="indexbImg b7"></div>
+                <div class="indexbImg b8"></div>
+                <div class="indexbImg b9"></div>
+                <div class="indexbImg b10"></div>
+                <div class="indexbImg b11"></div>
+                <div class="indexbImg b12"></div>
+                <div class="indexbImg b13"></div>
+                <div class="indexbImg b14"></div>
+                <div class="indexbImg b15"></div>
+                <div class="indexbImg b16"></div>
+                <div class="indexbImg b17"></div>
+                <div class="indexbImg b18"></div>
+                <div class="indexbImg b19"></div>
+                <div class="indexbImg b20"></div>
+              </div>
+              <div class="leftDemo">
+                <span class="span40">30%</span>
+                <div class="indexbImg b21"></div>
+                <div class="indexbImg b22"></div>
+                <div class="indexbImg b23"></div>
+                <div class="indexbImg b24"></div>
+                <div class="indexbImg b25"></div>
+                <div class="indexbImg b26"></div>
+                <div class="indexbImg b27"></div>
+                <div class="indexbImg b28"></div>
+                <div class="indexbImg b29"></div>
+                <div class="indexbImg b30"></div>
+                <div class="indexbImg b31"></div>
+                <div class="indexbImg b32"></div>
+                <div class="indexbImg b33"></div>
+                <div class="indexbImg b34"></div>
+                <div class="indexbImg b35"></div>
+                <div class="indexbImg b36"></div>
+                <div class="indexbImg b37"></div>
+                <div class="indexbImg b38"></div>
+                <div class="indexbImg b39"></div>
+                <div class="indexbImg b40"></div>
+              </div>
+              <div class="rightDemo">
+                <span class="span60">50%</span>
+                <div class="indexbImg b41"></div>
+                <div class="indexbImg b42"></div>
+                <div class="indexbImg b43"></div>
+                <div class="indexbImg b44"></div>
+                <div class="indexbImg b45"></div>
+                <div class="indexbImg b46"></div>
+                <div class="indexbImg b47"></div>
+                <div class="indexbImg b48"></div>
+                <div class="indexbImg b49"></div>
+                <div class="indexbImg b50"></div>
+                <div class="indexbImg b51"></div>
+                <div class="indexbImg b52"></div>
+                <div class="indexbImg b53"></div>
+                <div class="indexbImg b54"></div>
+                <div class="indexbImg b55"></div>
+                <div class="indexbImg b56"></div>
+                <div class="indexbImg b57"></div>
+                <div class="indexbImg b58"></div>
+                <div class="indexbImg b59"></div>
+                <div class="indexbImg b60"></div>
+              </div>
+              <div class="leftDemo">
+                <span class="span80">70%</span>
+              </div>
+              <div class="rightDemo">
+                <span class="span100">100%</span>
+              </div>
+              <span class="start"></span>
+              <span class="end">
+                <img src="../assets/qizi.png" style="width: 50px;height: 50px;" />
+              </span>
+            </div>
           </div>
           <div class="tabs-container tab-index-pan" v-show="showTitle.pming">
             <el-tabs
@@ -51,17 +131,17 @@
                       src="../assets/j1.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==1"
-                    >
+                    />
                     <img
                       src="../assets/j2.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==2"
-                    >
+                    />
                     <img
                       src="../assets/j3.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==3"
-                    >
+                    />
                     <span v-if="scope.row.order>3">{{scope.row.order}}</span>
                   </template>
                 </el-table-column>
@@ -76,12 +156,12 @@
                         :src="scope.row.img"
                         style="width: 60px;height: 60px;border-radius:50%;"
                         v-if="scope.row.img!=null"
-                      >
+                      />
                       <img
                         src="../assets/header.png"
                         style="width: 60px;height: 60px;border-radius:50%;"
                         v-if="scope.row.img==null"
-                      >
+                      />
                     </div>
                   </template>
                 </el-table-column>
@@ -172,17 +252,17 @@
                       src="../assets/j1.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==1"
-                    >
+                    />
                     <img
                       src="../assets/j2.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==2"
-                    >
+                    />
                     <img
                       src="../assets/j3.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==3"
-                    >
+                    />
                     <span v-if="scope.row.order>3">{{scope.row.order}}</span>
                   </template>
                 </el-table-column>
@@ -197,12 +277,12 @@
                         :src="scope.row.img"
                         style="width: 60px;height: 60px;border-radius:50%;"
                         v-if="scope.row.img!=null"
-                      >
+                      />
                       <img
                         src="../assets/header.png"
                         style="width: 60px;height: 60px;border-radius:50%;"
                         v-if="scope.row.img==null"
-                      >
+                      />
                     </div>
                   </template>
                 </el-table-column>
@@ -293,17 +373,17 @@
                       src="../assets/j1.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==1"
-                    >
+                    />
                     <img
                       src="../assets/j2.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==2"
-                    >
+                    />
                     <img
                       src="../assets/j3.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==3"
-                    >
+                    />
                     <span v-if="scope.row.order>3">{{scope.row.order}}</span>
                   </template>
                 </el-table-column>
@@ -318,12 +398,12 @@
                         :src="scope.row.img"
                         style="width: 60px;height: 60px;border-radius:50%;"
                         v-if="scope.row.img!=null"
-                      >
+                      />
                       <img
                         src="../assets/header.png"
                         style="width: 60px;height: 60px;border-radius:50%;"
                         v-if="scope.row.img==null"
-                      >
+                      />
                     </div>
                   </template>
                 </el-table-column>
@@ -414,17 +494,17 @@
                       src="../assets/j1.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==1"
-                    >
+                    />
                     <img
                       src="../assets/j2.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==2"
-                    >
+                    />
                     <img
                       src="../assets/j3.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==3"
-                    >
+                    />
                     <span v-if="scope.row.order>3">{{scope.row.order}}</span>
                   </template>
                 </el-table-column>
@@ -439,12 +519,12 @@
                         :src="scope.row.img"
                         style="width: 60px;height: 60px;border-radius:50%;"
                         v-if="scope.row.img!=null"
-                      >
+                      />
                       <img
                         src="../assets/header.png"
                         style="width: 60px;height: 60px;border-radius:50%;"
                         v-if="scope.row.img==null"
-                      >
+                      />
                     </div>
                   </template>
                 </el-table-column>
@@ -535,17 +615,17 @@
                       src="../assets/j1.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==1"
-                    >
+                    />
                     <img
                       src="../assets/j2.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==2"
-                    >
+                    />
                     <img
                       src="../assets/j3.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==3"
-                    >
+                    />
                     <span v-if="scope.row.order>3">{{scope.row.order}}</span>
                   </template>
                 </el-table-column>
@@ -560,12 +640,12 @@
                         :src="scope.row.img"
                         style="width: 60px;height: 60px;border-radius:50%;"
                         v-if="scope.row.img!=null"
-                      >
+                      />
                       <img
                         src="../assets/header.png"
                         style="width: 60px;height: 60px;border-radius:50%;"
                         v-if="scope.row.img==null"
-                      >
+                      />
                     </div>
                   </template>
                 </el-table-column>
@@ -656,17 +736,17 @@
                       src="../assets/j1.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==1"
-                    >
+                    />
                     <img
                       src="../assets/j2.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==2"
-                    >
+                    />
                     <img
                       src="../assets/j3.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==3"
-                    >
+                    />
                     <span v-if="scope.row.order>3">{{scope.row.order}}</span>
                   </template>
                 </el-table-column>
@@ -681,12 +761,12 @@
                         :src="scope.row.img"
                         style="width: 60px;height: 60px;border-radius:50%;"
                         v-if="scope.row.img!=null"
-                      >
+                      />
                       <img
                         src="../assets/header.png"
                         style="width: 60px;height: 60px;border-radius:50%;"
                         v-if="scope.row.img==null"
-                      >
+                      />
                     </div>
                   </template>
                 </el-table-column>
@@ -890,7 +970,7 @@
                 <el-table-column prop="cate" label="子类目" sortable align="center"></el-table-column>
                 <el-table-column prop="img" label="图片" align="center">
                   <template slot-scope="scope">
-                    <img :src="scope.row.img" style="width: 120px;height: 120px;">
+                    <img :src="scope.row.img" style="width: 120px;height: 120px;" />
                   </template>
                 </el-table-column>
                 <el-table-column prop="salesNum" label="月销量" sortable="custom" align="center"></el-table-column>
@@ -918,7 +998,7 @@
                 <el-table-column prop="cate" label="子类目" sortable align="center"></el-table-column>
                 <el-table-column prop="img" label="图片" sortable align="center">
                   <template slot-scope="scope">
-                    <img :src="scope.row.img" style="width: 120px;height: 120px;">
+                    <img :src="scope.row.img" style="width: 120px;height: 120px;" />
                   </template>
                 </el-table-column>
                 <el-table-column prop="salesNum" label="月销量" sortable="custom" align="center"></el-table-column>
@@ -946,7 +1026,7 @@
                 <el-table-column prop="cate" label="子类目" sortable align="center"></el-table-column>
                 <el-table-column prop="img" label="图片" sortable align="center">
                   <template slot-scope="scope">
-                    <img :src="scope.row.img" style="width: 120px;height: 120px;">
+                    <img :src="scope.row.img" style="width: 120px;height: 120px;" />
                   </template>
                 </el-table-column>
                 <el-table-column prop="salesNum" label="月销量" sortable="custom" align="center"></el-table-column>
@@ -974,7 +1054,7 @@
                 <el-table-column prop="cate" label="子类目" sortable align="center"></el-table-column>
                 <el-table-column prop="img" label="图片" sortable align="center">
                   <template slot-scope="scope">
-                    <img :src="scope.row.img" style="width: 120px;height: 120px;">
+                    <img :src="scope.row.img" style="width: 120px;height: 120px;" />
                   </template>
                 </el-table-column>
                 <el-table-column prop="salesNum" label="月销量" sortable="custom" align="center"></el-table-column>
@@ -1002,7 +1082,7 @@
                 <el-table-column prop="cate" label="子类目" sortable align="center"></el-table-column>
                 <el-table-column prop="img" label="图片" sortable align="center">
                   <template slot-scope="scope">
-                    <img :src="scope.row.img" style="width: 120px;height: 120px;">
+                    <img :src="scope.row.img" style="width: 120px;height: 120px;" />
                   </template>
                 </el-table-column>
                 <el-table-column prop="salesNum" label="月销量" sortable="custom" align="center"></el-table-column>
@@ -1030,7 +1110,7 @@
                 <el-table-column prop="cate" label="子类目" sortable align="center"></el-table-column>
                 <el-table-column prop="img" label="图片" sortable align="center">
                   <template slot-scope="scope">
-                    <img :src="scope.row.img" style="width: 120px;height: 120px;">
+                    <img :src="scope.row.img" style="width: 120px;height: 120px;" />
                   </template>
                 </el-table-column>
                 <el-table-column prop="salesNum" label="月销量" sortable="custom" align="center"></el-table-column>
@@ -1497,6 +1577,114 @@
         <img src="../assets/1.5.jpg"
              style="height:400px;width:95%;padding:15px;">
       </el-card>-->
+      <!-- <transition style="height:600px;" enter-active-class="animated fadeInRightBig">
+      <div class="zhezhao" v-show="flagShow"></div>
+      </transition> -->
+      <transition style="height:600px;" enter-active-class="animated jackInTheBox" leave-active-class="animated zoomOutDown">
+        <div class="digWhite" v-show="flagShow">
+          <img
+            src="../assets/close.png"
+            @click="closeIndex()"
+            class="closeIndex"
+            style="width: 34px;height: 35px;"
+          />
+          <transition style="height:600px;" enter-active-class="animated fadeInDownBig" leave-active-class="animated zoomOutDown" v-for="(item, index) in 6" :key="index">
+              <div class="testCase" v-show="flagShow">
+                <div class="tleft">
+                  <img
+                    src="../assets/header.png"
+                    style="width: 70px;height: 70px;border-radius:50%;"
+                  />
+                  <p class="namep">毕振强</p>
+                </div>
+                <div class="tright">
+                  <p>
+                    <span>完成度 ：</span>101%
+                  </p>
+                  <p>
+                    <span>已完成 ：</span>2000000
+                  </p>
+                  <p>
+                    <span>目&nbsp;&nbsp;&nbsp;&nbsp;标 ：</span>101%
+                  </p>
+                  <p>
+                    <span>奖&nbsp;&nbsp;&nbsp;&nbsp;金 ：</span>30000元
+                  </p>
+                </div>
+            </div>
+          </transition>
+        </div>
+      </transition>
+      <transition style="height:600px;" enter-active-class="animated jackInTheBox" leave-active-class="animated zoomOutDown">
+        <div class="digWhiteFour" v-show="flagShowFour">
+          <img
+            src="../assets/close.png"
+            @click="closeIndexFour()"
+            class="closeIndex"
+            style="width: 34px;height: 35px;"
+          />
+          <transition style="height:600px;" enter-active-class="animated fadeInDownBig" leave-active-class="animated zoomOutDown" v-for="(item, index) in 4" :key="index">
+              <div class="testCase" v-show="flagShowFour">
+                <div class="tleftFour">
+                  <img
+                    src="../assets/header.png"
+                    style="width: 70px;height: 70px;border-radius:50%;"
+                  />
+                  <p class="namepFour">毕振强</p>
+                </div>
+                <div class="trightFour">
+                  <p>
+                    <span>完成度 ：</span>101%
+                  </p>
+                  <p>
+                    <span>已完成 ：</span>2000000
+                  </p>
+                  <p>
+                    <span>目&nbsp;&nbsp;&nbsp;&nbsp;标 ：</span>101%
+                  </p>
+                  <p>
+                    <span>奖&nbsp;&nbsp;&nbsp;&nbsp;金 ：</span>30000元
+                  </p>
+                </div>
+            </div>
+          </transition>
+        </div>
+      </transition>
+      <transition style="height:600px;" enter-active-class="animated jackInTheBox" leave-active-class="animated zoomOutDown">
+        <div class="digWhiteThree" v-show="flagShowThree">
+          <img
+            src="../assets/close.png"
+            @click="closeIndexThree()"
+            class="closeIndex"
+            style="width: 34px;height: 35px;"
+          />
+          <transition style="height:600px;" enter-active-class="animated fadeInDownBig" leave-active-class="animated zoomOutDown" v-for="(item, index) in 3" :key="index">
+              <div class="testCaseThree" v-show="flagShowThree">
+                <div class="tleftThree">
+                  <img
+                    src="../assets/header.png"
+                    style="width: 80px;height: 80px;border-radius:50%;"
+                  />
+                  <p class="namepThree">毕振强</p>
+                </div>
+                <div class="trightThree">
+                  <p>
+                    <span>完成度 ：</span>101%
+                  </p>
+                  <p>
+                    <span>已完成 ：</span>2000000
+                  </p>
+                  <p>
+                    <span>目&nbsp;&nbsp;&nbsp;&nbsp;标 ：</span>101%
+                  </p>
+                  <p>
+                    <span>奖&nbsp;&nbsp;&nbsp;&nbsp;金 ：</span>30000元
+                  </p>
+                </div>
+            </div>
+          </transition>
+        </div>
+      </transition>
       <el-dialog :visible.sync="dialogVisible">
         <el-form :model="newsDetailList" label-width="80px" ref="detailForm">
           <el-form-item label="标题：" prop="title">
@@ -1538,6 +1726,7 @@ import { getMenu } from "../api/login";
 export default {
   data() {
     return {
+      objArr:[1,2,3,4,5,6,7,8,9],
       activeTabNamebk: "eBay-义乌仓",
       indexTabactive: 0,
       titleMenuTab: [
@@ -1550,6 +1739,9 @@ export default {
       ],
       activeTabName: "eBay-义乌仓",
       activeTabzz: "郑州eBay平台",
+      flagShow: false,
+      flagShowFour:false,
+      flagShowThree:false,
       page: null,
       dialogVisible: false,
       data: {
@@ -1575,9 +1767,9 @@ export default {
       shbm: [],
       sybm: [],
       zzbm: [],
-      tabzz:{
-        ebay:true,
-        joom:false
+      tabzz: {
+        ebay: true,
+        joom: false
       },
       shanghaiTable: [],
       zhengzhouTable: [],
@@ -1590,8 +1782,8 @@ export default {
       saleDevelop: [],
       saleZz: [],
       titleMenuzz: [],
-      zzEbay:[],
-      zzJoom:[],
+      zzEbay: [],
+      zzJoom: [],
       activeName: "上海销售",
       activeTitle: "销售排名",
       activePlat: "eBay-义乌仓",
@@ -1639,7 +1831,7 @@ export default {
         sale: false,
         pming: true,
         zz: false,
-        wj:false,
+        wj: false
       },
       pmShow: {
         pmYW: true,
@@ -1660,16 +1852,36 @@ export default {
     };
   },
   methods: {
-    handclickzz(tab, event){
+    four(){
+      this.flagShowFour = true;
+    },
+    closeIndexFour() {
+      this.flagShowFour = false;
+    },
+    zoomIn() {
+      this.flagShow = true;
+    },
+    closeIndex() {
+      this.flagShow = false;
+    },
+    three(){
+      this.flagShowThree = true;
+    },
+    closeIndexThree() {
+      this.flagShowThree = false;
+    },
+    two(){},
+    one(){},
+    handclickzz(tab, event) {
       if (tab.label === "郑州eBay平台") {
-        this.tabzz['ebay'] = true;
+        this.tabzz["ebay"] = true;
       } else {
-        this.tabzz['ebay'] = false;
+        this.tabzz["ebay"] = false;
       }
       if (tab.label === "郑州Joom平台") {
-        this.tabzz['joom'] = true;
+        this.tabzz["joom"] = true;
       } else {
-        this.tabzz['joom'] = false;
+        this.tabzz["joom"] = false;
       }
     },
     sortNumberPX(column, prop, order) {
@@ -2635,167 +2847,856 @@ h2:hover {
   background: #3c8dbc;
   color: #ffffff;
 }
-.tswj{
+.tswj {
   height: 848px;
   overflow-y: auto;
-  background: linear-gradient(54deg, #2a6496, #3c8dbc);
+  background: #494a5f;
 }
-.tabNo{
+.tabNo {
   width: 80%;
   float: left;
 }
-.tabY{
+.tabY {
   width: 20%;
   float: left;
 }
-.tabNoBlock{
+.tabNoBlock {
   width: 100%;
   background: #fff;
   height: 6px;
-  margin-top: 65px; 
+  margin-top: 65px;
   position: relative;
   padding-left: -25px;
 }
-.no10{
-  display: block;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: #909399;
-  color: #fff;
-  text-align: center;
-  line-height: 50px;
+.leftDemo,
+.rightDemo {
+  position: relative;
+  width: 507.5px;
+  height: 102px;
+  border: 30px solid;
+}
+.leftDemo {
+  border-right: 0;
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 100px;
+  z-index: 1;
+}
+.rightDemo {
+  left: 485px;
+  width: 460px;
+  border-left: 0;
+  border-top-right-radius: 100px;
+  border-bottom-right-radius: 100px;
+}
+.leftDemo:before,
+.rightDemo:before {
+  content: "";
   position: absolute;
+  display: block;
+  width: 507.5px;
+  height: 102px;
+  top: -15px;
+  border: 15px solid;
+}
+.leftDemo:before {
+  border-right: 0;
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 100px;
+  left: -15px;
+}
+.rightDemo:before {
+  width: 460px;
+  border-left: 0;
+  border-top-right-radius: 100px;
+  border-bottom-right-radius: 100px;
+}
+.bigDemo {
+  width: 980px;
+  margin: 0 auto;
+  margin-top: 87px;
+  position: relative;
+  height: 670px;
+}
+.start {
+  display: block;
+  width: 25px;
+  height: 25px;
+  background: #e7e7e7;
+  border: #303334 solid 10px;
+  border-radius: 50%;
+  position: absolute;
+  top: -8px;
+  left: 460px;
+  text-align: center;
+  line-height: 25px;
+}
+.end {
+  display: block;
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  bottom: -20px;
+  text-align: center;
+  line-height: 25px;
+  right: 480px;
+  z-index: 10;
+  color: red;
+  animation: myfirst 2s infinite;
+}
+.end img {
+  position: absolute;
+  top: -5px;
+  left: -5px;
+}
+@keyframes myfirst {
+  0%,
+  100% {
+    transform: scale(0.8);
+    -webkit-transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+  }
+}
+.span20 {
+  display: block;
+  color: #65c7d0;
+  font-size: 50px;
+  font-weight: 600;
+  position: absolute;
+  right: 40px;
+  top: 20px;
+}
+.span40 {
+  display: block;
+  color: #ea3c14;
+  font-size: 50px;
+  font-weight: 600;
+  position: absolute;
+  left: 40px;
+  top: 20px;
+}
+.span60 {
+  display: block;
+  color: #0071bd;
+  font-size: 50px;
+  font-weight: 600;
+  position: absolute;
+  right: 40px;
+  top: 20px;
+}
+.span80 {
+  display: block;
+  color: #f99324;
+  font-size: 50px;
+  font-weight: 600;
+  position: absolute;
+  left: 40px;
+  top: 20px;
+}
+.span100 {
+  color: #8cc63e;
+  display: block;
+  font-size: 50px;
+  font-weight: 600;
+  position: absolute;
+  left: -60px;
+  top: 20px;
+}
+.rightDemo:nth-child(1) {
+  border-color: #46b2bc;
+  top: 0;
+}
+.rightDemo:nth-child(1):before {
+  border-color: #65c7d0;
+}
+.leftDemo:nth-child(2) {
+  top: -30.5px;
+  width: 460px;
+  border-color: red;
+}
+.leftDemo:nth-child(2):before {
+  width: 460px;
+  border-color: #f7502b;
+}
+.rightDemo:nth-child(3) {
+  left: 485.5px;
+  z-index: 2;
+  width: 460px;
+  top: -61px;
+  border-color: #0071bd;
+}
+.rightDemo:nth-child(3):before {
+  border-color: rgb(22, 138, 216);
+  width: 460px;
+}
+.leftDemo:nth-child(4) {
+  width: 475px;
+  top: -91px;
+  border-color: #f99324;
+}
+.leftDemo:nth-child(4):before {
+  width: 475px;
+  border-color: #fbb03b;
+}
+.rightDemo:nth-child(5) {
+  left: 480.5px;
+  z-index: 2;
+  width: 460px;
+  top: -122px;
+  border-color: #6caf29;
+}
+.rightDemo:nth-child(5):before {
+  border-color: #8cc63e;
+  width: 460px;
+}
+.indexbImg {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-size: 100%;
+  background: url(../assets/sc.png) no-repeat center;
+  margin-left: -20px;
+  cursor: pointer;
+}
+.indexbImg:hover {
+  -webkit-animation: icon-bounce 0.5s alternate;
+  -moz-animation: icon-bounce 0.5s alternate;
+  -o-animation: icon-bounce 0.5s alternate;
+  animation: icon-bounce 0.5s alternate;
+}
+@keyframes icon-bounce {
+  0% {
+    transform: translate(0px, 0px);
+  }
+  50% {
+    transform: translate(0px, -10px);
+  }
+  100% {
+    transform: translate(0px, 0px);
+  }
+}
+.indexbImg img {
+  display: block;
+  width: 45px;
+  height: 45px;
+}
+.b1 {
+  position: absolute;
+  top: -35px;
   left: 10%;
-  top:-25px;
-  margin-left: -25px;
+  z-index: 101;
 }
-.no20{
-  display: block;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: #909399;
-  color: #fff;
-  text-align: center;
-  line-height: 50px;
+.b2 {
   position: absolute;
+  top: -35px;
   left: 20%;
-  top:-25px;
-  margin-left: -25px;
+  z-index: 101;
 }
-.no30{
-  display: block;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: #f56c6c;
-  color: #fff;
-  text-align: center;
-  line-height: 50px;
+.b3 {
   position: absolute;
+  top: -35px;
   left: 30%;
-  top:-25px;
-  margin-left: -25px;
+  z-index: 101;
 }
-.no40{
-  display: block;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: #f56c6c;
-  color: #fff;
-  text-align: center;
-  line-height: 50px;
+.b4 {
   position: absolute;
+  top: -35px;
   left: 40%;
-  top:-25px;
-  margin-left: -25px;
+  z-index: 101;
 }
-.no50{
-  display: block;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: #f56c6c;
-  color: #fff;
-  text-align: center;
-  line-height: 50px;
+.b5 {
   position: absolute;
+  top: -35px;
   left: 50%;
-  top:-25px;
-  margin-left: -25px;
+  z-index: 101;
 }
-.no60{
-  display: block;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: #e6a23c;
-  color: #fff;
-  text-align: center;
-  line-height: 50px;
+.b6 {
   position: absolute;
+  top: -35px;
   left: 60%;
-  top:-25px;
-  margin-left: -25px;
+  z-index: 101;
 }
-.no70{
-  display: block;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: #e6a23c;
-  color: #fff;
-  text-align: center;
-  line-height: 50px;
+.b7 {
   position: absolute;
+  top: -35px;
   left: 70%;
-  top:-25px;
-  margin-left: -25px;
+  z-index: 101;
 }
-.no80{
-  display: block;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: #409eff;
-  color: #fff;
-  text-align: center;
-  line-height: 50px;
+.b8 {
   position: absolute;
+  top: -35px;
   left: 80%;
-  top:-25px;
-  margin-left: -25px;
+  z-index: 101;
 }
-.no90{
-  display: block;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: #e6a23c;
-  color: #fff;
-  text-align: center;
-  line-height: 50px;
+.b9 {
   position: absolute;
+  top: -35px;
   left: 90%;
-  top:-25px;
-  margin-left: -25px;
+  z-index: 101;
 }
-.no100{
-  display: block;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: #67c23a;
-  color: #fff;
-  text-align: center;
-  line-height: 50px;
+.b10 {
   position: absolute;
-  left: 100%;
+  top: -5px;
+  right: -25px;
+  z-index: 101;
+}
+.b11 {
+  position: absolute;
+  top: 60px;
+  right: -27px;
+  z-index: 101;
+  transform: rotateY(180deg);
+}
+.b12 {
+  position: absolute;
+  bottom: -35px;
+  left: 90%;
+  z-index: 101;
+  transform: rotateY(180deg);
+}
+.b13 {
+  position: absolute;
+  bottom: -35px;
+  left: 80%;
+  z-index: 101;
+  transform: rotateY(180deg);
+}
+.b14 {
+  position: absolute;
+  bottom: -35px;
+  left: 70%;
+  z-index: 101;
+  transform: rotateY(180deg);
+}
+.b15 {
+  position: absolute;
+  bottom: -35px;
+  left: 60%;
+  z-index: 101;
+  transform: rotateY(180deg);
+}
+.b16 {
+  position: absolute;
+  bottom: -35px;
+  left: 50%;
+  z-index: 101;
+  transform: rotateY(180deg);
+}
+.b17 {
+  position: absolute;
+  bottom: -35px;
+  left: 40%;
+  z-index: 101;
+  transform: rotateY(180deg);
+}
+.b18 {
+  position: absolute;
+  bottom: -35px;
+  left: 30%;
+  z-index: 101;
+  transform: rotateY(180deg);
+}
+.b19 {
+  position: absolute;
+  bottom: -35px;
+  left: 20%;
+  z-index: 101;
+  transform: rotateY(180deg);
+}
+.b20 {
+  position: absolute;
+  bottom: -35px;
+  left: 10%;
+  z-index: 101;
+  transform: rotateY(180deg);
+}
+.b21 {
+  position: absolute;
+  top: -35px;
+  left: 90%;
+  z-index: 101;
+  transform: rotateY(180deg);
+}
+.b22 {
+  position: absolute;
+  top: -35px;
+  left: 80%;
+  z-index: 101;
+  transform: rotateY(180deg);
+}
+.b23 {
+  position: absolute;
+  top: -35px;
+  left: 70%;
+  z-index: 101;
+  transform: rotateY(180deg);
+}
+.b24 {
+  position: absolute;
+  top: -35px;
+  left: 60%;
+  z-index: 101;
+  transform: rotateY(180deg);
+}
+.b25 {
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  z-index: 101;
+  transform: rotateY(180deg);
+}
+.b26 {
+  position: absolute;
+  top: -35px;
+  left: 40%;
+  z-index: 101;
+  transform: rotateY(180deg);
+}
+.b27 {
+  position: absolute;
+  top: -35px;
+  left: 30%;
+  z-index: 101;
+  transform: rotateY(180deg);
+}
+.b28 {
+  position: absolute;
+  top: -35px;
+  left: 20%;
+  z-index: 101;
+  transform: rotateY(180deg);
+}
+.b29 {
+  position: absolute;
+  top: -35px;
+  left: 10%;
+  z-index: 101;
+  transform: rotateY(180deg);
+}
+.b30 {
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  z-index: 101;
+  transform: rotateY(180deg);
+}
+.b31 {
+  position: absolute;
+  top: 60px;
+  left: -5px;
+  z-index: 101;
+}
+.b32 {
+  position: absolute;
+  bottom: -35px;
+  left: 10%;
+  z-index: 101;
+}
+.b33 {
+  position: absolute;
+  bottom: -35px;
+  left: 20%;
+  z-index: 101;
+}
+.b34 {
+  position: absolute;
+  bottom: -35px;
+  left: 30%;
+  z-index: 101;
+}
+.b35 {
+  position: absolute;
+  bottom: -35px;
+  left: 40%;
+  z-index: 101;
+}
+.b36 {
+  position: absolute;
+  bottom: -35px;
+  left: 50%;
+  z-index: 101;
+}
+.b37 {
+  position: absolute;
+  bottom: -35px;
+  left: 60%;
+  z-index: 101;
+}
+.b38 {
+  position: absolute;
+  bottom: -35px;
+  left: 70%;
+  z-index: 101;
+}
+.b39 {
+  position: absolute;
+  bottom: -35px;
+  left: 80%;
+  z-index: 101;
+}
+.b40 {
+  position: absolute;
+  bottom: -35px;
+  left: 90%;
+  z-index: 101;
+}
+.b41 {
+  position: absolute;
+  top: -35px;
+  left: 10%;
+  z-index: 101;
+}
+.b42 {
+  position: absolute;
+  top: -35px;
+  left: 20%;
+  z-index: 101;
+}
+.b43 {
+  position: absolute;
+  top: -35px;
+  left: 30%;
+  z-index: 101;
+}
+.b44 {
+  position: absolute;
+  top: -35px;
+  left: 40%;
+  z-index: 101;
+}
+.b45 {
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  z-index: 101;
+}
+.b46 {
+  position: absolute;
+  top: -35px;
+  left: 60%;
+  z-index: 101;
+}
+.b47 {
+  position: absolute;
+  top: -35px;
+  left: 70%;
+  z-index: 101;
+}
+.b48 {
+  position: absolute;
+  top: -35px;
+  left: 80%;
+  z-index: 101;
+}
+.b49 {
+  position: absolute;
+  top: -35px;
+  left: 90%;
+  z-index: 101;
+}
+.b50 {
+  position: absolute;
+  top: -5px;
+  right: -25px;
+  z-index: 101;
+}
+.b51 {
+  position: absolute;
+  top: 60px;
+  right: -27px;
+  z-index: 101;
+  transform: rotateY(180deg);
+}
+.b52 {
+  position: absolute;
+  bottom: -35px;
+  left: 90%;
+  z-index: 101;
+  transform: rotateY(180deg);
+}
+.b53 {
+  position: absolute;
+  bottom: -35px;
+  left: 80%;
+  z-index: 101;
+  transform: rotateY(180deg);
+}
+.b54 {
+  position: absolute;
+  bottom: -35px;
+  left: 70%;
+  z-index: 101;
+  transform: rotateY(180deg);
+}
+.b55 {
+  position: absolute;
+  bottom: -35px;
+  left: 60%;
+  z-index: 101;
+  transform: rotateY(180deg);
+}
+.b56 {
+  position: absolute;
+  bottom: -35px;
+  left: 50%;
+  z-index: 101;
+  transform: rotateY(180deg);
+}
+.b57 {
+  position: absolute;
+  bottom: -35px;
+  left: 40%;
+  z-index: 101;
+  transform: rotateY(180deg);
+}
+.b58 {
+  position: absolute;
+  bottom: -35px;
+  left: 30%;
+  z-index: 101;
+  transform: rotateY(180deg);
+}
+.b59 {
+  position: absolute;
+  bottom: -35px;
+  left: 20%;
+  z-index: 101;
+  transform: rotateY(180deg);
+}
+.b60 {
+  position: absolute;
+  bottom: -35px;
+  left: 10%;
+  z-index: 101;
+  transform: rotateY(180deg);
+}
+// 全部
+.digWhite {
+  width: 1300px;
+  height: 500px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-left: -600px;
+  margin-top: -250px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 1px 2px 10px 1px rgba(60, 141, 188, 0.2);
   z-index: 999;
-  top:-25px;
-  margin-left: -25px;
+  border-radius: 15px;
+  overflow-y: auto;
+}
+.closeIndex {
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+}
+.CaseBox {
+  width: 100%;
+  overflow: hidden;
+  overflow-y: auto;
+}
+.testCase {
+  width: 22%;
+  float: left;
+  margin: 0 1.3% 0 1.7%;
+  background: #fff;
+  border-radius: 5px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  box-shadow: 1px 8px 30px 1px rgba(60, 141, 188, 0.2);
+}
+.tleft {
+  float: left;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin: 20px;
+  box-shadow: 4px 13px 30px 5px rgba(60, 141, 188, 0.2);
+}
+.tright {
+  float: left;
+  padding: 0 20px;
+  margin: 15px;
+  padding-left: 23px;
+  margin-left: 0;
+  box-shadow: 4px 13px 30px 1px rgba(60, 141, 188, 0.2);
+}
+.tright p {
+  font-size: 13px;
+}
+.tright span {
+  display: block;
+  float: left;
+  width: 60px;
+  text-align: justify;
+}
+.namep{
+  width: 100%;
+  font-size: 13px;
+  text-align: center;
+  background: #f5af19;
+  line-height: 28px;
+  color: #fff;
+  border-radius: 20px;
+  letter-spacing: 3px;
+}
+.zhezhao{
+  width: 200%;
+  background: #000;
+  height: 100%;
+  position: fixed;
+  opacity: 0.3;
+  top: 0;
+  left: -20rem;
+  z-index: 10;
+}
+.animated {animation-duration: 1.5s;}
+//四个
+.digWhiteFour {
+  width: 1300px;
+  height: 265px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-left: -600px;
+  margin-top: -133px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 1px 2px 10px 1px rgba(60, 141, 188, 0.2);
+  z-index: 999;
+  border-radius: 15px;
+  overflow-y: auto;
+}
+.closeIndexFour {
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+}
+.CaseBoxFour {
+  width: 100%;
+  overflow: hidden;
+  overflow-y: auto;
+}
+.testCaseFour {
+  width: 22%;
+  float: left;
+  margin: 0 1.3% 0 1.7%;
+  background: #fff;
+  border-radius: 5px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  box-shadow: 1px 8px 30px 1px rgba(60, 141, 188, 0.2);
+}
+.tleftFour {
+  float: left;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin: 20px;
+  box-shadow: 4px 13px 30px 5px rgba(60, 141, 188, 0.2);
+}
+.trightFour {
+  float: left;
+  padding: 0 20px;
+  margin: 15px;
+  padding-left: 23px;
+  margin-left: 0;
+  box-shadow: 4px 13px 30px 1px rgba(60, 141, 188, 0.2);
+}
+.trightFour p {
+  font-size: 13px;
+}
+.tright span {
+  display: block;
+  float: left;
+  width: 60px;
+  text-align: justify;
+}
+.namepFour{
+  width: 100%;
+  font-size: 13px;
+  text-align: center;
+  background: #f5af19;
+  line-height: 28px;
+  color: #fff;
+  border-radius: 20px;
+  letter-spacing: 3px;
+}
+//三个
+.digWhiteThree {
+  width: 1100px;
+  height: 265px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-left: -600px;
+  margin-top: -133px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 1px 2px 10px 1px rgba(60, 141, 188, 0.2);
+  z-index: 999;
+  border-radius: 15px;
+  overflow-y: auto;
+}
+.closeIndexThree {
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+}
+.CaseBoxThree {
+  width: 100%;
+  overflow: hidden;
+  overflow-y: auto;
+}
+.testCaseThree {
+  width: 30%;
+  float: left;
+  margin: 0 1.3% 0 1.7%;
+  background: #fff;
+  border-radius: 5px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  box-shadow: 1px 8px 30px 1px rgba(60, 141, 188, 0.2);
+}
+.tleftThree {
+  float: left;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 20px;
+  box-shadow: 4px 13px 30px 5px rgba(60, 141, 188, 0.2);
+}
+.trightThree {
+  float: left;
+  padding: 0 30px;
+  margin: 15px;
+  padding-left: 33px;
+  margin-left: 0;
+  box-shadow: 4px 13px 30px 1px rgba(60, 141, 188, 0.2);
+}
+.trightThree p {
+  font-size: 14px;
+}
+.trightThree span {
+  display: block;
+  float: left;
+  width: 70px;
+  text-align: justify;
+}
+.namepThree{
+  width: 100%;
+  font-size: 13px;
+  text-align: center;
+  background: #f5af19;
+  line-height: 28px;
+  color: #fff;
+  border-radius: 20px;
+  letter-spacing: 3px;
 }
 </style>
 <style>
