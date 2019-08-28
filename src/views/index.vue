@@ -1588,14 +1588,14 @@
             class="closeIndex"
             style="width: 34px;height: 35px;"
           />
-          <transition style="height:600px;" enter-active-class="animated fadeInDownBig" leave-active-class="animated zoomOutDown" v-for="(item, index) in 6" :key="index">
+          <transition style="height:600px;" enter-active-class="animated fadeInDownBig" leave-active-class="animated zoomOutDown" v-for="(item, index) in 70" :key="index">
               <div class="testCase" v-show="flagShow">
                 <div class="tleft">
                   <img
                     src="../assets/header.png"
                     style="width: 70px;height: 70px;border-radius:50%;"
                   />
-                  <p class="namep">毕振强</p>
+                  <p class="namep">测试</p>
                 </div>
                 <div class="tright">
                   <p>
@@ -1605,7 +1605,7 @@
                     <span>已完成 ：</span>2000000
                   </p>
                   <p>
-                    <span>目&nbsp;&nbsp;&nbsp;&nbsp;标 ：</span>101%
+                    <span>目&nbsp;&nbsp;&nbsp;&nbsp;标 ：</span>1000000
                   </p>
                   <p>
                     <span>奖&nbsp;&nbsp;&nbsp;&nbsp;金 ：</span>30000元
@@ -1630,7 +1630,7 @@
                     src="../assets/header.png"
                     style="width: 70px;height: 70px;border-radius:50%;"
                   />
-                  <p class="namepFour">毕振强</p>
+                  <p class="namepFour">测试</p>
                 </div>
                 <div class="trightFour">
                   <p>
@@ -1665,9 +1665,79 @@
                     src="../assets/header.png"
                     style="width: 80px;height: 80px;border-radius:50%;"
                   />
-                  <p class="namepThree">毕振强</p>
+                  <p class="namepThree">测试</p>
                 </div>
                 <div class="trightThree">
+                  <p>
+                    <span>完成度 ：</span>101%
+                  </p>
+                  <p>
+                    <span>已完成 ：</span>2000000
+                  </p>
+                  <p>
+                    <span>目&nbsp;&nbsp;&nbsp;&nbsp;标 ：</span>101%
+                  </p>
+                  <p>
+                    <span>奖&nbsp;&nbsp;&nbsp;&nbsp;金 ：</span>30000元
+                  </p>
+                </div>
+            </div>
+          </transition>
+        </div>
+      </transition>
+      <transition style="height:600px;" enter-active-class="animated jackInTheBox" leave-active-class="animated zoomOutDown">
+        <div class="digWhiteTwo" v-show="flagShowTwo">
+          <img
+            src="../assets/close.png"
+            @click="closeIndexTwo()"
+            class="closeIndex"
+            style="width: 34px;height: 35px;"
+          />
+          <transition style="height:600px;" enter-active-class="animated fadeInDownBig" leave-active-class="animated zoomOutDown" v-for="(item, index) in 2" :key="index">
+              <div class="testCaseTwo" v-show="flagShowTwo">
+                <div class="tleftTwo">
+                  <img
+                    src="../assets/header.png"
+                    style="width: 80px;height: 80px;border-radius:50%;"
+                  />
+                  <p class="namepTwo">测试</p>
+                </div>
+                <div class="trightTwo">
+                  <p>
+                    <span>完成度 ：</span>101%
+                  </p>
+                  <p>
+                    <span>已完成 ：</span>2000000
+                  </p>
+                  <p>
+                    <span>目&nbsp;&nbsp;&nbsp;&nbsp;标 ：</span>101%
+                  </p>
+                  <p>
+                    <span>奖&nbsp;&nbsp;&nbsp;&nbsp;金 ：</span>30000元
+                  </p>
+                </div>
+            </div>
+          </transition>
+        </div>
+      </transition>
+      <transition style="height:600px;" enter-active-class="animated jackInTheBox" leave-active-class="animated zoomOutDown">
+        <div class="digWhiteOne" v-show="flagShowOne">
+          <img
+            src="../assets/close.png"
+            @click="closeIndexOne()"
+            class="closeIndex"
+            style="width: 34px;height: 35px;"
+          />
+          <transition style="height:600px;" enter-active-class="animated fadeInDownBig" leave-active-class="animated zoomOutDown" v-for="(item, index) in 2" :key="index">
+              <div class="testCaseOne" v-show="flagShowOne">
+                <div class="tleftTwo">
+                  <img
+                    src="../assets/header.png"
+                    style="width: 80px;height: 80px;border-radius:50%;"
+                  />
+                  <p class="namepOne">测试</p>
+                </div>
+                <div class="trightOne">
                   <p>
                     <span>完成度 ：</span>101%
                   </p>
@@ -1742,6 +1812,7 @@ export default {
       flagShow: false,
       flagShowFour:false,
       flagShowThree:false,
+      flagShowTwo:false,
       page: null,
       dialogVisible: false,
       data: {
@@ -1870,7 +1941,12 @@ export default {
     closeIndexThree() {
       this.flagShowThree = false;
     },
-    two(){},
+    two(){
+      this.flagShowTwo= true;
+    },
+    closeIndexTwo() {
+      this.flagShowTwo = false;
+    },
     one(){},
     handclickzz(tab, event) {
       if (tab.label === "郑州eBay平台") {
@@ -3689,6 +3765,77 @@ h2:hover {
   text-align: justify;
 }
 .namepThree{
+  width: 100%;
+  font-size: 13px;
+  text-align: center;
+  background: #f5af19;
+  line-height: 28px;
+  color: #fff;
+  border-radius: 20px;
+  letter-spacing: 3px;
+}
+//两个
+.digWhiteTwo {
+  width: 750px;
+  height: 265px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-left: -375px;
+  margin-top: -133px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 1px 2px 10px 1px rgba(60, 141, 188, 0.2);
+  z-index: 999;
+  border-radius: 15px;
+  overflow-y: auto;
+}
+.closeIndexTwo {
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+}
+.CaseBoxTwo {
+  width: 100%;
+  overflow: hidden;
+  overflow-y: auto;
+}
+.testCaseTwo {
+  width: 45%;
+  float: left;
+  margin: 0 2.5%;
+  background: #fff;
+  border-radius: 5px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  box-shadow: 1px 8px 30px 1px rgba(60, 141, 188, 0.2);
+}
+.tleftTwo {
+  float: left;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 20px;
+  box-shadow: 4px 13px 30px 5px rgba(60, 141, 188, 0.2);
+}
+.trightTwo {
+  float: left;
+  padding: 0 30px;
+  margin: 15px;
+  padding-left: 33px;
+  margin-left: 0;
+  box-shadow: 4px 13px 30px 1px rgba(60, 141, 188, 0.2);
+}
+.trightTwo p {
+  font-size: 14px;
+}
+.trightTwo span {
+  display: block;
+  float: left;
+  width: 70px;
+  text-align: justify;
+}
+.namepTwo{
   width: 100%;
   font-size: 13px;
   text-align: center;
