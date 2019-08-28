@@ -1725,10 +1725,10 @@
           <img
             src="../assets/close.png"
             @click="closeIndexOne()"
-            class="closeIndex"
+            class="closeIndexOne"
             style="width: 34px;height: 35px;"
           />
-          <transition style="height:600px;" enter-active-class="animated fadeInDownBig" leave-active-class="animated zoomOutDown" v-for="(item, index) in 2" :key="index">
+          <transition style="height:600px;" enter-active-class="animated fadeInDownBig" leave-active-class="animated zoomOutDown" v-for="(item, index) in 1" :key="index">
               <div class="testCaseOne" v-show="flagShowOne">
                 <div class="tleftTwo">
                   <img
@@ -1813,6 +1813,7 @@ export default {
       flagShowFour:false,
       flagShowThree:false,
       flagShowTwo:false,
+      flagShowOne:false,
       page: null,
       dialogVisible: false,
       data: {
@@ -1947,7 +1948,12 @@ export default {
     closeIndexTwo() {
       this.flagShowTwo = false;
     },
-    one(){},
+    one(){
+      this.flagShowOne= true;
+    },
+    closeIndexOne() {
+      this.flagShowOne = false;
+    },
     handclickzz(tab, event) {
       if (tab.label === "郑州eBay平台") {
         this.tabzz["ebay"] = true;
@@ -3836,6 +3842,76 @@ h2:hover {
   text-align: justify;
 }
 .namepTwo{
+  width: 100%;
+  font-size: 13px;
+  text-align: center;
+  background: #f5af19;
+  line-height: 28px;
+  color: #fff;
+  border-radius: 20px;
+  letter-spacing: 3px;
+}
+//1条
+.digWhiteOne {
+  width: 345px;
+  height: 205px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-left: -172px;
+  margin-top: -133px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 1px 2px 10px 1px rgba(60, 141, 188, 0.2);
+  z-index: 999;
+  border-radius: 15px;
+}
+.closeIndexOne {
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  cursor: pointer;
+}
+.CaseBoxOne {
+  width: 100%;
+  overflow: hidden;
+  overflow-y: auto;
+}
+.testCaseOne {
+  width: 95%;
+  float: left;
+  margin: 0 2.5%;
+  background: #fff;
+  border-radius: 5px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  box-shadow: 1px 8px 30px 1px rgba(60, 141, 188, 0.2);
+}
+.tleftOne {
+  float: left;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 20px;
+  box-shadow: 4px 13px 30px 5px rgba(60, 141, 188, 0.2);
+}
+.trightOne {
+  float: left;
+  padding: 0 30px;
+  margin: 15px;
+  padding-left: 33px;
+  margin-left: 0;
+  box-shadow: 4px 13px 30px 1px rgba(60, 141, 188, 0.2);
+}
+.trightOne p {
+  font-size: 14px;
+}
+.trightOne span {
+  display: block;
+  float: left;
+  width: 70px;
+  text-align: justify;
+}
+.namepOne{
   width: 100%;
   font-size: 13px;
   text-align: center;
