@@ -72,63 +72,48 @@
                 <div class="jblist">
                   <div class="jb01 jbg">
                     <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
-                    <span>2000</span>
                   </div>
                   <div class="jb02 jbg">
                     <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
-                    <span>4000</span>
                   </div>
                   <div class="jb03 jbg">
                     <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
-                    <span>6000</span>
                   </div>
                   <div class="jb04 jbg">
                     <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
-                    <span>8000</span>
                   </div>
                   <div class="jb05 jbg">
                     <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
-                    <span>10000</span>
                   </div>
                   <div class="jb06 jbg">
                     <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
-                    <span>12000</span>
                   </div>
                   <div class="jb07 jbg">
                     <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
-                    <span>14000</span>
                   </div>
                   <div class="jb08 jbg">
                     <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
-                    <span>16000</span>
                   </div>
                   <div class="jb09 jbg">
                     <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
-                    <span>18000</span>
                   </div>
                   <div class="jb10 jbg">
                     <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
-                    <span>20000</span>
                   </div>
                   <div class="jb11 jbg">
                     <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
-                    <span>22000</span>
                   </div>
                   <div class="jb12 jbg">
                     <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
-                    <span>24000</span>
                   </div>
                   <div class="jb13 jbg">
                     <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
-                    <span>26000</span>
                   </div>
                   <div class="jb14 jbg">
                     <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
-                    <span>28000</span>
                   </div>
                   <div class="jb15 jbg">
                     <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
-                    <span>30000</span>
                   </div>
                 </div>
               </div>
@@ -1616,7 +1601,7 @@
             <div class="cardText">
               <div class="cardText01" v-for="(item,index) in bonusList" :key="index">
                 <img :src="item.avatar" style="width: 40px;height: 40px;border-radius:50%;" />
-                <span>{{item.bonus}}</span>
+                <span>{{item.username}}</span>
                 <p class="njts">{{item.vacationDays}}天</p>
                 <p>{{item.bonus | cutOut1}}+{{item.rxtraBonus | cutOut1}}</p>
               </div>
