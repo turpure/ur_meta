@@ -458,3 +458,10 @@ export function APISiteIndex() {
     method: 'get'
   })
 }
+
+export function APISiteSales() {
+  return request({
+    url: '/site/sales',
+    method: 'get'
+  })
+}

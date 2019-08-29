@@ -1583,30 +1583,42 @@
           <div class="cardLeft">
             <div class="cardLeft01">
               <p class="zmb">总目标奖金</p>
-              <span>1000000元</span>
-              <p class="njs">年假<b class="spGreen">255</b>天</p>
-            </div>
-            <div class="cardLeft01">
+              <span class="swhite">{{bonus.total}}元</span>
               <p class="zmb">已领取奖金</p>
-              <span>1000000元</span>
-              <p class="njs">年假<b class="spGreen">255</b>天</p>
+              <span class="spGreen">{{bonus.pass}}元</span>
+              <p class="zmb">剩余奖金</p>
+              <span>{{bonus.surplus}}元</span>
+              <img src="../assets/jab.png" style="width:49px;height:37px;margin-top:5px;" />
+            </div>
+            <div class="cardLeft01 cardLeft02">
+              <p class="zmb">总目标年假</p>
+              <span class="swhite">{{bonus.totalnj}}天</span>
+              <p class="zmb">已领取年假</p>
+              <span class="spGreen">{{bonus.passnj}}天</span>
+              <p class="zmb">剩余年假</p>
+              <span>{{bonus.surplusnj}}天</span>
+            </div>
+            <!-- <div class="cardLeft01">
+              <p class="zmb">已领取奖金</p>
+              <span>{{bonus.pass}}元</span>
+              <p class="njs">年假<b class="spGreen">{{bonus.passnj}}</b>天</p>
             </div>
             <div class="cardLeft01">
               <p class="zmb">剩余奖金</p>
-              <span>1000000元</span>
-              <p class="njs">年假<b class="spGreen">108</b>天</p>
-            </div>
+              <span>{{bonus.surplus}}元</span>
+              <p class="njs">年假<b class="spGreen">{{bonus.surplusnj}}</b>天</p>
+            </div> -->
           </div>
           <div class="cardRight">
             <div class="luck-user-title">
               <span>奖金名单</span>
             </div>
             <div class="cardText">
-              <div class="cardText01" v-for="(item,index) in 70" :key="index">
-                <img src="../assets/header.png" style="width: 40px;height: 40px;border-radius:50%;" />
-                <span>测测试</span>
-                <p class="njts">5天</p>
-                <p>20000+5000</p>
+              <div class="cardText01" v-for="(item,index) in bonusList" :key="index">
+                <img :src="item.avatar" style="width: 40px;height: 40px;border-radius:50%;" />
+                <span>{{item.bonus}}</span>
+                <p class="njts">{{item.vacationDays}}天</p>
+                <p>{{item.bonus | cutOut1}}+{{item.rxtraBonus | cutOut1}}</p>
               </div>
             </div>
           </div>
@@ -1916,7 +1928,8 @@ import {
   APIBranchDpart,
   getZzTargetEbay,
   getZzTargetJoom,
-  APISiteIndex
+  APISiteIndex,
+  APISiteSales
 } from "../api/api";
 import { compareUp, compareDown } from "../api/tools";
 import { updateLog } from "../api/product";
@@ -1943,6 +1956,15 @@ export default {
       flagShowThree: false,
       flagShowTwo: false,
       flagShowOne: false,
+      bonus:{
+        total:null,
+        pass:null,
+        surplus:null,
+        totalnj:null,
+        passnj:null,
+        surplusnj:null,
+      },
+      bonusList:[],
       page: null,
       dialogVisible: false,
       sortData: [],
@@ -2795,6 +2817,10 @@ export default {
       if (!value) return "";
       value = value.substring(0, 10);
       return value;
+    },
+    cutOut1: function(value) {
+      value = Number(value).toFixed(0);
+      return value;
     }
   },
   mounted() {
@@ -2894,6 +2920,20 @@ export default {
         }
       }
       this.tabSort=arrData
+    });
+    APISiteSales(this.activePlatpm).then(res => {
+      this.bonusList=res.data.data.list;
+      for (var i = 0; i < this.bonusList.length; i++) {
+        if (this.bonusList[i].avatar == null) {
+          this.bonusList[i].avatar = `/static/img/header.1a1e548.png`;
+        }
+      }
+      this.bonus.total = (Number(res.data.data.bonusAllNum)).toFixed(0);
+      this.bonus.totalnj = (Number(res.data.data.vacationDaysAllNum)).toFixed(0);
+      this.bonus.pass = (Number(res.data.data.bonusUsedNum)).toFixed(0);
+      this.bonus.passnj = (Number(res.data.data.vacationDaysUsedNum)).toFixed(0);
+      this.bonus.surplus = (Number(res.data.data.bonusUnUsedNum)).toFixed(0);
+      this.bonus.surplusnj = (Number(res.data.data.vacationDaysUnUsedNum)).toFixed(0);
     });
     this.getNews();
   }
@@ -3042,7 +3082,7 @@ export default {
 }
 .box-card {
   width: 30%;
-  height: 410px;
+  height: 475px;
   overflow-y: scroll;
   float: right;
   margin-top: 1.5%;
@@ -3088,7 +3128,7 @@ export default {
 }
 .box-card1 {
   width: 30%;
-  height: 495px;
+  height: 430px;
   float: right;
   margin-top: 10px;
   overflow-y: scroll;
@@ -3239,7 +3279,7 @@ h2:hover {
   background: #fff;
   border-radius: 50%;
   position: absolute;
-  bottom: 38px;
+  bottom: 36px;
   text-align: center;
   line-height: 25px;
   right: 477px;
@@ -3375,24 +3415,24 @@ h2:hover {
   width: 875px;
   border-color: rgb(221, 131, 85);
 }
-.indexbImg {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-size: 100%;
-  background: url(../assets/sc.png) no-repeat center;
-  margin-left: -20px;
-  cursor: pointer;
-}
-.indexbImg1 {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-size: 100%;
-  background: url(../assets/sc1.png) no-repeat center;
-  margin-left: -20px;
-  cursor: pointer;
-}
+// .indexbImg {
+//   width: 40px;
+//   height: 40px;
+//   border-radius: 50%;
+//   background-size: 100%;
+//   background: url(../assets/sc.png) no-repeat center;
+//   margin-left: -20px;
+//   cursor: pointer;
+// }
+// .indexbImg1 {
+//   width: 40px;
+//   height: 40px;
+//   border-radius: 50%;
+//   background-size: 100%;
+//   background: url(../assets/sc1.png) no-repeat center;
+//   margin-left: -20px;
+//   cursor: pointer;
+// }
 .indexbImg:hover {
   -webkit-animation: icon-bounce 0.5s alternate;
   -moz-animation: icon-bounce 0.5s alternate;
@@ -4445,44 +4485,53 @@ h2:hover {
   width: 95%;
   margin: auto;
   background: rgba(0, 0, 0, 0.3);
-  height: 380px;
+  height: 440px;
   margin-top: 15px;
   overflow: hidden;
 }
 .cardLeft {
   float: left;
   color: #fff;
-  margin-top: 6px;
+  margin-top: 1px;
   font-family: 'Consolas';
 }
 .zmb{
   text-align: center;
   margin: 0;
-  margin-top: 10px;
+  margin-top: 5px;
 }
 .njs{
   text-align: center;
   margin: 0;
   margin-top: 5px;
-  font-size: 18px;
+  font-size: 16px;
   letter-spacing:2px;
   font-weight: normal;
 }
 .cardLeft01{
-  width: 155px;
+  width: 175px;
   border: #f5ad18 4px solid;
-  height: 105px;;
+  height: 220px;;
   border-radius: 12px;
-  margin-left: 48px;
+  margin-left: 45px;
+  margin-top: 10px;
+  background: rgba(60, 141, 188, 0.1);
+}
+.cardLeft02{
+  width: 175px;
+  border: #f5ad18 4px solid;
+  height: 175px;
+  border-radius: 12px;
+  margin-left: 45px;
   margin-top: 10px;
   background: rgba(60, 141, 188, 0.1);
 }
 .cardLeft span {
   display: block;
-  font-size: 28px;
+  font-size: 24px;
   color: #fff;
   text-align: center;
-  margin-top: 5px;
+  margin-top: 1px;
   color: red;
 }
 .cardLeft img {
@@ -4495,7 +4544,7 @@ h2:hover {
   float: right;
   width: 50%;
   margin-right: 20px;
-  height: 355px;
+  height: 405px;
   margin-top: 19px;
   background: rgba(255, 255, 255, 0.2);
   position: relative;
@@ -4543,7 +4592,7 @@ h2:hover {
   margin-top: 62px;
   overflow: hidden;
   color: #fff;
-  height: 285px;
+  height: 335px;
   overflow-y: auto;
 }
 .cardText01 {
@@ -4576,28 +4625,22 @@ h2:hover {
   color: #67c23a !important;
 }
 .spGreen{
-  color: #67c23a;
+  color: #67c23a !important;
+}
+.swhite{
+  color: #e6a23c !important;
 }
 .jbg{
-  animation: rotate .8s infinite;
+  animation: rotate 1.5s infinite;
 }
 @keyframes rotate {
-    0% {
-    transform: translateY(0) ;
-  }
-    25% {
-        transform: translateY(8px);
-    }
-    50% {
-        transform: translateY(13px) scale(1.1, 0.9);
-       
-    }
-    75% {
-        ransform: translateY(8px) ;
+    0%  {
+        -webkit-transform:rotateY(0deg);
     }
     100% {
-        transform: translateY(0) ;
+        -webkit-transform:rotateY(360deg);
     }
+
 }
 //金币
 .jb01{
@@ -4799,6 +4842,12 @@ h2:hover {
   .cardRight{
     width: 52%;
     margin-right: 15px;
+  }
+  .cardLeft01{
+    width: 155px;
+  }
+  .cardLeft02{
+    width: 155px;
   }
 }
 </style>
