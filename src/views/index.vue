@@ -25,119 +25,48 @@
             <div class="bigDemo">
               <div class="rightDemo">
                 <span class="span20">10%</span>
-                <div class="indexbImg b0"></div>
-                <div class="indexbImg b1" @click="zoomIn"></div>
-                <div class="indexbImg b2" @click="four"></div>
-                <div class="indexbImg b3" @click="three"></div>
-                <div class="indexbImg b4" @click="two"></div>
-                <div class="indexbImg b5" @click="one"></div>
-                <div class="indexbImg b6"></div>
-                <div class="indexbImg b7"></div>
-                <div class="indexbImg b8"></div>
-                <div class="indexbImg b9"></div>
-                <div class="indexbImg b10"></div>
-                <div class="indexbImg1 b11"></div>
-                <div class="indexbImg1 b12"></div>
-                <div class="indexbImg1 b13"></div>
-                <div class="indexbImg1 b14"></div>
-                <div class="indexbImg1 b15"></div>
-                <div class="indexbImg1 b16"></div>
-                <div class="indexbImg1 b17"></div>
-                <div class="indexbImg1 b18"></div>
-                <div class="indexbImg1 b19"></div>
-                <div class="indexbImg1 b20"></div>
+                <div
+                  :class="[item.rate==0?'indexbImg b0':item.rate==1?'indexbImg b1':item.rate==2?'indexbImg b2':item.rate==3?'indexbImg b3':item.rate==4?'indexbImg b4':item.rate==5?'indexbImg b5':item.rate==6?'indexbImg b6':item.rate==7?'indexbImg b7':item.rate==8?'indexbImg b8':item.rate==9?'indexbImg b9':item.rate==10?'indexbImg b10':item.rate==11?'indexbImg1 b11':item.rate==12?'indexbImg1 b12':item.rate==13?'indexbImg1 b13':item.rate==14?'indexbImg1 b14':item.rate==15?'indexbImg1 b15':item.rate==16?'indexbImg1 b16':item.rate==17?'indexbImg1 b17':item.rate==18?'indexbImg1 b18':item.rate==19?'indexbImg1 b19':item.rate==20?'indexbImg1 b20':'',item.username==sysUserName?'imbge':'']"
+                  v-for="(item,index) in last20"
+                  :key="index"
+                  @click="judge(item.rate)"
+                ></div>
               </div>
               <div class="leftDemo">
                 <span class="span40">30%</span>
-                <div class="indexbImg1 b21"></div>
-                <div class="indexbImg1 b22"></div>
-                <div class="indexbImg1 b23"></div>
-                <div class="indexbImg1 b24"></div>
-                <div class="indexbImg1 b25"></div>
-                <div class="indexbImg1 b26"></div>
-                <div class="indexbImg1 b27"></div>
-                <div class="indexbImg1 b28"></div>
-                <div class="indexbImg1 b29"></div>
-                <div class="indexbImg1 b30"></div>
-                <div class="indexbImg b31"></div>
-                <div class="indexbImg b32"></div>
-                <div class="indexbImg b33"></div>
-                <div class="indexbImg b34"></div>
-                <div class="indexbImg b35"></div>
-                <div class="indexbImg b36"></div>
-                <div class="indexbImg b37"></div>
-                <div class="indexbImg b38"></div>
-                <div class="indexbImg b39"></div>
-                <div class="indexbImg b40"></div>
+                <div
+                  :class="[item.rate==21?'indexbImg1 b21':item.rate==22?'indexbImg1 b22':item.rate==23?'indexbImg1 b23':item.rate==24?'indexbImg1 b24':item.rate==25?'indexbImg1 b25':item.rate==26?'indexbImg1 b26':item.rate==27?'indexbImg1 b27':item.rate==28?'indexbImg1 b28':item.rate==29?'indexbImg1 b29':item.rate==30?'indexbImg1 b30':item.rate==31?'indexbImg b31':item.rate==32?'indexbImg b32':item.rate==33?'indexbImg b33':item.rate==34?'indexbImg b34':item.rate==35?'indexbImg b35':item.rate==36?'indexbImg b36':item.rate==37?'indexbImg b37':item.rate==38?'indexbImg b38':item.rate==39?'indexbImg b39':item.rate==40?'indexbImg b40':'',item.username==sysUserName?'imbge':'']"
+                  v-for="(item,index) in last40"
+                  :key="index"
+                  @click="judge(item.rate)"
+                ></div>
               </div>
               <div class="rightDemo">
                 <span class="span60">50%</span>
-                <div class="indexbImg b41"></div>
-                <div class="indexbImg b42"></div>
-                <div class="indexbImg b43"></div>
-                <div class="indexbImg b44"></div>
-                <div class="indexbImg b45"></div>
-                <div class="indexbImg b46"></div>
-                <div class="indexbImg b47"></div>
-                <div class="indexbImg b48"></div>
-                <div class="indexbImg b49"></div>
-                <div class="indexbImg b50"></div>
-                <div class="indexbImg1 b51"></div>
-                <div class="indexbImg1 b52"></div>
-                <div class="indexbImg1 b53"></div>
-                <div class="indexbImg1 b54"></div>
-                <div class="indexbImg1 b55"></div>
-                <div class="indexbImg1 b56"></div>
-                <div class="indexbImg1 b57"></div>
-                <div class="indexbImg1 b58"></div>
-                <div class="indexbImg1 b59"></div>
-                <div class="indexbImg1 b60"></div>
+                <div
+                  :class="[item.rate==41?'indexbImg b41':item.rate==42?'indexbImg b42':item.rate==43?'indexbImg b43':item.rate==44?'indexbImg b44':item.rate==45?'indexbImg b45':item.rate==46?'indexbImg b46':item.rate==47?'indexbImg b47':item.rate==48?'indexbImg b48':item.rate==49?'indexbImg b49':item.rate==50?'indexbImg b50':item.rate==51?'indexbImg1 b51':item.rate==52?'indexbImg1 b52':item.rate==53?'indexbImg1 b53':item.rate==54?'indexbImg1 b54':item.rate==55?'indexbImg1 b55':item.rate==56?'indexbImg1 b56':item.rate==57?'indexbImg1 b57':item.rate==58?'indexbImg1 b58':item.rate==59?'indexbImg1 b59':item.rate==60?'indexbImg1 b60':'',item.username==sysUserName?'imbge':'']"
+                  v-for="(item,index) in last60"
+                  :key="index"
+                  @click="judge(item.rate)"
+                ></div>
               </div>
               <div class="leftDemo">
                 <span class="span80">70%</span>
-                <div class="indexbImg1 b61"></div>
-                <div class="indexbImg1 b62"></div>
-                <div class="indexbImg1 b63"></div>
-                <div class="indexbImg1 b64"></div>
-                <div class="indexbImg1 b65"></div>
-                <div class="indexbImg1 b66"></div>
-                <div class="indexbImg1 b67"></div>
-                <div class="indexbImg1 b68"></div>
-                <div class="indexbImg1 b69"></div>
-                <div class="indexbImg1 b70"></div>
-                <div class="indexbImg b71"></div>
-                <div class="indexbImg b72"></div>
-                <div class="indexbImg b73"></div>
-                <div class="indexbImg b74"></div>
-                <div class="indexbImg b75"></div>
-                <div class="indexbImg b76"></div>
-                <div class="indexbImg b77"></div>
-                <div class="indexbImg b78"></div>
-                <div class="indexbImg b79"></div>
-                <div class="indexbImg b80"></div>
+                <div
+                  :class="[item.rate==61?'indexbImg1 b61':item.rate==62?'indexbImg1 b62':item.rate==63?'indexbImg1 b63':item.rate==64?'indexbImg1 b64':item.rate==65?'indexbImg1 b65':item.rate==66?'indexbImg1 b66':item.rate==67?'indexbImg1 b67':item.rate==68?'indexbImg1 b68':item.rate==69?'indexbImg1 b69':item.rate==70?'indexbImg1 b70':item.rate==71?'indexbImg b71':item.rate==72?'indexbImg b72':item.rate==73?'indexbImg b73':item.rate==74?'indexbImg b74':item.rate==75?'indexbImg b75':item.rate==76?'indexbImg b76':item.rate==77?'indexbImg b77':item.rate==78?'indexbImg b78':item.rate==79?'indexbImg b79':item.rate==80?'indexbImg b80':'',item.username==sysUserName?'imbge':'']"
+                  v-for="(item,index) in last80"
+                  :key="index"
+                  @click="judge(item.rate)"
+                ></div>
               </div>
               <div class="rightDemo">
                 <span class="span100">100%</span>
-                <div class="indexbImg b81"></div>
-                <div class="indexbImg b82"></div>
-                <div class="indexbImg b83"></div>
-                <div class="indexbImg b84"></div>
-                <div class="indexbImg b85"></div>
-                <div class="indexbImg b86"></div>
-                <div class="indexbImg b87"></div>
-                <div class="indexbImg b88"></div>
-                <div class="indexbImg b89"></div>
-                <div class="indexbImg b90"></div>
-                <div class="indexbImg1 b91"></div>
-                <div class="indexbImg1 b92"></div>
-                <div class="indexbImg1 b93"></div>
-                <div class="indexbImg1 b94"></div>
-                <div class="indexbImg1 b95"></div>
-                <div class="indexbImg1 b96"></div>
-                <div class="indexbImg1 b97"></div>
-                <div class="indexbImg1 b98"></div>
-                <div class="indexbImg1 b99"></div>
-                <div class="indexbImg1 b100"></div>
+                <div
+                  :class="[item.rate==81?'indexbImg b81':item.rate==82?'indexbImg b82':item.rate==83?'indexbImg b83':item.rate==84?'indexbImg b84':item.rate==85?'indexbImg b85':item.rate==86?'indexbImg b86':item.rate==87?'indexbImg b87':item.rate==88?'indexbImg b88':item.rate==89?'indexbImg b89':item.rate==90?'indexbImg b90':item.rate==91?'indexbImg1 b91':item.rate==92?'indexbImg1 b92':item.rate==93?'indexbImg1 b93':item.rate==94?'indexbImg1 b94':item.rate==95?'indexbImg1 b95':item.rate==96?'indexbImg1 b96':item.rate==97?'indexbImg1 b97':item.rate==98?'indexbImg1 b98':item.rate==99?'indexbImg1 b99':item.rate==100?'indexbImg1 b100':'',item.username==sysUserName?'imbge':'']"
+                  v-for="(item,index) in last100"
+                  :key="index"
+                  @click="judge(item.rate)"
+                ></div>
               </div>
               <div class="leftDemo"></div>
               <span class="start"></span>
@@ -1589,8 +1518,21 @@
         ></el-button>-->
         <div class="cardCase">
           <div class="cardLeft">
-            <span>1000000</span>
-            <img src="../assets/jj.png" />
+            <div class="cardLeft01">
+              <p class="zmb">总目标奖金</p>
+              <span>1000000元</span>
+              <p class="njs">年假<b class="spGreen">255</b>天</p>
+            </div>
+            <div class="cardLeft01">
+              <p class="zmb">已领取奖金</p>
+              <span>1000000元</span>
+              <p class="njs">年假<b class="spGreen">255</b>天</p>
+            </div>
+            <div class="cardLeft01">
+              <p class="zmb">剩余奖金</p>
+              <span>1000000元</span>
+              <p class="njs">年假<b class="spGreen">108</b>天</p>
+            </div>
           </div>
           <div class="cardRight">
             <div class="luck-user-title">
@@ -1599,8 +1541,9 @@
             <div class="cardText">
               <div class="cardText01" v-for="(item,index) in 70" :key="index">
                 <img src="../assets/header.png" style="width: 40px;height: 40px;border-radius:50%;" />
-                <span>测试</span>
-                <p>20000</p>
+                <span>测测试</span>
+                <p class="njts">5天</p>
+                <p>20000+5000</p>
               </div>
             </div>
           </div>
@@ -1657,29 +1600,30 @@
               style="height:600px;"
               enter-active-class="animated fadeInDownBig"
               leave-active-class="animated zoomOutDown"
-              v-for="(item, index) in 70"
+              v-for="(item, index) in sortData"
               :key="index"
             >
               <div class="testCase tabCase" v-show="flagShow">
                 <div class="tleft">
-                  <img
-                    src="../assets/header.png"
-                    style="width: 70px;height: 70px;border-radius:50%;"
-                  />
-                  <p class="namep">测试</p>
+                  <img :src="item.avatar" class="icimg" style="width: 70px;height: 70px;border-radius:50%;" />
+                  <p class="namep">{{item.username}}</p>
                 </div>
                 <div class="tright">
                   <p class="pred">
-                    <span>完成度 ：</span>101%
+                    <span>完成度 ：</span>
+                    {{item.rate}}%
                   </p>
                   <p>
-                    <span>已完成 ：</span>2000000
+                    <span>已完成 ：</span>
+                    {{item.amt}}
                   </p>
                   <p>
-                    <span>目&nbsp;&nbsp;&nbsp;&nbsp;标 ：</span>1000000
+                    <span>目&nbsp;&nbsp;&nbsp;&nbsp;标 ：</span>
+                    {{item.target}}
                   </p>
                   <p class="pred">
-                    <span>奖&nbsp;&nbsp;&nbsp;&nbsp;金 ：</span>30000元
+                    <span>奖&nbsp;&nbsp;&nbsp;&nbsp;金 ：</span>
+                    {{item.bonus}}元
                   </p>
                 </div>
               </div>
@@ -1703,26 +1647,30 @@
             style="height:600px;"
             enter-active-class="animated fadeInDownBig"
             leave-active-class="animated zoomOutDown"
-            v-for="(item, index) in 4"
+            v-for="(item, index) in sortData"
             :key="index"
           >
             <div class="testCase tabCase" v-show="flagShowFour">
               <div class="tleftFour">
-                <img src="../assets/header.png" style="width: 70px;height: 70px;border-radius:50%;" />
-                <p class="namepFour">测试</p>
+                <img :src="item.avatar" class="icimg" style="width: 70px;height: 70px;border-radius:50%;" />
+                <p class="namepFour">{{item.username}}</p>
               </div>
               <div class="trightFour">
                 <p class="pred">
-                  <span>完成度 ：</span>101%
+                  <span>完成度 ：</span>
+                  {{item.rate}}%
                 </p>
                 <p>
-                  <span>已完成 ：</span>2000000
+                  <span>已完成 ：</span>
+                  {{item.amt}}
                 </p>
                 <p>
-                  <span>目&nbsp;&nbsp;&nbsp;&nbsp;标 ：</span>101%
+                  <span>目&nbsp;&nbsp;&nbsp;&nbsp;标 ：</span>
+                  {{item.target}}
                 </p>
                 <p class="pred">
-                  <span>奖&nbsp;&nbsp;&nbsp;&nbsp;金 ：</span>30000元
+                  <span>奖&nbsp;&nbsp;&nbsp;&nbsp;金 ：</span>
+                  {{item.bonus}}元
                 </p>
               </div>
             </div>
@@ -1745,26 +1693,30 @@
             style="height:600px;"
             enter-active-class="animated fadeInDownBig"
             leave-active-class="animated zoomOutDown"
-            v-for="(item, index) in 3"
+            v-for="(item, index) in sortData"
             :key="index"
           >
             <div class="testCaseThree tabCase" v-show="flagShowThree">
               <div class="tleftThree">
-                <img src="../assets/header.png" style="width: 80px;height: 80px;border-radius:50%;" />
-                <p class="namepThree">测试</p>
+                <img :src="item.avatar" class="icimg" style="width: 80px;height: 80px;border-radius:50%;" />
+                <p class="namepThree">{{item.username}}</p>
               </div>
               <div class="trightThree">
                 <p class="pred">
-                  <span>完成度 ：</span>101%
+                  <span>完成度 ：</span>
+                  {{item.rate}}%
                 </p>
                 <p>
-                  <span>已完成 ：</span>2000000
+                  <span>已完成 ：</span>
+                  {{item.amt}}
                 </p>
                 <p>
-                  <span>目&nbsp;&nbsp;&nbsp;&nbsp;标 ：</span>101%
+                  <span>目&nbsp;&nbsp;&nbsp;&nbsp;标 ：</span>
+                  {{item.target}}
                 </p>
                 <p class="pred">
-                  <span>奖&nbsp;&nbsp;&nbsp;&nbsp;金 ：</span>30000元
+                  <span>奖&nbsp;&nbsp;&nbsp;&nbsp;金 ：</span>
+                  {{item.bonus}}元
                 </p>
               </div>
             </div>
@@ -1787,26 +1739,30 @@
             style="height:600px;"
             enter-active-class="animated fadeInDownBig"
             leave-active-class="animated zoomOutDown"
-            v-for="(item, index) in 2"
+            v-for="(item, index) in sortData"
             :key="index"
           >
             <div class="testCaseTwo tabCase" v-show="flagShowTwo">
               <div class="tleftTwo">
-                <img src="../assets/header.png" style="width: 80px;height: 80px;border-radius:50%;" />
-                <p class="namepTwo">测试</p>
+                <img :src="item.avatar" class="icimg" style="width: 80px;height: 80px;border-radius:50%;" />
+                <p class="namepTwo">{{item.username}}</p>
               </div>
               <div class="trightTwo">
                 <p class="pred">
-                  <span>完成度 ：</span>101%
+                  <span>完成度 ：</span>
+                  {{item.rate}}%
                 </p>
                 <p>
-                  <span>已完成 ：</span>2000000
+                  <span>已完成 ：</span>
+                  {{item.amt}}
                 </p>
                 <p>
-                  <span>目&nbsp;&nbsp;&nbsp;&nbsp;标 ：</span>101%
+                  <span>目&nbsp;&nbsp;&nbsp;&nbsp;标 ：</span>
+                  {{item.target}}
                 </p>
                 <p class="pred">
-                  <span>奖&nbsp;&nbsp;&nbsp;&nbsp;金 ：</span>30000元
+                  <span>奖&nbsp;&nbsp;&nbsp;&nbsp;金 ：</span>
+                  {{item.bonus}}元
                 </p>
               </div>
             </div>
@@ -1829,32 +1785,33 @@
             style="height:600px;"
             enter-active-class="animated jackInTheBox"
             leave-active-class="animated zoomOutDown"
-            v-for="(item, index) in 1"
+            v-for="(item, index) in sortData"
             :key="index"
           >
             <div class="testCaseOne" v-show="flagShowOne">
               <div class="tleftOne">
-                <img
-                  src="../assets/header.png"
-                  style="width: 100px;height: 100px;border-radius:50%;"
-                />
-                <p class="namepOne">测试</p>
+                <img :src="item.avatar" class="icimg" style="width: 100px;height: 100px;border-radius:50%;" />
+                <p class="namepOne">{{item.username}}</p>
               </div>
               <div class="trightOne">
                 <div class="p01">
                   <p class="pred">
-                    <span>完成度 ：</span>101%
+                    <span>完成度 ：</span>
+                    {{item.rate}}%
                   </p>
                   <p>
-                    <span>已完成 ：</span>2000000
+                    <span>已完成 ：</span>
+                    {{item.amt}}
                   </p>
                 </div>
                 <div class="p01">
                   <p>
-                    <span>目&nbsp;&nbsp;&nbsp;&nbsp;标 ：</span>2000000
+                    <span>目&nbsp;&nbsp;&nbsp;&nbsp;标 ：</span>
+                    {{item.target}}
                   </p>
                   <p class="pred">
-                    <span>奖&nbsp;&nbsp;&nbsp;&nbsp;金 ：</span>30000元
+                    <span>奖&nbsp;&nbsp;&nbsp;&nbsp;金 ：</span>
+                    {{item.bonus}}元
                   </p>
                 </div>
               </div>
@@ -1895,7 +1852,8 @@ import {
   APIAllDpart,
   APIBranchDpart,
   getZzTargetEbay,
-  getZzTargetJoom
+  getZzTargetJoom,
+  APISiteIndex
 } from "../api/api";
 import { compareUp, compareDown } from "../api/tools";
 import { updateLog } from "../api/product";
@@ -1904,7 +1862,6 @@ import { getMenu } from "../api/login";
 export default {
   data() {
     return {
-      objArr: [1, 2, 3, 4, 5, 6, 7, 8, 9],
       activeTabNamebk: "eBay-义乌仓",
       indexTabactive: 0,
       titleMenuTab: [
@@ -1918,12 +1875,20 @@ export default {
       activeTabName: "eBay-义乌仓",
       activeTabzz: "郑州eBay平台",
       flagShow: false,
+      sysUserName: null,
       flagShowFour: false,
       flagShowThree: false,
       flagShowTwo: false,
       flagShowOne: false,
       page: null,
       dialogVisible: false,
+      sortData: [],
+      tabSort:[],
+      last20: [],
+      last40: [],
+      last60: [],
+      last80: [],
+      last100: [],
       data: {
         id: "",
         isTop: "1"
@@ -2032,6 +1997,32 @@ export default {
     };
   },
   methods: {
+    judge(n){
+      this.sortData=[]
+      var dateArr=this.tabSort
+      for(var i=0;i<dateArr.length;i++){
+        if(dateArr[i].rate==n){
+          this.sortData.push(dateArr[i])
+        }
+      }
+      setTimeout(()=>{
+        if(this.sortData.length>4){
+          this.flagShow = true;
+        }
+        if(this.sortData.length==4){
+          this.flagShowFour = true;
+        }
+        if(this.sortData.length==3){
+          this.flagShowThree = true;
+        }
+        if(this.sortData.length==2){
+          this.flagShowTwo = true;
+        }
+        if(this.sortData.length==1){
+          this.flagShowOne = true;
+        }
+        },200)
+    },
     four() {
       this.flagShowFour = true;
     },
@@ -2733,6 +2724,9 @@ export default {
         }
       }
     });
+    this.$store.dispatch("GetUserInfo").then(() => {
+      this.sysUserName = this.$store.getters.name;
+    });
     updateLog(this.logdata).then(res => {
       if (res.data.code == 200) {
         this.logList = res.data.data.items;
@@ -2784,6 +2778,34 @@ export default {
     });
     ProsTargetPm(this.activePlatpm).then(res => {
       this.proTablepm = res.data.data;
+    });
+    APISiteIndex().then(res => {
+      var arrData = res.data.data;
+      for (var i = 0; i < arrData.length; i++) {
+        if (arrData[i].avatar == null) {
+          arrData[i].avatar = `/static/img/header.1a1e548.png`;
+        }
+        arrData[i].rate = Number(arrData[i].rate).toFixed(0);
+        arrData[i].target = Number(arrData[i].target).toFixed(0);
+        arrData[i].amt = Number(arrData[i].amt).toFixed(0);
+        arrData[i].bonus = Number(arrData[i].bonus).toFixed(0);
+        if (arrData[i].rate <= 20) {
+          this.last20.push(arrData[i]);
+        }
+        if (arrData[i].rate > 20 && arrData[i].rate <= 40) {
+          this.last40.push(arrData[i]);
+        }
+        if (arrData[i].rate > 40 && arrData[i].rate <= 60) {
+          this.last60.push(arrData[i]);
+        }
+        if (arrData[i].rate > 60 && arrData[i].rate <= 80) {
+          this.last80.push(arrData[i]);
+        }
+        if (arrData[i].rate > 80 && arrData[i].rate <= 100) {
+          this.last100.push(arrData[i]);
+        }
+      }
+      this.tabSort=arrData
     });
     this.getNews();
   }
@@ -3153,9 +3175,20 @@ h2:hover {
     -webkit-transform: scale(1.2);
   }
 }
+@keyframes myfirst1 {
+  0%,
+  100% {
+    transform: scale(0.8);
+    -webkit-transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1.5);
+    -webkit-transform: scale(1.5);
+  }
+}
 .span20 {
   display: block;
-  color: #65c7d0;
+  color: #96509f;
   font-size: 50px;
   font-weight: 600;
   position: absolute;
@@ -3164,7 +3197,7 @@ h2:hover {
 }
 .span40 {
   display: block;
-  color: #ea3c14;
+  color: #5a9c8e;
   font-size: 50px;
   font-weight: 600;
   position: absolute;
@@ -3208,11 +3241,11 @@ h2:hover {
 .leftDemo:nth-child(2) {
   top: -30.5px;
   width: 460px;
-  border-color: red;
+  border-color: #5a9c8e;
 }
 .leftDemo:nth-child(2):before {
   width: 460px;
-  border-color: #f7502b;
+  border-color: #69b8a7;
 }
 .rightDemo:nth-child(3) {
   left: 485.5px;
@@ -3228,11 +3261,11 @@ h2:hover {
 .leftDemo:nth-child(4) {
   width: 475px;
   top: -91px;
-  border-color: #f99324;
+  border-color: red;
 }
 .leftDemo:nth-child(4):before {
   width: 475px;
-  border-color: #fbb03b;
+  border-color: #f7502b;
 }
 .rightDemo:nth-child(5) {
   left: 485.5px;
@@ -3423,7 +3456,7 @@ h2:hover {
 .b20 {
   position: absolute;
   bottom: -35px;
-  left: 10%;
+  left: 5%;
   z-index: 101;
 }
 .b21 {
@@ -3543,7 +3576,7 @@ h2:hover {
 .b40 {
   position: absolute;
   bottom: -35px;
-  left: 90%;
+  left: 85%;
   z-index: 101;
 }
 .b41 {
@@ -3663,7 +3696,7 @@ h2:hover {
 .b60 {
   position: absolute;
   bottom: -35px;
-  left: 10%;
+  left: 5%;
   z-index: 101;
 }
 .b61 {
@@ -3952,7 +3985,7 @@ h2:hover {
 }
 .tright {
   float: left;
-  padding: 0 20px;
+  padding: 0 15px;
   margin: 15px;
   padding-left: 23px;
   margin-left: 0;
@@ -3966,6 +3999,7 @@ h2:hover {
   float: left;
   width: 60px;
   text-align: justify;
+  margin-top: -1px;
 }
 .namep {
   width: 100%;
@@ -4035,7 +4069,7 @@ h2:hover {
 }
 .trightFour {
   float: left;
-  padding: 0 20px;
+  padding: 0 15px;
   margin: 15px;
   padding-left: 23px;
   margin-left: 0;
@@ -4044,11 +4078,12 @@ h2:hover {
 .trightFour p {
   font-size: 13px;
 }
-.tright span {
+.trightFour span {
   display: block;
   float: left;
   width: 60px;
   text-align: justify;
+  margin-top: -1px;
 }
 .namepFour {
   width: 100%;
@@ -4105,9 +4140,9 @@ h2:hover {
 }
 .trightThree {
   float: left;
-  padding: 0 30px;
+  padding: 0 25px;
   margin: 15px;
-  padding-left: 33px;
+  padding-left: 35px;
   margin-left: 0;
   box-shadow: 4px 13px 30px 1px rgba(60, 141, 188, 0.2);
 }
@@ -4119,6 +4154,7 @@ h2:hover {
   float: left;
   width: 70px;
   text-align: justify;
+  margin-top: -1px;
 }
 .namepThree {
   width: 100%;
@@ -4177,7 +4213,7 @@ h2:hover {
   float: left;
   padding: 0 30px;
   margin: 15px;
-  padding-left: 33px;
+  padding-left: 35px;
   margin-left: 0;
   box-shadow: 4px 13px 30px 1px rgba(60, 141, 188, 0.2);
 }
@@ -4189,6 +4225,7 @@ h2:hover {
   float: left;
   width: 70px;
   text-align: justify;
+  margin-top: -1px;
 }
 .namepTwo {
   width: 100%;
@@ -4202,8 +4239,8 @@ h2:hover {
 }
 //1条
 .digWhiteOne {
-  width: 345px;
-  height: 325px;
+  width: 360px;
+  height: 320px;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -4226,8 +4263,8 @@ h2:hover {
   overflow-y: auto;
 }
 .testCaseOne {
-  width: 90%;
-  margin: 0 5%;
+  width: 88%;
+  margin: 0 6%;
   background: #fff;
   border-radius: 5px;
   margin-top: 30px;
@@ -4243,13 +4280,15 @@ h2:hover {
   box-shadow: 4px 13px 30px 5px rgba(60, 141, 188, 0.2);
 }
 .trightOne {
-  width: 93%;
+  width: 90%;
   margin: auto;
   overflow: hidden;
   box-shadow: 4px 13px 30px 1px rgba(60, 141, 188, 0.2);
   margin-top: 55px;
   padding-bottom: 5px;
   margin-bottom: 10px;
+  padding-left: 8px;
+  padding-top: 5px;
 }
 .trightOne p {
   font-size: 14px;
@@ -4266,6 +4305,11 @@ h2:hover {
 }
 .p01 {
   overflow: hidden;
+}
+.p01 p {
+  width: 48%;
+  padding: 2px;
+  line-height: 30px;
 }
 .p01 p:first-child {
   float: left;
@@ -4304,6 +4348,10 @@ h2:hover {
   -o-transform: translate(0, -20px);
   -ms-transform: translate(0, -20px);
 }
+.imbge {
+  animation: myfirst1 1.5s infinite;
+  z-index: 105;
+}
 //奖金池
 .cardCase {
   width: 95%;
@@ -4315,21 +4363,39 @@ h2:hover {
 }
 .cardLeft {
   float: left;
-  width: 150px;
+  color: #fff;
+  margin-top: 6px;
+  font-family: 'Consolas';
+}
+.zmb{
+  text-align: center;
+  margin: 0;
+  margin-top: 10px;
+}
+.njs{
+  text-align: center;
+  margin: 0;
+  margin-top: 5px;
+  font-size: 18px;
+  letter-spacing:2px;
+  font-weight: normal;
+}
+.cardLeft01{
+  width: 155px;
   border: #f5ad18 4px solid;
-  height: 150px;
+  height: 105px;;
   border-radius: 12px;
-  margin-left: 58px;
-  margin-top: 110px;
+  margin-left: 48px;
+  margin-top: 10px;
   background: rgba(60, 141, 188, 0.1);
 }
 .cardLeft span {
   display: block;
-  font-size: 30px;
+  font-size: 28px;
   color: #fff;
   text-align: center;
-  padding: 20px 0;
   margin-top: 5px;
+  color: red;
 }
 .cardLeft img {
   display: block;
@@ -4398,7 +4464,7 @@ h2:hover {
 }
 .cardText img {
   float: left;
-  margin-left:8%;
+  margin-left: 8%;
 }
 .cardText span {
   display: block;
@@ -4409,10 +4475,40 @@ h2:hover {
 .cardText p {
   float: right;
   margin-right: 10px;
+  color: red;
+}
+.icimg{
+  transition: All 0.3s ease-in-out;
+}
+.icimg:hover{
+  transform: scale(1.2)
+}
+.njts{
+  margin-top: 12px;
+  color: #67c23a !important;
+}
+.spGreen{
+  color: #67c23a;
 }
 @media (max-width: 1500px) {
   .cardLeft {
     margin-left: 10px;
+  }
+  .cardLeft01{
+    margin-left: 0;
+  }
+  .cardText img{
+    margin-left: 0;
+  }
+  .cardText span{
+    margin-left: 5px;
+  }
+  .cardText p{
+    margin-right: 5px;
+  }
+  .cardRight{
+    width: 52%;
+    margin-right: 15px;
   }
 }
 </style>

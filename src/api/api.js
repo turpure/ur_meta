@@ -451,3 +451,10 @@ export function APIBranchDpart() {
     method: 'get'
   })
 }
+
+export function APISiteIndex() {
+  return request({
+    url: '/site/index',
+    method: 'get'
+  })
+}
