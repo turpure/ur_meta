@@ -1998,6 +1998,11 @@ export default {
   },
   methods: {
     judge(n){
+      this.flagShow = false;
+      this.flagShowFour = false;
+      this.flagShowTwo = false;
+      this.flagShowOne = false;
+      this.flagShowThree = false;
       this.sortData=[]
       var dateArr=this.tabSort
       for(var i=0;i<dateArr.length;i++){
@@ -2007,18 +2012,38 @@ export default {
       }
       setTimeout(()=>{
         if(this.sortData.length>4){
+          this.flagShowFour = false;
+          this.flagShowThree = false;
+          this.flagShowTwo = false;
+          this.flagShowOne = false;
           this.flagShow = true;
         }
         if(this.sortData.length==4){
+          this.flagShow = false;
+          this.flagShowThree = false;
+          this.flagShowTwo = false;
+          this.flagShowOne = false;
           this.flagShowFour = true;
         }
         if(this.sortData.length==3){
+          this.flagShow = false;
+          this.flagShowFour = false;
+          this.flagShowTwo = false;
+          this.flagShowOne = false;
           this.flagShowThree = true;
         }
         if(this.sortData.length==2){
+          this.flagShow = false;
+          this.flagShowFour = false;
+          this.flagShowThree = false;
+          this.flagShowOne = false;
           this.flagShowTwo = true;
         }
         if(this.sortData.length==1){
+          this.flagShow = false;
+          this.flagShowFour = false;
+          this.flagShowThree = false;
+          this.flagShowTwo = false;
           this.flagShowOne = true;
         }
         },200)
@@ -3178,12 +3203,12 @@ h2:hover {
 @keyframes myfirst1 {
   0%,
   100% {
-    transform: scale(0.8);
-    -webkit-transform: scale(0.8);
+    transform: scale(1);
+    -webkit-transform: scale(1);
   }
   50% {
-    transform: scale(1.5);
-    -webkit-transform: scale(1.5);
+    transform: scale(1.6);
+    -webkit-transform: scale(1.6);
   }
 }
 .span20 {
@@ -4349,7 +4374,7 @@ h2:hover {
   -ms-transform: translate(0, -20px);
 }
 .imbge {
-  animation: myfirst1 1.5s infinite;
+  animation: myfirst1 1.2s infinite;
   z-index: 105;
 }
 //奖金池
