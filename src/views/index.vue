@@ -68,7 +68,70 @@
                   @click="judge(item.rate)"
                 ></div>
               </div>
-              <div class="leftDemo"></div>
+              <div class="leftDemo">
+                <div class="jblist">
+                  <div class="jb01 jbg">
+                    <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
+                    <span>2000</span>
+                  </div>
+                  <div class="jb02 jbg">
+                    <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
+                    <span>4000</span>
+                  </div>
+                  <div class="jb03 jbg">
+                    <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
+                    <span>6000</span>
+                  </div>
+                  <div class="jb04 jbg">
+                    <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
+                    <span>8000</span>
+                  </div>
+                  <div class="jb05 jbg">
+                    <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
+                    <span>10000</span>
+                  </div>
+                  <div class="jb06 jbg">
+                    <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
+                    <span>12000</span>
+                  </div>
+                  <div class="jb07 jbg">
+                    <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
+                    <span>14000</span>
+                  </div>
+                  <div class="jb08 jbg">
+                    <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
+                    <span>16000</span>
+                  </div>
+                  <div class="jb09 jbg">
+                    <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
+                    <span>18000</span>
+                  </div>
+                  <div class="jb10 jbg">
+                    <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
+                    <span>20000</span>
+                  </div>
+                  <div class="jb11 jbg">
+                    <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
+                    <span>22000</span>
+                  </div>
+                  <div class="jb12 jbg">
+                    <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
+                    <span>24000</span>
+                  </div>
+                  <div class="jb13 jbg">
+                    <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
+                    <span>26000</span>
+                  </div>
+                  <div class="jb14 jbg">
+                    <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
+                    <span>28000</span>
+                  </div>
+                  <div class="jb15 jbg">
+                    <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
+                    <span>30000</span>
+                  </div>
+                </div>
+              </div>
               <span class="start"></span>
               <span class="end">
                 <img src="../assets/qizi.png" style="width: 50px;height: 50px;" />
@@ -3111,7 +3174,7 @@ h2:hover {
 .rightDemo {
   position: relative;
   width: 507.5px;
-  height: 85px;
+  height: 91px;
   border: 30px solid;
 }
 .leftDemo {
@@ -3133,7 +3196,7 @@ h2:hover {
   position: absolute;
   display: block;
   width: 507.5px;
-  height: 85px;
+  height: 91px;
   top: -15px;
   border: 15px solid;
 }
@@ -3152,7 +3215,7 @@ h2:hover {
 .bigDemo {
   width: 980px;
   margin: 0 auto;
-  margin-top: 75px;
+  margin-top: 50px;
   position: relative;
   height: 670px;
 }
@@ -3176,10 +3239,10 @@ h2:hover {
   background: #fff;
   border-radius: 50%;
   position: absolute;
-  bottom: 65px;
+  bottom: 38px;
   text-align: center;
   line-height: 25px;
-  right: 480px;
+  right: 477px;
   z-index: 10;
   color: red;
   animation: myfirst 2s infinite;
@@ -3213,21 +3276,21 @@ h2:hover {
 }
 .span20 {
   display: block;
-  color: #96509f;
-  font-size: 50px;
-  font-weight: 600;
-  position: absolute;
-  right: 40px;
-  top: 14px;
-}
-.span40 {
-  display: block;
   color: #5a9c8e;
   font-size: 50px;
   font-weight: 600;
   position: absolute;
+  right: 40px;
+  top: 16px;
+}
+.span40 {
+  display: block;
+  color: #46b2bc;
+  font-size: 50px;
+  font-weight: 600;
+  position: absolute;
   left: 40px;
-  top: 14px;
+  top: 16px;
 }
 .span60 {
   display: block;
@@ -3236,16 +3299,16 @@ h2:hover {
   font-weight: 600;
   position: absolute;
   right: 40px;
-  top: 14px;
+  top: 16px;
 }
 .span80 {
   display: block;
-  color: #f99324;
+  color: red;
   font-size: 50px;
   font-weight: 600;
   position: absolute;
   left: 40px;
-  top: 14px;
+  top: 16px;
 }
 .span100 {
   color: #8cc63e;
@@ -3253,24 +3316,24 @@ h2:hover {
   font-size: 50px;
   font-weight: 600;
   position: absolute;
-  left: -60px;
-  top: 14px;
+  left: -50px;
+  top: 16px;
 }
 .rightDemo:nth-child(1) {
-  border-color: #46b2bc;
+  border-color: #5a9c8e;
   top: 0;
 }
 .rightDemo:nth-child(1):before {
-  border-color: #65c7d0;
+  border-color: #69b8a7;
 }
 .leftDemo:nth-child(2) {
   top: -30.5px;
   width: 460px;
-  border-color: #5a9c8e;
+  border-color: #46b2bc;
 }
 .leftDemo:nth-child(2):before {
   width: 460px;
-  border-color: #69b8a7;
+  border-color: #65c7d0;
 }
 .rightDemo:nth-child(3) {
   left: 485.5px;
@@ -3286,7 +3349,7 @@ h2:hover {
 .leftDemo:nth-child(4) {
   width: 475px;
   top: -91px;
-  border-color: red;
+  border-color: rgb(250, 10, 10);
 }
 .leftDemo:nth-child(4):before {
   width: 475px;
@@ -3305,12 +3368,12 @@ h2:hover {
 }
 .leftDemo:nth-child(6) {
   width: 875px;
-  top: -152px;
-  border-color: #3c8dbc;
+  top: -153px;
+  border-color: #d9742b;
 }
 .leftDemo:nth-child(6):before {
   width: 875px;
-  border-color: #4ca8dd;
+  border-color: rgb(221, 131, 85);
 }
 .indexbImg {
   width: 40px;
@@ -4514,6 +4577,208 @@ h2:hover {
 }
 .spGreen{
   color: #67c23a;
+}
+.jbg{
+  animation: rotate .8s infinite;
+}
+@keyframes rotate {
+    0% {
+    transform: translateY(0) ;
+  }
+    25% {
+        transform: translateY(8px);
+    }
+    50% {
+        transform: translateY(13px) scale(1.1, 0.9);
+       
+    }
+    75% {
+        ransform: translateY(8px) ;
+    }
+    100% {
+        transform: translateY(0) ;
+    }
+}
+//金币
+.jb01{
+  position: absolute;
+  top: -85px;
+  left: 40%;
+}
+.jb01 span{
+  display: block;
+  position: absolute;
+  color: #fff;
+  top: 35%;
+  left: 18%;
+}
+.jb02{
+  position: absolute;
+  top: -85px;
+  left: 30%;
+}
+.jb02 span{
+  display: block;
+  position: absolute;
+  color: #fff;
+  top: 35%;
+  left: 18%;
+}
+.jb03{
+  position: absolute;
+  top: -85px;
+  left: 20%;
+}
+.jb03 span{
+  display: block;
+  position: absolute;
+  color: #fff;
+  top: 35%;
+  left: 18%;
+}
+.jb04{
+  position: absolute;
+  top: -85px;
+  left: 10%;
+}
+.jb04 span{
+  display: block;
+  position: absolute;
+  color: #fff;
+  top: 35%;
+  left: 18%;
+}
+.jb05{
+  position: absolute;
+  top: -85px;
+  left: 0%;
+}
+.jb05 span{
+  display: block;
+  position: absolute;
+  color: #fff;
+  top: 35%;
+  left: 12%;
+}
+.jb06{
+  position: absolute;
+  bottom: 3px;
+  left: 0%;
+}
+.jb06 span{
+  display: block;
+  position: absolute;
+  color: #fff;
+  top: 35%;
+  left: 12%;
+}
+.jb07{
+  position: absolute;
+  bottom: 3px;
+  left: 10%;
+}
+.jb07 span{
+  display: block;
+  position: absolute;
+  color: #fff;
+  top: 35%;
+  left: 12%;
+}
+.jb08{
+  position: absolute;
+  bottom: 3px;
+  left: 20%;
+}
+.jb08 span{
+  display: block;
+  position: absolute;
+  color: #fff;
+  top: 35%;
+  left: 12%;
+}
+.jb09{
+  position: absolute;
+  bottom: 3px;
+  left: 30%;
+}
+.jb09 span{
+  display: block;
+  position: absolute;
+  color: #fff;
+  top: 35%;
+  left: 12%;
+}
+.jb10{
+  position: absolute;
+  bottom: 3px;
+  left: 40%;
+}
+.jb10 span{
+  display: block;
+  position: absolute;
+  color: #fff;
+  top: 35%;
+  left: 12%;
+}
+.jb11{
+  position: absolute;
+  bottom: 3px;
+  left: 50%;
+}
+.jb11 span{
+  display: block;
+  position: absolute;
+  color: #fff;
+  top: 35%;
+  left: 12%;
+}
+.jb12{
+  position: absolute;
+  bottom: 3px;
+  left: 60%;
+}
+.jb12 span{
+  display: block;
+  position: absolute;
+  color: #fff;
+  top: 35%;
+  left: 12%;
+}
+.jb13{
+  position: absolute;
+  bottom: 3px;
+  left: 70%;
+}
+.jb13 span{
+  display: block;
+  position: absolute;
+  color: #fff;
+  top: 35%;
+  left: 12%;
+}
+.jb14{
+  position: absolute;
+  bottom: 3px;
+  left: 80%;
+}
+.jb14 span{
+  display: block;
+  position: absolute;
+  color: #fff;
+  top: 35%;
+  left: 12%;
+}
+.jb15{
+  position: absolute;
+  bottom: 3px;
+  left: 90%;
+}
+.jb15 span{
+  display: block;
+  position: absolute;
+  color: #fff;
+  top: 35%;
+  left: 12%;
 }
 @media (max-width: 1500px) {
   .cardLeft {
