@@ -468,14 +468,21 @@ export function APISiteSales() {
 
 export function getSiteIndexXs() {
   return request({
-    url: '/site/sales',
+    url: '/site/index?role=' + 'sales',
     method: 'get'
   })
 }
 
 export function getSiteIndexKf() {
   return request({
-    url: '/site/sales',
+    url: '/site/index?role=' + 'dev',
+    method: 'get'
+  })
+}
+
+export function getSiteIndexBM() {
+  return request({
+    url: '/site/index?role=' + 'depart',
     method: 'get'
   })
 }

@@ -139,7 +139,7 @@
               </el-tabs>
               <div v-show="tabwcd.xs">
                 <el-table
-                  :data="zzEbay"
+                  :data="wcdxs"
                   size="small"
                   height="798"
                   ref="table1"
@@ -148,16 +148,18 @@
                 >
                   <el-table-column type="index" align="center"></el-table-column>
                   <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
-                  <el-table-column prop="plat" align="center" label="平台" sortable></el-table-column>
+                  <el-table-column prop="depart" align="center" label="部门" sortable></el-table-column>
                   <el-table-column prop="target" align="center" label="目标" sortable="custom"></el-table-column>
                   <el-table-column prop="amt" align="center" label="毛利" sortable="custom"></el-table-column>
+                  <el-table-column prop="bonus" align="center" label="奖金" sortable="custom"></el-table-column>
+                  <el-table-column prop="rxtraBonus" align="center" label="额外奖金" sortable="custom"></el-table-column>
                   <el-table-column prop="rate" align="center" label="目标进度" sortable="custom">
                     <template slot-scope="scope">
                       <el-progress
                         :text-inside="true"
                         :stroke-width="18"
                         :status="checkStatus(scope.row,'rate')"
-                        :percentage="Math.round(scope.row.rate*10000)/100"
+                        :percentage="Math.round(scope.row.rate*100)/100"
                       ></el-progress>
                     </template>
                   </el-table-column>
@@ -167,21 +169,21 @@
                         :text-inside="true"
                         :stroke-width="18"
                         status="exception"
-                        :percentage="Math.round(scope.row.dateRate*10000)/100"
+                        :percentage="Math.round(scope.row.dateRate*100)/100"
                       ></el-progress>
                     </template>
                   </el-table-column>
                   <el-table-column prop="updateTime" align="center" label="统计截止日期">
                     <template slot-scope="scope">
                       <i class="el-icon-time"></i>
-                      <span>{{dateFormatter(scope.row.updateTime)}}</span>
+                      <span>{{dateFormatter(scope.row.updatetime)}}</span>
                     </template>
                   </el-table-column>
                 </el-table>
               </div>
               <div v-show="tabwcd.kf">
                 <el-table
-                  :data="zzJoom"
+                  :data="wcdkf"
                   size="small"
                   height="798"
                   ref="table1"
@@ -190,16 +192,18 @@
                 >
                   <el-table-column type="index" align="center"></el-table-column>
                   <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
-                  <el-table-column prop="plat" align="center" label="平台" sortable></el-table-column>
+                  <el-table-column prop="depart" align="center" label="部门" sortable></el-table-column>
                   <el-table-column prop="target" align="center" label="目标" sortable="custom"></el-table-column>
                   <el-table-column prop="amt" align="center" label="毛利" sortable="custom"></el-table-column>
+                  <el-table-column prop="bonus" align="center" label="奖金" sortable="custom"></el-table-column>
+                  <el-table-column prop="rxtraBonus" align="center" label="额外奖金" sortable="custom"></el-table-column>
                   <el-table-column prop="rate" align="center" label="目标进度" sortable="custom">
                     <template slot-scope="scope">
                       <el-progress
                         :text-inside="true"
                         :stroke-width="18"
                         :status="checkStatus(scope.row,'rate')"
-                        :percentage="Math.round(scope.row.rate*10000)/100"
+                        :percentage="Math.round(scope.row.rate*100)/100"
                       ></el-progress>
                     </template>
                   </el-table-column>
@@ -209,7 +213,48 @@
                         :text-inside="true"
                         :stroke-width="18"
                         status="exception"
-                        :percentage="Math.round(scope.row.dateRate*10000)/100"
+                        :percentage="Math.round(scope.row.dateRate*100)/100"
+                      ></el-progress>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="updateTime" align="center" label="统计截止日期">
+                    <template slot-scope="scope">
+                      <i class="el-icon-time"></i>
+                      <span>{{dateFormatter(scope.row.updatetime)}}</span>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
+              <div v-show="tabwcd.bm">
+                <el-table
+                  :data="wcdbm"
+                  size="small"
+                  height="798"
+                  ref="table1"
+                  v-scrollBar:slim
+                  @sort-change="sortNumberjoom"
+                >
+                  <el-table-column type="index" align="center"></el-table-column>
+                  <el-table-column prop="username" align="center" label="部门" sortable></el-table-column>
+                  <el-table-column prop="target" align="center" label="目标" sortable="custom"></el-table-column>
+                  <el-table-column prop="bonus" align="center" label="奖金" sortable="custom"></el-table-column>
+                  <el-table-column prop="rate" align="center" label="目标进度" sortable="custom" width="200">
+                    <template slot-scope="scope">
+                      <el-progress
+                        :text-inside="true"
+                        :stroke-width="18"
+                        :status="checkStatus(scope.row,'rate')"
+                        :percentage="Math.round(scope.row.rate*100)/100"
+                      ></el-progress>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="dateRate" align="center" label="时间进度" width="200">
+                    <template slot-scope="scope">
+                      <el-progress
+                        :text-inside="true"
+                        :stroke-width="18"
+                        status="exception"
+                        :percentage="Math.round(scope.row.dateRate*100)/100"
                       ></el-progress>
                     </template>
                   </el-table-column>
@@ -1625,7 +1670,7 @@
           </el-card>
         </div>
         <el-card class="box-card">
-          <!-- <div slot="header" class="clearfix-list">
+          <div slot="header" class="clearfix-list">
           <h2>公告栏</h2>
         </div>
         <ul>
@@ -1662,51 +1707,7 @@
           @click="loadMore"
           class="more"
           v-text="this.page>=this.newsData.page?'加载更多':'已无更多'"
-          ></el-button>-->
-          <div class="cardCase">
-            <div class="cardLeft">
-              <div class="cardLeft01">
-                <p class="zmb">总目标奖金</p>
-                <span class="swhite">{{bonus.total}}元</span>
-                <p class="zmb">已领取奖金</p>
-                <span class="spGreen">{{bonus.pass}}元</span>
-                <p class="zmb">剩余奖金</p>
-                <span>{{bonus.surplus}}元</span>
-                <img src="../assets/jab.png" style="width:49px;height:37px;margin-top:5px;" />
-              </div>
-              <div class="cardLeft01 cardLeft02">
-                <p class="zmb">总目标年假</p>
-                <span class="swhite">{{bonus.totalnj}}天</span>
-                <p class="zmb">已领取年假</p>
-                <span class="spGreen">{{bonus.passnj}}天</span>
-                <p class="zmb">剩余年假</p>
-                <span>{{bonus.surplusnj}}天</span>
-              </div>
-              <!-- <div class="cardLeft01">
-              <p class="zmb">已领取奖金</p>
-              <span>{{bonus.pass}}元</span>
-              <p class="njs">年假<b class="spGreen">{{bonus.passnj}}</b>天</p>
-            </div>
-            <div class="cardLeft01">
-              <p class="zmb">剩余奖金</p>
-              <span>{{bonus.surplus}}元</span>
-              <p class="njs">年假<b class="spGreen">{{bonus.surplusnj}}</b>天</p>
-              </div>-->
-            </div>
-            <div class="cardRight">
-              <div class="luck-user-title">
-                <span>奖金名单</span>
-              </div>
-              <div class="cardText">
-                <div class="cardText01" v-for="(item,index) in bonusList" :key="index">
-                  <img :src="item.avatar" style="width: 40px;height: 40px;border-radius:50%;" />
-                  <span>{{item.username}}</span>
-                  <p class="njts">{{item.vacationDays}}天</p>
-                  <p>{{item.bonus | cutOut1}}+{{item.rxtraBonus | cutOut1}}</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          ></el-button>
         </el-card>
         <el-card class="box-card1">
           <div slot="header" class="clearfix-list">
@@ -1871,13 +1872,14 @@
                 <span>{{bonus.surplus}}元</span>
                 <img src="../assets/jab.png" style="width:49px;height:37px;margin-top:5px;" />
               </div>
-              <div class="cardLeft01 cardLeft02">
+              <div class="cardLeft01">
                 <p class="zmb">总目标年假</p>
                 <span class="swhite">{{bonus.totalnj}}天</span>
                 <p class="zmb">已领取年假</p>
                 <span class="spGreen">{{bonus.passnj}}天</span>
                 <p class="zmb">剩余年假</p>
                 <span>{{bonus.surplusnj}}天</span>
+                <img src="../assets/jab.png" style="width:49px;height:37px;margin-top:5px;" />
               </div>
               <!-- <div class="cardLeft01">
               <p class="zmb">已领取奖金</p>
@@ -2189,7 +2191,8 @@ import {
   APISiteIndex,
   APISiteSales,
   getSiteIndexXs,
-  getSiteIndexKf
+  getSiteIndexKf,
+  getSiteIndexBM
 } from "../api/api";
 import { compareUp, compareDown } from "../api/tools";
 import { updateLog } from "../api/product";
@@ -2199,8 +2202,8 @@ export default {
   data() {
     return {
       activeTabNamebk: "eBay-义乌仓",
-      ifShowIndex: true,
-      ifShowIndex1: false,
+      ifShowIndex1: true,
+      ifShowIndex: false,
       indexTabactive: 0,
       titleMenuTab: [
         "eBay-义乌仓",
@@ -2213,6 +2216,9 @@ export default {
       activeTabName: "eBay-义乌仓",
       activeTabzz: "郑州eBay平台",
       activeTabwcd: "所有销售",
+      wcdxs:[],
+      wcdkf:[],
+      wcdbm:[],
       flagShow: false,
       sysUserName: null,
       flagShowFour: false,
@@ -2266,7 +2272,8 @@ export default {
       },
       tabwcd: {
         xs: true,
-        kf: false
+        kf: false,
+        bm:false,
       },
       shanghaiTable: [],
       zhengzhouTable: [],
@@ -2279,7 +2286,7 @@ export default {
       saleDevelop: [],
       saleZz: [],
       titleMenuzz: [],
-      titleMenuwcd: ["所有销售", "所有开发"],
+      titleMenuwcd: ["所有销售", "所有开发","所有部门"],
       zzEbay: [],
       zzJoom: [],
       activeName: "上海销售",
@@ -2461,6 +2468,11 @@ export default {
         this.tabwcd["kf"] = true;
       } else {
         this.tabwcd["kf"] = false;
+      }
+      if (tab.label === "所有部门") {
+        this.tabwcd["bm"] = true;
+      } else {
+        this.tabwcd["bm"] = false;
       }
     },
     sortNumberPX(column, prop, order) {
@@ -3155,12 +3167,15 @@ export default {
     getZzTargetJoom().then(res => {
       this.zzJoom = res.data.data;
     });
-    // getSiteIndexXs().then(res => {
-    //   this.wcdxs = res.data.data;
-    // });
-    // getSiteIndexKf().then(res => {
-    //   this.wcdkf = res.data.data;
-    // });
+    getSiteIndexXs().then(res => {
+      this.wcdxs = res.data.data;
+    });
+    getSiteIndexKf().then(res => {
+      this.wcdkf = res.data.data;
+    });
+    getSiteIndexBM().then(res => {
+      this.wcdbm = res.data.data;
+    });
     getAmt(this.profitl1).then(res => {
       this.saleSh = res.data.data;
     });
@@ -3385,17 +3400,16 @@ export default {
   float: left;
   margin-top: 1.5%;
   height: 915px;
-  background: url(../assets/jjbg.jpg) no-repeat center;
+  background: url(../assets/bgban5.jpg) no-repeat center;
   background-size: 100% 100%;
   position: relative;
 }
 .box-card {
   width: 30%;
-  height: 475px;
+  height: 375px;
   overflow-y: scroll;
   float: right;
   margin-top: 1.5%;
-  background: url(../assets/jjbg.jpg) no-repeat center;
   background-size: 100% 100%;
   .post-left-box {
     position: relative;
@@ -3437,7 +3451,7 @@ export default {
 }
 .box-card1 {
   width: 30%;
-  height: 430px;
+  height: 530px;
   float: right;
   margin-top: 10px;
   overflow-y: scroll;
@@ -4791,11 +4805,10 @@ h2:hover {
 }
 //奖金池
 .cardCase {
-  width: 95%;
+  width: 100%;
   margin: auto;
-  background: rgba(0, 0, 0, 0.3);
-  height: 450px;
-  margin-top: 15px;
+  background: rgba(246, 248, 142, 0.1);
+  height: 525px;
   overflow: hidden;
 }
 .cardLeft {
@@ -4808,6 +4821,8 @@ h2:hover {
   text-align: center;
   margin: 0;
   margin-top: 5px;
+  color: #000;
+  margin-top: 10px;
 }
 .njs {
   text-align: center;
@@ -4820,20 +4835,18 @@ h2:hover {
 .cardLeft01 {
   width: 175px;
   border: #f5ad18 4px solid;
-  height: 220px;
+  height: 235px;
   border-radius: 12px;
   margin-left: 45px;
   margin-top: 10px;
-  background: rgba(60, 141, 188, 0.1);
 }
 .cardLeft02 {
   width: 175px;
   border: #f5ad18 4px solid;
-  height: 175px;
+  height: 190px;
   border-radius: 12px;
   margin-left: 45px;
   margin-top: 10px;
-  background: rgba(60, 141, 188, 0.1);
 }
 .cardLeft span {
   display: block;
@@ -4851,11 +4864,11 @@ h2:hover {
 }
 .cardRight {
   float: right;
-  width: 50%;
+  width: 53%;
   margin-right: 20px;
-  height: 410px;
+  height: 490px;
   margin-top: 19px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.4);
   position: relative;
 }
 .luck-user-title {
@@ -4884,16 +4897,16 @@ h2:hover {
   height: 2px;
 }
 .cardText::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
   height: 10px;
 }
 .cardText::-webkit-scrollbar-thumb {
-  background-color: #dcdfe6;
+  background-color: #fff;
   height: 50px;
-  outline-offset: -2px;
-  outline: 2px solid #eee;
+  outline-offset: -1px;
+  outline: 2px solid #fff;
   -webkit-border-radius: 40px;
-  border: 2px solid #eee;
+  border: 1px solid #fff;
 }
 .cardText {
   width: 100%;
@@ -4901,12 +4914,12 @@ h2:hover {
   margin-top: 62px;
   overflow: hidden;
   color: #fff;
-  height: 340px;
+  height: 425px;
   overflow-y: auto;
 }
 .cardText01 {
   overflow: hidden;
-  padding: 7px 0;
+  padding: 8px 0;
 }
 .cardText img {
   float: left;
@@ -4916,11 +4929,12 @@ h2:hover {
   display: block;
   float: left;
   line-height: 45px;
-  margin-left: 15px;
+  margin-left: 18px;
+  color: #000;
 }
 .cardText p {
   float: right;
-  margin-right: 10px;
+  margin-right: 12px;
   color: red;
 }
 .icimg {
@@ -5165,16 +5179,16 @@ h2:hover {
     margin-left: 0;
   }
   .cardText img {
-    margin-left: 0;
+    margin-left: 10px;
   }
   .cardText span {
-    margin-left: 5px;
+    margin-left: 10px;
   }
   .cardText p {
     margin-right: 5px;
   }
   .cardRight {
-    width: 52%;
+    width: 54%;
     margin-right: 15px;
   }
   .cardLeft01 {
