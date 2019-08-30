@@ -465,3 +465,17 @@ export function APISiteSales() {
     method: 'get'
   })
 }
+
+export function getSiteIndexXs() {
+  return request({
+    url: '/site/sales',
+    method: 'get'
+  })
+}
+
+export function getSiteIndexKf() {
+  return request({
+    url: '/site/sales',
+    method: 'get'
+  })
+}

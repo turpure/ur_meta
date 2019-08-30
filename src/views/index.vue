@@ -1,896 +1,1424 @@
 <template>
-  <div class="dashboard-editor-container" style="height: 970px;">
-    <section>
-      <div class="left-box">
-        <el-card>
-          <div style="padding-top:20px;padding-left:12px;padding-bottom:5px;">
-            <!-- <el-radio-group v-model="activeTitle">
+  <div>
+    <div class="dashboard-editor-container" style="height: 970px;" v-show="ifShowIndex">
+      <section>
+        <div class="left-box">
+          <el-card>
+            <div style="padding-top:20px;padding-left:12px;padding-bottom:5px;">
+              <!-- <el-radio-group v-model="activeTitle">
               <el-radio-button :label="item.name" v-for="(item, index) in titleMenu" :key="index"></el-radio-button>
-            </el-radio-group>-->
-            <div class="index_content">
-              <p
-                :class="indexTabactive==index?'index_p index_active':''"
-                v-for="(item, index) in titleMenu"
-                :key="index"
-                @click="handleTitle(item.name,index)"
-              >
-                <i
-                  :class="index==0?'el-icon-rank':index==1?'el-icon-tickets':index==2?'el-icon-document':index==3?'el-icon-date':'el-icon-tickets'"
-                ></i>
-                {{item.name}}
-              </p>
+              </el-radio-group>-->
+              <div class="index_content">
+                <p
+                  :class="indexTabactive==index?'index_p index_active':''"
+                  v-for="(item, index) in titleMenu"
+                  :key="index"
+                  @click="handleTitle(item.name,index)"
+                >
+                  <i
+                    :class="index==0?'el-icon-rank':index==1?'el-icon-tickets':index==2?'el-icon-document':index==3?'el-icon-date':'el-icon-tickets'"
+                  ></i>
+                  {{item.name}}
+                </p>
+              </div>
             </div>
-          </div>
-          <div class="tabs-container tab-index-pan tswj" v-show="showTitle.wj">
-            <div class="bigDemo">
-              <div class="rightDemo">
-                <span class="span20">10%</span>
-                <div
-                  :class="[item.rate==0?'indexbImg b0':item.rate==1?'indexbImg b1':item.rate==2?'indexbImg b2':item.rate==3?'indexbImg b3':item.rate==4?'indexbImg b4':item.rate==5?'indexbImg b5':item.rate==6?'indexbImg b6':item.rate==7?'indexbImg b7':item.rate==8?'indexbImg b8':item.rate==9?'indexbImg b9':item.rate==10?'indexbImg b10':item.rate==11?'indexbImg1 b11':item.rate==12?'indexbImg1 b12':item.rate==13?'indexbImg1 b13':item.rate==14?'indexbImg1 b14':item.rate==15?'indexbImg1 b15':item.rate==16?'indexbImg1 b16':item.rate==17?'indexbImg1 b17':item.rate==18?'indexbImg1 b18':item.rate==19?'indexbImg1 b19':item.rate==20?'indexbImg1 b20':'',item.username==sysUserName?'imbge':'']"
-                  v-for="(item,index) in last20"
-                  :key="index"
-                  @click="judge(item.rate)"
-                ></div>
-              </div>
-              <div class="leftDemo">
-                <span class="span40">30%</span>
-                <div
-                  :class="[item.rate==21?'indexbImg1 b21':item.rate==22?'indexbImg1 b22':item.rate==23?'indexbImg1 b23':item.rate==24?'indexbImg1 b24':item.rate==25?'indexbImg1 b25':item.rate==26?'indexbImg1 b26':item.rate==27?'indexbImg1 b27':item.rate==28?'indexbImg1 b28':item.rate==29?'indexbImg1 b29':item.rate==30?'indexbImg1 b30':item.rate==31?'indexbImg b31':item.rate==32?'indexbImg b32':item.rate==33?'indexbImg b33':item.rate==34?'indexbImg b34':item.rate==35?'indexbImg b35':item.rate==36?'indexbImg b36':item.rate==37?'indexbImg b37':item.rate==38?'indexbImg b38':item.rate==39?'indexbImg b39':item.rate==40?'indexbImg b40':'',item.username==sysUserName?'imbge':'']"
-                  v-for="(item,index) in last40"
-                  :key="index"
-                  @click="judge(item.rate)"
-                ></div>
-              </div>
-              <div class="rightDemo">
-                <span class="span60">50%</span>
-                <div
-                  :class="[item.rate==41?'indexbImg b41':item.rate==42?'indexbImg b42':item.rate==43?'indexbImg b43':item.rate==44?'indexbImg b44':item.rate==45?'indexbImg b45':item.rate==46?'indexbImg b46':item.rate==47?'indexbImg b47':item.rate==48?'indexbImg b48':item.rate==49?'indexbImg b49':item.rate==50?'indexbImg b50':item.rate==51?'indexbImg1 b51':item.rate==52?'indexbImg1 b52':item.rate==53?'indexbImg1 b53':item.rate==54?'indexbImg1 b54':item.rate==55?'indexbImg1 b55':item.rate==56?'indexbImg1 b56':item.rate==57?'indexbImg1 b57':item.rate==58?'indexbImg1 b58':item.rate==59?'indexbImg1 b59':item.rate==60?'indexbImg1 b60':'',item.username==sysUserName?'imbge':'']"
-                  v-for="(item,index) in last60"
-                  :key="index"
-                  @click="judge(item.rate)"
-                ></div>
-              </div>
-              <div class="leftDemo">
-                <span class="span80">70%</span>
-                <div
-                  :class="[item.rate==61?'indexbImg1 b61':item.rate==62?'indexbImg1 b62':item.rate==63?'indexbImg1 b63':item.rate==64?'indexbImg1 b64':item.rate==65?'indexbImg1 b65':item.rate==66?'indexbImg1 b66':item.rate==67?'indexbImg1 b67':item.rate==68?'indexbImg1 b68':item.rate==69?'indexbImg1 b69':item.rate==70?'indexbImg1 b70':item.rate==71?'indexbImg b71':item.rate==72?'indexbImg b72':item.rate==73?'indexbImg b73':item.rate==74?'indexbImg b74':item.rate==75?'indexbImg b75':item.rate==76?'indexbImg b76':item.rate==77?'indexbImg b77':item.rate==78?'indexbImg b78':item.rate==79?'indexbImg b79':item.rate==80?'indexbImg b80':'',item.username==sysUserName?'imbge':'']"
-                  v-for="(item,index) in last80"
-                  :key="index"
-                  @click="judge(item.rate)"
-                ></div>
-              </div>
-              <div class="rightDemo">
-                <span class="span100">100%</span>
-                <div
-                  :class="[item.rate==81?'indexbImg b81':item.rate==82?'indexbImg b82':item.rate==83?'indexbImg b83':item.rate==84?'indexbImg b84':item.rate==85?'indexbImg b85':item.rate==86?'indexbImg b86':item.rate==87?'indexbImg b87':item.rate==88?'indexbImg b88':item.rate==89?'indexbImg b89':item.rate==90?'indexbImg b90':item.rate==91?'indexbImg1 b91':item.rate==92?'indexbImg1 b92':item.rate==93?'indexbImg1 b93':item.rate==94?'indexbImg1 b94':item.rate==95?'indexbImg1 b95':item.rate==96?'indexbImg1 b96':item.rate==97?'indexbImg1 b97':item.rate==98?'indexbImg1 b98':item.rate==99?'indexbImg1 b99':item.rate==100?'indexbImg1 b100':'',item.username==sysUserName?'imbge':'']"
-                  v-for="(item,index) in last100"
-                  :key="index"
-                  @click="judge(item.rate)"
-                ></div>
-              </div>
-              <div class="leftDemo">
-                <div class="jblist">
-                  <div class="jb01 jbg">
-                    <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
-                  </div>
-                  <div class="jb02 jbg">
-                    <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
-                  </div>
-                  <div class="jb03 jbg">
-                    <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
-                  </div>
-                  <div class="jb04 jbg">
-                    <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
-                  </div>
-                  <div class="jb05 jbg">
-                    <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
-                  </div>
-                  <div class="jb06 jbg">
-                    <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
-                  </div>
-                  <div class="jb07 jbg">
-                    <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
-                  </div>
-                  <div class="jb08 jbg">
-                    <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
-                  </div>
-                  <div class="jb09 jbg">
-                    <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
-                  </div>
-                  <div class="jb10 jbg">
-                    <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
-                  </div>
-                  <div class="jb11 jbg">
-                    <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
-                  </div>
-                  <div class="jb12 jbg">
-                    <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
-                  </div>
-                  <div class="jb13 jbg">
-                    <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
-                  </div>
-                  <div class="jb14 jbg">
-                    <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
-                  </div>
-                  <div class="jb15 jbg">
-                    <img src="../assets/jb.png" style="width: 50px;height: 50px;" />
+            <div class="tabs-container tab-index-pan tswj" v-show="showTitle.wj">
+              <div class="bigDemo">
+                <div class="rightDemo">
+                  <span class="span20">10%</span>
+                  <div
+                    :class="[item.rate==0?'indexbImg b0':item.rate==1?'indexbImg b1':item.rate==2?'indexbImg b2':item.rate==3?'indexbImg b3':item.rate==4?'indexbImg b4':item.rate==5?'indexbImg b5':item.rate==6?'indexbImg b6':item.rate==7?'indexbImg b7':item.rate==8?'indexbImg b8':item.rate==9?'indexbImg b9':item.rate==10?'indexbImg b10':item.rate==11?'indexbImg1 b11':item.rate==12?'indexbImg1 b12':item.rate==13?'indexbImg1 b13':item.rate==14?'indexbImg1 b14':item.rate==15?'indexbImg1 b15':item.rate==16?'indexbImg1 b16':item.rate==17?'indexbImg1 b17':item.rate==18?'indexbImg1 b18':item.rate==19?'indexbImg1 b19':item.rate==20?'indexbImg1 b20':'',item.username==sysUserName?'imbge':'']"
+                    v-for="(item,index) in last20"
+                    :key="index"
+                    @click="judge(item.rate)"
+                  ></div>
+                </div>
+                <div class="leftDemo">
+                  <span class="span40">30%</span>
+                  <div
+                    :class="[item.rate==21?'indexbImg1 b21':item.rate==22?'indexbImg1 b22':item.rate==23?'indexbImg1 b23':item.rate==24?'indexbImg1 b24':item.rate==25?'indexbImg1 b25':item.rate==26?'indexbImg1 b26':item.rate==27?'indexbImg1 b27':item.rate==28?'indexbImg1 b28':item.rate==29?'indexbImg1 b29':item.rate==30?'indexbImg1 b30':item.rate==31?'indexbImg b31':item.rate==32?'indexbImg b32':item.rate==33?'indexbImg b33':item.rate==34?'indexbImg b34':item.rate==35?'indexbImg b35':item.rate==36?'indexbImg b36':item.rate==37?'indexbImg b37':item.rate==38?'indexbImg b38':item.rate==39?'indexbImg b39':item.rate==40?'indexbImg b40':'',item.username==sysUserName?'imbge':'']"
+                    v-for="(item,index) in last40"
+                    :key="index"
+                    @click="judge(item.rate)"
+                  ></div>
+                </div>
+                <div class="rightDemo">
+                  <span class="span60">50%</span>
+                  <div
+                    :class="[item.rate==41?'indexbImg b41':item.rate==42?'indexbImg b42':item.rate==43?'indexbImg b43':item.rate==44?'indexbImg b44':item.rate==45?'indexbImg b45':item.rate==46?'indexbImg b46':item.rate==47?'indexbImg b47':item.rate==48?'indexbImg b48':item.rate==49?'indexbImg b49':item.rate==50?'indexbImg b50':item.rate==51?'indexbImg1 b51':item.rate==52?'indexbImg1 b52':item.rate==53?'indexbImg1 b53':item.rate==54?'indexbImg1 b54':item.rate==55?'indexbImg1 b55':item.rate==56?'indexbImg1 b56':item.rate==57?'indexbImg1 b57':item.rate==58?'indexbImg1 b58':item.rate==59?'indexbImg1 b59':item.rate==60?'indexbImg1 b60':'',item.username==sysUserName?'imbge':'']"
+                    v-for="(item,index) in last60"
+                    :key="index"
+                    @click="judge(item.rate)"
+                  ></div>
+                </div>
+                <div class="leftDemo">
+                  <span class="span80">70%</span>
+                  <div
+                    :class="[item.rate==61?'indexbImg1 b61':item.rate==62?'indexbImg1 b62':item.rate==63?'indexbImg1 b63':item.rate==64?'indexbImg1 b64':item.rate==65?'indexbImg1 b65':item.rate==66?'indexbImg1 b66':item.rate==67?'indexbImg1 b67':item.rate==68?'indexbImg1 b68':item.rate==69?'indexbImg1 b69':item.rate==70?'indexbImg1 b70':item.rate==71?'indexbImg b71':item.rate==72?'indexbImg b72':item.rate==73?'indexbImg b73':item.rate==74?'indexbImg b74':item.rate==75?'indexbImg b75':item.rate==76?'indexbImg b76':item.rate==77?'indexbImg b77':item.rate==78?'indexbImg b78':item.rate==79?'indexbImg b79':item.rate==80?'indexbImg b80':'',item.username==sysUserName?'imbge':'']"
+                    v-for="(item,index) in last80"
+                    :key="index"
+                    @click="judge(item.rate)"
+                  ></div>
+                </div>
+                <div class="rightDemo">
+                  <span class="span100">100%</span>
+                  <div
+                    :class="[item.rate==81?'indexbImg b81':item.rate==82?'indexbImg b82':item.rate==83?'indexbImg b83':item.rate==84?'indexbImg b84':item.rate==85?'indexbImg b85':item.rate==86?'indexbImg b86':item.rate==87?'indexbImg b87':item.rate==88?'indexbImg b88':item.rate==89?'indexbImg b89':item.rate==90?'indexbImg b90':item.rate==91?'indexbImg1 b91':item.rate==92?'indexbImg1 b92':item.rate==93?'indexbImg1 b93':item.rate==94?'indexbImg1 b94':item.rate==95?'indexbImg1 b95':item.rate==96?'indexbImg1 b96':item.rate==97?'indexbImg1 b97':item.rate==98?'indexbImg1 b98':item.rate==99?'indexbImg1 b99':item.rate==100?'indexbImg1 b100':'',item.username==sysUserName?'imbge':'']"
+                    v-for="(item,index) in last100"
+                    :key="index"
+                    @click="judge(item.rate)"
+                  ></div>
+                </div>
+                <div class="leftDemo">
+                  <div class="jblist">
+                    <div class="jb01 jbg">
+                      <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                    </div>
+                    <div class="jb02 jbg">
+                      <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                    </div>
+                    <div class="jb03 jbg">
+                      <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                    </div>
+                    <div class="jb04 jbg">
+                      <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                    </div>
+                    <div class="jb05 jbg">
+                      <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                    </div>
+                    <div class="jb06 jbg">
+                      <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                    </div>
+                    <div class="jb07 jbg">
+                      <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                    </div>
+                    <div class="jb08 jbg">
+                      <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                    </div>
+                    <div class="jb09 jbg">
+                      <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                    </div>
+                    <div class="jb10 jbg">
+                      <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                    </div>
+                    <div class="jb11 jbg">
+                      <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                    </div>
+                    <div class="jb12 jbg">
+                      <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                    </div>
+                    <div class="jb13 jbg">
+                      <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                    </div>
+                    <div class="jb14 jbg">
+                      <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                    </div>
+                    <div class="jb15 jbg">
+                      <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                    </div>
                   </div>
                 </div>
+                <span class="start"></span>
+                <span class="end">
+                  <img src="../assets/qizi.png" style="width: 50px;height: 50px;" />
+                </span>
               </div>
-              <span class="start"></span>
-              <span class="end">
-                <img src="../assets/qizi.png" style="width: 50px;height: 50px;" />
-              </span>
             </div>
-          </div>
-          <div class="tabs-container tab-index-pan" v-show="showTitle.pming">
-            <el-tabs
-              v-model="activeTabName"
+            <div class="tabs-container tab-index-pan" v-show="showTitle.wcd">
+              <el-tabs
+                v-model="activeTabwcd"
+                style="width:100%;padding-left:14px;"
+                @tab-click="handclickwcd"
+              >
+                <el-tab-pane
+                  v-for="(item, index) in titleMenuwcd"
+                  :label="item"
+                  :name="item"
+                  :key="index"
+                ></el-tab-pane>
+              </el-tabs>
+              <div v-show="tabwcd.xs">
+                <el-table
+                  :data="zzEbay"
+                  size="small"
+                  height="798"
+                  ref="table1"
+                  v-scrollBar:slim
+                  @sort-change="sortNumberZZ"
+                >
+                  <el-table-column type="index" align="center"></el-table-column>
+                  <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
+                  <el-table-column prop="plat" align="center" label="平台" sortable></el-table-column>
+                  <el-table-column prop="target" align="center" label="目标" sortable="custom"></el-table-column>
+                  <el-table-column prop="amt" align="center" label="毛利" sortable="custom"></el-table-column>
+                  <el-table-column prop="rate" align="center" label="目标进度" sortable="custom">
+                    <template slot-scope="scope">
+                      <el-progress
+                        :text-inside="true"
+                        :stroke-width="18"
+                        :status="checkStatus(scope.row,'rate')"
+                        :percentage="Math.round(scope.row.rate*10000)/100"
+                      ></el-progress>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="dateRate" align="center" label="时间进度">
+                    <template slot-scope="scope">
+                      <el-progress
+                        :text-inside="true"
+                        :stroke-width="18"
+                        status="exception"
+                        :percentage="Math.round(scope.row.dateRate*10000)/100"
+                      ></el-progress>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="updateTime" align="center" label="统计截止日期">
+                    <template slot-scope="scope">
+                      <i class="el-icon-time"></i>
+                      <span>{{dateFormatter(scope.row.updateTime)}}</span>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
+              <div v-show="tabwcd.kf">
+                <el-table
+                  :data="zzJoom"
+                  size="small"
+                  height="798"
+                  ref="table1"
+                  v-scrollBar:slim
+                  @sort-change="sortNumberjoom"
+                >
+                  <el-table-column type="index" align="center"></el-table-column>
+                  <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
+                  <el-table-column prop="plat" align="center" label="平台" sortable></el-table-column>
+                  <el-table-column prop="target" align="center" label="目标" sortable="custom"></el-table-column>
+                  <el-table-column prop="amt" align="center" label="毛利" sortable="custom"></el-table-column>
+                  <el-table-column prop="rate" align="center" label="目标进度" sortable="custom">
+                    <template slot-scope="scope">
+                      <el-progress
+                        :text-inside="true"
+                        :stroke-width="18"
+                        :status="checkStatus(scope.row,'rate')"
+                        :percentage="Math.round(scope.row.rate*10000)/100"
+                      ></el-progress>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="dateRate" align="center" label="时间进度">
+                    <template slot-scope="scope">
+                      <el-progress
+                        :text-inside="true"
+                        :stroke-width="18"
+                        status="exception"
+                        :percentage="Math.round(scope.row.dateRate*10000)/100"
+                      ></el-progress>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="updateTime" align="center" label="统计截止日期">
+                    <template slot-scope="scope">
+                      <i class="el-icon-time"></i>
+                      <span>{{dateFormatter(scope.row.updateTime)}}</span>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
+            </div>
+            <div class="tabs-container tab-index-pan" v-show="showTitle.pming">
+              <el-tabs
+                v-model="activeTabName"
+                style="width:100%;padding-left:14px;"
+                @tab-click="handclickPm"
+              >
+                <el-tab-pane
+                  v-for="(item, index) in titleMenuTab"
+                  :label="item"
+                  :name="item"
+                  :key="index"
+                ></el-tab-pane>
+              </el-tabs>
+              <div v-show="pmShow.pmYW">
+                <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" height="800">
+                  <el-table-column
+                    prop="order"
+                    label="排名"
+                    sortable="custom"
+                    align="center"
+                    width="75"
+                  >
+                    <template slot-scope="scope">
+                      <img
+                        src="../assets/j1.png"
+                        style="width: 31px;height: 38px;"
+                        v-if="scope.row.order==1"
+                      />
+                      <img
+                        src="../assets/j2.png"
+                        style="width: 31px;height: 38px;"
+                        v-if="scope.row.order==2"
+                      />
+                      <img
+                        src="../assets/j3.png"
+                        style="width: 31px;height: 38px;"
+                        v-if="scope.row.order==3"
+                      />
+                      <span v-if="scope.row.order>3">{{scope.row.order}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="username" label="销售员" align="center" width="100"></el-table-column>
+                  <el-table-column prop="img" label="头像" align="center" width="100">
+                    <template slot-scope="scope">
+                      <div
+                        class="poImg"
+                        :class="[scope.row.order==1?'poImg1':scope.row.order==2?'poImg2':scope.row.order==3?'poImg3':'']"
+                      >
+                        <img
+                          :src="scope.row.img"
+                          style="width: 60px;height: 60px;border-radius:50%;"
+                          v-if="scope.row.img!=null"
+                        />
+                        <img
+                          src="../assets/header.png"
+                          style="width: 60px;height: 60px;border-radius:50%;"
+                          v-if="scope.row.img==null"
+                        />
+                      </div>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="depart" label="部门" align="center" width="100"></el-table-column>
+                  <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
+                  <el-table-column
+                    prop="lastProfit"
+                    label="上月毛利"
+                    sortable="custom"
+                    align="center"
+                    width="100"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="lastAve"
+                    label="上月本平台平均毛利"
+                    sortable="custom"
+                    align="center"
+                    width="170"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="lastDiff"
+                    label="上月毛利差额"
+                    sortable="custom"
+                    align="center"
+                    width="130"
+                  >
+                    <template slot-scope="scope">
+                      <span :class="scope.row.lastDiff<0?'colorRed':''">{{scope.row.lastDiff}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    prop="thisProfit"
+                    label="本月毛利"
+                    sortable="custom"
+                    align="center"
+                    width="100"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="thisAve"
+                    label="本月本平台平均毛利"
+                    sortable="custom"
+                    align="center"
+                    width="170"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="thisDiff"
+                    label="本月毛利差额"
+                    sortable="custom"
+                    align="center"
+                    width="130"
+                  >
+                    <template slot-scope="scope">
+                      <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    prop="hireDate"
+                    label="入职时长(月)"
+                    sortable="custom"
+                    align="center"
+                    width="120"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="createDate"
+                    label="统计时间"
+                    sortable="custom"
+                    align="center"
+                    width="120"
+                  >
+                    <template slot-scope="scope">
+                      <i class="el-icon-time"></i>
+                      <span>{{dateFormatter(scope.row.createDate)}}</span>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
+              <div v-show="pmShow.pmHW">
+                <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" height="800">
+                  <el-table-column
+                    prop="order"
+                    label="排名"
+                    sortable="custom"
+                    align="center"
+                    width="75"
+                  >
+                    <template slot-scope="scope">
+                      <img
+                        src="../assets/j1.png"
+                        style="width: 31px;height: 38px;"
+                        v-if="scope.row.order==1"
+                      />
+                      <img
+                        src="../assets/j2.png"
+                        style="width: 31px;height: 38px;"
+                        v-if="scope.row.order==2"
+                      />
+                      <img
+                        src="../assets/j3.png"
+                        style="width: 31px;height: 38px;"
+                        v-if="scope.row.order==3"
+                      />
+                      <span v-if="scope.row.order>3">{{scope.row.order}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="username" label="销售员" align="center" width="100"></el-table-column>
+                  <el-table-column prop="img" label="头像" align="center" width="100">
+                    <template slot-scope="scope">
+                      <div
+                        class="poImg"
+                        :class="[scope.row.order==1?'poImg1':scope.row.order==2?'poImg2':scope.row.order==3?'poImg3':'']"
+                      >
+                        <img
+                          :src="scope.row.img"
+                          style="width: 60px;height: 60px;border-radius:50%;"
+                          v-if="scope.row.img!=null"
+                        />
+                        <img
+                          src="../assets/header.png"
+                          style="width: 60px;height: 60px;border-radius:50%;"
+                          v-if="scope.row.img==null"
+                        />
+                      </div>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="depart" label="部门" align="center" width="100"></el-table-column>
+                  <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
+                  <el-table-column
+                    prop="lastProfit"
+                    label="上月毛利"
+                    sortable="custom"
+                    align="center"
+                    width="100"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="lastAve"
+                    label="上月本平台平均毛利"
+                    sortable="custom"
+                    align="center"
+                    width="170"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="lastDiff"
+                    label="上月毛利差额"
+                    sortable="custom"
+                    align="center"
+                    width="130"
+                  >
+                    <template slot-scope="scope">
+                      <span :class="scope.row.lastDiff<0?'colorRed':''">{{scope.row.lastDiff}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    prop="thisProfit"
+                    label="本月毛利"
+                    sortable="custom"
+                    align="center"
+                    width="100"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="thisAve"
+                    label="本月本平台平均毛利"
+                    sortable="custom"
+                    align="center"
+                    width="170"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="thisDiff"
+                    label="本月毛利差额"
+                    sortable="custom"
+                    align="center"
+                    width="130"
+                  >
+                    <template slot-scope="scope">
+                      <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    prop="hireDate"
+                    label="入职时长(月)"
+                    sortable="custom"
+                    align="center"
+                    width="120"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="createDate"
+                    label="统计时间"
+                    sortable="custom"
+                    align="center"
+                    width="120"
+                  >
+                    <template slot-scope="scope">
+                      <i class="el-icon-time"></i>
+                      <span>{{dateFormatter(scope.row.createDate)}}</span>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
+              <div v-show="pmShow.pmWISH">
+                <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" height="800">
+                  <el-table-column
+                    prop="order"
+                    label="排名"
+                    sortable="custom"
+                    align="center"
+                    width="75"
+                  >
+                    <template slot-scope="scope">
+                      <img
+                        src="../assets/j1.png"
+                        style="width: 31px;height: 38px;"
+                        v-if="scope.row.order==1"
+                      />
+                      <img
+                        src="../assets/j2.png"
+                        style="width: 31px;height: 38px;"
+                        v-if="scope.row.order==2"
+                      />
+                      <img
+                        src="../assets/j3.png"
+                        style="width: 31px;height: 38px;"
+                        v-if="scope.row.order==3"
+                      />
+                      <span v-if="scope.row.order>3">{{scope.row.order}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="username" label="销售员" align="center" width="100"></el-table-column>
+                  <el-table-column prop="img" label="头像" align="center" width="100">
+                    <template slot-scope="scope">
+                      <div
+                        class="poImg"
+                        :class="[scope.row.order==1?'poImg1':scope.row.order==2?'poImg2':scope.row.order==3?'poImg3':'']"
+                      >
+                        <img
+                          :src="scope.row.img"
+                          style="width: 60px;height: 60px;border-radius:50%;"
+                          v-if="scope.row.img!=null"
+                        />
+                        <img
+                          src="../assets/header.png"
+                          style="width: 60px;height: 60px;border-radius:50%;"
+                          v-if="scope.row.img==null"
+                        />
+                      </div>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="depart" label="部门" align="center" width="100"></el-table-column>
+                  <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
+                  <el-table-column
+                    prop="lastProfit"
+                    label="上月毛利"
+                    sortable="custom"
+                    align="center"
+                    width="100"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="lastAve"
+                    label="上月本平台平均毛利"
+                    sortable="custom"
+                    align="center"
+                    width="170"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="lastDiff"
+                    label="上月毛利差额"
+                    sortable="custom"
+                    align="center"
+                    width="130"
+                  >
+                    <template slot-scope="scope">
+                      <span :class="scope.row.lastDiff<0?'colorRed':''">{{scope.row.lastDiff}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    prop="thisProfit"
+                    label="本月毛利"
+                    sortable="custom"
+                    align="center"
+                    width="100"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="thisAve"
+                    label="本月本平台平均毛利"
+                    sortable="custom"
+                    align="center"
+                    width="170"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="thisDiff"
+                    label="本月毛利差额"
+                    sortable="custom"
+                    align="center"
+                    width="130"
+                  >
+                    <template slot-scope="scope">
+                      <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    prop="hireDate"
+                    label="入职时长(月)"
+                    sortable="custom"
+                    align="center"
+                    width="120"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="createDate"
+                    label="统计时间"
+                    sortable="custom"
+                    align="center"
+                    width="120"
+                  >
+                    <template slot-scope="scope">
+                      <i class="el-icon-time"></i>
+                      <span>{{dateFormatter(scope.row.createDate)}}</span>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
+              <div v-show="pmShow.pmSMT">
+                <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" height="800">
+                  <el-table-column
+                    prop="order"
+                    label="排名"
+                    sortable="custom"
+                    align="center"
+                    width="75"
+                  >
+                    <template slot-scope="scope">
+                      <img
+                        src="../assets/j1.png"
+                        style="width: 31px;height: 38px;"
+                        v-if="scope.row.order==1"
+                      />
+                      <img
+                        src="../assets/j2.png"
+                        style="width: 31px;height: 38px;"
+                        v-if="scope.row.order==2"
+                      />
+                      <img
+                        src="../assets/j3.png"
+                        style="width: 31px;height: 38px;"
+                        v-if="scope.row.order==3"
+                      />
+                      <span v-if="scope.row.order>3">{{scope.row.order}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="username" label="销售员" align="center" width="100"></el-table-column>
+                  <el-table-column prop="img" label="头像" align="center" width="100">
+                    <template slot-scope="scope">
+                      <div
+                        class="poImg"
+                        :class="[scope.row.order==1?'poImg1':scope.row.order==2?'poImg2':scope.row.order==3?'poImg3':'']"
+                      >
+                        <img
+                          :src="scope.row.img"
+                          style="width: 60px;height: 60px;border-radius:50%;"
+                          v-if="scope.row.img!=null"
+                        />
+                        <img
+                          src="../assets/header.png"
+                          style="width: 60px;height: 60px;border-radius:50%;"
+                          v-if="scope.row.img==null"
+                        />
+                      </div>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="depart" label="部门" align="center" width="100"></el-table-column>
+                  <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
+                  <el-table-column
+                    prop="lastProfit"
+                    label="上月毛利"
+                    sortable="custom"
+                    align="center"
+                    width="100"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="lastAve"
+                    label="上月本平台平均毛利"
+                    sortable="custom"
+                    align="center"
+                    width="170"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="lastDiff"
+                    label="上月毛利差额"
+                    sortable="custom"
+                    align="center"
+                    width="130"
+                  >
+                    <template slot-scope="scope">
+                      <span :class="scope.row.lastDiff<0?'colorRed':''">{{scope.row.lastDiff}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    prop="thisProfit"
+                    label="本月毛利"
+                    sortable="custom"
+                    align="center"
+                    width="100"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="thisAve"
+                    label="本月本平台平均毛利"
+                    sortable="custom"
+                    align="center"
+                    width="170"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="thisDiff"
+                    label="本月毛利差额"
+                    sortable="custom"
+                    align="center"
+                    width="130"
+                  >
+                    <template slot-scope="scope">
+                      <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    prop="hireDate"
+                    label="入职时长(月)"
+                    sortable="custom"
+                    align="center"
+                    width="120"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="createDate"
+                    label="统计时间"
+                    sortable="custom"
+                    align="center"
+                    width="120"
+                  >
+                    <template slot-scope="scope">
+                      <i class="el-icon-time"></i>
+                      <span>{{dateFormatter(scope.row.createDate)}}</span>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
+              <div v-show="pmShow.pmAMA">
+                <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" height="800">
+                  <el-table-column
+                    prop="order"
+                    label="排名"
+                    sortable="custom"
+                    align="center"
+                    width="75"
+                  >
+                    <template slot-scope="scope">
+                      <img
+                        src="../assets/j1.png"
+                        style="width: 31px;height: 38px;"
+                        v-if="scope.row.order==1"
+                      />
+                      <img
+                        src="../assets/j2.png"
+                        style="width: 31px;height: 38px;"
+                        v-if="scope.row.order==2"
+                      />
+                      <img
+                        src="../assets/j3.png"
+                        style="width: 31px;height: 38px;"
+                        v-if="scope.row.order==3"
+                      />
+                      <span v-if="scope.row.order>3">{{scope.row.order}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="username" label="销售员" align="center" width="100"></el-table-column>
+                  <el-table-column prop="img" label="头像" align="center" width="100">
+                    <template slot-scope="scope">
+                      <div
+                        class="poImg"
+                        :class="[scope.row.order==1?'poImg1':scope.row.order==2?'poImg2':scope.row.order==3?'poImg3':'']"
+                      >
+                        <img
+                          :src="scope.row.img"
+                          style="width: 60px;height: 60px;border-radius:50%;"
+                          v-if="scope.row.img!=null"
+                        />
+                        <img
+                          src="../assets/header.png"
+                          style="width: 60px;height: 60px;border-radius:50%;"
+                          v-if="scope.row.img==null"
+                        />
+                      </div>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="depart" label="部门" align="center" width="100"></el-table-column>
+                  <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
+                  <el-table-column
+                    prop="lastProfit"
+                    label="上月毛利"
+                    sortable="custom"
+                    align="center"
+                    width="100"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="lastAve"
+                    label="上月本平台平均毛利"
+                    sortable="custom"
+                    align="center"
+                    width="170"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="lastDiff"
+                    label="上月毛利差额"
+                    sortable="custom"
+                    align="center"
+                    width="130"
+                  >
+                    <template slot-scope="scope">
+                      <span :class="scope.row.lastDiff<0?'colorRed':''">{{scope.row.lastDiff}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    prop="thisProfit"
+                    label="本月毛利"
+                    sortable="custom"
+                    align="center"
+                    width="100"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="thisAve"
+                    label="本月本平台平均毛利"
+                    sortable="custom"
+                    align="center"
+                    width="170"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="thisDiff"
+                    label="本月毛利差额"
+                    sortable="custom"
+                    align="center"
+                    width="130"
+                  >
+                    <template slot-scope="scope">
+                      <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    prop="hireDate"
+                    label="入职时长(月)"
+                    sortable="custom"
+                    align="center"
+                    width="120"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="createDate"
+                    label="统计时间"
+                    sortable="custom"
+                    align="center"
+                    width="120"
+                  >
+                    <template slot-scope="scope">
+                      <i class="el-icon-time"></i>
+                      <span>{{dateFormatter(scope.row.createDate)}}</span>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
+              <div v-show="pmShow.pmJOOM">
+                <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" height="800">
+                  <el-table-column
+                    prop="order"
+                    label="排名"
+                    sortable="custom"
+                    align="center"
+                    width="75"
+                  >
+                    <template slot-scope="scope">
+                      <img
+                        src="../assets/j1.png"
+                        style="width: 31px;height: 38px;"
+                        v-if="scope.row.order==1"
+                      />
+                      <img
+                        src="../assets/j2.png"
+                        style="width: 31px;height: 38px;"
+                        v-if="scope.row.order==2"
+                      />
+                      <img
+                        src="../assets/j3.png"
+                        style="width: 31px;height: 38px;"
+                        v-if="scope.row.order==3"
+                      />
+                      <span v-if="scope.row.order>3">{{scope.row.order}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="username" label="销售员" align="center" width="100"></el-table-column>
+                  <el-table-column prop="img" label="头像" align="center" width="100">
+                    <template slot-scope="scope">
+                      <div
+                        class="poImg"
+                        :class="[scope.row.order==1?'poImg1':scope.row.order==2?'poImg2':scope.row.order==3?'poImg3':'']"
+                      >
+                        <img
+                          :src="scope.row.img"
+                          style="width: 60px;height: 60px;border-radius:50%;"
+                          v-if="scope.row.img!=null"
+                        />
+                        <img
+                          src="../assets/header.png"
+                          style="width: 60px;height: 60px;border-radius:50%;"
+                          v-if="scope.row.img==null"
+                        />
+                      </div>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="depart" label="部门" align="center" width="100"></el-table-column>
+                  <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
+                  <el-table-column
+                    prop="lastProfit"
+                    label="上月毛利"
+                    sortable="custom"
+                    align="center"
+                    width="100"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="lastAve"
+                    label="上月本平台平均毛利"
+                    sortable="custom"
+                    align="center"
+                    width="170"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="lastDiff"
+                    label="上月毛利差额"
+                    sortable="custom"
+                    align="center"
+                    width="130"
+                  >
+                    <template slot-scope="scope">
+                      <span :class="scope.row.lastDiff<0?'colorRed':''">{{scope.row.lastDiff}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    prop="thisProfit"
+                    label="本月毛利"
+                    sortable="custom"
+                    align="center"
+                    width="100"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="thisAve"
+                    label="本月本平台平均毛利"
+                    sortable="custom"
+                    align="center"
+                    width="170"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="thisDiff"
+                    label="本月毛利差额"
+                    sortable="custom"
+                    align="center"
+                    width="130"
+                  >
+                    <template slot-scope="scope">
+                      <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    prop="hireDate"
+                    label="入职时长(月)"
+                    sortable="custom"
+                    align="center"
+                    width="120"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="createDate"
+                    label="统计时间"
+                    sortable="custom"
+                    align="center"
+                    width="120"
+                  >
+                    <template slot-scope="scope">
+                      <i class="el-icon-time"></i>
+                      <span>{{dateFormatter(scope.row.createDate)}}</span>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
+            </div>
+            <div class="tabs-container tab-index-pan" v-show="showTitle.zz">
+              <el-tabs
+                v-model="activeTabzz"
+                style="width:100%;padding-left:14px;"
+                @tab-click="handclickzz"
+              >
+                <el-tab-pane
+                  v-for="(item, index) in titleMenuzz"
+                  :label="item.name"
+                  :name="item.name"
+                  :key="index"
+                ></el-tab-pane>
+              </el-tabs>
+              <div v-show="tabzz.ebay">
+                <el-table
+                  :data="zzEbay"
+                  size="small"
+                  height="798"
+                  ref="table1"
+                  v-scrollBar:slim
+                  @sort-change="sortNumberZZ"
+                >
+                  <el-table-column type="index" align="center"></el-table-column>
+                  <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
+                  <el-table-column prop="plat" align="center" label="平台" sortable></el-table-column>
+                  <el-table-column prop="target" align="center" label="目标" sortable="custom"></el-table-column>
+                  <el-table-column prop="amt" align="center" label="毛利" sortable="custom"></el-table-column>
+                  <el-table-column prop="rate" align="center" label="目标进度" sortable="custom">
+                    <template slot-scope="scope">
+                      <el-progress
+                        :text-inside="true"
+                        :stroke-width="18"
+                        :status="checkStatus(scope.row,'rate')"
+                        :percentage="Math.round(scope.row.rate*10000)/100"
+                      ></el-progress>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="dateRate" align="center" label="时间进度">
+                    <template slot-scope="scope">
+                      <el-progress
+                        :text-inside="true"
+                        :stroke-width="18"
+                        status="exception"
+                        :percentage="Math.round(scope.row.dateRate*10000)/100"
+                      ></el-progress>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="updateTime" align="center" label="统计截止日期">
+                    <template slot-scope="scope">
+                      <i class="el-icon-time"></i>
+                      <span>{{dateFormatter(scope.row.updateTime)}}</span>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
+              <div v-show="tabzz.joom">
+                <el-table
+                  :data="zzJoom"
+                  size="small"
+                  height="798"
+                  ref="table1"
+                  v-scrollBar:slim
+                  @sort-change="sortNumberjoom"
+                >
+                  <el-table-column type="index" align="center"></el-table-column>
+                  <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
+                  <el-table-column prop="plat" align="center" label="平台" sortable></el-table-column>
+                  <el-table-column prop="target" align="center" label="目标" sortable="custom"></el-table-column>
+                  <el-table-column prop="amt" align="center" label="毛利" sortable="custom"></el-table-column>
+                  <el-table-column prop="rate" align="center" label="目标进度" sortable="custom">
+                    <template slot-scope="scope">
+                      <el-progress
+                        :text-inside="true"
+                        :stroke-width="18"
+                        :status="checkStatus(scope.row,'rate')"
+                        :percentage="Math.round(scope.row.rate*10000)/100"
+                      ></el-progress>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="dateRate" align="center" label="时间进度">
+                    <template slot-scope="scope">
+                      <el-progress
+                        :text-inside="true"
+                        :stroke-width="18"
+                        status="exception"
+                        :percentage="Math.round(scope.row.dateRate*10000)/100"
+                      ></el-progress>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="updateTime" align="center" label="统计截止日期">
+                    <template slot-scope="scope">
+                      <i class="el-icon-time"></i>
+                      <span>{{dateFormatter(scope.row.updateTime)}}</span>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
+            </div>
+            <div class="tabs-container tab-index-pan" v-show="showTitle.baokuan">
+              <el-tabs
+                v-model="activeTabNamebk"
+                style="width:100%;padding-left:14px;"
+                @tab-click="handclickbk"
+              >
+                <el-tab-pane
+                  v-for="(item, index) in titleMenuTab"
+                  :label="item"
+                  :name="item"
+                  :key="index"
+                ></el-tab-pane>
+              </el-tabs>
+              <div v-show="indexbk.yw">
+                <el-table :data="proTable" size="small" @sort-change="sortNumber" height="800">
+                  <el-table-column type="index" align="center"></el-table-column>
+                  <el-table-column prop="platform" label="平台" sortable align="center"></el-table-column>
+                  <el-table-column prop="developer" label="开发员" sortable align="center"></el-table-column>
+                  <el-table-column prop="goodsCode" label="商品编码" sortable align="center">
+                    <template slot-scope="scope">
+                      <a :href="scope.row.linkUrl" target="_blank">{{scope.row.goodsCode}}</a>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
+                  <el-table-column prop="subCate" label="主类目" sortable align="center"></el-table-column>
+                  <el-table-column prop="cate" label="子类目" sortable align="center"></el-table-column>
+                  <el-table-column prop="img" label="图片" align="center">
+                    <template slot-scope="scope">
+                      <img :src="scope.row.img" style="width: 120px;height: 120px;" />
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="salesNum" label="月销量" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="profit" label="月毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="endTime" label="统计截止日期" sortable align="center">
+                    <template slot-scope="scope">
+                      <i class="el-icon-time"></i>
+                      <span>{{dateFormatter(scope.row.endTime)}}</span>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
+              <div v-show="indexbk.hw">
+                <el-table :data="proTable" size="small" @sort-change="sortNumber" height="800">
+                  <el-table-column type="index" align="center"></el-table-column>
+                  <el-table-column prop="platform" label="平台" sortable align="center"></el-table-column>
+                  <el-table-column prop="developer" label="开发员" sortable align="center"></el-table-column>
+                  <el-table-column prop="goodsCode" label="商品编码" sortable align="center">
+                    <template slot-scope="scope">
+                      <a :href="scope.row.linkUrl" target="_blank">{{scope.row.goodsCode}}</a>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
+                  <el-table-column prop="subCate" label="主类目" sortable align="center"></el-table-column>
+                  <el-table-column prop="cate" label="子类目" sortable align="center"></el-table-column>
+                  <el-table-column prop="img" label="图片" sortable align="center">
+                    <template slot-scope="scope">
+                      <img :src="scope.row.img" style="width: 120px;height: 120px;" />
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="salesNum" label="月销量" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="profit" label="月毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="endTime" label="统计截止日期" sortable align="center">
+                    <template slot-scope="scope">
+                      <i class="el-icon-time"></i>
+                      <span>{{dateFormatter(scope.row.endTime)}}</span>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
+              <div v-show="indexbk.wish">
+                <el-table :data="proTable" size="small" @sort-change="sortNumber" height="800">
+                  <el-table-column type="index" align="center"></el-table-column>
+                  <el-table-column prop="platform" label="平台" sortable align="center"></el-table-column>
+                  <el-table-column prop="developer" label="开发员" sortable align="center"></el-table-column>
+                  <el-table-column prop="goodsCode" label="商品编码" sortable align="center">
+                    <template slot-scope="scope">
+                      <a :href="scope.row.linkUrl" target="_blank">{{scope.row.goodsCode}}</a>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
+                  <el-table-column prop="subCate" label="主类目" sortable align="center"></el-table-column>
+                  <el-table-column prop="cate" label="子类目" sortable align="center"></el-table-column>
+                  <el-table-column prop="img" label="图片" sortable align="center">
+                    <template slot-scope="scope">
+                      <img :src="scope.row.img" style="width: 120px;height: 120px;" />
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="salesNum" label="月销量" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="profit" label="月毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="endTime" label="统计截止日期" sortable align="center">
+                    <template slot-scope="scope">
+                      <i class="el-icon-time"></i>
+                      <span>{{dateFormatter(scope.row.endTime)}}</span>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
+              <div v-show="indexbk.smt">
+                <el-table :data="proTable" size="small" @sort-change="sortNumber" height="800">
+                  <el-table-column type="index" align="center"></el-table-column>
+                  <el-table-column prop="platform" label="平台" sortable align="center"></el-table-column>
+                  <el-table-column prop="developer" label="开发员" sortable align="center"></el-table-column>
+                  <el-table-column prop="goodsCode" label="商品编码" sortable align="center">
+                    <template slot-scope="scope">
+                      <a :href="scope.row.linkUrl" target="_blank">{{scope.row.goodsCode}}</a>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
+                  <el-table-column prop="subCate" label="主类目" sortable align="center"></el-table-column>
+                  <el-table-column prop="cate" label="子类目" sortable align="center"></el-table-column>
+                  <el-table-column prop="img" label="图片" sortable align="center">
+                    <template slot-scope="scope">
+                      <img :src="scope.row.img" style="width: 120px;height: 120px;" />
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="salesNum" label="月销量" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="profit" label="月毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="endTime" label="统计截止日期" sortable align="center">
+                    <template slot-scope="scope">
+                      <i class="el-icon-time"></i>
+                      <span>{{dateFormatter(scope.row.endTime)}}</span>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
+              <div v-show="indexbk.ama">
+                <el-table :data="proTable" size="small" @sort-change="sortNumber" height="800">
+                  <el-table-column type="index" align="center"></el-table-column>
+                  <el-table-column prop="platform" label="平台" sortable align="center"></el-table-column>
+                  <el-table-column prop="developer" label="开发员" sortable align="center"></el-table-column>
+                  <el-table-column prop="goodsCode" label="商品编码" sortable align="center">
+                    <template slot-scope="scope">
+                      <a :href="scope.row.linkUrl" target="_blank">{{scope.row.goodsCode}}</a>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
+                  <el-table-column prop="subCate" label="主类目" sortable align="center"></el-table-column>
+                  <el-table-column prop="cate" label="子类目" sortable align="center"></el-table-column>
+                  <el-table-column prop="img" label="图片" sortable align="center">
+                    <template slot-scope="scope">
+                      <img :src="scope.row.img" style="width: 120px;height: 120px;" />
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="salesNum" label="月销量" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="profit" label="月毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="endTime" label="统计截止日期" sortable align="center">
+                    <template slot-scope="scope">
+                      <i class="el-icon-time"></i>
+                      <span>{{dateFormatter(scope.row.endTime)}}</span>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
+              <div v-show="indexbk.joom">
+                <el-table :data="proTable" size="small" @sort-change="sortNumber" height="800">
+                  <el-table-column type="index" align="center"></el-table-column>
+                  <el-table-column prop="platform" label="平台" sortable align="center"></el-table-column>
+                  <el-table-column prop="developer" label="开发员" sortable align="center"></el-table-column>
+                  <el-table-column prop="goodsCode" label="商品编码" sortable align="center">
+                    <template slot-scope="scope">
+                      <a :href="scope.row.linkUrl" target="_blank">{{scope.row.goodsCode}}</a>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
+                  <el-table-column prop="subCate" label="主类目" sortable align="center"></el-table-column>
+                  <el-table-column prop="cate" label="子类目" sortable align="center"></el-table-column>
+                  <el-table-column prop="img" label="图片" sortable align="center">
+                    <template slot-scope="scope">
+                      <img :src="scope.row.img" style="width: 120px;height: 120px;" />
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="salesNum" label="月销量" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="profit" label="月毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="endTime" label="统计截止日期" sortable align="center">
+                    <template slot-scope="scope">
+                      <i class="el-icon-time"></i>
+                      <span>{{dateFormatter(scope.row.endTime)}}</span>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
+            </div>
+            <div class="tabs-container tab-index-pan" v-show="showTitle.zengzhang">
+              <el-tabs
+                v-model="activeName"
+                @tab-click="handleClick"
+                style="width:100%;padding-left:14px;"
+              >
+                <el-tab-pane
+                  v-for="(item, index) in allMenu"
+                  :label="item.name"
+                  :name="item.name"
+                  :key="index"
+                ></el-tab-pane>
+              </el-tabs>
+            </div>
+            <div
+              class="tabs-container tab-index-pan"
+              v-show="showTitle.sale"
               style="width:100%;padding-left:14px;"
-              @tab-click="handclickPm"
             >
-              <el-tab-pane
-                v-for="(item, index) in titleMenuTab"
-                :label="item"
-                :name="item"
-                :key="index"
-              ></el-tab-pane>
-            </el-tabs>
-            <div v-show="pmShow.pmYW">
-              <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" height="800">
-                <el-table-column
-                  prop="order"
-                  label="排名"
-                  sortable="custom"
-                  align="center"
-                  width="75"
-                >
-                  <template slot-scope="scope">
-                    <img
-                      src="../assets/j1.png"
-                      style="width: 31px;height: 38px;"
-                      v-if="scope.row.order==1"
-                    />
-                    <img
-                      src="../assets/j2.png"
-                      style="width: 31px;height: 38px;"
-                      v-if="scope.row.order==2"
-                    />
-                    <img
-                      src="../assets/j3.png"
-                      style="width: 31px;height: 38px;"
-                      v-if="scope.row.order==3"
-                    />
-                    <span v-if="scope.row.order>3">{{scope.row.order}}</span>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="username" label="销售员" align="center" width="100"></el-table-column>
-                <el-table-column prop="img" label="头像" align="center" width="100">
-                  <template slot-scope="scope">
-                    <div
-                      class="poImg"
-                      :class="[scope.row.order==1?'poImg1':scope.row.order==2?'poImg2':scope.row.order==3?'poImg3':'']"
-                    >
-                      <img
-                        :src="scope.row.img"
-                        style="width: 60px;height: 60px;border-radius:50%;"
-                        v-if="scope.row.img!=null"
-                      />
-                      <img
-                        src="../assets/header.png"
-                        style="width: 60px;height: 60px;border-radius:50%;"
-                        v-if="scope.row.img==null"
-                      />
-                    </div>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="depart" label="部门" align="center" width="100"></el-table-column>
-                <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
-                <el-table-column
-                  prop="lastProfit"
-                  label="上月毛利"
-                  sortable="custom"
-                  align="center"
-                  width="100"
-                ></el-table-column>
-                <el-table-column
-                  prop="lastAve"
-                  label="上月本平台平均毛利"
-                  sortable="custom"
-                  align="center"
-                  width="170"
-                ></el-table-column>
-                <el-table-column
-                  prop="lastDiff"
-                  label="上月毛利差额"
-                  sortable="custom"
-                  align="center"
-                  width="130"
-                >
-                  <template slot-scope="scope">
-                    <span :class="scope.row.lastDiff<0?'colorRed':''">{{scope.row.lastDiff}}</span>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  prop="thisProfit"
-                  label="本月毛利"
-                  sortable="custom"
-                  align="center"
-                  width="100"
-                ></el-table-column>
-                <el-table-column
-                  prop="thisAve"
-                  label="本月本平台平均毛利"
-                  sortable="custom"
-                  align="center"
-                  width="170"
-                ></el-table-column>
-                <el-table-column
-                  prop="thisDiff"
-                  label="本月毛利差额"
-                  sortable="custom"
-                  align="center"
-                  width="130"
-                >
-                  <template slot-scope="scope">
-                    <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  prop="hireDate"
-                  label="入职时长(月)"
-                  sortable="custom"
-                  align="center"
-                  width="120"
-                ></el-table-column>
-                <el-table-column
-                  prop="createDate"
-                  label="统计时间"
-                  sortable="custom"
-                  align="center"
-                  width="120"
-                >
-                  <template slot-scope="scope">
-                    <i class="el-icon-time"></i>
-                    <span>{{dateFormatter(scope.row.createDate)}}</span>
-                  </template>
-                </el-table-column>
-              </el-table>
+              <el-tabs v-model="activeSale" @tab-click="handleClickSale">
+                <el-tab-pane
+                  v-for="(item, index) in allMenu"
+                  :label="item.name"
+                  :name="item.name"
+                  :key="index"
+                ></el-tab-pane>
+              </el-tabs>
             </div>
-            <div v-show="pmShow.pmHW">
-              <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" height="800">
-                <el-table-column
-                  prop="order"
-                  label="排名"
-                  sortable="custom"
-                  align="center"
-                  width="75"
-                >
-                  <template slot-scope="scope">
-                    <img
-                      src="../assets/j1.png"
-                      style="width: 31px;height: 38px;"
-                      v-if="scope.row.order==1"
-                    />
-                    <img
-                      src="../assets/j2.png"
-                      style="width: 31px;height: 38px;"
-                      v-if="scope.row.order==2"
-                    />
-                    <img
-                      src="../assets/j3.png"
-                      style="width: 31px;height: 38px;"
-                      v-if="scope.row.order==3"
-                    />
-                    <span v-if="scope.row.order>3">{{scope.row.order}}</span>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="username" label="销售员" align="center" width="100"></el-table-column>
-                <el-table-column prop="img" label="头像" align="center" width="100">
-                  <template slot-scope="scope">
-                    <div
-                      class="poImg"
-                      :class="[scope.row.order==1?'poImg1':scope.row.order==2?'poImg2':scope.row.order==3?'poImg3':'']"
-                    >
-                      <img
-                        :src="scope.row.img"
-                        style="width: 60px;height: 60px;border-radius:50%;"
-                        v-if="scope.row.img!=null"
-                      />
-                      <img
-                        src="../assets/header.png"
-                        style="width: 60px;height: 60px;border-radius:50%;"
-                        v-if="scope.row.img==null"
-                      />
-                    </div>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="depart" label="部门" align="center" width="100"></el-table-column>
-                <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
-                <el-table-column
-                  prop="lastProfit"
-                  label="上月毛利"
-                  sortable="custom"
-                  align="center"
-                  width="100"
-                ></el-table-column>
-                <el-table-column
-                  prop="lastAve"
-                  label="上月本平台平均毛利"
-                  sortable="custom"
-                  align="center"
-                  width="170"
-                ></el-table-column>
-                <el-table-column
-                  prop="lastDiff"
-                  label="上月毛利差额"
-                  sortable="custom"
-                  align="center"
-                  width="130"
-                >
-                  <template slot-scope="scope">
-                    <span :class="scope.row.lastDiff<0?'colorRed':''">{{scope.row.lastDiff}}</span>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  prop="thisProfit"
-                  label="本月毛利"
-                  sortable="custom"
-                  align="center"
-                  width="100"
-                ></el-table-column>
-                <el-table-column
-                  prop="thisAve"
-                  label="本月本平台平均毛利"
-                  sortable="custom"
-                  align="center"
-                  width="170"
-                ></el-table-column>
-                <el-table-column
-                  prop="thisDiff"
-                  label="本月毛利差额"
-                  sortable="custom"
-                  align="center"
-                  width="130"
-                >
-                  <template slot-scope="scope">
-                    <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  prop="hireDate"
-                  label="入职时长(月)"
-                  sortable="custom"
-                  align="center"
-                  width="120"
-                ></el-table-column>
-                <el-table-column
-                  prop="createDate"
-                  label="统计时间"
-                  sortable="custom"
-                  align="center"
-                  width="120"
-                >
-                  <template slot-scope="scope">
-                    <i class="el-icon-time"></i>
-                    <span>{{dateFormatter(scope.row.createDate)}}</span>
-                  </template>
-                </el-table-column>
-              </el-table>
-            </div>
-            <div v-show="pmShow.pmWISH">
-              <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" height="800">
-                <el-table-column
-                  prop="order"
-                  label="排名"
-                  sortable="custom"
-                  align="center"
-                  width="75"
-                >
-                  <template slot-scope="scope">
-                    <img
-                      src="../assets/j1.png"
-                      style="width: 31px;height: 38px;"
-                      v-if="scope.row.order==1"
-                    />
-                    <img
-                      src="../assets/j2.png"
-                      style="width: 31px;height: 38px;"
-                      v-if="scope.row.order==2"
-                    />
-                    <img
-                      src="../assets/j3.png"
-                      style="width: 31px;height: 38px;"
-                      v-if="scope.row.order==3"
-                    />
-                    <span v-if="scope.row.order>3">{{scope.row.order}}</span>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="username" label="销售员" align="center" width="100"></el-table-column>
-                <el-table-column prop="img" label="头像" align="center" width="100">
-                  <template slot-scope="scope">
-                    <div
-                      class="poImg"
-                      :class="[scope.row.order==1?'poImg1':scope.row.order==2?'poImg2':scope.row.order==3?'poImg3':'']"
-                    >
-                      <img
-                        :src="scope.row.img"
-                        style="width: 60px;height: 60px;border-radius:50%;"
-                        v-if="scope.row.img!=null"
-                      />
-                      <img
-                        src="../assets/header.png"
-                        style="width: 60px;height: 60px;border-radius:50%;"
-                        v-if="scope.row.img==null"
-                      />
-                    </div>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="depart" label="部门" align="center" width="100"></el-table-column>
-                <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
-                <el-table-column
-                  prop="lastProfit"
-                  label="上月毛利"
-                  sortable="custom"
-                  align="center"
-                  width="100"
-                ></el-table-column>
-                <el-table-column
-                  prop="lastAve"
-                  label="上月本平台平均毛利"
-                  sortable="custom"
-                  align="center"
-                  width="170"
-                ></el-table-column>
-                <el-table-column
-                  prop="lastDiff"
-                  label="上月毛利差额"
-                  sortable="custom"
-                  align="center"
-                  width="130"
-                >
-                  <template slot-scope="scope">
-                    <span :class="scope.row.lastDiff<0?'colorRed':''">{{scope.row.lastDiff}}</span>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  prop="thisProfit"
-                  label="本月毛利"
-                  sortable="custom"
-                  align="center"
-                  width="100"
-                ></el-table-column>
-                <el-table-column
-                  prop="thisAve"
-                  label="本月本平台平均毛利"
-                  sortable="custom"
-                  align="center"
-                  width="170"
-                ></el-table-column>
-                <el-table-column
-                  prop="thisDiff"
-                  label="本月毛利差额"
-                  sortable="custom"
-                  align="center"
-                  width="130"
-                >
-                  <template slot-scope="scope">
-                    <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  prop="hireDate"
-                  label="入职时长(月)"
-                  sortable="custom"
-                  align="center"
-                  width="120"
-                ></el-table-column>
-                <el-table-column
-                  prop="createDate"
-                  label="统计时间"
-                  sortable="custom"
-                  align="center"
-                  width="120"
-                >
-                  <template slot-scope="scope">
-                    <i class="el-icon-time"></i>
-                    <span>{{dateFormatter(scope.row.createDate)}}</span>
-                  </template>
-                </el-table-column>
-              </el-table>
-            </div>
-            <div v-show="pmShow.pmSMT">
-              <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" height="800">
-                <el-table-column
-                  prop="order"
-                  label="排名"
-                  sortable="custom"
-                  align="center"
-                  width="75"
-                >
-                  <template slot-scope="scope">
-                    <img
-                      src="../assets/j1.png"
-                      style="width: 31px;height: 38px;"
-                      v-if="scope.row.order==1"
-                    />
-                    <img
-                      src="../assets/j2.png"
-                      style="width: 31px;height: 38px;"
-                      v-if="scope.row.order==2"
-                    />
-                    <img
-                      src="../assets/j3.png"
-                      style="width: 31px;height: 38px;"
-                      v-if="scope.row.order==3"
-                    />
-                    <span v-if="scope.row.order>3">{{scope.row.order}}</span>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="username" label="销售员" align="center" width="100"></el-table-column>
-                <el-table-column prop="img" label="头像" align="center" width="100">
-                  <template slot-scope="scope">
-                    <div
-                      class="poImg"
-                      :class="[scope.row.order==1?'poImg1':scope.row.order==2?'poImg2':scope.row.order==3?'poImg3':'']"
-                    >
-                      <img
-                        :src="scope.row.img"
-                        style="width: 60px;height: 60px;border-radius:50%;"
-                        v-if="scope.row.img!=null"
-                      />
-                      <img
-                        src="../assets/header.png"
-                        style="width: 60px;height: 60px;border-radius:50%;"
-                        v-if="scope.row.img==null"
-                      />
-                    </div>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="depart" label="部门" align="center" width="100"></el-table-column>
-                <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
-                <el-table-column
-                  prop="lastProfit"
-                  label="上月毛利"
-                  sortable="custom"
-                  align="center"
-                  width="100"
-                ></el-table-column>
-                <el-table-column
-                  prop="lastAve"
-                  label="上月本平台平均毛利"
-                  sortable="custom"
-                  align="center"
-                  width="170"
-                ></el-table-column>
-                <el-table-column
-                  prop="lastDiff"
-                  label="上月毛利差额"
-                  sortable="custom"
-                  align="center"
-                  width="130"
-                >
-                  <template slot-scope="scope">
-                    <span :class="scope.row.lastDiff<0?'colorRed':''">{{scope.row.lastDiff}}</span>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  prop="thisProfit"
-                  label="本月毛利"
-                  sortable="custom"
-                  align="center"
-                  width="100"
-                ></el-table-column>
-                <el-table-column
-                  prop="thisAve"
-                  label="本月本平台平均毛利"
-                  sortable="custom"
-                  align="center"
-                  width="170"
-                ></el-table-column>
-                <el-table-column
-                  prop="thisDiff"
-                  label="本月毛利差额"
-                  sortable="custom"
-                  align="center"
-                  width="130"
-                >
-                  <template slot-scope="scope">
-                    <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  prop="hireDate"
-                  label="入职时长(月)"
-                  sortable="custom"
-                  align="center"
-                  width="120"
-                ></el-table-column>
-                <el-table-column
-                  prop="createDate"
-                  label="统计时间"
-                  sortable="custom"
-                  align="center"
-                  width="120"
-                >
-                  <template slot-scope="scope">
-                    <i class="el-icon-time"></i>
-                    <span>{{dateFormatter(scope.row.createDate)}}</span>
-                  </template>
-                </el-table-column>
-              </el-table>
-            </div>
-            <div v-show="pmShow.pmAMA">
-              <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" height="800">
-                <el-table-column
-                  prop="order"
-                  label="排名"
-                  sortable="custom"
-                  align="center"
-                  width="75"
-                >
-                  <template slot-scope="scope">
-                    <img
-                      src="../assets/j1.png"
-                      style="width: 31px;height: 38px;"
-                      v-if="scope.row.order==1"
-                    />
-                    <img
-                      src="../assets/j2.png"
-                      style="width: 31px;height: 38px;"
-                      v-if="scope.row.order==2"
-                    />
-                    <img
-                      src="../assets/j3.png"
-                      style="width: 31px;height: 38px;"
-                      v-if="scope.row.order==3"
-                    />
-                    <span v-if="scope.row.order>3">{{scope.row.order}}</span>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="username" label="销售员" align="center" width="100"></el-table-column>
-                <el-table-column prop="img" label="头像" align="center" width="100">
-                  <template slot-scope="scope">
-                    <div
-                      class="poImg"
-                      :class="[scope.row.order==1?'poImg1':scope.row.order==2?'poImg2':scope.row.order==3?'poImg3':'']"
-                    >
-                      <img
-                        :src="scope.row.img"
-                        style="width: 60px;height: 60px;border-radius:50%;"
-                        v-if="scope.row.img!=null"
-                      />
-                      <img
-                        src="../assets/header.png"
-                        style="width: 60px;height: 60px;border-radius:50%;"
-                        v-if="scope.row.img==null"
-                      />
-                    </div>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="depart" label="部门" align="center" width="100"></el-table-column>
-                <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
-                <el-table-column
-                  prop="lastProfit"
-                  label="上月毛利"
-                  sortable="custom"
-                  align="center"
-                  width="100"
-                ></el-table-column>
-                <el-table-column
-                  prop="lastAve"
-                  label="上月本平台平均毛利"
-                  sortable="custom"
-                  align="center"
-                  width="170"
-                ></el-table-column>
-                <el-table-column
-                  prop="lastDiff"
-                  label="上月毛利差额"
-                  sortable="custom"
-                  align="center"
-                  width="130"
-                >
-                  <template slot-scope="scope">
-                    <span :class="scope.row.lastDiff<0?'colorRed':''">{{scope.row.lastDiff}}</span>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  prop="thisProfit"
-                  label="本月毛利"
-                  sortable="custom"
-                  align="center"
-                  width="100"
-                ></el-table-column>
-                <el-table-column
-                  prop="thisAve"
-                  label="本月本平台平均毛利"
-                  sortable="custom"
-                  align="center"
-                  width="170"
-                ></el-table-column>
-                <el-table-column
-                  prop="thisDiff"
-                  label="本月毛利差额"
-                  sortable="custom"
-                  align="center"
-                  width="130"
-                >
-                  <template slot-scope="scope">
-                    <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  prop="hireDate"
-                  label="入职时长(月)"
-                  sortable="custom"
-                  align="center"
-                  width="120"
-                ></el-table-column>
-                <el-table-column
-                  prop="createDate"
-                  label="统计时间"
-                  sortable="custom"
-                  align="center"
-                  width="120"
-                >
-                  <template slot-scope="scope">
-                    <i class="el-icon-time"></i>
-                    <span>{{dateFormatter(scope.row.createDate)}}</span>
-                  </template>
-                </el-table-column>
-              </el-table>
-            </div>
-            <div v-show="pmShow.pmJOOM">
-              <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" height="800">
-                <el-table-column
-                  prop="order"
-                  label="排名"
-                  sortable="custom"
-                  align="center"
-                  width="75"
-                >
-                  <template slot-scope="scope">
-                    <img
-                      src="../assets/j1.png"
-                      style="width: 31px;height: 38px;"
-                      v-if="scope.row.order==1"
-                    />
-                    <img
-                      src="../assets/j2.png"
-                      style="width: 31px;height: 38px;"
-                      v-if="scope.row.order==2"
-                    />
-                    <img
-                      src="../assets/j3.png"
-                      style="width: 31px;height: 38px;"
-                      v-if="scope.row.order==3"
-                    />
-                    <span v-if="scope.row.order>3">{{scope.row.order}}</span>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="username" label="销售员" align="center" width="100"></el-table-column>
-                <el-table-column prop="img" label="头像" align="center" width="100">
-                  <template slot-scope="scope">
-                    <div
-                      class="poImg"
-                      :class="[scope.row.order==1?'poImg1':scope.row.order==2?'poImg2':scope.row.order==3?'poImg3':'']"
-                    >
-                      <img
-                        :src="scope.row.img"
-                        style="width: 60px;height: 60px;border-radius:50%;"
-                        v-if="scope.row.img!=null"
-                      />
-                      <img
-                        src="../assets/header.png"
-                        style="width: 60px;height: 60px;border-radius:50%;"
-                        v-if="scope.row.img==null"
-                      />
-                    </div>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="depart" label="部门" align="center" width="100"></el-table-column>
-                <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
-                <el-table-column
-                  prop="lastProfit"
-                  label="上月毛利"
-                  sortable="custom"
-                  align="center"
-                  width="100"
-                ></el-table-column>
-                <el-table-column
-                  prop="lastAve"
-                  label="上月本平台平均毛利"
-                  sortable="custom"
-                  align="center"
-                  width="170"
-                ></el-table-column>
-                <el-table-column
-                  prop="lastDiff"
-                  label="上月毛利差额"
-                  sortable="custom"
-                  align="center"
-                  width="130"
-                >
-                  <template slot-scope="scope">
-                    <span :class="scope.row.lastDiff<0?'colorRed':''">{{scope.row.lastDiff}}</span>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  prop="thisProfit"
-                  label="本月毛利"
-                  sortable="custom"
-                  align="center"
-                  width="100"
-                ></el-table-column>
-                <el-table-column
-                  prop="thisAve"
-                  label="本月本平台平均毛利"
-                  sortable="custom"
-                  align="center"
-                  width="170"
-                ></el-table-column>
-                <el-table-column
-                  prop="thisDiff"
-                  label="本月毛利差额"
-                  sortable="custom"
-                  align="center"
-                  width="130"
-                >
-                  <template slot-scope="scope">
-                    <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  prop="hireDate"
-                  label="入职时长(月)"
-                  sortable="custom"
-                  align="center"
-                  width="120"
-                ></el-table-column>
-                <el-table-column
-                  prop="createDate"
-                  label="统计时间"
-                  sortable="custom"
-                  align="center"
-                  width="120"
-                >
-                  <template slot-scope="scope">
-                    <i class="el-icon-time"></i>
-                    <span>{{dateFormatter(scope.row.createDate)}}</span>
-                  </template>
-                </el-table-column>
-              </el-table>
-            </div>
-          </div>
-          <div class="tabs-container tab-index-pan" v-show="showTitle.zz">
-            <el-tabs
-              v-model="activeTabzz"
-              style="width:100%;padding-left:14px;"
-              @tab-click="handclickzz"
-            >
-              <el-tab-pane
-                v-for="(item, index) in titleMenuzz"
-                :label="item.name"
-                :name="item.name"
-                :key="index"
-              ></el-tab-pane>
-            </el-tabs>
-            <div v-show="tabzz.ebay">
+            <div class="table-container" v-show="showTitle.zengzhang">
               <el-table
-                :data="zzEbay"
+                :data="shanghaiTable"
                 size="small"
                 height="798"
                 ref="table1"
+                v-if="show.shanghai"
                 v-scrollBar:slim
-                @sort-change="sortNumberZZ"
+                @sort-change="sortNumber"
               >
                 <el-table-column type="index" align="center"></el-table-column>
+                <el-table-column prop="depart" align="center" label="部门" sortable>
+                  <el-table-column prop="depart" :render-header="renderHeadertic" align="center"></el-table-column>
+                </el-table-column>
                 <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
-                <el-table-column prop="plat" align="center" label="平台" sortable></el-table-column>
-                <el-table-column prop="target" align="center" label="目标" sortable="custom"></el-table-column>
-                <el-table-column prop="amt" align="center" label="毛利" sortable="custom"></el-table-column>
-                <el-table-column prop="rate" align="center" label="目标进度" sortable="custom">
+                <!-- <el-table-column prop="role"
+                               align="center"
+                label="角色"></el-table-column>-->
+                <el-table-column prop="lastProfit" align="center" label="上月毛利" sortable="custom"></el-table-column>
+                <el-table-column prop="profit" align="center" label="本月毛利" sortable="custom"></el-table-column>
+                <el-table-column prop="rate" align="center" label="本月VS上月" sortable="custom">
+                  <template slot-scope="scope">
+                    <el-progress
+                      :text-inside="true"
+                      :stroke-width="18"
+                      :status="checkStatus(scope.row,'rate')"
+                      :percentage="Math.round(scope.row.rate*10000)/100"
+                    ></el-progress>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="dateRate" align="center" label="时间进度">
+                  <template slot-scope="scope">
+                    <el-progress
+                      :text-inside="true"
+                      :stroke-width="18"
+                      status="exception"
+                      :percentage="Math.round(scope.row.dateRate*10000)/100"
+                    ></el-progress>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="updateTime" align="center" label="统计截止日期">
+                  <template slot-scope="scope">
+                    <i class="el-icon-time"></i>
+                    <span>{{dateFormatter(scope.row.updateTime)}}</span>
+                  </template>
+                </el-table-column>
+              </el-table>
+              <el-table
+                :data="zhengzhouTable"
+                @sort-change="sortNumber"
+                size="small"
+                height="798"
+                v-show="show.zhengzhou"
+              >
+                <el-table-column type="index" align="center"></el-table-column>
+                <el-table-column prop="depart" align="center" label="部门">
+                  <el-table-column prop="depart" :render-header="renderHeadertic1" align="center"></el-table-column>
+                </el-table-column>
+                <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
+                <!-- <el-table-column prop="role"
+                               align="center"
+                label="角色"></el-table-column>-->
+                <el-table-column prop="lastProfit" align="center" label="上月毛利" sortable="custom"></el-table-column>
+                <el-table-column prop="profit" align="center" label="本月毛利" sortable="custom"></el-table-column>
+                <el-table-column prop="rate" align="center" label="本月VS上月" sortable="custom">
+                  <template slot-scope="scope">
+                    <el-progress
+                      :text-inside="true"
+                      :stroke-width="18"
+                      :status="checkStatus(scope.row,'rate')"
+                      :percentage="Math.round(scope.row.rate*10000)/100"
+                    ></el-progress>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="dateRate" align="center" label="时间进度">
+                  <template slot-scope="scope">
+                    <el-progress
+                      :text-inside="true"
+                      :stroke-width="18"
+                      status="exception"
+                      :percentage="Math.round(scope.row.dateRate*10000)/100"
+                    ></el-progress>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="updateTime" align="center" label="统计截止日期">
+                  <template slot-scope="scope">
+                    <i class="el-icon-time"></i>
+                    <span>{{ dateFormatter(scope.row.updateTime) }}</span>
+                  </template>
+                </el-table-column>
+              </el-table>
+              <el-table
+                :data="departTable"
+                size="small"
+                height="798"
+                v-show="show.depart"
+                @sort-change="sortNumber"
+              >
+                <el-table-column type="index" align="center"></el-table-column>
+                <el-table-column prop="depart" label="部门" align="center" sortable>
+                  <el-table-column prop="depart" :render-header="renderHeadertic2" align="center"></el-table-column>
+                </el-table-column>
+                <el-table-column prop="lastProfit" align="center" label="上月毛利" sortable="custom"></el-table-column>
+                <el-table-column prop="profit" label="本月毛利" align="center" sortable="custom"></el-table-column>
+                <el-table-column prop="rate" label="本月VS上月" align="center" sortable="custom">
+                  <template slot-scope="scope">
+                    <el-progress
+                      :text-inside="true"
+                      :stroke-width="18"
+                      :status="checkStatus(scope.row,'rate')"
+                      :percentage="Math.round(scope.row.rate*10000)/100"
+                    ></el-progress>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="dateRate" align="center" label="时间进度">
+                  <template slot-scope="scope">
+                    <el-progress
+                      :text-inside="true"
+                      :stroke-width="18"
+                      status="exception"
+                      :percentage="Math.round(scope.row.dateRate*10000)/100"
+                    ></el-progress>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="updateTime" align="center" label="统计截止日期">
+                  <template slot-scope="scope">
+                    <i class="el-icon-time"></i>
+                    <span>{{ dateFormatter(scope.row.updateTime) }}</span>
+                  </template>
+                </el-table-column>
+              </el-table>
+              <el-table
+                :data="developerTable"
+                height="798"
+                size="small"
+                v-show="show.developer"
+                @sort-change="sortNumber"
+              >
+                <el-table-column type="index" align="center"></el-table-column>
+                <el-table-column prop="depart" align="center" label="部门" sortable>
+                  <el-table-column prop="depart" :render-header="renderHeadertic3" align="center"></el-table-column>
+                </el-table-column>
+                <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
+                <!-- <el-table-column prop="role"
+                               align="center"
+                label="角色"></el-table-column>-->
+                <el-table-column prop="lastProfit" align="center" label="上月毛利" sortable="custom"></el-table-column>
+                <el-table-column prop="profit" align="center" label="本月毛利" sortable="custom"></el-table-column>
+                <el-table-column prop="rate" align="center" label="本月VS上月" sortable="custom">
                   <template slot-scope="scope">
                     <el-progress
                       :text-inside="true"
@@ -918,21 +1446,155 @@
                 </el-table-column>
               </el-table>
             </div>
-            <div v-show="tabzz.joom">
+            <div class="table-container" v-show="showTitle.sale">
               <el-table
-                :data="zzJoom"
+                :data="saleSh"
                 size="small"
                 height="798"
                 ref="table1"
+                v-if="sale.shanghai"
                 v-scrollBar:slim
-                @sort-change="sortNumberjoom"
+                @sort-change="sortNumber"
               >
                 <el-table-column type="index" align="center"></el-table-column>
+                <el-table-column prop="depart" align="center" label="部门" sortable>
+                  <el-table-column prop="depart" :render-header="renderHeaderPic" align="center"></el-table-column>
+                </el-table-column>
                 <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
-                <el-table-column prop="plat" align="center" label="平台" sortable></el-table-column>
-                <el-table-column prop="target" align="center" label="目标" sortable="custom"></el-table-column>
-                <el-table-column prop="amt" align="center" label="毛利" sortable="custom"></el-table-column>
-                <el-table-column prop="rate" align="center" label="目标进度" sortable="custom">
+                <!-- <el-table-column prop="role"
+                               align="center"
+                label="角色"></el-table-column>-->
+                <el-table-column prop="lastAmt" align="center" label="上月销售额" sortable="custom"></el-table-column>
+                <el-table-column prop="amt" align="center" label="本月销售额" sortable="custom"></el-table-column>
+                <el-table-column prop="rate" align="center" label="本月VS上月" sortable="custom">
+                  <template slot-scope="scope">
+                    <el-progress
+                      :text-inside="true"
+                      :stroke-width="18"
+                      :status="checkStatus(scope.row,'rate')"
+                      :percentage="Math.round(scope.row.rate*10000)/100"
+                    ></el-progress>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="dateRate" align="center" label="时间进度">
+                  <template slot-scope="scope">
+                    <el-progress
+                      :text-inside="true"
+                      :stroke-width="18"
+                      status="exception"
+                      :percentage="Math.round(scope.row.dateRate*10000)/100"
+                    ></el-progress>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="updateTime" align="center" label="统计截止日期">
+                  <template slot-scope="scope">
+                    <i class="el-icon-time"></i>
+                    <span>{{dateFormatter(scope.row.updateTime)}}</span>
+                  </template>
+                </el-table-column>
+              </el-table>
+              <el-table
+                :data="saleZz"
+                @sort-change="sortNumber"
+                size="small"
+                height="798"
+                v-show="sale.zhengzhou"
+              >
+                <el-table-column type="index" align="center"></el-table-column>
+                <el-table-column prop="depart" align="center" label="部门">
+                  <el-table-column prop="depart" :render-header="renderHeaderPic1" align="center"></el-table-column>
+                </el-table-column>
+                <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
+                <!-- <el-table-column prop="role"
+                               align="center"
+                label="角色"></el-table-column>-->
+                <el-table-column prop="lastAmt" align="center" label="上月销售额" sortable="custom"></el-table-column>
+                <el-table-column prop="amt" align="center" label="本月销售额" sortable="custom"></el-table-column>
+                <el-table-column prop="rate" align="center" label="本月VS上月" sortable="custom">
+                  <template slot-scope="scope">
+                    <el-progress
+                      :text-inside="true"
+                      :stroke-width="18"
+                      :status="checkStatus(scope.row,'rate')"
+                      :percentage="Math.round(scope.row.rate*10000)/100"
+                    ></el-progress>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="dateRate" align="center" label="时间进度">
+                  <template slot-scope="scope">
+                    <el-progress
+                      :text-inside="true"
+                      :stroke-width="18"
+                      status="exception"
+                      :percentage="Math.round(scope.row.dateRate*10000)/100"
+                    ></el-progress>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="updateTime" align="center" label="统计截止日期">
+                  <template slot-scope="scope">
+                    <i class="el-icon-time"></i>
+                    <span>{{ dateFormatter(scope.row.updateTime) }}</span>
+                  </template>
+                </el-table-column>
+              </el-table>
+              <el-table
+                :data="saleDepartment"
+                size="small"
+                height="798"
+                v-show="sale.depart"
+                @sort-change="sortNumber"
+              >
+                <el-table-column type="index" align="center"></el-table-column>
+                <el-table-column prop="depart" label="部门" align="center" sortable>
+                  <el-table-column prop="depart" :render-header="renderHeaderPic2" align="center"></el-table-column>
+                </el-table-column>
+                <el-table-column prop="lastAmt" align="center" label="上月销售额" sortable="custom"></el-table-column>
+                <el-table-column prop="amt" label="本月销售额" align="center" sortable="custom"></el-table-column>
+                <el-table-column prop="rate" label="本月VS上月" align="center" sortable="custom">
+                  <template slot-scope="scope">
+                    <el-progress
+                      :text-inside="true"
+                      :stroke-width="18"
+                      :status="checkStatus(scope.row,'rate')"
+                      :percentage="Math.round(scope.row.rate*10000)/100"
+                    ></el-progress>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="dateRate" align="center" label="时间进度">
+                  <template slot-scope="scope">
+                    <el-progress
+                      :text-inside="true"
+                      :stroke-width="18"
+                      status="exception"
+                      :percentage="Math.round(scope.row.dateRate*10000)/100"
+                    ></el-progress>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="updateTime" align="center" label="统计截止日期">
+                  <template slot-scope="scope">
+                    <i class="el-icon-time"></i>
+                    <span>{{ dateFormatter(scope.row.updateTime) }}</span>
+                  </template>
+                </el-table-column>
+              </el-table>
+              <el-table
+                :data="saleDevelop"
+                height="798"
+                size="small"
+                v-show="sale.developer"
+                @sort-change="sortNumber"
+              >
+                <el-table-column type="index" align="center"></el-table-column>
+                <el-table-column prop="depart" align="center" label="部门" sortable>
+                  <el-table-column prop="depart" :render-header="renderHeaderPic3" align="center"></el-table-column>
+                </el-table-column>
+                <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
+                <!-- <el-table-column prop="role"
+                               align="center"
+                label="角色"></el-table-column>-->
+                <el-table-column prop="lastAmt" align="center" label="上月销售额" sortable="custom"></el-table-column>
+                <el-table-column prop="amt" align="center" label="本月销售额" sortable="custom"></el-table-column>
+                <el-table-column prop="rate" align="center" label="本月VS上月" sortable="custom">
                   <template slot-scope="scope">
                     <el-progress
                       :text-inside="true"
@@ -960,573 +1622,10 @@
                 </el-table-column>
               </el-table>
             </div>
-          </div>
-          <div class="tabs-container tab-index-pan" v-show="showTitle.baokuan">
-            <el-tabs
-              v-model="activeTabNamebk"
-              style="width:100%;padding-left:14px;"
-              @tab-click="handclickbk"
-            >
-              <el-tab-pane
-                v-for="(item, index) in titleMenuTab"
-                :label="item"
-                :name="item"
-                :key="index"
-              ></el-tab-pane>
-            </el-tabs>
-            <div v-show="indexbk.yw">
-              <el-table :data="proTable" size="small" @sort-change="sortNumber" height="800">
-                <el-table-column type="index" align="center"></el-table-column>
-                <el-table-column prop="platform" label="平台" sortable align="center"></el-table-column>
-                <el-table-column prop="developer" label="开发员" sortable align="center"></el-table-column>
-                <el-table-column prop="goodsCode" label="商品编码" sortable align="center">
-                  <template slot-scope="scope">
-                    <a :href="scope.row.linkUrl" target="_blank">{{scope.row.goodsCode}}</a>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
-                <el-table-column prop="subCate" label="主类目" sortable align="center"></el-table-column>
-                <el-table-column prop="cate" label="子类目" sortable align="center"></el-table-column>
-                <el-table-column prop="img" label="图片" align="center">
-                  <template slot-scope="scope">
-                    <img :src="scope.row.img" style="width: 120px;height: 120px;" />
-                  </template>
-                </el-table-column>
-                <el-table-column prop="salesNum" label="月销量" sortable="custom" align="center"></el-table-column>
-                <el-table-column prop="profit" label="月毛利" sortable="custom" align="center"></el-table-column>
-                <el-table-column prop="endTime" label="统计截止日期" sortable align="center">
-                  <template slot-scope="scope">
-                    <i class="el-icon-time"></i>
-                    <span>{{dateFormatter(scope.row.endTime)}}</span>
-                  </template>
-                </el-table-column>
-              </el-table>
-            </div>
-            <div v-show="indexbk.hw">
-              <el-table :data="proTable" size="small" @sort-change="sortNumber" height="800">
-                <el-table-column type="index" align="center"></el-table-column>
-                <el-table-column prop="platform" label="平台" sortable align="center"></el-table-column>
-                <el-table-column prop="developer" label="开发员" sortable align="center"></el-table-column>
-                <el-table-column prop="goodsCode" label="商品编码" sortable align="center">
-                  <template slot-scope="scope">
-                    <a :href="scope.row.linkUrl" target="_blank">{{scope.row.goodsCode}}</a>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
-                <el-table-column prop="subCate" label="主类目" sortable align="center"></el-table-column>
-                <el-table-column prop="cate" label="子类目" sortable align="center"></el-table-column>
-                <el-table-column prop="img" label="图片" sortable align="center">
-                  <template slot-scope="scope">
-                    <img :src="scope.row.img" style="width: 120px;height: 120px;" />
-                  </template>
-                </el-table-column>
-                <el-table-column prop="salesNum" label="月销量" sortable="custom" align="center"></el-table-column>
-                <el-table-column prop="profit" label="月毛利" sortable="custom" align="center"></el-table-column>
-                <el-table-column prop="endTime" label="统计截止日期" sortable align="center">
-                  <template slot-scope="scope">
-                    <i class="el-icon-time"></i>
-                    <span>{{dateFormatter(scope.row.endTime)}}</span>
-                  </template>
-                </el-table-column>
-              </el-table>
-            </div>
-            <div v-show="indexbk.wish">
-              <el-table :data="proTable" size="small" @sort-change="sortNumber" height="800">
-                <el-table-column type="index" align="center"></el-table-column>
-                <el-table-column prop="platform" label="平台" sortable align="center"></el-table-column>
-                <el-table-column prop="developer" label="开发员" sortable align="center"></el-table-column>
-                <el-table-column prop="goodsCode" label="商品编码" sortable align="center">
-                  <template slot-scope="scope">
-                    <a :href="scope.row.linkUrl" target="_blank">{{scope.row.goodsCode}}</a>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
-                <el-table-column prop="subCate" label="主类目" sortable align="center"></el-table-column>
-                <el-table-column prop="cate" label="子类目" sortable align="center"></el-table-column>
-                <el-table-column prop="img" label="图片" sortable align="center">
-                  <template slot-scope="scope">
-                    <img :src="scope.row.img" style="width: 120px;height: 120px;" />
-                  </template>
-                </el-table-column>
-                <el-table-column prop="salesNum" label="月销量" sortable="custom" align="center"></el-table-column>
-                <el-table-column prop="profit" label="月毛利" sortable="custom" align="center"></el-table-column>
-                <el-table-column prop="endTime" label="统计截止日期" sortable align="center">
-                  <template slot-scope="scope">
-                    <i class="el-icon-time"></i>
-                    <span>{{dateFormatter(scope.row.endTime)}}</span>
-                  </template>
-                </el-table-column>
-              </el-table>
-            </div>
-            <div v-show="indexbk.smt">
-              <el-table :data="proTable" size="small" @sort-change="sortNumber" height="800">
-                <el-table-column type="index" align="center"></el-table-column>
-                <el-table-column prop="platform" label="平台" sortable align="center"></el-table-column>
-                <el-table-column prop="developer" label="开发员" sortable align="center"></el-table-column>
-                <el-table-column prop="goodsCode" label="商品编码" sortable align="center">
-                  <template slot-scope="scope">
-                    <a :href="scope.row.linkUrl" target="_blank">{{scope.row.goodsCode}}</a>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
-                <el-table-column prop="subCate" label="主类目" sortable align="center"></el-table-column>
-                <el-table-column prop="cate" label="子类目" sortable align="center"></el-table-column>
-                <el-table-column prop="img" label="图片" sortable align="center">
-                  <template slot-scope="scope">
-                    <img :src="scope.row.img" style="width: 120px;height: 120px;" />
-                  </template>
-                </el-table-column>
-                <el-table-column prop="salesNum" label="月销量" sortable="custom" align="center"></el-table-column>
-                <el-table-column prop="profit" label="月毛利" sortable="custom" align="center"></el-table-column>
-                <el-table-column prop="endTime" label="统计截止日期" sortable align="center">
-                  <template slot-scope="scope">
-                    <i class="el-icon-time"></i>
-                    <span>{{dateFormatter(scope.row.endTime)}}</span>
-                  </template>
-                </el-table-column>
-              </el-table>
-            </div>
-            <div v-show="indexbk.ama">
-              <el-table :data="proTable" size="small" @sort-change="sortNumber" height="800">
-                <el-table-column type="index" align="center"></el-table-column>
-                <el-table-column prop="platform" label="平台" sortable align="center"></el-table-column>
-                <el-table-column prop="developer" label="开发员" sortable align="center"></el-table-column>
-                <el-table-column prop="goodsCode" label="商品编码" sortable align="center">
-                  <template slot-scope="scope">
-                    <a :href="scope.row.linkUrl" target="_blank">{{scope.row.goodsCode}}</a>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
-                <el-table-column prop="subCate" label="主类目" sortable align="center"></el-table-column>
-                <el-table-column prop="cate" label="子类目" sortable align="center"></el-table-column>
-                <el-table-column prop="img" label="图片" sortable align="center">
-                  <template slot-scope="scope">
-                    <img :src="scope.row.img" style="width: 120px;height: 120px;" />
-                  </template>
-                </el-table-column>
-                <el-table-column prop="salesNum" label="月销量" sortable="custom" align="center"></el-table-column>
-                <el-table-column prop="profit" label="月毛利" sortable="custom" align="center"></el-table-column>
-                <el-table-column prop="endTime" label="统计截止日期" sortable align="center">
-                  <template slot-scope="scope">
-                    <i class="el-icon-time"></i>
-                    <span>{{dateFormatter(scope.row.endTime)}}</span>
-                  </template>
-                </el-table-column>
-              </el-table>
-            </div>
-            <div v-show="indexbk.joom">
-              <el-table :data="proTable" size="small" @sort-change="sortNumber" height="800">
-                <el-table-column type="index" align="center"></el-table-column>
-                <el-table-column prop="platform" label="平台" sortable align="center"></el-table-column>
-                <el-table-column prop="developer" label="开发员" sortable align="center"></el-table-column>
-                <el-table-column prop="goodsCode" label="商品编码" sortable align="center">
-                  <template slot-scope="scope">
-                    <a :href="scope.row.linkUrl" target="_blank">{{scope.row.goodsCode}}</a>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
-                <el-table-column prop="subCate" label="主类目" sortable align="center"></el-table-column>
-                <el-table-column prop="cate" label="子类目" sortable align="center"></el-table-column>
-                <el-table-column prop="img" label="图片" sortable align="center">
-                  <template slot-scope="scope">
-                    <img :src="scope.row.img" style="width: 120px;height: 120px;" />
-                  </template>
-                </el-table-column>
-                <el-table-column prop="salesNum" label="月销量" sortable="custom" align="center"></el-table-column>
-                <el-table-column prop="profit" label="月毛利" sortable="custom" align="center"></el-table-column>
-                <el-table-column prop="endTime" label="统计截止日期" sortable align="center">
-                  <template slot-scope="scope">
-                    <i class="el-icon-time"></i>
-                    <span>{{dateFormatter(scope.row.endTime)}}</span>
-                  </template>
-                </el-table-column>
-              </el-table>
-            </div>
-          </div>
-          <div class="tabs-container tab-index-pan" v-show="showTitle.zengzhang">
-            <el-tabs
-              v-model="activeName"
-              @tab-click="handleClick"
-              style="width:100%;padding-left:14px;"
-            >
-              <el-tab-pane
-                v-for="(item, index) in allMenu"
-                :label="item.name"
-                :name="item.name"
-                :key="index"
-              ></el-tab-pane>
-            </el-tabs>
-          </div>
-          <div
-            class="tabs-container tab-index-pan"
-            v-show="showTitle.sale"
-            style="width:100%;padding-left:14px;"
-          >
-            <el-tabs v-model="activeSale" @tab-click="handleClickSale">
-              <el-tab-pane
-                v-for="(item, index) in allMenu"
-                :label="item.name"
-                :name="item.name"
-                :key="index"
-              ></el-tab-pane>
-            </el-tabs>
-          </div>
-          <div class="table-container" v-show="showTitle.zengzhang">
-            <el-table
-              :data="shanghaiTable"
-              size="small"
-              height="798"
-              ref="table1"
-              v-if="show.shanghai"
-              v-scrollBar:slim
-              @sort-change="sortNumber"
-            >
-              <el-table-column type="index" align="center"></el-table-column>
-              <el-table-column prop="depart" align="center" label="部门" sortable>
-                <el-table-column prop="depart" :render-header="renderHeadertic" align="center"></el-table-column>
-              </el-table-column>
-              <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
-              <!-- <el-table-column prop="role"
-                               align="center"
-              label="角色"></el-table-column>-->
-              <el-table-column prop="lastProfit" align="center" label="上月毛利" sortable="custom"></el-table-column>
-              <el-table-column prop="profit" align="center" label="本月毛利" sortable="custom"></el-table-column>
-              <el-table-column prop="rate" align="center" label="本月VS上月" sortable="custom">
-                <template slot-scope="scope">
-                  <el-progress
-                    :text-inside="true"
-                    :stroke-width="18"
-                    :status="checkStatus(scope.row,'rate')"
-                    :percentage="Math.round(scope.row.rate*10000)/100"
-                  ></el-progress>
-                </template>
-              </el-table-column>
-              <el-table-column prop="dateRate" align="center" label="时间进度">
-                <template slot-scope="scope">
-                  <el-progress
-                    :text-inside="true"
-                    :stroke-width="18"
-                    status="exception"
-                    :percentage="Math.round(scope.row.dateRate*10000)/100"
-                  ></el-progress>
-                </template>
-              </el-table-column>
-              <el-table-column prop="updateTime" align="center" label="统计截止日期">
-                <template slot-scope="scope">
-                  <i class="el-icon-time"></i>
-                  <span>{{dateFormatter(scope.row.updateTime)}}</span>
-                </template>
-              </el-table-column>
-            </el-table>
-            <el-table
-              :data="zhengzhouTable"
-              @sort-change="sortNumber"
-              size="small"
-              height="798"
-              v-show="show.zhengzhou"
-            >
-              <el-table-column type="index" align="center"></el-table-column>
-              <el-table-column prop="depart" align="center" label="部门">
-                <el-table-column prop="depart" :render-header="renderHeadertic1" align="center"></el-table-column>
-              </el-table-column>
-              <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
-              <!-- <el-table-column prop="role"
-                               align="center"
-              label="角色"></el-table-column>-->
-              <el-table-column prop="lastProfit" align="center" label="上月毛利" sortable="custom"></el-table-column>
-              <el-table-column prop="profit" align="center" label="本月毛利" sortable="custom"></el-table-column>
-              <el-table-column prop="rate" align="center" label="本月VS上月" sortable="custom">
-                <template slot-scope="scope">
-                  <el-progress
-                    :text-inside="true"
-                    :stroke-width="18"
-                    :status="checkStatus(scope.row,'rate')"
-                    :percentage="Math.round(scope.row.rate*10000)/100"
-                  ></el-progress>
-                </template>
-              </el-table-column>
-              <el-table-column prop="dateRate" align="center" label="时间进度">
-                <template slot-scope="scope">
-                  <el-progress
-                    :text-inside="true"
-                    :stroke-width="18"
-                    status="exception"
-                    :percentage="Math.round(scope.row.dateRate*10000)/100"
-                  ></el-progress>
-                </template>
-              </el-table-column>
-              <el-table-column prop="updateTime" align="center" label="统计截止日期">
-                <template slot-scope="scope">
-                  <i class="el-icon-time"></i>
-                  <span>{{ dateFormatter(scope.row.updateTime) }}</span>
-                </template>
-              </el-table-column>
-            </el-table>
-            <el-table
-              :data="departTable"
-              size="small"
-              height="798"
-              v-show="show.depart"
-              @sort-change="sortNumber"
-            >
-              <el-table-column type="index" align="center"></el-table-column>
-              <el-table-column prop="depart" label="部门" align="center" sortable>
-                <el-table-column prop="depart" :render-header="renderHeadertic2" align="center"></el-table-column>
-              </el-table-column>
-              <el-table-column prop="lastProfit" align="center" label="上月毛利" sortable="custom"></el-table-column>
-              <el-table-column prop="profit" label="本月毛利" align="center" sortable="custom"></el-table-column>
-              <el-table-column prop="rate" label="本月VS上月" align="center" sortable="custom">
-                <template slot-scope="scope">
-                  <el-progress
-                    :text-inside="true"
-                    :stroke-width="18"
-                    :status="checkStatus(scope.row,'rate')"
-                    :percentage="Math.round(scope.row.rate*10000)/100"
-                  ></el-progress>
-                </template>
-              </el-table-column>
-              <el-table-column prop="dateRate" align="center" label="时间进度">
-                <template slot-scope="scope">
-                  <el-progress
-                    :text-inside="true"
-                    :stroke-width="18"
-                    status="exception"
-                    :percentage="Math.round(scope.row.dateRate*10000)/100"
-                  ></el-progress>
-                </template>
-              </el-table-column>
-              <el-table-column prop="updateTime" align="center" label="统计截止日期">
-                <template slot-scope="scope">
-                  <i class="el-icon-time"></i>
-                  <span>{{ dateFormatter(scope.row.updateTime) }}</span>
-                </template>
-              </el-table-column>
-            </el-table>
-            <el-table
-              :data="developerTable"
-              height="798"
-              size="small"
-              v-show="show.developer"
-              @sort-change="sortNumber"
-            >
-              <el-table-column type="index" align="center"></el-table-column>
-              <el-table-column prop="depart" align="center" label="部门" sortable>
-                <el-table-column prop="depart" :render-header="renderHeadertic3" align="center"></el-table-column>
-              </el-table-column>
-              <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
-              <!-- <el-table-column prop="role"
-                               align="center"
-              label="角色"></el-table-column>-->
-              <el-table-column prop="lastProfit" align="center" label="上月毛利" sortable="custom"></el-table-column>
-              <el-table-column prop="profit" align="center" label="本月毛利" sortable="custom"></el-table-column>
-              <el-table-column prop="rate" align="center" label="本月VS上月" sortable="custom">
-                <template slot-scope="scope">
-                  <el-progress
-                    :text-inside="true"
-                    :stroke-width="18"
-                    :status="checkStatus(scope.row,'rate')"
-                    :percentage="Math.round(scope.row.rate*10000)/100"
-                  ></el-progress>
-                </template>
-              </el-table-column>
-              <el-table-column prop="dateRate" align="center" label="时间进度">
-                <template slot-scope="scope">
-                  <el-progress
-                    :text-inside="true"
-                    :stroke-width="18"
-                    status="exception"
-                    :percentage="Math.round(scope.row.dateRate*10000)/100"
-                  ></el-progress>
-                </template>
-              </el-table-column>
-              <el-table-column prop="updateTime" align="center" label="统计截止日期">
-                <template slot-scope="scope">
-                  <i class="el-icon-time"></i>
-                  <span>{{dateFormatter(scope.row.updateTime)}}</span>
-                </template>
-              </el-table-column>
-            </el-table>
-          </div>
-          <div class="table-container" v-show="showTitle.sale">
-            <el-table
-              :data="saleSh"
-              size="small"
-              height="798"
-              ref="table1"
-              v-if="sale.shanghai"
-              v-scrollBar:slim
-              @sort-change="sortNumber"
-            >
-              <el-table-column type="index" align="center"></el-table-column>
-              <el-table-column prop="depart" align="center" label="部门" sortable>
-                <el-table-column prop="depart" :render-header="renderHeaderPic" align="center"></el-table-column>
-              </el-table-column>
-              <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
-              <!-- <el-table-column prop="role"
-                               align="center"
-              label="角色"></el-table-column>-->
-              <el-table-column prop="lastAmt" align="center" label="上月销售额" sortable="custom"></el-table-column>
-              <el-table-column prop="amt" align="center" label="本月销售额" sortable="custom"></el-table-column>
-              <el-table-column prop="rate" align="center" label="本月VS上月" sortable="custom">
-                <template slot-scope="scope">
-                  <el-progress
-                    :text-inside="true"
-                    :stroke-width="18"
-                    :status="checkStatus(scope.row,'rate')"
-                    :percentage="Math.round(scope.row.rate*10000)/100"
-                  ></el-progress>
-                </template>
-              </el-table-column>
-              <el-table-column prop="dateRate" align="center" label="时间进度">
-                <template slot-scope="scope">
-                  <el-progress
-                    :text-inside="true"
-                    :stroke-width="18"
-                    status="exception"
-                    :percentage="Math.round(scope.row.dateRate*10000)/100"
-                  ></el-progress>
-                </template>
-              </el-table-column>
-              <el-table-column prop="updateTime" align="center" label="统计截止日期">
-                <template slot-scope="scope">
-                  <i class="el-icon-time"></i>
-                  <span>{{dateFormatter(scope.row.updateTime)}}</span>
-                </template>
-              </el-table-column>
-            </el-table>
-            <el-table
-              :data="saleZz"
-              @sort-change="sortNumber"
-              size="small"
-              height="798"
-              v-show="sale.zhengzhou"
-            >
-              <el-table-column type="index" align="center"></el-table-column>
-              <el-table-column prop="depart" align="center" label="部门">
-                <el-table-column prop="depart" :render-header="renderHeaderPic1" align="center"></el-table-column>
-              </el-table-column>
-              <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
-              <!-- <el-table-column prop="role"
-                               align="center"
-              label="角色"></el-table-column>-->
-              <el-table-column prop="lastAmt" align="center" label="上月销售额" sortable="custom"></el-table-column>
-              <el-table-column prop="amt" align="center" label="本月销售额" sortable="custom"></el-table-column>
-              <el-table-column prop="rate" align="center" label="本月VS上月" sortable="custom">
-                <template slot-scope="scope">
-                  <el-progress
-                    :text-inside="true"
-                    :stroke-width="18"
-                    :status="checkStatus(scope.row,'rate')"
-                    :percentage="Math.round(scope.row.rate*10000)/100"
-                  ></el-progress>
-                </template>
-              </el-table-column>
-              <el-table-column prop="dateRate" align="center" label="时间进度">
-                <template slot-scope="scope">
-                  <el-progress
-                    :text-inside="true"
-                    :stroke-width="18"
-                    status="exception"
-                    :percentage="Math.round(scope.row.dateRate*10000)/100"
-                  ></el-progress>
-                </template>
-              </el-table-column>
-              <el-table-column prop="updateTime" align="center" label="统计截止日期">
-                <template slot-scope="scope">
-                  <i class="el-icon-time"></i>
-                  <span>{{ dateFormatter(scope.row.updateTime) }}</span>
-                </template>
-              </el-table-column>
-            </el-table>
-            <el-table
-              :data="saleDepartment"
-              size="small"
-              height="798"
-              v-show="sale.depart"
-              @sort-change="sortNumber"
-            >
-              <el-table-column type="index" align="center"></el-table-column>
-              <el-table-column prop="depart" label="部门" align="center" sortable>
-                <el-table-column prop="depart" :render-header="renderHeaderPic2" align="center"></el-table-column>
-              </el-table-column>
-              <el-table-column prop="lastAmt" align="center" label="上月销售额" sortable="custom"></el-table-column>
-              <el-table-column prop="amt" label="本月销售额" align="center" sortable="custom"></el-table-column>
-              <el-table-column prop="rate" label="本月VS上月" align="center" sortable="custom">
-                <template slot-scope="scope">
-                  <el-progress
-                    :text-inside="true"
-                    :stroke-width="18"
-                    :status="checkStatus(scope.row,'rate')"
-                    :percentage="Math.round(scope.row.rate*10000)/100"
-                  ></el-progress>
-                </template>
-              </el-table-column>
-              <el-table-column prop="dateRate" align="center" label="时间进度">
-                <template slot-scope="scope">
-                  <el-progress
-                    :text-inside="true"
-                    :stroke-width="18"
-                    status="exception"
-                    :percentage="Math.round(scope.row.dateRate*10000)/100"
-                  ></el-progress>
-                </template>
-              </el-table-column>
-              <el-table-column prop="updateTime" align="center" label="统计截止日期">
-                <template slot-scope="scope">
-                  <i class="el-icon-time"></i>
-                  <span>{{ dateFormatter(scope.row.updateTime) }}</span>
-                </template>
-              </el-table-column>
-            </el-table>
-            <el-table
-              :data="saleDevelop"
-              height="798"
-              size="small"
-              v-show="sale.developer"
-              @sort-change="sortNumber"
-            >
-              <el-table-column type="index" align="center"></el-table-column>
-              <el-table-column prop="depart" align="center" label="部门" sortable>
-                <el-table-column prop="depart" :render-header="renderHeaderPic3" align="center"></el-table-column>
-              </el-table-column>
-              <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
-              <!-- <el-table-column prop="role"
-                               align="center"
-              label="角色"></el-table-column>-->
-              <el-table-column prop="lastAmt" align="center" label="上月销售额" sortable="custom"></el-table-column>
-              <el-table-column prop="amt" align="center" label="本月销售额" sortable="custom"></el-table-column>
-              <el-table-column prop="rate" align="center" label="本月VS上月" sortable="custom">
-                <template slot-scope="scope">
-                  <el-progress
-                    :text-inside="true"
-                    :stroke-width="18"
-                    :status="checkStatus(scope.row,'rate')"
-                    :percentage="Math.round(scope.row.rate*10000)/100"
-                  ></el-progress>
-                </template>
-              </el-table-column>
-              <el-table-column prop="dateRate" align="center" label="时间进度">
-                <template slot-scope="scope">
-                  <el-progress
-                    :text-inside="true"
-                    :stroke-width="18"
-                    status="exception"
-                    :percentage="Math.round(scope.row.dateRate*10000)/100"
-                  ></el-progress>
-                </template>
-              </el-table-column>
-              <el-table-column prop="updateTime" align="center" label="统计截止日期">
-                <template slot-scope="scope">
-                  <i class="el-icon-time"></i>
-                  <span>{{dateFormatter(scope.row.updateTime)}}</span>
-                </template>
-              </el-table-column>
-            </el-table>
-          </div>
-        </el-card>
-      </div>
-      <el-card class="box-card">
-        <!-- <div slot="header" class="clearfix-list">
+          </el-card>
+        </div>
+        <el-card class="box-card">
+          <!-- <div slot="header" class="clearfix-list">
           <h2>公告栏</h2>
         </div>
         <ul>
@@ -1563,27 +1662,27 @@
           @click="loadMore"
           class="more"
           v-text="this.page>=this.newsData.page?'加载更多':'已无更多'"
-        ></el-button>-->
-        <div class="cardCase">
-          <div class="cardLeft">
-            <div class="cardLeft01">
-              <p class="zmb">总目标奖金</p>
-              <span class="swhite">{{bonus.total}}元</span>
-              <p class="zmb">已领取奖金</p>
-              <span class="spGreen">{{bonus.pass}}元</span>
-              <p class="zmb">剩余奖金</p>
-              <span>{{bonus.surplus}}元</span>
-              <img src="../assets/jab.png" style="width:49px;height:37px;margin-top:5px;" />
-            </div>
-            <div class="cardLeft01 cardLeft02">
-              <p class="zmb">总目标年假</p>
-              <span class="swhite">{{bonus.totalnj}}天</span>
-              <p class="zmb">已领取年假</p>
-              <span class="spGreen">{{bonus.passnj}}天</span>
-              <p class="zmb">剩余年假</p>
-              <span>{{bonus.surplusnj}}天</span>
-            </div>
-            <!-- <div class="cardLeft01">
+          ></el-button>-->
+          <div class="cardCase">
+            <div class="cardLeft">
+              <div class="cardLeft01">
+                <p class="zmb">总目标奖金</p>
+                <span class="swhite">{{bonus.total}}元</span>
+                <p class="zmb">已领取奖金</p>
+                <span class="spGreen">{{bonus.pass}}元</span>
+                <p class="zmb">剩余奖金</p>
+                <span>{{bonus.surplus}}元</span>
+                <img src="../assets/jab.png" style="width:49px;height:37px;margin-top:5px;" />
+              </div>
+              <div class="cardLeft01 cardLeft02">
+                <p class="zmb">总目标年假</p>
+                <span class="swhite">{{bonus.totalnj}}天</span>
+                <p class="zmb">已领取年假</p>
+                <span class="spGreen">{{bonus.passnj}}天</span>
+                <p class="zmb">剩余年假</p>
+                <span>{{bonus.surplusnj}}天</span>
+              </div>
+              <!-- <div class="cardLeft01">
               <p class="zmb">已领取奖金</p>
               <span>{{bonus.pass}}元</span>
               <p class="njs">年假<b class="spGreen">{{bonus.passnj}}</b>天</p>
@@ -1592,70 +1691,285 @@
               <p class="zmb">剩余奖金</p>
               <span>{{bonus.surplus}}元</span>
               <p class="njs">年假<b class="spGreen">{{bonus.surplusnj}}</b>天</p>
-            </div> -->
-          </div>
-          <div class="cardRight">
-            <div class="luck-user-title">
-              <span>奖金名单</span>
+              </div>-->
             </div>
-            <div class="cardText">
-              <div class="cardText01" v-for="(item,index) in bonusList" :key="index">
-                <img :src="item.avatar" style="width: 40px;height: 40px;border-radius:50%;" />
-                <span>{{item.username}}</span>
-                <p class="njts">{{item.vacationDays}}天</p>
-                <p>{{item.bonus | cutOut1}}+{{item.rxtraBonus | cutOut1}}</p>
+            <div class="cardRight">
+              <div class="luck-user-title">
+                <span>奖金名单</span>
+              </div>
+              <div class="cardText">
+                <div class="cardText01" v-for="(item,index) in bonusList" :key="index">
+                  <img :src="item.avatar" style="width: 40px;height: 40px;border-radius:50%;" />
+                  <span>{{item.username}}</span>
+                  <p class="njts">{{item.vacationDays}}天</p>
+                  <p>{{item.bonus | cutOut1}}+{{item.rxtraBonus | cutOut1}}</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </el-card>
-      <el-card class="box-card1">
-        <div slot="header" class="clearfix-list">
-          <h2>更新日志</h2>
-        </div>
-        <div class="contentBox">
-          <div class="contentBox01">
-            <!-- <div class="contentBoxLeft">
+        </el-card>
+        <el-card class="box-card1">
+          <div slot="header" class="clearfix-list">
+            <h2>更新日志</h2>
+          </div>
+          <div class="contentBox">
+            <div class="contentBox01">
+              <!-- <div class="contentBoxLeft">
             <div class="texta">
               <a class="titlea">2019-15-12</a>
               <span class="blueround"></span>    
             </div>
-            </div>-->
-            <div class="contentBoxRight">
-              <div class="text01" v-for="(item, index) in logList" :key="index">
-                <span class="blueround"></span>
-                <p class="titlep" :class="index==0?'clasRed':''">{{item.title}}</p>
-                <span class="titlea">{{item.createdDate | cutOut}}</span>
-                <p class="cp">{{item.details}}</p>
+              </div>-->
+              <div class="contentBoxRight">
+                <div class="text01" v-for="(item, index) in logList" :key="index">
+                  <span class="blueround"></span>
+                  <p class="titlep" :class="index==0?'clasRed':''">{{item.title}}</p>
+                  <span class="titlea">{{item.createdDate | cutOut}}</span>
+                  <p class="cp">{{item.details}}</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </el-card>
-      <!-- <el-card class="box-card1">
+        </el-card>
+        <!-- <el-card class="box-card1">
         <div slot="header"
              class="clearfix-list">
           <h2>活动栏</h2>
         </div>
         <img src="../assets/1.5.jpg"
              style="height:400px;width:95%;padding:15px;">
-      </el-card>-->
-      <!-- <transition style="height:600px;" enter-active-class="animated fadeInRightBig">
+        </el-card>-->
+        <!-- <transition style="height:600px;" enter-active-class="animated fadeInRightBig">
       <div class="zhezhao" v-show="flagShow"></div>
-      </transition>-->
-      <transition
-        style="height:600px;"
-        enter-active-class="animated jackInTheBox"
-        leave-active-class="animated zoomOutDown"
-      >
-        <div class="digWhite" v-show="flagShow">
-          <img
-            src="../assets/close.png"
-            @click="closeIndex()"
-            class="closeIndex"
-            style="width: 34px;height: 35px;"
-          />
-          <div class="CaseBox" v-show="flagShow">
+        </transition>-->
+        <el-dialog :visible.sync="dialogVisible">
+          <el-form :model="newsDetailList" label-width="80px" ref="detailForm">
+            <el-form-item label="标题：" prop="title">
+              <span v-html="newsDetailList.title" style="font-size:18px;"></span>
+            </el-form-item>
+            <el-form-item label="详情：" prop="detail">
+              <span v-html="newsDetailList.detail" style="font-size:18px;"></span>
+            </el-form-item>
+          </el-form>
+        </el-dialog>
+      </section>
+    </div>
+    <div class="dashboard-editor-container" v-show="ifShowIndex1">
+      <div class="left-boxCase">
+        <div class="leftBox">
+          <div class="bigDemo">
+                <div class="rightDemo">
+                  <span class="span20">10%</span>
+                  <div
+                    :class="[item.rate==0?'indexbImg b0':item.rate==1?'indexbImg b1':item.rate==2?'indexbImg b2':item.rate==3?'indexbImg b3':item.rate==4?'indexbImg b4':item.rate==5?'indexbImg b5':item.rate==6?'indexbImg b6':item.rate==7?'indexbImg b7':item.rate==8?'indexbImg b8':item.rate==9?'indexbImg b9':item.rate==10?'indexbImg b10':item.rate==11?'indexbImg1 b11':item.rate==12?'indexbImg1 b12':item.rate==13?'indexbImg1 b13':item.rate==14?'indexbImg1 b14':item.rate==15?'indexbImg1 b15':item.rate==16?'indexbImg1 b16':item.rate==17?'indexbImg1 b17':item.rate==18?'indexbImg1 b18':item.rate==19?'indexbImg1 b19':item.rate==20?'indexbImg1 b20':'',item.username==sysUserName?'imbge':'']"
+                    v-for="(item,index) in last20"
+                    :key="index"
+                    @click="judge(item.rate)"
+                  ></div>
+                </div>
+                <div class="leftDemo">
+                  <span class="span40">30%</span>
+                  <div
+                    :class="[item.rate==21?'indexbImg1 b21':item.rate==22?'indexbImg1 b22':item.rate==23?'indexbImg1 b23':item.rate==24?'indexbImg1 b24':item.rate==25?'indexbImg1 b25':item.rate==26?'indexbImg1 b26':item.rate==27?'indexbImg1 b27':item.rate==28?'indexbImg1 b28':item.rate==29?'indexbImg1 b29':item.rate==30?'indexbImg1 b30':item.rate==31?'indexbImg b31':item.rate==32?'indexbImg b32':item.rate==33?'indexbImg b33':item.rate==34?'indexbImg b34':item.rate==35?'indexbImg b35':item.rate==36?'indexbImg b36':item.rate==37?'indexbImg b37':item.rate==38?'indexbImg b38':item.rate==39?'indexbImg b39':item.rate==40?'indexbImg b40':'',item.username==sysUserName?'imbge':'']"
+                    v-for="(item,index) in last40"
+                    :key="index"
+                    @click="judge(item.rate)"
+                  ></div>
+                </div>
+                <div class="rightDemo">
+                  <span class="span60">50%</span>
+                  <div
+                    :class="[item.rate==41?'indexbImg b41':item.rate==42?'indexbImg b42':item.rate==43?'indexbImg b43':item.rate==44?'indexbImg b44':item.rate==45?'indexbImg b45':item.rate==46?'indexbImg b46':item.rate==47?'indexbImg b47':item.rate==48?'indexbImg b48':item.rate==49?'indexbImg b49':item.rate==50?'indexbImg b50':item.rate==51?'indexbImg1 b51':item.rate==52?'indexbImg1 b52':item.rate==53?'indexbImg1 b53':item.rate==54?'indexbImg1 b54':item.rate==55?'indexbImg1 b55':item.rate==56?'indexbImg1 b56':item.rate==57?'indexbImg1 b57':item.rate==58?'indexbImg1 b58':item.rate==59?'indexbImg1 b59':item.rate==60?'indexbImg1 b60':'',item.username==sysUserName?'imbge':'']"
+                    v-for="(item,index) in last60"
+                    :key="index"
+                    @click="judge(item.rate)"
+                  ></div>
+                </div>
+                <div class="leftDemo">
+                  <span class="span80">70%</span>
+                  <div
+                    :class="[item.rate==61?'indexbImg1 b61':item.rate==62?'indexbImg1 b62':item.rate==63?'indexbImg1 b63':item.rate==64?'indexbImg1 b64':item.rate==65?'indexbImg1 b65':item.rate==66?'indexbImg1 b66':item.rate==67?'indexbImg1 b67':item.rate==68?'indexbImg1 b68':item.rate==69?'indexbImg1 b69':item.rate==70?'indexbImg1 b70':item.rate==71?'indexbImg b71':item.rate==72?'indexbImg b72':item.rate==73?'indexbImg b73':item.rate==74?'indexbImg b74':item.rate==75?'indexbImg b75':item.rate==76?'indexbImg b76':item.rate==77?'indexbImg b77':item.rate==78?'indexbImg b78':item.rate==79?'indexbImg b79':item.rate==80?'indexbImg b80':'',item.username==sysUserName?'imbge':'']"
+                    v-for="(item,index) in last80"
+                    :key="index"
+                    @click="judge(item.rate)"
+                  ></div>
+                </div>
+                <div class="rightDemo">
+                  <span class="span100">100%</span>
+                  <div
+                    :class="[item.rate==81?'indexbImg b81':item.rate==82?'indexbImg b82':item.rate==83?'indexbImg b83':item.rate==84?'indexbImg b84':item.rate==85?'indexbImg b85':item.rate==86?'indexbImg b86':item.rate==87?'indexbImg b87':item.rate==88?'indexbImg b88':item.rate==89?'indexbImg b89':item.rate==90?'indexbImg b90':item.rate==91?'indexbImg1 b91':item.rate==92?'indexbImg1 b92':item.rate==93?'indexbImg1 b93':item.rate==94?'indexbImg1 b94':item.rate==95?'indexbImg1 b95':item.rate==96?'indexbImg1 b96':item.rate==97?'indexbImg1 b97':item.rate==98?'indexbImg1 b98':item.rate==99?'indexbImg1 b99':item.rate==100?'indexbImg1 b100':'',item.username==sysUserName?'imbge':'']"
+                    v-for="(item,index) in last100"
+                    :key="index"
+                    @click="judge(item.rate)"
+                  ></div>
+                </div>
+                <div class="leftDemo">
+                  <div class="jblist">
+                    <div class="jb01 jbg">
+                      <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                    </div>
+                    <div class="jb02 jbg">
+                      <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                    </div>
+                    <div class="jb03 jbg">
+                      <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                    </div>
+                    <div class="jb04 jbg">
+                      <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                    </div>
+                    <div class="jb05 jbg">
+                      <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                    </div>
+                    <div class="jb06 jbg">
+                      <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                    </div>
+                    <div class="jb07 jbg">
+                      <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                    </div>
+                    <div class="jb08 jbg">
+                      <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                    </div>
+                    <div class="jb09 jbg">
+                      <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                    </div>
+                    <div class="jb10 jbg">
+                      <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                    </div>
+                    <div class="jb11 jbg">
+                      <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                    </div>
+                    <div class="jb12 jbg">
+                      <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                    </div>
+                    <div class="jb13 jbg">
+                      <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                    </div>
+                    <div class="jb14 jbg">
+                      <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                    </div>
+                    <div class="jb15 jbg">
+                      <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                    </div>
+                  </div>
+                </div>
+                <span class="start"></span>
+                <span class="end">
+                  <img src="../assets/qizi.png" style="width: 50px;height: 50px;" />
+                </span>
+              </div>
+        </div>
+        <div class="rightBox">
+          <div class="cardCase">
+            <div class="cardLeft">
+              <div class="cardLeft01">
+                <p class="zmb">总目标奖金</p>
+                <span class="swhite">{{bonus.total}}元</span>
+                <p class="zmb">已领取奖金</p>
+                <span class="spGreen">{{bonus.pass}}元</span>
+                <p class="zmb">剩余奖金</p>
+                <span>{{bonus.surplus}}元</span>
+                <img src="../assets/jab.png" style="width:49px;height:37px;margin-top:5px;" />
+              </div>
+              <div class="cardLeft01 cardLeft02">
+                <p class="zmb">总目标年假</p>
+                <span class="swhite">{{bonus.totalnj}}天</span>
+                <p class="zmb">已领取年假</p>
+                <span class="spGreen">{{bonus.passnj}}天</span>
+                <p class="zmb">剩余年假</p>
+                <span>{{bonus.surplusnj}}天</span>
+              </div>
+              <!-- <div class="cardLeft01">
+              <p class="zmb">已领取奖金</p>
+              <span>{{bonus.pass}}元</span>
+              <p class="njs">年假<b class="spGreen">{{bonus.passnj}}</b>天</p>
+            </div>
+            <div class="cardLeft01">
+              <p class="zmb">剩余奖金</p>
+              <span>{{bonus.surplus}}元</span>
+              <p class="njs">年假<b class="spGreen">{{bonus.surplusnj}}</b>天</p>
+              </div>-->
+            </div>
+            <div class="cardRight">
+              <div class="luck-user-title">
+                <span>奖金名单</span>
+              </div>
+              <div class="cardText">
+                <div class="cardText01" v-for="(item,index) in bonusList" :key="index">
+                  <img :src="item.avatar" style="width: 40px;height: 40px;border-radius:50%;" />
+                  <span>{{item.username}}</span>
+                  <p class="njts">{{item.vacationDays}}天</p>
+                  <p>{{item.bonus | cutOut1}}+{{item.rxtraBonus | cutOut1}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+     <transition
+          style="height:600px;"
+          enter-active-class="animated jackInTheBox"
+          leave-active-class="animated zoomOutDown"
+        >
+          <div class="digWhite" v-show="flagShow">
+            <img
+              src="../assets/close.png"
+              @click="closeIndex()"
+              class="closeIndex"
+              style="width: 34px;height: 35px;"
+            />
+            <div class="CaseBox" v-show="flagShow">
+              <transition
+                style="height:600px;"
+                enter-active-class="animated fadeInDownBig"
+                leave-active-class="animated zoomOutDown"
+                v-for="(item, index) in sortData"
+                :key="index"
+              >
+                <div class="testCase tabCase" v-show="flagShow">
+                  <div class="tleft">
+                    <img
+                      :src="item.avatar"
+                      class="icimg"
+                      style="width: 70px;height: 70px;border-radius:50%;"
+                    />
+                    <p class="namep">{{item.username}}</p>
+                  </div>
+                  <div class="tright">
+                    <p class="pred">
+                      <span>完成度 ：</span>
+                      {{item.rate}}%
+                    </p>
+                    <p>
+                      <span>已完成 ：</span>
+                      {{item.amt}}
+                    </p>
+                    <p>
+                      <span>目&nbsp;&nbsp;&nbsp;&nbsp;标 ：</span>
+                      {{item.target}}
+                    </p>
+                    <p class="pred">
+                      <span>奖&nbsp;&nbsp;&nbsp;&nbsp;金 ：</span>
+                      {{item.bonus}}元
+                    </p>
+                  </div>
+                </div>
+              </transition>
+            </div>
+          </div>
+        </transition>
+        <transition
+          style="height:600px;"
+          enter-active-class="animated jackInTheBox"
+          leave-active-class="animated zoomOutDown"
+        >
+          <div class="digWhiteFour" v-show="flagShowFour">
+            <img
+              src="../assets/close.png"
+              @click="closeIndexFour()"
+              class="closeIndexFour"
+              style="width: 34px;height: 35px;"
+            />
             <transition
               style="height:600px;"
               enter-active-class="animated fadeInDownBig"
@@ -1663,12 +1977,16 @@
               v-for="(item, index) in sortData"
               :key="index"
             >
-              <div class="testCase tabCase" v-show="flagShow">
-                <div class="tleft">
-                  <img :src="item.avatar" class="icimg" style="width: 70px;height: 70px;border-radius:50%;" />
-                  <p class="namep">{{item.username}}</p>
+              <div class="testCase tabCase" v-show="flagShowFour">
+                <div class="tleftFour">
+                  <img
+                    :src="item.avatar"
+                    class="icimg"
+                    style="width: 70px;height: 70px;border-radius:50%;"
+                  />
+                  <p class="namepFour">{{item.username}}</p>
                 </div>
-                <div class="tright">
+                <div class="trightFour">
                   <p class="pred">
                     <span>完成度 ：</span>
                     {{item.rate}}%
@@ -1689,172 +2007,36 @@
               </div>
             </transition>
           </div>
-        </div>
-      </transition>
-      <transition
-        style="height:600px;"
-        enter-active-class="animated jackInTheBox"
-        leave-active-class="animated zoomOutDown"
-      >
-        <div class="digWhiteFour" v-show="flagShowFour">
-          <img
-            src="../assets/close.png"
-            @click="closeIndexFour()"
-            class="closeIndexFour"
-            style="width: 34px;height: 35px;"
-          />
-          <transition
-            style="height:600px;"
-            enter-active-class="animated fadeInDownBig"
-            leave-active-class="animated zoomOutDown"
-            v-for="(item, index) in sortData"
-            :key="index"
-          >
-            <div class="testCase tabCase" v-show="flagShowFour">
-              <div class="tleftFour">
-                <img :src="item.avatar" class="icimg" style="width: 70px;height: 70px;border-radius:50%;" />
-                <p class="namepFour">{{item.username}}</p>
-              </div>
-              <div class="trightFour">
-                <p class="pred">
-                  <span>完成度 ：</span>
-                  {{item.rate}}%
-                </p>
-                <p>
-                  <span>已完成 ：</span>
-                  {{item.amt}}
-                </p>
-                <p>
-                  <span>目&nbsp;&nbsp;&nbsp;&nbsp;标 ：</span>
-                  {{item.target}}
-                </p>
-                <p class="pred">
-                  <span>奖&nbsp;&nbsp;&nbsp;&nbsp;金 ：</span>
-                  {{item.bonus}}元
-                </p>
-              </div>
-            </div>
-          </transition>
-        </div>
-      </transition>
-      <transition
-        style="height:600px;"
-        enter-active-class="animated jackInTheBox"
-        leave-active-class="animated zoomOutDown"
-      >
-        <div class="digWhiteThree" v-show="flagShowThree">
-          <img
-            src="../assets/close.png"
-            @click="closeIndexThree()"
-            class="closeIndexThree"
-            style="width: 34px;height: 35px;"
-          />
-          <transition
-            style="height:600px;"
-            enter-active-class="animated fadeInDownBig"
-            leave-active-class="animated zoomOutDown"
-            v-for="(item, index) in sortData"
-            :key="index"
-          >
-            <div class="testCaseThree tabCase" v-show="flagShowThree">
-              <div class="tleftThree">
-                <img :src="item.avatar" class="icimg" style="width: 80px;height: 80px;border-radius:50%;" />
-                <p class="namepThree">{{item.username}}</p>
-              </div>
-              <div class="trightThree">
-                <p class="pred">
-                  <span>完成度 ：</span>
-                  {{item.rate}}%
-                </p>
-                <p>
-                  <span>已完成 ：</span>
-                  {{item.amt}}
-                </p>
-                <p>
-                  <span>目&nbsp;&nbsp;&nbsp;&nbsp;标 ：</span>
-                  {{item.target}}
-                </p>
-                <p class="pred">
-                  <span>奖&nbsp;&nbsp;&nbsp;&nbsp;金 ：</span>
-                  {{item.bonus}}元
-                </p>
-              </div>
-            </div>
-          </transition>
-        </div>
-      </transition>
-      <transition
-        style="height:600px;"
-        enter-active-class="animated jackInTheBox"
-        leave-active-class="animated zoomOutDown"
-      >
-        <div class="digWhiteTwo" v-show="flagShowTwo">
-          <img
-            src="../assets/close.png"
-            @click="closeIndexTwo()"
-            class="closeIndexTwo"
-            style="width: 34px;height: 35px;"
-          />
-          <transition
-            style="height:600px;"
-            enter-active-class="animated fadeInDownBig"
-            leave-active-class="animated zoomOutDown"
-            v-for="(item, index) in sortData"
-            :key="index"
-          >
-            <div class="testCaseTwo tabCase" v-show="flagShowTwo">
-              <div class="tleftTwo">
-                <img :src="item.avatar" class="icimg" style="width: 80px;height: 80px;border-radius:50%;" />
-                <p class="namepTwo">{{item.username}}</p>
-              </div>
-              <div class="trightTwo">
-                <p class="pred">
-                  <span>完成度 ：</span>
-                  {{item.rate}}%
-                </p>
-                <p>
-                  <span>已完成 ：</span>
-                  {{item.amt}}
-                </p>
-                <p>
-                  <span>目&nbsp;&nbsp;&nbsp;&nbsp;标 ：</span>
-                  {{item.target}}
-                </p>
-                <p class="pred">
-                  <span>奖&nbsp;&nbsp;&nbsp;&nbsp;金 ：</span>
-                  {{item.bonus}}元
-                </p>
-              </div>
-            </div>
-          </transition>
-        </div>
-      </transition>
-      <transition
-        style="height:600px;"
-        enter-active-class="animated jackInTheBox"
-        leave-active-class="animated zoomOutDown"
-      >
-        <div class="digWhiteOne" v-show="flagShowOne">
-          <img
-            src="../assets/close.png"
-            @click="closeIndexOne()"
-            class="closeIndexOne"
-            style="width: 34px;height:34px;"
-          />
-          <transition
-            style="height:600px;"
-            enter-active-class="animated jackInTheBox"
-            leave-active-class="animated zoomOutDown"
-            v-for="(item, index) in sortData"
-            :key="index"
-          >
-            <div class="testCaseOne" v-show="flagShowOne">
-              <div class="tleftOne">
-                <img :src="item.avatar" class="icimg" style="width: 100px;height: 100px;border-radius:50%;" />
-                <p class="namepOne">{{item.username}}</p>
-              </div>
-              <div class="trightOne">
-                <div class="p01">
+        </transition>
+        <transition
+          style="height:600px;"
+          enter-active-class="animated jackInTheBox"
+          leave-active-class="animated zoomOutDown"
+        >
+          <div class="digWhiteThree" v-show="flagShowThree">
+            <img
+              src="../assets/close.png"
+              @click="closeIndexThree()"
+              class="closeIndexThree"
+              style="width: 34px;height: 35px;"
+            />
+            <transition
+              style="height:600px;"
+              enter-active-class="animated fadeInDownBig"
+              leave-active-class="animated zoomOutDown"
+              v-for="(item, index) in sortData"
+              :key="index"
+            >
+              <div class="testCaseThree tabCase" v-show="flagShowThree">
+                <div class="tleftThree">
+                  <img
+                    :src="item.avatar"
+                    class="icimg"
+                    style="width: 80px;height: 80px;border-radius:50%;"
+                  />
+                  <p class="namepThree">{{item.username}}</p>
+                </div>
+                <div class="trightThree">
                   <p class="pred">
                     <span>完成度 ：</span>
                     {{item.rate}}%
@@ -1863,8 +2045,6 @@
                     <span>已完成 ：</span>
                     {{item.amt}}
                   </p>
-                </div>
-                <div class="p01">
                   <p>
                     <span>目&nbsp;&nbsp;&nbsp;&nbsp;标 ：</span>
                     {{item.target}}
@@ -1875,22 +2055,114 @@
                   </p>
                 </div>
               </div>
-              <div style="height:5px;width:100%"></div>
-            </div>
-          </transition>
-        </div>
-      </transition>
-      <el-dialog :visible.sync="dialogVisible">
-        <el-form :model="newsDetailList" label-width="80px" ref="detailForm">
-          <el-form-item label="标题：" prop="title">
-            <span v-html="newsDetailList.title" style="font-size:18px;"></span>
-          </el-form-item>
-          <el-form-item label="详情：" prop="detail">
-            <span v-html="newsDetailList.detail" style="font-size:18px;"></span>
-          </el-form-item>
-        </el-form>
-      </el-dialog>
-    </section>
+            </transition>
+          </div>
+        </transition>
+        <transition
+          style="height:600px;"
+          enter-active-class="animated jackInTheBox"
+          leave-active-class="animated zoomOutDown"
+        >
+          <div class="digWhiteTwo" v-show="flagShowTwo">
+            <img
+              src="../assets/close.png"
+              @click="closeIndexTwo()"
+              class="closeIndexTwo"
+              style="width: 34px;height: 35px;"
+            />
+            <transition
+              style="height:600px;"
+              enter-active-class="animated fadeInDownBig"
+              leave-active-class="animated zoomOutDown"
+              v-for="(item, index) in sortData"
+              :key="index"
+            >
+              <div class="testCaseTwo tabCase" v-show="flagShowTwo">
+                <div class="tleftTwo">
+                  <img
+                    :src="item.avatar"
+                    class="icimg"
+                    style="width: 80px;height: 80px;border-radius:50%;"
+                  />
+                  <p class="namepTwo">{{item.username}}</p>
+                </div>
+                <div class="trightTwo">
+                  <p class="pred">
+                    <span>完成度 ：</span>
+                    {{item.rate}}%
+                  </p>
+                  <p>
+                    <span>已完成 ：</span>
+                    {{item.amt}}
+                  </p>
+                  <p>
+                    <span>目&nbsp;&nbsp;&nbsp;&nbsp;标 ：</span>
+                    {{item.target}}
+                  </p>
+                  <p class="pred">
+                    <span>奖&nbsp;&nbsp;&nbsp;&nbsp;金 ：</span>
+                    {{item.bonus}}元
+                  </p>
+                </div>
+              </div>
+            </transition>
+          </div>
+        </transition>
+        <transition
+          style="height:600px;"
+          enter-active-class="animated jackInTheBox"
+          leave-active-class="animated zoomOutDown"
+        >
+          <div class="digWhiteOne" v-show="flagShowOne">
+            <img
+              src="../assets/close.png"
+              @click="closeIndexOne()"
+              class="closeIndexOne"
+              style="width: 34px;height:34px;"
+            />
+            <transition
+              style="height:600px;"
+              enter-active-class="animated jackInTheBox"
+              leave-active-class="animated zoomOutDown"
+              v-for="(item, index) in sortData"
+              :key="index"
+            >
+              <div class="testCaseOne" v-show="flagShowOne">
+                <div class="tleftOne">
+                  <img
+                    :src="item.avatar"
+                    class="icimg"
+                    style="width: 100px;height: 100px;border-radius:50%;"
+                  />
+                  <p class="namepOne">{{item.username}}</p>
+                </div>
+                <div class="trightOne">
+                  <div class="p01">
+                    <p class="pred">
+                      <span>完成度 ：</span>
+                      {{item.rate}}%
+                    </p>
+                    <p>
+                      <span>已完成 ：</span>
+                      {{item.amt}}
+                    </p>
+                  </div>
+                  <div class="p01">
+                    <p>
+                      <span>目&nbsp;&nbsp;&nbsp;&nbsp;标 ：</span>
+                      {{item.target}}
+                    </p>
+                    <p class="pred">
+                      <span>奖&nbsp;&nbsp;&nbsp;&nbsp;金 ：</span>
+                      {{item.bonus}}元
+                    </p>
+                  </div>
+                </div>
+                <div style="height:5px;width:100%"></div>
+              </div>
+            </transition>
+          </div>
+        </transition>
   </div>
 </template>
 
@@ -1914,7 +2186,9 @@ import {
   getZzTargetEbay,
   getZzTargetJoom,
   APISiteIndex,
-  APISiteSales
+  APISiteSales,
+  getSiteIndexXs,
+  getSiteIndexKf
 } from "../api/api";
 import { compareUp, compareDown } from "../api/tools";
 import { updateLog } from "../api/product";
@@ -1924,6 +2198,8 @@ export default {
   data() {
     return {
       activeTabNamebk: "eBay-义乌仓",
+      ifShowIndex1: true,
+      ifShowIndex: false,
       indexTabactive: 0,
       titleMenuTab: [
         "eBay-义乌仓",
@@ -1935,25 +2211,26 @@ export default {
       ],
       activeTabName: "eBay-义乌仓",
       activeTabzz: "郑州eBay平台",
+      activeTabwcd: "所有销售",
       flagShow: false,
       sysUserName: null,
       flagShowFour: false,
       flagShowThree: false,
       flagShowTwo: false,
       flagShowOne: false,
-      bonus:{
-        total:null,
-        pass:null,
-        surplus:null,
-        totalnj:null,
-        passnj:null,
-        surplusnj:null,
+      bonus: {
+        total: null,
+        pass: null,
+        surplus: null,
+        totalnj: null,
+        passnj: null,
+        surplusnj: null
       },
-      bonusList:[],
+      bonusList: [],
       page: null,
       dialogVisible: false,
       sortData: [],
-      tabSort:[],
+      tabSort: [],
       last20: [],
       last40: [],
       last60: [],
@@ -1986,6 +2263,10 @@ export default {
         ebay: true,
         joom: false
       },
+      tabwcd: {
+        xs: true,
+        kf: false
+      },
       shanghaiTable: [],
       zhengzhouTable: [],
       departTable: [],
@@ -1997,6 +2278,7 @@ export default {
       saleDevelop: [],
       saleZz: [],
       titleMenuzz: [],
+      titleMenuwcd: ["所有销售", "所有开发"],
       zzEbay: [],
       zzJoom: [],
       activeName: "上海销售",
@@ -2046,7 +2328,8 @@ export default {
         sale: false,
         pming: true,
         zz: false,
-        wj: false
+        wj: false,
+        wcd: false
       },
       pmShow: {
         pmYW: true,
@@ -2067,56 +2350,56 @@ export default {
     };
   },
   methods: {
-    judge(n){
+    judge(n) {
       this.flagShow = false;
       this.flagShowFour = false;
       this.flagShowTwo = false;
       this.flagShowOne = false;
       this.flagShowThree = false;
-      this.sortData=[]
-      var dateArr=this.tabSort
-      for(var i=0;i<dateArr.length;i++){
-        if(dateArr[i].rate==n){
-          this.sortData.push(dateArr[i])
+      this.sortData = [];
+      var dateArr = this.tabSort;
+      for (var i = 0; i < dateArr.length; i++) {
+        if (dateArr[i].rate == n) {
+          this.sortData.push(dateArr[i]);
         }
       }
-      setTimeout(()=>{
-        if(this.sortData.length>4){
+      setTimeout(() => {
+        if (this.sortData.length > 4) {
           this.flagShowFour = false;
           this.flagShowThree = false;
           this.flagShowTwo = false;
           this.flagShowOne = false;
           this.flagShow = true;
         }
-        if(this.sortData.length==4){
+        if (this.sortData.length == 4) {
           this.flagShow = false;
           this.flagShowThree = false;
           this.flagShowTwo = false;
           this.flagShowOne = false;
           this.flagShowFour = true;
         }
-        if(this.sortData.length==3){
+        if (this.sortData.length == 3) {
           this.flagShow = false;
           this.flagShowFour = false;
           this.flagShowTwo = false;
           this.flagShowOne = false;
           this.flagShowThree = true;
         }
-        if(this.sortData.length==2){
+        if (this.sortData.length == 2) {
           this.flagShow = false;
           this.flagShowFour = false;
           this.flagShowThree = false;
           this.flagShowOne = false;
           this.flagShowTwo = true;
         }
-        if(this.sortData.length==1){
+        if (this.sortData.length == 1) {
           this.flagShow = false;
           this.flagShowFour = false;
           this.flagShowThree = false;
           this.flagShowTwo = false;
           this.flagShowOne = true;
         }
-        },200)
+      }, 200);
     },
     four() {
       this.flagShowFour = true;
@@ -2158,6 +2441,18 @@ export default {
         this.tabzz["joom"] = true;
       } else {
         this.tabzz["joom"] = false;
+      }
+    },
+    handclickwcd(tab, event) {
+      if (tab.label === "所有销售") {
+        this.tabwcd["xs"] = true;
+      } else {
+        this.tabwcd["xs"] = false;
+      }
+      if (tab.label === "所有开发") {
+        this.tabwcd["kf"] = true;
+      } else {
+        this.tabwcd["kf"] = false;
       }
     },
     sortNumberPX(column, prop, order) {
@@ -2729,8 +3024,17 @@ export default {
         this.showTitle["wj"] = true;
         this.activeTitle = "旺季目标";
         this.indexTabactive = index;
+        this.ifShowIndex = false;
+        this.ifShowIndex1 = true;
       } else {
         this.showTitle["wj"] = false;
+      }
+      if (n === "旺季目标完成度") {
+        this.showTitle["wcd"] = true;
+        this.activeTitle = "旺季目标完成度";
+        this.indexTabactive = index;
+      } else {
+        this.showTitle["wcd"] = false;
       }
     },
     dateFormatter(date) {
@@ -2848,6 +3152,12 @@ export default {
     getZzTargetJoom().then(res => {
       this.zzJoom = res.data.data;
     });
+    // getSiteIndexXs().then(res => {
+    //   this.wcdxs = res.data.data;
+    // });
+    // getSiteIndexKf().then(res => {
+    //   this.wcdkf = res.data.data;
+    // });
     getAmt(this.profitl1).then(res => {
       this.saleSh = res.data.data;
     });
@@ -2904,21 +3214,23 @@ export default {
           this.last100.push(arrData[i]);
         }
       }
-      this.tabSort=arrData
+      this.tabSort = arrData;
     });
     APISiteSales(this.activePlatpm).then(res => {
-      this.bonusList=res.data.data.list;
+      this.bonusList = res.data.data.list;
       for (var i = 0; i < this.bonusList.length; i++) {
         if (this.bonusList[i].avatar == null) {
           this.bonusList[i].avatar = `/static/img/header.1a1e548.png`;
         }
       }
-      this.bonus.total = (Number(res.data.data.bonusAllNum)).toFixed(0);
-      this.bonus.totalnj = (Number(res.data.data.vacationDaysAllNum)).toFixed(0);
-      this.bonus.pass = (Number(res.data.data.bonusUsedNum)).toFixed(0);
-      this.bonus.passnj = (Number(res.data.data.vacationDaysUsedNum)).toFixed(0);
-      this.bonus.surplus = (Number(res.data.data.bonusUnUsedNum)).toFixed(0);
-      this.bonus.surplusnj = (Number(res.data.data.vacationDaysUnUsedNum)).toFixed(0);
+      this.bonus.total = Number(res.data.data.bonusAllNum).toFixed(0);
+      this.bonus.totalnj = Number(res.data.data.vacationDaysAllNum).toFixed(0);
+      this.bonus.pass = Number(res.data.data.bonusUsedNum).toFixed(0);
+      this.bonus.passnj = Number(res.data.data.vacationDaysUsedNum).toFixed(0);
+      this.bonus.surplus = Number(res.data.data.bonusUnUsedNum).toFixed(0);
+      this.bonus.surplusnj = Number(
+        res.data.data.vacationDaysUnUsedNum
+      ).toFixed(0);
     });
     this.getNews();
   }
@@ -3065,6 +3377,14 @@ export default {
   margin-top: 1.5%;
   height: 900px;
 }
+.left-boxCase {
+  width: 100%;
+  float: left;
+  margin-top: 1.5%;
+  height: 900px;
+  background: url(../assets/jjbg.jpg) no-repeat center;
+  background-size: 100% 100%;
+}
 .box-card {
   width: 30%;
   height: 475px;
@@ -3199,7 +3519,7 @@ h2:hover {
 .rightDemo {
   position: relative;
   width: 507.5px;
-  height: 91px;
+  height: 90px;
   border: 30px solid;
 }
 .leftDemo {
@@ -3221,7 +3541,7 @@ h2:hover {
   position: absolute;
   display: block;
   width: 507.5px;
-  height: 91px;
+  height: 90px;
   top: -15px;
   border: 15px solid;
 }
@@ -3240,7 +3560,7 @@ h2:hover {
 .bigDemo {
   width: 980px;
   margin: 0 auto;
-  margin-top: 50px;
+  margin-top: 58px;
   position: relative;
   height: 670px;
 }
@@ -3319,7 +3639,7 @@ h2:hover {
 }
 .span60 {
   display: block;
-  color: #0071bd;
+  color: #40bdc9;
   font-size: 50px;
   font-weight: 600;
   position: absolute;
@@ -3328,7 +3648,7 @@ h2:hover {
 }
 .span80 {
   display: block;
-  color: red;
+  color: #0bdbee;
   font-size: 50px;
   font-weight: 600;
   position: absolute;
@@ -3336,7 +3656,7 @@ h2:hover {
   top: 16px;
 }
 .span100 {
-  color: #8cc63e;
+  color: #83cf20;
   display: block;
   font-size: 50px;
   font-weight: 600;
@@ -3345,79 +3665,79 @@ h2:hover {
   top: 16px;
 }
 .rightDemo:nth-child(1) {
-  border-color: #5a9c8e;
-  top: 0;
+  border-color: #76c5cc;
+  top: 1.5px;
 }
 .rightDemo:nth-child(1):before {
   border-color: #69b8a7;
 }
 .leftDemo:nth-child(2) {
-  top: -30.5px;
+  top: -29px;
   width: 460px;
-  border-color: #46b2bc;
+  border-color: #69b8a7;
 }
 .leftDemo:nth-child(2):before {
   width: 460px;
-  border-color: #65c7d0;
+  border-color: #76c5cc;
 }
 .rightDemo:nth-child(3) {
   left: 485.5px;
   z-index: 2;
   width: 460px;
-  top: -61px;
-  border-color: #0071bd;
+  top: -59.5px;
+  border-color: #76c5cc;
 }
 .rightDemo:nth-child(3):before {
-  border-color: rgb(22, 138, 216);
+  border-color: #69b8a7;
   width: 460px;
 }
 .leftDemo:nth-child(4) {
   width: 475px;
-  top: -91px;
-  border-color: rgb(250, 10, 10);
+  top: -90px;
+  border-color: #69b8a7;
 }
 .leftDemo:nth-child(4):before {
   width: 475px;
-  border-color: #f7502b;
+  border-color: #76c5cc;
 }
 .rightDemo:nth-child(5) {
   left: 485.5px;
   z-index: 2;
   width: 460px;
-  top: -122px;
-  border-color: #6caf29;
+  top: -120.5px;
+  border-color: #76c5cc;
 }
 .rightDemo:nth-child(5):before {
-  border-color: #8cc63e;
+  border-color: #69b8a7;
   width: 460px;
 }
 .leftDemo:nth-child(6) {
-  width: 875px;
-  top: -153px;
-  border-color: #d9742b;
+  width: 870px;
+  top: -150px;
+  border-color: #6caf29;
 }
 .leftDemo:nth-child(6):before {
-  width: 875px;
-  border-color: rgb(221, 131, 85);
+  width: 870px;
+  border-color: #8cc63e;
 }
-// .indexbImg {
-//   width: 40px;
-//   height: 40px;
-//   border-radius: 50%;
-//   background-size: 100%;
-//   background: url(../assets/sc.png) no-repeat center;
-//   margin-left: -20px;
-//   cursor: pointer;
-// }
-// .indexbImg1 {
-//   width: 40px;
-//   height: 40px;
-//   border-radius: 50%;
-//   background-size: 100%;
-//   background: url(../assets/sc1.png) no-repeat center;
-//   margin-left: -20px;
-//   cursor: pointer;
-// }
+.indexbImg {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-size: 100%;
+  background: url(../assets/sc.png) no-repeat center;
+  margin-left: -20px;
+  cursor: pointer;
+}
+.indexbImg1 {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-size: 100%;
+  background: url(../assets/sc1.png) no-repeat center;
+  margin-left: -20px;
+  cursor: pointer;
+}
 .indexbImg:hover {
   -webkit-animation: icon-bounce 0.5s alternate;
   -moz-animation: icon-bounce 0.5s alternate;
@@ -4478,31 +4798,31 @@ h2:hover {
   float: left;
   color: #fff;
   margin-top: 1px;
-  font-family: 'Consolas';
+  font-family: "Consolas";
 }
-.zmb{
+.zmb {
   text-align: center;
   margin: 0;
   margin-top: 5px;
 }
-.njs{
+.njs {
   text-align: center;
   margin: 0;
   margin-top: 5px;
   font-size: 16px;
-  letter-spacing:2px;
+  letter-spacing: 2px;
   font-weight: normal;
 }
-.cardLeft01{
+.cardLeft01 {
   width: 175px;
   border: #f5ad18 4px solid;
-  height: 220px;;
+  height: 220px;
   border-radius: 12px;
   margin-left: 45px;
   margin-top: 10px;
   background: rgba(60, 141, 188, 0.1);
 }
-.cardLeft02{
+.cardLeft02 {
   width: 175px;
   border: #f5ad18 4px solid;
   height: 175px;
@@ -4531,7 +4851,7 @@ h2:hover {
   margin-right: 20px;
   height: 405px;
   margin-top: 19px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
   position: relative;
 }
 .luck-user-title {
@@ -4557,7 +4877,7 @@ h2:hover {
     #f0d03a,
     rgba(248, 215, 59, 0)
   );
-  height: 1px;
+  height: 2px;
 }
 .cardText::-webkit-scrollbar {
   width: 6px;
@@ -4599,239 +4919,257 @@ h2:hover {
   margin-right: 10px;
   color: red;
 }
-.icimg{
+.icimg {
   transition: All 0.3s ease-in-out;
 }
-.icimg:hover{
-  transform: scale(1.2)
+.icimg:hover {
+  transform: scale(1.2);
 }
-.njts{
+.njts {
   margin-top: 12px;
   color: #67c23a !important;
 }
-.spGreen{
+.spGreen {
   color: #67c23a !important;
 }
-.swhite{
+.swhite {
   color: #e6a23c !important;
 }
-.jbg{
+.jbg {
   animation: rotate 1.5s infinite;
 }
 @keyframes rotate {
-    0%  {
-        -webkit-transform:rotateY(0deg);
-    }
-    100% {
-        -webkit-transform:rotateY(360deg);
-    }
-
+  0% {
+    -webkit-transform: rotateY(0deg);
+  }
+  100% {
+    -webkit-transform: rotateY(360deg);
+  }
 }
 //金币
-.jb01{
+.jb01 {
   position: absolute;
   top: -85px;
   left: 40%;
 }
-.jb01 span{
+.jb01 span {
   display: block;
   position: absolute;
   color: #fff;
   top: 35%;
   left: 18%;
 }
-.jb02{
+.jb02 {
   position: absolute;
   top: -85px;
   left: 30%;
 }
-.jb02 span{
+.jb02 span {
   display: block;
   position: absolute;
   color: #fff;
   top: 35%;
   left: 18%;
 }
-.jb03{
+.jb03 {
   position: absolute;
   top: -85px;
   left: 20%;
 }
-.jb03 span{
+.jb03 span {
   display: block;
   position: absolute;
   color: #fff;
   top: 35%;
   left: 18%;
 }
-.jb04{
+.jb04 {
   position: absolute;
   top: -85px;
   left: 10%;
 }
-.jb04 span{
+.jb04 span {
   display: block;
   position: absolute;
   color: #fff;
   top: 35%;
   left: 18%;
 }
-.jb05{
+.jb05 {
   position: absolute;
   top: -85px;
   left: 0%;
 }
-.jb05 span{
+.jb05 span {
   display: block;
   position: absolute;
   color: #fff;
   top: 35%;
   left: 12%;
 }
-.jb06{
+.jb06 {
   position: absolute;
   bottom: 3px;
   left: 0%;
 }
-.jb06 span{
+.jb06 span {
   display: block;
   position: absolute;
   color: #fff;
   top: 35%;
   left: 12%;
 }
-.jb07{
+.jb07 {
   position: absolute;
   bottom: 3px;
   left: 10%;
 }
-.jb07 span{
+.jb07 span {
   display: block;
   position: absolute;
   color: #fff;
   top: 35%;
   left: 12%;
 }
-.jb08{
+.jb08 {
   position: absolute;
   bottom: 3px;
   left: 20%;
 }
-.jb08 span{
+.jb08 span {
   display: block;
   position: absolute;
   color: #fff;
   top: 35%;
   left: 12%;
 }
-.jb09{
+.jb09 {
   position: absolute;
   bottom: 3px;
   left: 30%;
 }
-.jb09 span{
+.jb09 span {
   display: block;
   position: absolute;
   color: #fff;
   top: 35%;
   left: 12%;
 }
-.jb10{
+.jb10 {
   position: absolute;
   bottom: 3px;
   left: 40%;
 }
-.jb10 span{
+.jb10 span {
   display: block;
   position: absolute;
   color: #fff;
   top: 35%;
   left: 12%;
 }
-.jb11{
+.jb11 {
   position: absolute;
   bottom: 3px;
   left: 50%;
 }
-.jb11 span{
+.jb11 span {
   display: block;
   position: absolute;
   color: #fff;
   top: 35%;
   left: 12%;
 }
-.jb12{
+.jb12 {
   position: absolute;
   bottom: 3px;
   left: 60%;
 }
-.jb12 span{
+.jb12 span {
   display: block;
   position: absolute;
   color: #fff;
   top: 35%;
   left: 12%;
 }
-.jb13{
+.jb13 {
   position: absolute;
   bottom: 3px;
   left: 70%;
 }
-.jb13 span{
+.jb13 span {
   display: block;
   position: absolute;
   color: #fff;
   top: 35%;
   left: 12%;
 }
-.jb14{
+.jb14 {
   position: absolute;
   bottom: 3px;
   left: 80%;
 }
-.jb14 span{
+.jb14 span {
   display: block;
   position: absolute;
   color: #fff;
   top: 35%;
   left: 12%;
 }
-.jb15{
+.jb15 {
   position: absolute;
   bottom: 3px;
   left: 90%;
 }
-.jb15 span{
+.jb15 span {
   display: block;
   position: absolute;
   color: #fff;
   top: 35%;
   left: 12%;
+}
+//第二屏幕
+.bgCase {
+  width: 100%;
+  height: 970px;
+  background: url(../assets/bgban5.jpg) no-repeat center;
+  background-size: 100% 100%;
+  padding: 0 30px;
+  background-color: #f0f2f5;
+  zoom: 0.9;
+}
+.leftBox{
+  width: 69%;
+  float: left;
+}
+.rightBox{
+  width: 30%;
+  height: 475px;
+  float: right;
 }
 @media (max-width: 1500px) {
   .cardLeft {
     margin-left: 10px;
   }
-  .cardLeft01{
+  .cardLeft01 {
     margin-left: 0;
   }
-  .cardText img{
+  .cardText img {
     margin-left: 0;
   }
-  .cardText span{
+  .cardText span {
     margin-left: 5px;
   }
-  .cardText p{
+  .cardText p {
     margin-right: 5px;
   }
-  .cardRight{
+  .cardRight {
     width: 52%;
     margin-right: 15px;
   }
-  .cardLeft01{
+  .cardLeft01 {
     width: 155px;
   }
-  .cardLeft02{
+  .cardLeft02 {
     width: 155px;
   }
 }
