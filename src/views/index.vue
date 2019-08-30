@@ -1756,6 +1756,7 @@
     </div>
     <div class="dashboard-editor-container" v-show="ifShowIndex1">
       <div class="left-boxCase">
+        <img src="../assets/fhui.png" class="lGoback" v-show="ifShowIndex1" @click="goHome()" style="width: 34px;height: 34px;" />
         <div class="leftBox">
           <div class="bigDemo">
                 <div class="rightDemo">
@@ -2350,6 +2351,13 @@ export default {
     };
   },
   methods: {
+    goHome(){
+      this.ifShowIndex1=false
+      this.ifShowIndex=true
+      this.showTitle["pming"] = true;
+      this.activeTitle = "销售排名";
+      this.indexTabactive=0
+    },
     judge(n) {
       this.flagShow = false;
       this.flagShowFour = false;
@@ -3021,13 +3029,8 @@ export default {
         this.showTitle["zz"] = false;
       }
       if (n === "旺季目标") {
-        this.showTitle["wj"] = true;
-        this.activeTitle = "旺季目标";
-        this.indexTabactive = index;
         this.ifShowIndex = false;
         this.ifShowIndex1 = true;
-      } else {
-        this.showTitle["wj"] = false;
       }
       if (n === "旺季目标完成度") {
         this.showTitle["wcd"] = true;
@@ -3089,7 +3092,7 @@ export default {
     },
     checkStatus(row, prop) {
       if (row.lastProfit < 0 && row.profit > 0) {
-        if (Math.abs(row[prop]) < row.dateRate) {
+        if (row[prop] < row.dateRate) {
           return "exception";
         }
         return "success";
@@ -3381,9 +3384,10 @@ export default {
   width: 100%;
   float: left;
   margin-top: 1.5%;
-  height: 900px;
+  height: 915px;
   background: url(../assets/jjbg.jpg) no-repeat center;
   background-size: 100% 100%;
+  position: relative;
 }
 .box-card {
   width: 30%;
@@ -3560,7 +3564,7 @@ h2:hover {
 .bigDemo {
   width: 980px;
   margin: 0 auto;
-  margin-top: 58px;
+  margin-top: 66px;
   position: relative;
   height: 670px;
 }
@@ -4790,7 +4794,7 @@ h2:hover {
   width: 95%;
   margin: auto;
   background: rgba(0, 0, 0, 0.3);
-  height: 440px;
+  height: 450px;
   margin-top: 15px;
   overflow: hidden;
 }
@@ -4849,7 +4853,7 @@ h2:hover {
   float: right;
   width: 50%;
   margin-right: 20px;
-  height: 405px;
+  height: 410px;
   margin-top: 19px;
   background: rgba(255, 255, 255, 0.1);
   position: relative;
@@ -4897,7 +4901,7 @@ h2:hover {
   margin-top: 62px;
   overflow: hidden;
   color: #fff;
-  height: 335px;
+  height: 340px;
   overflow-y: auto;
 }
 .cardText01 {
@@ -5145,6 +5149,13 @@ h2:hover {
   width: 30%;
   height: 475px;
   float: right;
+  margin-top: 10px;
+}
+.lGoback{
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  cursor: pointer;
 }
 @media (max-width: 1500px) {
   .cardLeft {
