@@ -2198,8 +2198,8 @@ export default {
   data() {
     return {
       activeTabNamebk: "eBay-义乌仓",
-      ifShowIndex1: true,
-      ifShowIndex: false,
+      ifShowIndex: true,
+      ifShowIndex1: false,
       indexTabactive: 0,
       titleMenuTab: [
         "eBay-义乌仓",
