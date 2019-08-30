@@ -422,7 +422,7 @@ export default {
                 this.$message.error(res.data.message);
               }
             });
-          }, 100);
+          }, 10);
         } else {
           this.$message.error(res.data.message);
         }
@@ -463,7 +463,7 @@ export default {
                 this.$message.error(res.data.message);
               }
             });
-          }, 100);
+          }, 10);
         } else {
           this.$message.error(res.data.message);
         }
