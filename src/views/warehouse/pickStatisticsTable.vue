@@ -8,7 +8,8 @@
             <el-input
               placeholder="SKU"
               size="small"
-              style="width:100px;margin-left:10px;"
+              class="winput"
+              style="margin-left:10px;"
               v-model="condition.sku"
               clearable
             ></el-input>
@@ -18,7 +19,8 @@
             <el-input
               placeholder="SKU名称"
               size="small"
-              style="width:100px;margin-left:10px;"
+              class="winput"
+              style="margin-left:10px;"
               v-model="condition.skuName"
               clearable
             ></el-input>
@@ -30,7 +32,8 @@
               placeholder="请选择"
               clearable
               size="small"
-              style="width:100px;margin-left:10px;"
+              class="winput"
+              style="margin-left:10px;"
             >
               <el-option
                 v-for="(item,index) in purchaser"
@@ -47,8 +50,9 @@
               v-model="condition.goodsSKUStatus"
               placeholder="请选择"
               clearable
+              class="winput"
               size="small"
-              style="width:110px;margin-left:10px;"
+              style="margin-left:10px;"
             >
               <el-option v-for="item in goodsState" :value="item" :key="item"></el-option>
             </el-select>
@@ -331,10 +335,16 @@ export default {
   float: left;
   margin-right: 20px;
 }
+.winput{
+  width: 140px;
+}
 @media (max-width: 1400px) {
   .floet01 {
     float: left;
     margin-right: 10px;
+  }
+  .winput{
+    width: 100px;
   }
 }
 </style>
