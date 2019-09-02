@@ -144,7 +144,7 @@
                   height="798"
                   ref="table1"
                   v-scrollBar:slim
-                  @sort-change="sortNumberZZ"
+                  @sort-change="sortNumberXS"
                 >
                   <el-table-column type="index" align="center" width="40"></el-table-column>
                   <el-table-column prop="username" align="center" label="姓名" sortable min-width="60"></el-table-column>
@@ -166,7 +166,7 @@
                       <el-progress
                         :text-inside="true"
                         :stroke-width="18"
-                        :status="checkStatus(scope.row,'rate')"
+                        :status="checkStatus1(scope.row,'rate')"
                         :percentage="Math.round(scope.row.rate*100)/100"
                       ></el-progress>
                     </template>
@@ -196,7 +196,7 @@
                   height="798"
                   ref="table1"
                   v-scrollBar:slim
-                  @sort-change="sortNumberjoom"
+                  @sort-change="sortNumberKF"
                 >
                   <el-table-column type="index" align="center"></el-table-column>
                   <el-table-column prop="username" align="center" label="姓名" sortable width="100"></el-table-column>
@@ -218,7 +218,7 @@
                       <el-progress
                         :text-inside="true"
                         :stroke-width="18"
-                        :status="checkStatus(scope.row,'rate')"
+                        :status="checkStatus1(scope.row,'rate')"
                         :percentage="Math.round(scope.row.rate*100)/100"
                       ></el-progress>
                     </template>
@@ -248,7 +248,7 @@
                   height="798"
                   ref="table1"
                   v-scrollBar:slim
-                  @sort-change="sortNumberjoom"
+                  @sort-change="sortNumberBM"
                 >
                   <el-table-column type="index" align="center"></el-table-column>
                   <el-table-column prop="username" align="center" label="部门" sortable></el-table-column>
@@ -259,7 +259,7 @@
                       <el-progress
                         :text-inside="true"
                         :stroke-width="18"
-                        :status="checkStatus(scope.row,'rate')"
+                        :status="checkStatus1(scope.row,'rate')"
                         :percentage="Math.round(scope.row.rate*100)/100"
                       ></el-progress>
                     </template>
@@ -2515,6 +2515,30 @@ export default {
         this.zzJoom = data.sort(compareUp(data, column.prop));
       }
     },
+    sortNumberXS(column, prop, order) {
+      const data = this.wcdxs;
+      if (column.order === "descending") {
+        this.wcdxs = data.sort(compareDown(data, column.prop));
+      } else {
+        this.wcdxs = data.sort(compareUp(data, column.prop));
+      }
+    },
+    sortNumberKF(column, prop, order) {
+      const data = this.wcdkf;
+      if (column.order === "descending") {
+        this.wcdkf = data.sort(compareDown(data, column.prop));
+      } else {
+        this.wcdkf = data.sort(compareUp(data, column.prop));
+      }
+    },
+    sortNumberBM(column, prop, order) {
+      const data = this.wcdbm;
+      if (column.order === "descending") {
+        this.wcdbm = data.sort(compareDown(data, column.prop));
+      } else {
+        this.wcdbm = data.sort(compareUp(data, column.prop));
+      }
+    },
     renderHeadertic(h, { column, $index }) {
       if ($index === 0) {
         let filters = this.shbm;
@@ -3117,6 +3141,13 @@ export default {
           this.tableData = data.sort(compareUp(data, column.prop));
         }
       }
+    },
+    checkStatus1(row, prop) {
+      if (row.rate < 100) {
+        return "exception";
+      }else{
+        return "success";
+      } 
     },
     checkStatus(row, prop) {
       if (row.lastProfit < 0 && row.profit > 0) {
