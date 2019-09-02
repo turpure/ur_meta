@@ -146,12 +146,20 @@
                   v-scrollBar:slim
                   @sort-change="sortNumberZZ"
                 >
-                  <el-table-column type="index" align="center"></el-table-column>
-                  <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
-                  <el-table-column prop="depart" align="center" label="部门" sortable></el-table-column>
-                  <el-table-column prop="target" align="center" label="目标" sortable="custom"></el-table-column>
-                  <el-table-column prop="amt" align="center" label="毛利" sortable="custom"></el-table-column>
-                  <el-table-column prop="bonus" align="center" label="奖金" sortable="custom"></el-table-column>
+                  <el-table-column type="index" align="center" width="40"></el-table-column>
+                  <el-table-column prop="username" align="center" label="姓名" sortable min-width="60"></el-table-column>
+                  <el-table-column prop="depart" align="center" label="部门" sortable min-width="90"></el-table-column>
+                  <el-table-column prop="target" align="center" label="目标" sortable="custom">
+                    <template slot-scope="scope">
+                      <span>{{scope.row.target |cutOut1}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="amt" align="center" label="已完成" sortable="custom"></el-table-column>
+                  <el-table-column prop="bonus" align="center" label="奖金" sortable="custom">
+                    <template slot-scope="scope">
+                      <span>{{scope.row.bonus |cutOut1}}</span>
+                    </template>
+                  </el-table-column>
                   <el-table-column prop="rxtraBonus" align="center" label="额外奖金" sortable="custom"></el-table-column>
                   <el-table-column prop="rate" align="center" label="目标进度" sortable="custom">
                     <template slot-scope="scope">
@@ -191,11 +199,19 @@
                   @sort-change="sortNumberjoom"
                 >
                   <el-table-column type="index" align="center"></el-table-column>
-                  <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
+                  <el-table-column prop="username" align="center" label="姓名" sortable width="100"></el-table-column>
                   <el-table-column prop="depart" align="center" label="部门" sortable></el-table-column>
-                  <el-table-column prop="target" align="center" label="目标" sortable="custom"></el-table-column>
-                  <el-table-column prop="amt" align="center" label="毛利" sortable="custom"></el-table-column>
-                  <el-table-column prop="bonus" align="center" label="奖金" sortable="custom"></el-table-column>
+                  <el-table-column prop="target" align="center" label="目标" sortable="custom">
+                    <template slot-scope="scope">
+                      <span>{{scope.row.target |cutOut1}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="amt" align="center" label="已完成" sortable="custom"></el-table-column>
+                  <el-table-column prop="bonus" align="center" label="奖金" sortable="custom">
+                    <template slot-scope="scope">
+                      <span>{{scope.row.bonus |cutOut1}}</span>
+                    </template>
+                  </el-table-column>
                   <el-table-column prop="rxtraBonus" align="center" label="额外奖金" sortable="custom"></el-table-column>
                   <el-table-column prop="rate" align="center" label="目标进度" sortable="custom">
                     <template slot-scope="scope">
@@ -1757,7 +1773,7 @@
     </div>
     <div class="dashboard-editor-container" v-show="ifShowIndex1">
       <div class="left-boxCase">
-        <img src="../assets/fhui.png" class="lGoback" v-show="ifShowIndex1" @click="goHome()" style="width: 34px;height: 34px;" />
+        <img src="../assets/fhui.png" class="lGoback" v-show="ifShowIndex1" @click="goHome()" style="width: 40px;height: 40px;" />
         <div class="leftBox">
           <div class="bigDemo">
                 <div class="rightDemo">

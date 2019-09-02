@@ -1362,3 +1362,12 @@ export function APIPickStatistics(param) {
     data
   })
 }
+
+export function APIWarehouseTools(param) {
+  const data = { condition: param }
+  return request({
+    url: '/warehouse-tools/ware-statistics',
+    method: 'post',
+    data
+  })
+}
