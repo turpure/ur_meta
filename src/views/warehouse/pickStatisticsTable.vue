@@ -94,7 +94,7 @@
           :height="tableHeightstock"
           style="width: 100%;margin:auto;margin-top:5px;"
         >
-          <el-table-column type="index" fixed align="center" width="80" header-align="center"></el-table-column>
+          <el-table-column type="index" fixed align="center" width="50" header-align="center"></el-table-column>
           <el-table-column label="sku" header-align="center" align="center" prop="sku"></el-table-column>
           <el-table-column label="sku名称" header-align="center" align="center" prop="skuName"></el-table-column>
           <el-table-column label="开发员" header-align="center" align="center" prop="salerName"></el-table-column>

@@ -3259,7 +3259,7 @@ export default {
         if (arrData[i].avatar == null) {
           arrData[i].avatar = `/static/img/header.1a1e548.png`;
         }
-        arrData[i].rate = Number(arrData[i].rate).toFixed(0);
+        arrData[i].rate = Math.ceil(Number(arrData[i].rate))
         arrData[i].target = Number(arrData[i].target).toFixed(0);
         arrData[i].amt = Number(arrData[i].amt).toFixed(0);
         arrData[i].bonus = Number(arrData[i].bonus).toFixed(0);
@@ -4444,7 +4444,7 @@ h2:hover {
   position: fixed;
   top: 50%;
   left: 50%;
-  margin-left: -600px;
+  margin-left: -650px;
   margin-top: -250px;
   background: rgba(255, 255, 255, 0.9);
   box-shadow: 1px 2px 10px 1px rgba(60, 141, 188, 0.2);
