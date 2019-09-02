@@ -172,7 +172,7 @@
                       <el-progress
                         :text-inside="true"
                         :stroke-width="18"
-                        :status="checkStatus1(scope.row,'rate')"
+                        :status="checkStatus(scope.row,'rate')"
                         :percentage="Math.round(scope.row.rate*100)/100"
                       ></el-progress>
                     </template>
@@ -224,7 +224,7 @@
                       <el-progress
                         :text-inside="true"
                         :stroke-width="18"
-                        :status="checkStatus1(scope.row,'rate')"
+                        :status="checkStatus(scope.row,'rate')"
                         :percentage="Math.round(scope.row.rate*100)/100"
                       ></el-progress>
                     </template>
@@ -266,18 +266,18 @@
                     align="center"
                     label="目标进度"
                     sortable="custom"
-                    width="200"
+                    width="180"
                   >
                     <template slot-scope="scope">
                       <el-progress
                         :text-inside="true"
                         :stroke-width="18"
-                        :status="checkStatus1(scope.row,'rate')"
+                        :status="checkStatus(scope.row,'rate')"
                         :percentage="Math.round(scope.row.rate*100)/100"
                       ></el-progress>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="dateRate" align="center" label="时间进度" width="200">
+                  <el-table-column prop="dateRate" align="center" label="时间进度" width="180">
                     <template slot-scope="scope">
                       <el-progress
                         :text-inside="true"
@@ -2436,8 +2436,7 @@ export default {
             this.sortData.push(dateArr[i]);
           }
         }
-      });
-      setTimeout(() => {
+        setTimeout(() => {
         if (this.sortData.length > 4) {
           this.flagShowFour = false;
           this.flagShowThree = false;
@@ -2474,6 +2473,7 @@ export default {
           this.flagShowOne = true;
         }
       }, 200);
+      });
     },
     four() {
       this.flagShowFour = true;
