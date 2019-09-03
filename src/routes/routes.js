@@ -120,6 +120,10 @@ import joomSubscribeId from '../views/productDevelop/joomSubscribeId.vue'
 // 报表中心
 import reportForm from '../views/productDevelop/reportForm.vue'
 import formEdit from '../views/productDevelop/formEdit.vue'
+// 产品引擎
+import proRecommend from '../views/analysis/proRecommend.vue'
+import proAnalysis from '../views/analysis/proAnalysis.vue'
+import mySubscribe from '../views/analysis/mySubscribe.vue'
 
 const routes = [
   {
@@ -313,6 +317,29 @@ const routes = [
         path: '/v1/settings/exchange',
         component: exchange,
         name: '美元设置'
+      }
+    ]
+  },
+  {
+    path: '/v1/products-engine/index',
+    component: Home,
+    name: '产品引擎',
+    iconCls: 'el-icon-message',
+    children: [
+      {
+        path: '/v1/products-engine/recommend',
+        component: proRecommend,
+        name: '商品推荐'
+      },
+      {
+        path: '/v1/products-engine/watch',
+        component: mySubscribe,
+        name: '我的订阅'
+      },
+      {
+        path: '/v1/products-engine/analysis',
+        component: proAnalysis,
+        name: '商品分析'
       }
     ]
   },
