@@ -1371,3 +1371,12 @@ export function APIWarehouseTools(param) {
     data
   })
 }
+
+export function APIWareSku(param) {
+  const data = { condition: param }
+  return request({
+    url: '/warehouse-tools/ware-sku?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
