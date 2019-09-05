@@ -2421,7 +2421,9 @@ export default {
             dateArr[i].avatar = `/static/img/header.1a1e548.png`;
           }
           dateArr[i].rate = Number(dateArr[i].rate).toFixed(1);
+
           dateArr[i].target = Number(dateArr[i].target).toFixed(0);
+          
           dateArr[i].amt = Number(dateArr[i].amt).toFixed(0);
           if(Number(dateArr[i].rate>=100)){
             dateArr[i].bonus = Number(dateArr[i].bonus).toFixed(0)+Number(dateArr[i].rxtraBonus).toFixed(0);
@@ -2430,7 +2432,7 @@ export default {
           }
         }
         for (var i = 0; i < dateArr.length; i++) {
-          var arrDb = dateArr[i].rate;
+          var arrDb = String(parseInt(dateArr[i].rate));
           var arrDbi = arrDb.substring(0, 1);
           if (arrDbi == n) {
             this.sortData.push(dateArr[i]);
@@ -3302,6 +3304,7 @@ export default {
         if (arrData[i].avatar == null) {
           arrData[i].avatar = `/static/img/header.1a1e548.png`;
         }
+        
         arrData[i].rate = parseInt(Number(arrData[i].rate));
         arrData[i].target = Number(arrData[i].target).toFixed(0);
         arrData[i].amt = Number(arrData[i].amt).toFixed(0);
