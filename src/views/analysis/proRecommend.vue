@@ -4,7 +4,7 @@
       <el-tabs v-model="activeName" type="card" style="background-color:#fff">
         <el-tab-pane v-for="(item, index) in this.allMenu" :label="item" :name="item" :key="index"></el-tab-pane>
       </el-tabs>
-      <el-col :span="24" class="toolbar" style="padding:15px 15px;">
+      <el-col :span="24" class="toolbar" style="padding:15px 12px;">
         <div class="floet">
           <div class="floet01">
             <span>店铺名称</span>
