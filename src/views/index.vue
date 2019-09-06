@@ -2284,6 +2284,7 @@ export default {
       last60: [],
       last80: [],
       last100: [],
+      dateArr:[],
       data: {
         id: "",
         isTop: "1"
@@ -2413,24 +2414,8 @@ export default {
       this.flagShowOne = false;
       this.flagShowThree = false;
       this.sortData = [];
-      APISiteIndex().then(res => {
-        this.spareData = res.data.data;
-        var dateArr = this.spareData;
-        for (var i = 0; i < dateArr.length; i++) {
-          if (dateArr[i].avatar == null) {
-            dateArr[i].avatar = `/static/img/header.1a1e548.png`;
-          }
-          dateArr[i].rate = Number(dateArr[i].rate).toFixed(1);
-
-          dateArr[i].target = Number(dateArr[i].target).toFixed(0);
-          
-          dateArr[i].amt = Number(dateArr[i].amt).toFixed(0);
-          if(Number(dateArr[i].rate>=100)){
-            dateArr[i].bonus = Number(dateArr[i].bonus).toFixed(0)+Number(dateArr[i].rxtraBonus).toFixed(0);
-          }else{
-            dateArr[i].bonus = 0;
-          }
-        }
+      console.log(this.sortData)
+      var dateArr=this.dateArr
         for (var i = 0; i < dateArr.length; i++) {
           var arrDb = String(parseInt(dateArr[i].rate));
           var arrDbi = arrDb.split('.');
@@ -2475,7 +2460,6 @@ export default {
           this.flagShowOne = true;
         }
       }, 200);
-      });
     },
     four() {
       this.flagShowFour = true;
@@ -3220,6 +3204,26 @@ export default {
     }
   },
   mounted() {
+    APISiteIndex().then(res => {
+        this.spareData = res.data.data;
+        var dateArr = this.spareData;
+        for (var i = 0; i < dateArr.length; i++) {
+          if (dateArr[i].avatar == null) {
+            dateArr[i].avatar = `/static/img/header.1a1e548.png`;
+          }
+          dateArr[i].rate = Number(dateArr[i].rate).toFixed(1);
+
+          dateArr[i].target = Number(dateArr[i].target).toFixed(0);
+          
+          dateArr[i].amt = Number(dateArr[i].amt).toFixed(0);
+          if(Number(dateArr[i].rate>=100)){
+            dateArr[i].bonus = Number(dateArr[i].bonus).toFixed(0)+Number(dateArr[i].rxtraBonus).toFixed(0);
+          }else{
+            dateArr[i].bonus = 0;
+          }
+        }
+        this.dateArr=dateArr
+      });
     getMenu().then(response => {
       const res = response.data.data;
       const menu = res.filter(e => e.name === "主页");
