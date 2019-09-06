@@ -4575,7 +4575,7 @@ h2:hover {
   position: fixed;
   top: 50%;
   left: 50%;
-  margin-left: -600px;
+  margin-left: -650px;
   margin-top: -133px;
   background: rgba(255, 255, 255, 0.9);
   box-shadow: 1px 2px 10px 1px rgba(60, 141, 188, 0.2);
@@ -4646,7 +4646,7 @@ h2:hover {
   position: fixed;
   top: 50%;
   left: 50%;
-  margin-left: -600px;
+  margin-left: -550px;
   margin-top: -133px;
   background: rgba(255, 255, 255, 0.9);
   box-shadow: 1px 2px 10px 1px rgba(60, 141, 188, 0.2);
