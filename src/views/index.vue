@@ -172,7 +172,7 @@
                       <el-progress
                         :text-inside="true"
                         :stroke-width="18"
-                        :status="checkStatus(scope.row,'rate')"
+                        :status="checkStatus1(scope.row,'rate')"
                         :percentage="Math.round(scope.row.rate*100)/100"
                       ></el-progress>
                     </template>
@@ -224,7 +224,7 @@
                       <el-progress
                         :text-inside="true"
                         :stroke-width="18"
-                        :status="checkStatus(scope.row,'rate')"
+                        :status="checkStatus1(scope.row,'rate')"
                         :percentage="Math.round(scope.row.rate*100)/100"
                       ></el-progress>
                     </template>
@@ -272,7 +272,7 @@
                       <el-progress
                         :text-inside="true"
                         :stroke-width="18"
-                        :status="checkStatus(scope.row,'rate')"
+                        :status="checkStatus1(scope.row,'rate')"
                         :percentage="Math.round(scope.row.rate*100)/100"
                       ></el-progress>
                     </template>
@@ -3188,7 +3188,7 @@ export default {
       }
     },
     checkStatus1(row, prop) {
-      if (row.rate < 100) {
+      if (Number(row.rate) < Number(row.dateRate)) {
         return "exception";
       } else {
         return "success";
