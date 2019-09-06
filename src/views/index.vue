@@ -2433,8 +2433,8 @@ export default {
         }
         for (var i = 0; i < dateArr.length; i++) {
           var arrDb = String(parseInt(dateArr[i].rate));
-          var arrDbi = arrDb.substring(0, 1);
-          if (arrDbi == n) {
+          var arrDbi = arrDb.split('.');
+          if (arrDbi[0] == n) {
             this.sortData.push(dateArr[i]);
           }
         }
