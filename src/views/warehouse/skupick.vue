@@ -104,9 +104,14 @@
             :current-page="this.condition.page"
             :page-sizes="[100, 200, 300, 400]"
             :page-size="this.condition.pageSize"
-            layout="total, sizes, prev, pager, next, jumper"
+            layout="total, sizes, slot, prev, pager, next, jumper"
             :total="this.total"
-          ></el-pagination>
+          >
+          <span>
+            <el-button type="text"
+                       @click="showAll">显示全部</el-button>
+          </span>
+          </el-pagination>
         </div>
       </el-col>
     </div>
@@ -171,6 +176,9 @@ export default {
     }
   },
   methods: {
+    showAll() {
+      this.handleSizeChange(this.total)
+    },
     formatter(row, column) {
       return row.changeTime ? row.changeTime.substring(0, 16) : "";
     },
