@@ -1380,3 +1380,13 @@ export function APIWareSku(param) {
     data
   })
 }
+
+export function APIWareSkuExport(param) {
+  const data = { condition: param }
+  return request({
+    url: '/warehouse-tools/ware-sku-export',
+    method: 'post',
+    data,
+    responseType: 'arraybuffer'
+  })
+}

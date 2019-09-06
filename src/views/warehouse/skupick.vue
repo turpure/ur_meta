@@ -1,7 +1,7 @@
 <template>
   <section>
     <div>
-      <el-col :span="24" class="toolbar" style="padding:15px 25px;">
+      <el-col :span="24" class="toolbar" style="padding:15px 12px;">
         <div class="floet">
           <div class="floet01">
             <span>SKU</span>
@@ -32,7 +32,7 @@
               size="small"
               class="winput"
               style="margin-left:10px;"
-              v-model="condition.store	"
+              v-model="condition.store"
               clearable
             ></el-input>
           </div>
@@ -60,16 +60,16 @@
               range-separator="至"
               start-placeholder="开始日期"
               end-placeholder="结束日期"
-              style="width:200px;margin-left:10px;"
+              style="width:220px;margin-left:10px;"
               :picker-options="pickerOptions2"
             ></el-date-picker>
           </div>
           <div class="floet01">
             <el-button size="small" type="primary" @click="getData()">查询</el-button>
           </div>
-          <!-- <div class="floet01">
+          <div class="floet01">
             <el-button size="small" type="success" @click="exportExcel">导出表格</el-button>
-          </div> -->
+          </div>
         </div>
       </el-col>
       <el-col :span="24">
@@ -85,6 +85,7 @@
           <el-table-column type="index" fixed align="center" width="50" header-align="center"></el-table-column>
           <el-table-column label="sku" header-align="center" align="center" prop="sku"></el-table-column>
           <el-table-column label="操作人" header-align="center" align="center" prop="person"></el-table-column>
+          <el-table-column label="类型" header-align="center" align="center" prop="type"></el-table-column>
           <el-table-column label="仓库" header-align="center" align="center" prop="storeName"></el-table-column>
           <el-table-column label="库位" header-align="center" align="center" prop="locationName"></el-table-column>
           <el-table-column
@@ -112,7 +113,7 @@
   </section>
 </template>
 <script type="text/ecmascript-6">
-import { APIWareSku, APIStockPerformExport } from "../../api/product";
+import { APIWareSku, APIWareSkuExport } from "../../api/product";
 import { getDeveloper,getMember,getPlatGoodsStatus } from "../../api/profit";
 import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 export default {
@@ -174,7 +175,7 @@ export default {
       return row.changeTime ? row.changeTime.substring(0, 16) : "";
     },
     exportExcel() {
-      APIStockPerformExport(this.condition).then(res => {
+      APIWareSkuExport(this.condition).then(res => {
         const blob = new Blob([res.data], {
           type:
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
@@ -260,6 +261,10 @@ export default {
     getPlatGoodsStatus().then(response => {
       this.goodsState = response.data.data;
     });
+    this.condition.changeTime = [
+      getMonthDate("lastMonth").start,
+       getMonthDate("lastMonth").end,
+    ];
     this.getData();
   }
 };
@@ -323,10 +328,10 @@ export default {
 @media (max-width: 1400px) {
   .floet01 {
     float: left;
-    margin-right: 10px;
+    margin-right: 5px;
   }
   .winput{
-    width: 130px;
+    width: 115px;
   }
 }
 </style>
