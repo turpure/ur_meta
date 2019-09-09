@@ -137,7 +137,7 @@
                   :key="index"
                 ></el-tab-pane>
               </el-tabs>
-              <div v-show="tabwcd.xs">
+              <div v-show="tabwcd.xs" class="infoTable">
                 <el-table
                   :data="wcdxs"
                   size="small"
@@ -147,6 +147,9 @@
                   @sort-change="sortNumberXS"
                 >
                   <el-table-column type="index" align="center" width="40"></el-table-column>
+                  <el-table-column prop="depart" align="center" label="部门" sortable min-width="90">
+                    <el-table-column prop="depart" :render-header="renderHeaderticXs" align="center"></el-table-column>
+                  </el-table-column>
                   <el-table-column
                     prop="username"
                     align="center"
@@ -154,7 +157,6 @@
                     sortable
                     min-width="60"
                   ></el-table-column>
-                  <el-table-column prop="depart" align="center" label="部门" sortable min-width="90"></el-table-column>
                   <el-table-column prop="target" align="center" label="目标" sortable="custom">
                     <template slot-scope="scope">
                       <span>{{scope.row.target |cutOut1}}</span>
@@ -195,7 +197,7 @@
                   </el-table-column>
                 </el-table>
               </div>
-              <div v-show="tabwcd.kf">
+              <div v-show="tabwcd.kf" class="infoTable">
                 <el-table
                   :data="wcdkf"
                   size="small"
@@ -204,9 +206,11 @@
                   v-scrollBar:slim
                   @sort-change="sortNumberKF"
                 >
-                  <el-table-column type="index" align="center"></el-table-column>
+                  <el-table-column type="index" align="center" width="40"></el-table-column>
+                  <el-table-column prop="depart" align="center" label="部门" sortable min-width="90">
+                    <el-table-column prop="depart" :render-header="renderHeaderticKf" align="center"></el-table-column>
+                  </el-table-column>
                   <el-table-column prop="username" align="center" label="姓名" sortable width="100"></el-table-column>
-                  <el-table-column prop="depart" align="center" label="部门" sortable></el-table-column>
                   <el-table-column prop="target" align="center" label="目标" sortable="custom">
                     <template slot-scope="scope">
                       <span>{{scope.row.target |cutOut1}}</span>
@@ -2257,7 +2261,9 @@ export default {
       activeTabzz: "郑州eBay平台",
       activeTabwcd: "所有销售",
       wcdxs: [],
+      wcdxsTotal:[],
       wcdkf: [],
+      wcdkfTotal:[],
       wcdbm: [],
       flagShow: false,
       sysUserName: null,
@@ -2323,9 +2329,12 @@ export default {
       developerTable: [],
       proTable: [],
       proTablepm: [],
+      indexSybm:['运营一部','运营二部','运营三部','运营五部','运营六部','运营七部','郑州分部Joom','郑州分部eBay1','郑州分部eBay2','郑州分部eBay3'],
       saleSh: [],
       saleDepartment: [],
       saleDevelop: [],
+      xsBmSx:null,
+      kfBmSx:null,
       saleZz: [],
       titleMenuzz: [],
       titleMenuwcd: ["所有销售", "所有开发", "所有部门"],
@@ -2414,7 +2423,6 @@ export default {
       this.flagShowOne = false;
       this.flagShowThree = false;
       this.sortData = [];
-      console.log(this.sortData)
       var dateArr=this.dateArr
         for (var i = 0; i < dateArr.length; i++) {
           var arrDb = String(parseInt(dateArr[i].rate));
@@ -2566,6 +2574,106 @@ export default {
         this.wcdbm = data.sort(compareDown(data, column.prop));
       } else {
         this.wcdbm = data.sort(compareUp(data, column.prop));
+      }
+    },
+    xsBmSxList(){
+      var xsNum=this.xsBmSx
+      var xsList=this.wcdxsTotal
+      var arrDy=[]
+      if(xsNum){
+        for(var i=0;i<xsList.length;i++){
+          if(xsList[i].depart==xsNum){
+            arrDy.push(xsList[i])
+          }
+        }
+        this.wcdxs=arrDy
+      }else{
+        this.wcdxs=this.wcdxsTotal
+      }
+    },
+    kfBmSxList(){
+      var xsNum=this.kfBmSx
+      var xsList=this.wcdkfTotal
+      var arrDy=[]
+      if(xsNum){
+        for(var i=0;i<xsList.length;i++){
+          if(xsList[i].depart==xsNum){
+            arrDy.push(xsList[i])
+          }
+        }
+        this.wcdkf=arrDy
+      }else{
+        this.wcdkf=this.wcdkfTotal
+      }
+    },
+    renderHeaderticXs(h, { column, $index }) {
+      if ($index === 0) {
+        let filters = this.indexSybm;
+        return h(
+          "el-select",
+          {
+            props: {
+              placeholder: "请选择",
+              value: this.xsBmSx,
+              size: "mini",
+              clearable: true
+            },
+            on: {
+              input: value => {
+                this.xsBmSx = value;
+                this.$emit("input", value);
+              },
+              change: searchValue => {
+                this.xsBmSxList();
+              }
+            }
+          },
+          [
+            filters.map(item => {
+              return h("el-option", {
+                props: {
+                  value: item,
+                  label: item
+                }
+              });
+            })
+          ]
+        );
+      }
+    },
+    renderHeaderticKf(h, { column, $index }) {
+      if ($index === 0) {
+        let filters = this.indexSybm;
+        return h(
+          "el-select",
+          {
+            props: {
+              placeholder: "请选择",
+              value: this.kfBmSx,
+              size: "mini",
+              clearable: true
+            },
+            on: {
+              input: value => {
+                this.kfBmSx = value;
+                this.$emit("input", value);
+              },
+              change: searchValue => {
+                this.kfBmSxList();
+              }
+            }
+          },
+          [
+            filters.map(item => {
+              return h("el-option", {
+                props: {
+                  value: item,
+                  label: item
+                }
+              });
+            })
+          ]
+        );
       }
     },
     renderHeadertic(h, { column, $index }) {
@@ -3265,9 +3373,11 @@ export default {
     });
     getSiteIndexXs().then(res => {
       this.wcdxs = res.data.data;
+      this.wcdxsTotal = res.data.data;
     });
     getSiteIndexKf().then(res => {
       this.wcdkf = res.data.data;
+      this.wcdkfTotal = res.data.data;
     });
     getSiteIndexBM().then(res => {
       this.wcdbm = res.data.data;
