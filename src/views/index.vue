@@ -147,8 +147,8 @@
                   @sort-change="sortNumberXS"
                 >
                   <el-table-column type="index" align="center" width="40"></el-table-column>
-                  <el-table-column prop="depart" align="center" label="部门" sortable min-width="90">
-                    <el-table-column prop="depart" :render-header="renderHeaderticXs" align="center"></el-table-column>
+                  <el-table-column prop="depart" align="center" label="部门" sortable min-width="95">
+                    <el-table-column prop="depart" :render-header="renderHeaderticXs" align="center" min-width="95"></el-table-column>
                   </el-table-column>
                   <el-table-column
                     prop="username"
@@ -207,10 +207,10 @@
                   @sort-change="sortNumberKF"
                 >
                   <el-table-column type="index" align="center" width="40"></el-table-column>
-                  <el-table-column prop="depart" align="center" label="部门" sortable min-width="90">
-                    <el-table-column prop="depart" :render-header="renderHeaderticKf" align="center"></el-table-column>
+                  <el-table-column prop="depart" align="center" label="部门" sortable min-width="95">
+                    <el-table-column prop="depart" :render-header="renderHeaderticKf" align="center" min-width="95"></el-table-column>
                   </el-table-column>
-                  <el-table-column prop="username" align="center" label="姓名" sortable width="100"></el-table-column>
+                  <el-table-column prop="username" align="center" label="姓名" sortable min-width="60"></el-table-column>
                   <el-table-column prop="target" align="center" label="目标" sortable="custom">
                     <template slot-scope="scope">
                       <span>{{scope.row.target |cutOut1}}</span>
@@ -1978,6 +1978,7 @@
                 <img
                   :src="item.avatar"
                   class="icimg"
+                  @click="goBlack(item.avatar)"
                   style="width: 70px;height: 70px;border-radius:50%;"
                 />
                 <p class="namep">{{item.username}}</p>
@@ -2029,6 +2030,7 @@
               <img
                 :src="item.avatar"
                 class="icimg"
+                @click="goBlack(item.avatar)"
                 style="width: 70px;height: 70px;border-radius:50%;"
               />
               <p class="namepFour">{{item.username}}</p>
@@ -2079,6 +2081,7 @@
               <img
                 :src="item.avatar"
                 class="icimg"
+                @click="goBlack(item.avatar)"
                 style="width: 80px;height: 80px;border-radius:50%;"
               />
               <p class="namepThree">{{item.username}}</p>
@@ -2129,6 +2132,7 @@
               <img
                 :src="item.avatar"
                 class="icimg"
+                @click="goBlack(item.avatar)"
                 style="width: 80px;height: 80px;border-radius:50%;"
               />
               <p class="namepTwo">{{item.username}}</p>
@@ -2179,6 +2183,7 @@
               <img
                 :src="item.avatar"
                 class="icimg"
+                @click="goBlack(item.avatar)"
                 style="width: 100px;height: 100px;border-radius:50%;"
               />
               <p class="namepOne">{{item.username}}</p>
@@ -2409,6 +2414,9 @@ export default {
     };
   },
   methods: {
+    goBlack(n){
+      window.open(n);
+    },
     goHome() {
       this.ifShowIndex1 = false;
       this.ifShowIndex = true;
@@ -2426,6 +2434,7 @@ export default {
       var dateArr=this.dateArr
         for (var i = 0; i < dateArr.length; i++) {
           var arrDb = String(parseInt(dateArr[i].rate));
+          console.log(dateArr[i].rate)
           var arrDbi = arrDb.split('.');
           if (arrDbi[0] == n) {
             this.sortData.push(dateArr[i]);
@@ -3319,7 +3328,7 @@ export default {
           if (dateArr[i].avatar == null) {
             dateArr[i].avatar = `/static/img/header.1a1e548.png`;
           }
-          dateArr[i].rate = Number(dateArr[i].rate).toFixed(1);
+          dateArr[i].rate = Number(dateArr[i].rate).toFixed(2);
 
           dateArr[i].target = Number(dateArr[i].target).toFixed(0);
           
@@ -5146,6 +5155,7 @@ h2:hover {
 }
 .icimg {
   transition: All 0.3s ease-in-out;
+  cursor: pointer;
 }
 .icimg:hover {
   transform: scale(1.2);
