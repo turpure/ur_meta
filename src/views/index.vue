@@ -2434,7 +2434,6 @@ export default {
       var dateArr=this.dateArr
         for (var i = 0; i < dateArr.length; i++) {
           var arrDb = String(parseInt(dateArr[i].rate));
-          console.log(dateArr[i].rate)
           var arrDbi = arrDb.split('.');
           if (arrDbi[0] == n) {
             this.sortData.push(dateArr[i]);
