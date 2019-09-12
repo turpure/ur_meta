@@ -3373,12 +3373,12 @@ export default {
     APIBranchDpart().then(res => {
       this.zzbm = res.data.data;
     });
-    getZzTargetEbay().then(res => {
-      this.zzEbay = res.data.data;
-    });
-    getZzTargetJoom().then(res => {
-      this.zzJoom = res.data.data;
-    });
+    // getZzTargetEbay().then(res => {
+    //   this.zzEbay = res.data.data;
+    // });
+    // getZzTargetJoom().then(res => {
+    //   this.zzJoom = res.data.data;
+    // });
     getSiteIndexXs().then(res => {
       this.wcdxs = res.data.data;
       this.wcdxsTotal = res.data.data;
