@@ -34,7 +34,7 @@
           ></el-option>
         </el-select>
         <span class="exportAccount" @click="exportEbay">导出所选账号</span>
-        <span class="exportAccount1" @click="ImportEbay" style="margin-left:10px;">一键盘导入Ibay</span>
+        <span class="exportAccount1" @click="ImportEbay" style="margin-left:10px;">一键导入Ibay</span>
         <!--<el-button type="danger">导出所选账号</el-button>-->
       </el-col>
     </el-col>
