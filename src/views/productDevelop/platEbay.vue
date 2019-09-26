@@ -171,7 +171,8 @@
       <el-col :span="24" style="padding: 0">
         <el-col :span="24">
           <h3 class="toolbar essential">站点组</h3>
-          <el-form-item label="*站点" style="margin-bottom: 5px;margin-top: 5px">
+          <span style="color:red;line-height:40px;margin-left:25px;">*</span>
+          <span style="color:#606266;margin-right:5px;">站点</span>
             <el-select
               size="small"
               v-model="ebaySiteUr"
@@ -189,7 +190,6 @@
             <!--style="width:245px;"-->
             <!--v-model="wishForm.site"-->
             <!--:disabled="true"></el-input>-->
-          </el-form-item>
         </el-col>
         <el-col :span="24">
           <h3 class="toolbar essential">多属性</h3>
@@ -356,9 +356,9 @@
         <h3 class="toolbar essential">主信息</h3>
       </el-col>
       <el-col :span="6">
-        <el-form-item label="*刊登分类">
-          <el-input size="small" style="width:245px;" v-model="wishForm.listedCate"></el-input>
-        </el-form-item>
+        <span style="color:red;line-height:40px;">*</span>
+        <span style="color:#606266;margin-right:5px;">刊登分类</span>
+        <el-input size="small" style="width:245px;" v-model="wishForm.listedCate"></el-input>  
       </el-col>
       <el-col :span="6">
         <el-form-item label="刊登分类2">
@@ -472,7 +472,7 @@
         </el-col>
       </el-col>
       <el-col :span="24">
-        <span style="text-align: right;margin-top: 8px;float: left;padding-left: 40px">*描述</span>
+        <span style="text-align: right;margin-top: 8px;float: left;padding-left: 40px"><span style="color:red">*</span>描述</span>
         <el-col :span="22">
           <el-input
             size="small"
@@ -567,7 +567,7 @@
       <el-col :span="12" style="margin-bottom: 40px;">
         <h4 class="adres">境内运输方式</h4>
         <el-col :span="10">
-          <el-col :span="7" style="margin-top: 10px;text-align: center" class="font12">*运输方式1</el-col>
+          <el-col :span="7" style="margin-top: 10px;text-align: center" class="font12"><span style="color:red">*</span>运输方式1</el-col>
           <el-col :span="17">
             <el-select
               style="width: 95%"
@@ -630,7 +630,7 @@
       <el-col :span="12">
         <h4 class="adres">境外运输方式</h4>
         <el-col :span="10">
-          <el-col :span="7" style="margin-top: 10px;text-align: center" class="font12">*运输方式1</el-col>
+          <el-col :span="7" style="margin-top: 10px;text-align: center" class="font12"><span style="color:red">*</span>运输方式1</el-col>
           <el-col :span="17">
             <el-select
               style="width: 95%"
