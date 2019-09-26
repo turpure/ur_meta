@@ -34,6 +34,7 @@
           ></el-option>
         </el-select>
         <span class="exportAccount" @click="exportEbay">导出所选账号</span>
+        <span class="exportAccount1" @click="ImportEbay" style="margin-left:10px;">导入eBay</span>
         <!--<el-button type="danger">导出所选账号</el-button>-->
       </el-col>
     </el-col>
@@ -882,7 +883,8 @@ import {
   APIFinishPlat,
   APIDeleteVariant,
   APIDeleteEbaySku,
-  APISaveFinishPlat
+  APISaveFinishPlat,
+  APIPlatEbayToIbay
 } from "../../api/product";
 import {
   getPlatEbayAccount,
@@ -969,6 +971,26 @@ export default {
     };
   },
   methods: {
+    ImportEbay(){
+     if (this.accountNum != "") {
+        let objStr = {
+          id: this.wishForm.infoId,
+          account: this.accountNum
+        };
+      APIPlatEbayToIbay(objStr).then(res => {
+        if (res.data.code === 200) {
+          this.$message({
+            message: "导入成功",
+            type: "success"
+          });
+        } else {
+          this.$message.error(res.data.message);
+        }
+      });
+      } else {
+        this.$message.error("请选择账号");
+      }
+    },
     replaceColor(){
       for(var i=0;i<this.title.length;i++){
         var ordDate=this.title[i].value
@@ -1891,15 +1913,27 @@ section {
   cursor: pointer;
   background: linear-gradient(to bottom, #f5f7fa 0%, #f5f7fa 45%,#d4d4d4 100%);
 }
+.exportAccount1 {
+  display: block;
+  float: left;
+  border: #dcdfe6 solid 1px;
+  height: 38px;
+  line-height: 38px;
+  background: #fff;
+  padding: 0 10px;
+  font-size: 13px;
+  cursor: pointer;
+  background: linear-gradient(to bottom, #f5f7fa 0%, #f5f7fa 45%,#d4d4d4 100%);
+}
 .selee .el-input__inner {
   border-radius: 300px !important;
 }
 .leftmedia{
-  margin-left: 21%;
+  margin-left: 18%;
 }
 @media screen and (max-width: 1600px){
    .leftmedia{
-     margin-left: 14%;
+     margin-left: 11%;
    }
 }
 @media screen and (max-width: 1440px){
