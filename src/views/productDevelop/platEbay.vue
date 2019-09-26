@@ -34,7 +34,7 @@
           ></el-option>
         </el-select>
         <span class="exportAccount" @click="exportEbay">导出所选账号</span>
-        <span class="exportAccount1" @click="ImportEbay" style="margin-left:10px;">导入eBay</span>
+        <span class="exportAccount1" @click="ImportEbay" style="margin-left:10px;">一键盘导入Ibay</span>
         <!--<el-button type="danger">导出所选账号</el-button>-->
       </el-col>
     </el-col>
@@ -872,6 +872,7 @@
         </div>
       </el-dialog>
     </el-form>
+    <div class="dzz" v-loading="listLoading" v-if="isIbay"></div>
   </section>
 </template>
 <script type="text/ecmascript-6">
@@ -899,6 +900,8 @@ export default {
       newColor:null,
       ordSize:null,
       newSize:null,
+      isIbay:false,
+      listLoading:true,
       showattribute1:false,
       radio: "",
       columns: "",
@@ -977,8 +980,10 @@ export default {
           id: this.wishForm.infoId,
           account: this.accountNum
         };
+        this.isIbay=true
       APIPlatEbayToIbay(objStr).then(res => {
         if (res.data.code === 200) {
+          this.isIbay=false
           this.$message({
             message: "导入成功",
             type: "success"
@@ -1960,5 +1965,13 @@ section {
    .leftmedia{
      margin-left: 9%;
    }
+}
+.dzz{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
 }
 </style>
