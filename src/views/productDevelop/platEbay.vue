@@ -171,10 +171,10 @@
       <el-col :span="24" style="padding: 0">
         <el-col :span="24">
           <h3 class="toolbar essential">站点组</h3>
-          <el-form-item label="站点" style="margin-bottom: 5px;margin-top: 5px">
+          <el-form-item label="*站点" style="margin-bottom: 5px;margin-top: 5px">
             <el-select
               size="small"
-              v-model="wishForm.site"
+              v-model="ebaySiteUr"
               @change="siteEbay($event)"
               style="width:245px;"
             >
@@ -356,7 +356,7 @@
         <h3 class="toolbar essential">主信息</h3>
       </el-col>
       <el-col :span="6">
-        <el-form-item label="刊登分类">
+        <el-form-item label="*刊登分类">
           <el-input size="small" style="width:245px;" v-model="wishForm.listedCate"></el-input>
         </el-form-item>
       </el-col>
@@ -567,12 +567,12 @@
       <el-col :span="12" style="margin-bottom: 40px;">
         <h4 class="adres">境内运输方式</h4>
         <el-col :span="10">
-          <el-col :span="7" style="margin-top: 10px;text-align: center" class="font12">运输方式1</el-col>
+          <el-col :span="7" style="margin-top: 10px;text-align: center" class="font12">*运输方式1</el-col>
           <el-col :span="17">
             <el-select
               style="width: 95%"
               clearable
-              v-model="wishForm.inShippingMethod1"
+              v-model="URinShippingMethod1"
               placeholder="--境内物流选择--"
             >
               <el-option
@@ -630,12 +630,12 @@
       <el-col :span="12">
         <h4 class="adres">境外运输方式</h4>
         <el-col :span="10">
-          <el-col :span="7" style="margin-top: 10px;text-align: center" class="font12">运输方式1</el-col>
+          <el-col :span="7" style="margin-top: 10px;text-align: center" class="font12">*运输方式1</el-col>
           <el-col :span="17">
             <el-select
               style="width: 95%"
               clearable
-              v-model="wishForm.outShippingMethod1"
+              v-model="URoutShippingMethod1"
               placeholder="--境外物流选择--"
             >
               <el-option
@@ -896,6 +896,9 @@ import { APISaveEbayInfo } from "../../api/platebay";
 export default {
   data() {
     return {
+      ebaySiteUr:null,
+      URoutShippingMethod1:null,
+      URinShippingMethod1:null,
       ordColor:null,
       newColor:null,
       ordSize:null,
@@ -1047,7 +1050,14 @@ export default {
       //     this.$message.error(res.data.message);
       //   }
       // });
-      for (var i = 0; i < this.title.length; i++) {
+      if(this.ebaySiteUr==null){
+        this.$message.error('请选择站点');
+      }else if(this.URinShippingMethod1==null){
+        this.$message.error('请选择境内运输方式1');
+      }else if(this.URoutShippingMethod1==null){
+        this.$message.error('请选择境外运输方式1');
+      }else{
+        for (var i = 0; i < this.title.length; i++) {
         var obj = {};
         obj.columns = [];
         obj.pictureKey = this.radio;
@@ -1074,7 +1084,7 @@ export default {
       };
       var specificsData = JSON.stringify(objStr);
       for(let n=0;n<this.ebaySite.length;n++){
-        if(this.wishForm.site==this.ebaySite[n].name){
+        if(this.ebaySiteUr==this.ebaySite[n].name){
          this.wishForm.site=this.ebaySite[n].code
         }
       }
@@ -1110,13 +1120,13 @@ export default {
           features: this.wishForm.features,
           regionManufacture: this.wishForm.regionManufacture,
           reserveField: this.wishForm.reserveField,
-          inShippingMethod1: this.wishForm.inShippingMethod1,
+          inShippingMethod1: this.URinShippingMethod1,
           inFirstCost1: this.wishForm.inFirstCost1,
           inSuccessorCost1: this.wishForm.inSuccessorCost1,
           inShippingMethod2: this.wishForm.inShippingMethod2,
           inFirstCost2: this.wishForm.inFirstCost2,
           inSuccessorCost2: this.wishForm.inSuccessorCost2,
-          outShippingMethod1: this.wishForm.outShippingMethod1,
+          outShippingMethod1: this.URoutShippingMethod1,
           outFirstCost1: this.wishForm.outFirstCost1,
           outSuccessorCost1: this.wishForm.outSuccessorCost1,
           outShipToCountry1: this.wishForm.outShipToCountry1,
@@ -1149,12 +1159,13 @@ export default {
         } else {
           this.$message.error(res.data.message);
         }
-        for(let s=0;s<this.ebaySite.length;s++){
-          if(this.wishForm.site==this.ebaySite[s].code){
-           this.wishForm.site=this.ebaySite[s].name
-           }
-        }
+        // for(let s=0;s<this.ebaySite.length;s++){
+        //   if(this.wishForm.site==this.ebaySite[s].code){
+        //    this.wishForm.site=this.ebaySite[s].name
+        //    }
+        // }
       });
+      }
     },
     siteEbay(e) {
       this.wishForm.site = e;
@@ -1162,21 +1173,24 @@ export default {
       this.InFirEbay();
       this.InSecEbay();
       setTimeout(()=>{
-        if(this.ebayInFir.length!=0){
-          this.wishForm.inShippingMethod1=this.ebayInFir[0].servicesName
-        }else{
-          this.wishForm.inShippingMethod1=null
-        }
-        if(this.ebayOutFir.length!=0){
-          this.wishForm.outShippingMethod1=this.ebayOutFir[0].servicesName
-        }else{
-          this.wishForm.outShippingMethod1=null
-        }
-        if(this.ebayInSec.length!=0){
-          this.wishForm.inShippingMethod2=this.ebayInSec[0].servicesName
-        }else{
-          this.wishForm.inShippingMethod2=null
-        }
+        this.URinShippingMethod1=null
+        this.URoutShippingMethod1=null
+        this.wishForm.inShippingMethod2=null
+        // if(this.ebayInFir.length!=0){
+        //   this.wishForm.inShippingMethod1=this.ebayInFir[0].servicesName
+        // }else{
+        //   this.wishForm.inShippingMethod1=null
+        // }
+        // if(this.ebayOutFir.length!=0){
+        //   this.wishForm.outShippingMethod1=this.ebayOutFir[0].servicesName
+        // }else{
+        //   this.wishForm.outShippingMethod1=null
+        // }
+        // if(this.ebayInSec.length!=0){
+        //   this.wishForm.inShippingMethod2=this.ebayInSec[0].servicesName
+        // }else{
+        //   this.wishForm.inShippingMethod2=null
+        // }
         for(let i=0;i<this.ebaySite.length;i++){
           if(this.ebaySite[i].name==e){
             this.currencyCode=`--${this.ebaySite[i].currencyCode}--`
@@ -1660,6 +1674,13 @@ export default {
       });
     },
     keep() {
+      if(this.ebaySiteUr==null){
+        this.$message.error('请选择站点');
+      }else if(this.URinShippingMethod1==null){
+        this.$message.error('请选择境内运输方式1');
+      }else if(this.URoutShippingMethod1==null){
+        this.$message.error('请选择境外运输方式1');
+      }else{
       for (var i = 0; i < this.title.length; i++) {
         var obj = {};
         obj.columns = [];
@@ -1687,7 +1708,7 @@ export default {
       };
       var specificsData = JSON.stringify(objStr);
       for(let n=0;n<this.ebaySite.length;n++){
-        if(this.wishForm.site==this.ebaySite[n].name){
+        if(this.ebaySiteUr==this.ebaySite[n].name){
          this.wishForm.site=this.ebaySite[n].code
         }
       }
@@ -1721,13 +1742,13 @@ export default {
           features: this.wishForm.features,
           regionManufacture: this.wishForm.regionManufacture,
           reserveField: this.wishForm.reserveField,
-          inShippingMethod1: this.wishForm.inShippingMethod1,
+          inShippingMethod1: this.URinShippingMethod1,
           inFirstCost1: this.wishForm.inFirstCost1,
           inSuccessorCost1: this.wishForm.inSuccessorCost1,
           inShippingMethod2: this.wishForm.inShippingMethod2,
           inFirstCost2: this.wishForm.inFirstCost2,
           inSuccessorCost2: this.wishForm.inSuccessorCost2,
-          outShippingMethod1: this.wishForm.outShippingMethod1,
+          outShippingMethod1: this.URoutShippingMethod1,
           outFirstCost1: this.wishForm.outFirstCost1,
           outSuccessorCost1: this.wishForm.outSuccessorCost1,
           outShipToCountry1: this.wishForm.outShipToCountry1,
@@ -1760,12 +1781,13 @@ export default {
         } else {
           this.$message.error(res.data.message);
         }
-        for(let s=0;s<this.ebaySite.length;s++){
-          if(this.wishForm.site==this.ebaySite[s].code){
-           this.wishForm.site=this.ebaySite[s].name
-           }
-        }
+        // for(let s=0;s<this.ebaySite.length;s++){
+        //   if(this.wishForm.site==this.ebaySite[s].code){
+        //    this.wishForm.site=this.ebaySite[s].name
+        //    }
+        // }
       });
+    }
     }
   },
   mounted() {
