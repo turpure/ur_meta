@@ -989,6 +989,7 @@ export default {
             type: "success"
           });
         } else {
+          this.isIbay=false
           this.$message.error(res.data.message);
         }
       });
