@@ -4,7 +4,7 @@
       <el-tabs v-model="activeName" type="card" style="background-color:#fff">
         <el-tab-pane v-for="(item, index) in this.allMenu" :label="item" :name="item" :key="index"></el-tab-pane>
       </el-tabs>
-      <el-col :span="24" class="toolbar" style="padding:15px 12px;">
+      <el-col :span="24" class="toolbar" style="padding:15px 5px;">
         <div class="floet">
           <div class="floet01">
             <span>店铺名称</span>
@@ -85,7 +85,7 @@
               range-separator="至"
               start-placeholder="开始日期"
               end-placeholder="结束日期"
-              style="width:200px;margin-left:10px;"
+              style="width:200px;"
               :picker-options="pickerOptions2"
             ></el-date-picker>
           </div>
@@ -430,8 +430,13 @@ export default {
     float: left;
     margin-right: 10px;
   }
+  .floet01 span{
+    width: 70px;
+    text-align: center;
+    display: inline-block;
+  }
   .winput {
-    width: 130px;
+    width: 100px;
   }
   .proCase01 {
     width: 11%;
