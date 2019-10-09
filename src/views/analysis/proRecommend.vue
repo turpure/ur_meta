@@ -4,99 +4,6 @@
       <el-tabs v-model="activeName" type="card" style="background-color:#fff">
         <el-tab-pane v-for="(item, index) in this.allMenu" :label="item" :name="item" :key="index"></el-tab-pane>
       </el-tabs>
-      <el-col :span="24" class="toolbar" style="padding:15px 5px;">
-        <div class="floet">
-          <div class="floet01">
-            <span>店铺名称</span>
-            <el-input
-              placeholder="店铺名称"
-              size="small"
-              class="winput"
-              style="margin-left:2px;"
-              v-model="condition.sku"
-              clearable
-            ></el-input>
-          </div>
-          <div class="floet01">
-            <span>商品售价</span>
-            <el-input
-              placeholder="商品售价"
-              size="small"
-              class="winput"
-              style="margin-left:2px;"
-              v-model="condition.location"
-              clearable
-            ></el-input>
-          </div>
-          <div class="floet01">
-            <span>总销量</span>
-            <el-input
-              placeholder="总销量"
-              size="small"
-              class="winput"
-              style="margin-left:2px;"
-              v-model="condition.store	"
-              clearable
-            ></el-input>
-          </div>
-          <div class="floet01">
-            <span>产品 ID</span>
-            <el-input
-              placeholder="产品 ID"
-              size="small"
-              class="winput"
-              style="margin-left:2px;"
-              v-model="condition.person"
-              clearable
-            ></el-input>
-          </div>
-          <div class="floet01">
-            <span>发货地</span>
-            <el-input
-              placeholder="发货地"
-              size="small"
-              class="winput"
-              style="margin-left:2px;"
-              v-model="condition.person"
-              clearable
-            ></el-input>
-          </div>
-          <div class="floet01">
-            <span>商品关键字</span>
-            <el-input
-              placeholder="商品关键字"
-              size="small"
-              class="winput"
-              style="margin-left:2px;"
-              v-model="condition.person"
-              clearable
-            ></el-input>
-          </div>
-          <div class="floet01">
-            <span>上架时间</span>
-            <el-date-picker
-              size="small"
-              v-model="condition.changeTime"
-              value-format="yyyy-MM-dd"
-              type="daterange"
-              align="right"
-              clearable
-              unlink-panels
-              range-separator="至"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-              style="width:200px;"
-              :picker-options="pickerOptions2"
-            ></el-date-picker>
-          </div>
-          <div class="floet01">
-            <el-button size="small" type="primary" @click="getData()">查询</el-button>
-          </div>
-          <!-- <div class="floet01">
-            <el-button size="small" type="success" @click="exportExcel">导出表格</el-button>
-          </div>-->
-        </div>
-      </el-col>
       <div class="proBox">
         <div class="proCase01" v-for="(item,index) in 21" :key="index">
           <div class="priImg">
@@ -141,7 +48,7 @@ export default {
   data() {
     return {
       tableHeightstock: window.innerHeight - 160,
-      allMenu: ["Wish", "Ebay", "Joom"],
+      allMenu: ["Wish", "Ebay", "Joom", "Amazon", "Aliexpress"],
       listLoading: false,
       activeName: "Wish",
       developer: [],

@@ -10,9 +10,11 @@
         ></el-tab-pane>
       </el-tabs>
       <div class="tabPlat">
-        <a class="platActive">Wish</a>
-        <a>Ebay</a>
-        <a>Joom</a>
+        <a
+          :class="platActive==index?'platActive':''"
+          v-for="(item, index) in this.allMenuAll"
+          :key="index"
+          >{{item}}</a>
         <div class="tabRight">
           <div class="tr01">
             <span class="trActive"></span>
@@ -221,11 +223,14 @@ export default {
   data() {
     return {
       tableHeightstock: window.innerHeight - 160,
+      allMenuAll: ["Wish", "Ebay", "Joom", "Amazon", "Aliexpress"],
+      activeNameAll: "Wish",
       allMenu: [],
       listLoading: false,
       activeName: "/v1/products-engine/analysis-new-products",
       developer: [],
       purchaser: [],
+      platActive: 0,
       goodsState: [],
       condition: {
         sku: null,

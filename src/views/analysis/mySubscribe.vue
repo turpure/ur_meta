@@ -294,7 +294,7 @@ export default {
   data() {
     return {
       tableHeightstock: window.innerHeight - 160,
-      allMenuAll: ["Wish", "Ebay", "Joom"],
+      allMenuAll: ["Wish", "Ebay", "Joom", "Amazon", "Aliexpress"],
       activeNameAll: "Wish",
       listLoading: false,
       platActive: 0,
