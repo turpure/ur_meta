@@ -512,7 +512,7 @@ export default {
     },
     // 导出
     exportExcel(form) {
-      console.log(form)
+      this.listLoading = true;
       const myform = JSON.parse(JSON.stringify(form));
       if (myform.member.length === 0 && myform.department.lenght !== 0) {
         const val = form.department;
@@ -530,6 +530,7 @@ export default {
         });
       }
       APIAccountExport(myform).then(res => {
+        this.listLoading = false;
         const blob = new Blob([res.data], {
           type:
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"

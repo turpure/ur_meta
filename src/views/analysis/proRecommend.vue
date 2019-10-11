@@ -1,7 +1,12 @@
 <template>
   <section>
     <div>
-      <el-tabs v-model="activeName" type="card" style="background-color:#fff">
+      <el-tabs
+        v-model="activeName"
+        type="card"
+        style="background-color:#fff"
+        @tab-click="handleClick"
+      >
         <el-tab-pane v-for="(item, index) in this.allMenu" :label="item" :name="item" :key="index"></el-tab-pane>
       </el-tabs>
       <div class="proBox">
@@ -9,6 +14,10 @@
           <div class="priImg">
             <img src="https://cbu01.alicdn.com/img/ibank/2018/967/507/9906705769_508626403.jpg" />
           </div>
+          <span class="corner">{{corner}}</span>
+          <a
+            class="justa"
+          >Apple iPhone 11- 128GB All Colors - GSM & CDMA Unlocked -1 Year Factory Warranty</a>
           <div class="proText">
             <div class="pro01">
               <p>
@@ -30,10 +39,9 @@
                 <span class="pblue">70天</span>
               </p>
             </div>
-          </div>
-          <div class="pbottom">
-            <a class="goDev">立即开发</a>
-            <a class="goStore">供应商</a>
+            <div class="pbottom">
+              <a class="goDev">立即开发</a>
+            </div>
           </div>
         </div>
       </div>
@@ -50,6 +58,7 @@ export default {
       tableHeightstock: window.innerHeight - 160,
       allMenu: ["Wish", "Ebay", "Joom", "Amazon", "Aliexpress"],
       listLoading: false,
+      corner: "Wish",
       activeName: "Wish",
       developer: [],
       purchaser: [],
@@ -100,6 +109,23 @@ export default {
     }
   },
   methods: {
+    handleClick(tab, event) {
+      if (tab.name === "Wish") {
+        this.corner = "Wish";
+      }
+      if (tab.name === "Ebay") {
+        this.corner = "Ebay";
+      }
+      if (tab.name === "Joom") {
+        this.corner = "Joom";
+      }
+      if (tab.name === "Amazon") {
+        this.corner = "Amazon";
+      }
+      if (tab.name === "Aliexpress") {
+        this.corner = "Aliexpress";
+      }
+    },
     formatter(row, column) {
       return row.changeTime ? row.changeTime.substring(0, 16) : "";
     },
@@ -256,12 +282,14 @@ export default {
   overflow: hidden;
 }
 .proCase01 {
-  width: 11.25%;
+  width: 12.26%;
   float: left;
-  margin: 0 1.2%;
+  margin: 0 0.7%;
   margin-top: 15px;
+  overflow: hidden;
   border: 5px solid #f0f0f0;
   background: rgb(243, 243, 243);
+  position: relative;
 }
 .priImg {
   max-width: 100%;
@@ -275,6 +303,8 @@ export default {
 .proText {
   width: 100%;
   overflow: hidden;
+  background: #fff;
+  border-top: #eee solid 1px;
 }
 .pro01 {
   width: 100%;
@@ -303,17 +333,19 @@ export default {
 }
 .pbottom {
   width: 100%;
+  overflow: hidden;
 }
 .goDev {
-  width: 45%;
+  width: 95%;
   background: #3c8dbc;
   display: block;
   text-align: center;
   color: #fff;
   float: left;
-  margin-left: 2%;
+  margin: auto;
   line-height: 28px;
   font-size: 13px;
+  margin-left: 2.5%;
   cursor: pointer;
   margin-top: 5px;
   margin-bottom: 5px;
@@ -337,7 +369,14 @@ export default {
     float: left;
     margin-right: 10px;
   }
-  .floet01 span{
+  .justa {
+    display: block;
+    font-size: 10px;
+    text-align: justify;
+    background: #fff;
+    padding: 10px 5px;
+  }
+  .floet01 span {
     width: 70px;
     text-align: center;
     display: inline-block;
@@ -346,23 +385,42 @@ export default {
     width: 100px;
   }
   .proCase01 {
-    width: 11%;
+    width: 17.7%;
+    overflow: hidden;
   }
   .proText p:first-child {
     float: left;
-    margin-left: 0%;
-    font-size: 12px;
+    font-size: 14px;
   }
   .proText p:last-child {
     float: right;
-    margin-right: 0%;
-    font-size: 12px;
+    font-size: 14px;
   }
-  .goDev{
-      font-size: 12px;
+  .goDev {
+    font-size: 14px;
   }
-  .goStore{
-      font-size: 12px;
+  .goStore {
+    font-size: 14px;
   }
+}
+.justa {
+  display: block;
+  font-size: 12px;
+  text-align: justify;
+  line-height: 20px;
+  background: #fff;
+  padding: 10px 5px;
+}
+.corner {
+  display: block;
+  background: #3c8dbc;
+  color: #fff;
+  text-align: center;
+  position: absolute;
+  top: 15px;
+  right: -50px;
+  width: 75%;
+  line-height: 25px;
+  transform: rotate(40deg);
 }
 </style>
