@@ -1409,3 +1409,26 @@ export function APIPlatEbayToIbay(param) {
     data
   })
 }
+
+export function APRecommendWish() {
+  return request({
+    url: '/products-engine/recommend?plat=wish',
+    method: 'get'
+  })
+}
+
+export function APRecommendEbay() {
+  return request({
+    url: '/products-engine/recommend?plat=ebay',
+    method: 'get'
+  })
+}
+
+export function forwardCreateEngine(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goods/dev-create',
+    method: 'post',
+    data
+  })
+}

@@ -9,38 +9,85 @@
       >
         <el-tab-pane v-for="(item, index) in this.allMenu" :label="item" :name="item" :key="index"></el-tab-pane>
       </el-tabs>
-      <div class="proBox">
-        <div class="proCase01" v-for="(item,index) in 21" :key="index">
-          <div class="priImg">
-            <img src="https://cbu01.alicdn.com/img/ibank/2018/967/507/9906705769_508626403.jpg" />
+      <div v-show="show.wish">
+        <div class="proBox">
+          <div class="proCase01" v-for="(item,index) in nostockdata" :key="index">
+            <div class="priImg">
+              <img
+                :src="'https://contestimg.wish.com/api/webimage/'+item.pid+'-medium.jpg'"
+                @click="goLinkUrl(item.pid)"
+              />
+            </div>
+            <span class="corner">{{corner}}</span>
+            <a class="justa">{{item.pname}}</a>
+            <div class="proText">
+              <div class="pro01">
+                <p>
+                  评论数
+                  <span class="pred">{{item.num_rating}}</span>
+                </p>
+                <p>
+                  评分
+                  <span class="pred">{{item.rating}}</span>
+                </p>
+              </div>
+              <div class="pro01">
+                <p>
+                  USD
+                  <span class="pblue">{{item.price}}</span>
+                </p>
+                <p>
+                  销售量
+                  <span class="pblue">{{item.max_num_bought}}</span>
+                </p>
+              </div>
+              <p style="text-align:left;margin-left:8px;margin-top:5px;">
+                上架时间
+                <span class="pblue">{{item.gen_time}}</span>
+              </p>
+              <div class="pbottom">
+                <a class="goDev" @click="submission('https://contestimg.wish.com/api/webimage/'+item.pid+'-medium.jpg','https://www.wish.com/product/'+item.pid,item.price)">立即开发</a>
+              </div>
+            </div>
           </div>
-          <span class="corner">{{corner}}</span>
-          <a
-            class="justa"
-          >Apple iPhone 11- 128GB All Colors - GSM & CDMA Unlocked -1 Year Factory Warranty</a>
-          <div class="proText">
-            <div class="pro01">
-              <p>
-                评论数
-                <span class="pred">100</span>
-              </p>
-              <p>
-                评分
-                <span class="pred">100</span>
-              </p>
+        </div>
+      </div>
+      <div v-show="show.ebay">
+        <div class="proBox">
+          <div class="proCase01" v-for="(item,index) in dataEbay" :key="index">
+            <div class="priImg">
+              <img :src="item.main_image" @click="goLinkUrlEbay(item.item_url)" />
             </div>
-            <div class="pro01">
-              <p>
-                USD
-                <span class="pblue">100</span>
+            <span class="corner">{{corner}}</span>
+            <a class="justa">{{item.title}}</a>
+            <div class="proText">
+              <div class="pro01">
+                <p>
+                  总销量
+                  <span class="pred">{{item.sold}}</span>
+                </p>
+                <p>
+                  周销售量
+                  <span class="pred">{{item.sales_week1}}</span>
+                </p>
+              </div>
+              <div class="pro01">
+                <p>
+                  USD
+                  <span class="pblue">{{item.price}}</span>
+                </p>
+                <p>
+                  收藏数
+                  <span class="pblue">{{item.watchers}}</span>
+                </p>
+              </div>
+              <p style="text-align:left;margin-left:8px;margin-top:5px;">
+                上架时间
+                <span class="pblue">{{item.gen_time}}</span>
               </p>
-              <p>
-                上线
-                <span class="pblue">70天</span>
-              </p>
-            </div>
-            <div class="pbottom">
-              <a class="goDev">立即开发</a>
+              <div class="pbottom">
+                <a class="goDev" @click="submission(item.main_image,item.item_url,item.price)">立即开发</a>
+              </div>
             </div>
           </div>
         </div>
@@ -49,13 +96,15 @@
   </section>
 </template>
 <script type="text/ecmascript-6">
-import { APIWareSku, APIStockPerformExport } from "../../api/product";
-import { getDeveloper, getMember, getPlatGoodsStatus } from "../../api/profit";
-import { compareUp, compareDown, getMonthDate } from "../../api/tools";
+import { APRecommendWish, APRecommendEbay,forwardCreateEngine } from "../../api/product";
 export default {
   data() {
     return {
       tableHeightstock: window.innerHeight - 160,
+      show: {
+        wish: true,
+        ebay: false
+      },
       allMenu: ["Wish", "Ebay", "Joom", "Amazon", "Aliexpress"],
       listLoading: false,
       corner: "Wish",
@@ -63,42 +112,8 @@ export default {
       developer: [],
       purchaser: [],
       goodsState: [],
-      condition: {
-        sku: null,
-        location: null,
-        store: null,
-        person: null,
-        pageSize: 100,
-        page: 1,
-        changeTime: []
-      },
-      total: null,
       nostockdata: [],
-      pickerOptions2: {
-        shortcuts: [
-          {
-            text: "本月",
-            onClick(vm) {
-              const date = getMonthDate("thisMonth");
-              vm.$emit("pick", [date["start"], date["end"]]);
-            }
-          },
-          {
-            text: "上个月",
-            onClick(picker) {
-              const date = getMonthDate("previousMonth");
-              picker.$emit("pick", [date["start"], date["end"]]);
-            }
-          },
-          {
-            text: "最近一个月",
-            onClick(picker) {
-              const date = getMonthDate("lastMonth");
-              picker.$emit("pick", [date["start"], date["end"]]);
-            }
-          }
-        ]
-      }
+      dataEbay: []
     };
   },
   filters: {
@@ -109,12 +124,24 @@ export default {
     }
   },
   methods: {
+    goLinkUrl(id){
+      window.open('https://www.wish.com/product/'+id)
+    },
+    goLinkUrlEbay(url){
+      window.open(url)
+    },
     handleClick(tab, event) {
       if (tab.name === "Wish") {
         this.corner = "Wish";
+        this.show.wish = true;
+      } else {
+        this.show.wish = false;
       }
       if (tab.name === "Ebay") {
         this.corner = "Ebay";
+        this.show.ebay = true;
+      } else {
+        this.show.ebay = false;
       }
       if (tab.name === "Joom") {
         this.corner = "Joom";
@@ -129,94 +156,47 @@ export default {
     formatter(row, column) {
       return row.changeTime ? row.changeTime.substring(0, 16) : "";
     },
-    exportExcel() {
-      APIStockPerformExport(this.condition).then(res => {
-        const blob = new Blob([res.data], {
-          type:
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
-        });
-        var file = res.headers["content-disposition"]
-          .split(";")[1]
-          .split("filename=")[1];
-        var filename = JSON.parse(file);
-        const downloadElement = document.createElement("a");
-        const objectUrl = window.URL.createObjectURL(blob);
-        downloadElement.href = objectUrl;
-        // const filename =
-        //   "Wish_" + year + month + strDate + hour + minute + second;
-        downloadElement.download = filename;
-        document.body.appendChild(downloadElement);
-        downloadElement.click();
-        document.body.removeChild(downloadElement);
-      });
-    },
-    handleSizeChange(val) {
-      this.condition.pageSize = val;
-      this.getData();
-    },
-    handleCurrentChange(val) {
-      this.condition.page = val;
-      this.getData();
-    },
-    getRowClass({ row, column, rowIndex, columnIndex }) {
-      if (rowIndex == 0) {
-        return "color:#337ab7";
-      } else {
-        return "";
-      }
-    },
-    getSummaries(param) {
-      const { columns, data } = param;
-      const sums = [];
-      columns.forEach((column, index) => {
-        if (index === 0) {
-          sums[index] = "合计";
-          return;
-        }
-        const values = data.map(item => Number(item[column.property]));
-        if (!values.every(value => isNaN(value))) {
-          sums[index] = values.reduce((prev, curr) => {
-            const value = Number(curr);
-            if (!isNaN(value)) {
-              return prev + curr;
-            } else {
-              return prev;
-            }
-          }, 0);
-        } else {
-          sums[index] = "N/A";
-        }
-        let arr = sums;
-        if (index === 7) {
-          sums[index] = Number(arr[7]).toFixed(2);
+    submission(a,b,c){
+      var condition={
+        "img": a, 
+        "cate": "女人世界", 
+        "subCate": "女包", 
+        "vendor1": null, 
+        "origin1":b , 
+        "developer": null, 
+        "introReason": null, 
+        "stockUp": "否", 
+        "salePrice": c, 
+        "type": "create", 
+        "flag": "backward", 
+        "hopeMonthProfit": null }
+      forwardCreateEngine(condition).then(res => {
+        if(res.data.code==200){
+          this.$message({
+              message: "开发成功",
+              type: "success"
+            });
         }
       });
-
-      return sums;
     },
-    getData() {
+    getDataEbay() {
       this.listLoading = true;
-      APIWareSku(this.condition).then(res => {
-        this.nostockdata = res.data.data.items;
-        this.condition.page = res.data.data._meta.currentPage;
-        this.condition.pageSize = res.data.data._meta.perPage;
-        this.total = res.data.data._meta.totalCount;
+      APRecommendEbay().then(res => {
+        this.dataEbay = res.data.data;
+        this.listLoading = false;
+      });
+    },
+    getDataWish() {
+      this.listLoading = true;
+      APRecommendWish().then(res => {
+        this.nostockdata = res.data.data;
         this.listLoading = false;
       });
     }
   },
   mounted() {
-    getDeveloper().then(response => {
-      this.developer = response.data.data;
-    });
-    getMember().then(response => {
-      const res = response.data.data;
-      this.purchaser = res.filter(ele => ele.position === "采购");
-    });
-    getPlatGoodsStatus().then(response => {
-      this.goodsState = response.data.data;
-    });
-    this.getData();
+    this.getDataWish();
+    this.getDataEbay();
   }
 };
 </script>
@@ -298,7 +278,8 @@ export default {
 .priImg img {
   display: block;
   width: 100%;
-  height: 100%;
+  height: 180px;
+  cursor: pointer;
 }
 .proText {
   width: 100%;
@@ -372,9 +353,10 @@ export default {
   .justa {
     display: block;
     font-size: 10px;
-    text-align: justify;
     background: #fff;
     padding: 10px 5px;
+    max-height: 50px;
+    overflow: hidden;
   }
   .floet01 span {
     width: 70px;
@@ -410,6 +392,8 @@ export default {
   line-height: 20px;
   background: #fff;
   padding: 10px 5px;
+  height: 50px;
+  overflow: hidden;
 }
 .corner {
   display: block;
