@@ -212,6 +212,13 @@
         sortable="custom"
       ></el-table-column>
       <el-table-column
+        prop="refund"
+        label="退款￥"
+        align="center"
+        :formatter="empty"
+        sortable="custom"
+      ></el-table-column>
+      <el-table-column
         prop="ProfitRmb"
         label="利润￥"
         align="center"
@@ -219,6 +226,13 @@
         sortable="custom"
       ></el-table-column>
       <el-table-column prop="rate" label="利润率%" align="center" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column
+        prop="refundRate"
+        label="退款利润占比"
+        align="center"
+        :formatter="empty"
+        sortable="custom"
+      ></el-table-column>
     </el-table>
     <el-col class="toolbar" v-show="total>0">
       <div class="pagination-container">
@@ -325,6 +339,7 @@ export default {
       }
     },
     showAll() {
+      this.condition.start=1
       this.handleSizeChange(this.total);
     },
     handleCurrentChange(val) {
