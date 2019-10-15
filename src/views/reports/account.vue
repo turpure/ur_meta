@@ -142,7 +142,7 @@
             ></el-date-picker>
           </el-form-item>
           <el-form-item>
-            <el-button size="small" type="primary" class="input" @click="onSubmit(condition)" style="margin-left:25px;">查询</el-button>
+            <el-button size="small" type="primary" class="input" @click="onTop(condition)" style="margin-left:25px;">查询</el-button>
           </el-form-item>
         </el-form>
       </transition>
@@ -174,12 +174,13 @@
       :summary-method="getSummaries"
       :height="tableHeight"
       :max-height="tableHeight"
+      ref="table"
       border
       class="elTable"
       :header-cell-style="getRowClass"
       style="width: 100%;font-size:13px;"
     >
-      <el-table-column prop="suffix" label="账号" align="center" :formatter="empty" sortable></el-table-column>
+      <el-table-column prop="suffix" label="账号" align="center" :formatter="empty"></el-table-column>
       <el-table-column prop="pingtai" label="平台" align="center" :formatter="empty" sortable></el-table-column>
       <el-table-column prop="salesman" label="销售员" align="center" :formatter="empty" sortable></el-table-column>
       <el-table-column
@@ -238,7 +239,7 @@
       <div class="pagination-container">
         <el-pagination
           :current-page="this.condition.start"
-          :page-sizes="[20,100,200,500,1000]"
+          :page-sizes="[50,100,200,500,1000]"
           :page-size="this.condition.limit"
           background
           layout="total, sizes, slot, prev, pager, next, jumper"
@@ -269,6 +270,7 @@ import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 export default {
   data() {
     return {
+      flagShowAll:false,
       currentPage: 1,
       pageSize: null,
       total: null,
@@ -301,7 +303,7 @@ export default {
         dateRange: [],
         account: [],
         start: 1,
-        limit: 20
+        limit: 50
       },
       pickerOptions2: {
         shortcuts: [
@@ -339,8 +341,16 @@ export default {
       }
     },
     showAll() {
+      this.flagShowAll=true
       this.condition.start=1
-      this.handleSizeChange(this.total);
+      this.tableData=[]
+      this.onSubmit(this.condition);
+    },
+    onTop(form){
+      this.flagShowAll=false
+      form.start = 1 
+      form.limit = 50;
+      this.onSubmit(form);
     },
     handleCurrentChange(val) {
       // this.currentPage = val
@@ -352,6 +362,7 @@ export default {
       //   this.tableData = this.searchTable = response.data.data.items
       //   this.total = Number(response.data.data.totalCount)
       // })
+      this.flagShowAll=false
       this.condition.start = val;
       this.onSubmit(this.condition);
     },
@@ -365,8 +376,15 @@ export default {
       //   this.tableData = this.searchTable = response.data.data.items
       //   this.total = Number(response.data.data.totalCount)
       // })
+      if(this.flagShowAll){
+        this.flagShowAll=false
+        this.condition.start = 1 
+        this.condition.limit = val;
+        this.onSubmit(this.condition);
+      }else{
       this.condition.limit = val;
       this.onSubmit(this.condition);
+      }
     },
     selectalls() {
       const allValues = [];
@@ -478,9 +496,50 @@ export default {
           getaccount(myform).then(response => {
             this.listLoading = false;
             this.tableData = this.searchTable = response.data.data.items;
-            this.total = response.data.data._meta.totalCount;
+            if(this.flagShowAll){
+              this.condition.limit=response.data.data._meta.totalCount;
+            }else{
+              this.total = response.data.data._meta.totalCount;
             this.condition.start = response.data.data._meta.currentPage;
             this.condition.limit = response.data.data._meta.perPage;
+            }
+          });
+        } else {
+          return false;
+        }
+      });
+    },
+    onSubmit1(form) {
+      const myform = JSON.parse(JSON.stringify(form));
+      const height = document.getElementById("app").clientHeight;
+      this.tableHeight = height - 290 + "px";
+      this.show2 = true;
+      this.$refs.condition.validate(valid => {
+        if (valid) {
+          if (myform.member.length === 0 && myform.department.lenght !== 0) {
+            const val = form.department;
+            const res = this.allMember;
+            for (let i = 0; i < val.length; i++) {
+              const per = res.filter(
+                ele =>
+                  (ele.department === val[i] ||
+                    ele.parent_department === val[i]) &&
+                  ele.position === "销售"
+              );
+              this.member.concat(per);
+            }
+            myform.member = this.member.map(m => {
+              return m.username;
+            });
+          }
+          // this.currentPage = 1
+          // this.condition.start = 0
+          this.condition.start++
+          myform.start++
+          myform.limit=50
+          getaccount(myform).then(response => {
+            this.condition.limit=response.data.data._meta.totalCount;
+            this.tableData=this.tableData.concat(response.data.data.items)
           });
         } else {
           return false;
@@ -621,6 +680,21 @@ export default {
     getAccount().then(response => {
       this.account = response.data.data;
     });
+    this.dom = this.$refs.table.bodyWrapper
+        this.dom.addEventListener('scroll', () => {
+            // 滚动距离
+            let scrollTop = this.dom.scrollTop
+            // 变量windowHeight是可视区的高度
+            let windowHeight = this.dom.clientHeight || this.dom.clientHeight
+            // 变量scrollHeight是滚动条的总高度
+            let scrollHeight = this.dom.scrollHeight || this.dom.scrollHeight
+            if (scrollTop + windowHeight === scrollHeight) {
+                // 获取到的不是全部数据 当滚动到底部 继续获取新的数据
+                if(this.flagShowAll){                 
+                this.onSubmit1(this.condition)
+                }
+            }
+        })
   }
 };
 </script>

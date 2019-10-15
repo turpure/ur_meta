@@ -43,7 +43,7 @@
               </div>
               <p style="text-align:left;margin-left:8px;margin-top:5px;">
                 上架时间
-                <span class="pblue">{{item.gen_time}}</span>
+                <span class="pblue">{{item.gen_time | cutOutMonye}}</span>
               </p>
               <div class="pbottom">
                 <a class="goDev" @click="submission('https://contestimg.wish.com/api/webimage/'+item.pid+'-medium.jpg','https://www.wish.com/product/'+item.pid,item.price)">立即开发</a>
@@ -83,10 +83,50 @@
               </div>
               <p style="text-align:left;margin-left:8px;margin-top:5px;">
                 上架时间
-                <span class="pblue">{{item.gen_time}}</span>
+                <span class="pblue">{{item.gen_time | cutOutMonye}}</span>
               </p>
               <div class="pbottom">
                 <a class="goDev" @click="submission(item.main_image,item.item_url,item.price)">立即开发</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-show="show.joom">
+        <div class="proBox">
+          <div class="proCase01" v-for="(item,index) in dataJoom" :key="index">
+            <div class="priImg">
+              <img :src="item.mainImage" @click="goLinkUrlJoom(item.productId)" />
+            </div>
+            <span class="corner">{{corner}}</span>
+            <a class="justa">{{item.productName}}</a>
+            <div class="proText">
+              <div class="pro01">
+                <p>
+                  评论数
+                  <span class="pred">{{item.reviewsCount}}</span>
+                </p>
+                <p>
+                  评分
+                  <span class="pred">{{item.rating}}</span>
+                </p>
+              </div>
+              <div class="pro01">
+                <p>
+                  USD
+                  <span class="pblue">{{item.price}}</span>
+                </p>
+                <p>
+                  推荐指数
+                  <span class="pblue">{{item.hot_index}}</span>
+                </p>
+              </div>
+              <p style="text-align:left;margin-left:8px;margin-top:5px;">
+                上架时间
+                <span class="pblue">{{item.publishedDate | cutOutMonye}}</span>
+              </p>
+              <div class="pbottom">
+                <a class="goDev" @click="submission(item.mainImage,'https://www.joom.com/en/products/'+item.productId,item.price)">立即开发</a>
               </div>
             </div>
           </div>
@@ -96,14 +136,15 @@
   </section>
 </template>
 <script type="text/ecmascript-6">
-import { APRecommendWish, APRecommendEbay,forwardCreateEngine } from "../../api/product";
+import { APRecommendWish, APRecommendEbay,APRecommendJoom,forwardCreateEngine } from "../../api/product";
 export default {
   data() {
     return {
       tableHeightstock: window.innerHeight - 160,
       show: {
         wish: true,
-        ebay: false
+        ebay: false,
+        joom:false
       },
       allMenu: ["Wish", "Ebay", "Joom", "Amazon", "Aliexpress"],
       listLoading: false,
@@ -113,19 +154,23 @@ export default {
       purchaser: [],
       goodsState: [],
       nostockdata: [],
-      dataEbay: []
+      dataEbay: [],
+      dataJoom:[]
     };
   },
   filters: {
     cutOutMonye: function(value) {
       if (!value) return "";
-      value = Number(value).toFixed(2);
+      value = value.substring(0,11);
       return value;
     }
   },
   methods: {
     goLinkUrl(id){
       window.open('https://www.wish.com/product/'+id)
+    },
+    goLinkUrlJoom(id){
+      window.open('https://www.joom.com/en/products/'+id)
     },
     goLinkUrlEbay(url){
       window.open(url)
@@ -145,6 +190,9 @@ export default {
       }
       if (tab.name === "Joom") {
         this.corner = "Joom";
+        this.show.joom = true;
+      }else{
+        this.show.joom = false;
       }
       if (tab.name === "Amazon") {
         this.corner = "Amazon";
@@ -186,6 +234,13 @@ export default {
         this.listLoading = false;
       });
     },
+    getDataJoom() {
+      this.listLoading = true;
+      APRecommendJoom().then(res => {
+        this.dataJoom = res.data.data;
+        this.listLoading = false;
+      });
+    },
     getDataWish() {
       this.listLoading = true;
       APRecommendWish().then(res => {
@@ -197,6 +252,7 @@ export default {
   mounted() {
     this.getDataWish();
     this.getDataEbay();
+    this.getDataJoom();
   }
 };
 </script>
@@ -274,12 +330,14 @@ export default {
 .priImg {
   max-width: 100%;
   max-height: 100%;
+  overflow: hidden;
 }
 .priImg img {
   display: block;
   width: 100%;
   height: 180px;
   cursor: pointer;
+  transition: transform 0.3s;
 }
 .proText {
   width: 100%;
@@ -345,6 +403,12 @@ export default {
   margin-top: 5px;
   margin-bottom: 5px;
 }
+.proCase01:hover{
+  border: 5px solid #2298a2;
+}
+.proCase01:hover .priImg img{
+  transform: scale(1.1);
+}
 @media (max-width: 1400px) {
   .floet01 {
     float: left;
@@ -369,6 +433,7 @@ export default {
   .proCase01 {
     width: 17.7%;
     overflow: hidden;
+    cursor: pointer;
   }
   .proText p:first-child {
     float: left;

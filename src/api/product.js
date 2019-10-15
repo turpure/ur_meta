@@ -1424,6 +1424,13 @@ export function APRecommendEbay() {
   })
 }
 
+export function APRecommendJoom() {
+  return request({
+    url: '/products-engine/recommend?plat=joom',
+    method: 'get'
+  })
+}
+
 export function forwardCreateEngine(param) {
   const data = { condition: param }
   return request({
