@@ -87,9 +87,6 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="商品名称">
-            <el-input size="small" v-model="condition.goodsName" style="width:18rem;"></el-input>
-          </el-form-item>
           <el-form-item label="出货仓库" class="input">
             <el-select
               size="small"
@@ -103,6 +100,9 @@
               <el-button plain type="info" @click="noselects">取消</el-button>
               <el-option v-for="item in store" :key="item" :value="item"></el-option>
             </el-select>
+          </el-form-item>
+          <el-form-item label="商品名称">
+            <el-input size="small" v-model="condition.goodsName" style="width:18rem;"></el-input>
           </el-form-item>
 
           <el-form-item label="商品编码">
@@ -170,7 +170,7 @@
       v-loading="listLoading"
       element-loading-text="正在加载中..."
       @sort-change="sortNumber"
-      show-summary
+      :show-summary="showSum"
       :summary-method="getSummaries"
       :height="tableHeight"
       :max-height="tableHeight"
@@ -229,7 +229,7 @@
       <el-table-column prop="rate" label="利润率%" align="center" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column
         prop="refundRate"
-        label="退款利润占比"
+        label="退款利润占比%"
         align="center"
         :formatter="empty"
         sortable="custom"
@@ -270,6 +270,7 @@ import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 export default {
   data() {
     return {
+      showSum:true,
       flagShowAll:false,
       currentPage: 1,
       pageSize: null,
@@ -540,6 +541,10 @@ export default {
           getaccount(myform).then(response => {
             this.condition.limit=response.data.data._meta.totalCount;
             this.tableData=this.tableData.concat(response.data.data.items)
+            this.$nextTick()
+            .then( ()=> {
+              this.showSum=true;
+            })
           });
         } else {
           return false;
