@@ -242,7 +242,7 @@ export function getArtist(param) {
 export function getaccount(param) {
   const data = { condition: param }
   return request({
-    url: '/report/account',
+    url: '/report/account?sort=' + param.sort,
     method: 'post',
     data
   })

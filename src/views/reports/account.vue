@@ -294,6 +294,7 @@ export default {
         sku: "",
         goodsName: "",
         dateType: 1,
+        sort:null,
         dateRange: [],
         account: [],
         start: 1,
@@ -564,12 +565,45 @@ export default {
     },
     // 数字排序
     sortNumber(column, prop, order) {
-      const data = this.tableData;
-      if (column.order === "descending") {
-        this.tableData = data.sort(compareDown(data, column.prop));
-      } else {
-        this.tableData = data.sort(compareUp(data, column.prop));
+      if(this.flagShowAll){
+        if(column.order==null){
+          this.condition.start=1
+          this.condition.limit=50
+          this.condition.sort=null;
+          this.onSubmit(this.condition);
+        }
+        if (column.order == "ascending") {
+          this.condition.start=1
+          this.condition.limit=50
+          this.condition.sort = column.prop;
+          this.onSubmit(this.condition);
+        }
+        if (column.order == "descending") {
+          this.condition.start=1
+          this.condition.limit=50
+          this.condition.sort ='-'+column.prop;
+          this.onSubmit(this.condition);
+        }
+      }else{
+        if(column.order==null){
+          this.condition.sort=null;
+          this.onSubmit(this.condition);
+        }
+        if (column.order == "ascending") {
+          this.condition.sort = column.prop;
+          this.onSubmit(this.condition);
+        }
+        if (column.order == "descending") {
+          this.condition.sort ='-'+column.prop;
+          this.onSubmit(this.condition);
+        }
       }
+      // const data = this.tableData;
+      // if (column.order === "descending") {
+      //   this.tableData = data.sort(compareDown(data, column.prop));
+      // } else {
+      //   this.tableData = data.sort(compareUp(data, column.prop));
+      // }
     },
     // 小数和空值格式化
     empty(row, column, cellValue, index) {
@@ -648,6 +682,10 @@ export default {
           sums[index] = Math.round(sums[index] * 100) / 100;
         } else {
           sums[index] = "N/A";
+        }
+        let arr=sums
+        if(index==11){
+            sums[index] = ((arr[8]/arr[9])*100).toFixed(2);
         }
       });
       // 退款率和利润率核算
