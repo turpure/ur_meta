@@ -263,6 +263,12 @@ import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 export default {
   data() {
     return {
+      totalQty:null,
+      totalSaleMoney:null,
+      totalRefund:null,
+      totalProfitRmb:null,
+      totalRate:null,
+      totalRefundRate:null,
       showSum:true,
       flagShowAll:false,
       currentPage: 1,
@@ -491,6 +497,12 @@ export default {
           getaccount(myform).then(response => {
             this.listLoading = false;
             this.tableData = this.searchTable = response.data.data.items;
+            this.totalProfitRmb=response.data.data.extra.totalProfitRmb
+            this.totalQty=response.data.data.extra.totalQty
+            this.totalRate=response.data.data.extra.totalRate
+            this.totalRefund=response.data.data.extra.totalRefund
+            this.totalRefundRate=response.data.data.extra.totalRefundRate
+            this.totalSaleMoney=response.data.data.extra.totalSaleMoney
             if(this.flagShowAll){
               this.condition.limit=response.data.data._meta.totalCount;
             }else{
@@ -535,10 +547,12 @@ export default {
           getaccount(myform).then(response => {
             this.condition.limit=response.data.data._meta.totalCount;
             this.tableData=this.tableData.concat(response.data.data.items)
-            this.$nextTick()
-            .then( ()=> {
-              this.showSum=true;
-            })
+            this.totalProfitRmb=response.data.data.extra.totalProfitRmb
+            this.totalQty=response.data.data.extra.totalQty
+            this.totalRate=response.data.data.extra.totalRate
+            this.totalRefund=response.data.data.extra.totalRefund
+            this.totalRefundRate=response.data.data.extra.totalRefundRate
+            this.totalSaleMoney=response.data.data.extra.totalSaleMoney
           });
         } else {
           return false;
@@ -659,42 +673,96 @@ export default {
     },
     // 合计
     getSummaries(param) {
-      const { columns, data } = param;
-      const sums = [];
-      const fileds = columns.map(item => item.property);
-      columns.forEach((column, index) => {
-        if (index === 0) {
-          sums[index] = "合计";
-          return;
-        }
-        const values = data.map(item =>
-          Number(item[column.property] ? item[column.property] : "unkonwn")
-        );
-        if (!values.every(value => isNaN(value))) {
-          sums[index] = values.reduce((prev, curr) => {
-            const value = Number(curr);
-            if (!isNaN(value)) {
-              return prev + curr;
-            } else {
-              return prev;
-            }
-          }, 0);
-          sums[index] = Math.round(sums[index] * 100) / 100;
-        } else {
-          sums[index] = "N/A";
-        }
-        let arr=sums
-        if(index==11){
-            sums[index] = ((arr[8]/arr[9])*100).toFixed(2);
-        }
-      });
-      // 退款率和利润率核算
-      sums[fileds.indexOf("rate")] =
-        Math.round(
-          (sums[fileds.indexOf("ProfitRmb")] * 10000) /
-            sums[fileds.indexOf("SaleMoneyRmb")]
-        ) / 100;
-      return sums;
+      if(this.flagShowAll){
+        const { columns, data } = param;
+        const sums = [];
+        const fileds = columns.map(item => item.property);
+        columns.forEach((column, index) => {
+          if (index === 0) {
+            sums[index] = "合计";
+            return;
+          }
+          const values = data.map(item =>
+            Number(item[column.property] ? item[column.property] : "unkonwn")
+          );
+          if (!values.every(value => isNaN(value))) {
+            sums[index] = values.reduce((prev, curr) => {
+              const value = Number(curr);
+              if (!isNaN(value)) {
+                return prev + curr;
+              } else {
+                return prev;
+              }
+            }, 0);
+            sums[index] = Math.round(sums[index] * 100) / 100;
+          } else {
+            sums[index] = "N/A";
+          }
+          let arr=sums
+          if(index==6){
+              sums[index] = this.totalQty;
+          }
+          if(index==7){
+              sums[index] = this.totalSaleMoney;
+          }
+          if(index==8){
+              sums[index] = this.totalRefund;
+          }
+          if(index==9){
+              sums[index] = this.totalProfitRmb;
+          }
+          if(index==10){
+              sums[index] = this.totalRate;
+          }
+          if(index==11){
+              sums[index] = this.totalRefundRate;
+          }
+        });
+        // 退款率和利润率核算
+        sums[fileds.indexOf("rate")] =
+          Math.round(
+            (sums[fileds.indexOf("ProfitRmb")] * 10000) /
+              sums[fileds.indexOf("SaleMoneyRmb")]
+          ) / 100;
+        return sums;        
+      }else{
+        const { columns, data } = param;
+        const sums = [];
+        const fileds = columns.map(item => item.property);
+        columns.forEach((column, index) => {
+          if (index === 0) {
+            sums[index] = "合计";
+            return;
+          }
+          const values = data.map(item =>
+            Number(item[column.property] ? item[column.property] : "unkonwn")
+          );
+          if (!values.every(value => isNaN(value))) {
+            sums[index] = values.reduce((prev, curr) => {
+              const value = Number(curr);
+              if (!isNaN(value)) {
+                return prev + curr;
+              } else {
+                return prev;
+              }
+            }, 0);
+            sums[index] = Math.round(sums[index] * 100) / 100;
+          } else {
+            sums[index] = "N/A";
+          }
+          let arr=sums
+          if(index==11){
+              sums[index] = ((arr[8]/arr[9])*100).toFixed(2);
+          }
+        });
+        // 退款率和利润率核算
+        sums[fileds.indexOf("rate")] =
+          Math.round(
+            (sums[fileds.indexOf("ProfitRmb")] * 10000) /
+              sums[fileds.indexOf("SaleMoneyRmb")]
+          ) / 100;
+        return sums;        
+      }
     }
   },
   mounted() {
