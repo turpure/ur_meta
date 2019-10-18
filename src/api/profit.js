@@ -836,3 +836,28 @@ export function getEbayBalanceConditon() {
     method: 'get'
   })
 }
+
+export function getJoomSubscribed() {
+  return request({
+    url: 'oa-data-mine/joom-store-subscribed',
+    method: 'get'
+  })
+}
+
+export function getSubscribeJoomStore(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data-mine/subscribe-joom-store',
+    method: 'post',
+    data
+  })
+}
+
+export function APIJoomStoreProduct(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data-mine/joom-store-product?page=' + param.page + '&sort=' + param.sort,
+    method: 'post',
+    data
+  })
+}

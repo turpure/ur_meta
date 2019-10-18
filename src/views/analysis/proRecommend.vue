@@ -178,18 +178,27 @@ export default {
     handleClick(tab, event) {
       if (tab.name === "Wish") {
         this.corner = "Wish";
+        if(this.nostockdata.length==0){
+          this.getDataWish()
+        }
         this.show.wish = true;
       } else {
         this.show.wish = false;
       }
       if (tab.name === "Ebay") {
         this.corner = "Ebay";
+        if(this.dataEbay.length==0){
+          this.getDataEbay()
+        }
         this.show.ebay = true;
       } else {
         this.show.ebay = false;
       }
       if (tab.name === "Joom") {
         this.corner = "Joom";
+        if(this.dataJoom.length==0){
+          this.getDataJoom()
+        }
         this.show.joom = true;
       }else{
         this.show.joom = false;
@@ -251,8 +260,6 @@ export default {
   },
   mounted() {
     this.getDataWish();
-    this.getDataEbay();
-    this.getDataJoom();
   }
 };
 </script>
