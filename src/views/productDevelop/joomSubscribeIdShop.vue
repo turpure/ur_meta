@@ -35,6 +35,15 @@
                 </a>
               </template>
             </el-table-column>
+            <el-table-column label="店铺名称" prop="storeName" header-align="center" align="center" width="160">
+                <template slot-scope="scope">
+                  <a
+                    :href="'https://www.joom.com/en/search/c.'+scope.row.productId"
+                    target="_blank"
+                    class="classa"
+                  >{{scope.row.storeName}}</a>
+                </template>
+            </el-table-column>
             <el-table-column label="产品名称" prop="productName" header-align="center">
               <el-table-column
                 prop="productName"
@@ -65,23 +74,6 @@
                 align="center"
                 width="150"
               ></el-table-column>
-            </el-table-column>
-            <el-table-column label="店铺名称" prop="storeName" header-align="center">
-              <el-table-column
-                label="店铺名称"
-                prop="storeName"
-                :render-header="renderHeader"
-                align="center"
-                width="180"
-              >
-                <template slot-scope="scope">
-                  <a
-                    :href="'https://www.joom.com/en/search/c.'+scope.row.productId"
-                    target="_blank"
-                    class="classa"
-                  >{{scope.row.storeName}}</a>
-                </template>
-              </el-table-column>
             </el-table-column>
             <el-table-column
               label="价格"
@@ -343,26 +335,7 @@ export default {
             }
           })
         ]);
-      } else if ($index === 2) {
-        return h("div", [
-          h("el-input", {
-            props: {
-              value: this.condition.storeName,
-              size: "mini",
-              clearable: true
-            },
-            on: {
-              input: value => {
-                this.condition.storeName = value;
-                this.$emit("input", value);
-              },
-              change: value => {
-                this.filter();
-              }
-            }
-          })
-        ]);
-      } else if ($index === 3) {
+      }else if ($index === 2) {
         return h("div", [
           h("el-input", {
             style: {
@@ -405,7 +378,7 @@ export default {
             }
           })
         ]);
-      } else if ($index === 4) {
+      } else if ($index === 3) {
         return h("div", [
           h("el-input", {
             style: {
@@ -447,7 +420,7 @@ export default {
             }
           })
         ]);
-      } else if ($index === 5) {
+      } else if ($index === 4) {
         return h("div", [
           h("el-input", {
             style: {
@@ -469,7 +442,7 @@ export default {
             }
           })
         ]);
-      } else if ($index === 6) {
+      } else if ($index === 5) {
         return h("el-date-picker", {
           props: {
             value: this.time1,
@@ -490,7 +463,7 @@ export default {
             }
           }
         });
-      } else if ($index === 7) {
+      } else if ($index === 6) {
         return h("el-date-picker", {
           props: {
             value: this.time2,
@@ -511,7 +484,7 @@ export default {
             }
           }
         });
-      } else if ($index === 8) {
+      } else if ($index === 7) {
         return h("el-date-picker", {
           props: {
             value: this.time3,
@@ -532,7 +505,7 @@ export default {
             }
           }
         });
-      } else if ($index === 9) {
+      } else if ($index === 8) {
         return h("div", [
           h("el-input", {
             style: {
@@ -623,9 +596,6 @@ export default {
   mounted() {
     this.condition.storeName = this.$route.params.id;
     this.relation();
-    setTimeout(()=>{     
-     this.condition.storeName=null
-    },100)
   }
 };
 </script>
