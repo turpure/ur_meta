@@ -5,6 +5,7 @@
       <el-button @click="exportExcel" type="primary">导出总表</el-button>
       <el-button @click="exportExcelMx" type="success">导出状态明细表</el-button>
       <el-button @click="exportExcelMxKf" type="warning">导出开发明细表</el-button>
+      <el-button @click="exportExcelMxbm" type="danger">导出部门明细表</el-button>
     </el-col>  
     <el-table
       :data="tableData"
@@ -85,67 +86,99 @@
         :formatter="empty"
         sortable="custom"
       ></el-table-column>
-      <el-table-column label="状态明细" :formatter="empty" width="110" align="center">
+      <el-table-column label="状态明细" :formatter="empty" width="100" align="center">
         <template slot-scope="scope">
           <span type="text" @click="view1(scope.$index, scope.row)" style="cursor: pointer;">
             <i class="iconfont icon-yulan"></i>
           </span>
         </template>
       </el-table-column>
-       <el-table-column label="开发明细" :formatter="empty" width="110" align="center">
+       <el-table-column label="开发明细" :formatter="empty" width="100" align="center">
         <template slot-scope="scope">
           <span type="text" @click="view2(scope.$index, scope.row)" style="cursor: pointer;">
             <i class="iconfont icon-yulan"></i>
           </span>
         </template>
       </el-table-column>
+      <el-table-column label="部门明细" :formatter="empty" width="100" align="center">
+        <template slot-scope="scope">
+          <span type="text" @click="view3(scope.$index, scope.row)" style="cursor: pointer;">
+            <i class="iconfont icon-yulan"></i>
+          </span>
+        </template>
+      </el-table-column>
     </el-table>
-    <el-dialog title="查看状态明细" :visible.sync="dialogTableVisible" width="72%">
+    <el-dialog title="查看状态明细" :visible.sync="dialogTableVisible" width="85%">
       <el-table :data="viewForm" @sort-change="sortNumberView" class="elTableee" border :header-cell-style="getRowClass" max-height="600">
-        <el-table-column property="storeName" label="仓库" align="center" width="130" fixed></el-table-column>
-        <el-table-column property="useNum" label="可用库存数量" sortable="custom" align="center" width="135"></el-table-column>
-        <el-table-column property="costmoney" label="可用库存金额" sortable="custom" align="center" width="135">
+        <el-table-column property="storeName" label="仓库" align="center" fixed></el-table-column>
+        <el-table-column property="useNum" label="可用库存数量" sortable="custom" align="center"></el-table-column>
+        <el-table-column property="costmoney" label="可用库存金额" sortable="custom" align="center">
             <template slot-scope="scope">{{scope.row['costmoney'] | cutOut}}</template>
         </el-table-column>
-        <el-table-column property="notInStore" label="在途数量" sortable="custom" align="center" width="135"></el-table-column>
-        <el-table-column property="notInCostmoney" label="在途金额" sortable="custom" align="center" width="135">
+        <el-table-column property="notInStore" label="在途数量" sortable="custom" align="center"></el-table-column>
+        <el-table-column property="notInCostmoney" label="在途金额" sortable="custom" align="center">
             <template slot-scope="scope">{{scope.row['notInCostmoney'] | cutOut}}</template>
         </el-table-column>
-        <el-table-column property="hopeUseNum" label="总库存数量" sortable="custom" align="center" width="135"></el-table-column>
-        <el-table-column property="totalCostmoney" label="总库存金额" sortable="custom" align="center" width="135">
+        <el-table-column property="hopeUseNum" label="总库存数量" sortable="custom" align="center"></el-table-column>
+        <el-table-column property="totalCostmoney" label="总库存金额" sortable="custom" align="center">
             <template slot-scope="scope">{{scope.row['totalCostmoney'] | cutOut}}</template>
         </el-table-column>
-        <el-table-column property="30DayCostmoney" label="近30天出库金额" sortable="custom" width="150" align="center">
+        <el-table-column property="30DayCostmoney" label="近30天出库金额" sortable="custom" align="center">
             <template slot-scope="scope">{{scope.row['30DayCostmoney'] | cutOut}}</template>
         </el-table-column>
-        <el-table-column property="sellDays" label="库存周转(天)" sortable="custom" align="center" width="135"></el-table-column>
-        <el-table-column property="goodsStatus" label="状态" align="center" width="116"></el-table-column>
+        <el-table-column property="sellDays" label="库存周转(天)" sortable="custom" align="center"></el-table-column>
+        <el-table-column property="goodsStatus" label="状态" align="center"></el-table-column>
       </el-table>
       <!-- <div slot="footer" class="dialog-footer">
         <el-button @click="dialogTableVisible = false">取 消</el-button>
         <el-button type="primary" @click="exportExcelMx()">导出明细</el-button>
       </div> -->
     </el-dialog>
-    <el-dialog title="查看开发明细" :visible.sync="dialogTableVisibleKf" width="73%">
+    <el-dialog title="查看开发明细" :visible.sync="dialogTableVisibleKf" width="85%">
       <el-table :data="viewFormKf" @sort-change="sortNumberViewKf" class="elTableee" border :header-cell-style="getRowClass" max-height="600">
-        <el-table-column property="storeName" label="仓库" align="center" width="130" fixed></el-table-column>
-        <el-table-column property="salerName" label="开发员" align="center" width="135" fixed></el-table-column>
-        <el-table-column property="useNum" label="可用库存数量" sortable="custom" align="center" width="135"></el-table-column>
-        <el-table-column property="costmoney" label="可用库存金额" sortable="custom" align="center" width="135">
+        <el-table-column property="storeName" label="仓库" align="center" fixed></el-table-column>
+        <el-table-column property="salerName" label="开发员" align="center" fixed></el-table-column>
+        <el-table-column property="useNum" label="可用库存数量" sortable="custom" align="center"></el-table-column>
+        <el-table-column property="costmoney" label="可用库存金额" sortable="custom" align="center">
           <template slot-scope="scope">{{scope.row['costmoney'] | cutOut}}</template>
         </el-table-column>
-        <el-table-column property="notInStore" label="在途数量" sortable="custom" align="center" width="135"></el-table-column>
-        <el-table-column property="notInCostmoney" label="在途金额" sortable="custom" align="center" width="135">
+        <el-table-column property="notInStore" label="在途数量" sortable="custom" align="center"></el-table-column>
+        <el-table-column property="notInCostmoney" label="在途金额" sortable="custom" align="center">
           <template slot-scope="scope">{{scope.row['notInCostmoney'] | cutOut}}</template>
         </el-table-column>
-        <el-table-column property="hopeUseNum" label="总库存数量" sortable="custom" align="center" width="135"></el-table-column>
-        <el-table-column property="totalCostmoney" label="总库存金额" sortable="custom" align="center" width="135">
+        <el-table-column property="hopeUseNum" label="总库存数量" sortable="custom" align="center"></el-table-column>
+        <el-table-column property="totalCostmoney" label="总库存金额" sortable="custom" align="center">
           <template slot-scope="scope">{{scope.row['totalCostmoney'] | cutOut}}</template>
         </el-table-column>
-        <el-table-column property="30DayCostmoney" label="近30天出库金额" sortable="custom" width="150" align="center">
+        <el-table-column property="30DayCostmoney" label="近30天出库金额" sortable="custom" align="center">
           <template slot-scope="scope">{{scope.row['30DayCostmoney'] | cutOut}}</template>
         </el-table-column>
-        <el-table-column property="sellDays" label="库存周转(天)" sortable="custom" align="center" width="135"></el-table-column>
+        <el-table-column property="sellDays" label="库存周转(天)" sortable="custom" align="center"></el-table-column>
+      </el-table>
+      <!-- <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogTableVisibleKf = false">取 消</el-button>
+        <el-button type="primary" @click="exportExcelMxKf()">导出明细</el-button>
+      </div> -->
+    </el-dialog>
+    <el-dialog title="查看部门明细" :visible.sync="dialogTableVisiblebm" width="85%">
+      <el-table :data="viewFormbm" @sort-change="sortNumberViewbm" class="elTableee" border :header-cell-style="getRowClass" max-height="600">
+        <el-table-column property="depart" label="部门" align="center" fixed></el-table-column>
+        <el-table-column property="useNum" label="可用库存数量" sortable="custom" align="center"></el-table-column>
+        <el-table-column property="costmoney" label="可用库存金额" sortable="custom" align="center">
+          <template slot-scope="scope">{{scope.row['costmoney'] | cutOut}}</template>
+        </el-table-column>
+        <el-table-column property="notInStore" label="在途数量" sortable="custom" align="center"></el-table-column>
+        <el-table-column property="notInCostmoney" label="在途金额" sortable="custom" align="center">
+          <template slot-scope="scope">{{scope.row['notInCostmoney'] | cutOut}}</template>
+        </el-table-column>
+        <el-table-column property="hopeUseNum" label="总库存数量" sortable="custom" align="center"></el-table-column>
+        <el-table-column property="totalCostmoney" label="总库存金额" sortable="custom" align="center">
+          <template slot-scope="scope">{{scope.row['totalCostmoney'] | cutOut}}</template>
+        </el-table-column>
+        <el-table-column property="30DayCostmoney" label="近30天出库金额" sortable="custom" align="center">
+          <template slot-scope="scope">{{scope.row['30DayCostmoney'] | cutOut}}</template>
+        </el-table-column>
+        <el-table-column property="sellDays" label="库存周转(天)" sortable="custom" align="center"></el-table-column>
       </el-table>
       <!-- <div slot="footer" class="dialog-footer">
         <el-button @click="dialogTableVisibleKf = false">取 消</el-button>
@@ -156,7 +189,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-import { getStackStatus,getStockStatusDetail,getStockDeveloperDetail } from "../../api/profit";
+import { getStackStatus,getStockStatusDetail,getStockDeveloperDetail,getStockDepartDetail } from "../../api/profit";
 import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 
 export default {
@@ -167,10 +200,13 @@ export default {
       listLoading: false,
       viewForm:[],
       viewFormKf:[],
+      viewFormbm:[],
       dialogTableVisible:false,
       dialogTableVisibleKf:false,
+      dialogTableVisiblebm:false,
       viewFormZt:[],
-      viewFormKfQk:[]
+      viewFormKfQk:[],
+      viewdelistbm:[]
     };
   },
   filters: {
@@ -241,6 +277,16 @@ export default {
         this.viewFormKf = res.data.data;
       });
     },
+    view3(index, row) {
+      this.viewFormbm=[];  
+      this.dialogTableVisiblebm = true;
+      let viewFormbm = {
+        storeName: row.storeName,
+      };
+      getStockDepartDetail(viewFormbm).then(res => {
+        this.viewFormbm = res.data.data;
+      });
+    },
     empty(row, column, cellValue, index) {
       return cellValue || '--'
     },
@@ -263,6 +309,14 @@ export default {
       };
       getStockDeveloperDetail(viewFormKfQk).then(res => {
         this.viewFormKfQk = res.data.data;
+      });
+    },
+    getDataMxbm(){
+      let viewdelistbm = {
+        storeName: '',
+      };
+      getStockDepartDetail(viewdelistbm).then(res => {
+        this.viewdelistbm = res.data.data;
       });
     },
     exportExcelMxKf() {
@@ -325,6 +379,34 @@ export default {
       const [fileName, fileType, sheetName] = [Filename, "xls"];
       this.$toExcel({ th, data, fileName, fileType, sheetName });
     },
+    exportExcelMxbm() {
+      const th = [
+        "部门",
+        "可用库存数量",
+        "可用库存金额",
+        "在途数量",
+        "在途金额",
+        "总库存数量",
+        "总库存金额",
+        "近30天出库金额",
+        "库存周转(天)"
+      ];
+      const filterVal = [
+        "depart",
+        "useNum",
+        "costmoney",
+        "notInStore",
+        "notInCostmoney",
+        "hopeUseNum",
+        "totalCostmoney",
+        "30DayCostmoney",
+        "sellDays"
+      ];
+      const Filename = "部门情况开发明细";
+      const data = this.viewdelistbm.map(v => filterVal.map(k => v[k]));
+      const [fileName, fileType, sheetName] = [Filename, "xls"];
+      this.$toExcel({ th, data, fileName, fileType, sheetName });
+    },
     exportExcel() {
       if (this.tableData.length != 0) {
         const th = [
@@ -382,6 +464,14 @@ export default {
         this.viewFormKf = data.sort(compareUp(data, column.prop));
       }
     },
+    sortNumberViewbm(column, prop, order) {
+      const data = this.viewFormbm;
+      if (column.order === "descending") {
+        this.viewFormbm = data.sort(compareDown(data, column.prop));
+      } else{
+        this.viewFormbm = data.sort(compareUp(data, column.prop));
+      }
+    },
     sortNumber1(column, prop, order) {
       const data = this.tableData1;
       if (column.order === "descending") {
@@ -395,6 +485,7 @@ export default {
     this.getData();
     this.getDataMx();
     this.getDataMxKf();
+    this.getDataMxbm();
   }
 };
 </script>

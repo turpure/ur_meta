@@ -763,6 +763,15 @@ export function getStockDeveloperDetail(param) {
   })
 }
 
+export function getStockDepartDetail(param) {
+  const data = { condition: param }
+  return request({
+    url: '/data-center/stock-depart-detail',
+    method: 'post',
+    data
+  })
+}
+
 export function getKeywordAnalysis(param) {
   const data = { condition: param }
   return request({
