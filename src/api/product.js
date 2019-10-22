@@ -1439,3 +1439,28 @@ export function forwardCreateEngine(param) {
     data
   })
 }
+
+export function APRengineRule() {
+  return request({
+    url: '/products-engine/rule',
+    method: 'get'
+  })
+}
+
+export function ebaySaveRule(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/save-rule',
+    method: 'post',
+    data
+  })
+}
+
+export function ebaySaveRuleDelete(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/delete-rule',
+    method: 'post',
+    data
+  })
+}

@@ -126,6 +126,7 @@ import formEdit from '../views/productDevelop/formEdit.vue'
 import proRecommend from '../views/analysis/proRecommend.vue'
 import proAnalysis from '../views/analysis/proAnalysis.vue'
 import mySubscribe from '../views/analysis/mySubscribe.vue'
+import pushRules from '../views/analysis/pushRules.vue'
 
 const routes = [
   {
@@ -337,6 +338,11 @@ const routes = [
         path: '/v1/products-engine/watch',
         component: mySubscribe,
         name: '我的订阅'
+      },
+      {
+        path: '/v1/products-engine/rule',
+        component: pushRules,
+        name: '规则推送'
       },
       {
         path: '/v1/products-engine/analysis',

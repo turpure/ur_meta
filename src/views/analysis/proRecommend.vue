@@ -53,43 +53,13 @@
         </div>
       </div>
       <div v-show="show.ebay">
-        <div class="proBox">
-          <div class="proCase01" v-for="(item,index) in dataEbay" :key="index">
-            <div class="priImg">
-              <img :src="item.main_image" @click="goLinkUrlEbay(item.item_url)" />
-            </div>
-            <span class="corner">{{corner}}</span>
-            <a class="justa">{{item.title}}</a>
-            <div class="proText">
-              <div class="pro01">
-                <p>
-                  总销量
-                  <span class="pred">{{item.sold}}</span>
-                </p>
-                <p>
-                  周销售量
-                  <span class="pred">{{item.sales_week1}}</span>
-                </p>
-              </div>
-              <div class="pro01">
-                <p>
-                  USD
-                  <span class="pblue">{{item.price}}</span>
-                </p>
-                <p>
-                  收藏数
-                  <span class="pblue">{{item.watchers}}</span>
-                </p>
-              </div>
-              <p style="text-align:left;margin-left:8px;margin-top:5px;">
-                上架时间
-                <span class="pblue">{{item.gen_time | cutOutMonye}}</span>
-              </p>
-              <div class="pbottom">
-                <a class="goDev" @click="submission(item.main_image,item.item_url,item.price)">立即开发</a>
-              </div>
-            </div>
-          </div>
+        <div class="ebayCase">
+          <span class="ebayText" @click="tabEbayXp">
+            <span class="ebayactive" :class="ebayStlye==0?'ebayActive':''"></span>新品规则
+          </span>
+          <span class="ebayText" @click="tabEbayRx">
+            <span class="ebayactive" :class="ebayStlye==1?'ebayActive':''"></span>热销规则
+          </span>
         </div>
       </div>
       <div v-show="show.joom">
@@ -146,6 +116,11 @@ export default {
         ebay: false,
         joom:false
       },
+      ebay: {
+        xp: true,
+        rx: false
+      },
+      ebayStlye:0,
       allMenu: ["Wish", "Ebay", "Joom", "Amazon", "Aliexpress"],
       listLoading: false,
       corner: "Wish",
@@ -166,6 +141,16 @@ export default {
     }
   },
   methods: {
+    tabEbayXp() {
+      this.ebayStlye = 0;
+      this.ebay.xp = true;
+      this.ebay.rx = false;
+    },
+    tabEbayRx() {
+      this.ebayStlye = 1;
+      this.ebay.xp = false;
+      this.ebay.rx = true;
+    },
     goLinkUrl(id){
       window.open('https://www.wish.com/product/'+id)
     },
@@ -478,5 +463,42 @@ export default {
   width: 75%;
   line-height: 25px;
   transform: rotate(40deg);
+}
+.ebayCase {
+  width: 98%;
+  margin-left: 0.7%;
+  border: 1px solid #e2e2e2;
+  margin-top: 15px;
+  background: #f8f8f8;
+  padding: 12px 0;
+  overflow: hidden;
+  border-radius: 6px;
+}
+.ebayText {
+  font-size: 14px;
+  padding: 0 20px;
+  display: block;
+  float: left;
+  cursor: pointer;
+}
+.ebayactive {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: block;
+  background: #fff;
+  float: left;
+  border: 1px solid #ccc;
+  margin-top: 3px;
+  margin-right: 10px;
+}
+.ebayActive {
+  background: #fff;
+  width: 4px;
+  height: 4px;
+  border: #409eff solid 5px;
+}
+.basp {
+  text-align: center;
 }
 </style>

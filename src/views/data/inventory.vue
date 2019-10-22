@@ -5,7 +5,6 @@
       <el-button @click="exportExcel" type="primary">导出总表</el-button>
       <el-button @click="exportExcelMx" type="success">导出状态明细表</el-button>
       <el-button @click="exportExcelMxKf" type="warning">导出开发明细表</el-button>
-      <el-button @click="exportExcelMxbm" type="danger">导出部门明细表</el-button>
     </el-col>  
     <el-table
       :data="tableData"
@@ -100,13 +99,6 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="部门明细" :formatter="empty" width="100" align="center">
-        <template slot-scope="scope">
-          <span type="text" @click="view3(scope.$index, scope.row)" style="cursor: pointer;">
-            <i class="iconfont icon-yulan"></i>
-          </span>
-        </template>
-      </el-table-column>
     </el-table>
     <el-dialog title="查看状态明细" :visible.sync="dialogTableVisible" width="85%">
       <el-table :data="viewForm" @sort-change="sortNumberView" class="elTableee" border :header-cell-style="getRowClass" max-height="600">
@@ -138,31 +130,6 @@
       <el-table :data="viewFormKf" @sort-change="sortNumberViewKf" class="elTableee" border :header-cell-style="getRowClass" max-height="600">
         <el-table-column property="storeName" label="仓库" align="center" fixed></el-table-column>
         <el-table-column property="salerName" label="开发员" align="center" fixed></el-table-column>
-        <el-table-column property="useNum" label="可用库存数量" sortable="custom" align="center"></el-table-column>
-        <el-table-column property="costmoney" label="可用库存金额" sortable="custom" align="center">
-          <template slot-scope="scope">{{scope.row['costmoney'] | cutOut}}</template>
-        </el-table-column>
-        <el-table-column property="notInStore" label="在途数量" sortable="custom" align="center"></el-table-column>
-        <el-table-column property="notInCostmoney" label="在途金额" sortable="custom" align="center">
-          <template slot-scope="scope">{{scope.row['notInCostmoney'] | cutOut}}</template>
-        </el-table-column>
-        <el-table-column property="hopeUseNum" label="总库存数量" sortable="custom" align="center"></el-table-column>
-        <el-table-column property="totalCostmoney" label="总库存金额" sortable="custom" align="center">
-          <template slot-scope="scope">{{scope.row['totalCostmoney'] | cutOut}}</template>
-        </el-table-column>
-        <el-table-column property="30DayCostmoney" label="近30天出库金额" sortable="custom" align="center">
-          <template slot-scope="scope">{{scope.row['30DayCostmoney'] | cutOut}}</template>
-        </el-table-column>
-        <el-table-column property="sellDays" label="库存周转(天)" sortable="custom" align="center"></el-table-column>
-      </el-table>
-      <!-- <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogTableVisibleKf = false">取 消</el-button>
-        <el-button type="primary" @click="exportExcelMxKf()">导出明细</el-button>
-      </div> -->
-    </el-dialog>
-    <el-dialog title="查看部门明细" :visible.sync="dialogTableVisiblebm" width="85%">
-      <el-table :data="viewFormbm" @sort-change="sortNumberViewbm" class="elTableee" border :header-cell-style="getRowClass" max-height="600">
-        <el-table-column property="depart" label="部门" align="center" fixed></el-table-column>
         <el-table-column property="useNum" label="可用库存数量" sortable="custom" align="center"></el-table-column>
         <el-table-column property="costmoney" label="可用库存金额" sortable="custom" align="center">
           <template slot-scope="scope">{{scope.row['costmoney'] | cutOut}}</template>
