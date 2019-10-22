@@ -870,3 +870,32 @@ export function APIJoomStoreProduct(param) {
     data
   })
 }
+
+export function getStockDepart(param) {
+  const data = { condition: param }
+  return request({
+    url: 'data-center/stock-depart-detail',
+    method: 'post',
+    data
+  })
+}
+
+export function getStockDepartStatusDetail(param) {
+  const data = { condition: param }
+  return request({
+    url: '/data-center/stock-depart-status-detail',
+    method: 'post',
+    data
+  })
+}
+
+export function getStockDepartDeveloperDetail(param) {
+  const data = { condition: param }
+  return request({
+    url: '/data-center/stock-depart-developer-detail',
+    method: 'post',
+    data
+  })
+}
+
+

@@ -27,6 +27,7 @@ import saledoc from '../views/data/saledoc.vue'
 import logisticsdoc from '../views/data/logisticsdoc.vue'
 import shortagedoc from '../views/data/shortagedoc.vue'
 import inventory from '../views/data/inventory.vue'
+import departInventory from '../views/data/departInventory.vue'
 // 销售工具
 import ebay from '../views/tool/ebay.vue'
 import ebaysku from '../views/tool/ebaysku.vue'
@@ -224,6 +225,11 @@ const routes = [
         path: '/v1/data-center/stock-status',
         component: inventory,
         name: '库存情况'
+      },
+      {
+        path: '/v1/data-center/stock-depart-detail',
+        component: departInventory,
+        name: '部门库存情况'
       },
       {
         path: '/v1/data-center/sales',
