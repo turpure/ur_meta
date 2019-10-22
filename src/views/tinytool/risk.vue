@@ -53,12 +53,10 @@
           width="130"
         ></el-table-column>
         <el-table-column label="账号简称" prop="suffix" align="center" width="120"></el-table-column>
-        <el-table-column label="买家ID" prop="buyerId" align="center" width="140">
+        <el-table-column label="买家ID" prop="buyerId" align="center" width="155">
           <template slot-scope="scope">
-            <span v-show="scope.row.level==null">{{scope.row.buyerId}}</span>
-              <el-tooltip placement="top-start" trigger="hover" content="这是一个高风险ID" v-show="scope.row.level!=null">
-                <a class="cred">{{scope.row.buyerId}}</a>
-              </el-tooltip>
+            <span :class="scope.row.level!=null?'cred':''">{{scope.row.buyerId}}</span>
+            <img v-show="scope.row.level!=null" src="../../assets/fx.png" style="width: 25px;height: 25px;" class="Tips" />
           </template>
         </el-table-column>
         <el-table-column label="收货人" prop="shipToName" align="center" width="150"></el-table-column>
@@ -616,6 +614,11 @@ export default {
   border-radius: 20px;
   display: block;
   line-height: 35px;
+}
+.Tips{
+  position: absolute;
+  top: 8px;
+  right: 8px;
 }
 </style>
 
