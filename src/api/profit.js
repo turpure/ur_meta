@@ -898,4 +898,17 @@ export function getStockDepartDeveloperDetail(param) {
   })
 }
 
+export function getEbayXp() {
+  return request({
+    url: '/products-engine/recommend?plat=ebay&type=new',
+    method: 'get'
+  })
+}
+
+export function getEbayRx() {
+  return request({
+    url: '/products-engine/recommend?plat=ebay&type=hot',
+    method: 'get'
+  })
+}
 

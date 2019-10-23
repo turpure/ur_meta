@@ -46,7 +46,10 @@
                 <span class="pblue">{{item.gen_time | cutOutMonye}}</span>
               </p>
               <div class="pbottom">
-                <a class="goDev" @click="submission('https://contestimg.wish.com/api/webimage/'+item.pid+'-medium.jpg','https://www.wish.com/product/'+item.pid,item.price)">立即开发</a>
+                <a
+                  class="goDev"
+                  @click="submission('https://contestimg.wish.com/api/webimage/'+item.pid+'-medium.jpg','https://www.wish.com/product/'+item.pid,item.price)"
+                >立即开发</a>
               </div>
             </div>
           </div>
@@ -61,6 +64,68 @@
             <span class="ebayactive" :class="ebayStlye==1?'ebayActive':''"></span>热销规则
           </span>
         </div>
+        <div v-show="ebay.xp">
+          <el-table
+            :data="ebayDataXp"
+            border
+            :height="tableHeightstock"
+            :header-cell-style="getRowClass"
+            style="width:98%;margin-left:0.7%;margin-top:15px;"
+          >
+            <el-table-column type="index" fixed align="center" width="40" header-align="center"></el-table-column>
+            <el-table-column property="title" label="标题" header-align="center" fixed width="300">
+              <template scope="scope">
+                <p style="margin:0">{{scope.row.title}}</p>
+                <p style="margin:0;margin-top:5px;color:#3c8dbc;">商品ID:{{scope.row.itemId}}</p>
+              </template>
+            </el-table-column>
+            <el-table-column prop="mainImage" fixed label="主图" header-align="center" width="80">
+              <template slot-scope="scope">
+                <el-tooltip
+                  placement="right"
+                  :open-delay="10"
+                  class="exxHover"
+                  popper-class="page-login-toolTipClass"
+                >
+                  <div slot="content">
+                    <img :src="scope.row.mainImage" style="width: 300px;height: 300px;" />
+                  </div>
+                  <img :src="scope.row.mainImage" style="width: 60px;height: 60px" />
+                </el-tooltip>
+                <!-- <img :src="scope.row.picUrl" style="width: 70px;height: 60px"> -->
+              </template>
+            </el-table-column>
+            <el-table-column property="price" label="价格" align="center" width="80"></el-table-column>
+            <el-table-column property="visit" label="浏览数" align="center" width="80"></el-table-column>
+            <el-table-column property="sold" label="销量" align="center" width="80"></el-table-column>
+            <el-table-column property="soldChart" label="走势图" align="center" width="258">
+              <template scope="scope">
+                <div class="eDiv" :id="'echarts'+scope.$index"></div>
+              </template>
+            </el-table-column>
+            <el-table-column property="listedTime" label="上架时间" align="center" width="95">
+              <template scope="scope">{{scope.row.listedTime | cutOutMonye}}</template>
+            </el-table-column>
+            <el-table-column label="卖家信息" align="center">
+              <el-table-column property="seller" label="卖家名称" align="center" width="100"></el-table-column>
+              <el-table-column property="itemLocation" label="发货地址" align="center" width="100"></el-table-column>
+            </el-table-column>
+            <el-table-column label="店铺信息" align="center">
+              <el-table-column property="store" label="店铺名称" align="center" width="100"></el-table-column>
+              <el-table-column property="storeLocation" label="店铺地址" align="center" width="80"></el-table-column>
+              <el-table-column property="marketplace" label="站点" align="center" width="100"></el-table-column>
+            </el-table-column>
+            <el-table-column property="salesThreeDayFlag" label="连续三天" align="center" width="80">
+              <template scope="scope">{{scope.row.salesThreeDayFlag==0?'无销量':'有销量'}}</template>
+            </el-table-column>
+            <!-- <el-table-column property="collect" label="关注" align="center"></el-table-column>
+            <el-table-column property="brand" label="品牌" align="center"></el-table-column>-->
+            <el-table-column property="lastModiTime" label="更新时间" align="center" width="95">
+              <template scope="scope">{{scope.row.lastModiTime | cutOutMonye}}</template>
+            </el-table-column>
+          </el-table>
+        </div>
+        <div v-show="ebay.rx">热销</div>
       </div>
       <div v-show="show.joom">
         <div class="proBox">
@@ -96,7 +161,10 @@
                 <span class="pblue">{{item.publishedDate | cutOutMonye}}</span>
               </p>
               <div class="pbottom">
-                <a class="goDev" @click="submission(item.mainImage,'https://www.joom.com/en/products/'+item.productId,item.price)">立即开发</a>
+                <a
+                  class="goDev"
+                  @click="submission(item.mainImage,'https://www.joom.com/en/products/'+item.productId,item.price)"
+                >立即开发</a>
               </div>
             </div>
           </div>
@@ -106,21 +174,55 @@
   </section>
 </template>
 <script type="text/ecmascript-6">
-import { APRecommendWish, APRecommendEbay,APRecommendJoom,forwardCreateEngine } from "../../api/product";
+import {
+  APRecommendWish,
+  APRecommendEbay,
+  APRecommendJoom,
+  forwardCreateEngine
+} from "../../api/product";
+import { getEbayXp, getEbayRx } from "../../api/profit";
 export default {
   data() {
     return {
-      tableHeightstock: window.innerHeight - 160,
+      tableHeightstock: window.innerHeight - 180,
+      options: {
+        xAxis: {
+          type: "category",
+          show:false,
+          boundaryGap: false,
+          data: []
+        },
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "cross",
+            label: {
+              backgroundColor: "#6a7985"
+            }
+          }
+        },
+        yAxis: {
+          type: "value",
+          minInterval : 5
+        },
+        series: [
+          {
+            data: [],
+            type: "line"
+          }
+        ]
+      },
+      ebayDataXp: [],
       show: {
         wish: true,
         ebay: false,
-        joom:false
+        joom: false
       },
       ebay: {
         xp: true,
         rx: false
       },
-      ebayStlye:0,
+      ebayStlye: 0,
       allMenu: ["Wish", "Ebay", "Joom", "Amazon", "Aliexpress"],
       listLoading: false,
       corner: "Wish",
@@ -130,17 +232,24 @@ export default {
       goodsState: [],
       nostockdata: [],
       dataEbay: [],
-      dataJoom:[]
+      dataJoom: []
     };
   },
   filters: {
     cutOutMonye: function(value) {
       if (!value) return "";
-      value = value.substring(0,11);
+      value = value.substring(0, 11);
       return value;
     }
   },
   methods: {
+    getRowClass({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex == 0) {
+        return "color:#337ab7;background:#f5f7fa";
+      } else {
+        return "";
+      }
+    },
     tabEbayXp() {
       this.ebayStlye = 0;
       this.ebay.xp = true;
@@ -151,20 +260,41 @@ export default {
       this.ebay.xp = false;
       this.ebay.rx = true;
     },
-    goLinkUrl(id){
-      window.open('https://www.wish.com/product/'+id)
+    goLinkUrl(id) {
+      window.open("https://www.wish.com/product/" + id);
     },
-    goLinkUrlJoom(id){
-      window.open('https://www.joom.com/en/products/'+id)
+    goLinkUrlJoom(id) {
+      window.open("https://www.joom.com/en/products/" + id);
     },
-    goLinkUrlEbay(url){
-      window.open(url)
+    goLinkUrlEbay(url) {
+      window.open(url);
+    },
+    ebayXp() {
+      getEbayXp().then(res => {
+        this.ebayDataXp = res.data.data;
+        for (let i = 0; i < this.ebayDataXp.length; i++) {
+          setTimeout(() => {
+            var obj = this.ebayDataXp[i].soldChart.soldData;
+            for (var k = 0; k < obj.length; k++) {
+              if (obj[k] == null) {
+                obj[k] = 0;
+              }
+            }
+            this.options.xAxis.data = this.ebayDataXp[i].soldChart.soldDate;
+            this.options.series[0].data = this.ebayDataXp[i].soldChart.soldData;
+            let or2 = this.$echarts.init(
+              document.getElementById("echarts" + i)
+            );
+            or2.setOption(this.options);
+          }, 20);
+        }
+      });
     },
     handleClick(tab, event) {
       if (tab.name === "Wish") {
         this.corner = "Wish";
-        if(this.nostockdata.length==0){
-          this.getDataWish()
+        if (this.nostockdata.length == 0) {
+          this.getDataWish();
         }
         this.show.wish = true;
       } else {
@@ -172,8 +302,8 @@ export default {
       }
       if (tab.name === "Ebay") {
         this.corner = "Ebay";
-        if(this.dataEbay.length==0){
-          this.getDataEbay()
+        if (this.ebayDataXp.length == 0) {
+          this.ebayXp();
         }
         this.show.ebay = true;
       } else {
@@ -181,11 +311,11 @@ export default {
       }
       if (tab.name === "Joom") {
         this.corner = "Joom";
-        if(this.dataJoom.length==0){
-          this.getDataJoom()
+        if (this.dataJoom.length == 0) {
+          this.getDataJoom();
         }
         this.show.joom = true;
-      }else{
+      } else {
         this.show.joom = false;
       }
       if (tab.name === "Amazon") {
@@ -198,26 +328,27 @@ export default {
     formatter(row, column) {
       return row.changeTime ? row.changeTime.substring(0, 16) : "";
     },
-    submission(a,b,c){
-      var condition={
-        "img": a, 
-        "cate": "女人世界", 
-        "subCate": "女包", 
-        "vendor1": null, 
-        "origin1":b , 
-        "developer": null, 
-        "introReason": null, 
-        "stockUp": "否", 
-        "salePrice": c, 
-        "type": "create", 
-        "flag": "backward", 
-        "hopeMonthProfit": null }
+    submission(a, b, c) {
+      var condition = {
+        img: a,
+        cate: "女人世界",
+        subCate: "女包",
+        vendor1: null,
+        origin1: b,
+        developer: null,
+        introReason: null,
+        stockUp: "否",
+        salePrice: c,
+        type: "create",
+        flag: "backward",
+        hopeMonthProfit: null
+      };
       forwardCreateEngine(condition).then(res => {
-        if(res.data.code==200){
+        if (res.data.code == 200) {
           this.$message({
-              message: "开发成功",
-              type: "success"
-            });
+            message: "开发成功",
+            type: "success"
+          });
         }
       });
     },
@@ -395,10 +526,10 @@ export default {
   margin-top: 5px;
   margin-bottom: 5px;
 }
-.proCase01:hover{
+.proCase01:hover {
   border: 5px solid #2298a2;
 }
-.proCase01:hover .priImg img{
+.proCase01:hover .priImg img {
   transform: scale(1.1);
 }
 @media (max-width: 1400px) {
@@ -500,5 +631,9 @@ export default {
 }
 .basp {
   text-align: center;
+}
+.eDiv {
+  width: 100%;
+  height: 160px;
 }
 </style>

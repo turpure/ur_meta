@@ -129,6 +129,7 @@
     <el-dialog title="查看开发明细" :visible.sync="dialogTableVisibleKf" width="85%">
       <el-table :data="viewFormKf" @sort-change="sortNumberViewKf" class="elTableee" border :header-cell-style="getRowClass" v-loading="listLoading2" max-height="600">
         <el-table-column property="depart" label="部门" align="center" fixed></el-table-column>
+        <el-table-column property="salerName" label="开发员" align="center" fixed></el-table-column>
         <el-table-column property="useNum" label="可用库存数量" sortable="custom" align="center"></el-table-column>
         <el-table-column property="costmoney" label="可用库存金额" sortable="custom" align="center">
           <template slot-scope="scope">{{scope.row['costmoney'] | cutOut}}</template>
@@ -278,7 +279,7 @@ export default {
     exportExcelMxKf() {
       const th = [
         "部门",
-        "开发",
+        "开发员",
         "可用库存数量",
         "可用库存金额",
         "在途数量",
