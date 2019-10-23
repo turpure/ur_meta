@@ -58,10 +58,10 @@
       <div v-show="show.ebay">
         <div class="ebayCase">
           <span class="ebayText" @click="tabEbayXp">
-            <span class="ebayactive" :class="ebayStlye==0?'ebayActive':''"></span>新品规则
+            <span class="ebayactive" :class="ebayStlye==0?'ebayActive':''"></span>新品商品
           </span>
           <span class="ebayText" @click="tabEbayRx">
-            <span class="ebayactive" :class="ebayStlye==1?'ebayActive':''"></span>热销规则
+            <span class="ebayactive" :class="ebayStlye==1?'ebayActive':''"></span>热销商品
           </span>
         </div>
         <div v-show="ebay.xp">
@@ -98,7 +98,7 @@
             <el-table-column property="price" label="价格" align="center" width="80"></el-table-column>
             <el-table-column property="visit" label="浏览数" align="center" width="80"></el-table-column>
             <el-table-column property="sold" label="销量" align="center" width="80"></el-table-column>
-            <el-table-column property="soldChart" label="走势图" align="center" width="258">
+            <el-table-column property="soldChart" label="销量走势图" align="center" width="258">
               <template scope="scope">
                 <div class="eDiv" :id="'echarts'+scope.$index"></div>
               </template>
@@ -125,7 +125,67 @@
             </el-table-column>
           </el-table>
         </div>
-        <div v-show="ebay.rx">热销</div>
+        <div v-show="ebay.rx">
+          <el-table
+            :data="ebayDataRx"
+            border
+            :height="tableHeightstock"
+            :header-cell-style="getRowClass"
+            style="width:98%;margin-left:0.7%;margin-top:15px;"
+          >
+            <el-table-column type="index" fixed align="center" width="40" header-align="center"></el-table-column>
+            <el-table-column property="title" label="标题" header-align="center" fixed width="300">
+              <template scope="scope">
+                <p style="margin:0">{{scope.row.title}}</p>
+                <p style="margin:0;margin-top:5px;color:#3c8dbc;">商品ID:{{scope.row.itemId}}</p>
+              </template>
+            </el-table-column>
+            <el-table-column prop="mainImage" fixed label="主图" header-align="center" width="80">
+              <template slot-scope="scope">
+                <el-tooltip
+                  placement="right"
+                  :open-delay="10"
+                  class="exxHover"
+                  popper-class="page-login-toolTipClass"
+                >
+                  <div slot="content">
+                    <img :src="scope.row.mainImage" style="width: 300px;height: 300px;" />
+                  </div>
+                  <img :src="scope.row.mainImage" style="width: 60px;height: 60px" />
+                </el-tooltip>
+                <!-- <img :src="scope.row.picUrl" style="width: 70px;height: 60px"> -->
+              </template>
+            </el-table-column>
+            <el-table-column property="price" label="价格" align="center" width="80"></el-table-column>
+            <el-table-column property="visit" label="浏览数" align="center" width="80"></el-table-column>
+            <el-table-column property="sold" label="销量" align="center" width="80"></el-table-column>
+            <el-table-column property="soldChart" label="销量走势图" align="center" width="258">
+              <template scope="scope">
+                <div class="eDiv1" :id="'echartsRx'+scope.$index"></div>
+              </template>
+            </el-table-column>
+            <el-table-column property="listedTime" label="上架时间" align="center" width="95">
+              <template scope="scope">{{scope.row.listedTime | cutOutMonye}}</template>
+            </el-table-column>
+            <el-table-column label="卖家信息" align="center">
+              <el-table-column property="seller" label="卖家名称" align="center" width="100"></el-table-column>
+              <el-table-column property="itemLocation" label="发货地址" align="center" width="100"></el-table-column>
+            </el-table-column>
+            <el-table-column label="店铺信息" align="center">
+              <el-table-column property="store" label="店铺名称" align="center" width="100"></el-table-column>
+              <el-table-column property="storeLocation" label="店铺地址" align="center" width="80"></el-table-column>
+              <el-table-column property="marketplace" label="站点" align="center" width="100"></el-table-column>
+            </el-table-column>
+            <el-table-column property="salesThreeDayFlag" label="连续三天" align="center" width="80">
+              <template scope="scope">{{scope.row.salesThreeDayFlag==0?'无销量':'有销量'}}</template>
+            </el-table-column>
+            <!-- <el-table-column property="collect" label="关注" align="center"></el-table-column>
+            <el-table-column property="brand" label="品牌" align="center"></el-table-column>-->
+            <el-table-column property="lastModiTime" label="更新时间" align="center" width="95">
+              <template scope="scope">{{scope.row.lastModiTime | cutOutMonye}}</template>
+            </el-table-column>
+          </el-table>
+        </div>
       </div>
       <div v-show="show.joom">
         <div class="proBox">
@@ -186,6 +246,9 @@ export default {
     return {
       tableHeightstock: window.innerHeight - 180,
       options: {
+        grid: {
+        left: '12%'
+    },
         xAxis: {
           type: "category",
           show:false,
@@ -193,17 +256,35 @@ export default {
           data: []
         },
         tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            type: "cross",
-            label: {
-              backgroundColor: "#6a7985"
-            }
-          }
+          trigger: "axis"
         },
         yAxis: {
           type: "value",
-          minInterval : 5
+          minInterval : 20
+        },
+        series: [
+          {
+            data: [],
+            type: "line"
+          }
+        ]
+      },
+      options1: {
+        grid: {
+        left: '12%'
+    },
+        xAxis: {
+          type: "category",
+          show:false,
+          boundaryGap: false,
+          data: []
+        },
+        tooltip: {
+          trigger: "axis"
+        },
+        yAxis: {
+          type: "value",
+          minInterval : 50
         },
         series: [
           {
@@ -213,6 +294,7 @@ export default {
         ]
       },
       ebayDataXp: [],
+      ebayDataRx:[],
       show: {
         wish: true,
         ebay: false,
@@ -290,6 +372,27 @@ export default {
         }
       });
     },
+    ebayRx() {
+      getEbayRx().then(res => {
+        this.ebayDataRx = res.data.data;
+        for (let i = 0; i < this.ebayDataRx.length; i++) {
+          setTimeout(() => {
+            var obj = this.ebayDataRx[i].soldChart.soldData;
+            for (var k = 0; k < obj.length; k++) {
+              if (obj[k] == null) {
+                obj[k] = 0;
+              }
+            }
+            this.options1.xAxis.data = this.ebayDataRx[i].soldChart.soldDate;
+            this.options1.series[0].data = this.ebayDataRx[i].soldChart.soldData;
+            let or2 = this.$echarts.init(
+              document.getElementById("echartsRx" + i)
+            );
+            or2.setOption(this.options1);
+          }, 20);
+        }
+      });
+    },
     handleClick(tab, event) {
       if (tab.name === "Wish") {
         this.corner = "Wish";
@@ -304,6 +407,7 @@ export default {
         this.corner = "Ebay";
         if (this.ebayDataXp.length == 0) {
           this.ebayXp();
+          this.ebayRx();  
         }
         this.show.ebay = true;
       } else {
@@ -634,6 +738,10 @@ export default {
 }
 .eDiv {
   width: 100%;
-  height: 160px;
+  height: 200px;
+}
+.eDiv1{
+  width: 245px;
+  height: 200px;
 }
 </style>
