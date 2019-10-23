@@ -101,7 +101,7 @@
       </el-table-column>
     </el-table>
     <el-dialog title="查看状态明细" :visible.sync="dialogTableVisible" width="85%">
-      <el-table :data="viewForm" @sort-change="sortNumberView" class="elTableee" border :header-cell-style="getRowClass" max-height="600">
+      <el-table :data="viewForm" @sort-change="sortNumberView" class="elTableee" border :header-cell-style="getRowClass" v-loading="listLoading1" max-height="600">
         <el-table-column property="depart" label="部门" align="center" fixed></el-table-column>
         <el-table-column property="useNum" label="可用库存数量" sortable="custom" align="center"></el-table-column>
         <el-table-column property="costmoney" label="可用库存金额" sortable="custom" align="center">
@@ -127,7 +127,7 @@
       </div> -->
     </el-dialog>
     <el-dialog title="查看开发明细" :visible.sync="dialogTableVisibleKf" width="85%">
-      <el-table :data="viewFormKf" @sort-change="sortNumberViewKf" class="elTableee" border :header-cell-style="getRowClass" max-height="600">
+      <el-table :data="viewFormKf" @sort-change="sortNumberViewKf" class="elTableee" border :header-cell-style="getRowClass" v-loading="listLoading2" max-height="600">
         <el-table-column property="depart" label="部门" align="center" fixed></el-table-column>
         <el-table-column property="useNum" label="可用库存数量" sortable="custom" align="center"></el-table-column>
         <el-table-column property="costmoney" label="可用库存金额" sortable="custom" align="center">
@@ -164,6 +164,8 @@ export default {
       tableHeight:window.innerHeight -161,
       tableData: [],
       listLoading: false,
+      listLoading1:false,
+      listLoading2:false,
       viewForm:[],
       viewFormKf:[],
       viewFormbm:[],
@@ -229,7 +231,9 @@ export default {
       let viewForm = {
         depart: row.depart,
       };
+      this.listLoading1=true
       getStockDepartStatusDetail(viewForm).then(res => {
+          this.listLoading1=false
         this.viewForm = res.data.data;
       });
     },
@@ -239,7 +243,9 @@ export default {
       let viewFormKf = {
         depart: row.depart,
       };
+      this.listLoading2=true
       getStockDepartDeveloperDetail(viewFormKf).then(res => {
+          this.listLoading2=false
         this.viewFormKf = res.data.data;
       });
     },
