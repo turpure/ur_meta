@@ -247,11 +247,11 @@ export default {
       tableHeightstock: window.innerHeight - 180,
       options: {
         grid: {
-        left: '12%'
-    },
+          left: "12%"
+        },
         xAxis: {
           type: "category",
-          show:false,
+          show: false,
           boundaryGap: false,
           data: []
         },
@@ -260,7 +260,7 @@ export default {
         },
         yAxis: {
           type: "value",
-          minInterval : 20
+          minInterval: 20
         },
         series: [
           {
@@ -271,11 +271,11 @@ export default {
       },
       options1: {
         grid: {
-        left: '12%'
-    },
+          left: "12%"
+        },
         xAxis: {
           type: "category",
-          show:false,
+          show: false,
           boundaryGap: false,
           data: []
         },
@@ -284,7 +284,7 @@ export default {
         },
         yAxis: {
           type: "value",
-          minInterval : 50
+          minInterval: 50
         },
         series: [
           {
@@ -294,7 +294,7 @@ export default {
         ]
       },
       ebayDataXp: [],
-      ebayDataRx:[],
+      ebayDataRx: [],
       show: {
         wish: true,
         ebay: false,
@@ -384,7 +384,9 @@ export default {
               }
             }
             this.options1.xAxis.data = this.ebayDataRx[i].soldChart.soldDate;
-            this.options1.series[0].data = this.ebayDataRx[i].soldChart.soldData;
+            this.options1.series[0].data = this.ebayDataRx[
+              i
+            ].soldChart.soldData;
             let or2 = this.$echarts.init(
               document.getElementById("echartsRx" + i)
             );
@@ -407,7 +409,7 @@ export default {
         this.corner = "Ebay";
         if (this.ebayDataXp.length == 0) {
           this.ebayXp();
-          this.ebayRx();  
+          this.ebayRx();
         }
         this.show.ebay = true;
       } else {
@@ -740,7 +742,7 @@ export default {
   width: 100%;
   height: 200px;
 }
-.eDiv1{
+.eDiv1 {
   width: 245px;
   height: 200px;
 }

@@ -1464,3 +1464,29 @@ export function ebaySaveRuleDelete(param) {
     data
   })
 }
+
+export function APRengineRuleHot() {
+  return request({
+    url: '/products-engine/rule?type=hot',
+    method: 'get'
+  })
+}
+
+export function ebaySaveRuleHot(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/save-rule?type=hot',
+    method: 'post',
+    data
+  })
+}
+
+export function ebaySaveRuleDeleteHot(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/delete-rule?type=hot',
+    method: 'post',
+    data
+  })
+}
+
