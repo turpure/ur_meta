@@ -64,11 +64,12 @@
             <span class="ebayactive" :class="ebayStlye==1?'ebayActive':''"></span>热销商品
           </span>
         </div>
-        <div v-show="ebay.xp">
+        <div v-show="ebay.xp" class="infoTable">
           <el-table
             :data="ebayDataXp"
             border
             :height="tableHeightstock"
+            @sort-change="sortNumber"
             :header-cell-style="getRowClass"
             style="width:98%;margin-left:0.7%;margin-top:15px;"
           >
@@ -86,59 +87,105 @@
                   </div>
                   <img :src="scope.row.mainImage" style="width: 60px;height: 60px" />
                 </el-tooltip>
-                <a class="ebayBlocka ebayBlocka1" @click="submission(scope.row.mainImage,'https://www.ebay.com/itm/' + scope.row.itemId,scope.row.price)"><i class="el-icon-star-off" style="margin-right:3px;"></i>认领</a>
-                <a class="ebayBlocka ebayBlocka2"><i class="el-icon-delete" style="margin-right:3px;"></i>过滤</a>
+                <a
+                  class="ebayBlocka ebayBlocka1"
+                  @click="submission(scope.row.mainImage,'https://www.ebay.com/itm/' + scope.row.itemId,scope.row.price)"
+                >
+                  <i class="el-icon-star-off" style="margin-right:3px;"></i>认领
+                </a>
+                <a class="ebayBlocka ebayBlocka2">
+                  <i class="el-icon-delete" style="margin-right:3px;"></i>过滤
+                </a>
                 <!-- <img :src="scope.row.picUrl" style="width: 70px;height: 60px"> -->
               </template>
             </el-table-column>
-            <el-table-column property="title" label="标题 / 类目 / 商品ID /品牌 / 更新时间" header-align="center" fixed width="300">
+            <el-table-column
+              property="title"
+              label="标题 / 类目 / 商品ID /品牌 / 更新时间"
+              header-align="center"
+              fixed
+              width="300"
+            >
               <template slot-scope="scope">
                 <p style="margin:0">{{scope.row.title}}</p>
-                <p style="margin:0;margin-top:8px;color:#e6a23c;font-size:13px;">{{scope.row.cidName}}</p>
-                <div style="margin-top:8px;"> 
-                <span style="margin:0;margin-top:8px;color:#3c8dbc;font-size:13px;">商品ID:{{scope.row.itemId}}</span>
-                <span style="margin:0;margin-top:8px;color:#3c8dbc;font-size:13px;margin-left:15px;">品牌:{{scope.row.brand}}</span>
+                <p
+                  style="margin:0;margin-top:8px;color:#e6a23c;font-size:13px;"
+                >{{scope.row.cidName}}</p>
+                <div style="margin-top:8px;">
+                  <span
+                    style="margin:0;margin-top:8px;color:#3c8dbc;font-size:13px;"
+                  >商品ID:{{scope.row.itemId}}</span>
+                  <span
+                    style="margin:0;margin-top:8px;color:#3c8dbc;font-size:13px;margin-left:15px;"
+                  >品牌:{{scope.row.brand}}</span>
                 </div>
-                <div style="margin-top:8px;">       
-                <span style="margin:0;margin-top:5px;font-size:13px;">连续三天:{{scope.row.salesThreeDayFlag==0?'有销量':'无销量'}}</span>
-                <span style="margin:0;margin-top:5px;font-size:13px;margin-left:15px;">更新时间:{{scope.row.lastModiTime | cutOutMonye}}</span>
+                <div style="margin-top:8px;">
+                  <span
+                    style="margin:0;margin-top:5px;font-size:13px;"
+                  >连续三天:{{scope.row.salesThreeDayFlag==0?'有销量':'无销量'}}</span>
+                  <span
+                    style="margin:0;margin-top:5px;font-size:13px;margin-left:15px;"
+                  >更新时间:{{scope.row.lastModiTime | cutOutMonye}}</span>
                 </div>
-                <div style="margin-top:8px;" class="ebayGoa">       
-                <span style="margin:0;margin-top:5px;font-size:13px;" @click="goLinkUrlEbay('https://www.ebay.com/itm/' + scope.row.itemId)">eBay链接</span>
-                <span style="margin:0;margin-top:5px;font-size:13px;" @click="goLinkUrlEbay('https://www.ebay.com/itm/' + scope.row.itemId)">货源链接</span>
+                <div style="margin-top:8px;" class="ebayGoa">
+                  <span
+                    style="margin:0;margin-top:5px;font-size:13px;"
+                    @click="goLinkUrlEbay('https://www.ebay.com/itm/' + scope.row.itemId)"
+                  >eBay链接</span>
+                  <span
+                    style="margin:0;margin-top:5px;font-size:13px;"
+                    @click="goLinkUrlEbay('https://www.ebay.com/itm/' + scope.row.itemId)"
+                  >货源链接</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column property="price" label="价格" align="center" width="80"></el-table-column>
-            <el-table-column property="visit" label="浏览数" align="center" width="80"></el-table-column>
-            <el-table-column property="sold" label="销量" align="center" width="80"></el-table-column>
+            <el-table-column
+              property="price"
+              label="价格"
+              align="center"
+              width="95"
+              sortable="custom"
+            ></el-table-column>
+            <el-table-column
+              property="visit"
+              label="浏览数"
+              align="center"
+              width="95"
+              sortable="custom"
+            ></el-table-column>
+            <el-table-column property="sold" label="销量" align="center" width="95" sortable="custom"></el-table-column>
             <el-table-column property="soldChart" label="销量走势图" align="center" width="258">
               <template slot-scope="scope">
                 <div class="eDiv" :id="'echarts'+scope.$index"></div>
               </template>
             </el-table-column>
-            <el-table-column property="listedTime" label="上架时间" align="center" width="95">
+            <el-table-column
+              property="listedTime"
+              label="上架时间"
+              align="center"
+              width="110"
+            >
               <template slot-scope="scope">{{scope.row.listedTime | cutOutMonye}}</template>
             </el-table-column>
-            <el-table-column label="卖家信息" align="center">
-              <el-table-column property="seller" label="卖家名称" align="center" width="100"></el-table-column>
-              <el-table-column property="itemLocation" label="发货地址" align="center" width="100"></el-table-column>
+            <el-table-column property="seller" label="卖家名称" align="center" width="110"></el-table-column>
+            <el-table-column property="itemLocation" label="发货地址" align="center" width="110"></el-table-column>
+            <el-table-column property="storeLocation" label="注册地址" align="center" width="100"></el-table-column>
+            <el-table-column property="marketplace" label="刊登站点" align="center" width="145">
+              <el-table-column
+                prop="marketplace"
+                :render-header="renderHeaderEbayXp"
+                width="145"
+                align="center"
+              ></el-table-column>
             </el-table-column>
-            <el-table-column label="店铺信息" align="center">
-              <el-table-column property="storeLocation" label="注册地址" align="center" width="100"></el-table-column>
-              <el-table-column property="marketplace" label="刊登站点" align="center" width="100"></el-table-column>
-            </el-table-column>
-            <el-table-column label="前三天销售" align="center">
-              <el-table-column property="storeLocation" label="件数" align="center" width="85"></el-table-column>
-              <el-table-column property="marketplace" label="金额" align="center" width="85"></el-table-column>
-              <el-table-column property="marketplace" label="增幅" align="center" width="85"></el-table-column>
-            </el-table-column>
+            <el-table-column property="store" label="店铺名称" align="center" width="120"></el-table-column>
           </el-table>
         </div>
-        <div v-show="ebay.rx">
+        <div v-show="ebay.rx" class="infoTable">
           <el-table
             :data="ebayDataRx"
             border
+            @sort-change="sortNumberRx"
             :height="tableHeightstock"
             :header-cell-style="getRowClass"
             style="width:98%;margin-left:0.7%;margin-top:15px;"
@@ -157,52 +204,90 @@
                   </div>
                   <img :src="scope.row.mainImage" style="width: 60px;height: 60px" />
                 </el-tooltip>
-                <a class="ebayBlocka ebayBlocka1" @click="submission(scope.row.mainImage,'https://www.ebay.com/itm/' + scope.row.itemId,scope.row.price)"><i class="el-icon-star-off" style="margin-right:3px;"></i>认领</a>
-                <a class="ebayBlocka ebayBlocka2"><i class="el-icon-delete" style="margin-right:3px;"></i>过滤</a>
+                <a
+                  class="ebayBlocka ebayBlocka1"
+                  @click="submission(scope.row.mainImage,'https://www.ebay.com/itm/' + scope.row.itemId,scope.row.price)"
+                >
+                  <i class="el-icon-star-off" style="margin-right:3px;"></i>认领
+                </a>
+                <a class="ebayBlocka ebayBlocka2">
+                  <i class="el-icon-delete" style="margin-right:3px;"></i>过滤
+                </a>
                 <!-- <img :src="scope.row.picUrl" style="width: 70px;height: 60px"> -->
               </template>
             </el-table-column>
-            <el-table-column property="title" label="标题 / 类目 / 商品ID /品牌 / 更新时间" header-align="center" fixed width="300">
+            <el-table-column
+              property="title"
+              label="标题 / 类目 / 商品ID /品牌 / 更新时间"
+              header-align="center"
+              fixed
+              width="300"
+            >
               <template slot-scope="scope">
                 <p style="margin:0">{{scope.row.title}}</p>
-                <p style="margin:0;margin-top:8px;color:#e6a23c;font-size:13px;">{{scope.row.cidName}}</p>
-                <div style="margin-top:8px;"> 
-                <span style="margin:0;margin-top:8px;color:#3c8dbc;font-size:13px;">商品ID:{{scope.row.itemId}}</span>
-                <span style="margin:0;margin-top:8px;color:#3c8dbc;font-size:13px;margin-left:15px;">品牌:{{scope.row.brand}}</span>
+                <p
+                  style="margin:0;margin-top:8px;color:#e6a23c;font-size:13px;"
+                >{{scope.row.categoryStructure}}</p>
+                <div style="margin-top:8px;">
+                  <span
+                    style="margin:0;margin-top:8px;color:#3c8dbc;font-size:13px;"
+                  >商品ID:{{scope.row.itemId}}</span>
+                  <span
+                    style="margin:0;margin-top:8px;color:#3c8dbc;font-size:13px;margin-left:15px;"
+                  >品牌:{{scope.row.brand}}</span>
                 </div>
-                <div style="margin-top:8px;">       
-                <span style="margin:0;margin-top:5px;font-size:13px;">连续三天:{{scope.row.salesThreeDayFlag==0?'有销量':'无销量'}}</span>
-                <span style="margin:0;margin-top:5px;font-size:13px;margin-left:15px;">更新时间:{{scope.row.lastModiTime | cutOutMonye}}</span>
+                <div style="margin-top:8px;">
+                  <span
+                    style="margin:0;margin-top:5px;font-size:13px;"
+                  >连续三天:{{scope.row.salesThreeDayFlag==0?'有销量':'无销量'}}</span>
+                  <span
+                    style="margin:0;margin-top:5px;font-size:13px;margin-left:15px;"
+                  >更新时间:{{scope.row.lastModiTime | cutOutMonye}}</span>
                 </div>
-                <div style="margin-top:8px;" class="ebayGoa">       
-                <span style="margin:0;margin-top:5px;font-size:13px;" @click="goLinkUrlEbay('https://www.ebay.com/itm/' + scope.row.itemId)">eBay链接</span>
-                <span style="margin:0;margin-top:5px;font-size:13px;" @click="goLinkUrlEbay('https://www.ebay.com/itm/' + scope.row.itemId)">货源链接</span>
+                <div style="margin-top:8px;" class="ebayGoa">
+                  <span
+                    style="margin:0;margin-top:5px;font-size:13px;"
+                    @click="goLinkUrlEbay('https://www.ebay.com/itm/' + scope.row.itemId)"
+                  >eBay链接</span>
+                  <span
+                    style="margin:0;margin-top:5px;font-size:13px;"
+                    @click="goLinkUrlEbay('https://www.ebay.com/itm/' + scope.row.itemId)"
+                  >货源链接</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column property="price" label="价格" align="center" width="80"></el-table-column>
-            <el-table-column property="visit" label="浏览数" align="center" width="80"></el-table-column>
-            <el-table-column property="sold" label="销量" align="center" width="80"></el-table-column>
+            <el-table-column property="price" label="价格" align="center" width="80" sortable="custom"></el-table-column>
+            <el-table-column property="visit" label="浏览数" align="center" width="80" sortable="custom"></el-table-column>
+            <el-table-column property="sold" label="销量" align="center" width="80" sortable="custom"></el-table-column>
             <el-table-column property="soldChart" label="销量走势图" align="center" width="258">
               <template slot-scope="scope">
                 <div class="eDiv1" :id="'echartsRx'+scope.$index"></div>
               </template>
             </el-table-column>
             <el-table-column property="listedTime" label="上架时间" align="center" width="95">
-              <template slot-scope="scope">{{scope.row.listedTime | cutOutMonye}}</template>
+              <template slot-scope="scope">{{scope.row.genTime | cutOutMonye}}</template>
             </el-table-column>
-            <el-table-column label="卖家信息" align="center">
               <el-table-column property="seller" label="卖家名称" align="center" width="100"></el-table-column>
               <el-table-column property="itemLocation" label="发货地址" align="center" width="100"></el-table-column>
-            </el-table-column>
-            <el-table-column label="店铺信息" align="center">
               <el-table-column property="storeLocation" label="注册地址" align="center" width="100"></el-table-column>
-              <el-table-column property="marketplace" label="刊登站点" align="center" width="100"></el-table-column>
+              <el-table-column property="marketplace" label="刊登站点" align="center" width="145">
+                <el-table-column
+                prop="marketplace"
+                :render-header="renderHeaderEbayRx"
+                width="145"
+                align="center"
+              ></el-table-column>
             </el-table-column>
+              </el-table-column>
             <el-table-column label="前三天销售" align="center">
-              <el-table-column property="storeLocation" label="件数" align="center" width="85"></el-table-column>
-              <el-table-column property="marketplace" label="金额" align="center" width="85"></el-table-column>
-              <el-table-column property="marketplace" label="增幅" align="center" width="85"></el-table-column>
+              <el-table-column property="salesThreeDay1" label="件数" align="center" width="85" sortable="custom"></el-table-column>
+              <el-table-column property="paymentThreeDay1" label="金额" align="center" width="85" sortable="custom"></el-table-column>
+              <el-table-column property="salesThreeDayGrowth" label="增幅(%)" align="center" width="85" sortable="custom"></el-table-column>
+            </el-table-column>
+            <el-table-column label="前七天销售" align="center">
+              <el-table-column property="salesWeek1" label="件数" align="center" width="85" sortable="custom"></el-table-column>
+              <el-table-column property="paymentWeek1" label="金额" align="center" width="85" sortable="custom"></el-table-column>
+              <el-table-column property="salesWeekGrowth" label="增幅(%)" align="center" width="85" sortable="custom"></el-table-column>
             </el-table-column>
           </el-table>
         </div>
@@ -261,14 +346,12 @@ import {
   forwardCreateEngine
 } from "../../api/product";
 import { getEbayXp, getEbayRx } from "../../api/profit";
+import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 export default {
   data() {
     return {
       tableHeightstock: window.innerHeight - 180,
       options: {
-        grid: {
-          left: "12%"
-        },
         xAxis: {
           type: "category",
           show: false,
@@ -291,7 +374,7 @@ export default {
       },
       options1: {
         grid: {
-          left: "12%"
+          left: "17%"
         },
         xAxis: {
           type: "category",
@@ -304,7 +387,7 @@ export default {
         },
         yAxis: {
           type: "value",
-          minInterval: 50
+          minInterval: 100
         },
         series: [
           {
@@ -314,7 +397,9 @@ export default {
         ]
       },
       ebayDataXp: [],
+      ebayDataXp1: [],
       ebayDataRx: [],
+      ebayDataRx1:[],
       show: {
         wish: true,
         ebay: false,
@@ -334,7 +419,9 @@ export default {
       goodsState: [],
       nostockdata: [],
       dataEbay: [],
-      dataJoom: []
+      dataJoom: [],
+      ebayXpZd: null,
+      ebayRxZd: null
     };
   },
   filters: {
@@ -345,8 +432,212 @@ export default {
     }
   },
   methods: {
+    getEbayXpData() {
+      let ebayShowDrr = this.ebayDataXp1;
+      let ebXpData = [];
+      if (this.ebayXpZd) {
+        for (let i = 0; i < ebayShowDrr.length; i++) {
+          if (ebayShowDrr[i].marketplace == this.ebayXpZd) {
+            ebXpData.push(ebayShowDrr[i]);
+          }
+        }
+        this.ebayDataXp = ebXpData;
+        for (let i = 0; i < this.ebayDataXp.length; i++) {
+          setTimeout(() => {
+            var obj = this.ebayDataXp[i].soldChart.soldData;
+            for (var k = 0; k < obj.length; k++) {
+              if (obj[k] == null) {
+                obj[k] = 0;
+              }
+            }
+            this.options.xAxis.data = this.ebayDataXp[i].soldChart.soldDate;
+            this.options.series[0].data = this.ebayDataXp[i].soldChart.soldData;
+            let or2 = this.$echarts.init(
+              document.getElementById("echarts" + i)
+            );
+            or2.setOption(this.options);
+          }, 20);
+        }
+      } else {
+        this.ebayDataXp = this.ebayDataXp1;
+        for (let i = 0; i < this.ebayDataXp.length; i++) {
+          setTimeout(() => {
+            var obj = this.ebayDataXp[i].soldChart.soldData;
+            for (var k = 0; k < obj.length; k++) {
+              if (obj[k] == null) {
+                obj[k] = 0;
+              }
+            }
+            this.options.xAxis.data = this.ebayDataXp[i].soldChart.soldDate;
+            this.options.series[0].data = this.ebayDataXp[i].soldChart.soldData;
+            let or2 = this.$echarts.init(
+              document.getElementById("echarts" + i)
+            );
+            or2.setOption(this.options);
+          }, 20);
+        }
+      }
+    },
+    getEbayRxData() {
+      let ebayShowDrr = this.ebayDataRx1;
+      let ebXpData = [];
+      if (this.ebayRxZd) {
+        for (let i = 0; i < ebayShowDrr.length; i++) {
+          if (ebayShowDrr[i].marketplace == this.ebayRxZd) {
+            ebXpData.push(ebayShowDrr[i]);
+          }
+        }
+        this.ebayDataRx = ebXpData;
+        for (let i = 0; i < this.ebayDataRx.length; i++) {
+          setTimeout(() => {
+            var obj = this.ebayDataRx[i].soldChart.soldData;
+            for (var k = 0; k < obj.length; k++) {
+              if (obj[k] == null) {
+                obj[k] = 0;
+              }
+            }
+            this.options1.xAxis.data = this.ebayDataRx[i].soldChart.soldDate;
+            this.options1.series[0].data = this.ebayDataRx[
+              i
+            ].soldChart.soldData;
+            let or2 = this.$echarts.init(
+              document.getElementById("echartsRx" + i)
+            );
+            or2.setOption(this.options1);
+          }, 20);
+        }
+      } else {
+        this.ebayDataRx = this.ebayDataRx1;
+        for (let i = 0; i < this.ebayDataRx.length; i++) {
+          setTimeout(() => {
+            var obj = this.ebayDataRx[i].soldChart.soldData;
+            for (var k = 0; k < obj.length; k++) {
+              if (obj[k] == null) {
+                obj[k] = 0;
+              }
+            }
+            this.options1.xAxis.data = this.ebayDataRx[i].soldChart.soldDate;
+            this.options1.series[0].data = this.ebayDataRx[
+              i
+            ].soldChart.soldData;
+            let or2 = this.$echarts.init(
+              document.getElementById("echartsRx" + i)
+            );
+            or2.setOption(this.options1);
+          }, 20);
+        }
+      }
+    },
+    renderHeaderEbayXp(h, { column, $index }) {
+      if ($index === 0) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "30px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.ebayXpZd,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.ebayXpZd = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.getEbayXpData();
+                }
+              }
+            })
+          ]
+        );
+      }
+    },
+    renderHeaderEbayRx(h, { column, $index }) {
+      if ($index === 0) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "30px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.ebayRxZd,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.ebayRxZd = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.getEbayRxData();
+                }
+              }
+            })
+          ]
+        );
+      }
+    },
+    sortNumber(column, prop, order) {
+      const data = this.ebayDataXp;
+      if (column.order === "descending") {
+        this.ebayDataXp = data.sort(compareDown(data, column.prop));
+      } else {
+        this.ebayDataXp = data.sort(compareUp(data, column.prop));
+      }
+      for (let i = 0; i < this.ebayDataXp.length; i++) {
+        setTimeout(() => {
+          var obj = this.ebayDataXp[i].soldChart.soldData;
+          for (var k = 0; k < obj.length; k++) {
+            if (obj[k] == null) {
+              obj[k] = 0;
+            }
+          }
+          this.options.xAxis.data = this.ebayDataXp[i].soldChart.soldDate;
+          this.options.series[0].data = this.ebayDataXp[i].soldChart.soldData;
+          let or2 = this.$echarts.init(document.getElementById("echarts" + i));
+          or2.setOption(this.options);
+        }, 20);
+      }
+    },
+    sortNumberRx(column, prop, order) {
+      const data = this.ebayDataRx;
+      if (column.order === "descending") {
+        this.ebayDataRx = data.sort(compareDown(data, column.prop));
+      } else {
+        this.ebayDataRx = data.sort(compareUp(data, column.prop));
+      }
+      for (let i = 0; i < this.ebayDataRx.length; i++) {
+          setTimeout(() => {
+            var obj = this.ebayDataRx[i].soldChart.soldData;
+            for (var k = 0; k < obj.length; k++) {
+              if (obj[k] == null) {
+                obj[k] = 0;
+              }
+            }
+            this.options1.xAxis.data = this.ebayDataRx[i].soldChart.soldDate;
+            this.options1.series[0].data = this.ebayDataRx[
+              i
+            ].soldChart.soldData;
+            let or2 = this.$echarts.init(
+              document.getElementById("echartsRx" + i)
+            );
+            or2.setOption(this.options1);
+          }, 20);
+        }
+    },
     getRowClass({ row, column, rowIndex, columnIndex }) {
-      if (rowIndex <=1) {
+      if (rowIndex <= 1) {
         return "color:#337ab7;background:#f5f7fa";
       } else {
         return "";
@@ -373,7 +664,7 @@ export default {
     },
     ebayXp() {
       getEbayXp().then(res => {
-        this.ebayDataXp = res.data.data;
+        this.ebayDataXp1 = this.ebayDataXp = res.data.data;
         for (let i = 0; i < this.ebayDataXp.length; i++) {
           setTimeout(() => {
             var obj = this.ebayDataXp[i].soldChart.soldData;
@@ -394,7 +685,7 @@ export default {
     },
     ebayRx() {
       getEbayRx().then(res => {
-        this.ebayDataRx = res.data.data;
+        this.ebayDataRx = this.ebayDataRx1 =res.data.data;
         for (let i = 0; i < this.ebayDataRx.length; i++) {
           setTimeout(() => {
             var obj = this.ebayDataRx[i].soldChart.soldData;
@@ -766,37 +1057,37 @@ export default {
   width: 245px;
   height: 200px;
 }
-.ebayBlocka{
+.ebayBlocka {
   display: block;
   text-align: center;
   margin-top: 10px;
   font-size: 13px;
   cursor: pointer;
 }
-.ebayBlocka1{
+.ebayBlocka1 {
   color: #337ab7;
 }
-.ebayBlocka2{
+.ebayBlocka2 {
   color: #f56c6c;
 }
-.ebayGoa{
+.ebayGoa {
   width: 100%;
   overflow: hidden;
 }
-.ebayGoa span{
+.ebayGoa span {
   display: block;
   text-align: center;
   font-size: 13px;
   line-height: 28px;
   cursor: pointer;
 }
-.ebayGoa span:first-child{
+.ebayGoa span:first-child {
   width: 40%;
   float: left;
   background: #409eff;
   color: #fff;
 }
-.ebayGoa span:last-child{
+.ebayGoa span:last-child {
   width: 40%;
   float: right;
   background: #f56c6c;
