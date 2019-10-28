@@ -77,10 +77,10 @@
             <el-table-column property="itemLocation" label="发货地址" align="center"></el-table-column>
             <el-table-column property="creator" label="创建人" align="center"></el-table-column>
             <el-table-column property="createdDate" label="创建时间" align="center">
-              <template scope="scope">{{scope.row.createdDate | cutOutMonye}}</template>
+              <template slot-scope="scope">{{scope.row.createdDate | cutOutMonye}}</template>
             </el-table-column>
             <el-table-column property="updatedDate" label="更新时间" align="center">
-              <template scope="scope">{{scope.row.updatedDate | cutOutMonye}}</template>
+              <template slot-scope="scope">{{scope.row.updatedDate | cutOutMonye}}</template>
             </el-table-column>
           </el-table>
         </div>
@@ -89,6 +89,7 @@
             :data="ebayRxdata"
             class="elTableee"
             border
+            :height="tableHeightstock"
             :header-cell-style="getRowClass"
             style="width:98%;margin-left:0.7%;margin-top:15px;"
           >
@@ -763,7 +764,7 @@ import {
 export default {
   data() {
     return {
-      tableHeightstock: window.innerHeight - 160,
+      tableHeightstock: window.innerHeight - 185,
       ebayStlye: 0,
       ebaydisLoginxp: false,
       ebaydisLoginrx: false,
