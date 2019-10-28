@@ -1490,3 +1490,39 @@ export function ebaySaveRuleDeleteHot(param) {
   })
 }
 
+export function ebayXpAccept(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/accept?plat=ebay&type=new',
+    method: 'post',
+    data
+  })
+}
+
+export function ebayRxAccept(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/accept?plat=ebay&type=hot',
+    method: 'post',
+    data
+  })
+}
+
+export function ebayXpRefuse(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/refuse?plat=ebay&type=new',
+    method: 'post',
+    data
+  })
+}
+
+export function ebayRxRefuse(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/refuse?plat=ebay&type=hot',
+    method: 'post',
+    data
+  })
+}
+

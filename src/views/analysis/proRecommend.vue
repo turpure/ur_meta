@@ -87,13 +87,10 @@
                   </div>
                   <img :src="scope.row.mainImage" style="width: 60px;height: 60px" />
                 </el-tooltip>
-                <a
-                  class="ebayBlocka ebayBlocka1"
-                  @click="submission(scope.row.mainImage,'https://www.ebay.com/itm/' + scope.row.itemId,scope.row.price)"
-                >
+                <a class="ebayBlocka ebayBlocka1" @click="submissionEbayXp(scope.row._id.$oid)">
                   <i class="el-icon-star-off" style="margin-right:3px;"></i>认领
                 </a>
-                <a class="ebayBlocka ebayBlocka2">
+                <a class="ebayBlocka ebayBlocka2" @click="refuseEbayXp(scope.row._id.$oid)">
                   <i class="el-icon-delete" style="margin-right:3px;"></i>过滤
                 </a>
                 <!-- <img :src="scope.row.picUrl" style="width: 70px;height: 60px"> -->
@@ -159,12 +156,7 @@
                 <div class="eDiv" :id="'echarts'+scope.$index"></div>
               </template>
             </el-table-column>
-            <el-table-column
-              property="listedTime"
-              label="上架时间"
-              align="center"
-              width="110"
-            >
+            <el-table-column property="listedTime" label="上架时间" align="center" width="110">
               <template slot-scope="scope">{{scope.row.listedTime | cutOutMonye}}</template>
             </el-table-column>
             <el-table-column property="seller" label="卖家名称" align="center" width="110"></el-table-column>
@@ -204,13 +196,10 @@
                   </div>
                   <img :src="scope.row.mainImage" style="width: 60px;height: 60px" />
                 </el-tooltip>
-                <a
-                  class="ebayBlocka ebayBlocka1"
-                  @click="submission(scope.row.mainImage,'https://www.ebay.com/itm/' + scope.row.itemId,scope.row.price)"
-                >
+                <a class="ebayBlocka ebayBlocka1" @click="submissionEbayRx(scope.row._id.$oid)">
                   <i class="el-icon-star-off" style="margin-right:3px;"></i>认领
                 </a>
-                <a class="ebayBlocka ebayBlocka2">
+                <a class="ebayBlocka ebayBlocka2" @click="refuseEbayRx(scope.row._id.$oid)">
                   <i class="el-icon-delete" style="margin-right:3px;"></i>过滤
                 </a>
                 <!-- <img :src="scope.row.picUrl" style="width: 70px;height: 60px"> -->
@@ -256,8 +245,20 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column property="price" label="价格" align="center" width="80" sortable="custom"></el-table-column>
-            <el-table-column property="visit" label="浏览数" align="center" width="80" sortable="custom"></el-table-column>
+            <el-table-column
+              property="price"
+              label="价格"
+              align="center"
+              width="80"
+              sortable="custom"
+            ></el-table-column>
+            <el-table-column
+              property="visit"
+              label="浏览数"
+              align="center"
+              width="80"
+              sortable="custom"
+            ></el-table-column>
             <el-table-column property="sold" label="销量" align="center" width="80" sortable="custom"></el-table-column>
             <el-table-column property="soldChart" label="销量走势图" align="center" width="258">
               <template slot-scope="scope">
@@ -267,27 +268,62 @@
             <el-table-column property="listedTime" label="上架时间" align="center" width="95">
               <template slot-scope="scope">{{scope.row.genTime | cutOutMonye}}</template>
             </el-table-column>
-              <el-table-column property="seller" label="卖家名称" align="center" width="100"></el-table-column>
-              <el-table-column property="itemLocation" label="发货地址" align="center" width="100"></el-table-column>
-              <el-table-column property="storeLocation" label="注册地址" align="center" width="100"></el-table-column>
-              <el-table-column property="marketplace" label="刊登站点" align="center" width="145">
-                <el-table-column
+            <el-table-column property="seller" label="卖家名称" align="center" width="100"></el-table-column>
+            <el-table-column property="itemLocation" label="发货地址" align="center" width="100"></el-table-column>
+            <el-table-column property="storeLocation" label="注册地址" align="center" width="100"></el-table-column>
+            <el-table-column property="marketplace" label="刊登站点" align="center" width="145">
+              <el-table-column
                 prop="marketplace"
                 :render-header="renderHeaderEbayRx"
                 width="145"
                 align="center"
               ></el-table-column>
             </el-table-column>
-              </el-table-column>
             <el-table-column label="前三天销售" align="center">
-              <el-table-column property="salesThreeDay1" label="件数" align="center" width="85" sortable="custom"></el-table-column>
-              <el-table-column property="paymentThreeDay1" label="金额" align="center" width="85" sortable="custom"></el-table-column>
-              <el-table-column property="salesThreeDayGrowth" label="增幅(%)" align="center" width="85" sortable="custom"></el-table-column>
+              <el-table-column
+                property="salesThreeDay1"
+                label="件数"
+                align="center"
+                width="85"
+                sortable="custom"
+              ></el-table-column>
+              <el-table-column
+                property="paymentThreeDay1"
+                label="金额"
+                align="center"
+                width="85"
+                sortable="custom"
+              ></el-table-column>
+              <el-table-column
+                property="salesThreeDayGrowth"
+                label="增幅(%)"
+                align="center"
+                width="85"
+                sortable="custom"
+              ></el-table-column>
             </el-table-column>
             <el-table-column label="前七天销售" align="center">
-              <el-table-column property="salesWeek1" label="件数" align="center" width="85" sortable="custom"></el-table-column>
-              <el-table-column property="paymentWeek1" label="金额" align="center" width="85" sortable="custom"></el-table-column>
-              <el-table-column property="salesWeekGrowth" label="增幅(%)" align="center" width="85" sortable="custom"></el-table-column>
+              <el-table-column
+                property="salesWeek1"
+                label="件数"
+                align="center"
+                width="85"
+                sortable="custom"
+              ></el-table-column>
+              <el-table-column
+                property="paymentWeek1"
+                label="金额"
+                align="center"
+                width="85"
+                sortable="custom"
+              ></el-table-column>
+              <el-table-column
+                property="salesWeekGrowth"
+                label="增幅(%)"
+                align="center"
+                width="85"
+                sortable="custom"
+              ></el-table-column>
             </el-table-column>
           </el-table>
         </div>
@@ -335,6 +371,20 @@
           </div>
         </div>
       </div>
+      <el-dialog title="过滤备注" :visible.sync="dialogEbayXpRefuse">
+        <el-input v-model="ebayXpText"></el-input>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogEbayXpRefuse = false">取 消</el-button>
+          <el-button type="primary" @click="addEbayXpRefuse">确 定</el-button>
+        </div>
+      </el-dialog>
+      <el-dialog title="过滤备注" :visible.sync="dialogEbayRxRefuse">
+        <el-input v-model="ebayRxText"></el-input>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogEbayRxRefuse = false">取 消</el-button>
+          <el-button type="primary" @click="addEbayRxRefuse">确 定</el-button>
+        </div>
+      </el-dialog>
     </div>
   </section>
 </template>
@@ -343,7 +393,11 @@ import {
   APRecommendWish,
   APRecommendEbay,
   APRecommendJoom,
-  forwardCreateEngine
+  forwardCreateEngine,
+  ebayXpAccept,
+  ebayRxAccept,
+  ebayXpRefuse,
+  ebayRxRefuse
 } from "../../api/product";
 import { getEbayXp, getEbayRx } from "../../api/profit";
 import { compareUp, compareDown, getMonthDate } from "../../api/tools";
@@ -399,7 +453,7 @@ export default {
       ebayDataXp: [],
       ebayDataXp1: [],
       ebayDataRx: [],
-      ebayDataRx1:[],
+      ebayDataRx1: [],
       show: {
         wish: true,
         ebay: false,
@@ -421,7 +475,13 @@ export default {
       dataEbay: [],
       dataJoom: [],
       ebayXpZd: null,
-      ebayRxZd: null
+      ebayRxZd: null,
+      dialogEbayXpRefuse: false,
+      dialogEbayRxRefuse: false,
+      ebayXpId: null,
+      ebayXpText: null,
+      ebayRxId: null,
+      ebayRxText: null,
     };
   },
   filters: {
@@ -432,6 +492,50 @@ export default {
     }
   },
   methods: {
+    addEbayXpRefuse(){
+      let condition={
+        id:this.ebayXpId,
+        reason:this.ebayXpText
+      }
+      ebayXpRefuse(condition).then(res => {
+        if (res.data.code == 200) {
+          this.$message({
+            message: "过滤成功",
+            type: "success"
+          });
+          this.ebayXp();
+        } else {
+          this.$message.error(res.data.message);
+        }
+        this.dialogEbayXpRefuse = false;
+      });
+    },
+    addEbayRxRefuse(){
+      let condition={
+        id:this.ebayRxId,
+        reason:this.ebayRxText
+      }
+      ebayRxRefuse(condition).then(res => {
+        if (res.data.code == 200) {
+          this.$message({
+            message: "过滤成功",
+            type: "success"
+          });
+          this.ebayRx();
+        } else {
+          this.$message.error(res.data.message);
+        }
+        this.dialogEbayXpRefuse = false;
+      });
+    },
+    refuseEbayXp(id) {
+      this.ebayXpId = id;
+      this.dialogEbayRxRefuse = true;
+    },
+    refuseEbayRx(id) {
+      this.ebayRxId = id;
+      this.dialogEbayRxRefuse = true;
+    },
     getEbayXpData() {
       let ebayShowDrr = this.ebayDataXp1;
       let ebXpData = [];
@@ -618,23 +722,21 @@ export default {
         this.ebayDataRx = data.sort(compareUp(data, column.prop));
       }
       for (let i = 0; i < this.ebayDataRx.length; i++) {
-          setTimeout(() => {
-            var obj = this.ebayDataRx[i].soldChart.soldData;
-            for (var k = 0; k < obj.length; k++) {
-              if (obj[k] == null) {
-                obj[k] = 0;
-              }
+        setTimeout(() => {
+          var obj = this.ebayDataRx[i].soldChart.soldData;
+          for (var k = 0; k < obj.length; k++) {
+            if (obj[k] == null) {
+              obj[k] = 0;
             }
-            this.options1.xAxis.data = this.ebayDataRx[i].soldChart.soldDate;
-            this.options1.series[0].data = this.ebayDataRx[
-              i
-            ].soldChart.soldData;
-            let or2 = this.$echarts.init(
-              document.getElementById("echartsRx" + i)
-            );
-            or2.setOption(this.options1);
-          }, 20);
-        }
+          }
+          this.options1.xAxis.data = this.ebayDataRx[i].soldChart.soldDate;
+          this.options1.series[0].data = this.ebayDataRx[i].soldChart.soldData;
+          let or2 = this.$echarts.init(
+            document.getElementById("echartsRx" + i)
+          );
+          or2.setOption(this.options1);
+        }, 20);
+      }
     },
     getRowClass({ row, column, rowIndex, columnIndex }) {
       if (rowIndex <= 1) {
@@ -685,7 +787,7 @@ export default {
     },
     ebayRx() {
       getEbayRx().then(res => {
-        this.ebayDataRx = this.ebayDataRx1 =res.data.data;
+        this.ebayDataRx = this.ebayDataRx1 = res.data.data;
         for (let i = 0; i < this.ebayDataRx.length; i++) {
           setTimeout(() => {
             var obj = this.ebayDataRx[i].soldChart.soldData;
@@ -745,27 +847,33 @@ export default {
     formatter(row, column) {
       return row.changeTime ? row.changeTime.substring(0, 16) : "";
     },
-    submission(a, b, c) {
-      var condition = {
-        img: a,
-        cate: "女人世界",
-        subCate: "女包",
-        vendor1: null,
-        origin1: b,
-        developer: null,
-        introReason: null,
-        stockUp: "否",
-        salePrice: c,
-        type: "create",
-        flag: "backward",
-        hopeMonthProfit: null
+    submissionEbayXp(id) {
+      let condition = {
+        id: id
       };
-      forwardCreateEngine(condition).then(res => {
+      ebayXpAccept(condition).then(res => {
         if (res.data.code == 200) {
           this.$message({
             message: "开发成功",
             type: "success"
           });
+        } else {
+          this.$message.error(res.data.message);
+        }
+      });
+    },
+    submissionEbayRx(id) {
+      let condition = {
+        id: id
+      };
+      ebayRxAccept(condition).then(res => {
+        if (res.data.code == 200) {
+          this.$message({
+            message: "开发成功",
+            type: "success"
+          });
+        } else {
+          this.$message.error(res.data.message);
         }
       });
     },
