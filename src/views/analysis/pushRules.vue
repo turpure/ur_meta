@@ -55,17 +55,17 @@
                     style="color: #409EFF;cursor:pointer;"
                   ></i>
                 </el-tooltip>
+                <el-tooltip content="立即生效">
+                  <i
+                    class="el-icon-star-on"
+                    style="color: #409EFF;cursor:pointer;"
+                  ></i>
+                </el-tooltip>
                 <el-tooltip content="删除">
                   <i
                     class="el-icon-delete"
                     style="color: #409EFF;cursor:pointer;"
                     @click="delArt(scope.$index, scope.row)"
-                  ></i>
-                </el-tooltip>
-                <el-tooltip content="立即生效">
-                  <i
-                    class="el-icon-star-on"
-                    style="color: #409EFF;cursor:pointer;"
                   ></i>
                 </el-tooltip>
               </template>
@@ -84,7 +84,12 @@
               </template>
             </el-table-column>
             <el-table-column property="listedTime" label="上架时间" align="center"></el-table-column>
-            <el-table-column property="creator" label="创建人" align="center"></el-table-column>
+            <el-table-column property="isUsed" label="是否停用" align="center">
+              <template slot-scope="scope">
+                {{scope.row.isUsed==0?'停用':'在用'}}
+              </template>
+            </el-table-column>
+            <el-table-column property="creator" label="创建人" align="center" width="80"></el-table-column>
             <el-table-column property="createdDate" label="创建时间" align="center">
               <template slot-scope="scope">{{scope.row.createdDate | cutOutMonye}}</template>
             </el-table-column>
@@ -983,7 +988,7 @@ export default {
         "意大利",
         "澳大利亚"
       ],
-      ebayOptionsTime: ["今天", "明天", "昨天"]
+      ebayOptionsTime: ["今天", "昨天", "前天"]
     };
   },
   filters: {
@@ -1095,8 +1100,8 @@ export default {
       if (this.ebayXp.listedTime) {
         let date = this.ebayXp.listedTime;
         date=date.replace(/0/g,"今天")
-        date=date.replace(/1/g,"明天")
-        date=date.replace(/2/g,"昨天")
+        date=date.replace(/1/g,"昨天")
+        date=date.replace(/2/g,"前天")
         this.ebayXp.listedTime=date
         this.ebayXp.listedTime=this.ebayXp.listedTime.split(",");
       }
@@ -1148,10 +1153,10 @@ export default {
           if(this.ebayXp.listedTime[i]=='今天'){
             this.ebayXp.listedTime[i]=0
           }
-          if(this.ebayXp.listedTime[i]=='明天'){
+          if(this.ebayXp.listedTime[i]=='昨天'){
             this.ebayXp.listedTime[i]=1
           }
-          if(this.ebayXp.listedTime[i]=='昨天'){
+          if(this.ebayXp.listedTime[i]=='前天'){
             this.ebayXp.listedTime[i]=2
           }
         }
@@ -1201,10 +1206,10 @@ export default {
           if(this.addEbayXp.listedTime[i]=='今天'){
             this.addEbayXp.listedTime[i]=0
           }
-          if(this.addEbayXp.listedTime[i]=='明天'){
+          if(this.addEbayXp.listedTime[i]=='昨天'){
             this.addEbayXp.listedTime[i]=1
           }
-          if(this.addEbayXp.listedTime[i]=='昨天'){
+          if(this.addEbayXp.listedTime[i]=='前天'){
             this.addEbayXp.listedTime[i]=2
           }
         }
@@ -1344,8 +1349,8 @@ export default {
         for(let i=0;i<this.ebaydata.length;i++){
           let date = this.ebaydata[i].listedTime;
           date=date.replace(/0/g,"今天")
-          date=date.replace(/1/g,"明天")
-          date=date.replace(/2/g,"昨天")
+          date=date.replace(/1/g,"昨天")
+          date=date.replace(/2/g,"前天")
           this.ebaydata[i].listedTime=date
         }
       });

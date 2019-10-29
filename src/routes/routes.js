@@ -128,6 +128,7 @@ import proRecommend from '../views/analysis/proRecommend.vue'
 import proAnalysis from '../views/analysis/proAnalysis.vue'
 import mySubscribe from '../views/analysis/mySubscribe.vue'
 import pushRules from '../views/analysis/pushRules.vue'
+import ebayRule from '../views/analysis/ebayRule.vue'
 
 const routes = [
   {
@@ -349,6 +350,11 @@ const routes = [
         path: '/v1/products-engine/rule',
         component: pushRules,
         name: '规则推送'
+      },
+      {
+        path: '/v1/products-engine/dev-cat',
+        component: ebayRule,
+        name: 'ebay规则'
       },
       {
         path: '/v1/products-engine/analysis',

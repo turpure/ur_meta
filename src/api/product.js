@@ -1526,3 +1526,38 @@ export function ebayRxRefuse(param) {
   })
 }
 
+export function ebayDevCatRule(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/dev-cat',
+    method: 'post',
+    data
+  })
+}
+
+export function ebayCatRule(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/ebay-cat',
+    method: 'post',
+    data
+  })
+}
+
+export function ebaySaveDevCat(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/save-dev-cat',
+    method: 'post',
+    data
+  })
+}
+
+export function ebayDeleteDevCat(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/delete-dev-cat',
+    method: 'post',
+    data
+  })
+}
