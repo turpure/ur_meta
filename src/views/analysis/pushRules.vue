@@ -62,19 +62,28 @@
                     @click="delArt(scope.$index, scope.row)"
                   ></i>
                 </el-tooltip>
+                <el-tooltip content="立即生效">
+                  <i
+                    class="el-icon-star-on"
+                    style="color: #409EFF;cursor:pointer;"
+                  ></i>
+                </el-tooltip>
               </template>
             </el-table-column>
-            <el-table-column property="soldStart" label="销量大于" align="center" fixed></el-table-column>
-            <el-table-column property="soldEnd" label="销量小于" align="center" fixed></el-table-column>
+            <el-table-column property="soldStart" label="销量大于" align="center" fixed width="80"></el-table-column>
+            <el-table-column property="soldEnd" label="销量小于" align="center" fixed width="80"></el-table-column>
             <el-table-column property="visitStart" label="浏览数大于" align="center"></el-table-column>
             <el-table-column property="visitEnd" label="浏览数小于" align="center"></el-table-column>
-            <el-table-column property="priceEnd" label="价格小于" align="center"></el-table-column>
-            <el-table-column property="priceStart" label="价格大于" align="center"></el-table-column>
-            <el-table-column property="country" label="站点" align="center"></el-table-column>
-            <el-table-column property="storeLocation" label="店铺地址" align="center"></el-table-column>
-            <el-table-column property="salesThreeDayFlag" label="连续三天销量" align="center"></el-table-column>
+            <el-table-column property="priceEnd" label="价格小于" align="center" width="80"></el-table-column>
+            <el-table-column property="priceStart" label="价格大于" align="center" width="80"></el-table-column>
+            <el-table-column property="marketplace" label="刊登站点" align="center" width="180"></el-table-column>
+            <el-table-column property="storeLocation" label="注册地址" align="center"></el-table-column>
+            <el-table-column property="salesThreeDayFlag" label="连续三天有销量" align="center">
+              <template slot-scope="scope">
+                {{scope.row.salesThreeDayFlag==0?'是':'否'}}
+              </template>
+            </el-table-column>
             <el-table-column property="listedTime" label="上架时间" align="center"></el-table-column>
-            <el-table-column property="itemLocation" label="发货地址" align="center"></el-table-column>
             <el-table-column property="creator" label="创建人" align="center"></el-table-column>
             <el-table-column property="createdDate" label="创建时间" align="center">
               <template slot-scope="scope">{{scope.row.createdDate | cutOutMonye}}</template>
@@ -250,26 +259,52 @@
             </el-col>
             <el-col :span="12" style="margin-bottom: 20px">
               <el-col :span="5">
-                <p class="basp">站点</p>
+                <p class="basp">刊登站点</p>
               </el-col>
               <el-col :span="19">
-                <el-input v-model="ebayXp.country"></el-input>
+                <el-select
+                  style="width:100%"
+                  multiple
+                  filterable
+                  collapse-tags
+                  allow-create
+                  default-first-option
+                  v-model="ebayXp.marketplace"
+                >
+                  <el-button plain type="info" @click="selectalld1">全选</el-button>
+                  <el-button plain type="info" @click="noselectd1">取消</el-button>
+                  <el-option
+                    v-for="(item, key) in ebayOptions"
+                    :key="item.key"
+                    :label="item"
+                    :value="item"
+                  ></el-option>
+                </el-select>
               </el-col>
             </el-col>
             <el-col :span="12" style="margin-bottom: 20px">
               <el-col :span="5">
-                <p class="basp">店铺地址</p>
+                <p class="basp">注册地址</p>
               </el-col>
               <el-col :span="19">
-                <el-input v-model="ebayXp.storeLocation"></el-input>
-              </el-col>
-            </el-col>
-            <el-col :span="12" style="margin-bottom: 20px">
-              <el-col :span="5">
-                <p class="basp">连续三天销量</p>
-              </el-col>
-              <el-col :span="19">
-                <el-input v-model="ebayXp.salesThreeDayFlag"></el-input>
+                <el-select
+                  style="width:100%"
+                  multiple
+                  filterable
+                  collapse-tags
+                  allow-create
+                  default-first-option
+                  v-model="ebayXp.storeLocation"
+                >
+                  <el-button plain type="info" @click="selectalld2">全选</el-button>
+                  <el-button plain type="info" @click="noselectd2">取消</el-button>
+                  <el-option
+                    v-for="(item, key) in ebayOptionsAddress"
+                    :key="item.key"
+                    :label="item"
+                    :value="item"
+                  ></el-option>
+                </el-select>
               </el-col>
             </el-col>
             <el-col :span="12" style="margin-bottom: 20px">
@@ -277,15 +312,37 @@
                 <p class="basp">上架时间</p>
               </el-col>
               <el-col :span="19">
-                <el-input v-model="ebayXp.listedTime"></el-input>
+                <el-select
+                  style="width:100%"
+                  multiple
+                  filterable
+                  collapse-tags
+                  allow-create
+                  default-first-option
+                  v-model="ebayXp.listedTime"
+                >
+                  <el-button plain type="info" @click="selectalld3">全选</el-button>
+                  <el-button plain type="info" @click="noselectd3">取消</el-button>
+                  <el-option
+                    v-for="(item, key) in ebayOptionsTime"
+                    :key="item.key"
+                    :label="item"
+                    :value="item"
+                  ></el-option>
+                </el-select>
               </el-col>
             </el-col>
             <el-col :span="12" style="margin-bottom: 20px">
               <el-col :span="5">
-                <p class="basp">发货地址</p>
+                <p class="basp">连续三天销量</p>
               </el-col>
               <el-col :span="19">
-                <el-input v-model="ebayXp.itemLocation"></el-input>
+                <el-switch
+                  v-model="ebayXp.salesThreeDayFlag"
+                  active-color="#13ce66"
+                  inactive-color="#ff4949"
+                  style="margin-top:10px;margin-left:10px;"
+                ></el-switch>
               </el-col>
             </el-col>
           </el-col>
@@ -348,26 +405,52 @@
             </el-col>
             <el-col :span="12" style="margin-bottom: 20px">
               <el-col :span="5">
-                <p class="basp">站点</p>
+                <p class="basp">刊登站点</p>
               </el-col>
               <el-col :span="19">
-                <el-input v-model="addEbayXp.country"></el-input>
+                <el-select
+                  style="width:100%"
+                  multiple
+                  filterable
+                  collapse-tags
+                  allow-create
+                  default-first-option
+                  v-model="addEbayXp.marketplace"
+                >
+                  <el-button plain type="info" @click="addselectalld1">全选</el-button>
+                  <el-button plain type="info" @click="addnoselectd1">取消</el-button>
+                  <el-option
+                    v-for="(item, key) in ebayOptions"
+                    :key="item.key"
+                    :label="item"
+                    :value="item"
+                  ></el-option>
+                </el-select>
               </el-col>
             </el-col>
             <el-col :span="12" style="margin-bottom: 20px">
               <el-col :span="5">
-                <p class="basp">店铺地址</p>
+                <p class="basp">注册地址</p>
               </el-col>
               <el-col :span="19">
-                <el-input v-model="addEbayXp.storeLocation"></el-input>
-              </el-col>
-            </el-col>
-            <el-col :span="12" style="margin-bottom: 20px">
-              <el-col :span="5">
-                <p class="basp">连续三天销量</p>
-              </el-col>
-              <el-col :span="19">
-                <el-input v-model="addEbayXp.salesThreeDayFlag"></el-input>
+                <el-select
+                  style="width:100%"
+                  multiple
+                  filterable
+                  collapse-tags
+                  allow-create
+                  default-first-option
+                  v-model="addEbayXp.storeLocation"
+                >
+                  <el-button plain type="info" @click="addselectalld2">全选</el-button>
+                  <el-button plain type="info" @click="addnoselectd2">取消</el-button>
+                  <el-option
+                    v-for="(item, key) in ebayOptionsAddress"
+                    :key="item.key"
+                    :label="item"
+                    :value="item"
+                  ></el-option>
+                </el-select>
               </el-col>
             </el-col>
             <el-col :span="12" style="margin-bottom: 20px">
@@ -375,15 +458,37 @@
                 <p class="basp">上架时间</p>
               </el-col>
               <el-col :span="19">
-                <el-input v-model="addEbayXp.listedTime"></el-input>
+                <el-select
+                  style="width:100%"
+                  multiple
+                  filterable
+                  collapse-tags
+                  allow-create
+                  default-first-option
+                  v-model="addEbayXp.listedTime"
+                >
+                  <el-button plain type="info" @click="addselectalld3">全选</el-button>
+                  <el-button plain type="info" @click="addnoselectd3">取消</el-button>
+                  <el-option
+                    v-for="(item, key) in ebayOptionsTime"
+                    :key="item.key"
+                    :label="item"
+                    :value="item"
+                  ></el-option>
+                </el-select>
               </el-col>
             </el-col>
             <el-col :span="12" style="margin-bottom: 20px">
               <el-col :span="5">
-                <p class="basp">发货地址</p>
+                <p class="basp">连续三天销量</p>
               </el-col>
               <el-col :span="19">
-                <el-input v-model="addEbayXp.itemLocation"></el-input>
+                <el-switch
+                  v-model="addEbayXp.salesThreeDayFlag"
+                  active-color="#13ce66"
+                  inactive-color="#ff4949"
+                  style="margin-top:10px;margin-left:10px;"
+                ></el-switch>
               </el-col>
             </el-col>
           </el-col>
@@ -778,7 +883,7 @@ export default {
         visitEnd: null,
         priceEnd: null,
         priceStart: null,
-        country: null,
+        marketplace: null,
         storeLocation: null,
         salesThreeDayFlag: null,
         listedTime: null,
@@ -791,10 +896,10 @@ export default {
         visitEnd: null,
         priceEnd: null,
         priceStart: null,
-        country: null,
-        storeLocation: null,
+        marketplace: [],
+        storeLocation: [],
         salesThreeDayFlag: null,
-        listedTime: null,
+        listedTime: [],
         itemLocation: null
       },
       addEbayRx: {
@@ -857,7 +962,28 @@ export default {
       listLoading: false,
       activeName: "Wish",
       ebaydata: [],
-      ebayRxdata: []
+      ebayRxdata: [],
+      ebayOptions: [
+        "EBAY_CH",
+        "EBAY_HK",
+        "EBAY_US",
+        "EBAY_GB",
+        "EBAY_FR",
+        "EBAY_DE",
+        "EBAY_IT",
+        "EBAY_AU"
+      ],
+      ebayOptionsAddress: [
+        "中国",
+        "香港",
+        "美国",
+        "英国",
+        "法国",
+        "德国",
+        "意大利",
+        "澳大利亚"
+      ],
+      ebayOptionsTime: ["今天", "明天", "昨天"]
     };
   },
   filters: {
@@ -868,6 +994,69 @@ export default {
     }
   },
   methods: {
+    selectalld1() {
+      var ard1 = []
+      for (const item in this.ebayOptions) {
+        ard1.push(this.ebayOptions[item])
+      }
+      this.ebayXp.marketplace = ard1
+    },
+    noselectd1() {
+      this.ebayXp.marketplace = []
+    },
+    addselectalld1() {
+      var ard1 = []
+      for (const item in this.ebayOptions) {
+        ard1.push(this.ebayOptions[item])
+      }
+      this.addEbayXp.marketplace = ard1
+    },
+    addnoselectd1() {
+      this.addEbayXp.marketplace = []
+    },
+    selectalld2() {
+      var ard1 = []
+      for (const item in this.ebayOptionsAddress) {
+        ard1.push(this.ebayOptionsAddress[item])
+      }
+      this.ebayXp.storeLocation = ard1
+    },
+    noselectd2() {
+      this.ebayXp.storeLocation = []
+    },
+    addselectalld2() {
+      var ard1 = []
+      for (const item in this.ebayOptionsAddress) {
+        ard1.push(this.ebayOptionsAddress[item])
+      }
+      this.addEbayXp.storeLocation = ard1
+    },
+    addnoselectd2() {
+      this.addEbayXp.storeLocation = []
+    },
+    selectalld3() {
+      var ard1 = []
+      for (const item in this.ebayOptionsTime) {
+        ard1.push(this.ebayOptionsTime[item])
+      }
+      this.ebayXp.listedTime = ard1
+    },
+    noselectd3() {
+      this.ebayXp.listedTime = []
+    },
+    addselectalld3() {
+      var ard1 = []
+      for (const item in this.ebayOptionsTime) {
+        ard1.push(this.ebayOptionsTime[item])
+      }
+      this.addEbayXp.listedTime = ard1
+    },
+    addnoselectd3() {
+      this.addEbayXp.listedTime = []
+    },
+    forbidSale1(e) {
+      console.log(e);
+    },
     addEbayxpLogin() {
       this.addEbaydisLoginxp = true;
     },
@@ -885,7 +1074,6 @@ export default {
       this.ebay.rx = true;
     },
     editArt(index, row) {
-      this.ebaydisLoginxp = true;
       this.ebayXp.id = row.id;
       this.ebayXp.soldStart = row.soldStart;
       this.ebayXp.soldEnd = row.soldEnd;
@@ -893,11 +1081,27 @@ export default {
       this.ebayXp.visitEnd = row.visitEnd;
       this.ebayXp.priceEnd = row.priceEnd;
       this.ebayXp.priceStart = row.priceStart;
-      this.ebayXp.country = row.country;
+      this.ebayXp.marketplace = row.marketplace;
       this.ebayXp.storeLocation = row.storeLocation;
       this.ebayXp.salesThreeDayFlag = row.salesThreeDayFlag;
       this.ebayXp.listedTime = row.listedTime;
       this.ebayXp.itemLocation = row.itemLocation;
+      if (this.ebayXp.marketplace) {
+        this.ebayXp.marketplace = this.ebayXp.marketplace.split(",");
+      }
+      if (this.ebayXp.storeLocation) {
+        this.ebayXp.storeLocation = this.ebayXp.storeLocation.split(",");
+      }
+      if (this.ebayXp.listedTime) {
+        let date = this.ebayXp.listedTime;
+        date=date.replace(/0/g,"今天")
+        date=date.replace(/1/g,"明天")
+        date=date.replace(/2/g,"昨天")
+        this.ebayXp.listedTime=date
+        this.ebayXp.listedTime=this.ebayXp.listedTime.split(",");
+      }
+      this.ebayXp.salesThreeDayFlag==0? this.ebayXp.salesThreeDayFlag=true:this.ebayXp.salesThreeDayFlag=false
+      this.ebaydisLoginxp = true;
     },
     editArtRx(index, row) {
       this.ebaydisLoginrx = true;
@@ -925,6 +1129,44 @@ export default {
       this.ebayRx.paymentThreeDay1End = row.paymentThreeDay1End;
     },
     saveEbayXp() {
+      if(this.ebayXp.marketplace){
+        if(this.ebayXp.marketplace.length>0){
+          this.ebayXp.marketplace=this.ebayXp.marketplace.join(',')
+        }else{
+          this.ebayXp.marketplace=this.ebayXp.marketplace[0]
+        }
+      }
+      if(this.ebayXp.storeLocation){
+        if(this.ebayXp.storeLocation.length>0){
+          this.ebayXp.storeLocation=this.ebayXp.storeLocation.join(',')
+        }else{
+          this.ebayXp.storeLocation=this.ebayXp.storeLocation[0]
+        }
+      }
+      if(this.ebayXp.listedTime){
+        for(let i=0;i<this.ebayXp.listedTime.length;i++){
+          if(this.ebayXp.listedTime[i]=='今天'){
+            this.ebayXp.listedTime[i]=0
+          }
+          if(this.ebayXp.listedTime[i]=='明天'){
+            this.ebayXp.listedTime[i]=1
+          }
+          if(this.ebayXp.listedTime[i]=='昨天'){
+            this.ebayXp.listedTime[i]=2
+          }
+        }
+        if(this.ebayXp.listedTime.length>0){
+          this.ebayXp.listedTime=this.ebayXp.listedTime.join(',')
+        }else{
+          this.ebayXp.listedTime=this.ebayXp.listedTime[0]
+        }
+      }
+      if(this.ebayXp.salesThreeDayFlag){
+        this.ebayXp.salesThreeDayFlag=0
+      }else{
+        this.ebayXp.salesThreeDayFlag=1
+      }
+      console.log(this.ebayXp)
       ebaySaveRule(this.ebayXp).then(res => {
         if (res.data.data) {
           this.$message({
@@ -933,10 +1175,50 @@ export default {
           });
           this.ebaydisLoginxp = false;
           this.getDataEbay();
+        }else{
+          this.ebaydisLoginxp = false;
+          this.getDataEbay();
         }
       });
     },
     addSaveEbayXp() {
+      if(this.addEbayXp.marketplace){
+        if(this.addEbayXp.marketplace.length>0){
+          this.addEbayXp.marketplace=this.addEbayXp.marketplace.join(',')
+        }else{
+          this.addEbayXp.marketplace=this.addEbayXp.marketplace[0]
+        }
+      }
+      if(this.addEbayXp.storeLocation){
+        if(this.addEbayXp.storeLocation.length>0){
+          this.addEbayXp.storeLocation=this.addEbayXp.storeLocation.join(',')
+        }else{
+          this.addEbayXp.storeLocation=this.addEbayXp.storeLocation[0]
+        }
+      }
+      if(this.addEbayXp.listedTime){
+        for(let i=0;i<this.addEbayXp.listedTime.length;i++){
+          if(this.addEbayXp.listedTime[i]=='今天'){
+            this.addEbayXp.listedTime[i]=0
+          }
+          if(this.addEbayXp.listedTime[i]=='明天'){
+            this.addEbayXp.listedTime[i]=1
+          }
+          if(this.addEbayXp.listedTime[i]=='昨天'){
+            this.addEbayXp.listedTime[i]=2
+          }
+        }
+        if(this.addEbayXp.listedTime.length>0){
+          this.addEbayXp.listedTime=this.addEbayXp.listedTime.join(',')
+        }else{
+          this.addEbayXp.listedTime=this.addEbayXp.listedTime[0]
+        }
+      }
+      if(this.addEbayXp.salesThreeDayFlag){
+        this.addEbayXp.salesThreeDayFlag=0
+      }else{
+        this.addEbayXp.salesThreeDayFlag=1
+      }
       ebaySaveRule(this.addEbayXp).then(res => {
         if (res.data.data) {
           this.$message({
@@ -1059,7 +1341,13 @@ export default {
       this.listLoading = true;
       APRengineRule().then(res => {
         this.ebaydata = res.data.data;
-        this.listLoading = false;
+        for(let i=0;i<this.ebaydata.length;i++){
+          let date = this.ebaydata[i].listedTime;
+          date=date.replace(/0/g,"今天")
+          date=date.replace(/1/g,"明天")
+          date=date.replace(/2/g,"昨天")
+          this.ebaydata[i].listedTime=date
+        }
       });
       APRengineRuleHot().then(res => {
         this.ebayRxdata = res.data.data;

@@ -249,17 +249,17 @@
               property="price"
               label="价格"
               align="center"
-              width="80"
+              width="90"
               sortable="custom"
             ></el-table-column>
             <el-table-column
               property="visit"
               label="浏览数"
               align="center"
-              width="80"
+              width="90"
               sortable="custom"
             ></el-table-column>
-            <el-table-column property="sold" label="销量" align="center" width="80" sortable="custom"></el-table-column>
+            <el-table-column property="sold" label="销量" align="center" width="90" sortable="custom"></el-table-column>
             <el-table-column property="soldChart" label="销量走势图" align="center" width="258">
               <template slot-scope="scope">
                 <div class="eDiv1" :id="'echartsRx'+scope.$index"></div>
