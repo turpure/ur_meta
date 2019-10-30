@@ -165,9 +165,6 @@
             >
               <template slot-scope="scope">{{scope.row.listedTime | cutOutMonye}}</template>
             </el-table-column>
-            <el-table-column property="seller" label="卖家名称" align="center" width="110"></el-table-column>
-            <el-table-column property="itemLocation" label="发货地址" align="center" width="110"></el-table-column>
-            <el-table-column property="storeLocation" label="注册地址" align="center" width="100"></el-table-column>
             <el-table-column property="marketplace" label="刊登站点" align="center" width="145">
               <el-table-column
                 prop="marketplace"
@@ -176,6 +173,9 @@
                 align="center"
               ></el-table-column>
             </el-table-column>
+            <el-table-column property="seller" label="卖家名称" align="center" width="110"></el-table-column>
+            <el-table-column property="itemLocation" label="发货地址" align="center" width="110"></el-table-column>
+            <el-table-column property="storeLocation" label="注册地址" align="center" width="100"></el-table-column>
             <el-table-column property="store" label="店铺名称" align="center" width="120"></el-table-column>
           </el-table>
           <div class="block toolbar">
