@@ -15,7 +15,7 @@
         :height="tableHeightstock"
         style="width:98%;margin-left:0.7%;margin-top:15px;"
       >
-        <el-table-column type="index" fixed align="center" width="40" header-align="center"></el-table-column>
+        <el-table-column type="index" fixed align="center" width="60" header-align="center"></el-table-column>
         <el-table-column label="操作" fixed header-align="center" align="center" width="100">
           <template slot-scope="scope">
             <el-tooltip content="更新">
