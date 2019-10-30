@@ -156,7 +156,7 @@
                 <div class="eDiv" :id="'echarts'+scope.$index"></div>
               </template>
             </el-table-column>
-            <el-table-column property="listedTime" label="上架时间" align="center" width="110">
+            <el-table-column property="listedTime" label="上架时间" align="center" width="110" sortable="custom">
               <template slot-scope="scope">{{scope.row.listedTime | cutOutMonye}}</template>
             </el-table-column>
             <el-table-column property="seller" label="卖家名称" align="center" width="110"></el-table-column>
@@ -172,6 +172,17 @@
             </el-table-column>
             <el-table-column property="store" label="店铺名称" align="center" width="120"></el-table-column>
           </el-table>
+          <div class="block toolbar">
+          <el-pagination background
+                           @size-change="handleSizeChangeEbayXp"
+                           @current-change="handleCurrentChangeEbayXp"
+                           :current-page="this.condition.page"
+                           :page-sizes="[20, 30, 40, 50]"
+                           :page-size="this.condition.pageSize"
+                           layout="total, sizes, prev, pager, next, jumper"
+                           :total="this.totalEbayXp">
+            </el-pagination>
+        </div>
         </div>
         <div v-show="ebay.rx" class="infoTable">
           <el-table
@@ -265,7 +276,7 @@
                 <div class="eDiv1" :id="'echartsRx'+scope.$index"></div>
               </template>
             </el-table-column>
-            <el-table-column property="listedTime" label="上架时间" align="center" width="95">
+            <el-table-column property="listedTime" label="上架时间" align="center" width="95" sortable="custom">
               <template slot-scope="scope">{{scope.row.genTime | cutOutMonye}}</template>
             </el-table-column>
             <el-table-column property="seller" label="卖家名称" align="center" width="100"></el-table-column>
@@ -285,21 +296,18 @@
                 label="件数"
                 align="center"
                 width="85"
-                sortable="custom"
               ></el-table-column>
               <el-table-column
                 property="paymentThreeDay1"
                 label="金额"
                 align="center"
                 width="85"
-                sortable="custom"
               ></el-table-column>
               <el-table-column
                 property="salesThreeDayGrowth"
                 label="增幅(%)"
                 align="center"
                 width="85"
-                sortable="custom"
               ></el-table-column>
             </el-table-column>
             <el-table-column label="前七天销售" align="center">
@@ -308,24 +316,32 @@
                 label="件数"
                 align="center"
                 width="85"
-                sortable="custom"
               ></el-table-column>
               <el-table-column
                 property="paymentWeek1"
                 label="金额"
                 align="center"
                 width="85"
-                sortable="custom"
               ></el-table-column>
               <el-table-column
                 property="salesWeekGrowth"
                 label="增幅(%)"
                 align="center"
                 width="85"
-                sortable="custom"
               ></el-table-column>
             </el-table-column>
           </el-table>
+          <div class="block toolbar">
+          <el-pagination background
+                           @size-change="handleSizeChangeEbayRx"
+                           @current-change="handleCurrentChangeEbayRx"
+                           :current-page="this.condition1.page"
+                           :page-sizes="[20, 30, 40, 50]"
+                           :page-size="this.condition1.pageSize"
+                           layout="total, sizes, prev, pager, next, jumper"
+                           :total="this.totalEbayRx">
+            </el-pagination>
+        </div>
         </div>
       </div>
       <div v-show="show.joom">
@@ -404,7 +420,9 @@ import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 export default {
   data() {
     return {
-      tableHeightstock: window.innerHeight - 180,
+      tableHeightstock: window.innerHeight - 210,
+      totalEbayXp:null,
+      totalEbayRx:null,
       options: {
         xAxis: {
           type: "category",
@@ -462,6 +480,18 @@ export default {
       ebay: {
         xp: true,
         rx: false
+      },
+      condition:{
+        marketplace:'',
+        page:1,
+        pageSize:20,
+        sort:'',
+      },
+      condition1:{
+        marketplace:'',
+        page:1,
+        pageSize:20,
+        sort:'',
       },
       ebayStlye: 0,
       allMenu: ["Wish", "Ebay", "Joom", "Amazon", "Aliexpress"],
@@ -644,17 +674,17 @@ export default {
           [
             h("el-input", {
               props: {
-                value: this.ebayXpZd,
+                value: this.condition.marketplace,
                 size: "mini",
                 clearable: true
               },
               on: {
                 input: value => {
-                  this.ebayXpZd = value;
+                  this.condition.marketplace = value;
                   this.$emit("input", value);
                 },
                 change: value => {
-                  this.getEbayXpData();
+                  this.ebayXp();
                 }
               }
             })
@@ -674,17 +704,17 @@ export default {
           [
             h("el-input", {
               props: {
-                value: this.ebayRxZd,
+                value: this.condition1.marketplace,
                 size: "mini",
                 clearable: true
               },
               on: {
                 input: value => {
-                  this.ebayRxZd = value;
+                  this.condition1.marketplace = value;
                   this.$emit("input", value);
                 },
                 change: value => {
-                  this.getEbayRxData();
+                  this.ebayRx();
                 }
               }
             })
@@ -693,49 +723,31 @@ export default {
       }
     },
     sortNumber(column, prop, order) {
-      const data = this.ebayDataXp;
-      if (column.order === "descending") {
-        this.ebayDataXp = data.sort(compareDown(data, column.prop));
-      } else {
-        this.ebayDataXp = data.sort(compareUp(data, column.prop));
+      if(column.order==null){
+        this.condition.sort=null;
+        this.ebayXp(this.condition);
       }
-      for (let i = 0; i < this.ebayDataXp.length; i++) {
-        setTimeout(() => {
-          var obj = this.ebayDataXp[i].soldChart.soldData;
-          for (var k = 0; k < obj.length; k++) {
-            if (obj[k] == null) {
-              obj[k] = 0;
-            }
-          }
-          this.options.xAxis.data = this.ebayDataXp[i].soldChart.soldDate;
-          this.options.series[0].data = this.ebayDataXp[i].soldChart.soldData;
-          let or2 = this.$echarts.init(document.getElementById("echarts" + i));
-          or2.setOption(this.options);
-        }, 20);
+      if (column.order == "ascending") {
+        this.condition.sort = column.prop;
+        this.ebayXp(this.condition);
+      }
+      if (column.order == "descending") {
+        this.condition.sort ='-'+column.prop;
+        this.ebayXp(this.condition);
       }
     },
     sortNumberRx(column, prop, order) {
-      const data = this.ebayDataRx;
-      if (column.order === "descending") {
-        this.ebayDataRx = data.sort(compareDown(data, column.prop));
-      } else {
-        this.ebayDataRx = data.sort(compareUp(data, column.prop));
+      if(column.order==null){
+        this.condition1.sort=null;
+        this.ebayRx(this.condition1);
       }
-      for (let i = 0; i < this.ebayDataRx.length; i++) {
-        setTimeout(() => {
-          var obj = this.ebayDataRx[i].soldChart.soldData;
-          for (var k = 0; k < obj.length; k++) {
-            if (obj[k] == null) {
-              obj[k] = 0;
-            }
-          }
-          this.options1.xAxis.data = this.ebayDataRx[i].soldChart.soldDate;
-          this.options1.series[0].data = this.ebayDataRx[i].soldChart.soldData;
-          let or2 = this.$echarts.init(
-            document.getElementById("echartsRx" + i)
-          );
-          or2.setOption(this.options1);
-        }, 20);
+      if (column.order == "ascending") {
+        this.condition1.sort = column.prop;
+        this.ebayRx(this.condition1);
+      }
+      if (column.order == "descending") {
+        this.condition1.sort ='-'+column.prop;
+        this.ebayRx(this.condition1);
       }
     },
     getRowClass({ row, column, rowIndex, columnIndex }) {
@@ -764,9 +776,28 @@ export default {
     goLinkUrlEbay(url) {
       window.open(url);
     },
+    handleCurrentChangeEbayXp(val) {
+      this.condition.page = val;
+      this.ebayXp(this.condition);
+    },
+    handleSizeChangeEbayXp(val) {
+      this.condition.pageSize = val;
+      this.ebayXp(this.condition);
+    },
+    handleCurrentChangeEbayRx(val) {
+      this.condition1.page = val;
+      this.ebayRx(this.condition);
+    },
+    handleSizeChangeEbayRx(val) {
+      this.condition1.pageSize = val;
+      this.ebayRx(this.condition);
+    },
     ebayXp() {
-      getEbayXp().then(res => {
-        this.ebayDataXp1 = this.ebayDataXp = res.data.data;
+      getEbayXp(this.condition).then(res => {
+        this.ebayDataXp1 = this.ebayDataXp = res.data.data.items;
+        this.totalEbayXp = res.data.data._meta.totalCount;
+        this.condition.page = res.data.data._meta.currentPage;
+        this.condition.pageSize = res.data.data._meta.perPage;
         for (let i = 0; i < this.ebayDataXp.length; i++) {
           setTimeout(() => {
             var obj = this.ebayDataXp[i].soldChart.soldData;
@@ -786,8 +817,11 @@ export default {
       });
     },
     ebayRx() {
-      getEbayRx().then(res => {
-        this.ebayDataRx = this.ebayDataRx1 = res.data.data;
+      getEbayRx(this.condition1).then(res => {
+        this.ebayDataRx = this.ebayDataRx1 = res.data.data.items;
+        this.totalEbayRx = res.data.data._meta.totalCount;
+        this.condition1.page = res.data.data._meta.currentPage;
+        this.condition1.pageSize = res.data.data._meta.perPage;
         for (let i = 0; i < this.ebayDataRx.length; i++) {
           setTimeout(() => {
             var obj = this.ebayDataRx[i].soldChart.soldData;

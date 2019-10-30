@@ -898,16 +898,16 @@ export function getStockDepartDeveloperDetail(param) {
   })
 }
 
-export function getEbayXp() {
+export function getEbayXp(param) {
   return request({
-    url: '/products-engine/recommend?plat=ebay&type=new',
+    url: '/products-engine/recommend?plat=ebay&type=new&marketplace=' + param.marketplace + '&page=' + param.page + '&pageSize=' + param.pageSize + '&sort=' + param.sort,
     method: 'get'
   })
 }
 
-export function getEbayRx() {
+export function getEbayRx(param) {
   return request({
-    url: '/products-engine/recommend?plat=ebay&type=hot',
+    url: '/products-engine/recommend?plat=ebay&type=hot&marketplace=' + param.marketplace + '&page=' + param.page + '&pageSize=' + param.pageSize + '&sort=' + param.sort,
     method: 'get'
   })
 }

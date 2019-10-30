@@ -169,7 +169,6 @@ export default {
           this.ebay.categoryId = this.ebayCatRule[i].id;
         }
       }
-      console.log(this.ebay);
       ebaySaveDevCat(this.ebay).then(res => {
         if (res.data.data) {
           this.$message({

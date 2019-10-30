@@ -1060,7 +1060,6 @@ export default {
       this.addEbayXp.listedTime = []
     },
     forbidSale1(e) {
-      console.log(e);
     },
     addEbayxpLogin() {
       this.addEbaydisLoginxp = true;
@@ -1171,7 +1170,6 @@ export default {
       }else{
         this.ebayXp.salesThreeDayFlag=1
       }
-      console.log(this.ebayXp)
       ebaySaveRule(this.ebayXp).then(res => {
         if (res.data.data) {
           this.$message({
