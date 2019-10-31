@@ -688,12 +688,14 @@ export default {
       this.ebayXpId = id;
       this.ebayXpText = null;
       this.ebayXpText1 = null;
+      this.ebayXpRefuse=false
       this.dialogEbayXpRefuse = true;
     },
     refuseEbayRx(id) {
       this.ebayRxId = id;
       this.ebayRxText = null;
       this.ebayRxText1 = null;
+      this.ebayRxRefuse=false
       this.dialogEbayRxRefuse = true;
     },
     getEbayXpData() {
