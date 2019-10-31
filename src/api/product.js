@@ -1561,3 +1561,21 @@ export function ebayDeleteDevCat(param) {
     data
   })
 }
+
+export function ebayRunRuleNew(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/run-rule?type=new',
+    method: 'post',
+    data
+  })
+}
+
+export function ebayRunRuleHot(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/run-rule?type=hot',
+    method: 'post',
+    data
+  })
+}

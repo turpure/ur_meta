@@ -559,8 +559,8 @@ export default {
       ebayDataRx: [],
       ebayDataRx1: [],
       show: {
-        wish: true,
-        ebay: false,
+        wish: false,
+        ebay: true,
         joom: false
       },
       ebay: {
@@ -580,10 +580,10 @@ export default {
         sort: ""
       },
       ebayStlye: 0,
-      allMenu: ["Wish", "Ebay", "Joom", "Amazon", "Aliexpress"],
+      allMenu: ["Ebay", "Wish", "Joom", "Amazon", "Aliexpress"],
       listLoading: false,
-      corner: "Wish",
-      activeName: "Wish",
+      corner: "Ebay",
+      activeName: "Ebay",
       developer: [],
       purchaser: [],
       goodsState: [],
@@ -1076,7 +1076,8 @@ export default {
     }
   },
   mounted() {
-    this.getDataWish();
+    this.ebayXp()
+    this.ebayRx()
   }
 };
 </script>

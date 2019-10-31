@@ -201,11 +201,9 @@ export default {
   },
   methods: {
     getTowLow(e) {
-      this.ebayCat.category = e;
       for (let i = 0; i < this.ebayCatRuleId.length; i++) {
         if (e == this.ebayCatRuleId[i].category) {
           this.ebayCat.parentId = this.ebayCatRuleId[i].id;
-          this.ebayCat.category = e;
         }
       }
       ebayCatRule(this.ebayCat).then(res => {
@@ -213,11 +211,9 @@ export default {
       });
     },
     getTowLow1(e) {
-      this.ebayCat.category = e;
       for (let i = 0; i < this.ebayCatRuleId.length; i++) {
         if (e == this.ebayCatRuleId[i].category) {
           this.ebayCat.parentId = this.ebayCatRuleId[i].id;
-          this.ebayCat.category = e;
         }
       }
       ebayCatRule(this.ebayCat).then(res => {
@@ -302,7 +298,7 @@ export default {
           this.ebayCatRuleTwo = res.data.data;
         });
       }else{
-        this.ebayCatRuleTwo=this.ebayCatRuleTwo
+        this.ebayCatRuleTwo=this.ebayCatRule
       }
       this.ebaydisLogin = true;
     },

@@ -42,6 +42,7 @@
             :data="ebaydata"
             class="elTableee"
             border
+            v-loading="lodingTo"
             :header-cell-style="getRowClass"
             style="width:98%;margin-left:0.7%;margin-top:15px;"
           >
@@ -57,6 +58,7 @@
                 </el-tooltip>
                 <el-tooltip content="立即生效">
                   <i
+                    @click="ljArt(scope.$index, scope.row)"
                     class="el-icon-star-on"
                     style="color: #409EFF;cursor:pointer;"
                   ></i>
@@ -79,15 +81,11 @@
             <el-table-column property="marketplace" label="刊登站点" align="center" width="180"></el-table-column>
             <el-table-column property="storeLocation" label="注册地址" align="center"></el-table-column>
             <el-table-column property="salesThreeDayFlag" label="连续三天有销量" align="center">
-              <template slot-scope="scope">
-                {{scope.row.salesThreeDayFlag==0?'是':'否'}}
-              </template>
+              <template slot-scope="scope">{{scope.row.salesThreeDayFlag==0?'是':'否'}}</template>
             </el-table-column>
             <el-table-column property="listedTime" label="上架时间" align="center"></el-table-column>
             <el-table-column property="isUsed" label="是否停用" align="center">
-              <template slot-scope="scope">
-                {{scope.row.isUsed==0?'停用':'在用'}}
-              </template>
+              <template slot-scope="scope">{{scope.row.isUsed==0?'停用':'在用'}}</template>
             </el-table-column>
             <el-table-column property="creator" label="创建人" align="center" width="80"></el-table-column>
             <el-table-column property="createdDate" label="创建时间" align="center">
@@ -103,6 +101,7 @@
             :data="ebayRxdata"
             class="elTableee"
             border
+            v-loading="lodingTo"
             :height="tableHeightstock"
             :header-cell-style="getRowClass"
             style="width:98%;margin-left:0.7%;margin-top:15px;"
@@ -114,6 +113,13 @@
                   <i
                     @click="editArtRx(scope.$index, scope.row)"
                     class="el-icon-edit"
+                    style="color: #409EFF;cursor:pointer;"
+                  ></i>
+                </el-tooltip>
+                <el-tooltip content="立即生效">
+                  <i
+                    @click="ljArtRx(scope.$index, scope.row)"
+                    class="el-icon-star-on"
                     style="color: #409EFF;cursor:pointer;"
                   ></i>
                 </el-tooltip>
@@ -869,7 +875,9 @@ import {
   ebaySaveRule,
   ebaySaveRuleHot,
   ebaySaveRuleDelete,
-  ebaySaveRuleDeleteHot
+  ebaySaveRuleDeleteHot,
+  ebayRunRuleNew,
+  ebayRunRuleHot
 } from "../../api/product";
 export default {
   data() {
@@ -880,6 +888,7 @@ export default {
       ebaydisLoginrx: false,
       addEbaydisLoginxp: false,
       addEbaydisLoginrx: false,
+      lodingTo:false,
       ebayXp: {
         id: null,
         soldStart: null,
@@ -955,17 +964,17 @@ export default {
         paymentThreeDay1End: null
       },
       show: {
-        wish: true,
-        ebay: false,
+        wish: false,
+        ebay: true,
         joom: false
       },
       ebay: {
         xp: true,
         rx: false
       },
-      allMenu: ["Wish", "Ebay", "Joom", "Amazon", "Aliexpress"],
+      allMenu: ["Ebay", "Wish", "Joom", "Amazon", "Aliexpress"],
       listLoading: false,
-      activeName: "Wish",
+      activeName: "Ebay",
       ebaydata: [],
       ebayRxdata: [],
       ebayOptions: [
@@ -999,68 +1008,101 @@ export default {
     }
   },
   methods: {
+    ljArt(index, row) {
+      let conde = {
+        ruleId: row.id
+      };
+      this.lodingTo=true
+      ebayRunRuleNew(conde).then(res => {
+        if (res.data.code == 200) {
+          this.$message({
+            message: "成功",
+            type: "success"
+          });
+        } else {
+          this.$message.error(res.data.message);
+        }
+        this.lodingTo=false
+      });
+    },
+    ljArtRx(index, row) {
+      let conde = {
+        ruleId: row._id
+      };
+      this.lodingTo=true
+      ebayRunRuleHot(conde).then(res => {
+        if (res.data.code == 200) {
+          this.$message({
+            message: "成功",
+            type: "success"
+          });
+        } else {
+          this.$message.error(res.data.message);
+        }
+        this.lodingTo=false
+      });
+    },
     selectalld1() {
-      var ard1 = []
+      var ard1 = [];
       for (const item in this.ebayOptions) {
-        ard1.push(this.ebayOptions[item])
+        ard1.push(this.ebayOptions[item]);
       }
-      this.ebayXp.marketplace = ard1
+      this.ebayXp.marketplace = ard1;
     },
     noselectd1() {
-      this.ebayXp.marketplace = []
+      this.ebayXp.marketplace = [];
     },
     addselectalld1() {
-      var ard1 = []
+      var ard1 = [];
       for (const item in this.ebayOptions) {
-        ard1.push(this.ebayOptions[item])
+        ard1.push(this.ebayOptions[item]);
       }
-      this.addEbayXp.marketplace = ard1
+      this.addEbayXp.marketplace = ard1;
     },
     addnoselectd1() {
-      this.addEbayXp.marketplace = []
+      this.addEbayXp.marketplace = [];
     },
     selectalld2() {
-      var ard1 = []
+      var ard1 = [];
       for (const item in this.ebayOptionsAddress) {
-        ard1.push(this.ebayOptionsAddress[item])
+        ard1.push(this.ebayOptionsAddress[item]);
       }
-      this.ebayXp.storeLocation = ard1
+      this.ebayXp.storeLocation = ard1;
     },
     noselectd2() {
-      this.ebayXp.storeLocation = []
+      this.ebayXp.storeLocation = [];
     },
     addselectalld2() {
-      var ard1 = []
+      var ard1 = [];
       for (const item in this.ebayOptionsAddress) {
-        ard1.push(this.ebayOptionsAddress[item])
+        ard1.push(this.ebayOptionsAddress[item]);
       }
-      this.addEbayXp.storeLocation = ard1
+      this.addEbayXp.storeLocation = ard1;
     },
     addnoselectd2() {
-      this.addEbayXp.storeLocation = []
+      this.addEbayXp.storeLocation = [];
     },
     selectalld3() {
-      var ard1 = []
+      var ard1 = [];
       for (const item in this.ebayOptionsTime) {
-        ard1.push(this.ebayOptionsTime[item])
+        ard1.push(this.ebayOptionsTime[item]);
       }
-      this.ebayXp.listedTime = ard1
+      this.ebayXp.listedTime = ard1;
     },
     noselectd3() {
-      this.ebayXp.listedTime = []
+      this.ebayXp.listedTime = [];
     },
     addselectalld3() {
-      var ard1 = []
+      var ard1 = [];
       for (const item in this.ebayOptionsTime) {
-        ard1.push(this.ebayOptionsTime[item])
+        ard1.push(this.ebayOptionsTime[item]);
       }
-      this.addEbayXp.listedTime = ard1
+      this.addEbayXp.listedTime = ard1;
     },
     addnoselectd3() {
-      this.addEbayXp.listedTime = []
+      this.addEbayXp.listedTime = [];
     },
-    forbidSale1(e) {
-    },
+    forbidSale1(e) {},
     addEbayxpLogin() {
       this.addEbaydisLoginxp = true;
     },
@@ -1098,13 +1140,15 @@ export default {
       }
       if (this.ebayXp.listedTime) {
         let date = this.ebayXp.listedTime;
-        date=date.replace(/0/g,"今天")
-        date=date.replace(/1/g,"昨天")
-        date=date.replace(/2/g,"前天")
-        this.ebayXp.listedTime=date
-        this.ebayXp.listedTime=this.ebayXp.listedTime.split(",");
+        date = date.replace(/0/g, "今天");
+        date = date.replace(/1/g, "昨天");
+        date = date.replace(/2/g, "前天");
+        this.ebayXp.listedTime = date;
+        this.ebayXp.listedTime = this.ebayXp.listedTime.split(",");
       }
-      this.ebayXp.salesThreeDayFlag==0? this.ebayXp.salesThreeDayFlag=true:this.ebayXp.salesThreeDayFlag=false
+      this.ebayXp.salesThreeDayFlag == 0
+        ? (this.ebayXp.salesThreeDayFlag = true)
+        : (this.ebayXp.salesThreeDayFlag = false);
       this.ebaydisLoginxp = true;
     },
     editArtRx(index, row) {
@@ -1133,42 +1177,42 @@ export default {
       this.ebayRx.paymentThreeDay1End = row.paymentThreeDay1End;
     },
     saveEbayXp() {
-      if(this.ebayXp.marketplace){
-        if(this.ebayXp.marketplace.length>0){
-          this.ebayXp.marketplace=this.ebayXp.marketplace.join(',')
-        }else{
-          this.ebayXp.marketplace=this.ebayXp.marketplace[0]
+      if (this.ebayXp.marketplace) {
+        if (this.ebayXp.marketplace.length > 0) {
+          this.ebayXp.marketplace = this.ebayXp.marketplace.join(",");
+        } else {
+          this.ebayXp.marketplace = this.ebayXp.marketplace[0];
         }
       }
-      if(this.ebayXp.storeLocation){
-        if(this.ebayXp.storeLocation.length>0){
-          this.ebayXp.storeLocation=this.ebayXp.storeLocation.join(',')
-        }else{
-          this.ebayXp.storeLocation=this.ebayXp.storeLocation[0]
+      if (this.ebayXp.storeLocation) {
+        if (this.ebayXp.storeLocation.length > 0) {
+          this.ebayXp.storeLocation = this.ebayXp.storeLocation.join(",");
+        } else {
+          this.ebayXp.storeLocation = this.ebayXp.storeLocation[0];
         }
       }
-      if(this.ebayXp.listedTime){
-        for(let i=0;i<this.ebayXp.listedTime.length;i++){
-          if(this.ebayXp.listedTime[i]=='今天'){
-            this.ebayXp.listedTime[i]=0
+      if (this.ebayXp.listedTime) {
+        for (let i = 0; i < this.ebayXp.listedTime.length; i++) {
+          if (this.ebayXp.listedTime[i] == "今天") {
+            this.ebayXp.listedTime[i] = 0;
           }
-          if(this.ebayXp.listedTime[i]=='昨天'){
-            this.ebayXp.listedTime[i]=1
+          if (this.ebayXp.listedTime[i] == "昨天") {
+            this.ebayXp.listedTime[i] = 1;
           }
-          if(this.ebayXp.listedTime[i]=='前天'){
-            this.ebayXp.listedTime[i]=2
+          if (this.ebayXp.listedTime[i] == "前天") {
+            this.ebayXp.listedTime[i] = 2;
           }
         }
-        if(this.ebayXp.listedTime.length>0){
-          this.ebayXp.listedTime=this.ebayXp.listedTime.join(',')
-        }else{
-          this.ebayXp.listedTime=this.ebayXp.listedTime[0]
+        if (this.ebayXp.listedTime.length > 0) {
+          this.ebayXp.listedTime = this.ebayXp.listedTime.join(",");
+        } else {
+          this.ebayXp.listedTime = this.ebayXp.listedTime[0];
         }
       }
-      if(this.ebayXp.salesThreeDayFlag){
-        this.ebayXp.salesThreeDayFlag=0
-      }else{
-        this.ebayXp.salesThreeDayFlag=1
+      if (this.ebayXp.salesThreeDayFlag) {
+        this.ebayXp.salesThreeDayFlag = 0;
+      } else {
+        this.ebayXp.salesThreeDayFlag = 1;
       }
       ebaySaveRule(this.ebayXp).then(res => {
         if (res.data.data) {
@@ -1178,49 +1222,49 @@ export default {
           });
           this.ebaydisLoginxp = false;
           this.getDataEbay();
-        }else{
+        } else {
           this.ebaydisLoginxp = false;
           this.getDataEbay();
         }
       });
     },
     addSaveEbayXp() {
-      if(this.addEbayXp.marketplace){
-        if(this.addEbayXp.marketplace.length>0){
-          this.addEbayXp.marketplace=this.addEbayXp.marketplace.join(',')
-        }else{
-          this.addEbayXp.marketplace=this.addEbayXp.marketplace[0]
+      if (this.addEbayXp.marketplace) {
+        if (this.addEbayXp.marketplace.length > 0) {
+          this.addEbayXp.marketplace = this.addEbayXp.marketplace.join(",");
+        } else {
+          this.addEbayXp.marketplace = this.addEbayXp.marketplace[0];
         }
       }
-      if(this.addEbayXp.storeLocation){
-        if(this.addEbayXp.storeLocation.length>0){
-          this.addEbayXp.storeLocation=this.addEbayXp.storeLocation.join(',')
-        }else{
-          this.addEbayXp.storeLocation=this.addEbayXp.storeLocation[0]
+      if (this.addEbayXp.storeLocation) {
+        if (this.addEbayXp.storeLocation.length > 0) {
+          this.addEbayXp.storeLocation = this.addEbayXp.storeLocation.join(",");
+        } else {
+          this.addEbayXp.storeLocation = this.addEbayXp.storeLocation[0];
         }
       }
-      if(this.addEbayXp.listedTime){
-        for(let i=0;i<this.addEbayXp.listedTime.length;i++){
-          if(this.addEbayXp.listedTime[i]=='今天'){
-            this.addEbayXp.listedTime[i]=0
+      if (this.addEbayXp.listedTime) {
+        for (let i = 0; i < this.addEbayXp.listedTime.length; i++) {
+          if (this.addEbayXp.listedTime[i] == "今天") {
+            this.addEbayXp.listedTime[i] = 0;
           }
-          if(this.addEbayXp.listedTime[i]=='昨天'){
-            this.addEbayXp.listedTime[i]=1
+          if (this.addEbayXp.listedTime[i] == "昨天") {
+            this.addEbayXp.listedTime[i] = 1;
           }
-          if(this.addEbayXp.listedTime[i]=='前天'){
-            this.addEbayXp.listedTime[i]=2
+          if (this.addEbayXp.listedTime[i] == "前天") {
+            this.addEbayXp.listedTime[i] = 2;
           }
         }
-        if(this.addEbayXp.listedTime.length>0){
-          this.addEbayXp.listedTime=this.addEbayXp.listedTime.join(',')
-        }else{
-          this.addEbayXp.listedTime=this.addEbayXp.listedTime[0]
+        if (this.addEbayXp.listedTime.length > 0) {
+          this.addEbayXp.listedTime = this.addEbayXp.listedTime.join(",");
+        } else {
+          this.addEbayXp.listedTime = this.addEbayXp.listedTime[0];
         }
       }
-      if(this.addEbayXp.salesThreeDayFlag){
-        this.addEbayXp.salesThreeDayFlag=0
-      }else{
-        this.addEbayXp.salesThreeDayFlag=1
+      if (this.addEbayXp.salesThreeDayFlag) {
+        this.addEbayXp.salesThreeDayFlag = 0;
+      } else {
+        this.addEbayXp.salesThreeDayFlag = 1;
       }
       ebaySaveRule(this.addEbayXp).then(res => {
         if (res.data.data) {
@@ -1344,12 +1388,12 @@ export default {
       this.listLoading = true;
       APRengineRule().then(res => {
         this.ebaydata = res.data.data;
-        for(let i=0;i<this.ebaydata.length;i++){
+        for (let i = 0; i < this.ebaydata.length; i++) {
           let date = this.ebaydata[i].listedTime;
-          date=date.replace(/0/g,"今天")
-          date=date.replace(/1/g,"昨天")
-          date=date.replace(/2/g,"前天")
-          this.ebaydata[i].listedTime=date
+          date = date.replace(/0/g, "今天");
+          date = date.replace(/1/g, "昨天");
+          date = date.replace(/2/g, "前天");
+          this.ebaydata[i].listedTime = date;
         }
       });
       APRengineRuleHot().then(res => {
@@ -1358,7 +1402,9 @@ export default {
       });
     }
   },
-  mounted() {}
+  mounted() {
+    this.getDataEbay();
+  }
 };
 </script>
 
