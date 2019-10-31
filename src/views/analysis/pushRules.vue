@@ -132,7 +132,7 @@
                 </el-tooltip>
               </template>
             </el-table-column>
-            <el-table-column property="marketplace" label="刊登站点" align="center" width="130"></el-table-column>
+            <el-table-column property="marketplace" label="刊登站点" align="center" width="180"></el-table-column>
             <el-table-column property="storeLocation" label="注册地址" align="center" width="100"></el-table-column>
             <el-table-column property="salesThreeDayFlag" label="连续三天有销量" align="center" width="120">
               <template slot-scope="scope">{{scope.row.salesThreeDayFlag==0?'是':'否'}}</template>
