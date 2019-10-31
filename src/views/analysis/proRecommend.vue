@@ -131,7 +131,7 @@
                   >eBay链接</span>
                   <span
                     style="margin:0;margin-top:5px;font-size:13px;"
-                    @click="goLinkUrlEbay('https://www.ebay.com/itm/' + scope.row.itemId)"
+                    @click="goLinkUrlEbayHy('https://kj.1688.com/pdt_tongkuan.html?imgUrl=' + scope.row.mainImage)"
                   >货源链接</span>
                 </div>
               </template>
@@ -258,7 +258,7 @@
                   >eBay链接</span>
                   <span
                     style="margin:0;margin-top:5px;font-size:13px;"
-                    @click="goLinkUrlEbay('https://www.ebay.com/itm/' + scope.row.itemId)"
+                    @click="goLinkUrlEbayHy('https://kj.1688.com/pdt_tongkuan.html?imgUrl=' + scope.row.mainImage)"
                   >货源链接</span>
                 </div>
               </template>
@@ -908,6 +908,9 @@ export default {
       this.ebayStlye = 1;
       this.ebay.xp = false;
       this.ebay.rx = true;
+    },
+    goLinkUrlEbayHy(url) {
+      window.open(url);
     },
     goLinkUrl(id) {
       window.open("https://www.wish.com/product/" + id);
