@@ -71,6 +71,7 @@
             :height="tableHeightstock"
             @sort-change="sortNumber"
             :header-cell-style="getRowClass"
+            v-loading="lodingEbayXp"
             style="width:98%;margin-left:0.7%;margin-top:15px;"
           >
             <el-table-column type="index" fixed align="center" width="40" header-align="center"></el-table-column>
@@ -197,6 +198,7 @@
             border
             @sort-change="sortNumberRx"
             :height="tableHeightstock"
+            v-loading="lodingEbayRx"
             :header-cell-style="getRowClass"
             style="width:98%;margin-left:0.7%;margin-top:15px;"
           >
@@ -489,6 +491,8 @@ export default {
       totalEbayRx: null,
       ebayXpRefuse: false,
       ebayRxRefuse: false,
+      lodingEbayRx:false,
+      lodingEbayXp:false,
       options: {
         xAxis: {
           type: "category",
@@ -938,6 +942,7 @@ export default {
       this.ebayRx(this.condition);
     },
     ebayXp() {
+      this.lodingEbayXp=true
       getEbayXp(this.condition).then(res => {
         this.ebayDataXp1 = this.ebayDataXp = res.data.data.items;
         this.totalEbayXp = res.data.data._meta.totalCount;
@@ -959,9 +964,11 @@ export default {
             or2.setOption(this.options);
           }, 20);
         }
+        this.lodingEbayXp=false
       });
     },
     ebayRx() {
+      this.lodingEbayRx=true
       getEbayRx(this.condition1).then(res => {
         this.ebayDataRx = this.ebayDataRx1 = res.data.data.items;
         this.totalEbayRx = res.data.data._meta.totalCount;
@@ -985,6 +992,7 @@ export default {
             or2.setOption(this.options1);
           }, 20);
         }
+        this.lodingEbayRx=false
       });
     },
     handleClick(tab, event) {
