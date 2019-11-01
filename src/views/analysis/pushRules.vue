@@ -80,6 +80,8 @@
             <el-table-column property="priceStart" label="价格大于" align="center" width="80"></el-table-column>
             <el-table-column property="marketplace" label="刊登站点" align="center" width="180"></el-table-column>
             <el-table-column property="storeLocation" label="注册地址" align="center"></el-table-column>
+            <el-table-column property="ruleName" label="规则名称" align="center"></el-table-column>
+            <el-table-column property="ruleMark" label="规则备注" align="center"></el-table-column>
             <el-table-column property="salesThreeDayFlag" label="连续三天有销量" align="center">
               <template slot-scope="scope">{{scope.row.salesThreeDayFlag==0?'是':'否'}}</template>
             </el-table-column>
@@ -134,6 +136,8 @@
             </el-table-column>
             <el-table-column property="marketplace" label="刊登站点" align="center" width="180"></el-table-column>
             <el-table-column property="storeLocation" label="注册地址" align="center" width="100"></el-table-column>
+            <el-table-column property="ruleName" label="规则名称" align="center" width="100"></el-table-column>
+            <el-table-column property="ruleMark" label="规则备注" align="center" width="100"></el-table-column>
             <el-table-column property="salesThreeDayFlag" label="连续三天有销量" align="center" width="120">
               <template slot-scope="scope">{{scope.row.salesThreeDayFlag==0?'是':'否'}}</template>
             </el-table-column>
@@ -218,66 +222,67 @@
               align="center"
               width="150"
             ></el-table-column>
+            <el-table-column property="creator" label="创建人" align="center" width="80"></el-table-column>
+            <el-table-column property="createdDate" label="创建时间" align="center" width="100">
+              <template slot-scope="scope">{{scope.row.createdDate | cutOutMonye}}</template>
+            </el-table-column>
+            <el-table-column property="updatedDate" label="更新时间" align="center" width="100">
+              <template slot-scope="scope">{{scope.row.updatedDate | cutOutMonye}}</template>
+            </el-table-column>
           </el-table>
         </div>
       </div>
       <div v-show="show.joom">2</div>
-      <el-dialog title="ebay新品编辑" :visible.sync="ebaydisLoginxp" width="65%">
+      <el-dialog title="ebay新品编辑" :visible.sync="ebaydisLoginxp" width="75%">
         <el-row style="margin-top: 0">
           <el-col :span="24" class="cTop">
-            <el-col :span="12" style="margin-bottom: 20px">
-              <el-col :span="5">
+            <el-col :span="6" style="margin-bottom: 20px">
+              <el-col :span="9">
                 <p class="basp">销量大于</p>
               </el-col>
-              <el-col :span="19">
-                <el-input v-model="ebayXp.soldStart"></el-input>
+              <el-col :span="7">
+                <el-input v-model="ebayXp.soldStart" placeholder="大于"></el-input>
+              </el-col>
+              <el-col :span="1">
+                <span class="colspan">-</span>
+              </el-col>
+              <el-col :span="7">
+                <el-input v-model="ebayXp.soldEnd" placeholder="小于"></el-input>
               </el-col>
             </el-col>
-            <el-col :span="12" style="margin-bottom: 20px">
-              <el-col :span="5">
-                <p class="basp">销量小于</p>
+            <el-col :span="6" style="margin-bottom: 20px">
+              <el-col :span="9">
+                <p class="basp">浏览数区间</p>
               </el-col>
-              <el-col :span="19">
-                <el-input v-model="ebayXp.soldEnd"></el-input>
+              <el-col :span="7">
+                <el-input v-model="ebayXp.visitStart" placeholder="大于"></el-input>
               </el-col>
-            </el-col>
-            <el-col :span="12" style="margin-bottom: 20px">
-              <el-col :span="5">
-                <p class="basp">浏览数大于</p>
+              <el-col :span="1">
+                <span class="colspan">-</span>
               </el-col>
-              <el-col :span="19">
-                <el-input v-model="ebayXp.visitStart"></el-input>
+              <el-col :span="7">
+                <el-input v-model="ebayXp.visitEnd" placeholder="小于"></el-input>
               </el-col>
             </el-col>
-            <el-col :span="12" style="margin-bottom: 20px">
-              <el-col :span="5">
-                <p class="basp">浏览数小于</p>
+            <el-col :span="6" style="margin-bottom: 20px">
+              <el-col :span="9">
+                <p class="basp">价格区间</p>
               </el-col>
-              <el-col :span="19">
-                <el-input v-model="ebayXp.visitEnd"></el-input>
+              <el-col :span="7">
+                <el-input v-model="ebayXp.priceStart" placeholder="大于"></el-input>
               </el-col>
-            </el-col>
-            <el-col :span="12" style="margin-bottom: 20px">
-              <el-col :span="5">
-                <p class="basp">价格大于</p>
+              <el-col :span="1">
+                <span class="colspan">-</span>
               </el-col>
-              <el-col :span="19">
-                <el-input v-model="ebayXp.priceStart"></el-input>
+              <el-col :span="7">
+                <el-input v-model="ebayXp.priceEnd" placeholder="小于"></el-input>
               </el-col>
             </el-col>
-            <el-col :span="12" style="margin-bottom: 20px">
-              <el-col :span="5">
-                <p class="basp">价格小于</p>
-              </el-col>
-              <el-col :span="19">
-                <el-input v-model="ebayXp.priceEnd"></el-input>
-              </el-col>
-            </el-col>
-            <el-col :span="12" style="margin-bottom: 20px">
-              <el-col :span="5">
+            <el-col :span="6" style="margin-bottom: 20px">
+              <el-col :span="9">
                 <p class="basp">刊登站点</p>
               </el-col>
-              <el-col :span="19">
+              <el-col :span="15">
                 <el-select
                   style="width:100%"
                   multiple
@@ -298,11 +303,11 @@
                 </el-select>
               </el-col>
             </el-col>
-            <el-col :span="12" style="margin-bottom: 20px">
-              <el-col :span="5">
+            <el-col :span="6" style="margin-bottom: 20px">
+              <el-col :span="9">
                 <p class="basp">注册地址</p>
               </el-col>
-              <el-col :span="19">
+              <el-col :span="15">
                 <el-select
                   style="width:100%"
                   multiple
@@ -323,11 +328,11 @@
                 </el-select>
               </el-col>
             </el-col>
-            <el-col :span="12" style="margin-bottom: 20px">
-              <el-col :span="5">
+            <el-col :span="6" style="margin-bottom: 20px">
+              <el-col :span="9">
                 <p class="basp">上架时间</p>
               </el-col>
-              <el-col :span="19">
+              <el-col :span="15">
                 <el-select
                   style="width:100%"
                   multiple
@@ -348,11 +353,27 @@
                 </el-select>
               </el-col>
             </el-col>
-            <el-col :span="12" style="margin-bottom: 20px">
-              <el-col :span="5">
+            <el-col :span="6" style="margin-bottom: 20px">
+              <el-col :span="9">
+                <p class="basp">规则名称</p>
+              </el-col>
+              <el-col :span="15">
+                <el-input v-model="ebayXp.ruleName"></el-input>
+              </el-col>
+            </el-col>
+            <el-col :span="6" style="margin-bottom: 20px">
+              <el-col :span="9">
+                <p class="basp">规则备注</p>
+              </el-col>
+              <el-col :span="15">
+                <el-input v-model="ebayXp.ruleMark"></el-input>
+              </el-col>
+            </el-col>
+            <el-col :span="6" style="margin-bottom: 20px">
+              <el-col :span="9">
                 <p class="basp">连续三天销量</p>
               </el-col>
-              <el-col :span="19">
+              <el-col :span="15">
                 <el-switch
                   v-model="ebayXp.salesThreeDayFlag"
                   active-color="#13ce66"
@@ -368,62 +389,56 @@
           <el-button type="primary" @click="saveEbayXp()">保 存</el-button>
         </div>
       </el-dialog>
-      <el-dialog title="添加ebay新品规则" :visible.sync="addEbaydisLoginxp" width="65%">
+      <el-dialog title="添加ebay新品规则" :visible.sync="addEbaydisLoginxp" width="75%">
         <el-row style="margin-top: 0">
           <el-col :span="24" class="cTop">
-            <el-col :span="12" style="margin-bottom: 20px">
-              <el-col :span="5">
+            <el-col :span="6" style="margin-bottom: 20px">
+              <el-col :span="9">
                 <p class="basp">销量大于</p>
               </el-col>
-              <el-col :span="19">
-                <el-input v-model="addEbayXp.soldStart"></el-input>
+              <el-col :span="7">
+                <el-input v-model="addEbayXp.soldStart" placeholder="大于"></el-input>
+              </el-col>
+              <el-col :span="1">
+                <span class="colspan">-</span>
+              </el-col>
+              <el-col :span="7">
+                <el-input v-model="addEbayXp.soldEnd" placeholder="小于"></el-input>
               </el-col>
             </el-col>
-            <el-col :span="12" style="margin-bottom: 20px">
-              <el-col :span="5">
-                <p class="basp">销量小于</p>
+            <el-col :span="6" style="margin-bottom: 20px">
+              <el-col :span="9">
+                <p class="basp">浏览数区间</p>
               </el-col>
-              <el-col :span="19">
-                <el-input v-model="addEbayXp.soldEnd"></el-input>
+              <el-col :span="7">
+                <el-input v-model="addEbayXp.visitStart" placeholder="大于"></el-input>
               </el-col>
-            </el-col>
-            <el-col :span="12" style="margin-bottom: 20px">
-              <el-col :span="5">
-                <p class="basp">浏览数大于</p>
+              <el-col :span="1">
+                <span class="colspan">-</span>
               </el-col>
-              <el-col :span="19">
-                <el-input v-model="addEbayXp.visitStart"></el-input>
+              <el-col :span="7">
+                <el-input v-model="addEbayXp.visitEnd" placeholder="小于"></el-input>
               </el-col>
             </el-col>
-            <el-col :span="12" style="margin-bottom: 20px">
-              <el-col :span="5">
-                <p class="basp">浏览数小于</p>
+            <el-col :span="6" style="margin-bottom: 20px">
+              <el-col :span="9">
+                <p class="basp">价格区间</p>
               </el-col>
-              <el-col :span="19">
-                <el-input v-model="addEbayXp.visitEnd"></el-input>
+              <el-col :span="7">
+                <el-input v-model="addEbayXp.priceStart" placeholder="大于"></el-input>
               </el-col>
-            </el-col>
-            <el-col :span="12" style="margin-bottom: 20px">
-              <el-col :span="5">
-                <p class="basp">价格大于</p>
+              <el-col :span="1">
+                <span class="colspan">-</span>
               </el-col>
-              <el-col :span="19">
-                <el-input v-model="addEbayXp.priceStart"></el-input>
+              <el-col :span="7">
+                <el-input v-model="addEbayXp.priceEnd" placeholder="小于"></el-input>
               </el-col>
             </el-col>
-            <el-col :span="12" style="margin-bottom: 20px">
-              <el-col :span="5">
-                <p class="basp">价格小于</p>
-              </el-col>
-              <el-col :span="19">
-                <el-input v-model="addEbayXp.priceEnd"></el-input>
-              </el-col>
-            </el-col>
-            <el-col :span="12" style="margin-bottom: 20px">
-              <el-col :span="5">
+            <el-col :span="6" style="margin-bottom: 20px">
+              <el-col :span="9">
                 <p class="basp">刊登站点</p>
               </el-col>
-              <el-col :span="19">
+              <el-col :span="15">
                 <el-select
                   style="width:100%"
                   multiple
@@ -444,11 +459,11 @@
                 </el-select>
               </el-col>
             </el-col>
-            <el-col :span="12" style="margin-bottom: 20px">
-              <el-col :span="5">
+            <el-col :span="6" style="margin-bottom: 20px">
+              <el-col :span="9">
                 <p class="basp">注册地址</p>
               </el-col>
-              <el-col :span="19">
+              <el-col :span="15">
                 <el-select
                   style="width:100%"
                   multiple
@@ -469,11 +484,11 @@
                 </el-select>
               </el-col>
             </el-col>
-            <el-col :span="12" style="margin-bottom: 20px">
-              <el-col :span="5">
+            <el-col :span="6" style="margin-bottom: 20px">
+              <el-col :span="9">
                 <p class="basp">上架时间</p>
               </el-col>
-              <el-col :span="19">
+              <el-col :span="15">
                 <el-select
                   style="width:100%"
                   multiple
@@ -494,16 +509,32 @@
                 </el-select>
               </el-col>
             </el-col>
-            <el-col :span="12" style="margin-bottom: 20px">
-              <el-col :span="5">
+            <el-col :span="6" style="margin-bottom: 20px">
+              <el-col :span="9">
+                <p class="basp">规则名称</p>
+              </el-col>
+              <el-col :span="15">
+                <el-input v-model="addEbayXp.ruleName"></el-input>
+              </el-col>
+            </el-col>
+            <el-col :span="6" style="margin-bottom: 20px">
+              <el-col :span="9">
+                <p class="basp">规则备注</p>
+              </el-col>
+              <el-col :span="15">
+                <el-input v-model="addEbayXp.ruleMark"></el-input>
+              </el-col>
+            </el-col>
+            <el-col :span="6" style="margin-bottom: 20px">
+              <el-col :span="9">
                 <p class="basp">连续三天销量</p>
               </el-col>
-              <el-col :span="19">
+              <el-col :span="15">
                 <el-switch
                   v-model="addEbayXp.salesThreeDayFlag"
                   active-color="#13ce66"
                   inactive-color="#ff4949"
-                  style="margin-top:10px;margin-left:10px;"
+                  style="margin-top:10px;"
                 ></el-switch>
               </el-col>
             </el-col>
@@ -565,6 +596,22 @@
                     :value="item"
                   ></el-option>
                 </el-select>
+              </el-col>
+            </el-col>
+            <el-col :span="6" style="margin-bottom: 20px">
+              <el-col :span="9">
+                <p class="basp">规则名称</p>
+              </el-col>
+              <el-col :span="15">
+                <el-input v-model="addEbayRx.ruleName"></el-input>
+              </el-col>
+            </el-col>
+            <el-col :span="6" style="margin-bottom: 20px">
+              <el-col :span="9">
+                <p class="basp">规则备注</p>
+              </el-col>
+              <el-col :span="15">
+                <el-input v-model="addEbayRx.ruleMark"></el-input>
               </el-col>
             </el-col>
             <el-col :span="6" style="margin-bottom: 20px">
@@ -768,6 +815,22 @@
             </el-col>
             <el-col :span="6" style="margin-bottom: 20px">
               <el-col :span="9">
+                <p class="basp">规则名称</p>
+              </el-col>
+              <el-col :span="15">
+                <el-input v-model="ebayRx.ruleName"></el-input>
+              </el-col>
+            </el-col>
+            <el-col :span="6" style="margin-bottom: 20px">
+              <el-col :span="9">
+                <p class="basp">规则备注</p>
+              </el-col>
+              <el-col :span="15">
+                <el-input v-model="ebayRx.ruleMark"></el-input>
+              </el-col>
+            </el-col>
+            <el-col :span="6" style="margin-bottom: 20px">
+              <el-col :span="9">
                 <p class="basp">价格区间</p>
               </el-col>
               <el-col :span="7">
@@ -785,7 +848,7 @@
                 <p class="basp">销量区间</p>
               </el-col>
               <el-col :span="7">
-                <el-input v-model="ebayRx.soldStart"></el-input>
+                <el-input v-model="ebayRx.soldStart" placeholder="大于"></el-input>
               </el-col>
               <el-col :span="1">
                 <span class="colspan">-</span>
@@ -948,7 +1011,9 @@ export default {
         storeLocation: null,
         salesThreeDayFlag: null,
         listedTime: null,
-        itemLocation: null
+        itemLocation: null,
+        ruleMark:null,
+        ruleName:null
       },
       addEbayXp: {
         soldStart: null,
@@ -961,7 +1026,9 @@ export default {
         storeLocation: [],
         salesThreeDayFlag: null,
         listedTime: [],
-        itemLocation: null
+        itemLocation: null,
+        ruleMark:null,
+        ruleName:null
       },
       addEbayRx: {
         marketplace: [],
@@ -984,7 +1051,9 @@ export default {
         salesThreeDayGrowthStart: null,
         salesThreeDayGrowthEnd: null,
         paymentThreeDay1Start: null,
-        paymentThreeDay1End: null
+        paymentThreeDay1End: null,
+        ruleMark:null,
+        ruleName:null
       },
       ebayRx: {
         _id: null,
@@ -1009,7 +1078,9 @@ export default {
         salesThreeDayGrowthStart: null,
         salesThreeDayGrowthEnd: null,
         paymentThreeDay1Start: null,
-        paymentThreeDay1End: null
+        paymentThreeDay1End: null,
+        ruleMark:null,
+        ruleName:null
       },
       show: {
         wish: false,
@@ -1208,7 +1279,7 @@ export default {
       this.ebay.rx = true;
     },
     editArt(index, row) {
-      this.ebayXp.id = row.id;
+      this.ebayXp.id = row._id;
       this.ebayXp.soldStart = row.soldStart;
       this.ebayXp.soldEnd = row.soldEnd;
       this.ebayXp.visitStart = row.visitStart;
@@ -1220,6 +1291,8 @@ export default {
       this.ebayXp.salesThreeDayFlag = row.salesThreeDayFlag;
       this.ebayXp.listedTime = row.listedTime;
       this.ebayXp.itemLocation = row.itemLocation;
+      this.ebayXp.ruleName = row.ruleName;
+      this.ebayXp.ruleMark = row.ruleMark;
       if (this.ebayXp.marketplace) {
         this.ebayXp.marketplace = this.ebayXp.marketplace.split(",");
       }
@@ -1263,6 +1336,8 @@ export default {
       this.ebayRx.paymentThreeDay1Start = row.paymentThreeDay1Start;
       this.ebayRx.paymentThreeDay1End = row.paymentThreeDay1End;
       this.ebayRx.marketplace = row.marketplace;
+      this.ebayRx.ruleName = row.ruleName;
+      this.ebayRx.ruleMark = row.ruleMark;
       if (this.ebayRx.salesThreeDayFlag==0) {
         this.ebayRx.salesThreeDayFlag = true;
       } else {
@@ -1414,7 +1489,7 @@ export default {
       })
         .then(() => {
           let conId = {
-            id: row.id
+            id: row._id
           };
           ebaySaveRuleDelete(conId).then(res => {
             if (res.data.message == "success") {
