@@ -1,14 +1,14 @@
 <template>
   <section>
     <div>
-      <el-tabs
+      <!-- <el-tabs
         v-model="activeName"
         type="card"
         style="background-color:#fff"
         @tab-click="handleClick"
       >
         <el-tab-pane v-for="(item, index) in this.allMenu" :label="item" :name="item" :key="index"></el-tab-pane>
-      </el-tabs>
+      </el-tabs> -->
       <div v-show="show.wish">
         <div class="proBox">
           <div class="proCase01" v-for="(item,index) in nostockdata" :key="index">
@@ -55,7 +55,7 @@
           </div>
         </div>
       </div>
-      <div v-show="show.ebay">
+      <div v-show="show.ebay" style="background:#fff;padding-top:15px;">
         <div class="ebayCase">
           <span class="ebayText" @click="tabEbayXp">
             <span class="ebayactive" :class="ebayStlye==0?'ebayActive':''"></span>新品商品
@@ -174,7 +174,11 @@
                 align="center"
               ></el-table-column>
             </el-table-column>
-            <el-table-column property="seller" label="卖家名称" align="center" width="110"></el-table-column>
+            <el-table-column property="seller" label="卖家名称" align="center" width="110">
+              <template slot-scope="scope">             
+              <a :href="'https://www.ebay.com/usr/'+scope.row.seller" target="_blank" class="goa">{{scope.row.seller}}</a>
+              </template>
+            </el-table-column>
             <el-table-column property="itemLocation" label="发货地址" align="center" width="110"></el-table-column>
             <el-table-column property="storeLocation" label="注册地址" align="center" width="100"></el-table-column>
             <el-table-column property="store" label="店铺名称" align="center" width="120"></el-table-column>
@@ -348,7 +352,11 @@
                 sortable="custom"
               ></el-table-column>
             </el-table-column>
-            <el-table-column property="seller" label="卖家名称" align="center" width="100"></el-table-column>
+            <el-table-column property="seller" label="卖家名称" align="center" width="100">
+              <template slot-scope="scope">             
+              <a :href="'https://www.ebay.com/usr/'+scope.row.seller" target="_blank" class="goa">{{scope.row.seller}}</a>
+              </template>
+            </el-table-column>
             <el-table-column property="itemLocation" label="发货地址" align="center" width="100"></el-table-column>
             <el-table-column property="storeLocation" label="注册地址" align="center" width="100"></el-table-column>
           </el-table>
@@ -486,7 +494,7 @@ import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 export default {
   data() {
     return {
-      tableHeightstock: window.innerHeight - 210,
+      tableHeightstock: window.innerHeight - 209,
       totalEbayXp: null,
       totalEbayRx: null,
       ebayXpRefuse: false,
@@ -873,12 +881,12 @@ export default {
         this.condition.sort = null;
         this.ebayXp(this.condition);
       }
-      if (column.order == "ascending") {
-        this.condition.sort = column.prop;
+      if (column.order == "ascending") {       
+        this.condition.sort = "-" + column.prop;
         this.ebayXp(this.condition);
       }
       if (column.order == "descending") {
-        this.condition.sort = "-" + column.prop;
+        this.condition.sort = column.prop;
         this.ebayXp(this.condition);
       }
     },
@@ -888,11 +896,11 @@ export default {
         this.ebayRx(this.condition1);
       }
       if (column.order == "ascending") {
-        this.condition1.sort = column.prop;
+        this.condition1.sort = "-" + column.prop;
         this.ebayRx(this.condition1);
       }
       if (column.order == "descending") {
-        this.condition1.sort = "-" + column.prop;
+        this.condition1.sort = column.prop;
         this.ebayRx(this.condition1);
       }
     },
@@ -1314,7 +1322,6 @@ export default {
   width: 98%;
   margin-left: 0.7%;
   border: 1px solid #e2e2e2;
-  margin-top: 15px;
   background: #f8f8f8;
   padding: 12px 0;
   overflow: hidden;
@@ -1390,5 +1397,9 @@ export default {
   float: right;
   background: #f56c6c;
   color: #fff;
+}
+.goa{
+  text-decoration: none;
+  color: #409EFF;
 }
 </style>
