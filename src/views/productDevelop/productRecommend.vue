@@ -14,7 +14,7 @@
       ></el-tab-pane>
     </el-tabs>
     <div v-show="show.recpro">
-      <proRecommend></proRecommend>
+      <ebayRecommend></ebayRecommend>
     </div>
     <div v-show="show.product">
       <el-col :span="24" style="padding:10px 15px;">
@@ -1234,7 +1234,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-import proRecommend from "../analysis/proRecommend.vue";
+import ebayRecommend from "./ebayRecommend.vue";
 import {
   goodsList,
   goodsCreate,
@@ -1262,7 +1262,7 @@ import { getMenu } from "../../api/login";
 
 export default {
   components: {
-    proRecommend
+    ebayRecommend
   },
   data() {
     return {
