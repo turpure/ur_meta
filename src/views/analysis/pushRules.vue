@@ -71,19 +71,19 @@
                   ></i>
                 </el-tooltip>
               </template>
-            </el-table-column>
-            <el-table-column property="soldStart" label="销量大于" align="center" fixed width="80"></el-table-column>
-            <el-table-column property="soldEnd" label="销量小于" align="center" fixed width="80"></el-table-column>
+            </el-table-column>            
+            <el-table-column property="ruleName" label="规则名称" align="center"></el-table-column>
+            <el-table-column property="ruleMark" label="规则备注" align="center"></el-table-column>
+            <el-table-column property="soldStart" label="销量大于" align="center" width="80"></el-table-column>
+            <el-table-column property="soldEnd" label="销量小于" align="center" width="80"></el-table-column>
             <el-table-column property="visitStart" label="浏览数大于" align="center"></el-table-column>
             <el-table-column property="visitEnd" label="浏览数小于" align="center"></el-table-column>
             <el-table-column property="priceStart" label="价格大于" align="center" width="80"></el-table-column>
             <el-table-column property="priceEnd" label="价格小于" align="center" width="80"></el-table-column>
             <el-table-column property="marketplace" label="刊登站点" align="center" width="180"></el-table-column>
             <el-table-column property="storeLocation" label="注册地址" align="center"></el-table-column>
-            <el-table-column property="ruleName" label="规则名称" align="center"></el-table-column>
-            <el-table-column property="ruleMark" label="规则备注" align="center"></el-table-column>
             <el-table-column property="salesThreeDayFlag" label="连续三天有销量" align="center">
-              <template slot-scope="scope">{{scope.row.salesThreeDayFlag==0?'是':'否'}}</template>
+              <template slot-scope="scope">{{scope.row.salesThreeDayFlag==0?'否':'是'}}</template>
             </el-table-column>
             <el-table-column property="listedTime" label="上架时间" align="center"></el-table-column>
             <el-table-column property="isUsed" label="是否停用" align="center">
@@ -134,17 +134,17 @@
                 </el-tooltip>
               </template>
             </el-table-column>
-            <el-table-column property="marketplace" label="刊登站点" align="center" width="180"></el-table-column>
-            <el-table-column property="storeLocation" label="注册地址" align="center" width="100"></el-table-column>
             <el-table-column property="ruleName" label="规则名称" align="center" width="100"></el-table-column>
             <el-table-column property="ruleMark" label="规则备注" align="center" width="100"></el-table-column>
+            <el-table-column property="marketplace" label="刊登站点" align="center" width="180"></el-table-column>
+            <el-table-column property="storeLocation" label="注册地址" align="center" width="100"></el-table-column>
             <el-table-column
               property="salesThreeDayFlag"
               label="连续三天有销量"
               align="center"
               width="120"
             >
-              <template slot-scope="scope">{{scope.row.salesThreeDayFlag==0?'是':'否'}}</template>
+              <template slot-scope="scope">{{scope.row.salesThreeDayFlag==0?'否':'是'}}</template>
             </el-table-column>
             <el-table-column property="isUsed" label="是否停用" align="center">
               <template slot-scope="scope">{{scope.row.isUsed==0?'停用':'在用'}}</template>
@@ -1348,8 +1348,8 @@ export default {
       //   }
       // }
       this.ebayXp.salesThreeDayFlag == 0
-        ? (this.ebayXp.salesThreeDayFlag = true)
-        : (this.ebayXp.salesThreeDayFlag = false);
+        ? (this.ebayXp.salesThreeDayFlag = false)
+        : (this.ebayXp.salesThreeDayFlag = true);
       this.ebaydisLoginxp = true;
     },
     editArtRx(index, row) {
@@ -1379,9 +1379,9 @@ export default {
       this.ebayRx.ruleName = row.ruleName;
       this.ebayRx.ruleMark = row.ruleMark;
       if (this.ebayRx.salesThreeDayFlag == 0) {
-        this.ebayRx.salesThreeDayFlag = true;
-      } else {
         this.ebayRx.salesThreeDayFlag = false;
+      } else {
+        this.ebayRx.salesThreeDayFlag = true;
       }
 
       this.ebaydisLoginrx = true;
@@ -1401,9 +1401,9 @@ export default {
         }
       }
       if (this.ebayXp.salesThreeDayFlag) {
-        this.ebayXp.salesThreeDayFlag = 0;
-      } else {
         this.ebayXp.salesThreeDayFlag = 1;
+      } else {
+        this.ebayXp.salesThreeDayFlag = 0;
       }
       ebaySaveRule(this.ebayXp).then(res => {
         if (res.data.data) {
@@ -1434,9 +1434,9 @@ export default {
         }
       }
       if (this.addEbayXp.salesThreeDayFlag) {
-        this.addEbayXp.salesThreeDayFlag = 0;
-      } else {
         this.addEbayXp.salesThreeDayFlag = 1;
+      } else {
+        this.addEbayXp.salesThreeDayFlag = 0;
       }
       ebaySaveRule(this.addEbayXp).then(res => {
         if (res.data.data) {
@@ -1451,9 +1451,9 @@ export default {
     },
     saveEbayRx() {
       if (this.ebayRx.salesThreeDayFlag) {
-        this.ebayRx.salesThreeDayFlag = 0;
-      } else {
         this.ebayRx.salesThreeDayFlag = 1;
+      } else {
+        this.ebayRx.salesThreeDayFlag = 0;
       }
       ebaySaveRuleHot(this.ebayRx).then(res => {
         if (res.data.data) {
@@ -1468,9 +1468,9 @@ export default {
     },
     addSaveEbayRx() {
       if (this.addEbayRx.salesThreeDayFlag) {
-        this.addEbayRx.salesThreeDayFlag = 0;
-      } else {
         this.addEbayRx.salesThreeDayFlag = 1;
+      } else {
+        this.addEbayRx.salesThreeDayFlag = 0;
       }
       ebaySaveRuleHot(this.addEbayRx).then(res => {
         if (res.data.data) {

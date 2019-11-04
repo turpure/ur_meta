@@ -1073,6 +1073,7 @@ export default {
           this.ebayXp();
         } else {
           this.$message.error(res.data.message);
+          this.ebayXp();
         }
       });
     },
@@ -1089,6 +1090,7 @@ export default {
           this.ebayRx();
         } else {
           this.$message.error(res.data.message);
+          this.ebayRx();
         }
       });
     },
