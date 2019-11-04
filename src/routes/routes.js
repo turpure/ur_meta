@@ -129,6 +129,7 @@ import proAnalysis from '../views/analysis/proAnalysis.vue'
 import mySubscribe from '../views/analysis/mySubscribe.vue'
 import pushRules from '../views/analysis/pushRules.vue'
 import ebayRule from '../views/analysis/ebayRule.vue'
+import distributionRule from '../views/analysis/distributionRule.vue'
 
 const routes = [
   {
@@ -360,6 +361,11 @@ const routes = [
         path: '/v1/products-engine/analysis',
         component: proAnalysis,
         name: '商品分析'
+      },
+      {
+        path: '/v1/products-engine/dispatch-rule',
+        component: distributionRule,
+        name: '分配规则'
       }
     ]
   },
