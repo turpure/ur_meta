@@ -1579,3 +1579,28 @@ export function ebayRunRuleHot(param) {
     data
   })
 }
+
+export function getAllotRule() {
+  return request({
+    url: '/products-engine/allot-rule',
+    method: 'get'
+  })
+}
+
+export function saveAllotRule(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/save-allot-rule',
+    method: 'post',
+    data
+  })
+}
+
+export function DeleteAllotRule(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/delete-allot-rule',
+    method: 'post',
+    data
+  })
+}
