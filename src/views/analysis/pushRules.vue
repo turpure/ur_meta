@@ -47,7 +47,7 @@
             style="width:98%;margin-left:0.7%;margin-top:15px;"
           >
             <el-table-column type="index" fixed align="center" width="40" header-align="center"></el-table-column>
-            <el-table-column label="操作" fixed header-align="center" align="center" width="80">
+            <el-table-column label="操作" fixed header-align="center" align="center" width="75">
               <template slot-scope="scope">
                 <el-tooltip content="更新">
                   <i
@@ -76,8 +76,8 @@
             <el-table-column property="soldEnd" label="销量小于" align="center" fixed width="80"></el-table-column>
             <el-table-column property="visitStart" label="浏览数大于" align="center"></el-table-column>
             <el-table-column property="visitEnd" label="浏览数小于" align="center"></el-table-column>
-            <el-table-column property="priceEnd" label="价格小于" align="center" width="80"></el-table-column>
             <el-table-column property="priceStart" label="价格大于" align="center" width="80"></el-table-column>
+            <el-table-column property="priceEnd" label="价格小于" align="center" width="80"></el-table-column>
             <el-table-column property="marketplace" label="刊登站点" align="center" width="180"></el-table-column>
             <el-table-column property="storeLocation" label="注册地址" align="center"></el-table-column>
             <el-table-column property="ruleName" label="规则名称" align="center"></el-table-column>
@@ -1005,87 +1005,87 @@ export default {
       addEbaydisLoginrx: false,
       lodingTo: false,
       ebayXp: {
-        id: null,
-        soldStart: null,
-        soldEnd: null,
-        visitStart: null,
-        visitEnd: null,
-        priceEnd: null,
-        priceStart: null,
-        marketplace: null,
-        storeLocation: null,
-        salesThreeDayFlag: null,
-        listedTime: null,
-        itemLocation: null,
-        ruleMark: null,
-        ruleName: null
-      },
-      addEbayXp: {
-        soldStart: null,
-        soldEnd: null,
-        visitStart: null,
-        visitEnd: null,
-        priceEnd: null,
-        priceStart: null,
+        id: "",
+        soldStart: "",
+        soldEnd: "",
+        visitStart: "",
+        visitEnd: "",
+        priceEnd: "",
+        priceStart: "",
         marketplace: [],
         storeLocation: [],
-        salesThreeDayFlag: null,
+        salesThreeDayFlag: "",
         listedTime: [],
-        itemLocation: null,
-        ruleMark: null,
-        ruleName: null
+        itemLocation: "",
+        ruleMark: "",
+        ruleName: ""
+      },
+      addEbayXp: {
+        soldStart: "",
+        soldEnd: "",
+        visitStart: "",
+        visitEnd: "",
+        priceEnd: "",
+        priceStart: "",
+        marketplace: [],
+        storeLocation: [],
+        salesThreeDayFlag: false,
+        listedTime: [],
+        itemLocation: "",
+        ruleMark: "",
+        ruleName: ""
       },
       addEbayRx: {
         marketplace: [],
-        salesThreeDayFlag: null,
-        priceStart: null,
-        priceEnd: null,
-        soldStart: null,
-        soldEnd: null,
+        salesThreeDayFlag: false,
+        priceStart: "",
+        priceEnd: "",
+        soldStart: "",
+        soldEnd: "",
         storeLocation: [],
-        genTimeStart: null,
-        genTimeEnd: null,
-        soldThePreviousGrowthStart: null,
-        soldThePreviousGrowthEnd: null,
-        soldThePreviousDayStart: null,
-        soldThePreviousDayEnd: null,
-        paymentThePreviousDayStart: null,
-        paymentThePreviousDayEnd: null,
-        salesThreeDay1Start: null,
-        salesThreeDay1End: null,
-        salesThreeDayGrowthStart: null,
-        salesThreeDayGrowthEnd: null,
-        paymentThreeDay1Start: null,
-        paymentThreeDay1End: null,
-        ruleMark: null,
-        ruleName: null
+        genTimeStart: "",
+        genTimeEnd: "",
+        soldThePreviousGrowthStart: "",
+        soldThePreviousGrowthEnd: "",
+        soldThePreviousDayStart: "",
+        soldThePreviousDayEnd: "",
+        paymentThePreviousDayStart: "",
+        paymentThePreviousDayEnd: "",
+        salesThreeDay1Start: "",
+        salesThreeDay1End: "",
+        salesThreeDayGrowthStart: "",
+        salesThreeDayGrowthEnd: "",
+        paymentThreeDay1Start: "",
+        paymentThreeDay1End: "",
+        ruleMark: "",
+        ruleName: ""
       },
       ebayRx: {
-        _id: null,
-        brand: null,
-        salesThreeDayFlag: null,
-        priceStart: null,
-        priceEnd: null,
-        soldStart: null,
-        soldEnd: null,
+        _id: "",
+        brand: "",
+        salesThreeDayFlag: "",
+        priceStart: "",
+        priceEnd: "",
+        soldStart: "",
+        soldEnd: "",
         storeLocation: [],
         marketplace: [],
-        genTimeStart: null,
-        genTimeEnd: null,
-        soldThePreviousGrowthStart: null,
-        soldThePreviousGrowthEnd: null,
-        soldThePreviousDayStart: null,
-        soldThePreviousDayEnd: null,
-        paymentThePreviousDayStart: null,
-        paymentThePreviousDayEnd: null,
-        salesThreeDay1Start: null,
-        salesThreeDay1End: null,
-        salesThreeDayGrowthStart: null,
-        salesThreeDayGrowthEnd: null,
-        paymentThreeDay1Start: null,
-        paymentThreeDay1End: null,
-        ruleMark: null,
-        ruleName: null
+        genTimeStart: "",
+        genTimeEnd: "",
+        soldThePreviousGrowthStart: "",
+        soldThePreviousGrowthEnd: "",
+        soldThePreviousDayStart: "",
+        soldThePreviousDayEnd: "",
+        paymentThePreviousDayStart: "",
+        paymentThePreviousDayEnd: "",
+        salesThreeDay1Start: "",
+        salesThreeDay1End: "",
+        salesThreeDayGrowthStart: "",
+        salesThreeDayGrowthEnd: "",
+        paymentThreeDay1Start: "",
+        paymentThreeDay1End: "",
+        ruleMark: "",
+        ruleName: ""
       },
       show: {
         wish: false,
@@ -1268,9 +1268,45 @@ export default {
     },
     forbidSale1(e) {},
     addEbayxpLogin() {
+      this.addEbayXp.soldStart = "";
+      this.addEbayXp.soldEnd = "";
+      this.addEbayXp.visitStart = "";
+      this.addEbayXp.visitEnd = "";
+      this.addEbayXp.priceEnd = "";
+      this.addEbayXp.priceStart = "";
+      this.addEbayXp.marketplace = [];
+      this.addEbayXp.storeLocation = [];
+      this.addEbayXp.salesThreeDayFlag = false;
+      this.addEbayXp.listedTime = [];
+      this.addEbayXp.itemLocation = "";
+      this.addEbayXp.ruleMark = "";
+      this.addEbayXp.ruleName = "";
       this.addEbaydisLoginxp = true;
     },
     addEbayrxLogin() {
+      this.addEbayRx.marketplace = [];
+      this.addEbayRx.salesThreeDayFlag = false;
+      this.addEbayRx.priceStart = "";
+      this.addEbayRx.priceEnd = "";
+      this.addEbayRx.soldStart = "";
+      this.addEbayRx.soldEnd = "";
+      this.addEbayRx.storeLocation = [];
+      this.addEbayRx.genTimeStart = "";
+      this.addEbayRx.genTimeEnd = "";
+      this.addEbayRx.soldThePreviousGrowthStart = "";
+      this.addEbayRx.soldThePreviousGrowthEnd = "";
+      this.addEbayRx.soldThePreviousDayStart = "";
+      this.addEbayRx.soldThePreviousDayEnd = "";
+      this.addEbayRx.paymentThePreviousDayStart = "";
+      this.addEbayRx.paymentThePreviousDayEnd = "";
+      this.addEbayRx.salesThreeDay1Start = "";
+      this.addEbayRx.salesThreeDay1End = "";
+      this.addEbayRx.salesThreeDayGrowthStart = "";
+      this.addEbayRx.salesThreeDayGrowthEnd = "";
+      this.addEbayRx.paymentThreeDay1Start = "";
+      this.addEbayRx.paymentThreeDay1End = "";
+      this.addEbayRx.ruleMark = "";
+      this.addEbayRx.ruleName = "";
       this.addEbaydisLoginrx = true;
     },
     tabEbayXp() {
@@ -1536,18 +1572,17 @@ export default {
         this.ebaydata = res.data.data;
         for (let i = 0; i < this.ebaydata.length; i++) {
           let date = this.ebaydata[i].listedTime;
-          console.log(date)
-            for (let k = 0; k< date.length; k++) {
-              if (date[k] == '0') {
-                date[k] = "今天";
-              }
-              if (date[k] == '1') {
-                date[k] = "昨天";
-              }
-              if (date[k] == '2') {
-                date[k] = "前天";
-              }
+          for (let k = 0; k < date.length; k++) {
+            if (date[k] == "0") {
+              date[k] = "今天";
             }
+            if (date[k] == "1") {
+              date[k] = "昨天";
+            }
+            if (date[k] == "2") {
+              date[k] = "前天";
+            }
+          }
         }
         this.listLoading = false;
       });
