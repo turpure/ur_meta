@@ -9,7 +9,7 @@
       >
         <i class="el-icon-plus"></i>添加
       </el-button>
-      <el-table :data="tableData" border style="width:98%;margin-left:0.7%;margin-top:15px;">
+      <el-table :data="tableData" border style="width:98%;margin-left:0.7%;margin-top:15px;" :header-cell-style="getRowClass">
         <el-table-column type="index" fixed align="center" width="50" header-align="center"></el-table-column>
         <el-table-column label="操作" fixed header-align="center" align="center" width="100">
           <template slot-scope="scope">
@@ -241,6 +241,13 @@ export default {
     };
   },
   methods: {
+    getRowClass({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex == 0) {
+        return "color:#337ab7;background:#f5f7fa";
+      } else {
+        return "";
+      }
+    },
     add() {
       this.addData.username = null;
       this.addData.depart = null;
