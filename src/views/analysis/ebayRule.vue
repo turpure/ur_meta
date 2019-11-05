@@ -62,7 +62,7 @@
               <p class="basp" style="text-align: center;">普源类目</p>
             </el-col>
             <el-col :span="18">
-              <el-select style="width:100%" v-model="ebay.pyCate" @change="getPlat($event)">
+              <el-select style="width:100%" v-model="ebay.pyCate">
                 <el-option
                   v-for="(item, key) in pyCate"
                   :key="item.key"
