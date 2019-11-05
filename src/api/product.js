@@ -1607,7 +1607,7 @@ export function DeleteAllotRule(param) {
 
 export function cateRule(param) {
   return request({
-    url: '/products-engine/cate-rule?page=' + param.plat,
+    url: '/products-engine/cate-rule?page=' + param.page,
     method: 'get'
   })
 }
