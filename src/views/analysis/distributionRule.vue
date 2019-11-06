@@ -47,7 +47,7 @@
         <el-table-column property="updatedDate" label="更新时间" align="center"></el-table-column>
       </el-table>
     </div>
-    <el-dialog title="添加" :visible.sync="addebaydisLogin" width="75%">
+    <el-dialog title="添加" :visible.sync="addebaydisLogin" width="78%">
       <el-row style="margin-top: 0">
         <el-col :span="24" class="cTop">
           <el-col :span="6" style="margin-bottom: 20px">
@@ -146,7 +146,9 @@
               <p class="basp" style="text-align: center;">发货地点</p>
             </el-col>
             <el-col :span="17">
-              <el-input v-model="addData.deliveryLocation"></el-input>
+              <el-select v-model="addData.deliveryLocation" placeholder="请选择" style="width:100%">
+                <el-option v-for="item in place" :key="item" :label="item" :value="item"></el-option>
+              </el-select>
             </el-col>
           </el-col>
           <el-col :span="6" style="margin-bottom: 20px">
@@ -164,7 +166,7 @@
         <el-button type="primary" @click="addsave()">保 存</el-button>
       </div>
     </el-dialog>
-    <el-dialog title="编辑" :visible.sync="datadisLogin" width="75%">
+    <el-dialog title="编辑" :visible.sync="datadisLogin" width="78%">
       <el-row style="margin-top: 0">
         <el-col :span="24" class="cTop">
           <el-col :span="6" style="margin-bottom: 20px">
@@ -255,7 +257,9 @@
               <p class="basp" style="text-align: center;">发货地点</p>
             </el-col>
             <el-col :span="17">
-              <el-input v-model="data.deliveryLocation"></el-input>
+              <el-select v-model="data.deliveryLocation" placeholder="请选择" style="width:100%">
+                <el-option v-for="item in place" :key="item" :label="item" :value="item"></el-option>
+              </el-select>
             </el-col>
           </el-col>
           <el-col :span="6" style="margin-bottom: 20px">
@@ -293,6 +297,16 @@ export default {
       member: [],
       pyCate: [],
       ruleName: [],
+      place: [
+        "中国",
+        "香港",
+        "美国",
+        "英国",
+        "法国",
+        "德国",
+        "意大利",
+        "澳大利亚"
+      ],
       addData: {
         username: null,
         depart: null,
