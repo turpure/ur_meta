@@ -360,7 +360,7 @@
             </el-col>
             <el-col :span="6" style="margin-bottom: 20px">
               <el-col :span="9">
-                <p class="basp">规则名称</p>
+                <p class="basp"><span style="color:red;font-size:14px;">* </span>规则名称</p>
               </el-col>
               <el-col :span="15">
                 <el-input v-model="ebayXp.ruleName"></el-input>
@@ -374,11 +374,11 @@
                 <el-input v-model="ebayXp.ruleMark"></el-input>
               </el-col>
             </el-col>
-            <el-col :span="6" style="margin-bottom: 20px">
-              <el-col :span="9">
+            <el-col :span="5" style="margin-bottom: 20px">
+              <el-col :span="10">
                 <p class="basp">连续三天销量</p>
               </el-col>
-              <el-col :span="15">
+              <el-col :span="14">
                 <el-switch
                   v-model="ebayXp.salesThreeDayFlag"
                   active-color="#13ce66"
@@ -516,7 +516,7 @@
             </el-col>
             <el-col :span="6" style="margin-bottom: 20px">
               <el-col :span="9">
-                <p class="basp">规则名称</p>
+                <p class="basp"><span style="color:red;font-size:14px;">* </span>规则名称</p>
               </el-col>
               <el-col :span="15">
                 <el-input v-model="addEbayXp.ruleName"></el-input>
@@ -605,7 +605,7 @@
             </el-col>
             <el-col :span="6" style="margin-bottom: 20px">
               <el-col :span="9">
-                <p class="basp">规则名称</p>
+                <p class="basp"><span style="color:red;font-size:14px;">* </span>规则名称</p>
               </el-col>
               <el-col :span="15">
                 <el-input v-model="addEbayRx.ruleName"></el-input>
@@ -820,7 +820,7 @@
             </el-col>
             <el-col :span="6" style="margin-bottom: 20px">
               <el-col :span="9">
-                <p class="basp">规则名称</p>
+                <p class="basp"><span style="color:red;font-size:14px;">* </span>规则名称</p>
               </el-col>
               <el-col :span="15">
                 <el-input v-model="ebayRx.ruleName"></el-input>
