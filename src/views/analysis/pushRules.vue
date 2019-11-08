@@ -56,7 +56,7 @@
                     style="color: #409EFF;cursor:pointer;"
                   ></i>
                 </el-tooltip>
-                <el-tooltip content="立即生效">
+                <el-tooltip content="立即更新">
                   <i
                     @click="ljArt(scope.$index, scope.row)"
                     class="el-icon-star-on"
@@ -82,7 +82,7 @@
             <el-table-column property="priceEnd" label="价格小于" align="center" width="80"></el-table-column>
             <el-table-column property="marketplace" label="刊登站点" align="center" width="180"></el-table-column>
             <el-table-column property="storeLocation" label="注册地址" align="center"></el-table-column>
-            <el-table-column property="salesThreeDayFlag" label="连续三天有销量" align="center">
+            <el-table-column property="salesThreeDayFlag" label="是否有小火苗" align="center">
               <template slot-scope="scope">{{scope.row.salesThreeDayFlag==0?'否':'是'}}</template>
             </el-table-column>
             <el-table-column property="listedTime" label="上架时间" align="center"></el-table-column>
@@ -118,7 +118,7 @@
                     style="color: #409EFF;cursor:pointer;"
                   ></i>
                 </el-tooltip>
-                <el-tooltip content="立即生效">
+                <el-tooltip content="立即更新">
                   <i
                     @click="ljArtRx(scope.$index, scope.row)"
                     class="el-icon-star-on"
@@ -238,12 +238,28 @@
         </div>
       </div>
       <div v-show="show.joom">2</div>
-      <el-dialog title="ebay新品编辑" :visible.sync="ebaydisLoginxp" width="75%">
+      <el-dialog title="ebay新品编辑" :visible.sync="ebaydisLoginxp" width="75%" :close-on-click-modal="false">
         <el-row style="margin-top: 0">
           <el-col :span="24" class="cTop">
             <el-col :span="8" style="margin-bottom: 20px">
               <el-col :span="9">
-                <p class="basp">销量大于</p>
+                <p class="basp"><span style="color:red;font-size:14px;">* </span>规则名称</p>
+              </el-col>
+              <el-col :span="15">
+                <el-input v-model="ebayXp.ruleName"></el-input>
+              </el-col>
+            </el-col>
+            <el-col :span="8" style="margin-bottom: 20px">
+              <el-col :span="9">
+                <p class="basp">规则备注</p>
+              </el-col>
+              <el-col :span="15">
+                <el-input v-model="ebayXp.ruleMark"></el-input>
+              </el-col>
+            </el-col>
+            <el-col :span="8" style="margin-bottom: 20px">
+              <el-col :span="9">
+                <p class="basp">销量区间</p>
               </el-col>
               <el-col :span="7">
                 <el-input v-model="ebayXp.soldStart" placeholder="大于"></el-input>
@@ -360,23 +376,7 @@
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
               <el-col :span="9">
-                <p class="basp"><span style="color:red;font-size:14px;">* </span>规则名称</p>
-              </el-col>
-              <el-col :span="15">
-                <el-input v-model="ebayXp.ruleName"></el-input>
-              </el-col>
-            </el-col>
-            <el-col :span="8" style="margin-bottom: 20px">
-              <el-col :span="9">
-                <p class="basp">规则备注</p>
-              </el-col>
-              <el-col :span="15">
-                <el-input v-model="ebayXp.ruleMark"></el-input>
-              </el-col>
-            </el-col>
-            <el-col :span="8" style="margin-bottom: 20px">
-              <el-col :span="9">
-                <p class="basp">连续三天销量</p>
+                <p class="basp">是否有小火苗</p>
               </el-col>
               <el-col :span="15">
                 <el-switch
@@ -394,12 +394,28 @@
           <el-button type="primary" @click="saveEbayXp()">保 存</el-button>
         </div>
       </el-dialog>
-      <el-dialog title="添加ebay新品规则" :visible.sync="addEbaydisLoginxp" width="75%">
+      <el-dialog title="添加ebay新品规则" :visible.sync="addEbaydisLoginxp" width="75%" :close-on-click-modal="false">
         <el-row style="margin-top: 0">
           <el-col :span="24" class="cTop">
             <el-col :span="8" style="margin-bottom: 20px">
               <el-col :span="9">
-                <p class="basp">销量大于</p>
+                <p class="basp"><span style="color:red;font-size:14px;">* </span>规则名称</p>
+              </el-col>
+              <el-col :span="15">
+                <el-input v-model="addEbayXp.ruleName"></el-input>
+              </el-col>
+            </el-col>
+            <el-col :span="8" style="margin-bottom: 20px">
+              <el-col :span="9">
+                <p class="basp">规则备注</p>
+              </el-col>
+              <el-col :span="15">
+                <el-input v-model="addEbayXp.ruleMark"></el-input>
+              </el-col>
+            </el-col>
+            <el-col :span="8" style="margin-bottom: 20px">
+              <el-col :span="9">
+                <p class="basp">销量区间</p>
               </el-col>
               <el-col :span="7">
                 <el-input v-model="addEbayXp.soldStart" placeholder="大于"></el-input>
@@ -516,23 +532,7 @@
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
               <el-col :span="9">
-                <p class="basp"><span style="color:red;font-size:14px;">* </span>规则名称</p>
-              </el-col>
-              <el-col :span="15">
-                <el-input v-model="addEbayXp.ruleName"></el-input>
-              </el-col>
-            </el-col>
-            <el-col :span="8" style="margin-bottom: 20px">
-              <el-col :span="9">
-                <p class="basp">规则备注</p>
-              </el-col>
-              <el-col :span="15">
-                <el-input v-model="addEbayXp.ruleMark"></el-input>
-              </el-col>
-            </el-col>
-            <el-col :span="8" style="margin-bottom: 20px">
-              <el-col :span="9">
-                <p class="basp">连续三天销量</p>
+                <p class="basp">是否有小火苗</p>
               </el-col>
               <el-col :span="15">
                 <el-switch
@@ -550,7 +550,7 @@
           <el-button type="primary" @click="addSaveEbayXp()">保 存</el-button>
         </div>
       </el-dialog>
-      <el-dialog title="添加ebay热销规则" :visible.sync="addEbaydisLoginrx" width="75%">
+      <el-dialog title="添加ebay热销规则" :visible.sync="addEbaydisLoginrx" width="75%" :close-on-click-modal="false">
         <el-row style="margin-top: 0">
           <el-col :span="24" class="cTop">
             <el-col :span="8" style="margin-bottom: 20px">
@@ -765,7 +765,7 @@
           <el-button type="primary" @click="addSaveEbayRx()">保 存</el-button>
         </div>
       </el-dialog>
-      <el-dialog title="ebay热销编辑" :visible.sync="ebaydisLoginrx" width="75%">
+      <el-dialog title="ebay热销编辑" :visible.sync="ebaydisLoginrx" width="75%" :close-on-click-modal="false">
         <el-row style="margin-top: 0">
           <el-col :span="24" class="cTop">
             <el-col :span="8" style="margin-bottom: 20px">
@@ -1134,7 +1134,7 @@ export default {
   methods: {
     ljArt(index, row) {
       let conde = {
-        ruleId: row.id
+        ruleId: row._id
       };
       this.lodingTo = true;
       ebayRunRuleNew(conde).then(res => {

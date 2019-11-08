@@ -55,26 +55,26 @@
         </el-table-column>
       </el-table>
     </div>
-    <el-dialog title="添加" :visible.sync="addebaydisLogin" width="78%">
+    <el-dialog title="添加" :visible.sync="addebaydisLogin" width="78%" :close-on-click-modal="false">
       <el-row style="margin-top: 0">
         <el-col :span="24" class="cTop cTop1">
-          <el-col :span="24" style="margin-bottom: 15px" class="cTop1">
-            <el-col :span="2">
-              <p class="baspOne">开发员</p>
-            </el-col>
-            <el-col :span="22" style="margin-top:3px;">
-              <el-radio-group v-model="addData.username">
-                <el-radio v-for='(item,index) in member' :key="index" :label="item.username">{{item.username}}</el-radio>
-              </el-radio-group>
-            </el-col>
-          </el-col>
           <el-col :span="24" style="margin-bottom: 10px">
             <el-col :span="2">
               <p class="baspOne">部 门</p>
             </el-col>
             <el-col :span="22" style="margin-top:3px;">
               <el-radio-group v-model="addData.depart">
-                <el-radio v-for='(item,index) in department' :key="index" :label="item.department">{{item.department}}</el-radio>
+                <el-radio v-for='(item,index) in department' :key="index" :label="item.department" @change="getRuleDev(item.department)">{{item.department}}</el-radio>
+              </el-radio-group>
+            </el-col>
+          </el-col>
+          <el-col :span="24" style="margin-bottom: 15px" class="cTop1">
+            <el-col :span="2">
+              <p class="baspOne" style="margin-bottom:10px;">开发员</p>
+            </el-col>
+            <el-col :span="22" style="margin-top:3px;">
+              <el-radio-group v-model="addData.username">
+                <el-radio v-for='(item,index) in devData' :key="index" :label="item.username">{{item.username}}</el-radio>
               </el-radio-group>
             </el-col>
           </el-col>
@@ -136,26 +136,26 @@
         <el-button type="primary" @click="addsave()">保 存</el-button>
       </div>
     </el-dialog>
-    <el-dialog title="编辑" :visible.sync="datadisLogin" width="78%">
+    <el-dialog title="编辑" :visible.sync="datadisLogin" width="78%" :close-on-click-modal="false">
       <el-row style="margin-top: 0">
         <el-col :span="24" class="cTop cTop1">
-          <el-col :span="24" style="margin-bottom: 15px" class="cTop1">
-            <el-col :span="2">
-              <p class="baspOne">开发员</p>
-            </el-col>
-            <el-col :span="22" style="margin-top:3px;">
-              <el-radio-group v-model="data.username">
-                <el-radio v-for='(item,index) in member' :key="index" :label="item.username">{{item.username}}</el-radio>
-              </el-radio-group>
-            </el-col>
-          </el-col>
           <el-col :span="24" style="margin-bottom: 10px">
             <el-col :span="2">
               <p class="baspOne">部 门</p>
             </el-col>
             <el-col :span="22" style="margin-top:3px;">
               <el-radio-group v-model="data.depart">
-                <el-radio v-for='(item,index) in department' :key="index" :label="item.department">{{item.department}}</el-radio>
+                <el-radio v-for='(item,index) in department' :key="index" :label="item.department" @change="getRuleDev(item.department)">{{item.department}}</el-radio>
+              </el-radio-group>
+            </el-col>
+          </el-col>
+          <el-col :span="24" style="margin-bottom: 15px" class="cTop1">
+            <el-col :span="2">
+              <p class="baspOne">开发员</p>
+            </el-col>
+            <el-col :span="22" style="margin-top:3px;">
+              <el-radio-group v-model="data.username">
+                <el-radio v-for='(item,index) in devData' :key="index" :label="item.username">{{item.username}}</el-radio>
               </el-radio-group>
             </el-col>
           </el-col>
@@ -247,6 +247,7 @@ export default {
         "意大利",
         "澳大利亚"
       ],
+      devData:[],
       addData: {
         username: null,
         depart: null,
@@ -283,6 +284,16 @@ export default {
     },
   },
   methods: {
+    getRuleDev(val){
+      let arr=this.member
+      let stj=[]
+      for(let i=0;i<arr.length;i++){
+        if(arr[i].department==val || arr[i].parent_department==val){
+          stj.push(arr[i])
+        }
+      }
+      this.devData=stj
+    },
     handleCheckedCitiesChange(val){
       console.log(val)
     },
@@ -344,6 +355,17 @@ export default {
         });
         this.data.ruleType = "热销";
       }
+      if(this.data.depart){
+        const val=this.data.depart
+        let arr=this.member
+        let stj=[]
+        for(let i=0;i<arr.length;i++){
+          if(arr[i].department==val || arr[i].parent_department==val){
+            stj.push(arr[i])
+          }
+        }
+        this.devData=stj
+       }
       this.datadisLogin = true;
     },
     save() {
