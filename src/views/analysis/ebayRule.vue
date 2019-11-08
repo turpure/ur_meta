@@ -40,8 +40,16 @@
         <el-table-column property="marketplace" label="站点" align="center"></el-table-column>
         <el-table-column property="cate" label="一级类目" align="center"></el-table-column>
         <el-table-column property="subCate" label="二级类目" align="center"></el-table-column>
-        <el-table-column property="createdDate" label="添加时间" align="center"></el-table-column>
-        <el-table-column property="updatedDate" label="更新时间" align="center"></el-table-column>
+        <el-table-column property="createdDate" label="添加时间" align="center">
+            <template slot-scope="scope">
+              {{scope.row.createdDate | cutOutDate}}
+            </template>
+        </el-table-column>
+        <el-table-column property="updatedDate" label="更新时间" align="center">
+          <template slot-scope="scope">
+              {{scope.row.updatedDate | cutOutDate}}
+            </template>
+        </el-table-column>
       </el-table>
       <el-pagination
         background
@@ -304,6 +312,12 @@ export default {
       rulePlat: [],
       ebayRuleOptions: []
     };
+  },
+  filters: {
+    cutOutDate(value){
+      value = value.substring(0, 11);
+      return value;
+    },
   },
   methods: {
     getPlat(e) {

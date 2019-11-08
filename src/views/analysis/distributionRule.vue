@@ -43,8 +43,16 @@
         <el-table-column property="productNum" label="推送产品数量" align="center"></el-table-column>
         <el-table-column property="category" label="类目" align="center"></el-table-column>
         <el-table-column property="deliveryLocation" label="发货地点" align="center"></el-table-column>
-        <el-table-column property="createdDate" label="添加时间" align="center"></el-table-column>
-        <el-table-column property="updatedDate" label="更新时间" align="center"></el-table-column>
+        <el-table-column property="createdDate" label="添加时间" align="center">
+          <template slot-scope="scope">
+              {{scope.row.createdDate | cutOutDate}}
+            </template>
+        </el-table-column>
+        <el-table-column property="updatedDate" label="更新时间" align="center">
+          <template slot-scope="scope">
+              {{scope.row.updatedDate | cutOutDate}}
+            </template>
+        </el-table-column>
       </el-table>
     </div>
     <el-dialog title="添加" :visible.sync="addebaydisLogin" width="78%">
@@ -267,6 +275,12 @@ export default {
       addebaydisLogin: false,
       datadisLogin: false
     };
+  },
+  filters: {
+    cutOutDate(value){
+      value = value.substring(0, 11);
+      return value;
+    },
   },
   methods: {
     handleCheckedCitiesChange(val){
