@@ -42,7 +42,6 @@
             :data="ebaydata"
             class="elTableee"
             border
-            v-loading="lodingTo"
             :header-cell-style="getRowClass"
             style="width:98%;margin-left:0.7%;margin-top:15px;"
           >
@@ -103,7 +102,6 @@
             :data="ebayRxdata"
             class="elTableee"
             border
-            v-loading="lodingTo"
             :height="tableHeightstock"
             :header-cell-style="getRowClass"
             style="width:98%;margin-left:0.7%;margin-top:15px;"
@@ -1137,10 +1135,14 @@ export default {
         ruleId: row._id
       };
       this.lodingTo = true;
+      this.$message({
+          message: '正在更新',
+          type: 'warning'
+      });
       ebayRunRuleNew(conde).then(res => {
         if (res.data.code == 200) {
           this.$message({
-            message: "成功",
+            message: "更新成功",
             type: "success"
           });
         } else {
@@ -1154,10 +1156,14 @@ export default {
         ruleId: row._id
       };
       this.lodingTo = true;
+      this.$message({
+          message: '正在更新',
+          type: 'warning'
+      });
       ebayRunRuleHot(conde).then(res => {
         if (res.data.code == 200) {
           this.$message({
-            message: "成功",
+            message: "更新成功",
             type: "success"
           });
         } else {
@@ -1334,6 +1340,15 @@ export default {
       this.ebayXp.itemLocation = row.itemLocation;
       this.ebayXp.ruleName = row.ruleName;
       this.ebayXp.ruleMark = row.ruleMark;
+      for(let i=0;i<this.ebayXp.storeLocation.length;i++){
+        this.ebayXp.storeLocation[i]=this.ebayXp.storeLocation[i].replace(/,/g, "");
+      }
+      for(let i=0;i<this.ebayXp.listedTime.length;i++){
+        this.ebayXp.listedTime[i]=this.ebayXp.listedTime[i].replace(/,/g, "");
+      }
+      for(let i=0;i<this.ebayXp.marketplace.length;i++){
+        this.ebayXp.marketplace[i]=this.ebayXp.marketplace[i].replace(/,/g, "");
+      }
       // if (this.ebayXp.listedTime) {
       //   for (let i = 0; i < this.ebayXp.listedTime.length; i++) {
       //     if (this.ebayXp.listedTime[i] == "今天") {
@@ -1383,7 +1398,12 @@ export default {
       } else {
         this.ebayRx.salesThreeDayFlag = true;
       }
-
+      for(let i=0;i<this.ebayRx.storeLocation.length;i++){
+        this.ebayRx.storeLocation[i]=this.ebayRx.storeLocation[i].replace(/,/g, "");
+      }
+      for(let i=0;i<this.ebayXp.marketplace.length;i++){
+        this.ebayRx.marketplace[i]=this.ebayRx.marketplace[i].replace(/,/g, "");
+      }
       this.ebaydisLoginrx = true;
     },
     saveEbayXp() {
@@ -1580,12 +1600,24 @@ export default {
         this.ebaydata = res.data.data;
         for (let i = 0; i < this.ebaydata.length; i++) {
           let date = this.ebaydata[i].listedTime;
+          let storeLocation = this.ebaydata[i].storeLocation;
+          let marketplace = this.ebaydata[i].marketplace;
+          for(let i=0;i<storeLocation.length;i++){
+            if(i!=storeLocation[i].length-1){
+              storeLocation[i]=storeLocation[i]+','
+            }
+          }
+          for(let i=0;i<marketplace.length;i++){
+            if(i!=marketplace[i].length-1){
+              marketplace[i]=marketplace[i]+','
+            }
+          }
           for (let k = 0; k < date.length; k++) {
             if (date[k] == "0") {
-              date[k] = "今天";
+              date[k] = "今天,";
             }
             if (date[k] == "1") {
-              date[k] = "昨天";
+              date[k] = "昨天,";
             }
             if (date[k] == "2") {
               date[k] = "前天";
@@ -1596,6 +1628,32 @@ export default {
       });
       APRengineRuleHot().then(res => {
         this.ebayRxdata = res.data.data;
+        for (let i = 0; i < this.ebaydata.length; i++) {
+          let date = this.ebaydata[i].listedTime;
+          let storeLocation = this.ebaydata[i].storeLocation;
+          let marketplace = this.ebaydata[i].marketplace;
+          for(let i=0;i<storeLocation.length;i++){
+            if(i!=storeLocation[i].length-1){
+              storeLocation[i]=storeLocation[i]+','
+            }
+          }
+          for(let i=0;i<marketplace.length;i++){
+            if(i!=marketplace[i].length-1){
+              marketplace[i]=marketplace[i]+','
+            }
+          }
+          for (let k = 0; k < date.length; k++) {
+            if (date[k] == "0") {
+              date[k] = "今天,";
+            }
+            if (date[k] == "1") {
+              date[k] = "昨天,";
+            }
+            if (date[k] == "2") {
+              date[k] = "前天";
+            }
+          }
+        }
         this.listLoading = false;
       });
     }

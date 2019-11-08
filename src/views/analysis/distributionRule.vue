@@ -68,9 +68,9 @@
               </el-radio-group>
             </el-col>
           </el-col>
-          <el-col :span="24" style="margin-bottom: 15px" class="cTop1">
+          <el-col :span="24" style="margin-bottom: 12px" class="cTop1">
             <el-col :span="2">
-              <p class="baspOne" style="margin-bottom:10px;">开发员</p>
+              <p class="baspOne" style="padding-bottom:12px;">开发员</p>
             </el-col>
             <el-col :span="22" style="margin-top:3px;">
               <el-radio-group v-model="addData.username">
@@ -330,6 +330,7 @@ export default {
       this.addData.productNum = null;
       this.addData.category = null;
       this.ruleName = [];
+      this.devData=[];
       this.addData.deliveryLocation = null;
       this.addebaydisLogin = true;
     },
