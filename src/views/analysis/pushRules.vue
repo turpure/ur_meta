@@ -236,7 +236,7 @@
         </div>
       </div>
       <div v-show="show.joom">2</div>
-      <el-dialog title="ebay新品编辑" :visible.sync="ebaydisLoginxp" width="75%" :close-on-click-modal="false">
+      <el-dialog title="ebay新品规则" :visible.sync="ebaydisLoginxp" width="75%" :close-on-click-modal="false">
         <el-row style="margin-top: 0">
           <el-col :span="24" class="cTop">
             <el-col :span="8" style="margin-bottom: 20px">
@@ -314,7 +314,7 @@
                   <el-button plain type="info" @click="selectalld1">全选</el-button>
                   <el-button plain type="info" @click="noselectd1">取消</el-button>
                   <el-option
-                    v-for="(item, key) in ebayOptions"
+                    v-for="(item, key) in ebayOptionsXp"
                     :key="item.key"
                     :label="item"
                     :value="item"
@@ -470,7 +470,7 @@
                   <el-button plain type="info" @click="addselectalld1">全选</el-button>
                   <el-button plain type="info" @click="addnoselectd1">取消</el-button>
                   <el-option
-                    v-for="(item, key) in ebayOptions"
+                    v-for="(item, key) in ebayOptionsXp"
                     :key="item.key"
                     :label="item"
                     :value="item"
@@ -974,7 +974,7 @@
           </el-col>
         </el-row>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="addEbaydisLoginrx = false">取 消</el-button>
+          <el-button @click="ebaydisLoginrx = false">取 消</el-button>
           <el-button type="primary" @click="saveEbayRx()">保 存</el-button>
         </div>
       </el-dialog>
@@ -1110,6 +1110,12 @@ export default {
         "EBAY_DE",
         "EBAY_IT",
         "EBAY_AU"
+      ],
+      ebayOptionsXp: [
+        "美国",
+        "英国",
+        "德国",
+        "澳大利亚",
       ],
       ebayOptionsAddress: [
         "中国",
@@ -1432,6 +1438,11 @@ export default {
       } else {
         this.ebayXp.salesThreeDayFlag = 0;
       }
+      if (this.ebayXp.popularStatus) {
+        this.ebayXp.popularStatus = 1;
+      } else {
+        this.ebayXp.popularStatus = 0;
+      }
       ebaySaveRule(this.ebayXp).then(res => {
         if (res.data.data) {
           this.$message({
@@ -1466,6 +1477,11 @@ export default {
         } else {
           this.addEbayXp.salesThreeDayFlag = 0;
         }
+        if (this.addEbayXp.popularStatus) {
+        this.addEbayXp.popularStatus = 1;
+      } else {
+        this.addEbayXp.popularStatus = 0;
+      }
         ebaySaveRule(this.addEbayXp).then(res => {
           if (res.data.data) {
             this.$message({
