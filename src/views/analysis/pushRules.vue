@@ -81,8 +81,8 @@
             <el-table-column property="priceEnd" label="价格小于" align="center" width="80"></el-table-column>
             <el-table-column property="marketplace" label="刊登站点" align="center" width="180"></el-table-column>
             <el-table-column property="storeLocation" label="注册地址" align="center"></el-table-column>
-            <el-table-column property="salesThreeDayFlag" label="是否有小火苗" align="center">
-              <template slot-scope="scope">{{scope.row.salesThreeDayFlag==0?'否':'是'}}</template>
+            <el-table-column property="popularStatus" label="是否有小火苗" align="center">
+              <template slot-scope="scope">{{scope.row.popularStatus==0?'否':'是'}}</template>
             </el-table-column>
             <el-table-column property="listedTime" label="上架时间" align="center"></el-table-column>
             <el-table-column property="isUsed" label="是否停用" align="center">
@@ -378,7 +378,7 @@
               </el-col>
               <el-col :span="15">
                 <el-switch
-                  v-model="ebayXp.salesThreeDayFlag"
+                  v-model="ebayXp.popularStatus"
                   active-color="#13ce66"
                   inactive-color="#ff4949"
                   style="margin-top:10px;"
@@ -534,7 +534,7 @@
               </el-col>
               <el-col :span="15">
                 <el-switch
-                  v-model="addEbayXp.salesThreeDayFlag"
+                  v-model="addEbayXp.popularStatus"
                   active-color="#13ce66"
                   inactive-color="#ff4949"
                   style="margin-top:10px;"
@@ -1016,6 +1016,7 @@ export default {
         listedTime: [],
         itemLocation: "",
         ruleMark: "",
+        popularStatus:false,
         ruleName: ""
       },
       addEbayXp: {
@@ -1029,8 +1030,9 @@ export default {
         storeLocation: [],
         salesThreeDayFlag: false,
         listedTime: [],
-        itemLocation: "",
+        itemLocation: false,
         ruleMark: "",
+        popularStatus:"",
         ruleName: ""
       },
       addEbayRx: {
@@ -1283,6 +1285,7 @@ export default {
       this.addEbayXp.marketplace = [];
       this.addEbayXp.storeLocation = [];
       this.addEbayXp.salesThreeDayFlag = false;
+      this.addEbayXp.popularStatus = false;
       this.addEbayXp.listedTime = [];
       this.addEbayXp.itemLocation = "";
       this.addEbayXp.ruleMark = "";
@@ -1336,6 +1339,7 @@ export default {
       this.ebayXp.marketplace = row.marketplace;
       this.ebayXp.storeLocation = row.storeLocation;
       this.ebayXp.salesThreeDayFlag = row.salesThreeDayFlag;
+      this.ebayXp.popularStatus = row.popularStatus;
       this.ebayXp.listedTime = row.listedTime;
       this.ebayXp.itemLocation = row.itemLocation;
       this.ebayXp.ruleName = row.ruleName;
@@ -1365,6 +1369,9 @@ export default {
       this.ebayXp.salesThreeDayFlag == 0
         ? (this.ebayXp.salesThreeDayFlag = false)
         : (this.ebayXp.salesThreeDayFlag = true);
+        this.ebayXp.popularStatus == 0
+        ? (this.ebayXp.popularStatus = false)
+        : (this.ebayXp.popularStatus = true);
       this.ebaydisLoginxp = true;
     },
     editArtRx(index, row) {
@@ -1916,12 +1923,6 @@ export default {
 }
 .basp {
   text-align: center;
-}
-@media (max-width: 1500px) {
-  .basp {
-    text-align: center;
-    font-size: 10px;
-  }
 }
 .colspan {
   display: block;
