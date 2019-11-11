@@ -79,7 +79,7 @@
             <el-table-column property="visitEnd" label="浏览数小于" align="center"></el-table-column>
             <el-table-column property="priceStart" label="价格大于" align="center" width="80"></el-table-column>
             <el-table-column property="priceEnd" label="价格小于" align="center" width="80"></el-table-column>
-            <el-table-column property="marketplace" label="刊登站点" align="center" width="180"></el-table-column>
+            <el-table-column property="publishedSite" label="刊登站点" align="center" width="180"></el-table-column>
             <el-table-column property="storeLocation" label="注册地址" align="center"></el-table-column>
             <el-table-column property="popularStatus" label="是否有小火苗" align="center">
               <template slot-scope="scope">{{scope.row.popularStatus==0?'否':'是'}}</template>
@@ -309,7 +309,7 @@
                   collapse-tags
                   allow-create
                   default-first-option
-                  v-model="ebayXp.marketplace"
+                  v-model="ebayXp.publishedSite"
                 >
                   <el-button plain type="info" @click="selectalld1">全选</el-button>
                   <el-button plain type="info" @click="noselectd1">取消</el-button>
@@ -465,7 +465,7 @@
                   collapse-tags
                   allow-create
                   default-first-option
-                  v-model="addEbayXp.marketplace"
+                  v-model="addEbayXp.publishedSite"
                 >
                   <el-button plain type="info" @click="addselectalld1">全选</el-button>
                   <el-button plain type="info" @click="addnoselectd1">取消</el-button>
@@ -1010,7 +1010,7 @@ export default {
         visitEnd: "",
         priceEnd: "",
         priceStart: "",
-        marketplace: [],
+        publishedSite: [],
         storeLocation: [],
         salesThreeDayFlag: "",
         listedTime: [],
@@ -1026,7 +1026,7 @@ export default {
         visitEnd: "",
         priceEnd: "",
         priceStart: "",
-        marketplace: [],
+        publishedSite: [],
         storeLocation: [],
         salesThreeDayFlag: false,
         listedTime: [],
@@ -1182,13 +1182,13 @@ export default {
     },
     selectalld1() {
       var ard1 = [];
-      for (const item in this.ebayOptions) {
-        ard1.push(this.ebayOptions[item]);
+      for (const item in this.ebayOptionsXp) {
+        ard1.push(this.ebayOptionsXp[item]);
       }
-      this.ebayXp.marketplace = ard1;
+      this.ebayXp.publishedSite = ard1;
     },
     noselectd1() {
-      this.ebayXp.marketplace = [];
+      this.ebayXp.publishedSite = [];
     },
     selectalld1Rx() {
       var ard1 = [];
@@ -1202,13 +1202,13 @@ export default {
     },
     addselectalld1() {
       var ard1 = [];
-      for (const item in this.ebayOptions) {
-        ard1.push(this.ebayOptions[item]);
+      for (const item in this.ebayOptionsXp) {
+        ard1.push(this.ebayOptionsXp[item]);
       }
-      this.addEbayXp.marketplace = ard1;
+      this.addEbayXp.publishedSite = ard1;
     },
     addnoselectd1() {
-      this.addEbayXp.marketplace = [];
+      this.addEbayXp.publishedSite = [];
     },
     addselectalld1Rx() {
       var ard1 = [];
@@ -1288,7 +1288,7 @@ export default {
       this.addEbayXp.visitEnd = "";
       this.addEbayXp.priceEnd = "";
       this.addEbayXp.priceStart = "";
-      this.addEbayXp.marketplace = [];
+      this.addEbayXp.publishedSite = [];
       this.addEbayXp.storeLocation = [];
       this.addEbayXp.salesThreeDayFlag = false;
       this.addEbayXp.popularStatus = false;
@@ -1343,6 +1343,7 @@ export default {
       this.ebayXp.priceEnd = row.priceEnd;
       this.ebayXp.priceStart = row.priceStart;
       this.ebayXp.marketplace = row.marketplace;
+      this.ebayXp.publishedSite = row.publishedSite;
       this.ebayXp.storeLocation = row.storeLocation;
       this.ebayXp.salesThreeDayFlag = row.salesThreeDayFlag;
       this.ebayXp.popularStatus = row.popularStatus;
@@ -1356,8 +1357,8 @@ export default {
       for(let i=0;i<this.ebayXp.listedTime.length;i++){
         this.ebayXp.listedTime[i]=this.ebayXp.listedTime[i].replace(/,/g, "");
       }
-      for(let i=0;i<this.ebayXp.marketplace.length;i++){
-        this.ebayXp.marketplace[i]=this.ebayXp.marketplace[i].replace(/,/g, "");
+      for(let i=0;i<this.ebayXp.publishedSite.length;i++){
+        this.ebayXp.publishedSite[i]=this.ebayXp.publishedSite[i].replace(/,/g, "");
       }
       // if (this.ebayXp.listedTime) {
       //   for (let i = 0; i < this.ebayXp.listedTime.length; i++) {
@@ -1481,6 +1482,9 @@ export default {
         this.addEbayXp.popularStatus = 1;
       } else {
         this.addEbayXp.popularStatus = 0;
+      }
+      if(this.addEbayXp.publishedSite.length==0){
+        this.addEbayXp.publishedSite=this.ebayOptionsXp
       }
         ebaySaveRule(this.addEbayXp).then(res => {
           if (res.data.data) {
@@ -1624,15 +1628,15 @@ export default {
         for (let i = 0; i < this.ebaydata.length; i++) {
           let date = this.ebaydata[i].listedTime;
           let storeLocation = this.ebaydata[i].storeLocation;
-          let marketplace = this.ebaydata[i].marketplace;
+          let publishedSite = this.ebaydata[i].publishedSite;
           for(let i=0;i<storeLocation.length;i++){
-            if(i!=storeLocation[i].length-1){
+            if(i!=storeLocation.length-1){
               storeLocation[i]=storeLocation[i]+','
             }
           }
-          for(let i=0;i<marketplace.length;i++){
-            if(i!=marketplace[i].length-1){
-              marketplace[i]=marketplace[i]+','
+          for(let i=0;i<publishedSite.length;i++){
+            if(i!=publishedSite.length-1){
+              publishedSite[i]=publishedSite[i]+','
             }
           }
           for (let k = 0; k < date.length; k++) {
@@ -1656,7 +1660,7 @@ export default {
           let storeLocation = this.ebaydata[i].storeLocation;
           let marketplace = this.ebaydata[i].marketplace;
           for(let i=0;i<storeLocation.length;i++){
-            if(i!=storeLocation[i].length-1){
+            if(i!=storeLocation.length-1){
               storeLocation[i]=storeLocation[i]+','
             }
           }
