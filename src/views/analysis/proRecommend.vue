@@ -125,7 +125,7 @@
                   >连续三天有销量:{{scope.row.salesThreeDayFlag==0?'否':'是'}}</span>
                   <span
                     style="margin:0;margin-top:5px;font-size:13px;margin-left:15px;"
-                  >更新时间:{{scope.row.lastModiTime | cutOutMonye}}</span>
+                  >推荐时间:{{scope.row.recommendDate | cutOutMonye}}</span>
                 </div>
                 <div style="margin-top:8px;" class="ebayGoa">
                   <span
@@ -138,6 +138,18 @@
                   >货源链接</span>
                 </div>
               </template>
+            </el-table-column>
+            <el-table-column
+              label="推荐状态"
+              align="center"
+              width="125"
+            >
+            <template slot-scope="scope">
+              <div v-for="(item, index) in scope.row.recommendTopersons" :key="index" class="supera" style="margin-bottom:15px;">
+                <a :class="item.status=='refuse'?'red':item.status=='accept'?'green':'gray'">{{item.name}}</a>
+                <a style="margin-top:5px;;color:red" v-show="item.reason"><span>过滤原因:</span><br>{{item.reason}}</a>
+              </div>
+            </template>
             </el-table-column>
             <el-table-column
               property="price"
@@ -257,7 +269,7 @@
                   >连续三天有销量:{{scope.row.salesThreeDayFlag==0?'否':'是'}}</span>
                   <span
                     style="margin:0;margin-top:5px;font-size:13px;margin-left:15px;"
-                  >更新时间:{{scope.row.lastModiTime | cutOutMonye}}</span>
+                  >推荐时间:{{scope.row.recommendDate | cutOutMonye}}</span>
                 </div>
                 <div style="margin-top:8px;" class="ebayGoa">
                   <span
@@ -270,6 +282,18 @@
                   >货源链接</span>
                 </div>
               </template>
+            </el-table-column>
+            <el-table-column
+              label="推荐状态"
+              align="center"
+              width="125"
+            >
+            <template slot-scope="scope">
+              <div v-for="(item, index) in scope.row.recommendTopersons" :key="index" class="supera" style="margin-bottom:15px;">
+                <a :class="item.status=='refuse'?'red':item.status=='accept'?'green':'gray'">{{item.name}}</a>
+                <a style="margin-top:5px;;color:red" v-show="item.reason"><span>过滤原因:</span><br>{{item.reason}}</a>
+              </div>
+            </template>
             </el-table-column>
             <el-table-column
               property="price"
@@ -1447,5 +1471,27 @@ export default {
   font-size: 10px;
   left: 247px;
   top: 3px;
+}
+.supera a{
+  display: block;
+  width: 85%;
+  line-height: 28px;
+  margin: auto;
+}
+.gray{
+  border: #ccc solid 1px;
+  border-radius: 5px;
+}
+.red{
+  color: #f56c6c;
+  border: 1px solid hsla(0,87%,69%,.2);
+  background:hsla(0,87%,69%,.1);
+  border-radius: 5px;
+}
+.green{
+  color: #0e9a00;
+  border: 1px solid rgba(3,82,38,.2);
+  background:rgba(33,170,95,.1);
+  border-radius: 5px;
 }
 </style>
