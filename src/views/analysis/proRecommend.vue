@@ -145,7 +145,7 @@
               width="125"
             >
             <template slot-scope="scope">
-              <div v-for="(item, index) in scope.row.recommendTopersons" :key="index" class="supera" style="margin-bottom:15px;">
+              <div v-for="(item, index) in scope.row.recommendToPersons" :key="index" class="supera" style="margin-bottom:15px;">
                 <a :class="item.status=='refuse'?'red':item.status=='accept'?'green':'gray'">{{item.name}}</a>
                 <a style="margin-top:5px;;color:red" v-show="item.reason"><span>过滤原因:</span><br>{{item.reason}}</a>
               </div>
@@ -289,7 +289,7 @@
               width="125"
             >
             <template slot-scope="scope">
-              <div v-for="(item, index) in scope.row.recommendTopersons" :key="index" class="supera" style="margin-bottom:15px;">
+              <div v-for="(item, index) in scope.row.recommendToPersons" :key="index" class="supera" style="margin-bottom:15px;">
                 <a :class="item.status=='refuse'?'red':item.status=='accept'?'green':'gray'">{{item.name}}</a>
                 <a style="margin-top:5px;;color:red" v-show="item.reason"><span>过滤原因:</span><br>{{item.reason}}</a>
               </div>
