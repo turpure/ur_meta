@@ -1659,3 +1659,11 @@ export function getAllotRuleInfo(param) {
     method: 'get'
   })
 }
+
+export function getCateRuleInfo(param) {
+  return request({
+    url: '/products-engine/cate-rule-info?id=' + param.id,
+    method: 'get'
+  })
+}
+
