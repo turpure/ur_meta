@@ -125,7 +125,7 @@
                   >连续三天有销量:{{scope.row.salesThreeDayFlag==0?'否':'是'}}</span>
                   <span
                     style="margin:0;margin-top:5px;font-size:13px;margin-left:15px;"
-                  >更新时间:{{scope.row.lastModiTime | cutOutMonye}}</span>
+                  >推荐时间:{{scope.row.recommendDate | cutOutMonye}}</span>
                 </div>
                 <div style="margin-top:8px;" class="ebayGoa">
                   <span
@@ -257,7 +257,7 @@
                   >连续三天有销量:{{scope.row.salesThreeDayFlag==0?'否':'是'}}</span>
                   <span
                     style="margin:0;margin-top:5px;font-size:13px;margin-left:15px;"
-                  >更新时间:{{scope.row.lastModiTime | cutOutMonye}}</span>
+                  >推荐时间:{{scope.row.recommendDate | cutOutMonye}}</span>
                 </div>
                 <div style="margin-top:8px;" class="ebayGoa">
                   <span
