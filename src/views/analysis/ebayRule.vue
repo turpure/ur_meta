@@ -703,7 +703,7 @@ export default {
   margin-top: 5px;
 }
 .treeDiv {
-  height: 100px;
+  height: 90px;
   overflow: hidden;
   overflow-y: auto;
 }
