@@ -90,10 +90,10 @@
                   </div>
                   <img :src="scope.row.mainImage" style="width: 60px;height: 60px" />
                 </el-tooltip>
-                <a class="ebayBlocka ebayBlocka1" @click="submissionEbayXp(scope.row._id.oid)">
+                <a class="ebayBlocka ebayBlocka1" @click="submissionEbayXp(scope.row._id.oid)" v-show="scope.row.flag">
                   <i class="el-icon-star-off" style="margin-right:3px;"></i>认领
                 </a>
-                <a class="ebayBlocka ebayBlocka2" @click="refuseEbayXp(scope.row._id.oid)">
+                <a class="ebayBlocka ebayBlocka2" @click="refuseEbayXp(scope.row._id.oid)" v-show="scope.row.flag">
                   <i class="el-icon-delete" style="margin-right:3px;"></i>过滤
                 </a>
                 <!-- <img :src="scope.row.picUrl" style="width: 70px;height: 60px"> -->
@@ -138,6 +138,20 @@
                   >货源链接</span>
                 </div>
               </template>
+            </el-table-column>
+            <el-table-column
+              property="receiver"
+              label="推荐人列表"
+              align="center"
+              width="100"
+            >
+            <template slot-scope="scope">
+                <div
+                  v-for="(itemm, index) in scope.row.receiver"
+                  :key="index"
+                >{{itemm}}
+              </div>
+            </template>
             </el-table-column>
             <el-table-column
               property="price"
@@ -222,10 +236,10 @@
                   </div>
                   <img :src="scope.row.mainImage" style="width: 60px;height: 60px" />
                 </el-tooltip>
-                <a class="ebayBlocka ebayBlocka1" @click="submissionEbayRx(scope.row._id.oid)">
+                <a class="ebayBlocka ebayBlocka1" @click="submissionEbayRx(scope.row._id.oid)" v-show="scope.row.flag">
                   <i class="el-icon-star-off" style="margin-right:3px;"></i>认领
                 </a>
-                <a class="ebayBlocka ebayBlocka2" @click="refuseEbayRx(scope.row._id.oid)">
+                <a class="ebayBlocka ebayBlocka2" @click="refuseEbayRx(scope.row._id.oid)" v-show="scope.row.flag">
                   <i class="el-icon-delete" style="margin-right:3px;"></i>过滤
                 </a>
                 <!-- <img :src="scope.row.picUrl" style="width: 70px;height: 60px"> -->
@@ -270,6 +284,21 @@
                   >货源链接</span>
                 </div>
               </template>
+            </el-table-column>
+            <el-table-column
+              property="receiver"
+              label="推荐列表"
+              align="center"
+              width="90"
+              sortable="custom"
+            >
+            <template slot-scope="scope">
+                <div
+                  v-for="(itemm, index) in scope.row.receiver"
+                  :key="index"
+                >{{itemm}}
+              </div>
+            </template>
             </el-table-column>
             <el-table-column
               property="price"
@@ -615,7 +644,8 @@ export default {
       ebayXpText1: null,
       ebayRxId: null,
       ebayRxText: null,
-      ebayRxText1: null
+      ebayRxText1: null,
+      sysUserName:null
     };
   },
   filters: {
@@ -974,6 +1004,7 @@ export default {
           this.proTotalXp=res.data.data._meta.totalCount;
         }
         for (let i = 0; i < this.ebayDataXp.length; i++) {
+          this.$set(this.ebayDataXp[i],'flag',false)
           setTimeout(() => {
             var obj = this.ebayDataXp[i].soldChart.soldData;
             for (var k = 0; k < obj.length; k++) {
@@ -988,6 +1019,12 @@ export default {
             );
             or2.setOption(this.options);
           }, 20);
+          var str=this.ebayDataXp[i].receiver
+          for(var k=0;k<str.length;k++){
+            if(this.sysUserName==str[k]){
+              this.ebayDataXp[i].flag=true
+            }
+          }
         }
         this.lodingEbayXp=false
       });
@@ -1003,6 +1040,7 @@ export default {
           this.proTotalRx=res.data.data._meta.totalCount;
         }
         for (let i = 0; i < this.ebayDataRx.length; i++) {
+          this.$set(this.ebayDataRx[i],'flag',false)
           setTimeout(() => {
             var obj = this.ebayDataRx[i].soldChart.soldData;
             for (var k = 0; k < obj.length; k++) {
@@ -1018,6 +1056,12 @@ export default {
               document.getElementById("echartsRx" + i)
             );
             or2.setOption(this.options1);
+            var str=this.ebayDataRx[i].receiver
+            for(var k=0;k<str.length;k++){
+              if(this.sysUserName==str[k]){
+                this.ebayDataRx[i].flag=true
+              }
+            }
           }, 20);
         }
         this.lodingEbayRx=false
@@ -1127,6 +1171,7 @@ export default {
   mounted() {
     this.ebayXp()
     this.ebayRx()
+    this.sysUserName = sessionStorage.getItem('user')
   }
 };
 </script>
