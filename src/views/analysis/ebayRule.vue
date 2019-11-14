@@ -353,6 +353,12 @@ export default {
       ) {
         this.itemDetail[a].platValue[b].marketplaceValue[c].flag = true;
       }
+      if (
+        this.itemDetail[a].platValue[b].marketplaceValue[c].cateValue.subCateChecked.length ==
+        0
+      ) {
+        this.itemDetail[a].platValue[b].marketplaceValue[c].flag = false;
+      }
     },
     ruleCateActive(a, b, c) {
       this.itemDetail[a].platValue[b].marketplaceValue[c].flag = !this
@@ -361,6 +367,10 @@ export default {
         var data = this.itemDetail[a].platValue[b].marketplaceValue[c]
           .cateValue;
         data.subCateChecked=[]
+      }else{
+        var data = this.itemDetail[a].platValue[b].marketplaceValue[c]
+          .cateValue;
+        data.subCateChecked=data.subCate
       }
       if (this.itemDetail[a].platValue[b].marketplaceValue[c].flag == true) {
         this.itemDetail[a].platValue[b].flag = true;
