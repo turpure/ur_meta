@@ -361,21 +361,45 @@ export default {
     addruleNewOne() {
       if (!this.addruleNew) {
         this.ruleNameNew = [];
+      }else{
+        var arr=[]
+        for(var i=0;i<this.ruleNameXp.length;i++){
+          arr.push(this.ruleNameXp[i].ruleName)
+        }
+        this.ruleNameNew = arr;
       }
     },
     addruleHotOne() {
       if (!this.addruleHot) {
         this.ruleNameHot = [];
+      }else{
+        var arr=[]
+        for(var i=0;i<this.ruleNameRx.length;i++){
+          arr.push(this.ruleNameRx[i].ruleName)
+        }
+        this.ruleNameHot = arr;
       }
     },
     ruleNewOne() {
       if (!this.ruleNew) {
         this.addruleNameNew = [];
+      }else{
+        var arr=[]
+        for(var i=0;i<this.ruleNameXp.length;i++){
+          arr.push(this.ruleNameXp[i].ruleName)
+        }
+        this.addruleNameNew = arr;
       }
     },
     ruleHotOne() {
       if (!this.ruleHot) {
         this.addruleNameHot = [];
+      }else{
+        var arr=[]
+        for(var i=0;i<this.ruleNameRx.length;i++){
+          arr.push(this.ruleNameRx[i].ruleName)
+        }
+        this.addruleNameHot = arr;
       }
     },
     ruleNewGet() {
@@ -496,7 +520,6 @@ export default {
               for(var k=0;k<detail[i].ruleValue.length;k++){
                 this.ruleNameNew.push(detail[i].ruleValue[k].ruleName)
               }
-              console.log(this.addruleNameNew)
             }
           }
           if(detail[i].ruleType=='hot' &&  detail[i].flag){
@@ -649,7 +672,6 @@ export default {
           let deliveryLocation = this.tableData[i].deliveryLocation;
           for(let i=0;i<category.length;i++){
             if(i!=category.length-1){
-              console.log(i,category.length)
               category[i]=category[i]+','
             }
           }
