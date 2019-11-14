@@ -1063,22 +1063,26 @@ export default {
       return row.changeTime ? row.changeTime.substring(0, 16) : "";
     },
     submissionEbayXp(id) {
-      let condition = {
-        id: id
-      };
-      ebayXpAccept(condition).then(res => {
-        if (res.data.code == 200) {
-          this.$message({
-            message: "开发成功",
-            type: "success"
+      this.$confirm("确定认领改产品？", "提示", { type: "success" }).then(
+        () => {
+          let condition = {
+            id: id
+          };
+          ebayXpAccept(condition).then(res => {
+            if (res.data.code == 200) {
+              this.$message({
+                message: "开发成功",
+                type: "success"
+              });
+              this.proTotalXp=this.proTotalXp-1
+              this.ebayXp();
+            } else {
+              this.$message.error(res.data.message);
+              this.ebayXp();
+            }
           });
-          this.proTotalXp=this.proTotalXp-1
-          this.ebayXp();
-        } else {
-          this.$message.error(res.data.message);
-          this.ebayXp();
         }
-      });
+      );
     },
     submissionEbayRx(id) {
       let condition = {
