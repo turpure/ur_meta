@@ -175,7 +175,11 @@
               <el-col :span="23">
                 <div v-for="(item,index) in itemDetail" :key="index">
                   <el-col :span="24">
-                    <span class="curSpan" style="font-size:15px;color:#3c8dbc" @click="rulePlatActive(index)">
+                    <span
+                      class="curSpan"
+                      style="font-size:14px;color:#3c8dbc"
+                      @click="rulePlatActive(index)"
+                    >
                       <span class="oneClass" :class="item.flag?'ruleBac':''"></span>
                       {{item.plat}}
                     </span>
@@ -186,7 +190,11 @@
                     v-show="item.flag"
                   >
                     <el-col :span="24" style="margin-top:20px;">
-                      <span class="curSpan" @click="ruleMakActive(index,indexTwo)" style="color:#3c8dbc">
+                      <span
+                        class="curSpan"
+                        @click="ruleMakActive(index,indexTwo)"
+                        style="color:#3c8dbc"
+                      >
                         <span class="oneClass" :class="itemTwo.flag?'ruleBac':''"></span>
                         {{itemTwo.marketplace}}
                       </span>
@@ -210,10 +218,26 @@
                         </el-col>
                         <el-col
                           :span="24"
-                          style="margin-top:2px;padding-left:20px;width:98%;"
+                          style="margin-top:5px;width:100%;"
                           class="treeDiv"
                         >
-                          <el-col
+                          <el-select
+                            v-model="itemTree.cateValue.subCateChecked"
+                            multiple
+                            collapse-tags
+                            style="width:90%;"
+                            placeholder="请选择"
+                            size="small"
+                            @change="ruleSubcateActive(index,indexTwo,indexTree)"
+                          >
+                            <el-option
+                              v-for="item in itemTree.cateValue.subCate"
+                              :key="item"
+                              :label="item"
+                              :value="item"
+                            ></el-option>
+                          </el-select>
+                          <!-- <el-col
                             :span="24"
                             v-for="(itemFour,indexFour) in itemTree.cateValue"
                             :key="indexFour"
@@ -225,7 +249,7 @@
                               <span class="oneClass" :class="itemFour.flag?'ruleBac':''"></span>
                               {{itemFour.subCate}}
                             </span>
-                          </el-col>
+                          </el-col>-->
                         </el-col>
                       </el-col>
                     </el-col>
@@ -323,13 +347,12 @@ export default {
   },
   methods: {
     ruleSubcateActive(a, b, c, d) {
-      this.itemDetail[a].platValue[b].marketplaceValue[c].cateValue[
-        d
-      ].flag = !this.itemDetail[a].platValue[b].marketplaceValue[c].cateValue[d]
-        .flag;
-      if (this.itemDetail[a].platValue[b].marketplaceValue[c].cateValue[d].flag == true) {
+      if (
+        this.itemDetail[a].platValue[b].marketplaceValue[c].cateValue.subCateChecked.length !=
+        0
+      ) {
         this.itemDetail[a].platValue[b].marketplaceValue[c].flag = true;
-      }  
+      }
     },
     ruleCateActive(a, b, c) {
       this.itemDetail[a].platValue[b].marketplaceValue[c].flag = !this
@@ -337,9 +360,7 @@ export default {
       if (this.itemDetail[a].platValue[b].marketplaceValue[c].flag == false) {
         var data = this.itemDetail[a].platValue[b].marketplaceValue[c]
           .cateValue;
-        for (var i = 0; i < data.length; i++) {
-          data[i].flag = false;
-        }
+        data.subCateChecked=[]
       }
       if (this.itemDetail[a].platValue[b].marketplaceValue[c].flag == true) {
         this.itemDetail[a].platValue[b].flag = true;
@@ -353,9 +374,7 @@ export default {
         for (var i = 0; i < data.length; i++) {
           data[i].flag = false;
           var Twodata = data[i].cateValue;
-          for (var k = 0; k < Twodata.length; k++) {
-            Twodata[k].flag = false;
-          }
+          Twodata.subCateChecked=[]
         }
       }
     },
@@ -514,14 +533,14 @@ export default {
                 if (dataTree[j].flag == false) {
                   dataTree.splice(j, 1);
                   j--;
-                } else {
-                  var dataFour = dataTree[j].cateValue;
-                  for (var l = 0; l < dataFour.length; l++) {
-                    if (dataFour[l].flag == false) {
-                      dataFour.splice(l, 1);
-                      l--;
-                    }
-                  }
+                // } else {
+                //   var dataFour = dataTree[j].cateValue;
+                //   for (var l = 0; l < dataFour.length; l++) {
+                //     if (dataFour[l].flag == false) {
+                //       dataFour.splice(l, 1);
+                //       l--;
+                //     }
+                //   }
                 }
               }
             }
@@ -694,7 +713,7 @@ export default {
   display: block;
   margin-top: 10px;
   margin-bottom: 5px;
-  font-size: 15px;
+  font-size: 14px;
 }
 .curSpanFour {
   display: block;
@@ -702,11 +721,11 @@ export default {
   font-size: 12px;
   margin-top: 5px;
 }
-.treeDiv {
+/* .treeDiv {
   height: 90px;
   overflow: hidden;
   overflow-y: auto;
-}
+} */
 .ruleBac {
   width: 4px;
   height: 4px;
