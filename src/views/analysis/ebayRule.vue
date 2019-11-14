@@ -189,55 +189,50 @@
                     :key="indexTwo"
                     v-show="item.flag"
                   >
-                    <el-col :span="24" style="margin-top:20px;">
-                      <span
-                        class="curSpan"
-                        @click="ruleMakActive(index,indexTwo)"
-                        style="color:#3c8dbc"
-                      >
-                        <span class="oneClass" :class="itemTwo.flag?'ruleBac':''"></span>
-                        {{itemTwo.marketplace}}
-                      </span>
-                    </el-col>
-                    <el-col :span="24" style="margin-top:5px;padding-left:15px;">
-                      <el-col
-                        :span="6"
-                        v-show="itemTwo.flag"
-                        v-for="(itemTree,indexTree) in itemTwo.marketplaceValue"
-                        :key="indexTree"
-                      >
-                        <el-col :span="24">
+                    <el-col :span="8">
+                      <el-col :span="24" style="margin-top:20px;">
+                        <span class="curSpan" @click="ruleMakActive(index,indexTwo)" style="color:#3c8dbc">
                           <span
-                            class="curSpan curSpanTree"
-                            style="color:#3c8dbc"
-                            @click="ruleCateActive(index,indexTwo,indexTree)"
-                          >
-                            <span class="oneClass" :class="itemTree.flag?'ruleBac':''"></span>
-                            {{itemTree.cate}}
-                          </span>
-                        </el-col>
+                            class="oneClass"
+                            :class="itemTwo.flag?'ruleBac':''"
+                          ></span>
+                          {{itemTwo.marketplace}}
+                        </span>
+                      </el-col>
+                      <el-col :span="23" style="margin-top:5px;padding-left:18px;" class="scrollTopHeight">
                         <el-col
                           :span="24"
-                          style="margin-top:5px;width:100%;"
-                          class="treeDiv"
+                          v-for="(itemTree,indexTree) in itemTwo.marketplaceValue"
+                          :key="indexTree"
                         >
-                          <el-select
-                            v-model="itemTree.cateValue.subCateChecked"
-                            multiple
-                            collapse-tags
-                            style="width:90%;"
-                            placeholder="请选择"
-                            size="small"
-                            @change="ruleSubcateActive(index,indexTwo,indexTree)"
-                          >
-                            <el-option
-                              v-for="item in itemTree.cateValue.subCate"
-                              :key="item"
-                              :label="item"
-                              :value="item"
-                            ></el-option>
-                          </el-select>
-                          <!-- <el-col
+                          <el-col :span="24">
+                            <span
+                              class="curSpan curSpanTree"
+                              style="color:#3c8dbc"
+                              @click="ruleCateActive(index,indexTwo,indexTree)"
+                            >
+                              <span class="oneClass" :class="itemTree.flag?'ruleBac':''"></span>
+                              {{itemTree.cate}}
+                            </span>
+                          </el-col>
+                          <el-col :span="24" style="margin-top:5px;width:100%;" class="treeDiv">
+                            <el-select
+                              v-model="itemTree.cateValue.subCateChecked"
+                              multiple
+                              collapse-tags
+                              style="width:95%;"
+                              placeholder="请选择"
+                              size="small"
+                              @change="ruleSubcateActive(index,indexTwo,indexTree)"
+                            >
+                              <el-option
+                                v-for="item in itemTree.cateValue.subCate"
+                                :key="item"
+                                :label="item"
+                                :value="item"
+                              ></el-option>
+                            </el-select>
+                            <!-- <el-col
                             :span="24"
                             v-for="(itemFour,indexFour) in itemTree.cateValue"
                             :key="indexFour"
@@ -249,7 +244,8 @@
                               <span class="oneClass" :class="itemFour.flag?'ruleBac':''"></span>
                               {{itemFour.subCate}}
                             </span>
-                          </el-col>-->
+                            </el-col>-->
+                          </el-col>
                         </el-col>
                       </el-col>
                     </el-col>
@@ -348,14 +344,15 @@ export default {
   methods: {
     ruleSubcateActive(a, b, c, d) {
       if (
-        this.itemDetail[a].platValue[b].marketplaceValue[c].cateValue.subCateChecked.length !=
-        0
+        this.itemDetail[a].platValue[b].marketplaceValue[c].cateValue
+          .subCateChecked.length != 0
       ) {
         this.itemDetail[a].platValue[b].marketplaceValue[c].flag = true;
+        this.itemDetail[a].platValue[b].flag = true;
       }
       if (
-        this.itemDetail[a].platValue[b].marketplaceValue[c].cateValue.subCateChecked.length ==
-        0
+        this.itemDetail[a].platValue[b].marketplaceValue[c].cateValue
+          .subCateChecked.length == 0
       ) {
         this.itemDetail[a].platValue[b].marketplaceValue[c].flag = false;
       }
@@ -366,11 +363,11 @@ export default {
       if (this.itemDetail[a].platValue[b].marketplaceValue[c].flag == false) {
         var data = this.itemDetail[a].platValue[b].marketplaceValue[c]
           .cateValue;
-        data.subCateChecked=[]
-      }else{
+        data.subCateChecked = [];
+      } else {
         var data = this.itemDetail[a].platValue[b].marketplaceValue[c]
           .cateValue;
-        data.subCateChecked=data.subCate
+        data.subCateChecked = data.subCate;
       }
       if (this.itemDetail[a].platValue[b].marketplaceValue[c].flag == true) {
         this.itemDetail[a].platValue[b].flag = true;
@@ -384,7 +381,7 @@ export default {
         for (var i = 0; i < data.length; i++) {
           data[i].flag = false;
           var Twodata = data[i].cateValue;
-          Twodata.subCateChecked=[]
+          Twodata.subCateChecked = [];
         }
       }
     },
@@ -543,14 +540,14 @@ export default {
                 if (dataTree[j].flag == false) {
                   dataTree.splice(j, 1);
                   j--;
-                // } else {
-                //   var dataFour = dataTree[j].cateValue;
-                //   for (var l = 0; l < dataFour.length; l++) {
-                //     if (dataFour[l].flag == false) {
-                //       dataFour.splice(l, 1);
-                //       l--;
-                //     }
-                //   }
+                  // } else {
+                  //   var dataFour = dataTree[j].cateValue;
+                  //   for (var l = 0; l < dataFour.length; l++) {
+                  //     if (dataFour[l].flag == false) {
+                  //       dataFour.splice(l, 1);
+                  //       l--;
+                  //     }
+                  //   }
                 }
               }
             }
@@ -742,6 +739,17 @@ export default {
   background: #fff;
   border: #409eff solid 6px;
 }
+.ruleBac1 {
+  width: 4px;
+  height: 4px;
+  background: #fff;
+  border: #67C23A solid 6px;
+}
+.scrollTopHeight{
+  height: 480px;
+  overflow: hidden;
+  overflow-y: auto;
+}
 </style>
 <style>
 .cTop2 .el-radio + .el-radio {
@@ -765,7 +773,7 @@ export default {
   margin-bottom: 10px;
 }
 .cTop2 ::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
 }
 </style>
