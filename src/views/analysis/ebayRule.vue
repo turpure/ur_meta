@@ -191,7 +191,7 @@
                   >
                     <el-col :span="8">
                       <el-col :span="24" style="margin-top:20px;">
-                        <span class="curSpan" @click="ruleMakActive(index,indexTwo)" style="color:#3c8dbc">
+                        <span class="curSpan" @click="ruleMakActive(index,indexTwo)" :class="itemTwo.flag?'cColor':''">
                           <span
                             class="oneClass"
                             :class="itemTwo.flag?'ruleBac':''"
@@ -208,7 +208,7 @@
                           <el-col :span="24">
                             <span
                               class="curSpan curSpanTree"
-                              style="color:#3c8dbc"
+                               :class="itemTree.flag?'cColor':''"
                               @click="ruleCateActive(index,indexTwo,indexTree)"
                             >
                               <span class="oneClass" :class="itemTree.flag?'ruleBac':''"></span>
@@ -749,6 +749,9 @@ export default {
   height: 480px;
   overflow: hidden;
   overflow-y: auto;
+}
+.cColor{
+  color: #3c8dbc;
 }
 </style>
 <style>
