@@ -1119,6 +1119,14 @@ export default {
                 type: "success"
               });
               this.proTotalXp=this.proTotalXp-1
+              sessionStorage.setItem("ebayEdit", res.data.data.data.devNum);
+              this.$confirm("认领成功,前去开发", "提示", { type: "success" }).then(
+              () => {
+                let Logistics = this.$router.resolve({
+                  path: `/v1/oa-goodsinfo/ebayEdit`
+                });
+                window.open(Logistics.href);                
+              })
               this.ebayXp();
             } else {
               this.$message.error(res.data.message);
@@ -1129,22 +1137,35 @@ export default {
       );
     },
     submissionEbayRx(id) {
-      let condition = {
-        id: id
-      };
-      ebayRxAccept(condition).then(res => {
-        if (res.data.code == 200) {
-          this.$message({
-            message: "开发成功",
-            type: "success"
+      this.$confirm("确定认领改产品？", "提示", { type: "success" }).then(
+        () => {
+          let condition = {
+            id: id
+          };
+          ebayRxAccept(condition).then(res => {
+            if (res.data.code == 200) {
+              this.$message({
+                message: "开发成功",
+                type: "success"
+              });
+              this.proTotalRx=this.proTotalRx-1
+              sessionStorage.setItem("ebayEdit", res.data.data.data.devNum);
+              this.$confirm("认领成功,前去开发", "提示", { type: "success" }).then(
+              () => {
+                let Logistics = this.$router.resolve({
+                  path: `/v1/oa-goodsinfo/ebayEdit`
+                });
+                window.open(Logistics.href);                
+              })
+              this.ebayXp();
+              this.ebayRx();
+            } else {
+              this.$message.error(res.data.message);
+              this.ebayRx();
+            }
           });
-          this.proTotalRx=this.proTotalRx-1
-          this.ebayRx();
-        } else {
-          this.$message.error(res.data.message);
-          this.ebayRx();
         }
-      });
+      );
     },
     getDataEbay() {
       this.listLoading = true;
