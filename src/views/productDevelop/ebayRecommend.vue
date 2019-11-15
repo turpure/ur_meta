@@ -1114,10 +1114,6 @@ export default {
           };
           ebayXpAccept(condition).then(res => {
             if (res.data.code == 200) {
-              this.$message({
-                message: "开发成功",
-                type: "success"
-              });
               this.proTotalXp=this.proTotalXp-1
               sessionStorage.setItem("ebayEdit", res.data.data.data.devNum);
               this.$confirm("认领成功,前去开发", "提示", { type: "success" }).then(
@@ -1144,10 +1140,6 @@ export default {
           };
           ebayRxAccept(condition).then(res => {
             if (res.data.code == 200) {
-              this.$message({
-                message: "开发成功",
-                type: "success"
-              });
               this.proTotalRx=this.proTotalRx-1
               sessionStorage.setItem("ebayEdit", res.data.data.data.devNum);
               this.$confirm("认领成功,前去开发", "提示", { type: "success" }).then(
