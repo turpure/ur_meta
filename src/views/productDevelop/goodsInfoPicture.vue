@@ -197,7 +197,7 @@
                 </el-table-column>
             </el-table>
             <!-- 图片信息查看对话框 -->
-            <!-- <el-dialog title='详情' :visible.sync="dialogPicture" width="75%" top="2.2%">
+            <el-dialog title='详情' :visible.sync="dialogPicture" width="75%" top="2.2%">
                 <el-form
                         label-position="left"
                         class="goodProForm"
@@ -302,46 +302,6 @@
                                 </el-form-item>
                             </el-col>
                             <el-col :span="4">
-                                <el-form-item label="主类目" prop="cate" class="item">
-                                <el-input size="small" v-model="goodsInfoPic.oaGoods.cate" style="width:95%;" disabled></el-input>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="4">
-                                <el-form-item label="子类目" prop="subCate" class="item">
-                                <el-input size="small" v-model="goodsInfoPic.oaGoods.subCate" style="width:95%;" disabled></el-input>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="4">
-                                <el-form-item label="供应商链接1" prop="vendor1" class="item">
-                                <a :href="goodsInfoPic.oaGoods.vendor1" target="_blank"><el-input size="small" v-model="goodsInfoPic.oaGoods.vendor1" class="goodFormchild" style="width:95%;" disabled></el-input></a>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="4">
-                                <el-form-item label="供应商链接2" prop="vendor2" class="item">
-                                <a :href="goodsInfoPic.oaGoods.vendor2" target="_blank"><el-input size="small" v-model="goodsInfoPic.oaGoods.vendor2" class="goodFormchild" style="width:95%;" disabled></el-input></a>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="4">
-                                <el-form-item label="供应商链接3" prop="vendor3" class="item">
-                                <a :href="goodsInfoPic.oaGoods.vendor3" target="_blank"><el-input size="small" v-model="goodsInfoPic.oaGoods.vendor3" class="goodFormchild" style="width:95%;" disabled></el-input></a>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="4">
-                                <el-form-item label="平台参考链接1" prop="origin1" class="item">
-                                <a :href="goodsInfoPic.oaGoods.origin1" target="_blank"><el-input size="small" v-model="goodsInfoPic.oaGoods.origin1" class="goodFormchild" style="width:95%;" disabled></el-input></a>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="4">
-                                <el-form-item label="平台参考链接2" prop="origin2" class="item">
-                                <a :href="goodsInfoPic.oaGoods.origin2" target="_blank"><el-input size="small" v-model="goodsInfoPic.oaGoods.origin2" class="goodFormchild" style="width:95%;" disabled></el-input></a>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="4">
-                                <el-form-item label="平台参考链接3" prop="origin2" class="item">
-                                <a :href="goodsInfoPic.oaGoods.origin3" target="_blank"><el-input size="small" v-model="goodsInfoPic.oaGoods.origin3" class="goodFormchild" style="width:95%;" disabled></el-input></a>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="4">
                                 <el-form-item label="禁售平台" prop="dictionaryName" class="item">
                                 <el-input size="small" v-model="goodsInfoPic.dictionaryName" style="width:95%;" disabled></el-input>
                                 </el-form-item>
@@ -363,7 +323,7 @@
                             </el-col>
                         </el-row>
                 </el-form>
-            </el-dialog> -->
+            </el-dialog>
             <el-pagination background
                            @size-change="handleSizeChangePic"
                            @current-change="handleCurrentChangePic"
