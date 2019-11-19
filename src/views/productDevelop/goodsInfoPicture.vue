@@ -197,7 +197,7 @@
                 </el-table-column>
             </el-table>
             <!-- 图片信息查看对话框 -->
-            <el-dialog title='详情' :visible.sync="dialogPicture" width="75%" top="2.2%">
+            <!-- <el-dialog title='详情' :visible.sync="dialogPicture" width="75%" top="2.2%">
                 <el-form
                         label-position="left"
                         class="goodProForm"
@@ -363,7 +363,7 @@
                             </el-col>
                         </el-row>
                 </el-form>
-            </el-dialog>
+            </el-dialog> -->
             <el-pagination background
                            @size-change="handleSizeChangePic"
                            @current-change="handleCurrentChangePic"
