@@ -1228,6 +1228,10 @@ export default {
         this.$message.error('请填写英文申报名')
         return
       }
+      if(!this.editForm.cate){
+        this.$message.error('请选择主类目')
+        return
+      }
       if(!this.editForm.supplierName){
         this.$message.error('请填写供应商名称')
         return
@@ -1336,6 +1340,10 @@ export default {
       }
       if(!this.editForm.aliasEnName){
         this.$message.error('请填写英文申报名')
+        return
+      }
+      if(!this.editForm.cate){
+        this.$message.error('请选择主类目')
         return
       }
       if(!this.editForm.supplierName){

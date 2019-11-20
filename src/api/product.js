@@ -1667,3 +1667,12 @@ export function getCateRuleInfo(param) {
   })
 }
 
+export function formProductReport(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/product-report',
+    method: 'post',
+    data
+  })
+}
+
