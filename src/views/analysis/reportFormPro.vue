@@ -22,7 +22,6 @@
               size="small"
               style="width:170px;margin-left:10px;"
             >
-              
               <el-option v-for="item in developer" :value="item" :key="item"></el-option>
             </el-select>
           </div>
@@ -61,41 +60,38 @@
       </div>
     </div>
     <div v-show="show.ts">
-       <div class="w95">
+      <div class="w95">
         <div class="floet">
           <div class="floet01" style="margin-left:5px;">
             <span>规则类型</span>
             <el-select
-              v-model="condition.developer"
+              v-model="condition1.ruleType"
               placeholder="请选择"
               clearable
               size="small"
+              @change="getRuleName($event)"
               style="width:170px;margin-left:10px;"
             >
-              
               <el-option v-for="item in ruleType" :value="item" :key="item"></el-option>
             </el-select>
           </div>
           <div class="floet01">
             <span>规则名称</span>
             <el-select
-              v-model="condition.developer"
-              multiple
-              collapse-tags
+              v-model="condition1.ruleName"
               placeholder="请选择"
               clearable
               size="small"
               style="width:170px;margin-left:10px;"
             >
-              
-              <el-option v-for="item in developer" :value="item" :key="item"></el-option>
+              <el-option v-for="item in ruleNameData" :value="item.ruleName" :key="item.ruleName"></el-option>
             </el-select>
           </div>
           <div class="floet01">
             <span>认领时间</span>
             <el-date-picker
               size="small"
-              v-model="condition.dateRange"
+              v-model="condition1.dateRange"
               value-format="yyyy-MM-dd"
               type="daterange"
               align="right"
@@ -109,12 +105,33 @@
             ></el-date-picker>
           </div>
           <div class="floet01">
-            <el-button size="small" type="primary" @click="getData()">查询</el-button>
+            <el-button size="small" type="primary" @click="getDataTs()">查询</el-button>
           </div>
         </div>
       </div>
       <div class="w95">
-        
+        <el-table
+          :data="tabledata"
+          border
+          class="elTableForm"
+          :summary-method="getSummaries"
+          :header-cell-style="getRowClass"
+          show-summary
+          :height="tableHeightstock"
+          style="width: 100%;margin:auto;margin-top:5px;"
+        >
+          <el-table-column type="index" fixed align="center" width="80" header-align="center"></el-table-column>
+          <el-table-column label="规则类型" header-align="center" align="center" prop="ruleType">
+            <template slot-scope="scope">
+              <span>{{scope.row.ruleType=='new'?'新品':'热销'}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="规则名称" header-align="center" align="center" prop="ruleName"></el-table-column>
+          <el-table-column label="总产品数" header-align="center" align="center" prop="totalNum"></el-table-column>
+          <el-table-column label="认领产品数" header-align="center" align="center" prop="claimNum"></el-table-column>
+          <el-table-column label="爆款数" header-align="center" align="center" prop="hotNum"></el-table-column>
+          <el-table-column label="旺款数" header-align="center" align="center" prop="popNum"></el-table-column>
+        </el-table>
       </div>
     </div>
   </section>
@@ -122,12 +139,18 @@
 <script type="text/ecmascript-6">
 import { getMenu } from "../../api/login";
 import { getDeveloper } from "../../api/profit";
-import { formProductReport,APRengineRule,APRengineRuleHot } from "../../api/product";
-import { compareUp, compareDown, getMonthDate } from "../../api/tools";
+import {
+  formProductReport,
+  APRengineRule,
+  APRengineRuleHot,
+  formRuleReport
+} from "../../api/product";
+import { compareUp, compareDown, getMonthDate,getNextDate} from "../../api/tools";
 export default {
   data() {
     return {
       index: 1,
+      tableHeightstock: window.innerHeight - 210,
       activeName: "first",
       developer: [],
       obj: {
@@ -138,7 +161,7 @@ export default {
       },
       show: {
         rl: true,
-        ts:false
+        ts: false
       },
       sty: {
         width: "100%",
@@ -148,24 +171,31 @@ export default {
         developer: [],
         dateRange: []
       },
-      ruleType:['新品','热销'],
+      condition1: {
+        ruleType: null,
+        ruleName: null,
+        dateRange: []
+      },
+      ruleType: ["新品", "热销"],
+      ruleNameData: [],
       listLoading: false,
       allMenu: [],
-      ruleNameXp:[],
-      ruleNameRx:[],
+      ruleNameXp: [],
+      ruleNameRx: [],
+      tabledata: [],
       options1: {
         tooltip: {
-         trigger: 'axis',
+          trigger: "axis",
           axisPointer: {
-            type: 'cross',
+            type: "cross",
             label: {
-              backgroundColor: '#6a7985'
+              backgroundColor: "#6a7985"
             }
-          },
+          }
         },
         legend: {
-          top:'2%',
-          data: ["爆款数", "旺款数","产品总数"]
+          top: "2%",
+          data: ["爆款数", "旺款数", "产品总数"]
         },
         grid: {
           left: "3%",
@@ -176,7 +206,7 @@ export default {
         xAxis: [
           {
             type: "category",
-            top:'1%',
+            top: "1%",
             data: []
           }
         ],
@@ -189,9 +219,9 @@ export default {
           {
             name: "爆款数",
             type: "bar",
-            data: [],
-            // itemStyle: {   
-            //     normal:{  
+            data: []
+            // itemStyle: {
+            //     normal:{
             //         color: function (params){
             //             var colorList = ['#409EFF'];
             //             return colorList[params.dataIndex];
@@ -202,9 +232,9 @@ export default {
           {
             name: "旺款数",
             type: "bar",
-            data: [],
-            // itemStyle: {   
-            //     normal:{  
+            data: []
+            // itemStyle: {
+            //     normal:{
             //         color: function (params){
             //             var colorList = ['#E6A23C'];
             //             return colorList[params.dataIndex];
@@ -215,9 +245,9 @@ export default {
           {
             name: "产品总数",
             type: "bar",
-            data: [],
-            // itemStyle: {   
-            //     normal:{  
+            data: []
+            // itemStyle: {
+            //     normal:{
             //         color: function (params){
             //             var colorList = ['#F56C6C'];
             //             return colorList[params.dataIndex];
@@ -255,6 +285,46 @@ export default {
     };
   },
   methods: {
+    getSummaries(param) {
+      const { columns, data } = param;
+      const sums = [];
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = "合计";
+          return;
+        }
+        const values = data.map(item => Number(item[column.property]));
+        if (!values.every(value => isNaN(value))) {
+          sums[index] = values.reduce((prev, curr) => {
+            const value = Number(curr);
+            if (!isNaN(value)) {
+              return prev + curr;
+            } else {
+              return prev;
+            }
+          }, 0);
+          sums[index] += "";
+        } else {
+          sums[index] = "N/A";
+        }
+      });
+      return sums;
+    },
+    getRowClass({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex == 0) {
+        return "color:#337ab7;background:#f5f7fa";
+      } else {
+        return "";
+      }
+    },
+    getRuleName(e) {
+      this.condition1.ruleName = null;
+      if (e == "新品") {
+        this.ruleNameData = this.ruleNameXp;
+      } else {
+        this.ruleNameData = this.ruleNameRx;
+      }
+    },
     handleClick(tab, event) {
       if (tab.name === "/v1/products-engine/product-report") {
         this.show["rl"] = true;
@@ -267,19 +337,24 @@ export default {
         this.show["ts"] = false;
       }
     },
+    getDataTs() {
+      formRuleReport(this.condition1).then(res => {
+        this.tabledata = res.data.data;
+      });
+    },
     getData() {
       this.listLoading = true;
       formProductReport(this.condition).then(res => {
         var data = res.data.data;
-        var name=[]
-        var data1=[]
-        var data2=[]
-        var data3=[]
-        for(var i=0;i<data.length;i++){
-          name.push(data[i].developer)
-          data1.push(data[i].hotNum)
-          data2.push(data[i].popNum)
-          data3.push(data[i].totalNum)
+        var name = [];
+        var data1 = [];
+        var data2 = [];
+        var data3 = [];
+        for (var i = 0; i < data.length; i++) {
+          name.push(data[i].developer);
+          data1.push(data[i].hotNum);
+          data2.push(data[i].popNum);
+          data3.push(data[i].totalNum);
         }
         this.options1.xAxis[0].data = name;
         this.options1.series[0].data = data1;
@@ -292,12 +367,24 @@ export default {
     }
   },
   mounted() {
+    var startData = getMonthDate("lastMonth").start;
+    var endData = getMonthDate("lastMonth").end;
+    this.condition.dateRange = [
+      getNextDate(startData, -1),
+      getNextDate(endData, -1)
+    ];
+    this.condition1.dateRange = [
+      getNextDate(startData, -1),
+      getNextDate(endData, -1)
+    ];
     APRengineRule().then(res => {
       this.ruleNameXp = res.data.data;
     });
     APRengineRuleHot().then(res => {
       this.ruleNameRx = res.data.data;
     });
+    this.getData();
+    this.getDataTs();
     getMenu().then(response => {
       const res = response.data.data;
       const menu = res.filter(e => e.route === "/v1/products-engine/index");
@@ -348,7 +435,7 @@ export default {
 }
 .floet01 {
   float: left;
-  margin-right: 20px;
+  margin-right: 15px;
 }
 </style>
 

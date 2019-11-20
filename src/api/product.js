@@ -1676,3 +1676,12 @@ export function formProductReport(param) {
   })
 }
 
+export function formRuleReport(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/rule-report',
+    method: 'post',
+    data
+  })
+}
+
