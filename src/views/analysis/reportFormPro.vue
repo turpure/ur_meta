@@ -27,7 +27,7 @@
             </el-select>
           </div>
           <div class="floet01">
-            <span>开发时间</span>
+            <span>认领时间</span>
             <el-date-picker
               size="small"
               v-model="condition.dateRange"
@@ -64,6 +64,19 @@
        <div class="w95">
         <div class="floet">
           <div class="floet01" style="margin-left:5px;">
+            <span>规则类型</span>
+            <el-select
+              v-model="condition.developer"
+              placeholder="请选择"
+              clearable
+              size="small"
+              style="width:170px;margin-left:10px;"
+            >
+              
+              <el-option v-for="item in ruleType" :value="item" :key="item"></el-option>
+            </el-select>
+          </div>
+          <div class="floet01">
             <span>规则名称</span>
             <el-select
               v-model="condition.developer"
@@ -79,7 +92,7 @@
             </el-select>
           </div>
           <div class="floet01">
-            <span>开发时间</span>
+            <span>认领时间</span>
             <el-date-picker
               size="small"
               v-model="condition.dateRange"
@@ -109,7 +122,7 @@
 <script type="text/ecmascript-6">
 import { getMenu } from "../../api/login";
 import { getDeveloper } from "../../api/profit";
-import { formProductReport } from "../../api/product";
+import { formProductReport,APRengineRule,APRengineRuleHot } from "../../api/product";
 import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 export default {
   data() {
@@ -135,8 +148,11 @@ export default {
         developer: [],
         dateRange: []
       },
+      ruleType:['新品','热销'],
       listLoading: false,
       allMenu: [],
+      ruleNameXp:[],
+      ruleNameRx:[],
       options1: {
         tooltip: {
          trigger: 'axis',
@@ -276,6 +292,12 @@ export default {
     }
   },
   mounted() {
+    APRengineRule().then(res => {
+      this.ruleNameXp = res.data.data;
+    });
+    APRengineRuleHot().then(res => {
+      this.ruleNameRx = res.data.data;
+    });
     getMenu().then(response => {
       const res = response.data.data;
       const menu = res.filter(e => e.route === "/v1/products-engine/index");
