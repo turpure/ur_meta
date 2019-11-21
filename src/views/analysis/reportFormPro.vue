@@ -1,6 +1,11 @@
 <template>
   <section class="tabheught" :style="obj">
-    <el-tabs v-model="activeName" type="card" @tab-click="handleClick" style="background: #fff;">
+    <el-tabs
+      v-model="activeName"
+      type="card"
+      @tab-click="handleClick"
+      style="background: #fff;height:40px;"
+    >
       <el-tab-pane
         v-for="(item, index) in this.allMenu"
         :label="item.name"
@@ -8,6 +13,75 @@
         :key="index"
       ></el-tab-pane>
     </el-tabs>
+    <div v-show="show.mt">
+      <div class="mtBox">
+        <div class="mtBox01">
+          <div class="t1">全部</div>
+          <img src="../../assets/qbpro.png" class="img1" style="width: 50px;height: 50px;" />
+          <div class="twz">
+            <span class="tw1">新品</span>
+            <span class="tw2">{{xptotal}}</span>
+          </div>
+          <div class="twz">
+            <span class="tw1">热销</span>
+            <span class="tw2">{{rxtotal}}</span>
+          </div>
+        </div>
+        <div class="mtBox01">
+          <div class="t1">已推送</div>
+          <img src="../../assets/tspro.png" class="img1" style="width: 50px;height: 50px;" />
+          <div class="twz">
+            <span class="tw1">新品</span>
+            <span class="tw2">{{tsxptotal}}</span>
+          </div>
+          <div class="twz">
+            <span class="tw1">热销</span>
+            <span class="tw2">{{tsrxtotal}}</span>
+          </div>
+        </div>
+        <div class="mtBox01">
+          <div class="t1">已认领</div>
+          <img src="../../assets/rlpro.png" class="img1" style="width: 50px;height: 50px;" />
+          <span class="sj66">{{rltotal}}</span>
+        </div>
+        <div class="mtBox01">
+          <div class="t1">已过滤</div>
+          <img src="../../assets/glpro.png" class="img1" style="width: 50px;height: 50px;" />
+          <span class="sj66">{{gltotal}}</span>
+        </div>
+        <div class="mtBox01">
+          <div class="t1">未处理</div>
+          <img src="../../assets/clpro.png" class="img1" style="width: 50px;height: 50px;" />
+          <span class="sj66">{{cltotal}}</span>
+        </div>
+      </div>
+      <div class="mtCase">
+        <div class="mtCase01" :style="mtCase01">
+          <p class="mtop">近七天认领走势图</p>
+          <el-col :span="24">
+            <div ref="indexOr" :style="styObj"></div>
+          </el-col>
+        </div>
+        <div class="mtCase02 reCop" :style="mtCase01">
+          <p class="mtop">开发产品处理情况占比</p>
+          <transition
+            enter-active-class="animated fadeIn"
+            leave-active-class="animated fadeIn"
+          >
+            <div class="xBox" v-show="isshow">
+              <div class="mcT01" v-for="(item,index) in devNum" :key="index">
+                <span class="mName">{{item.username}}</span>
+                <div class="xCase">
+                  <span class="xg" :style="{width:item.claimRate+'%'}"></span>
+                  <span class="xr" :style="{width:item.filterRate+'%'}"></span>
+                  <span class="xh" :style="{width:item.unhandledRate+'%'}"></span>
+                </div>
+              </div>
+            </div>
+          </transition>
+        </div>
+      </div>
+    </div>
     <div v-show="show.rl">
       <div class="w95">
         <div class="floet">
@@ -139,13 +213,20 @@
 <script type="text/ecmascript-6">
 import { getMenu } from "../../api/login";
 import { getDeveloper } from "../../api/profit";
+import echarts from "echarts";
 import {
   formProductReport,
   APRengineRule,
   APRengineRuleHot,
-  formRuleReport
+  formRuleReport,
+  getDailyReport
 } from "../../api/product";
-import { compareUp, compareDown, getMonthDate,getNextDate} from "../../api/tools";
+import {
+  compareUp,
+  compareDown,
+  getMonthDate,
+  getNextDate
+} from "../../api/tools";
 export default {
   data() {
     return {
@@ -160,12 +241,20 @@ export default {
         height: window.innerHeight - 205 + "px"
       },
       show: {
-        rl: true,
+        mt: true,
+        rl: false,
         ts: false
+      },
+      styObj: {
+        width: "100%",
+        height: window.innerHeight - 339 + "px"
       },
       sty: {
         width: "100%",
         height: window.innerHeight - 208 + "px"
+      },
+      mtCase01: {
+        height: window.innerHeight - 295 + "px"
       },
       condition: {
         developer: [],
@@ -179,10 +268,89 @@ export default {
       ruleType: ["新品", "热销"],
       ruleNameData: [],
       listLoading: false,
+      rltotal: 0,
+      gltotal: 0,
+      cltotal: 0,
+      tsxptotal: 0,
+      tsrxtotal: 0,
+      xptotal: 0,
+      rxtotal: 0,
       allMenu: [],
       ruleNameXp: [],
       ruleNameRx: [],
       tabledata: [],
+      isshow:false,
+      devNum: [],
+      options: {
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "cross",
+            label: {
+              backgroundColor: "#6a7985"
+            }
+          }
+        },
+        grid: {
+          left: "3%",
+          right: "3%",
+          bottom: "3%",
+          containLabel: true
+        },
+        xAxis: [
+          {
+            type: "category",
+            boundaryGap: false,
+            data: []
+          }
+        ],
+        yAxis: {
+          type: "value"
+        },
+        series: [
+          {
+            type: "line",
+            itemStyle: {
+              normal: {
+                //颜色渐变函数 前四个参数分别表示四个位置依次为左、下、右、上
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                  {
+                    offset: 0,
+                    color: "#d7f4f8" // 0% 处的颜色
+                  },
+                  {
+                    offset: 0.5,
+                    color: "#eefcfd" // 100% 处的颜色
+                  },
+                  {
+                    offset: 1,
+                    color: "#4fd6d2" // 100% 处的颜色
+                  }
+                ]), //背景渐变色
+                lineStyle: {
+                  // 系列级个性化折线样式
+                  width: 4,
+                  type: "solid",
+                  color: "#4fd6d2"
+                }
+              },
+              emphasis: {
+                color: "#67c23a",
+                lineStyle: {
+                  // 系列级个性化折线样式
+                  width: 4,
+                  type: "dotted",
+                  color: "#4fd6d2" //折线的颜色
+                }
+              }
+            }, //线条样式
+            symbolSize: 8, //折线点的大小
+            areaStyle: { normal: {} },
+            data: [],
+            smooth: true
+          }
+        ]
+      },
       options1: {
         tooltip: {
           trigger: "axis",
@@ -220,40 +388,16 @@ export default {
             name: "爆款数",
             type: "bar",
             data: []
-            // itemStyle: {
-            //     normal:{
-            //         color: function (params){
-            //             var colorList = ['#409EFF'];
-            //             return colorList[params.dataIndex];
-            //         }
-            //     },
-            // },
           },
           {
             name: "旺款数",
             type: "bar",
             data: []
-            // itemStyle: {
-            //     normal:{
-            //         color: function (params){
-            //             var colorList = ['#E6A23C'];
-            //             return colorList[params.dataIndex];
-            //         }
-            //     },
-            // },
           },
           {
             name: "产品总数",
             type: "bar",
             data: []
-            // itemStyle: {
-            //     normal:{
-            //         color: function (params){
-            //             var colorList = ['#F56C6C'];
-            //             return colorList[params.dataIndex];
-            //         }
-            //     },
-            // },
           }
         ]
       },
@@ -326,13 +470,20 @@ export default {
       }
     },
     handleClick(tab, event) {
+      if (tab.name === "/v1/products-engine/daily-report") {
+        this.show["mt"] = true;
+      } else {
+        this.show["mt"] = false;
+      }
       if (tab.name === "/v1/products-engine/product-report") {
         this.show["rl"] = true;
+        this.getData();
       } else {
         this.show["rl"] = false;
       }
       if (tab.name === "/v1/products-engine/rule-report") {
         this.show["ts"] = true;
+        this.getDataTs();
       } else {
         this.show["ts"] = false;
       }
@@ -383,8 +534,6 @@ export default {
     APRengineRuleHot().then(res => {
       this.ruleNameRx = res.data.data;
     });
-    this.getData();
-    this.getDataTs();
     getMenu().then(response => {
       const res = response.data.data;
       const menu = res.filter(e => e.route === "/v1/products-engine/index");
@@ -398,6 +547,87 @@ export default {
     });
     getDeveloper().then(response => {
       this.developer = response.data.data;
+    });
+    getDailyReport().then(response => {
+      this.devNum = response.data.data.devData;
+      this.isshow=true
+      var xptotal = response.data.data.totalNewNum;
+      var setTime = setInterval(() => {
+        if (this.xptotal >= xptotal) {
+          this.xptotal = xptotal;
+          clearInterval(setTime);
+        } else {
+          this.xptotal = this.xptotal + 5;
+        }
+      }, 1);
+      var rxtotal = response.data.data.totalHotNum;
+      var setTime1 = setInterval(() => {
+        if (this.rxtotal >= rxtotal) {
+          this.rxtotal = rxtotal;
+          clearInterval(setTime1);
+        } else {
+          this.rxtotal = this.rxtotal + 20;
+        }
+      }, 1);
+      var tsxptotal = response.data.data.dispatchNewNum;
+      var setTime2 = setInterval(() => {
+        if (this.tsxptotal >= tsxptotal) {
+          this.tsxptotal = tsxptotal;
+          clearInterval(setTime2);
+        } else {
+          this.tsxptotal = this.tsxptotal + 1;
+        }
+      }, 1);
+      var tsrxtotal = response.data.data.dispatchHotNum;
+      var setTime3 = setInterval(() => {
+        if (this.tsrxtotal >= tsrxtotal) {
+          this.tsrxtotal = tsrxtotal;
+          clearInterval(setTime3);
+        } else {
+          this.tsrxtotal = this.tsrxtotal + 1;
+        }
+      }, 1);
+      var rltotal =
+        response.data.data.claimNewNum + response.data.data.claimHotNum;
+      var setTime4 = setInterval(() => {
+        if (this.rltotal >= rltotal) {
+          this.rltotal = rltotal;
+          clearInterval(setTime4);
+        } else {
+          this.rltotal = this.rltotal + 1;
+        }
+      }, 1);
+      var gltotal =
+        response.data.data.filterNewNum + response.data.data.filterHotNum;
+      var setTime5 = setInterval(() => {
+        if (this.gltotal >= gltotal) {
+          this.gltotal = gltotal;
+          clearInterval(setTime5);
+        } else {
+          this.gltotal = this.gltotal + 1;
+        }
+      }, 1);
+      var cltotal =
+        response.data.data.unhandledNewNum + response.data.data.unhandledHotNum;
+      var setTime6 = setInterval(() => {
+        if (this.cltotal >= cltotal) {
+          this.cltotal = cltotal;
+          clearInterval(setTime6);
+        } else {
+          this.cltotal = this.cltotal + 1;
+        }
+      }, 1);
+      var arrName = [];
+      var arrData = [];
+      var lineData = response.data.data.claimData;
+      for (var i = 0; i < lineData.length; i++) {
+        arrName.push(lineData[i].name);
+        arrData.push(lineData[i].value);
+      }
+      this.options.xAxis[0].data = arrName;
+      this.options.series[0].data = arrData;
+      let indexOr = this.$echarts.init(this.$refs.indexOr);
+      indexOr.setOption(this.options);
     });
   }
 };
@@ -437,5 +667,175 @@ export default {
   float: left;
   margin-right: 15px;
 }
+.mtBox {
+  width: 98.5%;
+  margin: auto;
+  margin-top: 15px;
+  height: 150px;
+  overflow: hidden;
+}
+.mtBox01 {
+  width: 18.85%;
+  height: 150px;
+  float: left;
+  border-radius: 5px;
+  position: relative;
+}
+.mtBox01:nth-child(1) {
+  background: #3c8dbc;
+}
+.mtBox01:nth-child(4) {
+  margin-left: 1.33%;
+  background: #f56c6c;
+}
+.mtBox01:nth-child(2) {
+  margin-left: 1.33%;
+  background: #e6a23c;
+}
+.mtBox01:nth-child(3) {
+  margin-left: 1.33%;
+  background: #67c23a;
+}
+.mtBox01:nth-child(5) {
+  margin-left: 1.33%;
+  background: #909399;
+}
+.mtCase {
+  width: 98.5%;
+  margin: auto;
+  margin-top: 16px;
+  overflow: hidden;
+}
+.mtCase01 {
+  width: 79.4%;
+  background: #fff;
+  float: right;
+  margin-right: 0.5%;
+  border-radius: 5px;
+}
+.mtCase02 {
+  width: 18.9%;
+  float: left;
+  background: #fff;
+  border-radius: 5px;
+}
+.t1 {
+  color: #fff;
+  font-size: 15px;
+  padding: 10px;
+  width: 100%;
+  padding-left: 15px;
+  letter-spacing: 2px;
+}
+.img1 {
+  position: absolute;
+  right: 30px;
+  top: 50px;
+}
+.sj66 {
+  text-shadow: 0px 1px 0px #fff, 0px 2px 0px #888, 0px 1px 0px #777,
+    0px 1px 0px #666, 0px 1px 0px #555, 0px 1px 0px #444,
+    0px 1px 0px rgb(95, 95, 95), 0px 5px 5px #606061;
+  color: #fff;
+  letter-spacing: 2px;
+  font-size: 40px;
+  display: block;
+  width: 90%;
+  text-align: center;
+  margin-top: 15px;
+}
+.twz {
+  width: 32%;
+  color: #fff;
+  letter-spacing: 2px;
+  float: left;
+}
+.tw1 {
+  display: block;
+  text-align: center;
+  font-size: 14px;
+  margin-top: 8px;
+}
+.tw2 {
+  display: block;
+  text-align: center;
+  font-size: 15px;
+  font-size: 28px;
+  margin-top: 10px;
+  text-shadow: 0px 1px 0px #fff, 0px 2px 0px #888, 0px 1px 0px #777,
+    0px 1px 0px #666, 0px 1px 0px #555, 0px 1px 0px #444,
+    0px 1px 0px rgb(95, 95, 95), 0px 5px 5px #606061;
+}
+.mtop {
+  margin: 0;
+  font-size: 14px;
+  line-height: 45px;
+  padding-left: 15px;
+  border-bottom: rgb(224, 224, 224) solid 1px;
+}
+.xBox {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  overflow-y: auto;
+}
+.mcT01 {
+  width: 92%;
+  margin: auto;
+}
+.mName {
+  display: block;
+  font-size: 14px;
+  text-align: center;
+  margin: 15px 0px 10px 0px;
+}
+.xCase {
+  width: 95%;
+  margin: auto;
+  overflow: hidden;
+  border-radius: 25px;
+}
+.xg {
+  display: block;
+  float: left;
+  background: #67c23a;
+  height: 12px;
+}
+.xr {
+  display: block;
+  float: left;
+  background: #f56c6c;
+  height: 12px;
+}
+.xh {
+  display: block;
+  float: left;
+  background: #909399;
+  height: 12px;
+}
+@media screen and (max-width: 1500px) {
+  .img1 {
+    position: absolute;
+    right: 15px;
+    top: 50px;
+  }
+  .twz {
+    width: 30%;
+    color: #fff;
+    letter-spacing: 2px;
+    float: left;
+  }
+  .tw2 {
+    font-size: 18px;
+  }
+  .sj66 {
+    width: 75%;
+  }
+}
 </style>
-
+<style>
+.reCop ::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+</style>
