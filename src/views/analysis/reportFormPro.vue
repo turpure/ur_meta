@@ -85,20 +85,17 @@
         </div>
         <div class="mtCase02 reCop" :style="mtCase01">
           <p class="mtop">今日开发产品处理情况</p>
-          <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeIn">
+          <transition
+            enter-active-class="animated fadeIn"
+            leave-active-class="animated fadeIn"
+          >
             <div class="xBox" v-show="isshow">
               <div class="mcT01" v-for="(item,index) in devNum" :key="index">
                 <span class="mName">{{item.username}}</span>
                 <div class="xCase">
-                  <el-tooltip placement="top" :content="item.claimNum+''">
-                    <span class="xg" :style="{width:item.claimRate+'%'}"></span>
-                  </el-tooltip>
-                  <el-tooltip placement="top" :content="item.filterNum+''">
-                    <span class="xr" :style="{width:item.filterRate+'%'}"></span>
-                  </el-tooltip>
-                  <el-tooltip placement="top" :content="item.unhandledNum+''">
-                    <span class="xh" :style="{width:item.unhandledRate+'%'}"></span>
-                  </el-tooltip>
+                  <span class="xg" :style="{width:item.claimRate+'%'}"></span>
+                  <span class="xr" :style="{width:item.filterRate+'%'}"></span>
+                  <span class="xh" :style="{width:item.unhandledRate+'%'}"></span>
                 </div>
               </div>
             </div>
@@ -299,17 +296,17 @@ export default {
       tsrxtotal: 0,
       xptotal: 0,
       rxtotal: 0,
-      rlxptotal: 0,
-      rlrxtotal: 0,
-      glxptotal: 0,
-      glrxtotal: 0,
-      clxptotal: 0,
-      clrxtotal: 0,
+      rlxptotal:0,
+      rlrxtotal:0,
+      glxptotal:0,
+      glrxtotal:0,
+      clxptotal:0,
+      clrxtotal:0,
       allMenu: [],
       ruleNameXp: [],
       ruleNameRx: [],
       tabledata: [],
-      isshow: false,
+      isshow:false,
       devNum: [],
       options: {
         tooltip: {
@@ -580,7 +577,7 @@ export default {
     });
     getDailyReport().then(response => {
       this.devNum = response.data.data.devData;
-      this.isshow = true;
+      this.isshow=true
       var xptotal = response.data.data.totalNewNum;
       var setTime = setInterval(() => {
         if (this.xptotal >= xptotal) {
@@ -617,7 +614,8 @@ export default {
           this.tsrxtotal = this.tsrxtotal + 1;
         }
       }, 1);
-      var rlxptotal = response.data.data.claimNewNum;
+      var rlxptotal =
+        response.data.data.claimNewNum;
       var setTime4 = setInterval(() => {
         if (this.rlxptotal >= rlxptotal) {
           this.rlxptotal = rlxptotal;
@@ -626,7 +624,8 @@ export default {
           this.rlxptotal = this.rlxptotal + 1;
         }
       }, 1);
-      var rlrxtotal = response.data.data.claimHotNum;
+      var rlrxtotal =
+        response.data.data.claimHotNum;
       var setTime7 = setInterval(() => {
         if (this.rlrxtotal >= rlrxtotal) {
           this.rlrxtotal = rlrxtotal;
@@ -635,7 +634,8 @@ export default {
           this.rlrxtotal = this.rlrxtotal + 1;
         }
       }, 1);
-      var glxptotal = response.data.data.filterNewNum;
+      var glxptotal =
+        response.data.data.filterNewNum;
       var setTime5 = setInterval(() => {
         if (this.glxptotal >= glxptotal) {
           this.glxptotal = glxptotal;
@@ -644,7 +644,8 @@ export default {
           this.glxptotal = this.glxptotal + 1;
         }
       }, 1);
-      var glrxtotal = response.data.data.filterHotNum;
+      var glrxtotal =
+        response.data.data.filterHotNum;
       var setTime8 = setInterval(() => {
         if (this.glrxtotal >= glrxtotal) {
           this.glrxtotal = glrxtotal;
@@ -653,7 +654,8 @@ export default {
           this.glrxtotal = this.glrxtotal + 1;
         }
       }, 1);
-      var clxptotal = response.data.data.unhandledNewNum;
+      var clxptotal =
+        response.data.data.unhandledNewNum;
       var setTime6 = setInterval(() => {
         if (this.clxptotal >= clxptotal) {
           this.clxptotal = clxptotal;
@@ -662,7 +664,8 @@ export default {
           this.clxptotal = this.clxptotal + 1;
         }
       }, 1);
-      var clrxtotal = response.data.data.unhandledHotNum;
+      var clrxtotal =
+        response.data.data.unhandledHotNum;
       var setTime9 = setInterval(() => {
         if (this.clrxtotal >= clrxtotal) {
           this.clrxtotal = clrxtotal;
