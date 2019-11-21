@@ -16,7 +16,7 @@
     <div v-show="show.mt">
       <div class="mtBox">
         <div class="mtBox01">
-          <div class="t1">全部</div>
+          <div class="t1">今日全部</div>
           <img src="../../assets/qbpro.png" class="img1" style="width: 50px;height: 50px;" />
           <div class="twz">
             <span class="tw1">新品</span>
@@ -28,7 +28,7 @@
           </div>
         </div>
         <div class="mtBox01">
-          <div class="t1">已推送</div>
+          <div class="t1">今日已推送</div>
           <img src="../../assets/tspro.png" class="img1" style="width: 50px;height: 50px;" />
           <div class="twz">
             <span class="tw1">新品</span>
@@ -40,19 +40,40 @@
           </div>
         </div>
         <div class="mtBox01">
-          <div class="t1">已认领</div>
+          <div class="t1">今日已认领</div>
           <img src="../../assets/rlpro.png" class="img1" style="width: 50px;height: 50px;" />
-          <span class="sj66">{{rltotal}}</span>
+          <div class="twz">
+            <span class="tw1">新品</span>
+            <span class="tw2">{{rlxptotal}}</span>
+          </div>
+          <div class="twz">
+            <span class="tw1">热销</span>
+            <span class="tw2">{{rlrxtotal}}</span>
+          </div>
         </div>
         <div class="mtBox01">
-          <div class="t1">已过滤</div>
+          <div class="t1">今日已过滤</div>
           <img src="../../assets/glpro.png" class="img1" style="width: 50px;height: 50px;" />
-          <span class="sj66">{{gltotal}}</span>
+          <div class="twz">
+            <span class="tw1">新品</span>
+            <span class="tw2">{{glxptotal}}</span>
+          </div>
+          <div class="twz">
+            <span class="tw1">热销</span>
+            <span class="tw2">{{glrxtotal}}</span>
+          </div>
         </div>
         <div class="mtBox01">
-          <div class="t1">未处理</div>
+          <div class="t1">今日未处理</div>
           <img src="../../assets/clpro.png" class="img1" style="width: 50px;height: 50px;" />
-          <span class="sj66">{{cltotal}}</span>
+          <div class="twz">
+            <span class="tw1">新品</span>
+            <span class="tw2">{{clxptotal}}</span>
+          </div>
+          <div class="twz">
+            <span class="tw1">热销</span>
+            <span class="tw2">{{clrxtotal}}</span>
+          </div>
         </div>
       </div>
       <div class="mtCase">
@@ -63,18 +84,21 @@
           </el-col>
         </div>
         <div class="mtCase02 reCop" :style="mtCase01">
-          <p class="mtop">开发产品处理情况占比</p>
-          <transition
-            enter-active-class="animated fadeIn"
-            leave-active-class="animated fadeIn"
-          >
+          <p class="mtop">今日开发产品处理情况</p>
+          <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeIn">
             <div class="xBox" v-show="isshow">
               <div class="mcT01" v-for="(item,index) in devNum" :key="index">
                 <span class="mName">{{item.username}}</span>
                 <div class="xCase">
-                  <span class="xg" :style="{width:item.claimRate+'%'}"></span>
-                  <span class="xr" :style="{width:item.filterRate+'%'}"></span>
-                  <span class="xh" :style="{width:item.unhandledRate+'%'}"></span>
+                  <el-tooltip placement="top" :content="item.claimNum+''">
+                    <span class="xg" :style="{width:item.claimRate+'%'}"></span>
+                  </el-tooltip>
+                  <el-tooltip placement="top" :content="item.filterNum+''">
+                    <span class="xr" :style="{width:item.filterRate+'%'}"></span>
+                  </el-tooltip>
+                  <el-tooltip placement="top" :content="item.unhandledNum+''">
+                    <span class="xh" :style="{width:item.unhandledRate+'%'}"></span>
+                  </el-tooltip>
                 </div>
               </div>
             </div>
@@ -275,11 +299,17 @@ export default {
       tsrxtotal: 0,
       xptotal: 0,
       rxtotal: 0,
+      rlxptotal: 0,
+      rlrxtotal: 0,
+      glxptotal: 0,
+      glrxtotal: 0,
+      clxptotal: 0,
+      clrxtotal: 0,
       allMenu: [],
       ruleNameXp: [],
       ruleNameRx: [],
       tabledata: [],
-      isshow:false,
+      isshow: false,
       devNum: [],
       options: {
         tooltip: {
@@ -550,7 +580,7 @@ export default {
     });
     getDailyReport().then(response => {
       this.devNum = response.data.data.devData;
-      this.isshow=true
+      this.isshow = true;
       var xptotal = response.data.data.totalNewNum;
       var setTime = setInterval(() => {
         if (this.xptotal >= xptotal) {
@@ -587,34 +617,58 @@ export default {
           this.tsrxtotal = this.tsrxtotal + 1;
         }
       }, 1);
-      var rltotal =
-        response.data.data.claimNewNum + response.data.data.claimHotNum;
+      var rlxptotal = response.data.data.claimNewNum;
       var setTime4 = setInterval(() => {
-        if (this.rltotal >= rltotal) {
-          this.rltotal = rltotal;
+        if (this.rlxptotal >= rlxptotal) {
+          this.rlxptotal = rlxptotal;
           clearInterval(setTime4);
         } else {
-          this.rltotal = this.rltotal + 1;
+          this.rlxptotal = this.rlxptotal + 1;
         }
       }, 1);
-      var gltotal =
-        response.data.data.filterNewNum + response.data.data.filterHotNum;
+      var rlrxtotal = response.data.data.claimHotNum;
+      var setTime7 = setInterval(() => {
+        if (this.rlrxtotal >= rlrxtotal) {
+          this.rlrxtotal = rlrxtotal;
+          clearInterval(setTime7);
+        } else {
+          this.rlrxtotal = this.rlrxtotal + 1;
+        }
+      }, 1);
+      var glxptotal = response.data.data.filterNewNum;
       var setTime5 = setInterval(() => {
-        if (this.gltotal >= gltotal) {
-          this.gltotal = gltotal;
+        if (this.glxptotal >= glxptotal) {
+          this.glxptotal = glxptotal;
           clearInterval(setTime5);
         } else {
-          this.gltotal = this.gltotal + 1;
+          this.glxptotal = this.glxptotal + 1;
         }
       }, 1);
-      var cltotal =
-        response.data.data.unhandledNewNum + response.data.data.unhandledHotNum;
+      var glrxtotal = response.data.data.filterHotNum;
+      var setTime8 = setInterval(() => {
+        if (this.glrxtotal >= glrxtotal) {
+          this.glrxtotal = glrxtotal;
+          clearInterval(setTime8);
+        } else {
+          this.glrxtotal = this.glrxtotal + 1;
+        }
+      }, 1);
+      var clxptotal = response.data.data.unhandledNewNum;
       var setTime6 = setInterval(() => {
-        if (this.cltotal >= cltotal) {
-          this.cltotal = cltotal;
+        if (this.clxptotal >= clxptotal) {
+          this.clxptotal = clxptotal;
           clearInterval(setTime6);
         } else {
-          this.cltotal = this.cltotal + 1;
+          this.clxptotal = this.clxptotal + 1;
+        }
+      }, 1);
+      var clrxtotal = response.data.data.unhandledHotNum;
+      var setTime9 = setInterval(() => {
+        if (this.clrxtotal >= clrxtotal) {
+          this.clrxtotal = clrxtotal;
+          clearInterval(setTime9);
+        } else {
+          this.clrxtotal = this.clrxtotal + 1;
         }
       }, 1);
       var arrName = [];
@@ -725,7 +779,6 @@ export default {
   padding: 10px;
   width: 100%;
   padding-left: 15px;
-  letter-spacing: 2px;
 }
 .img1 {
   position: absolute;
