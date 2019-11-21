@@ -709,15 +709,15 @@ export default {
 .mtCase01 {
   width: 79.4%;
   background: #fff;
-  float: right;
-  margin-right: 0.5%;
+  float: left;
   border-radius: 5px;
 }
 .mtCase02 {
-  width: 18.9%;
-  float: left;
+  width: 18.8%;
+  float: right;
   background: #fff;
   border-radius: 5px;
+  margin-right: 0.45%;
 }
 .t1 {
   color: #fff;
