@@ -593,7 +593,7 @@ export default {
             this.rxtotal = rxtotal;
             clearInterval(setTime1);
           } else {
-            this.rxtotal = this.rxtotal + 20;
+            this.rxtotal = this.rxtotal + 50;
           }
         }, 1);
         var tsxptotal = response.data.data.dispatchNewNum;
