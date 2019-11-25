@@ -1692,3 +1692,18 @@ export function getDailyReport() {
   })
 }
 
+export function formRefuseReport(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/refuse-report',
+    method: 'post',
+    data
+  })
+}
+
+export function getPyCate() {
+  return request({
+    url: '/products-engine/py-cate',
+    method: 'get'
+  })
+}

@@ -253,6 +253,39 @@
         </el-table>
       </div>
     </div>
+    <div v-show="show.gl">
+      <div class="w95">
+        <div class="floet">
+          <div class="floet01">
+            <span>时间日期</span>
+            <el-date-picker
+              size="small"
+              v-model="condition2.dateRange"
+              value-format="yyyy-MM-dd"
+              type="daterange"
+              align="right"
+              clearable
+              unlink-panels
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              style="width:250px;margin-left:10px;"
+              :picker-options="pickerOptions2"
+            ></el-date-picker>
+          </div>
+          <div class="floet01">
+            <el-button size="small" type="primary" @click="getDataGl()">查询</el-button>
+          </div>
+        </div>
+      </div>
+      <div class="w95">
+        <el-col :span="24">
+          <el-card>
+            <div ref="or1" :style="obj1"></div>
+          </el-card>
+        </el-col>
+      </div>
+    </div>
   </section>
 </template>
 <script type="text/ecmascript-6">
@@ -264,7 +297,8 @@ import {
   APRengineRule,
   APRengineRuleHot,
   formRuleReport,
-  getDailyReport
+  getDailyReport,
+  formRefuseReport
 } from "../../api/product";
 import {
   compareUp,
@@ -288,7 +322,8 @@ export default {
       show: {
         mt: true,
         rl: false,
-        ts: false
+        ts: false,
+        gl: false
       },
       styObj: {
         width: "100%",
@@ -308,6 +343,9 @@ export default {
       condition1: {
         ruleType: null,
         ruleName: null,
+        dateRange: []
+      },
+      condition2: {
         dateRange: []
       },
       ruleType: ["新品", "热销"],
@@ -331,6 +369,7 @@ export default {
       ruleNameRx: [],
       tabledata: [],
       tabledatarl: [],
+      tabledatagl: [],
       isshow: false,
       devNum: [],
       options: {
@@ -413,43 +452,73 @@ export default {
             }
           }
         },
-        legend: {
-          top: "2%",
-          data: ["爆款数", "旺款数", "产品总数"]
-        },
         grid: {
           left: "3%",
-          right: "4%",
+          right: "3%",
           bottom: "3%",
           containLabel: true
         },
-        xAxis: [
-          {
-            type: "category",
-            top: "1%",
-            data: []
-          }
-        ],
-        yAxis: [
-          {
-            type: "value"
-          }
-        ],
+        xAxis: {
+          type: "category",
+          data: []
+        },
+        yAxis: {
+          type: "value"
+        },
         series: [
           {
-            name: "爆款数",
+            data: [],
             type: "bar",
-            data: []
-          },
-          {
-            name: "旺款数",
-            type: "bar",
-            data: []
-          },
-          {
-            name: "产品总数",
-            type: "bar",
-            data: []
+            itemStyle: {
+              normal: {
+                label: {
+                  show: true,
+                  position: "top",
+                  textStyle: {
+                    color: "#222222"
+                  },
+                  formatter: function(params) {
+                    if (params.value == 0) {
+                      return "";
+                    } else {
+                      return params.value;
+                    }
+                  }
+                },
+                barBorderRadius: [12, 12, 12, 12],
+                //颜色渐变函数 前四个参数分别表示四个位置依次为左、下、右、上
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                  {
+                    offset: 0,
+                    color: "#4fd6d2" // 0% 处的颜色
+                  },
+                  {
+                    offset: 0.5,
+                    color: "#4fd6d2" // 100% 处的颜色
+                  },
+                  {
+                    offset: 1,
+                    color: "#4fd6d2" // 100% 处的颜色
+                  }
+                ]), //背景渐变色
+                lineStyle: {
+                  // 系列级个性化折线样式
+                  width: 4,
+                  type: "solid",
+                  color: "#4fd6d2"
+                }
+              },
+              emphasis: {
+                color: "#4fd6d2",
+                lineStyle: {
+                  // 系列级个性化折线样式
+                  width: 4,
+                  type: "dotted",
+                  color: "#4fd6d2" //折线的颜色
+                }
+              }
+            }, //线条样式
+            barWidth: "20" //折线点的大小
           }
         ]
       },
@@ -573,6 +642,12 @@ export default {
       } else {
         this.show["ts"] = false;
       }
+      if (tab.name === "/v1/products-engine/refuse-report") {
+        this.show["gl"] = true;
+        this.getDataGl();
+      } else {
+        this.show["gl"] = false;
+      }
     },
     getDataTotal() {
       getDailyReport().then(response => {
@@ -593,7 +668,7 @@ export default {
             this.rxtotal = rxtotal;
             clearInterval(setTime1);
           } else {
-            this.rxtotal = this.rxtotal + 50;
+            this.rxtotal = this.rxtotal + 100;
           }
         }, 1);
         var tsxptotal = response.data.data.dispatchNewNum;
@@ -686,6 +761,21 @@ export default {
         this.tabledata = res.data.data;
       });
     },
+    getDataGl() {
+      formRefuseReport(this.condition2).then(res => {
+        var tabledatagl = res.data.data;
+        var name = [];
+        var data = [];
+        for (var i = 0; i < tabledatagl.length; i++) {
+          name.push(tabledatagl[i].refuse);
+          data.push(tabledatagl[i].num);
+        }
+        this.options1.xAxis.data = name;
+        this.options1.series[0].data = data;
+        let or1 = this.$echarts.init(this.$refs.or1);
+        or1.setOption(this.options1);
+      });
+    },
     getData() {
       this.listLoading = true;
       formProductReport(this.condition).then(res => {
@@ -703,6 +793,10 @@ export default {
       getNextDate(endData, 0)
     ];
     this.condition1.dateRange = [
+      getNextDate(startData, 0),
+      getNextDate(endData, 0)
+    ];
+    this.condition2.dateRange = [
       getNextDate(startData, 0),
       getNextDate(endData, 0)
     ];
@@ -738,7 +832,7 @@ export default {
   width: 97%;
   overflow: hidden;
   background: #fff;
-  margin-left: 0.5%;
+  margin-left: 0.6%;
   padding: 10px 10px;
   margin-top: 10px;
   border-radius: 5px;
