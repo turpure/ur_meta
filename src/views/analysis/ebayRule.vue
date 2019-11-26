@@ -524,8 +524,12 @@ export default {
       var obj = {
         id: null
       };
+      this.addPyCate=null
       getCateRuleInfo(obj).then(response => {
         this.itemDetail = response.data.data.detail;
+      });
+      getPyCate().then(response => {
+        this.pyCate = response.data.data;
       });
       setTimeout(() => {
         this.addebaydisLogin = true;
