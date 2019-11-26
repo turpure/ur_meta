@@ -358,6 +358,7 @@ export default {
     addCustomCate(){
       if(this.CustomCateName){
         this.pyCate.push(this.CustomCateName)
+        this.addPyCate=this.CustomCateName
         this.innerVisible=false
       }else{
         this.$message.error("请输入类目名称");

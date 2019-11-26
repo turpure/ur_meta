@@ -162,6 +162,14 @@
           <el-table-column type="index" fixed align="center" width="80" header-align="center"></el-table-column>
           <el-table-column label="开发员" header-align="center" align="center" prop="developer"></el-table-column>
           <el-table-column label="分配产品总数" header-align="center" align="center" prop="dispatchNum"></el-table-column>
+          <el-table-column label="认领产品数" header-align="center" align="center" prop="claimNum"></el-table-column>
+          <el-table-column label="认领率(%)" header-align="center" align="center" prop="claimRate">
+            <template slot-scope="scope">{{scope.row.claimRate | cutOut}}</template>
+          </el-table-column>
+          <el-table-column label="过滤数" header-align="center" align="center" prop="filterNum"></el-table-column>
+          <el-table-column label="过滤率(%)" header-align="center" align="center" prop="filterRate">
+            <template slot-scope="scope">{{scope.row.filterRate | cutOut}}</template>
+          </el-table-column>
           <el-table-column label="爆款数" header-align="center" align="center" prop="hotNum"></el-table-column>
           <el-table-column label="爆款率(%)" header-align="center" align="center" prop="hotRate">
             <template slot-scope="scope">{{scope.row.hotRate | cutOut}}</template>
@@ -170,10 +178,7 @@
           <el-table-column label="旺款率(%)" header-align="center" align="center" prop="popRate">
             <template slot-scope="scope">{{scope.row.popRate | cutOut}}</template>
           </el-table-column>
-          <el-table-column label="认领产品数" header-align="center" align="center" prop="claimNum"></el-table-column>
-          <el-table-column label="认领率(%)" header-align="center" align="center" prop="claimRate">
-            <template slot-scope="scope">{{scope.row.claimRate | cutOut}}</template>
-          </el-table-column>
+          <el-table-column label="未处理数" header-align="center" align="center" prop="unhandledNum"></el-table-column>
         </el-table>
       </div>
     </div>
@@ -248,8 +253,22 @@
           <el-table-column label="总产品数" header-align="center" align="center" prop="totalNum"></el-table-column>
           <el-table-column label="推送总数" header-align="center" align="center" prop="dispatchNum"></el-table-column>
           <el-table-column label="认领产品数" header-align="center" align="center" prop="claimNum"></el-table-column>
+          <el-table-column label="认领率(%)" header-align="center" align="center" prop="claimRate">
+            <template slot-scope="scope">{{scope.row.claimRate | cutOut}}</template>
+          </el-table-column>
+          <el-table-column label="过滤产品数" header-align="center" align="center" prop="filterNum"></el-table-column>
+          <el-table-column label="过滤率(%)" header-align="center" align="center" prop="filterRate">
+            <template slot-scope="scope">{{scope.row.filterRate | cutOut}}</template>
+          </el-table-column>
           <el-table-column label="爆款数" header-align="center" align="center" prop="hotNum"></el-table-column>
+          <el-table-column label="爆款率(%)" header-align="center" align="center" prop="hotRate">
+            <template slot-scope="scope">{{scope.row.hotRate | cutOut}}</template>
+          </el-table-column>
           <el-table-column label="旺款数" header-align="center" align="center" prop="popNum"></el-table-column>
+          <el-table-column label="旺款率(%)" header-align="center" align="center" prop="popRate">
+            <template slot-scope="scope">{{scope.row.popRate | cutOut}}</template>
+          </el-table-column>
+          <el-table-column label="未处理产品数" header-align="center" align="center" prop="unhandledNewNum"></el-table-column>
         </el-table>
       </div>
     </div>
@@ -286,6 +305,15 @@
         </el-col>
       </div>
     </div>
+    <el-dialog width="75%" title="" :visible.sync="innerVisible">
+        <el-row>
+          <div v-for="(item,index) in detailArr" :key="index" class="xRep">
+            <div class="xRepChild">
+              <span class="ddSpan">{{item.name}}</span><span class="deSpan">{{item.value}}</span>
+            </div>  
+          </div>
+        </el-row>
+    </el-dialog>
   </section>
 </template>
 <script type="text/ecmascript-6">
@@ -310,6 +338,7 @@ export default {
   data() {
     return {
       index: 1,
+      innerVisible:false,
       tableHeightstock: window.innerHeight - 210,
       activeName: "first",
       developer: [],
@@ -370,6 +399,7 @@ export default {
       tabledata: [],
       tabledatarl: [],
       tabledatagl: [],
+      detailArr:[],
       isshow: false,
       devNum: [],
       options: {
@@ -564,6 +594,7 @@ export default {
           sums[index] = "合计";
           return;
         }
+        if (index == 3 || index == 4 || index == 5 || index == 7 || index == 9 || index == 11 || index == 13) {
         const values = data.map(item => Number(item[column.property]));
         if (!values.every(value => isNaN(value))) {
           sums[index] = values.reduce((prev, curr) => {
@@ -578,6 +609,22 @@ export default {
         } else {
           sums[index] = "N/A";
         }
+        }else{
+          sums[index] = "--";
+        }
+        var arr=sums
+        if(index==6){
+          sums[index] = (arr[5]/arr[4]*100).toFixed(2);
+        }
+        if(index==8){
+          sums[index] = (arr[7]/arr[4]*100).toFixed(2);
+        }
+        if(index==10){
+          sums[index] = (arr[9]/arr[5]*100).toFixed(2);
+        }
+        if(index==12){
+          sums[index] = (arr[11]/arr[5]*100).toFixed(2);
+        }
       });
       return sums;
     },
@@ -589,7 +636,7 @@ export default {
           sums[index] = "合计";
           return;
         }
-        if (index == 2 || index == 3 || index == 5 || index == 7) {
+        if (index == 2 || index == 3 || index == 5 || index == 7 || index == 9 || index == 11) {
           const values = data.map(item => Number(item[column.property]));
           if (!values.every(value => isNaN(value))) {
             sums[index] = values.reduce((prev, curr) => {
@@ -604,6 +651,21 @@ export default {
           } else {
             sums[index] = "N/A";
           }
+        }else{
+          sums[index] = "--";
+        }
+        var arr=sums
+        if(index==4){
+          sums[index] = (arr[3]/arr[2]*100).toFixed(2);
+        }
+        if(index==6){
+          sums[index] = (arr[5]/arr[2]*100).toFixed(2);
+        }
+        if(index==8){
+          sums[index] = (arr[7]/arr[3]*100).toFixed(2);
+        }
+        if(index==10){
+          sums[index] = (arr[9]/arr[3]*100).toFixed(2);
         }
       });
       return sums;
@@ -668,7 +730,7 @@ export default {
             this.rxtotal = rxtotal;
             clearInterval(setTime1);
           } else {
-            this.rxtotal = this.rxtotal + 100;
+            this.rxtotal = this.rxtotal + 200;
           }
         }, 1);
         var tsxptotal = response.data.data.dispatchNewNum;
@@ -763,7 +825,7 @@ export default {
     },
     getDataGl() {
       formRefuseReport(this.condition2).then(res => {
-        var tabledatagl = res.data.data;
+        var tabledatagl = res.data.data.refuse;
         var name = [];
         var data = [];
         for (var i = 0; i < tabledatagl.length; i++) {
@@ -774,6 +836,26 @@ export default {
         this.options1.series[0].data = data;
         let or1 = this.$echarts.init(this.$refs.or1);
         or1.setOption(this.options1);
+        var _this =this
+        or1.on('click', function (params) {
+          console.log(params)
+          if(params.name=="8：其他"){
+            _this.innerVisible=true
+          }
+        })
+        var detailStr=res.data.data.detail;
+        var detailArr=[]
+        for(var key in detailStr){
+          var obj={
+            name:key,
+            value:detailStr[key]
+          }
+          detailArr.push(obj)
+        }
+        for(var i=0;i<detailArr.length;i++){
+          detailArr[i].name=detailArr[i].name.replace("8：其他:","");
+        }
+        this.detailArr=detailArr
       });
     },
     getData() {
@@ -1002,6 +1084,36 @@ export default {
   float: left;
   background: #909399;
   height: 12px;
+}
+.xRep{
+  width: 15.6%;
+  float: left;
+  margin: 8px 0.4%;
+  text-align: center;
+  font-size: 13px;
+  line-height: 40px;
+  border: #eee solid 1px;
+  background: #eee;
+  border-radius: 5px;
+  text-align:center;
+  position: relative;
+}
+.xRepChild{
+  overflow: hidden;
+  margin:0 auto;
+}
+.ddSpan{
+  display:inline-block;text-align:left;
+}
+.deSpan{
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #f35b5b;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+  color: #fff;
 }
 @media screen and (max-width: 1500px) {
   .img1 {
