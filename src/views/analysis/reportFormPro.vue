@@ -845,6 +845,7 @@ export default {
         var detailArr=res.data.data.detail;
         for(var i=0;i<detailArr.length;i++){
           detailArr[i].name=detailArr[i].name.replace("8：其他:","");
+          detailArr[i].name=detailArr[i].name.replace("8：其它:","");
         }
         this.detailArr=detailArr
       });
