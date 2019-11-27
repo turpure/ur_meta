@@ -15,9 +15,14 @@
         </div>
       </div>
     </div>
+    <el-col :span="24" style="margin-top:10px;">
+      <el-col :md="6" :lg="6" :xl="4">
+        <img :src="condition.imageUrl" class="imageSty" />
+      </el-col>
+    </el-col>
     <div class="w90" :style="obj1" v-loading="imgLoading">
       <el-row>
-        <el-col :span="4" v-for="(item,index) in imageArr" :key="index">
+        <el-col :md="6" :lg="6" :xl="4" v-for="(item,index) in imageArr" :key="index">
           <img :src="item.PicName" class="imageSty" />
         </el-col>
       </el-row>
@@ -64,7 +69,7 @@ export default {
   width: 100%;
   overflow: hidden;
   background: #fff;
-  padding: 15px 12px;
+  padding: 15px 6px;
   border-radius: 5px;
 }
 .w90 {
@@ -90,9 +95,9 @@ export default {
 }
 @media screen and (max-width: 1500px) {
   .imageSty {
-    width: 95%;
+    width: 92%;
     margin: auto;
-    height: 150px;
+    height: 180px;
     border: #ccc solid 1px;
     margin: 0 2.5%;
     margin-bottom: 10px;
