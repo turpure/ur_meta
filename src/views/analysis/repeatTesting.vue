@@ -15,17 +15,15 @@
         </div>
       </div>
     </div>
-    <el-col :span="24" style="margin-top:10px;">
-      <el-col :md="6" :lg="6" :xl="4">
+    <div style="margin-top:10px;">
+      <div class="imgDiv">
         <img :src="condition.imageUrl" class="imageSty" />
-      </el-col>
-    </el-col>
+      </div>
+    </div>
     <div class="w90" :style="obj1" v-loading="imgLoading">
-      <el-row>
-        <el-col :md="6" :lg="6" :xl="4" v-for="(item,index) in imageArr" :key="index">
+        <div v-for="(item,index) in imageArr" :key="index" class="imgDiv">
           <img :src="item.PicName" class="imageSty" />
-        </el-col>
-      </el-row>
+        </div>
     </div>
   </section>
 </template>
@@ -84,7 +82,7 @@ export default {
 .imageSty {
   width: 95%;
   margin: auto;
-  height: 220px;
+  height: 240px;
   border: #ccc solid 1px;
   margin: 0 2.5%;
   margin-bottom: 10px;
@@ -92,6 +90,10 @@ export default {
 .floet01 {
   float: left;
   margin-right: 15px;
+}
+.imgDiv{
+    width: 20%;
+    float: left;
 }
 @media screen and (max-width: 1500px) {
   .imageSty {
