@@ -84,7 +84,6 @@ export default {
   margin: auto;
   height: 240px;
   border: #ccc solid 1px;
-  margin: 0 2.5%;
   margin-bottom: 10px;
 }
 .floet01 {
@@ -101,7 +100,6 @@ export default {
     margin: auto;
     height: 180px;
     border: #ccc solid 1px;
-    margin: 0 2.5%;
     margin-bottom: 10px;
   }
 }
