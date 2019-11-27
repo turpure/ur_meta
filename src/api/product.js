@@ -1707,3 +1707,12 @@ export function getPyCate() {
     method: 'get'
   })
 }
+
+export function formImageSearch(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/image-search',
+    method: 'post',
+    data
+  })
+}
