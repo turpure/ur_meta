@@ -89,10 +89,16 @@
             <div class="xBox" v-show="isshow">
               <div class="mcT01" v-for="(item,index) in devNum" :key="index">
                 <span class="mName">{{item.username}}</span>
-                <div class="xCase">
-                  <span class="xg" :style="{width:item.claimRate+'%'}"></span>
-                  <span class="xr" :style="{width:item.filterRate+'%'}"></span>
-                  <span class="xh" :style="{width:item.unhandledRate+'%'}"></span>
+                <div class="xCase" @mouseover="numIndex=index" @mouseout="numIndex=999">
+                  <span class="xg" :style="{width:item.claimRate+'%'}">
+                    <span v-show="index==numIndex">{{item.claimNum}}</span>
+                  </span>
+                  <span class="xr" :style="{width:item.filterRate+'%'}">
+                    <span v-show="index==numIndex">{{item.filterNum}}</span>
+                  </span>
+                  <span class="xh" :style="{width:item.unhandledRate+'%'}">
+                    <span v-show="index==numIndex">{{item.unhandledNum}}</span>
+                  </span>
                   <!-- <el-tooltip :content="item.claimNum+''" placement="top">
                     <span class="xg" :style="{width:item.claimRate+'%'}"></span>
                   </el-tooltip>
@@ -338,6 +344,7 @@ export default {
   data() {
     return {
       index: 1,
+      numIndex:999,
       innerVisible:false,
       tableHeightstock: window.innerHeight - 210,
       activeName: "first",
@@ -1064,18 +1071,39 @@ export default {
   float: left;
   background: #67c23a;
   height: 12px;
+  position: relative;
+}
+.xg span{
+  text-align: center;
+  display: block;
+  color: #000;
+  line-height: 12px;
+}
+.xr span{
+  text-align: center;
+  display: block;
+  color: #000;
+  line-height: 12px;
+}
+.xh span{
+  text-align: center;
+  display: block;
+  color: #000;
+  line-height: 12px;
 }
 .xr {
   display: block;
   float: left;
   background: #f56c6c;
   height: 12px;
+  position: relative;
 }
 .xh {
   display: block;
   float: left;
   background: #909399;
   height: 12px;
+  position: relative;
 }
 .xRep{
   width: 15.6%;
