@@ -89,6 +89,11 @@
             <div class="xBox" v-show="isshow">
               <div class="mcT01" v-for="(item,index) in devNum" :key="index">
                 <span class="mName">{{item.username}}</span>
+                <div class="mcDiv" v-show="numIndex==index">
+                  <span :style="{width:item.claimRate+'%'}" v-show="item.claimNum>0">{{item.claimNum}}</span>
+                  <span :style="{width:item.filterRate+'%'}" v-show="item.filterNum>0">{{item.filterNum}}</span>
+                  <span :style="{width:item.unhandledRate+'%'}" v-show="item.unhandledNum>0">{{item.unhandledNum}}</span>
+                </div>
                 <div class="xCase" @mouseover="numIndex=index" @mouseout="numIndex=999">
                   <span class="xg" :style="{width:item.claimRate+'%'}">
                   </span>
@@ -1050,6 +1055,7 @@ export default {
 .mcT01 {
   width: 92%;
   margin: auto;
+  position: relative;
 }
 .mName {
   display: block;
@@ -1101,6 +1107,21 @@ export default {
   background: #909399;
   height: 12px;
   position: relative;
+}
+.mcDiv{
+  width: 95%;
+  left:50%;
+  margin-left: -47.5%;
+  overflow: hidden;
+  position: absolute;
+  border-radius: 25px;
+  top: 15px;
+}
+.mcDiv span{
+  width: 100%;
+  display: block;
+  float: left;
+  text-align: right;
 }
 .xRep{
   width: 15.6%;
