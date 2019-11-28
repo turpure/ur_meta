@@ -1975,7 +1975,7 @@
                 v-for="(item,index) in last110"
                 :key="index"
                 @click="judge(item.rate)"
-                :class="[item.rxtraBonus==100?'indexbImg1 jb01img':item.rxtraBonus==200?'indexbImg1 jb02img':item.rxtraBonus==300?'indexbImg1 jb03img':item.rxtraBonus==400?'indexbImg1 jb04img':item.rxtraBonus==500?'indexbImg1 jb05img':item.rxtraBonus==600?'indexbImg jb06img':item.rxtraBonus==700?'indexbImg jb07img':item.rxtraBonus==800?'indexbImg jb08img':item.rxtraBonus==900?'indexbImg jb09img':item.rxtraBonus==1000?'indexbImg jb010img':item.rxtraBonus==1100?'indexbImg jb011img':item.rxtraBonus==1200?'indexbImg jb012img':item.rxtraBonus==1300?'indexbImg jb013img':item.rxtraBonus==1400?'indexbImg jb014img':item.rxtraBonus==1500?'indexbImg jb015img':'',item.username==sysUserName?'imbge':'']"
+                :class="[item.rxtraBonus==100?'indexbImg1 jb01img':item.rxtraBonus==200?'indexbImg1 jb02img':item.rxtraBonus==300?'indexbImg1 jb03img':item.rxtraBonus==400?'indexbImg1 jb04img':item.rxtraBonus==500?'indexbImg1 jb05img':item.rxtraBonus==600?'indexbImg jb06img':item.rxtraBonus==700?'indexbImg jb07img':item.rxtraBonus==800?'indexbImg jb08img':item.rxtraBonus==900?'indexbImg jb09img':item.rxtraBonus==1000?'indexbImg jb010img':item.rxtraBonus==1100?'indexbImg jb011img':item.rxtraBonus==1200?'indexbImg jb012img':item.rxtraBonus==1300?'indexbImg jb013img':item.rxtraBonus==1400?'indexbImg jb014img':item.rxtraBonus>=1500?'indexbImg jb015img':'',item.username==sysUserName?'imbge':'']"
               ></div>
               <div class="jblist">
                 <div class="jb01 jbg">

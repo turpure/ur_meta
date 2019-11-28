@@ -847,14 +847,14 @@ export default {
         or1.setOption(this.options1);
         var _this =this
         or1.on('click', function (params) {
-          if(params.name=="8：其他"){
+          if(params.name=="8: 其他"){
             _this.innerVisible=true
           }
         })
         var detailArr=res.data.data.detail;
         for(var i=0;i<detailArr.length;i++){
-          detailArr[i].name=detailArr[i].name.replace("8：其他:","");
-          detailArr[i].name=detailArr[i].name.replace("8：其它:","");
+          detailArr[i].name=detailArr[i].name.replace("8: 其他:","");
+          detailArr[i].name=detailArr[i].name.replace("8: 其它:","");
         }
         this.detailArr=detailArr
       });
