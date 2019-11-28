@@ -91,13 +91,10 @@
                 <span class="mName">{{item.username}}</span>
                 <div class="xCase" @mouseover="numIndex=index" @mouseout="numIndex=999">
                   <span class="xg" :style="{width:item.claimRate+'%'}">
-                    <span v-show="index==numIndex">{{item.claimNum}}</span>
                   </span>
                   <span class="xr" :style="{width:item.filterRate+'%'}">
-                    <span v-show="index==numIndex">{{item.filterNum}}</span>
                   </span>
                   <span class="xh" :style="{width:item.unhandledRate+'%'}">
-                    <span v-show="index==numIndex">{{item.unhandledNum}}</span>
                   </span>
                   <!-- <el-tooltip :content="item.claimNum+''" placement="top">
                     <span class="xg" :style="{width:item.claimRate+'%'}"></span>
@@ -1046,7 +1043,7 @@ export default {
 }
 .xBox {
   width: 100%;
-  height: 100%;
+  height: 90%;
   overflow: hidden;
   overflow-y: auto;
 }
