@@ -871,6 +871,8 @@ export default {
     this.getDataTotal();
     var startData = getMonthDate("sevenData").start;
     var endData = getMonthDate("sevenData").end;
+    var startToda = getMonthDate("todaData").start;
+    var endToda = getMonthDate("todaData").end;
     this.condition.dateRange = [
       getNextDate(startData, 0),
       getNextDate(endData, 0)
@@ -880,8 +882,8 @@ export default {
       getNextDate(endData, 0)
     ];
     this.condition2.dateRange = [
-      getNextDate(startData, 0),
-      getNextDate(endData, 0)
+      getNextDate(startToda, 0),
+      getNextDate(endToda, 0)
     ];
     APRengineRule().then(res => {
       this.ruleNameXp = res.data.data;
