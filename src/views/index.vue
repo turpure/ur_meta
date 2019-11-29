@@ -3472,7 +3472,7 @@ export default {
           
           dateArr[i].amt = Number(dateArr[i].amt).toFixed(0);
           if(Number(dateArr[i].rate>=100)){
-            dateArr[i].bonus = Number(dateArr[i].bonus).toFixed(0)+Number(dateArr[i].rxtraBonus).toFixed(0);
+            dateArr[i].bonus = Number(dateArr[i].bonus)+Number(dateArr[i].rxtraBonus);
           }else{
             dateArr[i].bonus = 0;
           }
