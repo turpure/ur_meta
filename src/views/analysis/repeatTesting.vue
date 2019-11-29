@@ -27,14 +27,15 @@
       </div>
     </div>
     <div style="margin-top:10px;">
-      <div class="imgDiv" style="margin-left:10px;">
+      <div class="imgDiv" style="margin-left:10px;margin-bottom:10px;">
         <img :src="condition.imageUrl" class="imageSty" />
       </div>
     </div>
     <div class="w90" :style="obj1" v-loading="imgLoading">
       <div style="margin-left:10px;">
         <div v-for="(item,index) in imageArr" :key="index" class="imgDiv">
-          <img :src="item.PicName" class="imageSty" />
+          <img :src="item.ProductId" class="imageSty" />
+          <span>sku:{{item.PicName}}</span>
         </div>
       </div>
     </div>
@@ -122,11 +123,11 @@ export default {
   overflow: hidden;
 }
 .imageSty {
-  width: 92%;
+  width: 90%;
   margin: auto;
-  height: 250px;
+  height: 240px;
   border: #ccc solid 1px;
-  margin-bottom: 10px;
+  
 }
 .floet01 {
   float: left;
@@ -136,13 +137,19 @@ export default {
   width: 20%;
   float: left;
 }
+.imgDiv span{
+    display: block;
+    width: 90%;
+    text-align: center;
+    overflow: hidden;
+    line-height: 30px;
+}
 @media screen and (max-width: 1500px) {
   .imageSty {
     width: 92%;
     margin: auto;
     height: 180px;
     border: #ccc solid 1px;
-    margin-bottom: 10px;
   }
 }
 </style>
