@@ -3708,9 +3708,10 @@ export default {
       var bigDemo=this.$refs.bigDemo
       var cont=0
       var setTime=setInterval(() => {
-        if(bigDemo.scrollTop<240){
+        if(cont<190){
           bigDemo.scrollTop=cont++
         }else{
+          console.log(bigDemo.scrollTop)
           clearInterval(setTime)
         }
       }, 5);
