@@ -728,17 +728,6 @@ export default {
           this.clrxtotal = this.clrxtotal + 1;
         }
       }, 1);
-      var arrName = [];
-      var arrData = [];
-      var lineData = redata.claimData;
-      for (var i = 0; i < lineData.length; i++) {
-        arrName.push(lineData[i].name);
-        arrData.push(lineData[i].value);
-      }
-      this.options.xAxis[0].data = arrName;
-      this.options.series[0].data = arrData;
-      let indexOr = this.$echarts.init(this.$refs.indexOr);
-      indexOr.setOption(this.options);
     },
 
     websocketsend(agentData) {
@@ -984,17 +973,17 @@ export default {
         //     this.clrxtotal = this.clrxtotal + 1;
         //   }
         // }, 1);
-        // var arrName = [];
-        // var arrData = [];
-        // var lineData = response.data.data.claimData;
-        // for (var i = 0; i < lineData.length; i++) {
-        //   arrName.push(lineData[i].name);
-        //   arrData.push(lineData[i].value);
-        // }
-        // this.options.xAxis[0].data = arrName;
-        // this.options.series[0].data = arrData;
-        // let indexOr = this.$echarts.init(this.$refs.indexOr);
-        // indexOr.setOption(this.options);
+        var arrName = [];
+        var arrData = [];
+        var lineData = response.data.data.claimData;
+        for (var i = 0; i < lineData.length; i++) {
+          arrName.push(lineData[i].name);
+          arrData.push(lineData[i].value);
+        }
+        this.options.xAxis[0].data = arrName;
+        this.options.series[0].data = arrData;
+        let indexOr = this.$echarts.init(this.$refs.indexOr);
+        indexOr.setOption(this.options);
       });
     },
     getDataTs() {
