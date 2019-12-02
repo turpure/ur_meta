@@ -3711,11 +3711,9 @@ export default {
         if(cont<190){
           bigDemo.scrollTop=cont++
         }else{
-          console.log(bigDemo.scrollTop)
           clearInterval(setTime)
         }
       }, 5);
-      console.log(bigDemo.scrollTop)
     },1000)
   }
 };
@@ -3866,7 +3864,7 @@ export default {
   float: left;
   margin-top: 1.5%;
   height: 915px;
-  background: url(../assets/bgban5.jpg) no-repeat center;
+  background: url(../assets/bgban51.png) no-repeat center;
   background-size: 100% 100%;
   position: relative;
 }
