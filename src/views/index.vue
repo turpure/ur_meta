@@ -1924,7 +1924,7 @@
           style="width: 40px;height: 40px;"
         />
         <div class="leftBox">
-          <div class="bigDemo">
+          <div class="bigDemo" ref="bigDemo">
             <div class="rightDemo">
               <span class="span20">10%</span>
               <div
@@ -3704,6 +3704,18 @@ export default {
       ).toFixed(0);
     });
     this.getNews();
+    setTimeout(()=>{
+      var bigDemo=this.$refs.bigDemo
+      var cont=0
+      var setTime=setInterval(() => {
+        if(bigDemo.scrollTop<240){
+          bigDemo.scrollTop=cont++
+        }else{
+          clearInterval(setTime)
+        }
+      }, 5);
+      console.log(bigDemo.scrollTop)
+    },1000)
   }
 };
 </script>
@@ -4033,7 +4045,7 @@ h2:hover {
   margin: 0 auto;
   padding-top: 66px;
   position: relative;
-  height: 750px;
+  height: 800px;
   overflow: hidden;
   overflow-y: auto;
 }
