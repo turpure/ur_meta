@@ -90,17 +90,23 @@
               <div class="mcT01" v-for="(item,index) in devNum" :key="index">
                 <span class="mName">{{item.username}}</span>
                 <div class="mcDiv" v-show="numIndex==index">
-                  <span :style="{width:item.claimRate+'%'}" v-show="item.claimNum>0">{{item.claimNum}}</span>
-                  <span :style="{width:item.filterRate+'%'}" v-show="item.filterNum>0">{{item.filterNum}}</span>
-                  <span :style="{width:item.unhandledRate+'%'}" v-show="item.unhandledNum>0">{{item.unhandledNum}}</span>
+                  <span
+                    :style="{width:item.claimRate+'%'}"
+                    v-show="item.claimNum>0"
+                  >{{item.claimNum}}</span>
+                  <span
+                    :style="{width:item.filterRate+'%'}"
+                    v-show="item.filterNum>0"
+                  >{{item.filterNum}}</span>
+                  <span
+                    :style="{width:item.unhandledRate+'%'}"
+                    v-show="item.unhandledNum>0"
+                  >{{item.unhandledNum}}</span>
                 </div>
                 <div class="xCase" @mouseover="numIndex=index" @mouseout="numIndex=999">
-                  <span class="xg" :style="{width:item.claimRate+'%'}">
-                  </span>
-                  <span class="xr" :style="{width:item.filterRate+'%'}">
-                  </span>
-                  <span class="xh" :style="{width:item.unhandledRate+'%'}">
-                  </span>
+                  <span class="xg" :style="{width:item.claimRate+'%'}"></span>
+                  <span class="xr" :style="{width:item.filterRate+'%'}"></span>
+                  <span class="xh" :style="{width:item.unhandledRate+'%'}"></span>
                   <!-- <el-tooltip :content="item.claimNum+''" placement="top">
                     <span class="xg" :style="{width:item.claimRate+'%'}"></span>
                   </el-tooltip>
@@ -276,7 +282,12 @@
           <el-table-column label="旺款率(%)" header-align="center" align="center" prop="popRate">
             <template slot-scope="scope">{{scope.row.popRate | cutOut}}</template>
           </el-table-column>
-          <el-table-column label="未处理产品数" header-align="center" align="center" prop="unhandledNewNum"></el-table-column>
+          <el-table-column
+            label="未处理产品数"
+            header-align="center"
+            align="center"
+            prop="unhandledNewNum"
+          ></el-table-column>
         </el-table>
       </div>
     </div>
@@ -313,14 +324,15 @@
         </el-col>
       </div>
     </div>
-    <el-dialog width="75%" title="" :visible.sync="innerVisible">
-        <el-row>
-          <div v-for="(item,index) in detailArr" :key="index" class="xRep">
-            <div class="xRepChild">
-              <span class="ddSpan">{{item.name}}</span><span class="deSpan">{{item.num}}</span>
-            </div>  
+    <el-dialog width="75%" title :visible.sync="innerVisible">
+      <el-row>
+        <div v-for="(item,index) in detailArr" :key="index" class="xRep">
+          <div class="xRepChild">
+            <span class="ddSpan">{{item.name}}</span>
+            <span class="deSpan">{{item.num}}</span>
           </div>
-        </el-row>
+        </div>
+      </el-row>
     </el-dialog>
   </section>
 </template>
@@ -346,8 +358,9 @@ export default {
   data() {
     return {
       index: 1,
-      numIndex:999,
-      innerVisible:false,
+      numIndex: 999,
+      innerVisible: false,
+      websock: null,
       tableHeightstock: window.innerHeight - 210,
       activeName: "first",
       developer: [],
@@ -408,7 +421,7 @@ export default {
       tabledata: [],
       tabledatarl: [],
       tabledatagl: [],
-      detailArr:[],
+      detailArr: [],
       isshow: false,
       devNum: [],
       options: {
@@ -594,7 +607,46 @@ export default {
       return value;
     }
   },
+  destroyed: function() {
+    this.websocketclose();
+  },
+  created() {
+    this.initWebSocket();
+  },
   methods: {
+    initWebSocket() {
+      //初始化weosocket
+      const wsuri = "ws://192.168.0.1:8080"; //ws地址
+      this.websock = new WebSocket(wsuri);
+      console.log(this.websock)
+      this.websocket.onopen = this.websocketonopen;
+      this.websocket.onerror = this.websocketonerror;
+      this.websock.onmessage = this.websocketonmessage;
+      this.websock.onclose = this.websocketclose;
+    },
+    websocketonopen() {
+      let actions = '212121';
+      this.websocketsend(actions);
+      console.log("WebSocket连接成功");
+    },
+    websocketonerror(e) {
+      //错误
+      console.log("WebSocket连接发生错误");
+    },
+    websocketonmessage(e) {
+      //数据接收
+      console.log(e);
+    },
+
+    websocketsend(agentData) {
+      //数据发送
+      this.websock.send(agentData);
+    },
+
+    websocketclose(e) {
+      //关闭
+      console.log("connection closed (" + e.code + ")");
+    },
     getSummaries(param) {
       const { columns, data } = param;
       const sums = [];
@@ -603,49 +655,15 @@ export default {
           sums[index] = "合计";
           return;
         }
-        if (index == 3 || index == 4 || index == 5 || index == 7 || index == 9 || index == 11 || index == 13) {
-        const values = data.map(item => Number(item[column.property]));
-        if (!values.every(value => isNaN(value))) {
-          sums[index] = values.reduce((prev, curr) => {
-            const value = Number(curr);
-            if (!isNaN(value)) {
-              return prev + curr;
-            } else {
-              return prev;
-            }
-          }, 0);
-          sums[index] += "";
-        } else {
-          sums[index] = "N/A";
-        }
-        }else{
-          sums[index] = "--";
-        }
-        var arr=sums
-        if(index==6){
-          sums[index] = (arr[5]/arr[4]*100).toFixed(2);
-        }
-        if(index==8){
-          sums[index] = (arr[7]/arr[4]*100).toFixed(2);
-        }
-        if(index==10){
-          sums[index] = (arr[9]/arr[5]*100).toFixed(2);
-        }
-        if(index==12){
-          sums[index] = (arr[11]/arr[5]*100).toFixed(2);
-        }
-      });
-      return sums;
-    },
-    getSummariesrl(param) {
-      const { columns, data } = param;
-      const sums = [];
-      columns.forEach((column, index) => {
-        if (index === 0) {
-          sums[index] = "合计";
-          return;
-        }
-        if (index == 2 || index == 3 || index == 5 || index == 7 || index == 9 || index == 11) {
+        if (
+          index == 3 ||
+          index == 4 ||
+          index == 5 ||
+          index == 7 ||
+          index == 9 ||
+          index == 11 ||
+          index == 13
+        ) {
           const values = data.map(item => Number(item[column.property]));
           if (!values.every(value => isNaN(value))) {
             sums[index] = values.reduce((prev, curr) => {
@@ -660,21 +678,70 @@ export default {
           } else {
             sums[index] = "N/A";
           }
-        }else{
+        } else {
           sums[index] = "--";
         }
-        var arr=sums
-        if(index==4){
-          sums[index] = (arr[3]/arr[2]*100).toFixed(2);
+        var arr = sums;
+        if (index == 6) {
+          sums[index] = ((arr[5] / arr[4]) * 100).toFixed(2);
         }
-        if(index==6){
-          sums[index] = (arr[5]/arr[2]*100).toFixed(2);
+        if (index == 8) {
+          sums[index] = ((arr[7] / arr[4]) * 100).toFixed(2);
         }
-        if(index==8){
-          sums[index] = (arr[7]/arr[3]*100).toFixed(2);
+        if (index == 10) {
+          sums[index] = ((arr[9] / arr[5]) * 100).toFixed(2);
         }
-        if(index==10){
-          sums[index] = (arr[9]/arr[3]*100).toFixed(2);
+        if (index == 12) {
+          sums[index] = ((arr[11] / arr[5]) * 100).toFixed(2);
+        }
+      });
+      return sums;
+    },
+    getSummariesrl(param) {
+      const { columns, data } = param;
+      const sums = [];
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = "合计";
+          return;
+        }
+        if (
+          index == 2 ||
+          index == 3 ||
+          index == 5 ||
+          index == 7 ||
+          index == 9 ||
+          index == 11
+        ) {
+          const values = data.map(item => Number(item[column.property]));
+          if (!values.every(value => isNaN(value))) {
+            sums[index] = values.reduce((prev, curr) => {
+              const value = Number(curr);
+              if (!isNaN(value)) {
+                return prev + curr;
+              } else {
+                return prev;
+              }
+            }, 0);
+            sums[index] += "";
+          } else {
+            sums[index] = "N/A";
+          }
+        } else {
+          sums[index] = "--";
+        }
+        var arr = sums;
+        if (index == 4) {
+          sums[index] = ((arr[3] / arr[2]) * 100).toFixed(2);
+        }
+        if (index == 6) {
+          sums[index] = ((arr[5] / arr[2]) * 100).toFixed(2);
+        }
+        if (index == 8) {
+          sums[index] = ((arr[7] / arr[3]) * 100).toFixed(2);
+        }
+        if (index == 10) {
+          sums[index] = ((arr[9] / arr[3]) * 100).toFixed(2);
         }
       });
       return sums;
@@ -845,18 +912,18 @@ export default {
         this.options1.series[0].data = data;
         let or1 = this.$echarts.init(this.$refs.or1);
         or1.setOption(this.options1);
-        var _this =this
-        or1.on('click', function (params) {
-          if(params.name=="8: 其他"){
-            _this.innerVisible=true
+        var _this = this;
+        or1.on("click", function(params) {
+          if (params.name == "8: 其他") {
+            _this.innerVisible = true;
           }
-        })
-        var detailArr=res.data.data.detail;
-        for(var i=0;i<detailArr.length;i++){
-          detailArr[i].name=detailArr[i].name.replace("8: 其他:","");
-          detailArr[i].name=detailArr[i].name.replace("8: 其它:","");
+        });
+        var detailArr = res.data.data.detail;
+        for (var i = 0; i < detailArr.length; i++) {
+          detailArr[i].name = detailArr[i].name.replace("8: 其他:", "");
+          detailArr[i].name = detailArr[i].name.replace("8: 其它:", "");
         }
-        this.detailArr=detailArr
+        this.detailArr = detailArr;
       });
     },
     getData() {
@@ -1078,19 +1145,19 @@ export default {
   height: 12px;
   position: relative;
 }
-.xg span{
+.xg span {
   text-align: center;
   display: block;
   color: #000;
   line-height: 12px;
 }
-.xr span{
+.xr span {
   text-align: center;
   display: block;
   color: #000;
   line-height: 12px;
 }
-.xh span{
+.xh span {
   text-align: center;
   display: block;
   color: #000;
@@ -1110,22 +1177,22 @@ export default {
   height: 12px;
   position: relative;
 }
-.mcDiv{
+.mcDiv {
   width: 95%;
-  left:50%;
+  left: 50%;
   margin-left: -47.5%;
   overflow: hidden;
   position: absolute;
   border-radius: 25px;
   top: 15px;
 }
-.mcDiv span{
+.mcDiv span {
   width: 100%;
   display: block;
   float: left;
   text-align: right;
 }
-.xRep{
+.xRep {
   width: 15.6%;
   float: left;
   margin: 8px 0.4%;
@@ -1135,17 +1202,18 @@ export default {
   border: #eee solid 1px;
   background: #eee;
   border-radius: 5px;
-  text-align:center;
+  text-align: center;
   position: relative;
 }
-.xRepChild{
+.xRepChild {
   overflow: hidden;
-  margin:0 auto;
+  margin: 0 auto;
 }
-.ddSpan{
-  display:inline-block;text-align:left;
+.ddSpan {
+  display: inline-block;
+  text-align: left;
 }
-.deSpan{
+.deSpan {
   position: absolute;
   top: 0;
   right: 0;

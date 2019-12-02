@@ -5965,6 +5965,7 @@ h2:hover {
   top: 20px;
   left: 20px;
   cursor: pointer;
+  z-index: 999;
 }
 @media (max-width: 1500px) {
   .cardLeft {
