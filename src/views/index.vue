@@ -1975,7 +1975,7 @@
                 v-for="(item,index) in last110"
                 :key="index"
                 @click="judge(item.rate)"
-                :class="[item.rxtraBonus==100?'indexbImg1 jb01img':item.rxtraBonus==200?'indexbImg1 jb02img':item.rxtraBonus==300?'indexbImg1 jb03img':item.rxtraBonus==400?'indexbImg1 jb04img':item.rxtraBonus==500?'indexbImg1 jb05img':item.rxtraBonus==600?'indexbImg jb06img':item.rxtraBonus==700?'indexbImg jb07img':item.rxtraBonus==800?'indexbImg jb08img':item.rxtraBonus==900?'indexbImg jb09img':item.rxtraBonus==1000?'indexbImg jb010img':item.rxtraBonus==1100?'indexbImg jb011img':item.rxtraBonus==1200?'indexbImg jb012img':item.rxtraBonus==1300?'indexbImg jb013img':item.rxtraBonus==1400?'indexbImg jb014img':item.rxtraBonus=1500?'indexbImg jb015img':'',item.username==sysUserName?'imbge':'']"
+                :class="[item.rxtraBonus==100?'indexbImg1 jb01img':item.rxtraBonus==200?'indexbImg1 jb02img':item.rxtraBonus==300?'indexbImg1 jb03img':item.rxtraBonus==400?'indexbImg1 jb04img':item.rxtraBonus==500?'indexbImg1 jb05img':item.rxtraBonus==600?'indexbImg jb06img':item.rxtraBonus==700?'indexbImg jb07img':item.rxtraBonus==800?'indexbImg jb08img':item.rxtraBonus==900?'indexbImg jb09img':item.rxtraBonus==1000?'indexbImg jb010img':item.rxtraBonus==1100?'indexbImg jb011img':item.rxtraBonus==1200?'indexbImg jb012img':item.rxtraBonus==1300?'indexbImg jb013img':item.rxtraBonus==1400?'indexbImg jb014img':item.rxtraBonus==1500?'indexbImg jb015img':'',item.username==sysUserName?'imbge':'']"
               ></div>
               <div class="jblist">
                 <div class="jb01 jbg">
@@ -2071,7 +2071,7 @@
             </div>
             <div class="leftDemo">
               <div
-               v-for="(item,index) in last120"
+               v-for="(item,index) in last130"
                 :key="index"
                 @click="judge(item.rate)"
                 :class="[item.rxtraBonus==2700?'indexbImg1 jb027img':item.rxtraBonus==2800?'indexbImg jb028img':item.rxtraBonus==2900?'indexbImg jb029img':item.rxtraBonus==3000?'indexbImg jb030img':item.rxtraBonus==3100?'indexbImg jb031img':item.rxtraBonus==3200?'indexbImg jb032img':item.rxtraBonus==3300?'indexbImg jb033img':item.rxtraBonus==3400?'indexbImg jb034img':item.rxtraBonus==3500?'indexbImg jb035img':item.rxtraBonus==3600?'indexbImg jb036img':item.rxtraBonus==3700?'indexbImg jb037img':'',item.username==sysUserName?'imbge':'']"
