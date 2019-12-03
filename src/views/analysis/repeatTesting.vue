@@ -13,15 +13,16 @@
         <div class="floet01">
           <el-button size="small" type="primary" @click="seach">搜索</el-button>
         </div>
-        <div class="floet01">
+        <div class="floet01 floeatTest">
           <el-upload
             class="upload-demo"
             :action="actionUrl"
+            drag
             :on-change="getFile"
             :http-request="handleHttpRequest"
             :show-file-list="false"
           >
-            <el-button size="small" type="primary">点击上传</el-button>
+            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
           </el-upload>
         </div>
       </div>
@@ -160,5 +161,14 @@ export default {
     height: 180px;
     border: #ccc solid 1px;
   }
+}
+</style>
+<style>
+.floeatTest .el-upload-dragger{
+  height: 32px;
+  width: 220px;
+}
+.floeatTest .el-upload__text{
+  line-height: 30px;
 }
 </style>
