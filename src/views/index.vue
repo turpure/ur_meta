@@ -1964,7 +1964,7 @@
             <div class="rightDemo">
               <span class="span100">100%</span>
               <div
-                :class="[item.rate==81?'indexbImg b81':item.rate==82?'indexbImg b82':item.rate==83?'indexbImg b83':item.rate==84?'indexbImg b84':item.rate==85?'indexbImg b85':item.rate==86?'indexbImg b86':item.rate==87?'indexbImg b87':item.rate==88?'indexbImg b88':item.rate==89?'indexbImg b89':item.rate==90?'indexbImg b90':item.rate==91?'indexbImg1 b91':item.rate==92?'indexbImg1 b92':item.rate==93?'indexbImg1 b93':item.rate==94?'indexbImg1 b94':item.rate==95?'indexbImg1 b95':item.rate==96?'indexbImg1 b96':item.rate==97?'indexbImg1 b97':item.rate==98?'indexbImg1 b98':item.rate==99?'indexbImg1 b99':item.rate==100?'indexbImg1 b100':'',item.username==sysUserName?'imbge':'']"
+                :class="[item.rate==81?'indexbImg b81':item.rate==82?'indexbImg b82':item.rate==83?'indexbImg b83':item.rate==84?'indexbImg b84':item.rate==85?'indexbImg b85':item.rate==86?'indexbImg b86':item.rate==87?'indexbImg b87':item.rate==88?'indexbImg b88':item.rate==89?'indexbImg b89':item.rate==90?'indexbImg b90':item.rate==91?'indexbImg1 b91':item.rate==92?'indexbImg1 b92':item.rate==93?'indexbImg1 b93':item.rate==94?'indexbImg1 b94':item.rate==95?'indexbImg1 b95':item.rate==96?'indexbImg1 b96':item.rate==97?'indexbImg1 b97':item.rate==98?'indexbImg1 b98':item.rate==99?'indexbImg1 b99':item.rate>=100?'indexbImg1 b100':'',item.username==sysUserName?'imbge':'']"
                 v-for="(item,index) in last100"
                 :key="index"
                 @click="judge(item.rate)"
@@ -3672,7 +3672,7 @@ export default {
         if (arrData[i].rate > 60 && arrData[i].rate <= 80) {
           this.last80.push(arrData[i]);
         }
-        if (arrData[i].rate > 80 && arrData[i].rate <= 100 && arrData[i].rxtraBonus == 0) {
+        if (arrData[i].rate > 80 && arrData[i].rxtraBonus == 0) {
           this.last100.push(arrData[i]);
         }
         if (arrData[i].rate >= 100 && arrData[i].rxtraBonus >0 && arrData[i].rxtraBonus >0<=1500) {
