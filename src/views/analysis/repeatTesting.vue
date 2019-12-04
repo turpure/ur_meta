@@ -14,7 +14,7 @@
           <el-button size="small" type="primary" @click="seach">搜索</el-button>
         </div>
         <div class="floet01 floeatTest">
-          <el-upload
+          <!-- <el-upload
             class="upload-demo"
             :action="actionUrl"
             drag
@@ -23,20 +23,38 @@
             :show-file-list="false"
           >
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-          </el-upload>
+          </el-upload>-->
         </div>
       </div>
     </div>
-    <div>
-      <div class="imgDiv" style="margin-left:10px;">
-        <img :src="condition.imageUrl" style="width:88%;height:245px;margin-left:3%;margin-top:10px;" />
+    <div style="overflow:hidden">
+      <el-upload
+        class="upload-demo floeatTest"
+        :action="actionUrl"
+        drag
+        :on-change="getFile"
+        style="float:left;margin-left:18px;margin-top:10px;"
+        :http-request="handleHttpRequest"
+        :show-file-list="false"
+      >
+        <i class="el-icon-upload"></i>
+        <div class="el-upload__text">
+          将文件拖到此处，或
+          <em>点击上传</em>
+        </div>
+      </el-upload>
+      <div class="imgDiv" style="margin-left:20px;float:left" v-show="condition.imageUrl">
+        <img
+          :src="condition.imageUrl"
+          style="width:88%;height:245px;margin-left:3%;margin-top:10px;"
+        />
       </div>
     </div>
     <div class="w90" :style="obj1" v-loading="imgLoading">
       <div style="margin-left:10px;">
         <div v-for="(item,index) in imageArr" :key="index" class="imgDiv">
           <a :href="item.ProductId" target="_black">
-          <img :src="item.ProductId" class="imageSty" />
+            <img :src="item.ProductId" class="imageSty" />
           </a>
           <span>{{item.PicName}}</span>
         </div>
@@ -88,9 +106,9 @@ export default {
       this.getBase64(file.raw).then(res => {
         this.condition.imageUrl = res;
         formImageSearch(this.condition).then(res => {
-        this.imageArr = res.data.data.Auctions;
-        this.imgLoading = false;
-      });
+          this.imageArr = res.data.data.Auctions;
+          this.imgLoading = false;
+        });
       });
     },
     seach() {
@@ -120,7 +138,7 @@ export default {
   width: 100%;
   overflow: hidden;
   margin: auto;
-  margin-top: 15px;
+  // margin-top: 15px;
 }
 .floet {
   overflow: hidden;
@@ -134,7 +152,7 @@ export default {
   margin-left: 3%;
   margin-top: 12px;
 }
-.imageSty:hover{
+.imageSty:hover {
   transform: scale(1.1);
   border: #3c8dbc solid 1px;
 }
@@ -146,13 +164,13 @@ export default {
   width: 20%;
   float: left;
 }
-.imgDiv span{
-    display: block;
-    width: 90%;
-    text-align: center;
-    overflow: hidden;
-    color: red;
-    font-weight: bold;
+.imgDiv span {
+  display: block;
+  width: 90%;
+  text-align: center;
+  overflow: hidden;
+  color: red;
+  font-weight: bold;
 }
 @media screen and (max-width: 1500px) {
   .imageSty {
@@ -161,14 +179,21 @@ export default {
     height: 180px;
     border: #ccc solid 1px;
   }
+  .w90 {
+    width: 100%;
+    overflow: hidden;
+    margin: auto;
+    margin-top: 15px;
+  }
 }
 </style>
 <style>
-.floeatTest .el-upload-dragger{
-  height: 32px;
-  width: 220px;
+.floeatTest .el-upload-dragger {
+  background: #fff;
+  width: 310px;
+  height: 245px;
 }
-.floeatTest .el-upload__text{
-  line-height: 30px;
+.floeatTest .el-upload-dragger .el-icon-upload {
+  margin: 65px 0 16px;
 }
 </style>
