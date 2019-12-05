@@ -56,7 +56,7 @@
           <a :href="item.ProductId" target="_black">
             <img :src="item.ProductId" class="imageSty" />
           </a>
-          <span>{{item.PicName}}</span>
+          <span>{{item.GoodsCode}}</span>
         </div>
       </div>
     </div>
