@@ -56,15 +56,20 @@
           <a :href="item.ProductId" target="_black">
             <img :src="item.ProductId" class="imageSty" />
           </a>
-          <span @click="goDetails(item.GoodsCode)">{{item.GoodsCode}}</span>
+          <span @click="goDetails(item.GoodsCode)">{{item.GoodsCode}}<a style="margin-left:10px;">查看</a></span>
         </div>
       </div>
     </div>
     <el-dialog width="92%" title :visible.sync="innerVisible">
       <el-table :data="arrData"  class="elTableee" border :header-cell-style="getRowClass" max-height="600">
         <el-table-column property="SKU" label="SKU" align="center" width="90"></el-table-column>
+        <el-table-column property="skuImageUrl" label="图片" align="center" width="100">
+          <template slot-scope="scope">
+            <img :src="scope.row.skuImageUrl" style="width:80px;height:80px;display: block;margin: auto">
+          </template>
+        </el-table-column>
         <el-table-column property="goodscode" label="商品编码" align="center" width="90"></el-table-column>
-        <el-table-column property="goodsname" label="商品名称" align="center" width="135"></el-table-column>
+        <el-table-column property="goodsname" label="商品名称" align="center" width="175"></el-table-column>
         <el-table-column property="SellCount" label="5天销量" align="center" width="80"></el-table-column>
         <el-table-column property="SellCount1" label="10天销量" align="center" width="80"></el-table-column>
         <el-table-column property="SellCount2" label="20天销量" align="center" width="80"></el-table-column>
@@ -80,11 +85,6 @@
         <el-table-column property="CreateDate" label="SKU名称" align="center" width="100"></el-table-column>
         <el-table-column property="Weight" label="重量" align="center" width="80"></el-table-column>
         <el-table-column property="possessMan1" label="美工" align="center" width="80"></el-table-column>
-        <el-table-column property="skuImageUrl" label="SKU图片" align="center" width="140">
-          <template slot-scope="scope">
-            <a :href="scope.row.skuImageUrl">{{scope.row.skuImageUrl}}</a>
-          </template>
-        </el-table-column>
       </el-table>
     </el-dialog>
   </section>
@@ -226,6 +226,12 @@ export default {
   font-weight: bold;
   cursor: pointer;
   line-height: 30px;
+}
+.repa{
+  display: block;
+  width: 90%;
+  overflow: hidden;
+  height: 60px;
 }
 @media screen and (max-width: 1500px) {
   .imageSty {
