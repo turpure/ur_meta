@@ -1599,4 +1599,14 @@ export default {
     margin: 0 6px;
   }
 }
+@media (max-width: 1200px) {
+  .cdIV {
+    width: 14.8%;
+    height: 255px;
+    float: left;
+    background: #fff;
+    margin: 0 6px;
+  }
+
+}
 </style>
