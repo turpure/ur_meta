@@ -27,7 +27,7 @@
         </div>
       </div>
     </div>
-    <div style="overflow:hidden">
+    <div style="overflow:hidden;margin-bottom:5px;">
       <el-upload
         class="upload-demo floeatTest"
         :action="actionUrl"
@@ -56,15 +56,42 @@
           <a :href="item.ProductId" target="_black">
             <img :src="item.ProductId" class="imageSty" />
           </a>
-          <span>{{item.GoodsCode}}</span>
+          <span @click="goDetails(item.GoodsCode)">{{item.GoodsCode}}</span>
         </div>
       </div>
     </div>
+    <el-dialog width="92%" title :visible.sync="innerVisible">
+      <el-table :data="arrData"  class="elTableee" border :header-cell-style="getRowClass" max-height="600">
+        <el-table-column property="SKU" label="SKU" align="center" width="90"></el-table-column>
+        <el-table-column property="goodscode" label="商品编码" align="center" width="90"></el-table-column>
+        <el-table-column property="goodsname" label="商品名称" align="center" width="135"></el-table-column>
+        <el-table-column property="SellCount" label="5天销量" align="center" width="80"></el-table-column>
+        <el-table-column property="SellCount1" label="10天销量" align="center" width="80"></el-table-column>
+        <el-table-column property="SellCount2" label="20天销量" align="center" width="80"></el-table-column>
+        <el-table-column property="storeName" label="仓库" align="center" width="80"></el-table-column>
+        <el-table-column property="Number" label="库存数量" align="center" width="80"></el-table-column>
+        <el-table-column property="ReservationNum" label="占用数量" align="center" width="80"></el-table-column>
+        <el-table-column property="usenum" label="可用数量" align="center"  width="80"></el-table-column>
+        <el-table-column property="purchase" label="采购" align="center"  width="80"></el-table-column>
+        <el-table-column property="GoodsStatus" label="商品状态" align="center"  width="80"></el-table-column>
+        <el-table-column property="SalerName" label="开发员" align="center" width="80"></el-table-column>
+        <el-table-column property="hopeUseNum" label="预计可用数量" align="center" width="110"></el-table-column>
+        <el-table-column property="CreateDate" label="创建时间" align="center" width="100"></el-table-column>
+        <el-table-column property="CreateDate" label="SKU名称" align="center" width="100"></el-table-column>
+        <el-table-column property="Weight" label="重量" align="center" width="80"></el-table-column>
+        <el-table-column property="possessMan1" label="美工" align="center" width="80"></el-table-column>
+        <el-table-column property="skuImageUrl" label="SKU图片" align="center" width="140">
+          <template slot-scope="scope">
+            <a :href="scope.row.skuImageUrl">{{scope.row.skuImageUrl}}</a>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-dialog>
   </section>
 </template>
 
 <script type="text/ecmascript-6">
-import { formImageSearch } from "../../api/product";
+import { formImageSearch, formSkuInfo } from "../../api/product";
 export default {
   data() {
     return {
@@ -76,13 +103,22 @@ export default {
         height: window.innerHeight - 145 + "px"
       },
       imgLoading: false,
+      innerVisible:false,
       imageArr: [],
+      arrData:[],
       condition: {
         imageUrl: null
       }
     };
   },
   methods: {
+    getRowClass({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex == 0) {
+        return "color:#337ab7;background:#f5f7fa";
+      } else {
+        return "";
+      }
+    },    
     handleHttpRequest() {},
     getBase64(file) {
       //把图片转成base64编码
@@ -111,12 +147,30 @@ export default {
         });
       });
     },
-    seach() {
-      this.imgLoading = true;
-      formImageSearch(this.condition).then(res => {
-        this.imageArr = res.data.data.Auctions;
-        this.imgLoading = false;
+    goDetails(e) {
+      console.log(e);
+      var obj = {
+        goodsCode: e
+      };
+      formSkuInfo(obj).then(res => {
+        this.arrData=res.data.data
+        this.innerVisible=true
       });
+    },
+    seach() {
+      if (this.condition.imageUrl == null) {
+        this.$message.error("请输入图片地址");
+      } else {
+        this.imgLoading = true;
+        formImageSearch(this.condition).then(res => {
+          if (res.data.code == "200") {
+            this.imageArr = res.data.data.Auctions;
+          } else {
+            this.$message.error("没有匹配到产品");
+          }
+          this.imgLoading = false;
+        });
+      }
     }
   },
   mounted() {}
@@ -150,10 +204,9 @@ export default {
   border: #ccc solid 1px;
   transition: transform 0.3s;
   margin-left: 3%;
-  margin-top: 12px;
 }
 .imageSty:hover {
-  transform: scale(1.1);
+  // transform: scale(1.1);
   border: #3c8dbc solid 1px;
 }
 .floet01 {
@@ -171,6 +224,8 @@ export default {
   overflow: hidden;
   color: red;
   font-weight: bold;
+  cursor: pointer;
+  line-height: 30px;
 }
 @media screen and (max-width: 1500px) {
   .imageSty {
