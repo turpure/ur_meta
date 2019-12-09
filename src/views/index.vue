@@ -1967,7 +1967,7 @@
                 :class="[item.rate==81?'indexbImg b81':item.rate==82?'indexbImg b82':item.rate==83?'indexbImg b83':item.rate==84?'indexbImg b84':item.rate==85?'indexbImg b85':item.rate==86?'indexbImg b86':item.rate==87?'indexbImg b87':item.rate==88?'indexbImg b88':item.rate==89?'indexbImg b89':item.rate==90?'indexbImg b90':item.rate==91?'indexbImg1 b91':item.rate==92?'indexbImg1 b92':item.rate==93?'indexbImg1 b93':item.rate==94?'indexbImg1 b94':item.rate==95?'indexbImg1 b95':item.rate==96?'indexbImg1 b96':item.rate==97?'indexbImg1 b97':item.rate==98?'indexbImg1 b98':item.rate==99?'indexbImg1 b99':item.rate>=100?'indexbImg1 b100':'',item.username==sysUserName?'imbge':'']"
                 v-for="(item,index) in last100"
                 :key="index"
-                @click="judge(item.rate)"
+                @click="judge(item.rate,item.rxtraBonus)"
               ></div>
             </div>
             <div class="leftDemo">
@@ -2248,7 +2248,7 @@
                   <img :src="item.avatar" style="width: 40px;height: 40px;border-radius:50%;" />
                   <span>{{item.username}}</span>
                   <p class="njts">{{item.vacationDays}}天</p>
-                  <p>{{item.bonus | cutOut1}}+{{item.rxtraBonus | cutOut1}}</p>
+                  <p>{{item.bonus | cutOut1}}<b v-show="item.rxtraBonus!=0">+</b><b v-show="item.rxtraBonus!=0">{{item.rxtraBonus | cutOut1}}</b></p>
                 </div>
               </div>
             </div>
@@ -2734,7 +2734,7 @@ export default {
       this.activeTitle = "销售排名";
       this.indexTabactive = 0;
     },
-    judge(n) {
+    judge(n,b) {
       this.flagShow = false;
       this.flagShowFour = false;
       this.flagShowTwo = false;
@@ -2745,8 +2745,15 @@ export default {
         for (var i = 0; i < dateArr.length; i++) {
           var arrDb = String(parseInt(dateArr[i].rate));
           var arrDbi = arrDb.split('.');
-          if (arrDbi[0] == n) {
-            this.sortData.push(dateArr[i]);
+          if(n>=100 && b && b==0){
+            console.log(b)
+            if(arrDbi[0]>=100 && dateArr[i].rxtraBonus==0){
+              this.sortData.push(dateArr[i]);
+            }
+          }else{
+            if (arrDbi[0] == n) {
+              this.sortData.push(dateArr[i]);
+            }
           }
         }
         setTimeout(() => {
@@ -3814,7 +3821,7 @@ export default {
         }else{
           clearInterval(setTime)
         }
-      },0);
+      },1);
     },1000)
   }
 };
