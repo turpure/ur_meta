@@ -528,9 +528,11 @@
           <div class="xxb">
             <div class="xx01" v-for="(item,index) in photoImg" :key="index">
               <div class="xx01Left">
+                <span style="display:block;margin-bottom:5px;color:red">原图</span>
                 <img :src="item.image">
               </div>
               <div class="xx01Right">
+                <span style="display:block;margin-left:10px;margin-top:5px;color:red">相似产品</span>
                 <div class="xxBox" v-for="(itemId,index) in item.similar" :key="index">
                   <img :src="itemId.ProductId">
                   <span>{{itemId.GoodsCode}}</span>
@@ -1600,7 +1602,7 @@ export default {
 }
 .xxBox{
   width: 12.2%;
-  overflow: hidden;
+  // overflow: hidden;
   float: left;
   margin: 0 1%;
 }
@@ -1616,6 +1618,12 @@ export default {
   width: 100%;
   margin-top: 5px;
   border: #eee solid 1px;
+  transition: All 0.3s ease-in-out;
+}
+.xx01Right img:hover{
+  display: block;
+  border: #3c8dbc solid 1px;
+  transform: scale(1.1)
 }
 @media (max-width: 1700px) {
   .cdIV {
