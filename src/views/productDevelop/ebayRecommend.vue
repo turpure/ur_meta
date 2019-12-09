@@ -523,7 +523,7 @@
           <el-button type="primary" @click="addEbayRxRefuse">确 定</el-button>
         </div>
       </el-dialog>
-      <el-dialog title :visible.sync="dialogPhoto" width="85%">
+      <el-dialog title :visible.sync="dialogPhoto" width="85%" @close='closeDlg'>
         <div class="ccdiv" v-show="!arrtable">
           <div class="xxb">
             <div class="xx01" v-for="(item,index) in photoImg" :key="index">
@@ -730,6 +730,12 @@ export default {
     }
   },
   methods: {
+    closeDlg(){
+      if(this.arrtable){
+        this.dialogPhoto=true
+        this.arrtable=false
+      }
+    },
     goDetails(e){
       var obj = {
         goodsCode: e
@@ -738,7 +744,6 @@ export default {
         this.arrData=res.data.data
         this.arrtable=true
       });
-      console.log(n)
     },
     goLinkPhoto(e,img) {
       this.photoImg=[];
@@ -1613,7 +1618,7 @@ export default {
 .xxb{
   width: 100%;
   overflow: hidden;
-  max-height: 640px;
+  max-height: 620px;
   overflow-y: auto;
 }
 .imgDiv img:hover{
