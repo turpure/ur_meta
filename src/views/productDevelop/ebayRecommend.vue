@@ -525,7 +525,7 @@
       </el-dialog>
       <el-dialog title :visible.sync="dialogPhoto" width="85%" @close='closeDlg'>
         <div class="ccdiv" v-show="!arrtable">
-          <div class="xxb">
+          <div class="xxb" ref="xxb">
             <div class="xx01" v-for="(item,index) in photoImg" :key="index">
               <div class="xx01Left">
                 <span style="display:block;margin-bottom:5px;color:#000">原图</span>
@@ -545,7 +545,7 @@
             </div> -->
           </div>
         </div>
-        <el-table :data="arrData"  class="elTableee" border :header-cell-style="getRowClass" max-height="580" v-show="arrtable">
+        <el-table :data="arrData"  class="elTableee" border :header-cell-style="getRowClass" max-height="580" v-show="arrtable" ref="tableList">
           <el-table-column property="SKU" label="SKU" align="center" width="90"></el-table-column>
           <el-table-column property="skuImageUrl" label="图片" align="center" width="100">
             <template slot-scope="scope">
@@ -570,9 +570,9 @@
           <el-table-column property="Weight" label="重量" align="center" width="80"></el-table-column>
           <el-table-column property="possessMan1" label="美工" align="center" width="80"></el-table-column>
         </el-table>
-        <div slot="footer" class="dialog-footer" v-show="arrtable">
+        <!-- <div slot="footer" class="dialog-footer" v-show="arrtable">
           <el-button type="danger" @click="arrtable=false">关 闭</el-button>
-        </div>
+        </div> -->
       </el-dialog>
     </div>
   </section>
@@ -743,14 +743,17 @@ export default {
       formSkuInfo(obj).then(res => {
         this.arrData=res.data.data
         this.arrtable=true
+        this.$refs.tableList.bodyWrapper.scrollTop =0;
       });
     },
     goLinkPhoto(e,img) {
       this.photoImg=[];
-      this.imgUrl=null
       setTimeout(()=>{
-        this.imgUrl=img
         this.photoImg = e;
+        this.$nextTick(function () {
+          var scc =this.$refs.xxb
+          scc.scrollTop = 0
+        })
         this.dialogPhoto = true;
       },500)
     },
