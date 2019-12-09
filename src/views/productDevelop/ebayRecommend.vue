@@ -526,81 +526,14 @@
       <el-dialog title :visible.sync="dialogPhoto" width="85%">
         <div class="ccdiv">
           <div class="xxb">
-            <div class="xx01">
+            <div class="xx01" v-for="(item,index) in photoImg" :key="index">
               <div class="xx01Left">
-                <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
+                <img :src="item.image">
               </div>
               <div class="xx01Right">
-                <div class="xxBox">
-                  <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
-                  <span>7A10124</span>
-                </div>
-                <div class="xxBox">
-                  <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
-                  <span>7A10124</span>
-                </div>
-                <div class="xxBox">
-                  <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
-                  <span>7A10124</span>
-                </div>
-                <div class="xxBox">
-                  <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
-                  <span>7A10124</span>
-                </div>
-                <div class="xxBox">
-                  <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
-                  <span>7A10124</span>
-                </div>
-                <div class="xxBox">
-                  <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
-                  <span>7A10124</span>
-                </div>
-                <div class="xxBox">
-                  <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
-                  <span>7A10124</span>
-                </div>
-              </div>
-            </div>
-            <div class="xx01">
-              <div class="xx01Left">
-                <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
-              </div>
-              <div class="xx01Right">
-                <div class="xxBox">
-                  <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
-                  <span>7A10124</span>
-                </div>
-                <div class="xxBox">
-                  <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
-                  <span>7A10124</span>
-                </div>
-                <div class="xxBox">
-                  <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
-                  <span>7A10124</span>
-                </div>
-                <div class="xxBox">
-                  <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
-                  <span>7A10124</span>
-                </div>
-                <div class="xxBox">
-                  <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
-                  <span>7A10124</span>
-                </div>
-                <div class="xxBox">
-                  <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
-                  <span>7A10124</span>
-                </div>
-                <div class="xxBox">
-                  <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
-                  <span>7A10124</span>
-                </div>
-                <div class="xxBox">
-                  <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
-                  <span>7A10124</span>
-                </div>
-                <div class="xxBox">
-                  <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
-                  <span>7A10124</span>
+                <div class="xxBox" v-for="(itemId,index) in item.similar" :key="index">
+                  <img :src="itemId.ProductId">
+                  <span>{{itemId.GoodsCode}}</span>
                 </div>
               </div>
             </div>

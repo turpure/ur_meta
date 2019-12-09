@@ -3764,7 +3764,6 @@ export default {
         }
         if (arrData[i].rate > 80 && arrData[i].rxtraBonus == 0) {
           this.last100.push(arrData[i]);
-          console.log(this.last100)
         }
         if (arrData[i].rate >= 100 && arrData[i].rxtraBonus >0 && arrData[i].rxtraBonus >0<=1500) {
           this.last110.push(arrData[i]);
