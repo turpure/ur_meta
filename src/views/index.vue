@@ -2746,7 +2746,6 @@ export default {
           var arrDb = String(parseInt(dateArr[i].rate));
           var arrDbi = arrDb.split('.');
           if(n>=100 && b && b==0){
-            console.log(b)
             if(arrDbi[0]>=100 && dateArr[i].rxtraBonus==0){
               this.sortData.push(dateArr[i]);
             }
