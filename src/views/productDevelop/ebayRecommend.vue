@@ -524,18 +524,18 @@
         </div>
       </el-dialog>
       <el-dialog title :visible.sync="dialogPhoto" width="85%">
-        <div class="ccdiv">
+        <div class="ccdiv" v-show="!arrtable">
           <div class="xxb">
             <div class="xx01" v-for="(item,index) in photoImg" :key="index">
               <div class="xx01Left">
-                <span style="display:block;margin-bottom:5px;color:red">原图</span>
+                <span style="display:block;margin-bottom:5px;color:#000">原图</span>
                 <img :src="item.image">
               </div>
               <div class="xx01Right">
-                <span style="display:block;margin-left:10px;margin-top:5px;color:red">相似产品</span>
+                <span style="display:block;margin-left:10px;margin-top:5px;color:#000">相似产品</span>
                 <div class="xxBox" v-for="(itemId,index) in item.similar" :key="index">
                   <img :src="itemId.ProductId">
-                  <span>{{itemId.GoodsCode}}</span>
+                  <span @click="goDetails(itemId.GoodsCode)">{{itemId.GoodsCode}}<a style="margin-left:10px;">查看</a></span>
                 </div>
               </div>
             </div>
@@ -544,6 +544,34 @@
               <span>{{item.GoodsCode}}</span>
             </div> -->
           </div>
+        </div>
+        <el-table :data="arrData"  class="elTableee" border :header-cell-style="getRowClass" max-height="580" v-show="arrtable">
+          <el-table-column property="SKU" label="SKU" align="center" width="90"></el-table-column>
+          <el-table-column property="skuImageUrl" label="图片" align="center" width="100">
+            <template slot-scope="scope">
+              <img :src="scope.row.skuImageUrl" style="width:80px;height:80px;display: block;margin: auto">
+            </template>
+          </el-table-column>
+          <el-table-column property="goodscode" label="商品编码" align="center" width="90"></el-table-column>
+          <el-table-column property="goodsname" label="商品名称" align="center" width="175"></el-table-column>
+          <el-table-column property="SellCount" label="5天销量" align="center" width="80"></el-table-column>
+          <el-table-column property="SellCount1" label="10天销量" align="center" width="80"></el-table-column>
+          <el-table-column property="SellCount2" label="20天销量" align="center" width="80"></el-table-column>
+          <el-table-column property="storeName" label="仓库" align="center" width="80"></el-table-column>
+          <el-table-column property="Number" label="库存数量" align="center" width="80"></el-table-column>
+          <el-table-column property="ReservationNum" label="占用数量" align="center" width="80"></el-table-column>
+          <el-table-column property="usenum" label="可用数量" align="center"  width="80"></el-table-column>
+          <el-table-column property="purchase" label="采购" align="center"  width="80"></el-table-column>
+          <el-table-column property="GoodsStatus" label="商品状态" align="center"  width="80"></el-table-column>
+          <el-table-column property="SalerName" label="开发员" align="center" width="80"></el-table-column>
+          <el-table-column property="hopeUseNum" label="预计可用数量" align="center" width="110"></el-table-column>
+          <el-table-column property="CreateDate" label="创建时间" align="center" width="100"></el-table-column>
+          <el-table-column property="CreateDate" label="SKU名称" align="center" width="100"></el-table-column>
+          <el-table-column property="Weight" label="重量" align="center" width="80"></el-table-column>
+          <el-table-column property="possessMan1" label="美工" align="center" width="80"></el-table-column>
+        </el-table>
+        <div slot="footer" class="dialog-footer" v-show="arrtable">
+          <el-button type="danger" @click="arrtable=false">关 闭</el-button>
         </div>
       </el-dialog>
     </div>
@@ -558,7 +586,8 @@ import {
   ebayXpAccept,
   ebayRxAccept,
   ebayXpRefuse,
-  ebayRxRefuse
+  ebayRxRefuse,
+  formSkuInfo
 } from "../../api/product";
 import { getEbayXpMind, getEbayRxMind } from "../../api/profit";
 import { compareUp, compareDown, getMonthDate } from "../../api/tools";
@@ -688,7 +717,9 @@ export default {
       ebayRxId: null,
       ebayRxText: null,
       ebayRxText1: null,
-      sysUserName: null
+      sysUserName: null,
+      arrData:[],
+      arrtable:false,
     };
   },
   filters: {
@@ -699,6 +730,16 @@ export default {
     }
   },
   methods: {
+    goDetails(e){
+      var obj = {
+        goodsCode: e
+      };
+      formSkuInfo(obj).then(res => {
+        this.arrData=res.data.data
+        this.arrtable=true
+      });
+      console.log(n)
+    },
     goLinkPhoto(e,img) {
       this.photoImg=[];
       this.imgUrl=null
@@ -1611,6 +1652,7 @@ export default {
   text-align: center;
   color: red;
   line-height: 30px;
+  cursor: pointer;
 }
 .xx01Right img{
   display: block;
