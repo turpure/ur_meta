@@ -526,7 +526,7 @@
       <el-dialog title :visible.sync="dialogPhoto" width="85%" @close='closeDlg'>
         <div class="ccdiv" v-show="!arrtable">
           <div class="xxb" ref="xxb">
-            <div class="xx01" v-for="(item,index) in photoImg" :key="index">
+            <div class="xx01" v-for="(item,index) in photoImg" :key="index" v-show="item.similar.length!=0">
               <div class="xx01Left">
                 <span style="display:block;margin-bottom:5px;color:#000">原图</span>
                 <img :src="item.image">
