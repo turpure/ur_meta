@@ -535,7 +535,7 @@
                 <span style="display:block;margin-left:10px;margin-top:5px;color:#000">相似产品</span>
                 <div class="xxBox" v-for="(itemId,index) in item.similar" :key="index">
                   <img :src="itemId.ProductId">
-                  <span @click="goDetails(itemId.GoodsCode)">{{itemId.GoodsCode}}<a style="margin-left:10px;">查看</a></span>
+                  <span @click="goDetails(itemId.GoodsCode)">{{itemId.GoodsCode}}<a style="margin-left:5px;">{{itemId.goodsStatus}}</a><a style="margin-left:5px;">查看</a></span>
                 </div>
               </div>
             </div>
@@ -1648,9 +1648,10 @@ export default {
   float: right;
   width: 86%;
   border-left: #ccc solid 1px;
+  min-height: 220px;
 }
 .xxBox{
-  width: 12.2%;
+  width: 14.5%;
   // overflow: hidden;
   float: left;
   margin: 0 1%;
@@ -1687,6 +1688,9 @@ export default {
     height: 170px;
     width: 12%;
   }
+  .xx01Right{
+  min-height: 195px;
+}
   .xx01Right img{
   display: block;
   height: 155px;
