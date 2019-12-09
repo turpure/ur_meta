@@ -3764,6 +3764,7 @@ export default {
         }
         if (arrData[i].rate > 80 && arrData[i].rxtraBonus == 0) {
           this.last100.push(arrData[i]);
+          console.log(this.last100)
         }
         if (arrData[i].rate >= 100 && arrData[i].rxtraBonus >0 && arrData[i].rxtraBonus >0<=1500) {
           this.last110.push(arrData[i]);
@@ -3790,6 +3791,11 @@ export default {
           this.bonusList[i].avatar = `/static/img/header.1a1e548.png`;
         }
       }
+      var fun = (arr, key, decrease = false) => {
+          arr.sort((a, b) => (decrease ? 1 : -1) * (a[key] - b[key]));
+          return arr;
+      }
+      fun(this.bonusList,'rxtraBonus')
       this.bonus.total = Number(res.data.data.bonusAllNum).toFixed(0);
       this.bonus.totalnj = Number(res.data.data.vacationDaysAllNum).toFixed(0);
       this.bonus.pass = Number(res.data.data.bonusUsedNum).toFixed(0);

@@ -146,7 +146,7 @@
                   >货源链接</span>
                   <span
                     style="margin:0;margin-top:5px;font-size:13px;"
-                    @click="goLinkPhoto(scope.row.similarImages)"
+                    @click="goLinkPhoto(scope.row.similarImages,scope.row.mainImage)"
                   >相似产品</span>
                 </div>
               </template>
@@ -299,7 +299,7 @@
                   >货源链接</span>
                   <span
                     style="margin:0;margin-top:5px;font-size:13px;"
-                    @click="goLinkPhoto(scope.row.similarImages)"
+                    @click="goLinkPhoto(scope.row.similarImages,scope.row.mainImage)"
                   >相似产品</span>
                 </div>
               </template>
@@ -523,11 +523,91 @@
           <el-button type="primary" @click="addEbayRxRefuse">确 定</el-button>
         </div>
       </el-dialog>
-      <el-dialog title :visible.sync="dialogPhoto" width="95%">
+      <el-dialog title :visible.sync="dialogPhoto" width="85%">
         <div class="ccdiv">
-          <div v-for="(item,index) in photoImg" :key="index" class="cdIV">
-            <img :src="item.ProductId" class="imgPhto" />
-            <span>{{item.GoodsCode}}</span>
+          <div class="xxb">
+            <div class="xx01">
+              <div class="xx01Left">
+                <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
+              </div>
+              <div class="xx01Right">
+                <div class="xxBox">
+                  <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
+                  <span>7A10124</span>
+                </div>
+                <div class="xxBox">
+                  <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
+                  <span>7A10124</span>
+                </div>
+                <div class="xxBox">
+                  <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
+                  <span>7A10124</span>
+                </div>
+                <div class="xxBox">
+                  <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
+                  <span>7A10124</span>
+                </div>
+                <div class="xxBox">
+                  <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
+                  <span>7A10124</span>
+                </div>
+                <div class="xxBox">
+                  <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
+                  <span>7A10124</span>
+                </div>
+                <div class="xxBox">
+                  <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
+                  <span>7A10124</span>
+                </div>
+              </div>
+            </div>
+            <div class="xx01">
+              <div class="xx01Left">
+                <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
+              </div>
+              <div class="xx01Right">
+                <div class="xxBox">
+                  <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
+                  <span>7A10124</span>
+                </div>
+                <div class="xxBox">
+                  <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
+                  <span>7A10124</span>
+                </div>
+                <div class="xxBox">
+                  <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
+                  <span>7A10124</span>
+                </div>
+                <div class="xxBox">
+                  <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
+                  <span>7A10124</span>
+                </div>
+                <div class="xxBox">
+                  <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
+                  <span>7A10124</span>
+                </div>
+                <div class="xxBox">
+                  <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
+                  <span>7A10124</span>
+                </div>
+                <div class="xxBox">
+                  <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
+                  <span>7A10124</span>
+                </div>
+                <div class="xxBox">
+                  <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
+                  <span>7A10124</span>
+                </div>
+                <div class="xxBox">
+                  <img src="https://i.ebayimg.com/00/s/MTAwMFgxMDAw/z/6QYAAOSwn55d6Med/$_12.JPG?set_id=880000500F">
+                  <span>7A10124</span>
+                </div>
+              </div>
+            </div>
+            <!-- <div v-for="(item,index) in photoImg" :key="index" class="cdIV">
+              <img :src="item.ProductId" class="imgPhto" />
+              <span>{{item.GoodsCode}}</span>
+            </div> -->
           </div>
         </div>
       </el-dialog>
@@ -559,6 +639,7 @@ export default {
       lodingEbayXp: false,
       dialogPhoto: false,
       photoImg: [],
+      imgUrl:null,
       proTotalXp: 0,
       proTotalRx: 0,
       options: {
@@ -683,9 +764,11 @@ export default {
     }
   },
   methods: {
-    goLinkPhoto(e) {
+    goLinkPhoto(e,img) {
       this.photoImg=[];
+      this.imgUrl=null
       setTimeout(()=>{
+        this.imgUrl=img
         this.photoImg = e;
         this.dialogPhoto = true;
       },500)
@@ -1534,13 +1617,72 @@ export default {
 .ccdiv {
   width: 100%;
   overflow: hidden;
-  max-height: 600px;
-  overflow-y: auto;
 }
 .cdIV span{
   display: block;
   text-align: center;
   color: red;
+}
+.imgDiv{
+  width: 100%;
+  overflow: hidden;
+}
+.imgDiv img{
+  display: block;
+  width: 235px;
+  height: 205px;
+  border:#ccc solid 1px;
+  margin: auto;
+}
+.xxb{
+  width: 100%;
+  overflow: hidden;
+  max-height: 640px;
+  overflow-y: auto;
+}
+.imgDiv img:hover{
+  border:#3c8dbc solid 1px;
+}
+.xx01{
+  width: 99%;
+  overflow: hidden;
+  border: #ccc solid 1px;
+  margin-bottom: 10px;
+}
+.xx01Left{
+  float: left;
+  width: 12.5%;
+  height: 200px;
+  padding: 10px;
+}
+.xx01Left img{
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.xx01Right{
+  float: right;
+  width: 86%;
+  border-left: #ccc solid 1px;
+}
+.xxBox{
+  width: 12.2%;
+  overflow: hidden;
+  float: left;
+  margin: 0 1%;
+}
+.xxBox span{
+  display: block;
+  text-align: center;
+  color: red;
+  line-height: 30px;
+}
+.xx01Right img{
+  display: block;
+  height: 185px;
+  width: 100%;
+  margin-top: 5px;
+  border: #eee solid 1px;
 }
 @media (max-width: 1700px) {
   .cdIV {
@@ -1550,12 +1692,33 @@ export default {
     background: #fff;
     margin: 0 6px;
   }
+  .xx01Left{
+    height: 170px;
+    width: 12%;
+  }
+  .xx01Right img{
+  display: block;
+  height: 155px;
+  width: 100%;
+  margin-top: 5px;
+  border: #ccc solid 1px;
+}
 }
 @media (max-width: 1400px) {
   .floet01 {
     float: left;
     margin-right: 10px;
   }
+  .xx01Left{
+    height: 150px;
+  }
+  .xx01Right img{
+  display: block;
+  height: 135px;
+  width: 100%;
+  margin-top: 5px;
+  border: #ccc solid 1px;
+}
   .justa {
     display: block;
     font-size: 10px;
@@ -1599,7 +1762,7 @@ export default {
     margin: 0 6px;
   }
 }
-@media (max-width: 1200px) {
+@media (max-width: 1300px) {
   .cdIV {
     width: 14.8%;
     height: 255px;
@@ -1607,6 +1770,10 @@ export default {
     background: #fff;
     margin: 0 6px;
   }
-
+.xx01Right{
+  float: left;
+  width: 85.5%;
+  border-left: #ccc solid 1px;
+}
 }
 </style>
