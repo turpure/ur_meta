@@ -27,45 +27,63 @@
         </div>
       </div>
     </div>
-    <div style="overflow:hidden;margin-bottom:5px;">
-      <el-upload
-        class="upload-demo floeatTest"
-        :action="actionUrl"
-        drag
-        :on-change="getFile"
-        style="float:left;margin-left:18px;margin-top:10px;"
-        :http-request="handleHttpRequest"
-        :show-file-list="false"
-      >
-        <i class="el-icon-upload"></i>
-        <div class="el-upload__text">
-          将文件拖到此处，或
-          <em>点击上传</em>
-        </div>
-      </el-upload>
-      <div class="imgDiv" style="margin-left:20px;float:left" v-show="condition.imageUrl">
-        <img
-          :src="condition.imageUrl"
-          style="width:88%;height:245px;margin-left:3%;margin-top:10px;"
-        />
+      <div style="margin-top:15px;" class="obc1" :style="obj3">
+        <el-card :style="obj3">
+          <div style="overflow:hidden;margin-bottom:5px;">
+            <el-upload
+              class="upload-demo floeatTest"
+              :action="actionUrl"
+              drag
+              :on-change="getFile"
+              style="margin-top:10px;border:none"
+              :http-request="handleHttpRequest"
+              :show-file-list="false"
+            >
+              <i class="el-icon-upload"></i>
+              <div class="el-upload__text">
+                将文件拖到此处，或
+                <em>点击上传</em>
+              </div>
+            </el-upload>
+            <div class="imgDiv" style="width:100%;" v-show="condition.imageUrl">
+              <img
+                :src="condition.imageUrl"
+                style="width:100%;height:245px;margin-left:3%;margin-top:10px;"
+              />
+            </div>
+          </div>          
+        </el-card>
       </div>
-    </div>
-    <div class="w90" :style="obj1" v-loading="imgLoading">
-      <div style="margin-left:10px;">
-        <div v-for="(item,index) in imageArr" :key="index" class="imgDiv">
-          <a :href="item.ProductId" target="_black">
-            <img :src="item.ProductId" class="imageSty" />
-          </a>
-          <span @click="goDetails(item.GoodsCode)">{{item.GoodsCode}}<a style="margin-left:10px;">查看</a></span>
+      <div class="obc2" style="margin-top:15px;" :style="obj3">
+        <div class="w90" :style="obj1" v-loading="imgLoading">
+          <div style="margin-left:10px;">
+            <div v-for="(item,index) in imageArr" :key="index" class="imgDiv">
+              <a :href="item.ProductId" target="_black">
+                <img :src="item.ProductId" class="imageSty" />
+              </a>
+              <span @click="goDetails(item.GoodsCode)">
+                {{item.GoodsCode}}
+                <a style="margin-left:10px;">查看</a>
+              </span>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
     <el-dialog width="92%" title :visible.sync="innerVisible">
-      <el-table :data="arrData"  class="elTableee" border :header-cell-style="getRowClass" max-height="600">
+      <el-table
+        :data="arrData"
+        class="elTableee"
+        border
+        :header-cell-style="getRowClass"
+        max-height="600"
+      >
         <el-table-column property="SKU" label="SKU" align="center" width="90"></el-table-column>
         <el-table-column property="skuImageUrl" label="图片" align="center" width="100">
           <template slot-scope="scope">
-            <img :src="scope.row.skuImageUrl" style="width:80px;height:80px;display: block;margin: auto">
+            <img
+              :src="scope.row.skuImageUrl"
+              style="width:80px;height:80px;display: block;margin: auto"
+            />
           </template>
         </el-table-column>
         <el-table-column property="goodscode" label="商品编码" align="center" width="90"></el-table-column>
@@ -76,9 +94,9 @@
         <el-table-column property="storeName" label="仓库" align="center" width="80"></el-table-column>
         <el-table-column property="Number" label="库存数量" align="center" width="80"></el-table-column>
         <el-table-column property="ReservationNum" label="占用数量" align="center" width="80"></el-table-column>
-        <el-table-column property="usenum" label="可用数量" align="center"  width="80"></el-table-column>
-        <el-table-column property="purchase" label="采购" align="center"  width="80"></el-table-column>
-        <el-table-column property="GoodsStatus" label="商品状态" align="center"  width="80"></el-table-column>
+        <el-table-column property="usenum" label="可用数量" align="center" width="80"></el-table-column>
+        <el-table-column property="purchase" label="采购" align="center" width="80"></el-table-column>
+        <el-table-column property="GoodsStatus" label="商品状态" align="center" width="80"></el-table-column>
         <el-table-column property="SalerName" label="开发员" align="center" width="80"></el-table-column>
         <el-table-column property="hopeUseNum" label="预计可用数量" align="center" width="110"></el-table-column>
         <el-table-column property="CreateDate" label="创建时间" align="center" width="100"></el-table-column>
@@ -102,10 +120,13 @@ export default {
       obj1: {
         height: window.innerHeight - 145 + "px"
       },
+      obj3:{
+        height: window.innerHeight - 185 + "px"
+      },
       imgLoading: false,
-      innerVisible:false,
+      innerVisible: false,
       imageArr: [],
-      arrData:[],
+      arrData: [],
       condition: {
         imageUrl: null
       }
@@ -118,7 +139,7 @@ export default {
       } else {
         return "";
       }
-    },    
+    },
     handleHttpRequest() {},
     getBase64(file) {
       //把图片转成base64编码
@@ -153,8 +174,8 @@ export default {
         goodsCode: e
       };
       formSkuInfo(obj).then(res => {
-        this.arrData=res.data.data
-        this.innerVisible=true
+        this.arrData = res.data.data;
+        this.innerVisible = true;
       });
     },
     seach() {
@@ -201,9 +222,10 @@ export default {
   width: 88%;
   margin: auto;
   height: 245px;
-  border: #ccc solid 1px;
+  border: #d4d4d4 solid 1px;
   transition: transform 0.3s;
   margin-left: 3%;
+  margin-top:20px;
 }
 .imageSty:hover {
   // transform: scale(1.1);
@@ -227,17 +249,36 @@ export default {
   cursor: pointer;
   line-height: 30px;
 }
-.repa{
+.repa {
   display: block;
   width: 90%;
   overflow: hidden;
   height: 60px;
 }
+.obc1{
+  width: 20%;
+  overflow: hidden;
+  float: left;
+  margin-left: 1%;
+  background: #fff;
+}
+.obc2{
+  width: 77%;
+  overflow: hidden;
+  float: right;
+  background: #fff;
+  margin-right: 1%;
+}
 @media screen and (max-width: 1500px) {
+  .imgDiv {
+  width: 32%;
+  float: left;
+}
   .imageSty {
     width: 92%;
     margin: auto;
     height: 180px;
+    margin-left: 5%;
     border: #ccc solid 1px;
   }
   .w90 {
@@ -249,12 +290,13 @@ export default {
 }
 </style>
 <style>
+.floeatTest .el-upload{
+  width: 100%;
+  border-bottom: #d4d4d4 solid 1px;
+}
 .floeatTest .el-upload-dragger {
   background: #fff;
-  width: 310px;
-  height: 245px;
-}
-.floeatTest .el-upload-dragger .el-icon-upload {
-  margin: 65px 0 16px;
+  width: 100% !important;
+  border: none;
 }
 </style>
