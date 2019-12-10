@@ -3911,7 +3911,7 @@ export default {
       var bigDemo=this.$refs.bigDemo
       var cont=0
       var setTime=setInterval(() => {
-        if(cont<450){
+        if(cont<680){
           bigDemo.scrollTop=cont++
         }else{
           clearInterval(setTime)
