@@ -755,9 +755,9 @@ export default {
       this.websock.send(agentData);
     },
 
-    websocketclose() {
+    websocketclose(e) {
       //关闭
-      console.log("我关闭了");
+      console.log("我关闭了",e);
     },
     getSummaries(param) {
       const { columns, data } = param;
