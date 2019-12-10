@@ -58,13 +58,10 @@
         <div class="w90" :style="obj1" v-loading="imgLoading">
           <div style="margin-left:10px;">
             <div v-for="(item,index) in imageArr" :key="index" class="imgDiv">
-              <a :href="item.ProductId" target="_black">
-                <img :src="item.ProductId" class="imageSty" />
+              <a :href="item.linkUrl" target="_black">
+                <img :src="item.ProductId" class="imageSty" title="点击图片跳转到阿里巴巴链接"  />
               </a>
-              <span @click="goDetails(item.GoodsCode)">
-                {{item.GoodsCode}}
-                <a style="margin-left:10px;">查看</a>
-              </span>
+              <span @click="goDetails(item.GoodsCode)">{{item.GoodsCode}}<a style="margin-left:5px;display:block">{{item.goodsStatus}}</a><a style="padding:2px 8px;background:#409EFF;color:#fff;display:block">查看</a></span>
             </div>
           </div>
         </div>
