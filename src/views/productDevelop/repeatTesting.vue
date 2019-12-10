@@ -115,7 +115,7 @@ export default {
     return {
       actionUrl: "",
       obj: {
-        height: window.innerHeight - 60 + "px"
+        height: window.innerHeight - 105 + "px"
       },
       obj1: {
         height: window.innerHeight - 145 + "px"
@@ -256,14 +256,14 @@ export default {
   height: 60px;
 }
 .obc1{
-  width: 20%;
+  width: 20.5%;
   overflow: hidden;
   float: left;
-  margin-left: 1%;
+  margin-left: 0.5%;
   background: #fff;
 }
 .obc2{
-  width: 77%;
+  width: 77.5%;
   overflow: hidden;
   float: right;
   background: #fff;
@@ -292,7 +292,7 @@ export default {
 <style>
 .floeatTest .el-upload{
   width: 100%;
-  border-bottom: #d4d4d4 solid 1px;
+  border-bottom: #eee solid 8px;
 }
 .floeatTest .el-upload-dragger {
   background: #fff;
