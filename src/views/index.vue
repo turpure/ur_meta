@@ -72,7 +72,7 @@
                 <div class="leftDemo">
                   <div class="jblist">
                     <div class="jb01 jbg">
-                      <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                      <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                     </div>
                     <div class="jb02 jbg">
                       <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
@@ -1979,49 +1979,49 @@
               ></div>
               <div class="jblist">
                 <div class="jb01 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb02 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb03 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb04 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb05 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb06 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb07 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb08 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb09 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb10 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb11 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb12 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb13 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb14 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb15 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
               </div>
             </div>
@@ -2035,37 +2035,37 @@
               </div>
               <div class="jblist">
                 <div class="jbg jbr1">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr2 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr3 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr4 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr5 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr6 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr7 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr8 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr9 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr10 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr11 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
               </div>
             </div>
@@ -2079,37 +2079,37 @@
               </div>
               <div class="jblist">
                 <div class="jb05 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb06 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb07 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb08 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb09 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb10 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb11 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb12 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb13 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb14 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb15 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
               </div>
             </div>
@@ -2123,37 +2123,37 @@
               </div>
               <div class="jblist">
                 <div class="jbg jbr1">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr2 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr3 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr4 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr5 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr6 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr7 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr8 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr9 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr10 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr11 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
               </div>
             </div>
@@ -2167,37 +2167,37 @@
               </div>
               <div class="jblist">
                 <div class="jb05 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb06 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb07 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb08 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb09 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb10 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb11 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb12 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb13 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb14 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb15 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
               </div>
             </div>
@@ -3971,7 +3971,7 @@ export default {
   float: left;
   margin-top: 1.5%;
   height: 915px;
-  background: url(../assets/bgban51.png) no-repeat center;
+  background: url(../assets/bgban7.jpg) no-repeat center;
   background-size: 100% 100%;
   position: relative;
 }
