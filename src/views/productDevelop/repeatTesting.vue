@@ -132,7 +132,7 @@ export default {
   filters: {
     str1: function(value) {
       if (!value) return "";
-      value = value.substring(0, 1);
+      value = value.substring(0, 4);
       return value;
     },
   },  
