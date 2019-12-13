@@ -141,6 +141,17 @@
             </el-col>
             <el-col :span="22" style="margin-top:1px;">
               <el-col :span="24">
+                <el-checkbox-group v-model="excludePyCate" @change="handleCheckedCitiesChange">
+                  <el-checkbox
+                    v-for="(item,index) in platArr"
+                    :key="index"
+                    :label="item"
+                    :value="item"
+                    @change="checkinlist(item)"
+                  ></el-checkbox>
+               </el-checkbox-group>
+              </el-col>
+              <el-col :span="24" style="padding-left:10px;">
                 <el-checkbox v-model="ruleNew" @change="ruleNewOne">新品</el-checkbox>
               </el-col>
               <el-col :span="24">
@@ -153,7 +164,7 @@
                   >{{item.ruleName}}</el-checkbox>
                 </el-checkbox-group>
               </el-col>
-              <el-col :span="24">
+              <el-col :span="24" style="padding-left:10px;">
                 <el-checkbox v-model="ruleHot" @change="ruleHotOne">热销</el-checkbox>
               </el-col>
               <el-col :span="24">
@@ -161,6 +172,27 @@
                   <el-checkbox
                     style="margin-left:25px;"
                     v-for="(item,index) in ruleNameRx"
+                    :key="index"
+                    :label="item.ruleName"
+                  >{{item.ruleName}}</el-checkbox>
+                </el-checkbox-group>
+              </el-col>
+              <el-col :span="24">
+                <el-checkbox-group v-model="excludePyCate" @change="handleCheckedCitiesChange">
+                  <el-checkbox
+                    v-for="(item,index) in platWishArr"
+                    :key="index"
+                    :label="item"
+                    :value="item"
+                    @change="checkinlist(item)"
+                  ></el-checkbox>
+               </el-checkbox-group>
+              </el-col>
+              <el-col :span="24">
+                <el-checkbox-group v-model="addruleNameHot" @change="ruleHotGet">
+                  <el-checkbox
+                    style="margin-left:25px;"
+                    v-for="(item,index) in ruleNameWish"
                     :key="index"
                     :label="item.ruleName"
                   >{{item.ruleName}}</el-checkbox>
@@ -307,12 +339,16 @@ import {
   APRengineRule,
   APRengineRuleHot,
   getAllotRuleInfo,
-  getPyCate
+  getPyCate,
+  wishProductsRule
 } from "../../api/product";
 import { getMember, getSection, getAttributeInfoCat } from "../../api/profit";
 export default {
   data() {
     return {
+      platArr:['eBay'],
+      platWishArr:['Wish'],
+      ruleNameWish:[],
       tableData: [],
       department: [],
       member: [],
@@ -737,6 +773,9 @@ export default {
     });
     APRengineRuleHot().then(res => {
       this.ruleNameRx = res.data.data;
+    });
+    wishProductsRule().then(res => {
+       this.ruleNameWish = res.data.data;
     });
     this.getData();
     getSection().then(response => {
