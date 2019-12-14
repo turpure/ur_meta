@@ -2335,7 +2335,8 @@
                 <div class="cardText01" v-for="(item,index) in bonusList" :key="index">
                   <img :src="item.avatar" style="width: 40px;height: 40px;border-radius:50%;" />
                   <span>{{item.username}}</span>
-                  <p class="njts">{{item.vacationDays}}天</p>
+                  <p v-if= "!item.vacationDays.length" class="njts">{{item.vacationDays}}天</p>
+                  <p v-if= "item.vacationDays.length" class="njts">0天</p>
                   <p>{{item.bonus | cutOut1}}<b v-show="item.rxtraBonus!=0">+</b><b v-show="item.rxtraBonus!=0">{{item.rxtraBonus | cutOut1}}</b></p>
                 </div>
               </div>
