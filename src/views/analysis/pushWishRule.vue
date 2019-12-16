@@ -63,16 +63,6 @@
                 {{scope.row.ruleType=='new'?'新品':'热销'}}
               </template>
             </el-table-column>
-            <el-table-column property="maxNumBoughtStart" label="销量大于" align="center" width="80"></el-table-column>
-            <el-table-column property="maxNumBoughtEnd" label="销量小于" align="center" width="80"></el-table-column>
-            <el-table-column property="ratingStart" label="评分大于" align="center"></el-table-column>
-            <el-table-column property="ratingEnd" label="评分小于" align="center"></el-table-column>
-            <el-table-column property="totalpriceStart" label="价格大于" align="center" width="80"></el-table-column>
-            <el-table-column property="totalpriceEnd" label="价格小于" align="center" width="80"></el-table-column>
-            <el-table-column property="viewRate1Start" label="前7天Viewing均值大于" align="center" width="170"></el-table-column>
-            <el-table-column property="viewRate1End" label="前7天Viewing均值小于" align="center" width="170"></el-table-column>
-            <el-table-column property="intervalRatingStart" label="前30天新增评论数大于" align="center" width="170"></el-table-column>
-            <el-table-column property="intervalRatingEnd" label="前30天新增评论数小于" align="center" width="170"></el-table-column>
             <el-table-column property="pb" label="商品pb" align="center" width="80">
               <template slot-scope="scope">
                 {{scope.row.pb=='1'?'有':scope.row.pb=='0'?'无':'不限'}}
@@ -88,7 +78,17 @@
                 {{scope.row.verified=='1'?'认证':scope.row.verified=='0'?'非认证':'不限'}}
               </template>
             </el-table-column>
-            <el-table-column property="listedTime" label="上架时间" align="center"></el-table-column>
+            <el-table-column property="listedTime" label="上架时间" align="center" width="90"></el-table-column>
+            <el-table-column property="maxNumBoughtStart" label="销量大于" align="center" width="80"></el-table-column>
+            <el-table-column property="maxNumBoughtEnd" label="销量小于" align="center" width="80"></el-table-column>
+            <el-table-column property="ratingStart" label="评分大于" align="center"></el-table-column>
+            <el-table-column property="ratingEnd" label="评分小于" align="center"></el-table-column>
+            <el-table-column property="totalpriceStart" label="价格大于" align="center" width="80"></el-table-column>
+            <el-table-column property="totalpriceEnd" label="价格小于" align="center" width="80"></el-table-column>
+            <el-table-column property="viewRate1Start" label="前7天Viewing均值大于" align="center" width="170"></el-table-column>
+            <el-table-column property="viewRate1End" label="前7天Viewing均值小于" align="center" width="170"></el-table-column>
+            <el-table-column property="intervalRatingStart" label="前30天新增评论数大于" align="center" width="170"></el-table-column>
+            <el-table-column property="intervalRatingEnd" label="前30天新增评论数小于" align="center" width="170"></el-table-column>
           </el-table>
         </div>
         <div v-show="ebay.rx">
