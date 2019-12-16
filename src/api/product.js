@@ -1741,3 +1741,20 @@ export function wishProductsSaveRule(param) {
     data
   })
 }
+
+export function getallotRuleInfo(param) {
+  return request({
+    url: '/products-engine/allot-rule-info?id=' + param.id,
+    method: 'get'
+  })
+}
+
+export function wishRuleDelete(param) {
+  const data = { condition: param }
+  return request({
+    url: '/wish-products/delete-rule',
+    method: 'post',
+    data
+  })
+}
+
