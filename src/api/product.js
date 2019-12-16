@@ -1758,3 +1758,12 @@ export function wishRuleDelete(param) {
   })
 }
 
+export function manualRecommend(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/manual-recommend',
+    method: 'post',
+    data
+  })
+}
+

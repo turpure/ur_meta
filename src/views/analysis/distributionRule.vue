@@ -368,6 +368,7 @@ export default {
       ],
       devData: [],
       addData: {
+        id:null,
         username: null,
         depart: null,
         productNum: null,

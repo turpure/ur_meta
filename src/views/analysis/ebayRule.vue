@@ -180,7 +180,8 @@
                   <div v-for="(item,index) in itemDetail" :key="index">
                       <span
                         class="curSpan"
-                        style="font-size:14px;color:#3c8dbc;display:block;float:left;margin-right:20px;"
+                        style="font-size:14px;display:block;float:left;margin-right:20px;"
+                         :class="itemCateIndex==index?'redred':''"
                          @click="rulePlatActive1(index)"
                       >
                         <span class="oneClass" :class="item.flag?'ruleBac':''" @click.stop="rulePlatActive(index)"></span>
@@ -278,7 +279,7 @@
                         class="scrollTopHeight"
                       >
                         <el-col
-                          :span="8"
+                          :span="12"
                           v-for="(itemTree,indexTree) in itemTwo.marketplaceValue"
                           :key="indexTree"
                         >
@@ -864,6 +865,9 @@ export default {
   height: 4px;
   background: #fff;
   border: #67c23a solid 6px;
+}
+.redred{
+  color: #3c8dbc !important;
 }
 .scrollTopHeight {
   height: 480px;
