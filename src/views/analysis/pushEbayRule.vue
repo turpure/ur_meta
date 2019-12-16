@@ -1033,6 +1033,7 @@ export default {
         itemLocation: false,
         ruleMark: "",
         popularStatus:"",
+        isUsed:1,
         ruleName: ""
       },
       addEbayRx: {
@@ -1044,6 +1045,7 @@ export default {
         soldStart: "",
         soldEnd: "",
         storeLocation: [],
+        isUsed:1,
         genTimeStart: "",
         genTimeEnd: "",
         soldThePreviousGrowthStart: "",
