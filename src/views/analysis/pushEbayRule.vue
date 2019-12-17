@@ -46,7 +46,7 @@
             style="width:98%;margin-left:0.7%;margin-top:15px;"
           >
             <el-table-column type="index" fixed align="center" width="40" header-align="center"></el-table-column>
-            <el-table-column label="操作" fixed header-align="center" align="center" width="75">
+            <el-table-column label="操作" fixed header-align="center" align="center" width="95">
               <template slot-scope="scope">
                 <el-tooltip content="更新">
                   <i
@@ -69,9 +69,16 @@
                     @click="delArt(scope.$index, scope.row)"
                   ></i>
                 </el-tooltip>
+                <el-tooltip :content="scope.row.isUsed==0?'停用':'启用'">
+                  <i
+                    class="el-icon-menu"
+                    style="color: #409EFF;cursor:pointer;"
+                    @click="startRule(scope.$index, scope.row,'news')"
+                  ></i>
+                </el-tooltip>
               </template>
             </el-table-column>
-            <el-table-column property="ruleName" label="规则名称" align="center"></el-table-column>
+            <el-table-column property="ruleName" label="规则名称" align="center" width="110"></el-table-column>
             <el-table-column property="ruleMark" label="规则备注" align="center"></el-table-column>
             <el-table-column property="soldStart" label="销量大于" align="center" width="80"></el-table-column>
             <el-table-column property="soldEnd" label="销量小于" align="center" width="80"></el-table-column>
@@ -107,7 +114,7 @@
             style="width:98%;margin-left:0.7%;margin-top:15px;"
           >
             <el-table-column type="index" fixed align="center" width="40" header-align="center"></el-table-column>
-            <el-table-column label="操作" fixed header-align="center" align="center" width="80">
+            <el-table-column label="操作" fixed header-align="center" align="center" width="95">
               <template slot-scope="scope">
                 <el-tooltip content="更新">
                   <i
@@ -128,6 +135,13 @@
                     class="el-icon-delete"
                     style="color: #409EFF;cursor:pointer;"
                     @click="delArtRx(scope.$index, scope.row)"
+                  ></i>
+                </el-tooltip>
+                <el-tooltip :content="scope.row.isUsed==0?'启用':'停用'">
+                  <i
+                    class="el-icon-menu"
+                    style="color: #409EFF;cursor:pointer;"
+                    @click="startRule(scope.$index, scope.row,'hot')"
                   ></i>
                 </el-tooltip>
               </template>
@@ -990,7 +1004,9 @@ import {
   ebaySaveRuleDelete,
   ebaySaveRuleDeleteHot,
   ebayRunRuleNew,
-  ebayRunRuleHot
+  ebayRunRuleHot,
+  startRule,
+  stopRule
 } from "../../api/product";
 export default {
   data() {
@@ -1142,6 +1158,41 @@ export default {
     }
   },
   methods: {
+    startRule(index,row,type){
+      if(row.isUsed=='0'){
+        var obj={
+          type:type,
+          ruleId:row._id
+        }
+        startRule(obj).then(res => {
+          if (res.data.code == 200) {
+            this.$message({
+              message: "成功",
+              type: "success"
+            });
+            this.getDataEbay();
+          } else {
+            this.$message.error(res.data.message);
+          }
+        });
+      }else{
+        var obj={
+          type:'news',
+          ruleId:row._id
+        }
+        stopRule(obj).then(res => {
+          if (res.data.code == 200) {
+            this.$message({
+              message: "成功",
+              type: "success"
+            });
+            this.getDataEbay();
+          } else {
+            this.$message.error(res.data.message);
+          }
+        });
+      }
+    },
     ljArt(index, row) {
       let conde = {
         ruleId: row._id
