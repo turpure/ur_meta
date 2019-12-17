@@ -69,7 +69,7 @@
                     @click="delArt(scope.$index, scope.row)"
                   ></i>
                 </el-tooltip>
-                <el-tooltip :content="scope.row.isUsed==0?'停用':'启用'">
+                <el-tooltip :content="scope.row.isUsed==0?'启用':'停用'">
                   <i
                     class="el-icon-menu"
                     style="color: #409EFF;cursor:pointer;"
