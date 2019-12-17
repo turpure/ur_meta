@@ -221,7 +221,7 @@
               @size-change="handleSizeChangeEbayXp"
               @current-change="handleCurrentChangeEbayXp"
               :current-page="this.condition.page"
-              :page-sizes="[20, 30, 40, 50]"
+              :page-sizes="[5,20, 30, 40, 50]"
               :page-size="this.condition.pageSize"
               layout="total, sizes, prev, pager, next, jumper"
               :total="this.totalEbayXp"
@@ -295,7 +295,7 @@
                     @click="goLinkUrlEbay(scope.row.marketplace,scope.row.itemId)"
                   >eBay链接</span>
                   <span
-                    style="margin:0;margin-top:5px;font-size:13px;"
+                    style="margin-top:5px;font-size:13px;"
                     @click="goLinkUrlEbayHy('https://kj.1688.com/pdt_tongkuan.html?imgUrl=' + scope.row.mainImage)"
                   >货源链接</span>
                   <span
@@ -428,7 +428,7 @@
               @size-change="handleSizeChangeEbayRx"
               @current-change="handleCurrentChangeEbayRx"
               :current-page="this.condition1.page"
-              :page-sizes="[20, 30, 40, 50]"
+              :page-sizes="[5,20, 30, 40, 50]"
               :page-size="this.condition1.pageSize"
               layout="total, sizes, prev, pager, next, jumper"
               :total="this.totalEbayRx"
@@ -676,14 +676,14 @@ export default {
         marketplace: "",
         recommendStatus: "",
         page: 1,
-        pageSize: 20,
+        pageSize: 5,
         sort: ""
       },
       condition1: {
         marketplace: "",
         recommendStatus: "",
         page: 1,
-        pageSize: 20,
+        pageSize: 5,
         sort: ""
       },
       ebayStlye: 0,
