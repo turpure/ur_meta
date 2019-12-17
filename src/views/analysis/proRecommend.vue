@@ -138,7 +138,7 @@
                   >货源链接</span>
                   <span
                     style="margin-top:5px;font-size:13px;"
-                    @click="manualPush(scope.row.itemId)"
+                    @click="manualPush(scope.row.itemId,'new')"
                   >手动推送</span>
                 </div>
               </template>
@@ -300,7 +300,7 @@
                   >货源链接</span>
                   <span
                     style="margin-top:5px;font-size:13px;"
-                    @click="manualPush(scope.row.itemId)"
+                    @click="manualPush(scope.row.itemId,'hot')"
                   >手动推送</span>
                 </div>
               </template>
@@ -540,16 +540,6 @@
       <el-dialog title :visible.sync="dialogmanualPush" width="40%">
         <el-row>
           <el-col :span="24">
-            <el-col :span="4" class="basp">推送规则</el-col>
-            <el-col :span="18">
-              <el-select
-                v-model="itemShow.type"
-                placeholder="请选择"
-                style="width:100%"
-              >
-                <el-option v-for="item in showRule" :key="item" :label="item" :value="item"></el-option>
-              </el-select>
-            </el-col>
             <el-col :span="4" class="basp" style="margin-top:15px;">产品开发</el-col>
             <el-col :span="18" style="margin-top:15px;">
               <el-select
@@ -743,8 +733,9 @@ export default {
           this.dialogmanualPush=false
       });
     },
-    manualPush(id){
+    manualPush(id,type){
       this.itemShow.itemId=id
+      this.itemShow.type=type
       this.dialogmanualPush=true
     },
     selectEbayXp(e) {
