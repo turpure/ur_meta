@@ -391,12 +391,25 @@
                 <p class="basp">是否有小火苗</p>
               </el-col>
               <el-col :span="15">
-                <el-switch
+                <el-col :span="6">
+                  <el-switch
                   v-model="ebayXp.popularStatus"
                   active-color="#13ce66"
                   inactive-color="#ff4949"
                   style="margin-top:10px;"
                 ></el-switch>
+                </el-col>
+                <el-col :span="12">
+                  <p class="basp">是否手动推送</p>
+                </el-col>
+                <el-col :span="6">
+                  <el-switch
+                  v-model="ebayXp.type"
+                  active-color="#13ce66"
+                  inactive-color="#ff4949"
+                  style="margin-top:10px;"
+                ></el-switch>
+                </el-col>
               </el-col>
             </el-col>
           </el-col>
@@ -547,12 +560,25 @@
                 <p class="basp">是否有小火苗</p>
               </el-col>
               <el-col :span="15">
-                <el-switch
+                <el-col :span="6">
+                  <el-switch
                   v-model="addEbayXp.popularStatus"
                   active-color="#13ce66"
                   inactive-color="#ff4949"
                   style="margin-top:10px;"
                 ></el-switch>
+                </el-col>
+                <el-col :span="12">
+                  <p class="basp">是否手动推送</p>
+                </el-col>
+                <el-col :span="6">
+                  <el-switch
+                  v-model="addEbayXp.type"
+                  active-color="#13ce66"
+                  inactive-color="#ff4949"
+                  style="margin-top:10px;"
+                ></el-switch>
+                </el-col>
               </el-col>
             </el-col>
           </el-col>
@@ -762,12 +788,25 @@
                 <p class="basp">连续三天有销量</p>
               </el-col>
               <el-col :span="15">
-                <el-switch
+                <el-col :span="6">
+                  <el-switch
                   v-model="addEbayRx.salesThreeDayFlag"
                   active-color="#13ce66"
                   inactive-color="#ff4949"
                   style="margin-top:10px;"
                 ></el-switch>
+                </el-col>
+                <el-col :span="12">
+                  <p class="basp">是否手动推送</p>
+                </el-col>
+                <el-col :span="6">
+                  <el-switch
+                  v-model="addEbayRx.type"
+                  active-color="#13ce66"
+                  inactive-color="#ff4949"
+                  style="margin-top:10px;"
+                ></el-switch>
+                </el-col>
               </el-col>
             </el-col>
           </el-col>
@@ -977,12 +1016,25 @@
                 <p class="basp">连续三天有销量</p>
               </el-col>
               <el-col :span="15">
-                <el-switch
+                <el-col :span="6">
+                  <el-switch
                   v-model="ebayRx.salesThreeDayFlag"
                   active-color="#13ce66"
                   inactive-color="#ff4949"
-                  style="margin-top:10px;margin-left:10px;"
+                  style="margin-top:10px;"
                 ></el-switch>
+                </el-col>
+                <el-col :span="12">
+                  <p class="basp">是否手动推送</p>
+                </el-col>
+                <el-col :span="6">
+                  <el-switch
+                  v-model="ebayRx.type"
+                  active-color="#13ce66"
+                  inactive-color="#ff4949"
+                  style="margin-top:10px;"
+                ></el-switch>
+                </el-col>
               </el-col>
             </el-col>
           </el-col>
@@ -1033,6 +1085,7 @@ export default {
         itemLocation: "",
         ruleMark: "",
         popularStatus:false,
+        type:'',
         ruleName: ""
       },
       addEbayXp: {
@@ -1045,6 +1098,7 @@ export default {
         publishedSite: [],
         storeLocation: [],
         salesThreeDayFlag: false,
+        type:false,
         listedTime: [],
         itemLocation: false,
         ruleMark: "",
@@ -1056,6 +1110,7 @@ export default {
         marketplace: [],
         publishedSite: [],
         salesThreeDayFlag: false,
+        type:false,
         priceStart: "",
         priceEnd: "",
         soldStart: "",
@@ -1083,6 +1138,7 @@ export default {
         _id: "",
         brand: "",
         salesThreeDayFlag: "",
+        type:'',
         priceStart: "",
         priceEnd: "",
         soldStart: "",
@@ -1404,6 +1460,7 @@ export default {
       this.ebayXp.salesThreeDayFlag = row.salesThreeDayFlag;
       this.ebayXp.popularStatus = row.popularStatus;
       this.ebayXp.listedTime = row.listedTime;
+      this.ebayXp.type = row.type;
       this.ebayXp.itemLocation = row.itemLocation;
       this.ebayXp.ruleName = row.ruleName;
       this.ebayXp.ruleMark = row.ruleMark;
@@ -1432,6 +1489,9 @@ export default {
       this.ebayXp.salesThreeDayFlag == 0
         ? (this.ebayXp.salesThreeDayFlag = false)
         : (this.ebayXp.salesThreeDayFlag = true);
+        this.ebayXp.type == 'auto'
+        ? (this.ebayXp.type = false)
+        : (this.ebayXp.type = true);
         this.ebayXp.popularStatus == 0
         ? (this.ebayXp.popularStatus = false)
         : (this.ebayXp.popularStatus = true);
@@ -1464,6 +1524,7 @@ export default {
       this.ebayRx.publishedSite = row.publishedSite;
       this.ebayRx.ruleName = row.ruleName;
       this.ebayRx.ruleMark = row.ruleMark;
+      this.ebayRx.type = row.type;
       if (this.ebayRx.salesThreeDayFlag == 0) {
         this.ebayRx.salesThreeDayFlag = false;
       } else {
@@ -1472,6 +1533,9 @@ export default {
       this.ebayRx.popularStatus == 0
         ? (this.ebayRx.popularStatus = false)
         : (this.ebayRx.popularStatus = true);
+      this.ebayRx.type == 'auto'
+        ? (this.ebayRx.type = false)
+        : (this.ebayRx.type = true);  
       for(let i=0;i<this.ebayRx.storeLocation.length;i++){
         this.ebayRx.storeLocation[i]=this.ebayRx.storeLocation[i].replace(/,/g, "");
       }
@@ -1537,6 +1601,11 @@ export default {
           this.addEbayXp.salesThreeDayFlag = 1;
         } else {
           this.addEbayXp.salesThreeDayFlag = 0;
+        }
+        if (this.addEbayXp.type) {
+          this.addEbayXp.type = 'manual';
+        } else {
+          this.addEbayXp.type = 'auto';
         }
         if (this.addEbayXp.popularStatus) {
         this.addEbayXp.popularStatus = 1;
