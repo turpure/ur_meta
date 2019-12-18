@@ -80,6 +80,9 @@
             </el-table-column>
             <el-table-column property="ruleName" label="规则名称" align="center" width="110"></el-table-column>
             <el-table-column property="ruleMark" label="规则备注" align="center"></el-table-column>
+            <el-table-column property="isUsed" label="是否停用" align="center" width="100">
+              <template slot-scope="scope"><a :class="scope.row.isUsed==0?'clasRed1':'clasGreen1'">{{scope.row.isUsed==0?'停用':'在用'}}</a></template>
+            </el-table-column>
             <el-table-column property="soldStart" label="销量大于" align="center" width="80"></el-table-column>
             <el-table-column property="soldEnd" label="销量小于" align="center" width="80"></el-table-column>
             <el-table-column property="visitStart" label="浏览数大于" align="center"></el-table-column>
@@ -92,9 +95,6 @@
               <template slot-scope="scope">{{scope.row.popularStatus==0?'否':'是'}}</template>
             </el-table-column>
             <el-table-column property="listedTime" label="上架时间" align="center"></el-table-column>
-            <el-table-column property="isUsed" label="是否停用" align="center">
-              <template slot-scope="scope">{{scope.row.isUsed==0?'停用':'在用'}}</template>
-            </el-table-column>
             <el-table-column property="creator" label="创建人" align="center" width="80"></el-table-column>
             <el-table-column property="createdDate" label="创建时间" align="center">
               <template slot-scope="scope">{{scope.row.createdDate | cutOutMonye}}</template>
@@ -148,6 +148,9 @@
             </el-table-column>
             <el-table-column property="ruleName" label="规则名称" align="center" width="100"></el-table-column>
             <el-table-column property="ruleMark" label="规则备注" align="center" width="100"></el-table-column>
+            <el-table-column property="isUsed" label="是否停用" align="center" width="100">
+              <template slot-scope="scope"><a :class="scope.row.isUsed==0?'clasRed1':'clasGreen1'">{{scope.row.isUsed==0?'停用':'在用'}}</a></template>
+            </el-table-column>
             <el-table-column property="publishedSite" label="刊登站点" align="center" width="180"></el-table-column>
             <el-table-column property="storeLocation" label="注册地址" align="center" width="100"></el-table-column>
             <el-table-column
@@ -157,9 +160,6 @@
               width="120"
             >
               <template slot-scope="scope">{{scope.row.salesThreeDayFlag==0?'否':'是'}}</template>
-            </el-table-column>
-            <el-table-column property="isUsed" label="是否停用" align="center">
-              <template slot-scope="scope">{{scope.row.isUsed==0?'停用':'在用'}}</template>
             </el-table-column>
             <el-table-column property="priceEnd" label="价格小于" align="center" width="100"></el-table-column>
             <el-table-column property="priceStart" label="价格大于" align="center" width="100"></el-table-column>
@@ -1764,7 +1764,7 @@ export default {
   color: #f56c6c;
   border: rgba(245, 108, 108, 0.2) solid 1px;
   background: rgba(245, 108, 108, 0.1);
-  width: 65%;
+  width: 85%;
   margin: auto;
   line-height: 32px;
   display: block;
@@ -1773,7 +1773,7 @@ export default {
 .clasGreen1 {
   color: #0e9a00;
   border-radius: 5px;
-  width: 65%;
+  width: 85%;
   margin: auto;
   line-height: 32px;
   display: block;
