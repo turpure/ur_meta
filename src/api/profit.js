@@ -42,6 +42,12 @@ export function getDeveloper() {
     method: 'get'
   })
 }
+export function getRuleDeveloper() {
+  return request({
+    url: '/products-engine/recommend-developer',
+    method: 'get'
+  })
+}
 // 没有权限的人员
 export function getUsers() {
   return request({

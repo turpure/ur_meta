@@ -573,7 +573,7 @@ import {
   ebayRxRefuse,
   manualRecommend
 } from "../../api/product";
-import { getEbayXp, getEbayRx,getDeveloper } from "../../api/profit";
+import { getEbayXp, getEbayRx,getRuleDeveloper } from "../../api/profit";
 import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 export default {
   data() {
@@ -736,6 +736,7 @@ export default {
     manualPush(id,type){
       this.itemShow.itemId=id
       this.itemShow.type=type
+      this.itemShow.developer=[]
       this.dialogmanualPush=true
     },
     selectEbayXp(e) {
@@ -1289,7 +1290,7 @@ export default {
   mounted() {
     this.ebayXp();
     this.ebayRx();
-    getDeveloper().then(response => {
+    getRuleDeveloper().then(response => {
       const possessMan = response.data.data;
       this.developerItem = possessMan
     });
