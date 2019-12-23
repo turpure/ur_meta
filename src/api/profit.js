@@ -917,6 +917,19 @@ export function getEbayRx(param) {
     method: 'get'
   })
 }
+export function getWishXp(param) {
+  return request({
+    url: '/products-engine/recommend?plat=wish&type=new&marketplace=' + param.marketplace + '&page=' + param.page + '&recommendStatus=' + param.recommendStatus + '&pageSize=' + param.pageSize + '&sort=' + param.sort,
+    method: 'get'
+  })
+}
+
+export function getWishRx(param) {
+  return request({
+    url: '/products-engine/recommend?plat=wish&type=hot&marketplace=' + param.marketplace + '&page=' + param.page + '&recommendStatus=' + param.recommendStatus + '&pageSize=' + param.pageSize + '&sort=' + param.sort,
+    method: 'get'
+  })
+}
 export function getEbayXpMind(param) {
   return request({
     url: '/products-engine/mind-recommend?plat=ebay&type=new&marketplace=' + param.marketplace + '&page=' + param.page + '&pageSize=' + param.pageSize + '&sort=' + param.sort,
