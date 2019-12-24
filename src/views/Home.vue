@@ -483,8 +483,8 @@ export default {
       }
       .el-menu-item {
         min-width: 15rem;
-        text-align: center;
-        // padding-left: 4rem !important;
+        // text-align: center;
+        padding-left: 4rem !important;
       }
       .data-scroll-width {
         width: 15rem;
@@ -615,8 +615,8 @@ export default {
         }
         .el-menu-item {
           min-width: 215px;
-          text-align: center;
-          // padding-left: 4rem !important;
+          // text-align: center;
+          padding-left: 40px !important;
         }
         .data-scroll-width {
           width: 215px;
