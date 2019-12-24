@@ -3,15 +3,15 @@
     <div>
       <div v-show="show.ebay" style="background:#fff;padding-top:10px;">
         <div class="ebayCase">
-          <span class="ebayText" @click="tabEbayXp" style="margin-left:12px;" v-show="!ebay.wish">
-            <span class="ebayactive" :class="ebayStlye==0?'ebayActive':''"></span>新品商品
-          </span>
           <span class="ebayText" @click="tabEbayRx" v-show="!ebay.wish">
             <span class="ebayactive" :class="ebayStlye==1?'ebayActive':''"></span>热销商品
           </span>
+          <span class="ebayText" @click="tabEbayXp" style="margin-left:12px;" v-show="!ebay.wish">
+            <span class="ebayactive" :class="ebayStlye==0?'ebayActive':''"></span>新品商品
+          </span>
           <span class="pospan" v-show="!ebay.wish">{{proTotalXp}}</span>
           <span class="pospan1" v-show="!ebay.wish">{{proTotalRx}}</span>
-          <el-select v-model="platValue" placeholder="请选择" size="small" style="float:right;margin-right:15px;width:150px;" @change="getPlat($event)">
+          <el-select v-model="platValue" placeholder="请选择" size="small" style="float:left;margin-left:15px;width:150px;margin-top:3px;" @change="getPlat($event)">
             <el-option
               v-for="item in platArr"
               :key="item"
@@ -416,6 +416,11 @@
                 <p
                   style="margin:0;margin-top:8px;color:#e6a23c;font-size:13px;"
                 >{{scope.row.pname}}</p>
+                <div style="margin-top:8px;">
+                  <span
+                    style="margin:0;margin-top:8px;color:#3c8dbc;font-size:13px;"
+                  >商品ID:{{scope.row.pid}}</span>
+                </div>
                 <div style="margin-top:8px;" class="ebayGoa">
                   <span
                     style="margin-top:5px;font-size:13px;"
@@ -1736,12 +1741,12 @@ export default {
   font-size: 14px;
   padding: 0 18px;
   display: block;
-  float: left;
+  float: right;
   cursor: pointer;
   border: #eee solid 1px;
   background: #fff;
   line-height: 35px;
-  margin-left: 20px;
+  margin-right: 20px;
   border-radius: 5px;
 }
 .ebayactive {
@@ -1827,7 +1832,7 @@ export default {
   padding: 1px 5px;
   border-radius: 20px;
   font-size: 10px;
-  left: 108px;
+  right: 150px;
   top: 3px;
 }
 .pospan1 {
@@ -1838,7 +1843,7 @@ export default {
   padding: 1px 5px;
   border-radius: 20px;
   font-size: 10px;
-  left: 247px;
+  right: 10px;
   top: 3px;
 }
 .imgPhto {
