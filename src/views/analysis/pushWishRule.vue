@@ -89,6 +89,10 @@
             <el-table-column property="viewRate1End" label="前7天Viewing均值小于" align="center" width="170"></el-table-column>
             <el-table-column property="intervalRatingStart" label="前30天新增评论数大于" align="center" width="170"></el-table-column>
             <el-table-column property="intervalRatingEnd" label="前30天新增评论数小于" align="center" width="170"></el-table-column>
+            <el-table-column property="creator" label="创建人" align="center" width="80"></el-table-column>
+            <el-table-column property="createdDate" label="创建时间" align="center" width="100">
+              <template slot-scope="scope">{{scope.row.createdDate | cutOutMonye}}</template>
+            </el-table-column>
           </el-table>
         </div>
         <div v-show="ebay.rx">
@@ -1071,8 +1075,8 @@ export default {
       // for(let i=0;i<this.ebayXp.listedTime.length;i++){
       //   this.ebayXp.listedTime[i]=this.ebayXp.listedTime[i].replace(/,/g, "");
       // }
-      this.listedTime1=this.ebayXp.listedTime[0]
-      this.listedTime2=this.ebayXp.listedTime[1]
+      this.listedTime1=this.ebayXp.listedTime[0].replace(/,/g, "");
+      this.listedTime2=this.ebayXp.listedTime[1].replace(/,/g, "");
       this.ebaydisLoginxp = true;
     },
     saveEbayXp() {
