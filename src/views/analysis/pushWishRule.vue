@@ -1281,15 +1281,9 @@ export default {
         for (let i = 0; i < this.ebaydata.length; i++) {
           let date = this.ebaydata[i].listedTime;
           for (let k = 0; k < date.length; k++) {
-              if (date[k] == "0") {
-                date[k] = "今天,";
-              }
-              if (date[k] == "1") {
-                date[k] = "昨天,";
-              }
-              if (date[k] == "2") {
-                date[k] = "前天";
-              }
+            if(k!=date.length-1){
+              date[k]= date[k]+','
+            }
           }
         }
         this.listLoading = false;
