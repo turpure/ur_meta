@@ -2947,7 +2947,7 @@ export default {
         "eBay-义乌仓",
         "eBay-海外仓",
         "Wish",
-        "SMT",
+        "Aliexpress",
         "Amazon",
         "Joom",
         "Shopee",
@@ -3871,8 +3871,8 @@ export default {
       } else {
         this.pmShow["pmWISH"] = false;
       }
-      if (tab.label === "SMT") {
-        this.activePlatpm = "SMT";
+      if (tab.label === "Aliexpress") {
+        this.activePlatpm = "Aliexpress";
         this.pmShow["pmSMT"] = true;
         ProsTargetPm(this.activePlatpm).then(res => {
           this.proTablepm = res.data.data;
