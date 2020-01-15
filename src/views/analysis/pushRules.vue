@@ -25,7 +25,7 @@ export default {
   },
   data() {
     return {
-      allMenu: ["Ebay", "Wish", "Joom", "Amazon", "Aliexpress"],
+      allMenu: ["Ebay", "Wish","Shopee", "Joom", "Amazon", "Aliexpress"],
       listLoading: false,
       activeName:'Ebay',
       show:{
