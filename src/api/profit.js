@@ -951,3 +951,12 @@ export function getWishRxMind(param) {
   })
 }
 
+export function gethwckcsku(param) {
+  const data = { condition: param }
+  return request({
+    url: '/tiny-tool/sku?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+

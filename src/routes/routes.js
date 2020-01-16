@@ -57,6 +57,7 @@ import prescription from '../views/tinytool/prescription.vue'
 import ukxn from '../views/tinytool/ukxn.vue'
 import ukzc from '../views/tinytool/ukzc.vue'
 import auzc from '../views/tinytool/auzc.vue'
+import hwckc from '../views/tinytool/hwckc.vue'
 import joomtool from '../views/tinytool/joomtool.vue'
 import bidding from '../views/tinytool/bidding.vue'
 import ebayBalance from '../views/tinytool/ebayBalance.vue'
@@ -509,6 +510,11 @@ const routes = [
             path: '/v1/tiny-tool/uk',
             component: uk,
             name: 'UK真仓定价'
+          },
+          {
+            path: '/v1/tiny-tool/sku',
+            component: hwckc,
+            name: '海外仓库存'
           },
           {
             path: '/v1/tiny-tool/au',
