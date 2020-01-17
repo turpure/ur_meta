@@ -44,9 +44,9 @@
               style="margin-left:10px;"
             >查询</el-button>
           </el-form-item>
-          <!-- <el-form-item>
+          <el-form-item>
             <el-button size="small" type="success" @click="exportExcel(condition)">导出</el-button>
-          </el-form-item>-->
+          </el-form-item>
         </el-form>
       </transition>
     </div>
@@ -100,7 +100,7 @@
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="this.condition.page"
-          :page-sizes="[10, 20, 30, 40]"
+          :page-sizes="[100, 200, 300, 400]"
           :page-size="this.condition.pageSize"
           layout="total, sizes, prev, pager, next, jumper"
           :total="this.total"
@@ -128,7 +128,7 @@ export default {
       condition: {
         goodsCode: "",
         seller: "",
-        pageSize: 20,
+        pageSize: 100,
         page: 1
       },
       listLoading: false
