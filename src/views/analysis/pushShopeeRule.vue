@@ -48,37 +48,23 @@
             </el-table-column>
             <el-table-column property="ruleName" label="规则名称" align="center" width="100"></el-table-column>
             <el-table-column property="ruleMark" label="规则备注" align="center" width="100"></el-table-column>
-            <el-table-column property="ruleType" label="规则类别" align="center" width="100">
-              <template slot-scope="scope">
-                {{scope.row.ruleType=='new'?'新品':'热销'}}
-              </template>
+            <el-table-column property="country" label="国家" align="center" width="100"></el-table-column>
+            <el-table-column property="genTimeStart" label="上架开始时间" align="center" width="80"></el-table-column>
+            <el-table-column property="genTimeEnd" label="上架结束时间" align="center" width="80"></el-table-column>
+            <el-table-column property="historicalSoldStart" label="总销售件数大于" align="center" width="80"></el-table-column>
+            <el-table-column property="historicalSoldEnd" label="总销售件数小于" align="center" width="80"></el-table-column>
+            <el-table-column property="isShopeeVerified" label="虾皮优选" align="center" width="100"></el-table-column>
+            <el-table-column property="likedCountStart" label="Favorite大于" align="center" width="80"></el-table-column>
+            <el-table-column property="likedCountEnd" label="Favorite小于" align="center" width="80"></el-table-column>
+            <el-table-column property="paymentStart" label="前30天销售金额大于" align="center" width="100"></el-table-column>
+            <el-table-column property="paymentEnd" label="前30天销售金额小于" align="center" width="100"></el-table-column>
+            <el-table-column property="soldStart" label="前30天销售件数大于" align="center" width="100"></el-table-column>
+            <el-table-column property="soldEnd" label="前30天销售件数小于" align="center" width="100"></el-table-column>
+            <el-table-column property="ratingCountStart" label="评分大于" align="center" width="100"></el-table-column>
+            <el-table-column property="ratingCountEnd" label="评分小于" align="center" width="100"></el-table-column>
+            <el-table-column property="shopLocationStatus" label="所在地" align="center" width="100">
+              <template slot-scope="scope">{{scope.row.shopLocationStatus==1?'海外':scope.row.shopLocationStatus==1?'本地':'全部'}}</template>
             </el-table-column>
-            <el-table-column property="pb" label="商品pb" align="center" width="80">
-              <template slot-scope="scope">
-                {{scope.row.pb=='1'?'有':scope.row.pb=='0'?'无':'不限'}}
-              </template>
-            </el-table-column>
-            <el-table-column property="hwc" label="海外仓" align="center" width="80">
-              <template slot-scope="scope">
-                {{scope.row.hwc=='1'?'海外仓':scope.row.hwc=='0'?'非海外仓':'不限'}}
-              </template>
-            </el-table-column>
-            <el-table-column property="verified" label="Wish认证" align="center" width="100">
-              <template slot-scope="scope">
-                {{scope.row.verified=='1'?'认证':scope.row.verified=='0'?'非认证':'不限'}}
-              </template>
-            </el-table-column>
-            <el-table-column property="listedTime" label="上架时间" align="center" width="90"></el-table-column>
-            <el-table-column property="maxNumBoughtStart" label="销量大于" align="center" width="80"></el-table-column>
-            <el-table-column property="maxNumBoughtEnd" label="销量小于" align="center" width="80"></el-table-column>
-            <el-table-column property="ratingStart" label="评分大于" align="center"></el-table-column>
-            <el-table-column property="ratingEnd" label="评分小于" align="center"></el-table-column>
-            <el-table-column property="totalpriceStart" label="价格大于" align="center" width="80"></el-table-column>
-            <el-table-column property="totalpriceEnd" label="价格小于" align="center" width="80"></el-table-column>
-            <el-table-column property="viewRate1Start" label="前7天Viewing均值大于" align="center" width="170"></el-table-column>
-            <el-table-column property="viewRate1End" label="前7天Viewing均值小于" align="center" width="170"></el-table-column>
-            <el-table-column property="intervalRatingStart" label="前30天新增评论数大于" align="center" width="170"></el-table-column>
-            <el-table-column property="intervalRatingEnd" label="前30天新增评论数小于" align="center" width="170"></el-table-column>
             <el-table-column property="creator" label="创建人" align="center" width="80"></el-table-column>
             <el-table-column property="createdDate" label="创建时间" align="center" width="100">
               <template slot-scope="scope">{{scope.row.createdDate | cutOutMonye}}</template>
@@ -86,7 +72,7 @@
           </el-table>
         </div>
       </div>
-      <el-dialog title="wish规则" :visible.sync="ebaydisLoginxp" width="75%" :close-on-click-modal="false">
+      <el-dialog title="shopee规则" :visible.sync="ebaydisLoginxp" width="75%" :close-on-click-modal="false">
         <el-row style="margin-top: 0">
           <el-col :span="24" class="cTop">
             <el-col :span="8" style="margin-bottom: 20px">
@@ -107,59 +93,17 @@
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
               <el-col :span="9">
-                <p class="basp">规则类型</p>
+                <p class="basp">国家</p>
               </el-col>
               <el-col :span="15">
-                <el-select v-model="ebayXp.ruleType" placeholder="请选择" style="width:100%;" clearable>
+                <el-select v-model="ebayXp.country" placeholder="请选择" style="width:100%;" clearable>
                   <el-option
-                    v-for="item in optionsType"
-                    :key="item.value"
+                    v-for="item in countrys"
+                    :key="item"
                     :label="item"
                     :value="item">
                   </el-option>
                 </el-select>
-              </el-col>
-            </el-col>
-            <el-col :span="8" style="margin-bottom: 20px">
-              <el-col :span="9">
-                <p class="basp">销量区间</p>
-              </el-col>
-              <el-col :span="7">
-                <el-input v-model="ebayXp.maxNumBoughtStart" placeholder="大于"></el-input>
-              </el-col>
-              <el-col :span="1">
-                <span class="colspan">-</span>
-              </el-col>
-              <el-col :span="7">
-                <el-input v-model="ebayXp.maxNumBoughtEnd" placeholder="小于"></el-input>
-              </el-col>
-            </el-col>
-            <el-col :span="8" style="margin-bottom: 20px">
-              <el-col :span="9">
-                <p class="basp">评分</p>
-              </el-col>
-              <el-col :span="7">
-                <el-input v-model="ebayXp.ratingStart" placeholder="大于"></el-input>
-              </el-col>
-              <el-col :span="1">
-                <span class="colspan">-</span>
-              </el-col>
-              <el-col :span="7">
-                <el-input v-model="ebayXp.ratingEnd" placeholder="小于"></el-input>
-              </el-col>
-            </el-col>
-            <el-col :span="8" style="margin-bottom: 20px">
-              <el-col :span="9">
-                <p class="basp">价格区间</p>
-              </el-col>
-              <el-col :span="7">
-                <el-input v-model="ebayXp.totalpriceStart" placeholder="大于"></el-input>
-              </el-col>
-              <el-col :span="1">
-                <span class="colspan">-</span>
-              </el-col>
-              <el-col :span="7">
-                <el-input v-model="ebayXp.totalpriceEnd" placeholder="小于"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
@@ -167,81 +111,95 @@
                 <p class="basp">上架时间</p>
               </el-col>
               <el-col :span="7">
-                <el-input v-model="listedTime1" placeholder="大于"></el-input>
+                <el-input v-model="ebayXp.genTimeStart" placeholder="开始"></el-input>
               </el-col>
               <el-col :span="1">
                 <span class="colspan">-</span>
               </el-col>
               <el-col :span="7">
-                <el-input v-model="listedTime2" placeholder="小于"></el-input>
+                <el-input v-model="ebayXp.genTimeEnd" placeholder="结束"></el-input>
               </el-col>
-              <!-- <el-col :span="15">
-               <el-select
-                  style="width:100%"
-                  multiple
-                  filterable
-                  collapse-tags
-                  allow-create
-                  default-first-option
-                  v-model="ebayXp.listedTime"
-                >
-                  <el-button plain type="info" @click="selectalld3">全选</el-button>
-                  <el-button plain type="info" @click="noselectd3">取消</el-button>
-                  <el-option
-                    v-for="(item, key) in ebayOptionsTime"
-                    :key="item.key"
-                    :label="item"
-                    :value="item"
-                  ></el-option>
-                </el-select>
-              </el-col> -->
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
               <el-col :span="9">
-                <p class="basp">前7天Viewing均值</p>
+                <p class="basp">总销售数</p>
               </el-col>
               <el-col :span="7">
-                <el-input v-model="ebayXp.viewRate1Start" placeholder="大于"></el-input>
+                <el-input v-model="ebayXp.historicalSoldStart" placeholder="大于"></el-input>
               </el-col>
               <el-col :span="1">
                 <span class="colspan">-</span>
               </el-col>
               <el-col :span="7">
-                <el-input v-model="ebayXp.viewRate1End" placeholder="小于"></el-input>
+                <el-input v-model="ebayXp.historicalSoldEnd" placeholder="小于"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
               <el-col :span="9">
-                <p class="basp">前30天新增评论数</p>
+                <p class="basp">Favorite</p>
               </el-col>
               <el-col :span="7">
-                <el-input v-model="ebayXp.intervalRatingStart" placeholder="大于"></el-input>
+                <el-input v-model="ebayXp.likedCountStart" placeholder="大于"></el-input>
               </el-col>
               <el-col :span="1">
                 <span class="colspan">-</span>
               </el-col>
               <el-col :span="7">
-                <el-input v-model="ebayXp.intervalRatingEnd" placeholder="小于"></el-input>
+                <el-input v-model="ebayXp.likedCountEnd" placeholder="小于"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
               <el-col :span="9">
-                <p class="basp">商品pb</p>
+                <p class="basp">前30天销售金额</p>
+              </el-col>
+              <el-col :span="7">
+                <el-input v-model="ebayXp.paymentStart" placeholder="大于"></el-input>
+              </el-col>
+              <el-col :span="1">
+                <span class="colspan">-</span>
+              </el-col>
+              <el-col :span="7">
+                <el-input v-model="ebayXp.paymentEnd" placeholder="小于"></el-input>
+              </el-col>
+            </el-col>
+            <el-col :span="8" style="margin-bottom: 20px">
+              <el-col :span="9">
+                <p class="basp">前30天销售件数</p>
+              </el-col>
+              <el-col :span="7">
+                <el-input v-model="ebayXp.soldStart" placeholder="大于"></el-input>
+              </el-col>
+              <el-col :span="1">
+                <span class="colspan">-</span>
+              </el-col>
+              <el-col :span="7">
+                <el-input v-model="ebayXp.soldEnd" placeholder="小于"></el-input>
+              </el-col>
+            </el-col>
+            <el-col :span="8" style="margin-bottom: 20px">
+              <el-col :span="9">
+                <p class="basp">评分</p>
+              </el-col>
+              <el-col :span="7">
+                <el-input v-model="ebayXp.ratingCountStart" placeholder="大于"></el-input>
+              </el-col>
+              <el-col :span="1">
+                <span class="colspan">-</span>
+              </el-col>
+              <el-col :span="7">
+                <el-input v-model="ebayXp.ratingCountEnd" placeholder="小于"></el-input>
+              </el-col>
+            </el-col>
+            <el-col :span="8" style="margin-bottom: 20px">
+              <el-col :span="9">
+                <p class="basp">虾皮优选</p>
               </el-col>
               <el-col :span="15">
-                <el-radio-group v-model="ebayXp.pb" size="medium">
-                  <el-radio-button label="">不限</el-radio-button>
-                  <el-radio-button label="0">无</el-radio-button>
-                  <el-radio-button label="1">有</el-radio-button>
+                <el-radio-group v-model="ebayXp.isShopeeVerified" size="medium">
+                  <el-radio-button label="不限">不限</el-radio-button>
+                  <el-radio-button label="是">是</el-radio-button>
+                  <el-radio-button label="否">否</el-radio-button>
                 </el-radio-group>
-                <!-- <el-select v-model="ebayXp.pb" placeholder="请选择" style="width:100%;" clearable>
-                  <el-option
-                    v-for="item in optionsPb"
-                    :key="item.value"
-                    :label="item"
-                    :value="item">
-                  </el-option>
-                </el-select> -->
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
@@ -249,39 +207,11 @@
                 <p class="basp">海外仓</p>
               </el-col>
               <el-col :span="15">
-                <el-radio-group v-model="ebayXp.hwc" size="medium">
-                  <el-radio-button label="">不限</el-radio-button>
-                  <el-radio-button label="0">非海外仓</el-radio-button>
-                  <el-radio-button label="1">海外仓</el-radio-button>
+                <el-radio-group v-model="ebayXp.shopLocationStatus" size="medium">
+                  <el-radio-button label="">ALL</el-radio-button>
+                  <el-radio-button label="1">海外</el-radio-button>
+                  <el-radio-button label="2">本地</el-radio-button>
                 </el-radio-group>
-                <!-- <el-select v-model="ebayXp.hwc" placeholder="请选择" style="width:100%;" clearable>
-                  <el-option
-                    v-for="item in optionsHwc"
-                    :key="item.value"
-                    :label="item"
-                    :value="item">
-                  </el-option>
-                </el-select> -->
-              </el-col>
-            </el-col>
-            <el-col :span="8" style="margin-bottom: 20px">
-              <el-col :span="9">
-                <p class="basp">Wish认证</p>
-              </el-col>
-              <el-col :span="15">
-                <el-radio-group v-model="ebayXp.verified" size="medium">
-                  <el-radio-button label="">不限</el-radio-button>
-                  <el-radio-button label="0">非认证</el-radio-button>
-                  <el-radio-button label="1">认证</el-radio-button>
-                </el-radio-group>
-                <!-- <el-select v-model="ebayXp.verified" placeholder="请选择" style="width:100%;" clearable>
-                  <el-option
-                    v-for="item in optionsWish"
-                    :key="item.value"
-                    :label="item"
-                    :value="item">
-                  </el-option>
-                </el-select> -->
               </el-col>
             </el-col>
           </el-col>
@@ -291,7 +221,7 @@
           <el-button type="primary" @click="saveEbayXp()">保 存</el-button>
         </div>
       </el-dialog>
-      <el-dialog title="添加wish规则" :visible.sync="addEbaydisLoginxp" width="75%" :close-on-click-modal="false">
+      <el-dialog title="添加shopee规则" :visible.sync="addEbaydisLoginxp" width="75%" :close-on-click-modal="false">
         <el-row style="margin-top: 0">
           <el-col :span="24" class="cTop">
             <el-col :span="8" style="margin-bottom: 20px">
@@ -312,59 +242,17 @@
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
               <el-col :span="9">
-                <p class="basp">规则类型</p>
+                <p class="basp">国家</p>
               </el-col>
               <el-col :span="15">
-                <el-select v-model="addEbayXp.ruleType" placeholder="请选择" style="width:100%;" clearable>
+                <el-select v-model="addEbayXp.country" placeholder="请选择" style="width:100%;" clearable>
                   <el-option
-                    v-for="item in optionsType"
-                    :key="item.value"
+                    v-for="item in countrys"
+                    :key="item"
                     :label="item"
                     :value="item">
                   </el-option>
                 </el-select>
-              </el-col>
-            </el-col>
-            <el-col :span="8" style="margin-bottom: 20px">
-              <el-col :span="9">
-                <p class="basp">销量区间</p>
-              </el-col>
-              <el-col :span="7">
-                <el-input v-model="addEbayXp.maxNumBoughtStart" placeholder="大于"></el-input>
-              </el-col>
-              <el-col :span="1">
-                <span class="colspan">-</span>
-              </el-col>
-              <el-col :span="7">
-                <el-input v-model="addEbayXp.maxNumBoughtEnd" placeholder="小于"></el-input>
-              </el-col>
-            </el-col>
-            <el-col :span="8" style="margin-bottom: 20px">
-              <el-col :span="9">
-                <p class="basp">评分</p>
-              </el-col>
-              <el-col :span="7">
-                <el-input v-model="addEbayXp.ratingStart" placeholder="大于"></el-input>
-              </el-col>
-              <el-col :span="1">
-                <span class="colspan">-</span>
-              </el-col>
-              <el-col :span="7">
-                <el-input v-model="addEbayXp.ratingEnd" placeholder="小于"></el-input>
-              </el-col>
-            </el-col>
-            <el-col :span="8" style="margin-bottom: 20px">
-              <el-col :span="9">
-                <p class="basp">价格区间</p>
-              </el-col>
-              <el-col :span="7">
-                <el-input v-model="addEbayXp.totalpriceStart" placeholder="大于"></el-input>
-              </el-col>
-              <el-col :span="1">
-                <span class="colspan">-</span>
-              </el-col>
-              <el-col :span="7">
-                <el-input v-model="addEbayXp.totalpriceEnd" placeholder="小于"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
@@ -372,121 +260,107 @@
                 <p class="basp">上架时间</p>
               </el-col>
               <el-col :span="7">
-                <el-input v-model="listedTime1" placeholder="大于"></el-input>
+                <el-input v-model="addEbayXp.genTimeStart" placeholder="开始"></el-input>
               </el-col>
               <el-col :span="1">
                 <span class="colspan">-</span>
               </el-col>
               <el-col :span="7">
-                <el-input v-model="listedTime2" placeholder="小于"></el-input>
+                <el-input v-model="addEbayXp.genTimeEnd" placeholder="结束"></el-input>
               </el-col>
-              <!-- <el-col :span="15">
-               <el-select
-                  style="width:100%"
-                  multiple
-                  filterable
-                  collapse-tags
-                  allow-create
-                  default-first-option
-                  v-model="addEbayXp.listedTime"
-                >
-                  <el-button plain type="info" @click="addselectalld3">全选</el-button>
-                  <el-button plain type="info" @click="addnoselectd3">取消</el-button>
-                  <el-option
-                    v-for="(item, key) in ebayOptionsTime"
-                    :key="item.key"
-                    :label="item"
-                    :value="item"
-                  ></el-option>
-                </el-select>
-              </el-col> -->
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
               <el-col :span="9">
-                <p class="basp">前7天Viewing均值</p>
+                <p class="basp">总销售数</p>
               </el-col>
               <el-col :span="7">
-                <el-input v-model="addEbayXp.viewRate1Start" placeholder="大于"></el-input>
+                <el-input v-model="addEbayXp.historicalSoldStart" placeholder="大于"></el-input>
               </el-col>
               <el-col :span="1">
                 <span class="colspan">-</span>
               </el-col>
               <el-col :span="7">
-                <el-input v-model="addEbayXp.viewRate1End" placeholder="小于"></el-input>
+                <el-input v-model="addEbayXp.historicalSoldEnd" placeholder="小于"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
               <el-col :span="9">
-                <p class="basp">前30天新增评论数</p>
+                <p class="basp">Favorite</p>
               </el-col>
               <el-col :span="7">
-                <el-input v-model="addEbayXp.intervalRatingStart" placeholder="大于"></el-input>
+                <el-input v-model="addEbayXp.likedCountStart" placeholder="大于"></el-input>
               </el-col>
               <el-col :span="1">
                 <span class="colspan">-</span>
               </el-col>
               <el-col :span="7">
-                <el-input v-model="addEbayXp.intervalRatingEnd" placeholder="小于"></el-input>
+                <el-input v-model="addEbayXp.likedCountEnd" placeholder="小于"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
               <el-col :span="9">
-                <p class="basp">商品pb</p>
+                <p class="basp">前30天销售金额</p>
               </el-col>
-              <el-col :span="15">
-                <el-radio-group v-model="addEbayXp.pb" size="medium">
-                  <el-radio-button label="">不限</el-radio-button>
-                  <el-radio-button label="0">无</el-radio-button>
-                  <el-radio-button label="1">有</el-radio-button>
-                </el-radio-group>
-                <!-- <el-select v-model="addEbayXp.pb" placeholder="请选择" style="width:100%;" clearable>
-                  <el-option
-                    v-for="item in optionsPb"
-                    :key="item.value"
-                    :label="item"
-                    :value="item">
-                  </el-option>
-                </el-select> -->
+              <el-col :span="7">
+                <el-input v-model="addEbayXp.paymentStart" placeholder="大于"></el-input>
+              </el-col>
+              <el-col :span="1">
+                <span class="colspan">-</span>
+              </el-col>
+              <el-col :span="7">
+                <el-input v-model="addEbayXp.paymentEnd" placeholder="小于"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
               <el-col :span="9">
-                <p class="basp">海外仓</p>
+                <p class="basp">前30天销售件数</p>
               </el-col>
-              <el-col :span="15">
-                <el-radio-group v-model="addEbayXp.hwc" size="medium">
-                  <el-radio-button label="">不限</el-radio-button>
-                  <el-radio-button label="0">非海外仓</el-radio-button>
-                  <el-radio-button label="1">海外仓</el-radio-button>
-                </el-radio-group>
-                <!-- <el-select v-model="addEbayXp.hwc" placeholder="请选择" style="width:100%;" clearable>
-                  <el-option
-                    v-for="item in optionsHwc"
-                    :key="item.value"
-                    :label="item"
-                    :value="item">
-                  </el-option>
-                </el-select> -->
+              <el-col :span="7">
+                <el-input v-model="addEbayXp.soldStart" placeholder="大于"></el-input>
+              </el-col>
+              <el-col :span="1">
+                <span class="colspan">-</span>
+              </el-col>
+              <el-col :span="7">
+                <el-input v-model="addEbayXp.soldEnd" placeholder="小于"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
               <el-col :span="9">
-                <p class="basp">Wish认证</p>
+                <p class="basp">评分</p>
+              </el-col>
+              <el-col :span="7">
+                <el-input v-model="addEbayXp.ratingCountStart" placeholder="大于"></el-input>
+              </el-col>
+              <el-col :span="1">
+                <span class="colspan">-</span>
+              </el-col>
+              <el-col :span="7">
+                <el-input v-model="addEbayXp.ratingCountEnd" placeholder="小于"></el-input>
+              </el-col>
+            </el-col>
+            <el-col :span="8" style="margin-bottom: 20px">
+              <el-col :span="9">
+                <p class="basp">虾皮优选</p>
               </el-col>
               <el-col :span="15">
-                <el-radio-group v-model="addEbayXp.verified" size="medium">
-                  <el-radio-button label="">不限</el-radio-button>
-                  <el-radio-button label="0">非认证</el-radio-button>
-                  <el-radio-button label="1">认证</el-radio-button>
+                <el-radio-group v-model="addEbayXp.isShopeeVerified" size="medium">
+                  <el-radio-button label="不限">不限</el-radio-button>
+                  <el-radio-button label="是">是</el-radio-button>
+                  <el-radio-button label="否">否</el-radio-button>
                 </el-radio-group>
-                <!-- <el-select v-model="addEbayXp.verified" placeholder="请选择" style="width:100%;" clearable>
-                  <el-option
-                    v-for="item in optionsWish"
-                    :key="item.value"
-                    :label="item"
-                    :value="item">
-                  </el-option>
-                </el-select> -->
+              </el-col>
+            </el-col>
+            <el-col :span="8" style="margin-bottom: 20px">
+              <el-col :span="9">
+                <p class="basp">所在地</p>
+              </el-col>
+              <el-col :span="15">
+                <el-radio-group v-model="addEbayXp.shopLocationStatus" size="medium">
+                  <el-radio-button label="">ALL</el-radio-button>
+                  <el-radio-button label="1">海外</el-radio-button>
+                  <el-radio-button label="2">本地</el-radio-button>
+                </el-radio-group>
               </el-col>
             </el-col>
           </el-col>
@@ -500,7 +374,7 @@
 </template>
 <script type="text/ecmascript-6">
 import {
-  wishProductsRule,
+  shopeeProductsRule,
   APRengineRuleHot,
   wishProductsSaveRule,
   ebaySaveRuleHot,
@@ -514,6 +388,7 @@ export default {
   data() {
     return {
       tableHeightstock: window.innerHeight - 185,
+      countrys:['马来西亚','印度尼西亚','泰国','菲律宾','台湾','新加坡','越南'],
       ebayStlye: 0,
       ebaydisLoginxp: false,
       ebaydisLoginrx: false,
@@ -529,46 +404,44 @@ export default {
       ebayOptionsTime: ["今天", "昨天", "前天"],
       ebayXp: {
         id: "",
-        ruleType: "",
+        plat:'shopee',
         ruleMark: "",
         ruleName: "",
-        genTimeStart:'',
-        genTimeEnd:'',
-        totalpriceStart:'',
-        totalpriceEnd:'',
-        viewRate1Start:'',
-        listedTime:[],
-        viewRate1End:'',
-        intervalRatingStart:'',
-        intervalRatingEnd:'',
-        maxNumBoughtStart:'',
-        maxNumBoughtEnd:'',
-        ratingStart:'',
-        ratingEnd:'',
-        pb:'',
-        hwc:'',
-        verified:'',
+        country: "",
+        genTimeEnd: "",
+        genTimeStart: "",
+        historicalSoldEnd: "",
+        historicalSoldStart: "",
+        isShopeeVerified: "不限",
+        likedCountEnd: "",
+        likedCountStart: "",
+        paymentEnd: "",
+        paymentStart: "",
+        ratingCountEnd: "",
+        ratingCountStart: "",
+        shopLocationStatus: "",
+        soldEnd: "",
+        soldStart: "",
       },
       addEbayXp: {
-        ruleType: "",
-        listedTime:[],
+        plat:'shopee',
         ruleMark: "",
         ruleName: "",
-        genTimeStart:'',
-        genTimeEnd:'',
-        totalpriceStart:'',
-        totalpriceEnd:'',
-        viewRate1Start:'',
-        viewRate1End:'',
-        intervalRatingStart:'',
-        intervalRatingEnd:'',
-        maxNumBoughtStart:'',
-        maxNumBoughtEnd:'',
-        ratingStart:'',
-        ratingEnd:'',
-        pb:'',
-        hwc:'',
-        verified:'',
+        country: "",
+        genTimeEnd: "",
+        genTimeStart: "",
+        historicalSoldEnd: "",
+        historicalSoldStart: "",
+        isShopeeVerified: "不限",
+        likedCountEnd: "",
+        likedCountStart: "",
+        paymentEnd: "",
+        paymentStart: "",
+        ratingCountEnd: "",
+        ratingCountStart: "",
+        shopLocationStatus: "",
+        soldEnd: "",
+        soldStart: "",
       },
       addEbayRx: {
         marketplace: [],
@@ -767,7 +640,7 @@ export default {
     addnoselectd1() {
       this.addEbayXp.publishedSite = [];
     },
-    addselectalld1Rx() {
+    addselectalld1Rx() {    
       var ard1 = [];
       for (const item in this.ebayOptionsXp) {
         ard1.push(this.ebayOptionsXp[item]);
@@ -901,55 +774,28 @@ export default {
     },
     editArt(index, row) {
       this.ebayXp.id = row._id;
-      this.ebayXp.genTimeStart = row.genTimeStart;
+      this.ebayXp.country = row.country;
       this.ebayXp.genTimeEnd = row.genTimeEnd;
-      this.ebayXp.totalpriceStart = row.totalpriceStart;
-      this.ebayXp.totalpriceEnd = row.totalpriceEnd;
-      this.ebayXp.viewRate1Start = row.viewRate1Start;
-      this.ebayXp.viewRate1End = row.viewRate1End;
-      this.ebayXp.intervalRatingStart = row.intervalRatingStart;
-      this.ebayXp.intervalRatingEnd = row.intervalRatingEnd;
-      this.ebayXp.maxNumBoughtStart = row.maxNumBoughtStart;
-      this.ebayXp.maxNumBoughtEnd = row.maxNumBoughtEnd;
-      this.ebayXp.ratingStart = row.ratingStart;
-      this.ebayXp.ratingEnd = row.ratingEnd;
-      this.ebayXp.pb = row.pb;
-      this.ebayXp.hwc = row.hwc;
-      this.ebayXp.verified = row.verified;
+      this.ebayXp.genTimeStart = row.genTimeStart;
+      this.ebayXp.historicalSoldEnd = row.historicalSoldEnd;
+      this.ebayXp.historicalSoldStart = row.historicalSoldStart;
+      this.ebayXp.isShopeeVerified = row.isShopeeVerified;
+      this.ebayXp.likedCountEnd = row.likedCountEnd;
+      this.ebayXp.likedCountStart = row.likedCountStart;
+      this.ebayXp.paymentEnd = row.paymentEnd;
+      this.ebayXp.paymentStart = row.paymentStart;
+      this.ebayXp.ratingCountEnd = row.ratingCountEnd;
+      this.ebayXp.ratingCountStart = row.ratingCountStart;
+      this.ebayXp.shopLocationStatus = row.shopLocationStatus;
+      this.ebayXp.soldEnd = row.soldEnd;
+      this.ebayXp.soldStart = row.soldStart;
       this.ebayXp.ruleName = row.ruleName;
-      this.ebayXp.ruleMark = row.ruleMark;
-      this.ebayXp.ruleType = row.ruleType;
-      this.ebayXp.listedTime = row.listedTime;
-      // this.ebayXp.pb == 0 ? this.ebayXp.pb = '无': this.ebayXp.pb == 1?this.ebayXp.pb = '有':this.ebayXp.pb='';
-      // this.ebayXp.hwc == 0? this.ebayXp.hwc = '非海外仓': this.ebayXp.hwc == 1?this.ebayXp.hwc = '海外仓':this.ebayXp.hwc='';
-      // this.ebayXp.verified == 0? this.ebayXp.verified = '非认证': this.ebayXp.verified == 1?this.ebayXp.verified = '认证':this.ebayXp.verified='';  
-      // for(let i=0;i<this.ebayXp.listedTime.length;i++){
-      //   this.ebayXp.listedTime[i]=this.ebayXp.listedTime[i].replace(/,/g, "");
-      // }
-      this.listedTime1=this.ebayXp.listedTime[0].replace(/,/g, "");
-      this.listedTime2=this.ebayXp.listedTime[1].replace(/,/g, "");
+      this.ebayXp.ruleMark = row.ruleMark;      
       this.ebaydisLoginxp = true;
     },
     saveEbayXp() {
-      // for (let i = 0; i < this.ebayXp.listedTime.length; i++) {
-      //     if (this.ebayXp.listedTime[i] == "今天") {
-      //       this.ebayXp.listedTime[i] = 0;
-      //     }
-      //     if (this.ebayXp.listedTime[i] == "昨天") {
-      //       this.ebayXp.listedTime[i] = 1;
-      //     }
-      //     if (this.ebayXp.listedTime[i] == "前天") {
-      //       this.ebayXp.listedTime[i] = 2;
-      //     }
-      // }
-      // this.ebayXp.pb == '无' ? this.ebayXp.pb = '0': this.ebayXp.pb == '有'?this.ebayXp.pb = '1':this.ebayXp.pb='';
-      // this.ebayXp.hwc == '非海外仓'? this.ebayXp.hwc = '0': this.ebayXp.hwc == '海外仓'?this.ebayXp.hwc = '1':this.ebayXp.hwc='';
-      // this.ebayXp.verified == '非认证'? this.ebayXp.verified = '0': this.ebayXp.verified == '认证'?this.ebayXp.verified = '1':this.ebayXp.verified='';  
-      var arr=[]
-      arr.push(this.listedTime1)
-      arr.push(this.listedTime2)
-      this.ebayXp.listedTime=arr
       this.ebaydisLoginxp = true;
+      this.ebayXp.country=='马来西亚'?this.ebayXp.country='1':this.ebayXp.country=='印度尼西亚'?this.ebayXp.country='2':this.ebayXp.country=='泰国'?this.ebayXp.country='3':this.ebayXp.country=='菲律宾'?this.ebayXp.country='4':this.ebayXp.country=='台湾'?this.ebayXp.country='5':this.ebayXp.country=='新加坡'?this.ebayXp.country='6':'7'
       wishProductsSaveRule(this.ebayXp).then(res => {
         if (res.data.data) {
           this.$message({
@@ -966,24 +812,7 @@ export default {
     },
     addSaveEbayXp() {
       if (this.addEbayXp.ruleName) {
-        // for (let i = 0; i < this.addEbayXp.listedTime.length; i++) {
-        //     if (this.addEbayXp.listedTime[i] == "今天") {
-        //       this.addEbayXp.listedTime[i] = 0;
-        //     }
-        //     if (this.addEbayXp.listedTime[i] == "昨天") {
-        //       this.addEbayXp.listedTime[i] = 1;
-        //     }
-        //     if (this.addEbayXp.listedTime[i] == "前天") {
-        //       this.addEbayXp.listedTime[i] = 2;
-        //     }
-        // }
-        var arr=[]
-        arr.push(this.listedTime1)
-        arr.push(this.listedTime2)
-        this.addEbayXp.listedTime=arr
-        // this.addEbayXp.pb == '无' ? this.addEbayXp.pb = '0': this.addEbayXp.pb == '有'?this.addEbayXp.pb = '1':this.addEbayXp.pb='';
-        // this.addEbayXp.hwc == '非海外仓'? this.addEbayXp.hwc = '0': this.addEbayXp.hwc == '海外仓'?this.addEbayXp.hwc = '1':this.addEbayXp.hwc='';
-        // this.addEbayXp.verified == '非认证'? this.addEbayXp.verified = '0': this.addEbayXp.verified == '认证'?this.addEbayXp.verified = '1':this.addEbayXp.verified=''; 
+        this.addEbayXp.country=='马来西亚'?this.addEbayXp.country='1':this.addEbayXp.country=='印度尼西亚'?this.addEbayXp.country='2':this.addEbayXp.country=='泰国'?this.addEbayXp.country='3':this.addEbayXp.country=='菲律宾'?this.addEbayXp.country='4':this.addEbayXp.country=='台湾'?this.addEbayXp.country='5':this.addEbayXp.country=='新加坡'?this.addEbayXp.country='6':'7'
         wishProductsSaveRule(this.addEbayXp).then(res => {
           if (res.data.data) {
             this.$message({
@@ -1054,6 +883,7 @@ export default {
       })
         .then(() => {
           let conId = {
+            plat:'shopee',
             id: row._id
           };
           wishRuleDelete(conId).then(res => {
@@ -1131,15 +961,10 @@ export default {
     },
     getDataEbay() {
       this.listLoading = true;
-      wishProductsRule().then(res => {
+      shopeeProductsRule().then(res => {
         this.ebaydata = res.data.data;
-        for (let i = 0; i < this.ebaydata.length; i++) {
-          let date = this.ebaydata[i].listedTime;
-          for (let k = 0; k < date.length; k++) {
-            if(k!=date.length-1){
-              date[k]= date[k]+','
-            }
-          }
+        for(var i=0;i<this.ebaydata.length;i++){
+          this.ebaydata[i].country==1?this.ebaydata[i].country='马来西亚':this.ebaydata[i].country=='2'?this.ebaydata[i].country='印度尼西亚':this.ebaydata[i].country=='3'?this.ebaydata[i].country='泰国':this.ebaydata[i].country=='4'?this.ebaydata[i].country='菲律宾':this.ebaydata[i].country=='5'?this.ebaydata[i].country='台湾':this.ebaydata[i].country=='6'?this.ebaydata[i].country='新加坡':'越南'
         }
         this.listLoading = false;
       });

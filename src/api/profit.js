@@ -960,3 +960,10 @@ export function gethwckcsku(param) {
   })
 }
 
+export function getShopeePro(param) {
+  return request({
+    url: '/products-engine/recommend?plat=shopee&page=' + param.page + '&recommendStatus=' + param.recommendStatus + '&pageSize=' + param.pageSize + '&sort=' + param.sort,
+    method: 'get'
+  })
+}
+

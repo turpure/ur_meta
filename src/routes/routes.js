@@ -137,6 +137,7 @@ import reportFormPro from '../views/analysis/reportFormPro.vue'
 import repeatTesting from '../views/analysis/repeatTesting.vue'
 import recommendWish from '../views/analysis/recommendWish.vue'
 import recommendEbay from '../views/analysis/recommendEbay.vue'
+import recommendShopee from '../views/analysis/recommendShopee.vue'
 
 const routes = [
   {
@@ -364,6 +365,11 @@ const routes = [
             path: '/v1/products-engine/recommendEbay',
             component: recommendEbay,
             name: '每日推荐ebay'
+          },
+          {
+            path: '/v1/products-engine/recommendShopee',
+            component: recommendShopee,
+            name: '每日推荐shopee'
           }
         ]
       },
