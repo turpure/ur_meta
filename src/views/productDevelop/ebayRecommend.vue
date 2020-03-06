@@ -823,7 +823,8 @@ import {
   formSkuInfo,
   wishRefuse,
   shopeeRefuse,
-  wishAccept
+  wishAccept,
+  shopeeAccept
 } from "../../api/product";
 import { getEbayXpMind, getEbayRxMind,getWishRxMind,getShopeeMind } from "../../api/profit";
 import { compareUp, compareDown, getMonthDate } from "../../api/tools";
@@ -1809,7 +1810,7 @@ export default {
           let condition = {
             id: id
           };
-          wishAccept(condition).then(res => {
+          shopeeAccept(condition).then(res => {
             if (res.data.code == 200) {
               sessionStorage.setItem("ebayEdit", res.data.data.data.devNum);
               this.$confirm("认领成功,前去开发", "提示", {

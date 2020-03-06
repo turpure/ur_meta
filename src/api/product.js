@@ -1517,6 +1517,15 @@ export function wishAccept(param) {
   })
 }
 
+export function shopeeAccept(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/accept?plat=shopee',
+    method: 'post',
+    data
+  })
+}
+
 export function ebayXpRefuse(param) {
   const data = { condition: param }
   return request({
