@@ -1544,6 +1544,15 @@ export function wishRefuse(param) {
   })
 }
 
+export function shopeeRefuse(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/refuse?plat=shopee',
+    method: 'post',
+    data
+  })
+}
+
 export function ebayDevCatRule(param) {
   const data = { condition: param }
   return request({
