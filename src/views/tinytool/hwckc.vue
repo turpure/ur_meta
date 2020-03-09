@@ -85,21 +85,7 @@
       <el-table-column prop="threeSellCount" label="3天销量" align="center" sortable="custom" width="100"></el-table-column>
       <el-table-column prop="sevenSellCount" label="7天销量" align="center" sortable="custom" width="100"></el-table-column>
       <el-table-column prop="fourteenSellCount" label="14天销量" align="center" sortable="custom" width="100"></el-table-column>
-      <el-table-column prop="sellCount1" label="5天销量" align="center" sortable="custom" width="100"></el-table-column>
-      <el-table-column
-        prop="sellCount2"
-        label="10天销量"
-         width="100"
-        align="center"
-        sortable="custom"
-      ></el-table-column>
-      <el-table-column
-        prop="sellCount3"
-        label="20天销量"
-         width="100"
-        align="center"
-        sortable="custom"
-      ></el-table-column>
+      <el-table-column prop="thirtySellCount" label="30天销量" align="center" sortable="custom" width="100"></el-table-column>
       <el-table-column prop="weight" label="重量" align="center" sortable="custom" width="80"></el-table-column>
       <el-table-column prop="turnoverDays" label="周转天数" align="center" sortable="custom" width="100"></el-table-column>
       <el-table-column prop="updateTime" label="更新时间" align="center" sortable="custom" width="100">
