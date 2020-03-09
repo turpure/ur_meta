@@ -877,13 +877,11 @@ export default {
     },
     websocketonmessage(e) {
       //数据接收
-      console.log(JSON.parse(e.data))
       var redata = JSON.parse(e.data).ebay;
       var redataWish = JSON.parse(e.data).wish;
       var redataShopee = JSON.parse(e.data).shopee;
       this.devNum = redata.devData;
       this.devNumWish = redataWish.devData;
-      console.log(redataShopee)
       this.devNumShopee = redataShopee.devData;
       this.isshow = true;
       var xptotal = redata.totalNewNum;
