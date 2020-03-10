@@ -64,7 +64,7 @@
     >
       <el-table-column prop="sku" label="sku" align="center" fixed width="100"></el-table-column>
       <el-table-column prop="goodsCode" label="商品编码" align="center" fixed width="90"></el-table-column>
-      <el-table-column prop="skuName" label="商品名称" align="center" fixed width="100"></el-table-column>
+      <el-table-column prop="skuName" label="商品名称" align="center" fixed width="150"></el-table-column>
       <el-table-column prop="goodsStatus" label="商品状态" align="center" width="80"></el-table-column>
       <el-table-column prop="storeName" label="仓库" align="center" width="80"></el-table-column>
       <el-table-column
@@ -111,7 +111,7 @@
 
 <script type="text/ecmascript-6">
 import { getMember, gethwckcsku } from "../../api/profit";
-import { APIExportReplenish } from "../../api/product";
+import { APIExportskuExport } from "../../api/product";
 import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 
 export default {
@@ -148,8 +148,7 @@ export default {
       }
     },
     exportExcel(from) {
-      from.type = "uk2";
-      APIExportReplenish(from).then(res => {
+      APIExportskuExport().then(res => {
         const blob = new Blob([res.data], {
           type:
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
