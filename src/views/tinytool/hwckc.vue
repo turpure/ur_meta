@@ -62,35 +62,38 @@
       :header-cell-style="getRowClass"
       style="width: 100%;font-size:13px;"
     >
-      <el-table-column prop="sku" label="sku" align="center" fixed width="100"></el-table-column>
+      <el-table-column prop="depart" label="部门" align="center" fixed width="80"></el-table-column>
+      <el-table-column prop="storeName" label="仓库" align="center" fixed width="80"></el-table-column>
       <el-table-column prop="goodsCode" label="商品编码" align="center" fixed width="90"></el-table-column>
+      <el-table-column prop="sku" label="sku" align="center" fixed width="100"></el-table-column>
       <el-table-column prop="skuName" label="商品名称" align="center" fixed width="150"></el-table-column>
-      <el-table-column prop="goodsStatus" label="商品状态" align="center" width="80"></el-table-column>
-      <el-table-column prop="storeName" label="仓库" align="center" width="80"></el-table-column>
       <el-table-column
         prop="salerName"
         label="开发员"
+        fixed
          width="80"
         align="center"
       ></el-table-column>
-      <el-table-column prop="depart" label="部门" align="center" width="80"></el-table-column>
       <el-table-column prop="seller1" label="销售员1" align="center" width="80"></el-table-column>
-      <el-table-column prop="seller2" label="销售员2" align="center" width="80"></el-table-column>      
+      <el-table-column prop="seller2" label="销售员2" align="center" width="80"></el-table-column>
+      <el-table-column prop="weight" label="重量" align="center" sortable="custom" width="80"></el-table-column>      
       <el-table-column prop="costPrice" label="平均单价" align="center" sortable="custom" width="100"></el-table-column>
+      <el-table-column prop="costmoney" label="成本" align="center" sortable="custom" width="100"></el-table-column>      
       <el-table-column prop="useNum" label="可用库存" align="center" sortable="custom" width="100"></el-table-column>
-      <el-table-column prop="notInStore" label="在途数量" align="center" sortable="custom" width="100"></el-table-column>
-      <el-table-column prop="notInCostmoney" label="在途金额" align="center" sortable="custom" width="100"></el-table-column>
-      <el-table-column prop="costmoney" label="成本" align="center" sortable="custom" width="80"></el-table-column>
       <el-table-column prop="hopeUseNum" label="预计可用库存" align="center" sortable="custom" width="125"></el-table-column>
+      <!-- <el-table-column prop="notInStore" label="在途数量" align="center" sortable="custom" width="100"></el-table-column> -->
+      <!-- <el-table-column prop="notInCostmoney" label="在途金额" align="center" sortable="custom" width="100"></el-table-column> -->
+      <el-table-column prop="turnoverDays" label="周转天数" align="center" sortable="custom" width="100">
+        <template slot-scope="scope">{{scope.row.turnoverDays | cutOut}}</template>
+      </el-table-column>
       <el-table-column prop="threeSellCount" label="3天销量" align="center" sortable="custom" width="100"></el-table-column>
       <el-table-column prop="sevenSellCount" label="7天销量" align="center" sortable="custom" width="100"></el-table-column>
       <el-table-column prop="fourteenSellCount" label="14天销量" align="center" sortable="custom" width="100"></el-table-column>
       <el-table-column prop="thirtySellCount" label="30天销量" align="center" sortable="custom" width="100"></el-table-column>
-      <el-table-column prop="weight" label="重量" align="center" sortable="custom" width="80"></el-table-column>
-      <el-table-column prop="turnoverDays" label="周转天数" align="center" sortable="custom" width="100"></el-table-column>
-      <el-table-column prop="updateTime" label="更新时间" align="center" sortable="custom" width="100">
+      <!-- <el-table-column prop="updateTime" label="更新时间" align="center" sortable="custom" width="100">
         <template slot-scope="scope">{{scope.row.updateTime | cutOutDate}}</template>
-      </el-table-column>
+      </el-table-column> -->
+      <el-table-column prop="goodsStatus" label="商品状态" align="center" width="80"></el-table-column>
     </el-table>
     <div class="toolbar" style="overflow:hidden">
       <div style="float:left;">
@@ -138,6 +141,10 @@ export default {
       value = value.substring(0, 11);
       return value;
     },
+    cutOut(value){
+      value = Number(value).toFixed(0);
+      return value;
+    },
   },
   methods: {
     getRowClass({ row, column, rowIndex, columnIndex }) {
@@ -148,7 +155,11 @@ export default {
       }
     },
     exportExcel(from) {
-      APIExportskuExport().then(res => {
+      var condition={
+        goodsCode: from.goodsCode,
+        seller: from.seller,
+      }
+      APIExportskuExport(condition).then(res => {
         const blob = new Blob([res.data], {
           type:
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
