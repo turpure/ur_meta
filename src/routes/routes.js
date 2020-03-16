@@ -123,6 +123,7 @@ import joomSubscribe from '../views/productDevelop/joomSubscribe.vue'
 import joomSubscribeId from '../views/productDevelop/joomSubscribeId.vue'
 import joomSubscribeShop from '../views/productDevelop/joomSubscribeShop.vue'
 import joomSubscribeIdShop from '../views/productDevelop/joomSubscribeIdShop.vue'
+import collectionVova from '../views/productDevelop/collectionVova.vue'
 // 报表中心
 import reportForm from '../views/productDevelop/reportForm.vue'
 import formEdit from '../views/productDevelop/formEdit.vue'
@@ -683,6 +684,11 @@ const routes = [
             path: '/v1/oa-data-mine/collectionJoom',
             component: collectionJoom,
             name: 'Joom'
+          },
+          {
+            path: '/v1/oa-data-mine/collectionVova',
+            component: collectionVova,
+            name: 'vova菜鸡'
           },
           {
             path: '/v1/oa-data-mine/joom-cate-mine-index',
