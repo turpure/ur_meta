@@ -281,23 +281,27 @@ export default {
       this.dialogPassword=true
     },
     changePassword(){
-      var condition={
-        password:this.newPassword
-      }
-      changePassword(condition).then(response => {
-        if (response.data.code === 200) {
-            this.$message({
-              message: "成功",
-              type: "success"
-            });
-            this.dialogPassword = false;
-            sessionStorage.removeItem("user");
-            removeToken();
-            this.$router.push("/login");
-          } else {
-             this.$message.error(response.data.message);
+      this.$confirm("确定修改密码?", "提示", { type: "warning" }).then(
+        () => {
+          var condition={
+            password:this.newPassword
           }
-      })
+          changePassword(condition).then(response => {
+            if (response.data.code === 200) {
+                this.$message({
+                  message: "成功",
+                  type: "success"
+                });
+                this.dialogPassword = false;
+                sessionStorage.removeItem("user");
+                removeToken();
+                this.$router.push("/login");
+              } else {
+                this.$message.error(response.data.message);
+              }
+          })
+        }
+      );
     },
     ...mapActions(
       // 语法糖
