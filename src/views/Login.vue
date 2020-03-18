@@ -90,6 +90,10 @@ export default {
     if (sessionStorage.getItem("ifmenu")) {
       sessionStorage.removeItem("ifmenu");
     }
+    if (localStorage.getItem("userName") && localStorage.getItem("userPassword")) {
+      this.ruleForm2.username = localStorage.getItem("userName");
+      this.ruleForm2.password = localStorage.getItem("userPassword");
+    }
     this.getCookie();
   },
   methods: {
@@ -145,7 +149,9 @@ export default {
               .dispatch("LoginByUsername", this.ruleForm2)
               .then(() => {
                 this.loading = false;
-                localStorage.setItem("user", this.ruleForm2.username);
+                localStorage.setItem("userName", this.ruleForm2.username);
+                localStorage.setItem("userPassword", this.ruleForm2.password);
+                sessionStorage.setItem("user", this.ruleForm2.username);
                 this.$router.push({ path: "/index" });
               })
               .catch(err => {
@@ -159,7 +165,7 @@ export default {
               .dispatch("LoginByUsername", this.ruleForm2)
               .then(() => {
                 this.loading = false;
-                localStorage.setItem("user", this.ruleForm2.username);
+                sessionStorage.setItem("user", this.ruleForm2.username);
                 this.$router.push({ path: "/index" });
               })
               .catch(err => {

@@ -300,7 +300,7 @@ export default {
                       type: "success"
                     });
                     this.dialogPassword = false;
-                    localStorage.removeItem("user");
+                    sessionStorage.removeItem("user");
                     removeToken();
                     this.$router.push("/login");
                   } else {
@@ -403,7 +403,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          localStorage.removeItem("user");
+          sessionStorage.removeItem("user");
           removeToken();
           _this.$router.push("/login");
         })
