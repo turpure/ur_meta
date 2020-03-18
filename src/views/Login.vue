@@ -145,11 +145,11 @@ export default {
               .dispatch("LoginByUsername", this.ruleForm2)
               .then(() => {
                 this.loading = false;
-                sessionStorage.setItem("user", this.ruleForm2.username);
+                localStorage.setItem("user", this.ruleForm2.username);
                 this.$router.push({ path: "/index" });
               })
               .catch(err => {
-                this.$message.error(err);
+                this.$message.error('请检查账号密码是否正确');
                 this.loading = false;
               });
           } else {
@@ -159,7 +159,7 @@ export default {
               .dispatch("LoginByUsername", this.ruleForm2)
               .then(() => {
                 this.loading = false;
-                sessionStorage.setItem("user", this.ruleForm2.username);
+                localStorage.setItem("user", this.ruleForm2.username);
                 this.$router.push({ path: "/index" });
               })
               .catch(err => {

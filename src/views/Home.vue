@@ -57,6 +57,8 @@
         <el-row>
           <el-col :span="4" style="line-height:40px;height:40px;text-align:center;color:#3c8dbc">新密码</el-col>
           <el-col :span="19"><el-input v-model="newPassword" type="password"></el-input></el-col>
+          <el-col :span="4" style="line-height:40px;height:40px;text-align:center;color:#3c8dbc;margin-top:15px;">确认密码</el-col>
+          <el-col :span="19" style="margin-top:15px;"><el-input v-model="newPasswordConfirm" type="password"></el-input></el-col>
         </el-row>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogPassword = false">取 消</el-button>
@@ -208,6 +210,7 @@ export default {
       dialogPassword:false,
       dialogVisible: false,
       newPassword:null,
+      newPasswordConfirm:null,
       activeIndex: "/index",
       allMenu: [],
       asideMenu: { position: 0, menu: [{ name: "", children: [] }] },
@@ -281,27 +284,35 @@ export default {
       this.dialogPassword=true
     },
     changePassword(){
-      this.$confirm("确定修改密码?", "提示", { type: "warning" }).then(
-        () => {
-          var condition={
-            password:this.newPassword
-          }
-          changePassword(condition).then(response => {
-            if (response.data.code === 200) {
-                this.$message({
-                  message: "成功",
-                  type: "success"
-                });
-                this.dialogPassword = false;
-                sessionStorage.removeItem("user");
-                removeToken();
-                this.$router.push("/login");
-              } else {
-                this.$message.error(response.data.message);
+      if(this.newPassword && this.newPasswordConfirm){
+        if(this.newPassword != this.newPasswordConfirm){
+          this.$message.error('两次密码不一致');
+        }else{
+          this.$confirm("确定修改密码?", "提示", { type: "warning" }).then(
+            () => {
+              var condition={
+                password:this.newPassword
               }
-          })
+              changePassword(condition).then(response => {
+                if (response.data.code === 200) {
+                    this.$message({
+                      message: "成功",
+                      type: "success"
+                    });
+                    this.dialogPassword = false;
+                    localStorage.removeItem("user");
+                    removeToken();
+                    this.$router.push("/login");
+                  } else {
+                    this.$message.error(response.data.message);
+                  }
+              })
+            }
+          );
         }
-      );
+      }else{
+        this.$message.error('请输入新密码');
+      }
     },
     ...mapActions(
       // 语法糖
@@ -392,7 +403,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          sessionStorage.removeItem("user");
+          localStorage.removeItem("user");
           removeToken();
           _this.$router.push("/login");
         })
