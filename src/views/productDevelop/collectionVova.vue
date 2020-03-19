@@ -434,7 +434,7 @@ export default {
       delist: [],
       condition: {
         proId: null,
-        platForm: null,
+        platForm:'vova',
         progress: null,
         creator: null,
         createTime: null,
@@ -562,7 +562,8 @@ export default {
     exportJoom() {
       if (this.sels.length != 0) {
         let objStr1 = {
-          id: this.sels.map(e => e.id)
+          id: this.sels.map(e => e.id),
+          plat:'vova'
         };
         APIMineExport(objStr1).then(res => {
           const blob = new Blob([res.data], {
@@ -594,7 +595,7 @@ export default {
             second = "0" + second;
           }
           const filename =
-            "joom_" + year + month + strDate + hour + minute + second;
+            "vova_" + year + month + strDate + hour + minute + second;
           downloadElement.download = filename + ".csv";
           document.body.appendChild(downloadElement);
           downloadElement.click();
@@ -641,11 +642,13 @@ export default {
           const strObj = this.collectionNumber.split("，");
           this.collectionNumber = strObj.join(",");
           var objStr = {
-            proId: this.collectionNumber
+            proId: this.collectionNumber,
+            platForm:'vova'
           };
         } else {
           var objStr = {
-            proId: this.collectionNumber
+            proId: this.collectionNumber,
+            platForm:'vova'
           };
         }
         APICjMine(objStr).then(res => {
@@ -669,7 +672,7 @@ export default {
     joomId(idnex, row) {
       if (row.progress != "采集失败") {
         this.$router.push({
-          path: `/joom/${row.id}`
+          path: `/vova/${row.id}`
         });
       } else {
         this.$message.error("采集成功以后才能编辑");
