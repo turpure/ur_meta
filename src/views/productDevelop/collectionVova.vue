@@ -107,7 +107,7 @@
             <el-table-column prop="picUrl" fixed label="商品图片" header-align="center" width="80">
               <template slot-scope="scope">
                 <a
-                :href="'https://www.vova.com/'+scope.row.proId"
+                :href="scope.row.proId"
                 target="_blank"
                 style="display: block; width: 60px;height: 60px"
               >
@@ -671,9 +671,13 @@ export default {
     },
     joomId(idnex, row) {
       if (row.progress != "采集失败") {
-        this.$router.push({
-          path: `/vova/${row.id}`
+        let Logistics = this.$router.resolve({
+         path: `/vova/${row.id}`
         });
+        window.open(Logistics.href);
+        // this.$router.push({
+        //   path: `/vova/${row.id}`
+        // });
       } else {
         this.$message.error("采集成功以后才能编辑");
       }
