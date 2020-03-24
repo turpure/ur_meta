@@ -775,7 +775,8 @@ export default {
               props: {
                 value: this.condition.platForm,
                 size: "mini",
-                clearable: true
+                clearable: true,
+                disabled: true,
               },
               on: {
                 input: value => {
