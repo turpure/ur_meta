@@ -5,7 +5,7 @@
         <el-col :span="24" style="padding:15px 15px;">
           <el-col :span="6">
             <el-input
-              placeholder="15090-18415021(多个用逗号隔开)"
+              placeholder="输入产品网址链接(多个用逗号隔开)"
               v-model="collectionNumber"
               style="width:97%;"
               clearable
@@ -107,7 +107,7 @@
             <el-table-column prop="picUrl" fixed label="商品图片" header-align="center" width="80">
               <template slot-scope="scope">
                 <a
-                :href="'https://www.joom.com/en/products/'+scope.row.proId"
+                :href="'https://www.vova.com/'+scope.row.proId"
                 target="_blank"
                 style="display: block; width: 60px;height: 60px"
               >
