@@ -119,7 +119,7 @@
                 </a>
               </template>
             </el-table-column>
-            <el-table-column label="商品编号" header-align="center">
+            <el-table-column label="商品地址" header-align="center">
               <el-table-column
                 prop="proId"
                 :render-header="renderHeaderPic"

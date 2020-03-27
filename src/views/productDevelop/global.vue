@@ -141,8 +141,11 @@ export default {
         series: [
           {
             name: "访问来源",
-            type: "pie",
-            radius : '60%',
+            type: "funnel",
+            width: '85%',
+            height: '85%',
+            funnelAlign: 'left',
+            center: ['75%', '25%'],  // for pie
             data: []
           }
         ]
@@ -182,8 +185,11 @@ export default {
         series: [
           {
             name: "访问来源",
-            type: "pie",
-            radius : '60%',
+            type: "funnel",
+            width: '85%',
+            height: '85%',
+            funnelAlign: 'left',
+            center: ['75%', '25%'],  // for pie
             data:[] 
           }
         ]
