@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="dashboard-editor-container" style="height: 970px;">
+    <div class="dashboard-editor-container newIndex" style="height: 970px;">
       <section>
         <div class="left-box">
           <el-card>
@@ -21,6 +21,84 @@
                   {{item.name}}
                 </p>
               </div>
+            </div>
+            <div class="tabs-container tab-index-pan tabdColor" v-show="showTitle.ckIntegral">
+              <el-table
+                  :data="ckintegral"
+                  size="small"
+                  height="847"
+                  ref="table1"
+                  @sort-change="sortNumberCk"
+                >
+                    <el-table-column
+                      prop="order"
+                      label="排名"
+                      sortable="custom"
+                      align="center"
+                      width="80"
+                    >
+                      <template slot-scope="scope">
+                        <img
+                          src="../assets/j1.png"
+                          style="width: 31px;height: 38px;"
+                          v-if="scope.row.order==1"
+                        />
+                        <img
+                          src="../assets/j2.png"
+                          style="width: 31px;height: 38px;"
+                          v-if="scope.row.order==2"
+                        />
+                        <img
+                          src="../assets/j3.png"
+                          style="width: 31px;height: 38px;"
+                          v-if="scope.row.order==3"
+                        />
+                        <span v-if="scope.row.order>3">{{scope.row.order}}</span>
+                      </template>
+                    </el-table-column>
+                  <el-table-column
+                    prop="name"
+                    align="center"
+                    label="姓名"
+                    width="110"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="job"
+                    align="center"
+                    width="110"
+                    label="职位"
+                  ></el-table-column>
+                  <el-table-column prop="this_num" align="center" label="本月积分" sortable="custom"></el-table-column>
+                  <el-table-column prop="this_agv_num" align="center" label="本月本岗位平均积分" sortable="custom" width="170"></el-table-column>
+                  <el-table-column prop="this_diff" align="center" label="本月积分差" sortable="custom"></el-table-column>
+                  <el-table-column prop="last_num" align="center" label="上月积分" sortable="custom"></el-table-column>
+                  <el-table-column prop="this_last" align="center" label="本月VS上月" sortable="custom">
+                    <template slot-scope="scope">
+                      <el-progress
+                        :text-inside="true"
+                        :stroke-width="18"
+                        :status="checkStatus1(scope.row,'this_last')"
+                        :percentage="Math.round(scope.row.this_last*100)/100"
+                      ></el-progress>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="dateRate" align="center" label="时间进度">
+                    <template slot-scope="scope">
+                      <el-progress
+                        :text-inside="true"
+                        :stroke-width="18"
+                        status="exception"
+                        :percentage="Math.round(scope.row.time_rate*100)/100"
+                      ></el-progress>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="updateTime" align="center" label="统计截止日期">
+                    <template slot-scope="scope">
+                      <i class="el-icon-time"></i>
+                      <span>{{dateFormatter(scope.row.update_time)}}</span>
+                    </template>
+                  </el-table-column>
+                </el-table>
             </div>
             <div class="tabs-container tab-index-pan tabdColor" v-show="showTitle.wcd">
               <el-tabs
@@ -1959,7 +2037,8 @@ import {
   APISiteSales,
   getSiteIndexXs,
   getSiteIndexKf,
-  getSiteIndexBM
+  getSiteIndexBM,
+  getCkIntegral
 } from "../api/api";
 import { compareUp, compareDown } from "../api/tools";
 import { updateLog } from "../api/product";
@@ -1968,6 +2047,7 @@ import { getMenu } from "../api/login";
 export default {
   data() {
     return {
+      ckintegral:[],
       activeTabNamebk: "eBay-义乌仓",
       indexTabactive: 0,
       titleMenuTab: [
@@ -2122,7 +2202,8 @@ export default {
         pming: true,
         zz: false,
         wj: false,
-        wcd: false
+        wcd: false,
+        ckIntegral:false,
       },
       pmShow: {
         pmYW: true,
@@ -2305,6 +2386,14 @@ export default {
         this.wcdxs = data.sort(compareUp(data, column.prop));
       }
     },
+    sortNumberXS(column, prop, order) {
+      const data = this.ckintegral;
+      if (column.order === "descending") {
+        this.ckintegral = data.sort(compareDown(data, column.prop));
+      } else {
+        this.ckintegral = data.sort(compareUp(data, column.prop));
+      }
+    },    
     sortNumberKF(column, prop, order) {
       const data = this.wcdkf;
       if (column.order === "descending") {
@@ -2991,6 +3080,13 @@ export default {
       } else {
         this.showTitle["wcd"] = false;
       }
+      if (n === "仓库积分榜") {
+        this.showTitle["ckIntegral"] = true;
+        this.activeTitle = "仓库积分榜";
+        this.indexTabactive = index;
+      } else {
+        this.showTitle["ckIntegral"] = false;
+      }
     },
     dateFormatter(date) {
       return date.substring(0, 10);
@@ -3154,6 +3250,9 @@ export default {
     });
     ProsTargetPm(this.activePlatpm).then(res => {
       this.proTablepm = res.data.data;
+    });
+    getCkIntegral().then(res => {
+      this.ckintegral = res.data.data;
     });
     this.getNews();
   }
@@ -5542,5 +5641,8 @@ h2:hover {
 .bigDemo::-webkit-scrollbar {
   width: 1px !important;
   height: 1px !important;
+}
+.newIndex td{
+  padding:0.7rem 0 !important;
 }
 </style>
