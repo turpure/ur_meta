@@ -1,43 +1,67 @@
 <template>
   <section>
     <div>
+      <el-col :span="24" class="toolbar" style="padding:15px 12px;">
+        <div class="floet">
+          <div class="floet01">
+            <span>月份</span>
+            <el-date-picker
+              size="small"
+              v-model="time1"
+              type="month"
+              value-format="yyyy-MM"
+              style="width:150px;margin-left:10px;"
+              placeholder="月份"
+            ></el-date-picker>
+          </div>
+          <div class="floet01">
+            <el-button size="small" type="primary" @click="getData()">查询</el-button>
+          </div>
+          <div class="floet01">
+            <el-button size="small" type="success" @click="exportExcel">导出表格</el-button>
+          </div>
+        </div>
+      </el-col>
       <el-col :span="24">
         <el-table
           :data="nostockdata"
           border
           class="elTableForm"
+          @sort-change="sortNumber"
+          :summary-method="getSummaries"
+          show-summary
           :header-cell-style="getRowClass"
           v-loading="listLoading"
           :height="tableHeightstock"
-          style="width: 100%;margin-top:5px;"
+          style="width: 100%;"
         >
           <el-table-column type="index" fixed align="center" header-align="center" width="45"></el-table-column>  
           <el-table-column label="姓名" fixed header-align="center" align="center" prop="name" width="80"></el-table-column>
           <el-table-column label="月份" fixed header-align="center" align="center" prop="month" width="80"></el-table-column>
-          <el-table-column label="总积分" fixed header-align="center" align="center" prop="total_integral" width="80"></el-table-column>
-          <el-table-column label="计件工资" fixed header-align="center" align="center" prop="wages" width="80"></el-table-column>
-          <el-table-column label="出勤天数" header-align="center" align="center" prop="working_days" width="80"></el-table-column>  
+          <el-table-column label="总积分" fixed header-align="center" align="center" prop="total_integral" width="100" sortable="custom"></el-table-column>
+          <el-table-column label="计件工资" fixed header-align="center" align="center" prop="wages" width="105" sortable="custom"></el-table-column>
+          <el-table-column label="出勤天数" header-align="center" align="center" prop="working_days" width="105" sortable="custom"></el-table-column>  
           <el-table-column label="组别" header-align="center" align="center" prop="group" width="80"></el-table-column>
           <el-table-column label="职位" header-align="center" align="center" prop="job" width="80"></el-table-column>
           <el-table-column label="小组" header-align="center" align="center" prop="team" width="80"></el-table-column>
-          <el-table-column label="采购入库包裹" header-align="center" align="center" prop="pur_in_package_num" width="115"></el-table-column>
-          <el-table-column label="入库包裹" header-align="center" align="center" prop="in_package_num" width="90"></el-table-column>
-          <el-table-column label="入库数量" header-align="center" align="center" prop="in_storage_num" width="90"></el-table-column>
-          <el-table-column label="PDA入库SKU数" header-align="center" align="center" prop="pda_in_storage_sku_num" width="125"></el-table-column>
-          <el-table-column label="单品包裹数" header-align="center" align="center" prop="single_sku_package_num" width="105"></el-table-column>
-          <el-table-column label="核单包裹数" header-align="center" align="center" prop="check_package_num" width="105"></el-table-column>
-          <el-table-column label="拣货SKU种数" header-align="center" align="center" prop="picked_sku_num" width="115"></el-table-column>
-          <el-table-column label="拣货总数量" header-align="center" align="center" prop="picked_total_num" width="105"></el-table-column>
-          <el-table-column label="包裹数" header-align="center" align="center" prop="package_num" width="100"></el-table-column>
-          <el-table-column label="拆包积分" header-align="center" align="center" prop="unpacking_integral" width="100"></el-table-column>
-          <el-table-column label="打标积分" header-align="center" align="center" prop="marking_integral" width="100"></el-table-column>
-          <el-table-column label="贴标积分" header-align="center" align="center" prop="labeling_integral" width="100"></el-table-column>
-          <el-table-column label="上架积分" header-align="center" align="center" prop="on_shelf_integral" width="100"></el-table-column>
-          <el-table-column label="拣货积分" header-align="center" align="center" prop="picking_integral" width="100"></el-table-column>
-          <el-table-column label="打包积分" header-align="center" align="center" prop="packing_integral" width="100"></el-table-column>
-          <el-table-column label="分拣积分" header-align="center" align="center" prop="sorting_integral" width="100"></el-table-column>
-          <el-table-column label="其它得分项" header-align="center" align="center" prop="other_integral" width="100"></el-table-column>
-          <el-table-column label="扣分项" header-align="center" align="center" prop="deduction_integral" width="105"></el-table-column>
+          <el-table-column label="采购入库包裹" header-align="center" align="center" prop="pur_in_package_num" width="130" sortable="custom"></el-table-column>
+          <el-table-column label="入库包裹" header-align="center" align="center" prop="in_package_num" width="105" sortable="custom"></el-table-column>
+          <el-table-column label="入库数量" header-align="center" align="center" prop="in_storage_num" width="105" sortable="custom"></el-table-column>
+          <el-table-column label="PDA入库SKU数" header-align="center" align="center" prop="pda_in_storage_sku_num" width="150" sortable="custom"></el-table-column>
+          <el-table-column label="单品包裹数" header-align="center" align="center" prop="single_sku_package_num" width="115" sortable="custom"></el-table-column>
+          <el-table-column label="核单包裹数" header-align="center" align="center" prop="check_package_num" width="115" sortable="custom"></el-table-column>
+          <el-table-column label="拣货SKU种数" header-align="center" align="center" prop="picked_sku_num" width="135" sortable="custom"></el-table-column>
+          <el-table-column label="拣货总数量" header-align="center" align="center" prop="picked_total_num" width="115" sortable="custom"></el-table-column>
+          <el-table-column label="包裹数" header-align="center" align="center" prop="package_num" width="100" sortable="custom"></el-table-column>
+          <el-table-column label="拆包积分" header-align="center" align="center" prop="unpacking_integral" width="105" sortable="custom"></el-table-column>
+          <el-table-column label="打标积分" header-align="center" align="center" prop="marking_integral" width="105" sortable="custom"></el-table-column>
+          <el-table-column label="贴标积分" header-align="center" align="center" prop="labeling_integral" width="105" sortable="custom"></el-table-column>
+          <el-table-column label="上架积分" header-align="center" align="center" prop="on_shelf_integral" width="105" sortable="custom"></el-table-column>
+          <el-table-column label="拣货积分" header-align="center" align="center" prop="picking_integral" width="105" sortable="custom"></el-table-column>
+          <el-table-column label="打包积分" header-align="center" align="center" prop="packing_integral" width="105" sortable="custom"></el-table-column>
+          <el-table-column label="分拣积分" header-align="center" align="center" prop="sorting_integral" width="105" sortable="custom"></el-table-column>
+          <el-table-column label="其它得分项" header-align="center" align="center" prop="other_integral" width="115" sortable="custom"></el-table-column>
+          <el-table-column label="扣分项" header-align="center" align="center" prop="deduction_integral" width="105" sortable="custom"></el-table-column>
           <el-table-column label="统计截止时间" header-align="center" align="center" prop="update_date" width="110">
               <template slot-scope="scope">{{scope.row.update_date | cutOutDate}}</template>
           </el-table-column>
@@ -65,12 +89,13 @@ import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 export default {
   data() {
     return {
-      tableHeightstock: window.innerHeight - 70,
+      tableHeightstock: window.innerHeight - 125,
       options: ["备货", "不备货"],
       listLoading: false,
       developer: [],
       purchaser: [],
       goodsState:[],
+      time1:'',
       condition: {
         sku: null,
         skuName: null,
@@ -116,6 +141,14 @@ export default {
     },
   },
   methods: {
+    sortNumber(column, prop, order) {
+      const data = this.nostockdata;
+      if (column.order === "descending") {
+        this.nostockdata = data.sort(compareDown(data, column.prop));
+      } else {
+        this.nostockdata = data.sort(compareUp(data, column.prop));
+      }
+    },
     formatter(row, column) {
       return row.minOrderTime ? row.minOrderTime.substring(0, 16) : "";
     },
@@ -175,10 +208,6 @@ export default {
           }, 0);
         } else {
           sums[index] = "N/A";
-        }
-        let arr = sums;
-        if (index === 7) {
-          sums[index] = Number(arr[7]).toFixed(2);
         }
       });
 
