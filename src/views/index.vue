@@ -23,6 +23,18 @@
               </div>
             </div>
             <div class="tabs-container tab-index-pan tabdColor" v-show="showTitle.ckIntegral">
+              <el-tabs
+                v-model="activeCkName"
+                style="width:100%;padding-left:14px;"
+                @tab-click="getCkIntegral"
+              >
+                <el-tab-pane
+                  v-for="(item, index) in titleMenuCk"
+                  :label="item.name"
+                  :name="item.name"
+                  :key="index"
+                ></el-tab-pane>
+              </el-tabs>
               <el-table
                   :data="ckintegral"
                   size="small"
@@ -61,7 +73,11 @@
                     align="center"
                     label="姓名"
                     width="110"
-                  ></el-table-column>
+                  >
+                  <template slot-scope="scope">
+                    <p>{{scope.row.name}}</p>
+                  </template>
+                  </el-table-column>
                   <el-table-column
                     prop="job"
                     align="center"
@@ -2047,7 +2063,9 @@ import { getMenu } from "../api/login";
 export default {
   data() {
     return {
+      titleMenuCk:[],
       ckintegral:[],
+      activeCkName:'拆包',
       activeTabNamebk: "eBay-义乌仓",
       indexTabactive: 0,
       titleMenuTab: [
@@ -2386,7 +2404,7 @@ export default {
         this.wcdxs = data.sort(compareUp(data, column.prop));
       }
     },
-    sortNumberXS(column, prop, order) {
+    sortNumberCk(column, prop, order) {
       const data = this.ckintegral;
       if (column.order === "descending") {
         this.ckintegral = data.sort(compareDown(data, column.prop));
@@ -3157,7 +3175,15 @@ export default {
         return "exception";
       }
       return "success";
-    }
+    },
+    getCkIntegral(){
+      var container={
+        job:this.activeCkName
+      }
+      getCkIntegral(container).then(res => {
+        this.ckintegral = res.data.data;
+      });
+    },
   },
   filters: {
     cutOut: function(value) {
@@ -3182,6 +3208,9 @@ export default {
         }
         if (this.titleMenu[i].route == "/v1/site/zz-target") {
           this.titleMenuzz = this.titleMenu[i].tabs;
+        }
+        if (this.titleMenu[i].route == "/v1/site/integral-ranking") {
+          this.titleMenuCk = this.titleMenu[i].tabs;
         }
       }
     });
@@ -3251,9 +3280,7 @@ export default {
     ProsTargetPm(this.activePlatpm).then(res => {
       this.proTablepm = res.data.data;
     });
-    getCkIntegral().then(res => {
-      this.ckintegral = res.data.data;
-    });
+    this.getCkIntegral();
     this.getNews();
   }
 };

@@ -9,7 +9,7 @@
           :header-cell-style="getRowClass"
           v-loading="listLoading"
           :height="tableHeightstock"
-          style="width: 98.5%;margin-left:0.7%;margin-top:15px;"
+          style="width: 100%;margin-top:5px;"
         >
           <el-table-column type="index" fixed align="center" header-align="center" width="45"></el-table-column>  
           <el-table-column label="姓名" fixed header-align="center" align="center" prop="name" width="80"></el-table-column>
@@ -65,7 +65,7 @@ import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 export default {
   data() {
     return {
-      tableHeightstock: window.innerHeight - 80,
+      tableHeightstock: window.innerHeight - 70,
       options: ["备货", "不备货"],
       listLoading: false,
       developer: [],

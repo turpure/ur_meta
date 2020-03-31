@@ -487,9 +487,9 @@ export function getSiteIndexBM() {
   })
 }
 
-export function getCkIntegral() {
+export function getCkIntegral(param) {
   return request({
-    url: '/site/integral-ranking',
+    url: '/site/integral-ranking?job=' + param.job,
     method: 'get'
   })
 }
