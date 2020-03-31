@@ -38,7 +38,7 @@
               <el-table
                   :data="ckintegral"
                   size="small"
-                  height="847"
+                  height="798"
                   ref="table1"
                   @sort-change="sortNumberCk"
                 >
@@ -84,11 +84,27 @@
                     width="110"
                     label="职位"
                   ></el-table-column>
-                  <el-table-column prop="this_num" align="center" label="本月积分" sortable="custom"></el-table-column>
-                  <el-table-column prop="this_agv_num" align="center" label="本月本岗位平均积分" sortable="custom" width="170"></el-table-column>
-                  <el-table-column prop="this_diff" align="center" label="本月积分差" sortable="custom"></el-table-column>
-                  <el-table-column prop="last_num" align="center" label="上月积分" sortable="custom"></el-table-column>
-                  <el-table-column prop="this_last" align="center" label="本月VS上月" sortable="custom">
+                  <el-table-column prop="this_num" align="center" label="本月积分" sortable="custom" min-width="110">
+                    <template slot-scope="scope">
+                      <span :class="scope.row.this_num<0?'colorRed':''">{{scope.row.this_num}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="this_agv_num" align="center" label="本月本岗位平均积分" sortable="custom" width="170">
+                    <template slot-scope="scope">
+                      <span :class="scope.row.this_agv_num<0?'colorRed':''">{{scope.row.this_agv_num}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="this_diff" align="center" label="本月积分差" sortable="custom" min-width="115">
+                    <template slot-scope="scope">
+                      <span :class="scope.row.this_diff<0?'colorRed':''">{{scope.row.this_diff}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="last_num" align="center" label="上月积分" sortable="custom" min-width="110">
+                    <template slot-scope="scope">
+                      <span :class="scope.row.last_num<0?'colorRed':''">{{scope.row.last_num}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="this_last" align="center" label="本月VS上月" sortable="custom" min-width="120">
                     <template slot-scope="scope">
                       <el-progress
                         :text-inside="true"
@@ -98,7 +114,7 @@
                       ></el-progress>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="dateRate" align="center" label="时间进度">
+                  <el-table-column prop="dateRate" align="center" label="时间进度" min-width="120">
                     <template slot-scope="scope">
                       <el-progress
                         :text-inside="true"
@@ -108,7 +124,7 @@
                       ></el-progress>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="updateTime" align="center" label="统计截止日期">
+                  <el-table-column prop="updateTime" align="center" label="统计截止日期" min-width="110">
                     <template slot-scope="scope">
                       <i class="el-icon-time"></i>
                       <span>{{dateFormatter(scope.row.update_time)}}</span>
