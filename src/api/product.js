@@ -1850,9 +1850,32 @@ export function hwcSkuUpdate(param) {
   })
 }
 
-export function getIntegral() {
+export function getIntegral(param) {
+  const data = { condition: param }
   return request({
     url: '/warehouse-tools/integral',
+    method: 'post',
+    data
+  })
+}
+
+export function getqueryInfojob() {
+  return request({
+    url: '/warehouse-tools/query-info?type=job',
+    method: 'get'
+  })
+}
+
+export function getqueryInfoname() {
+  return request({
+    url: '/warehouse-tools/query-info?type=name',
+    method: 'get'
+  })
+}
+
+export function getqueryInfogroup() {
+  return request({
+    url: '/warehouse-tools/query-info?type=group',
     method: 'get'
   })
 }
