@@ -168,7 +168,7 @@ export default {
         sj:false
       },
       activeName:'积分参数',
-      allMenu: ['积分参数','数据导入'],
+      allMenu: ['参数设置','数据导入'],
       action: "upload",
       headers: Object(),
       tableHeight: window.innerHeight - 145,
