@@ -84,22 +84,22 @@
                     width="90"
                     label="职位"
                   ></el-table-column>
-                  <el-table-column prop="this_num" align="center" :render-header="renderHeaderCk1" sortable="custom" min-width="110">
+                  <el-table-column prop="this_num" align="center" :render-header="renderHeaderCk1" sortable="custom" min-width="130">
                     <template slot-scope="scope">
                       <span :class="scope.row.this_num<0?'colorRed':''">{{scope.row.this_num}}</span>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="this_agv_num" align="center" :render-header="renderHeaderCk2" sortable="custom" width="195">
+                  <el-table-column prop="this_agv_num" align="center" :render-header="renderHeaderCk2" sortable="custom" width="205">
                     <template slot-scope="scope">
                       <span :class="scope.row.this_agv_num<0?'colorRed':''">{{scope.row.this_agv_num}}</span>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="this_diff" align="center" sortable="custom" :render-header="renderHeaderCk3" min-width="115">
+                  <el-table-column prop="this_diff" align="center" sortable="custom" :render-header="renderHeaderCk3" min-width="145">
                     <template slot-scope="scope">
                       <span :class="scope.row.this_diff<0?'colorRed':''">{{scope.row.this_diff}}</span>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="last_num" align="center" sortable="custom" :render-header="renderHeaderCk4" min-width="110">
+                  <el-table-column prop="last_num" align="center" sortable="custom" :render-header="renderHeaderCk4" min-width="130">
                     <template slot-scope="scope">
                       <span :class="scope.row.last_num<0?'colorRed':''">{{scope.row.last_num}}</span>
                     </template>
