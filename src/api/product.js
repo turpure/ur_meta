@@ -1879,3 +1879,28 @@ export function getqueryInfogroup() {
     method: 'get'
   })
 }
+
+export function getwarehouseRate() {
+  return request({
+    url: '/settings/warehouse-rate',
+    method: 'get'
+  })
+}
+
+export function getSavewarehouseRate(param) {
+  const data = { condition: param }
+  return request({
+    url: '/settings/warehouse-rate',
+    method: 'post',
+    data
+  })
+}
+
+export function getDeletewarehouseRate(param) {
+  const data = { condition: param }
+  return request({
+    url: '/settings/warehouse-rate',
+    method: 'delete',
+    data
+  })
+}
