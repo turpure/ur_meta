@@ -190,7 +190,7 @@ export default {
   },
   methods: {
     handleClick(tab, event) {
-      if (tab.label === "积分参数") {
+      if (tab.label === "参数设置") {
         this.show.sz = true;
       } else {
         this.show.sz = false;
