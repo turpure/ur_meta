@@ -62,19 +62,24 @@
               <span style="color:red;">{{scope.row.wages}}</span>
             </template>
           </el-table-column>
-          <el-table-column label="出勤天数" header-align="center" align="center" prop="working_days" width="105" sortable="custom"></el-table-column>  
+          <el-table-column label="贴标出勤天数" header-align="center" align="center" prop="labeling_days" width="130" sortable="custom"></el-table-column>
+          <el-table-column label="分拣出勤天数" header-align="center" align="center" prop="sorting_days" width="130" sortable="custom"></el-table-column>  
           <el-table-column label="组别" header-align="center" align="center" prop="group" width="80"></el-table-column>
           <el-table-column label="职位" header-align="center" align="center" prop="job" width="80"></el-table-column>
           <el-table-column label="小组" header-align="center" align="center" prop="team" width="80"></el-table-column>
           <el-table-column label="采购入库包裹" header-align="center" align="center" prop="pur_in_package_num" width="130" sortable="custom"></el-table-column>
-          <el-table-column label="入库包裹" header-align="center" align="center" prop="in_package_num" width="105" sortable="custom"></el-table-column>
-          <el-table-column label="入库数量" header-align="center" align="center" prop="in_storage_num" width="105" sortable="custom"></el-table-column>
+          <el-table-column label="打标入库包裹" header-align="center" align="center" prop="marking_in_storage_package_num" width="130" sortable="custom"></el-table-column>
+          <el-table-column label="打标入库数量" header-align="center" align="center" prop="marking_in_storage_num" width="130" sortable="custom"></el-table-column>
+          <el-table-column label="贴标入库包裹" header-align="center" align="center" prop="labeling_in_storage_package_num" width="130" sortable="custom"></el-table-column>
+          <el-table-column label="贴标入库数量" header-align="center" align="center" prop="labeling_in_storage_num" width="130" sortable="custom"></el-table-column>
           <el-table-column label="PDA入库SKU数" header-align="center" align="center" prop="pda_in_storage_sku_num" width="150" sortable="custom"></el-table-column>
-          <el-table-column label="单品包裹数" header-align="center" align="center" prop="single_sku_package_num" width="115" sortable="custom"></el-table-column>
-          <el-table-column label="核单包裹数" header-align="center" align="center" prop="check_package_num" width="115" sortable="custom"></el-table-column>
-          <el-table-column label="拣货SKU种数" header-align="center" align="center" prop="picked_sku_num" width="135" sortable="custom"></el-table-column>
-          <el-table-column label="拣货总数量" header-align="center" align="center" prop="picked_total_num" width="115" sortable="custom"></el-table-column>
-          <el-table-column label="包裹数" header-align="center" align="center" prop="package_num" width="100" sortable="custom"></el-table-column>
+          <el-table-column label="单品包裹数" header-align="center" align="center" prop="single_package_num" width="115" sortable="custom"></el-table-column>
+          <el-table-column label="核单包裹数" header-align="center" align="center" prop="multi_package_num" width="115" sortable="custom"></el-table-column>
+          <el-table-column label="打包单品包裹数" header-align="center" align="center" prop="pack_single_package_num" width="145" sortable="custom"></el-table-column>
+          <el-table-column label="打包核单包裹数" header-align="center" align="center" prop="pack_multi_package_num" width="145" sortable="custom"></el-table-column>
+          <el-table-column label="拣货SKU种数" header-align="center" align="center" prop="picking_sku_num" width="135" sortable="custom"></el-table-column>
+          <el-table-column label="拣货总数量" header-align="center" align="center" prop="picking_total_num" width="115" sortable="custom"></el-table-column>
+          <el-table-column label="分拣包裹数" header-align="center" align="center" prop="package_num" width="130" sortable="custom"></el-table-column>
           <el-table-column label="拆包积分" header-align="center" align="center" prop="unpacking_integral" width="105" sortable="custom"></el-table-column>
           <el-table-column label="打标积分" header-align="center" align="center" prop="marking_integral" width="105" sortable="custom"></el-table-column>
           <el-table-column label="贴标积分" header-align="center" align="center" prop="labeling_integral" width="105" sortable="custom"></el-table-column>
@@ -183,16 +188,21 @@ export default {
         "组别",
         "职位",
         "小组",
-        "出勤天数",
+        "贴标出勤天数",
+        "分拣出勤天数",
         "采购入库包裹",
-        "入库包裹",
-        "入库数量",
+        "打标入库包裹",
+        "打标入库数量",
+        "贴标入库包裹",
+        "贴标入库数量",
         "PDA入库SKU数",
         "单品包裹数",
         "核单包裹数",
+        "打包单品包裹数",
+        "打包核单包裹数",
         "拣货SKU种数",
         "拣货总数量",
-        "包裹数",
+        "分拣包裹数",
         "拆包积分",
         "打标积分",
         "贴标积分",
@@ -212,15 +222,20 @@ export default {
         "group",
         "job",
         "team",
-        "working_days",
+        "labeling_days",
+        "sorting_days",
         "pur_in_package_num",
-        "in_package_num",
-        "in_storage_num",
+        "marking_in_storage_package_num",
+        "marking_in_storage_num",
+        "labeling_in_storage_package_num",
+        "labeling_in_storage_num",
         "pda_in_storage_sku_num",
-        "single_sku_package_num",
-        "check_package_num",
-        "picked_sku_num",
-        "picked_total_num",
+        "single_package_num",
+        "multi_package_num",
+        "pack_single_package_num",
+        "pack_multi_package_num",
+        "picking_sku_num",
+        "picking_total_num",
         "package_num",
         "unpacking_integral",
         "marking_integral",
