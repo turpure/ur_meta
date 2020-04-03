@@ -97,9 +97,9 @@
                       <span :class="scope.row.this_other_num<0?'colorRed':''">{{scope.row.this_other_num}}</span>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="this_num" align="center" :render-header="renderHeaderCk1" sortable="custom" min-width="130">
+                  <el-table-column prop="this_job_num" align="center" :render-header="renderHeaderCk1" sortable="custom" min-width="130">
                     <template slot-scope="scope">
-                      <span :class="scope.row.this_num<0?'colorRed':''">{{scope.row.this_num}}</span>
+                      <span :class="scope.row.this_job_num<0?'colorRed':''">{{scope.row.this_job_num}}</span>
                     </template>
                   </el-table-column>
                   <el-table-column prop="this_agv_num" align="center" :render-header="renderHeaderCk2" sortable="custom" width="205">
@@ -194,9 +194,9 @@
                     width="90"
                     label="职位"
                   ></el-table-column>
-                  <el-table-column prop="this_num" align="center" :render-header="renderHeaderCk1" sortable="custom" min-width="130">
+                  <el-table-column prop="this_job_num" align="center" :render-header="renderHeaderCk1" sortable="custom" min-width="130">
                     <template slot-scope="scope">
-                      <span :class="scope.row.this_num<0?'colorRed':''">{{scope.row.this_num}}</span>
+                      <span :class="scope.row.this_job_num<0?'colorRed':''">{{scope.row.this_job_num}}</span>
                     </template>
                   </el-table-column>
                   <el-table-column prop="this_agv_num" align="center" :render-header="renderHeaderCk2" sortable="custom" width="205">

@@ -75,24 +75,35 @@
       </el-row>
       </div>
       <div v-show="show.sj">
-        <el-row class="contentt">
-          <el-col :span="24" class="newDj">
-              <el-button type="danger" size="small" @click='export01Excel'>
-                下载模板
-              </el-button>
-              <el-upload
-                class="upload-demo"
-                drag
-                :action="action"
-                multiple
-                :headers="headers"
-                style="margin-top:15px;"
-                :onError="uploadError"
-                :on-success="uploadSuccess"
-              >
-              <i class="el-icon-upload"></i>
-                <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-              </el-upload>
+        <el-row>
+          <div class="ckBox">
+            <el-col :span="24" class="newDj">
+              <el-col :span="4" style="margin-left:15px;">
+                <el-upload
+                  class="upload-demo"
+                  drag
+                  :action="action"
+                  multiple
+                  :headers="headers"
+                  :onError="uploadError"
+                  :on-success="uploadSuccess"
+                >
+                  <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                </el-upload>
+              </el-col>
+              <el-col :span="3">
+                <el-button type="danger" size="small" @click='export01Excel' style="margin-left:10px">
+                  下载模板
+                </el-button>
+              </el-col>
+              <div class="ckRight">
+                <span class="ckText"><span class="ckActive" :class="ckindex==1?'ckActiveBlock':''"></span><span>导入记录</span></span>
+                <span class="ckText"><span class="ckActive" :class="ckindex==0?'ckActiveBlock':''"></span><span>导入列表</span></span>
+              </div>  
+            </el-col>
+          </div>
+          <el-col :span="24">
+            2121
           </el-col>
         </el-row>
       </div>
@@ -167,7 +178,8 @@ export default {
         sz:true,
         sj:false
       },
-      activeName:'积分参数',
+      ckindex:0,
+      activeName:'参数设置',
       allMenu: ['参数设置','数据导入'],
       action: "upload",
       headers: Object(),
@@ -345,17 +357,17 @@ export default {
 </script>
 
 <style lang="scss">
-// .newDj .el-upload-dragger{
-//   width:100% !important;
-//   height: 32px !important;
-//   line-height: 32px !important;
-// }
-// .newDj .upload-demo{
-//   height: 32px !important;
-// }
-// .newDj .el-upload{
-//   width: 100% !important;
-// }
+.newDj .el-upload-dragger{
+  width:100% !important;
+  height: 32px !important;
+  line-height: 32px !important;
+}
+.newDj .upload-demo{
+  height: 32px !important;
+}
+.newDj .el-upload{
+  width: 100% !important;
+}
 .contentt {
   margin-left: 20px;
   margin-top: 15px;
@@ -392,5 +404,53 @@ export default {
 }
 .aArial .el-input__inner{
   font-family: Arial !important;
+}
+</style>
+<style scoped>
+.ckBox{
+  width: 98%;
+  margin-left: .7%;
+  border: 1px solid #e2e2e2;
+  background: #f8f8f8;
+  padding: 12px 0;
+  overflow: hidden;
+  border-radius: 6px;
+  position: relative;
+  margin-top: 15px;
+}
+.ckRight{
+  position: absolute;
+  right: 0;
+  top: 9px;
+  overflow: hidden;
+}
+.ckActive{
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: block;
+  background: #fff;
+  float: left;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+.ckText{
+  font-size: 14px;
+  padding: 0 18px;
+  display: block;
+  float: right;
+  cursor: pointer;
+  border: 1px solid #eee;
+  background: #fff;
+  line-height: 35px;
+  margin-right: 20px;
+  border-radius: 5px;
+}
+.ckActiveBlock{
+  background: #fff;
+  width: 4px;
+  height: 4px;
+  border: 5px solid #409eff;
 }
 </style>
