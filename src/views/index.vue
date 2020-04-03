@@ -2876,7 +2876,7 @@ export default {
     },
     renderHeaderPic(h, { column, $index }) {
       if ($index === 0) {
-        let filters = this.shbm;
+        let filters = this.sybm;
         return h(
           "el-select",
           {
