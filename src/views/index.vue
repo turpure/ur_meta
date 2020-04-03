@@ -2009,8 +2009,8 @@ import { getMenu } from "../api/login";
 export default {
   data() {
     return {
-      leftWidth:'69',
-      rightWidth:'30',
+      leftWidth:'99.8',
+      rightWidth:'0',
       indexJob:[],
       thisMonth:0,
       lastMonth:0,
@@ -2189,7 +2189,7 @@ export default {
         pmHVOVA: false,
       },
       zbJob:null,
-      shrinkFlag:false,
+      shrinkFlag:true,
       indexbk: {
         yw: true,
         hw: false,
