@@ -40,6 +40,116 @@
                   size="small"
                   height="798"
                   ref="table1"
+                  v-show="inCk.zb"
+                  @sort-change="sortNumberCk"
+                >
+                    <el-table-column
+                      prop="order"
+                      label="排名"
+                      sortable="custom"
+                      align="center"
+                      width="80"
+                    >
+                      <template slot-scope="scope">
+                        <img
+                          src="../assets/j1.png"
+                          style="width: 31px;height: 38px;"
+                          v-if="scope.row.order==1"
+                        />
+                        <img
+                          src="../assets/j2.png"
+                          style="width: 31px;height: 38px;"
+                          v-if="scope.row.order==2"
+                        />
+                        <img
+                          src="../assets/j3.png"
+                          style="width: 31px;height: 38px;"
+                          v-if="scope.row.order==3"
+                        />
+                        <span v-if="scope.row.order>3">{{scope.row.order}}</span>
+                      </template>
+                    </el-table-column>
+                  <el-table-column
+                    prop="name"
+                    align="center"
+                    label="姓名"
+                    width="90"
+                  >
+                  <template slot-scope="scope">
+                    <p>{{scope.row.name}}</p>
+                  </template>
+                  </el-table-column>
+                  <el-table-column
+                    prop="job"
+                    align="center"
+                    width="160"
+                    label="职位"
+                  >
+                  <el-table-column prop="job" :render-header="renderHeaderCkzb" align="center" width="160"></el-table-column>
+                  </el-table-column>
+                  <el-table-column prop="this_total_num" align="center" :render-header="renderHeaderCk11" sortable="custom" min-width="145">
+                    <template slot-scope="scope">
+                      <span :class="scope.row.this_total_num<0?'colorRed':''">{{scope.row.this_total_num}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="this_other_num" align="center" :render-header="renderHeaderCk0" sortable="custom" min-width="160">
+                    <template slot-scope="scope">
+                      <span :class="scope.row.this_other_num<0?'colorRed':''">{{scope.row.this_other_num}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="this_num" align="center" :render-header="renderHeaderCk1" sortable="custom" min-width="130">
+                    <template slot-scope="scope">
+                      <span :class="scope.row.this_num<0?'colorRed':''">{{scope.row.this_num}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="this_agv_num" align="center" :render-header="renderHeaderCk2" sortable="custom" width="205">
+                    <template slot-scope="scope">
+                      <span :class="scope.row.this_agv_num<0?'colorRed':''">{{scope.row.this_agv_num}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="this_diff" align="center" sortable="custom" :render-header="renderHeaderCk3" min-width="145">
+                    <template slot-scope="scope">
+                      <span :class="scope.row.this_diff<0?'colorRed':''">{{scope.row.this_diff}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="last_num" align="center" sortable="custom" :render-header="renderHeaderCk4" min-width="130">
+                    <template slot-scope="scope">
+                      <span :class="scope.row.last_num<0?'colorRed':''">{{scope.row.last_num}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="this_last" align="center" label="本月VS上月" sortable="custom" min-width="120">
+                    <template slot-scope="scope">
+                      <el-progress
+                        :text-inside="true"
+                        :stroke-width="18"
+                        :status="checkStatus1(scope.row,'this_last')"
+                        :percentage="Math.round(scope.row.this_last*100)/100"
+                      ></el-progress>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="dateRate" align="center" label="时间进度" min-width="120">
+                    <template slot-scope="scope">
+                      <el-progress
+                        :text-inside="true"
+                        :stroke-width="18"
+                        status="exception"
+                        :percentage="Math.round(scope.row.time_rate*100)/100"
+                      ></el-progress>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="updateTime" align="center" label="统计截止日期" min-width="110">
+                    <template slot-scope="scope">
+                      <i class="el-icon-time"></i>
+                      <span>{{dateFormatter(scope.row.update_time)}}</span>
+                    </template>
+                  </el-table-column>
+                </el-table>
+                <el-table
+                  :data="ckintegral"
+                  size="small"
+                  height="798"
+                  ref="table1"
+                  v-show="inCk.qt"
                   @sort-change="sortNumberCk"
                 >
                     <el-table-column
@@ -131,182 +241,6 @@
                     </template>
                   </el-table-column>
                 </el-table>
-            </div>
-            <div class="tabs-container tab-index-pan tabdColor" v-show="showTitle.wcd">
-              <el-tabs
-                v-model="activeTabwcd"
-                style="width:100%;padding-left:14px;"
-                @tab-click="handclickwcd"
-              >
-                <el-tab-pane
-                  v-for="(item, index) in titleMenuwcd"
-                  :label="item"
-                  :name="item"
-                  :key="index"
-                ></el-tab-pane>
-              </el-tabs>
-              <div v-show="tabwcd.xs" class="infoTable">
-                <el-table
-                  :data="wcdxs"
-                  size="small"
-                  height="798"
-                  ref="table1"
-                  v-scrollBar:slim
-                  @sort-change="sortNumberXS"
-                >
-                  <el-table-column type="index" align="center" width="40"></el-table-column>
-                  <el-table-column prop="depart" align="center" label="部门" sortable min-width="95">
-                    <el-table-column prop="depart" :render-header="renderHeaderticXs" align="center" min-width="95"></el-table-column>
-                  </el-table-column>
-                  <el-table-column
-                    prop="username"
-                    align="center"
-                    label="姓名"
-                    sortable
-                    min-width="60"
-                  ></el-table-column>
-                  <el-table-column prop="target" align="center" label="目标" sortable="custom">
-                    <template slot-scope="scope">
-                      <span>{{scope.row.target |cutOut1}}</span>
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop="amt" align="center" label="已完成" sortable="custom"></el-table-column>
-                  <el-table-column prop="bonus" align="center" label="奖金" sortable="custom">
-                    <template slot-scope="scope">
-                      <span>{{scope.row.bonus |cutOut1}}</span>
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop="rxtraBonus" align="center" label="额外奖金" sortable="custom"></el-table-column>
-                  <el-table-column prop="rate" align="center" label="目标进度" sortable="custom">
-                    <template slot-scope="scope">
-                      <el-progress
-                        :text-inside="true"
-                        :stroke-width="18"
-                        :status="checkStatus1(scope.row,'rate')"
-                        :percentage="Math.round(scope.row.rate*100)/100"
-                      ></el-progress>
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop="dateRate" align="center" label="时间进度">
-                    <template slot-scope="scope">
-                      <el-progress
-                        :text-inside="true"
-                        :stroke-width="18"
-                        status="exception"
-                        :percentage="Math.round(scope.row.dateRate*100)/100"
-                      ></el-progress>
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop="updateTime" align="center" label="统计截止日期">
-                    <template slot-scope="scope">
-                      <i class="el-icon-time"></i>
-                      <span>{{dateFormatter(scope.row.updatetime)}}</span>
-                    </template>
-                  </el-table-column>
-                </el-table>
-              </div>
-              <div v-show="tabwcd.kf" class="infoTable">
-                <el-table
-                  :data="wcdkf"
-                  size="small"
-                  height="798"
-                  ref="table1"
-                  v-scrollBar:slim
-                  @sort-change="sortNumberKF"
-                >
-                  <el-table-column type="index" align="center" width="40"></el-table-column>
-                  <el-table-column prop="depart" align="center" label="部门" sortable min-width="95">
-                    <el-table-column prop="depart" :render-header="renderHeaderticKf" align="center" min-width="95"></el-table-column>
-                  </el-table-column>
-                  <el-table-column prop="username" align="center" label="姓名" sortable min-width="60"></el-table-column>
-                  <el-table-column prop="target" align="center" label="目标" sortable="custom">
-                    <template slot-scope="scope">
-                      <span>{{scope.row.target |cutOut1}}</span>
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop="amt" align="center" label="已完成" sortable="custom"></el-table-column>
-                  <el-table-column prop="bonus" align="center" label="奖金" sortable="custom">
-                    <template slot-scope="scope">
-                      <span>{{scope.row.bonus |cutOut1}}</span>
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop="rxtraBonus" align="center" label="额外奖金" sortable="custom"></el-table-column>
-                  <el-table-column prop="rate" align="center" label="目标进度" sortable="custom">
-                    <template slot-scope="scope">
-                      <el-progress
-                        :text-inside="true"
-                        :stroke-width="18"
-                        :status="checkStatus1(scope.row,'rate')"
-                        :percentage="Math.round(scope.row.rate*100)/100"
-                      ></el-progress>
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop="dateRate" align="center" label="时间进度">
-                    <template slot-scope="scope">
-                      <el-progress
-                        :text-inside="true"
-                        :stroke-width="18"
-                        status="exception"
-                        :percentage="Math.round(scope.row.dateRate*100)/100"
-                      ></el-progress>
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop="updateTime" align="center" label="统计截止日期">
-                    <template slot-scope="scope">
-                      <i class="el-icon-time"></i>
-                      <span>{{dateFormatter(scope.row.updatetime)}}</span>
-                    </template>
-                  </el-table-column>
-                </el-table>
-              </div>
-              <div v-show="tabwcd.bm">
-                <el-table
-                  :data="wcdbm"
-                  size="small"
-                  height="798"
-                  ref="table1"
-                  v-scrollBar:slim
-                  @sort-change="sortNumberBM"
-                >
-                  <el-table-column type="index" align="center"></el-table-column>
-                  <el-table-column prop="username" align="center" label="部门" sortable></el-table-column>
-                  <el-table-column prop="target" align="center" label="目标" sortable="custom"></el-table-column>
-                  <el-table-column prop="amt" align="center" label="已完成" sortable="custom"></el-table-column>
-                  <el-table-column prop="bonus" align="center" label="奖金" sortable="custom"></el-table-column>
-                  <el-table-column
-                    prop="rate"
-                    align="center"
-                    label="目标进度"
-                    sortable="custom"
-                    width="180"
-                  >
-                    <template slot-scope="scope">
-                      <el-progress
-                        :text-inside="true"
-                        :stroke-width="18"
-                        :status="checkStatus1(scope.row,'rate')"
-                        :percentage="Math.round(scope.row.rate*100)/100"
-                      ></el-progress>
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop="dateRate" align="center" label="时间进度" width="180">
-                    <template slot-scope="scope">
-                      <el-progress
-                        :text-inside="true"
-                        :stroke-width="18"
-                        status="exception"
-                        :percentage="Math.round(scope.row.dateRate*100)/100"
-                      ></el-progress>
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop="updateTime" align="center" label="统计截止日期">
-                    <template slot-scope="scope">
-                      <i class="el-icon-time"></i>
-                      <span>{{dateFormatter(scope.row.updateTime)}}</span>
-                    </template>
-                  </el-table-column>
-                </el-table>
-              </div>
             </div>
             <div class="tabs-container tab-index-pan" v-show="showTitle.pming">
               <el-tabs
@@ -1380,7 +1314,7 @@
                 </el-table>
               </div>
             </div>
-            <div class="tabs-container tab-index-pan" v-show="showTitle.baokuan">
+            <!-- <div class="tabs-container tab-index-pan" v-show="showTitle.baokuan">
               <el-tabs
                 v-model="activeTabNamebk"
                 style="width:100%;padding-left:14px;"
@@ -1561,7 +1495,7 @@
                   </el-table-column>
                 </el-table>
               </div>
-            </div>
+            </div> -->
             <div class="tabs-container tab-index-pan" v-show="showTitle.zengzhang">
               <el-tabs
                 v-model="activeName"
@@ -2065,17 +1999,18 @@ import {
   getCkIntegral
 } from "../api/api";
 import { compareUp, compareDown } from "../api/tools";
-import { updateLog } from "../api/product";
+import { updateLog,getqueryInfojob } from "../api/product";
 import { getMenu } from "../api/login";
 
 export default {
   data() {
     return {
+      indexJob:[],
       thisMonth:0,
       lastMonth:0,
       titleMenuCk:[],
       ckintegral:[],
-      activeCkName:'拆包',
+      activeCkName:'总榜',
       activeTabNamebk: "eBay-义乌仓",
       indexTabactive: 0,
       titleMenuTab: [
@@ -2088,6 +2023,10 @@ export default {
         "Shopee",
         "VOVA"
       ],
+      inCk:{
+        zb:true,
+        qt:false
+      },
       activeTabName: "eBay-义乌仓",
       activeTabzz: "郑州eBay平台",
       activeTabwcd: "所有销售",
@@ -2182,11 +2121,11 @@ export default {
       titleMenuwcd: ["所有销售", "所有开发", "所有部门"],
       zzEbay: [],
       zzJoom: [],
-      activeName: "上海销售",
+      activeName: "所有销售",
       activeTitle: "销售排名",
       activePlat: "eBay-义乌仓",
       activePlatpm: "eBay-义乌仓",
-      activeSale: "上海销售",
+      activeSale: "所有销售",
       profitl1: {
         depart: null
       },
@@ -2243,6 +2182,7 @@ export default {
         pmHShopee: false,
         pmHVOVA: false,
       },
+      zbJob:null,
       indexbk: {
         yw: true,
         hw: false,
@@ -2254,6 +2194,41 @@ export default {
     };
   },
   methods: {
+    renderHeaderCkzb(h, { column, $index }) {
+      if ($index === 0) {
+        let filters = this.indexJob;
+        return h(
+          "el-select",
+          {
+            props: {
+              placeholder: "请选择",
+              value: this.zbJob,
+              size: "mini",
+              clearable: true
+            },
+            on: {
+              input: value => {
+                this.zbJob = value;
+                this.$emit("input", value);
+              },
+              change: searchValue => {
+                this.getCkIntegral();
+              }
+            }
+          },
+          [
+            filters.map(item => {
+              return h("el-option", {
+                props: {
+                  value: item,
+                  label: item
+                }
+              });
+            })
+          ]
+        );
+      }
+    },
     renderHeaderticXs1(h,{column}) { // h即为cerateElement的简写，具体可看vue官方文档
         var pmMonth=this.lastMonth
         return h(
@@ -2306,6 +2281,32 @@ export default {
           ],
         );
     },
+    renderHeaderCk11(h,{column}) { // h即为cerateElement的简写，具体可看vue官方文档
+        var pmMonth=this.thisMonth
+        return h(
+          'span',
+          [ 
+            h('span', '本月'),
+            h('span', {
+              style:'color:red;'
+            },'('+pmMonth+'月)'),
+            h('span', '总积分'),
+          ],
+        );
+    },    
+    renderHeaderCk0(h,{column}) { // h即为cerateElement的简写，具体可看vue官方文档
+        var pmMonth=this.thisMonth
+        return h(
+          'span',
+          [ 
+            h('span', '其他岗位'),
+            h('span', {
+              style:'color:red;'
+            },'('+pmMonth+'月)'),
+            h('span', '积分'),
+          ],
+        );
+    },    
     renderHeaderCk1(h,{column}) { // h即为cerateElement的简写，具体可看vue官方文档
         var pmMonth=this.thisMonth
         return h(
@@ -3070,7 +3071,7 @@ export default {
       });
     },
     handleClick(tab, event) {
-      if (tab.label === "上海销售") {
+      if (tab.label === "所有销售") {
         this.show["shanghai"] = true;
       } else {
         this.show["shanghai"] = false;
@@ -3092,7 +3093,7 @@ export default {
       }
     },
     handleClickSale(tab, event) {
-      if (tab.label === "上海销售") {
+      if (tab.label === "所有销售") {
         this.sale["shanghai"] = true;
       } else {
         this.sale["shanghai"] = false;
@@ -3305,7 +3306,7 @@ export default {
     sortNumber(column, prop, order) {
       if (this.activeTitle === "利润增长表") {
         var tab;
-        if (this.activeName === "上海销售") {
+        if (this.activeName === "所有销售") {
           tab = "shanghai";
         } else if (this.activeName === "郑州销售") {
           tab = "zhengzhou";
@@ -3323,7 +3324,7 @@ export default {
         }
       } else if (this.activeTitle === "销售额增长表") {
         var tab;
-        if (this.activeSale === "上海销售") {
+        if (this.activeSale === "所有销售") {
           tab = "saleSh";
         } else if (this.activeSale === "郑州销售") {
           tab = "saleZz";
@@ -3369,8 +3370,28 @@ export default {
       return "success";
     },
     getCkIntegral(){
-      var container={
-        job:this.activeCkName
+      var activeCkName = this.activeCkName=='总榜'?activeCkName='':activeCkName=this.activeCkName
+      if(this.activeCkName=='总榜' && this.zbJob==null){
+        var container={
+          job:activeCkName,
+          type:'all'
+        }
+        this.inCk.zb=true
+        this.inCk.qt=false
+      }else if(this.activeCkName=='总榜' && this.zbJob!=null){
+        var container={
+          job:this.zbJob,
+          type:'all'
+        }
+        this.inCk.zb=true
+        this.inCk.qt=false
+      }else{
+        var container={
+          job:activeCkName,
+          type:'job'
+        }
+        this.inCk.zb=false
+        this.inCk.qt=true
       }
       getCkIntegral(container).then(res => {
         this.ckintegral = res.data.data;
@@ -3392,7 +3413,6 @@ export default {
     getMenu().then(response => {
       const res = response.data.data;
       const menu = res.filter(e => e.name === "主页");
-      this.allMenu = menu[0].tabs[1].tabs;
       this.titleMenu = menu[0].tabs;
       for (let i = 0; i < this.titleMenu.length; i++) {
         if (this.titleMenu[i].name == "今日爆款") {
@@ -3401,8 +3421,15 @@ export default {
         if (this.titleMenu[i].route == "/v1/site/zz-target") {
           this.titleMenuzz = this.titleMenu[i].tabs;
         }
+        if (this.titleMenu[i].route == "/v1/site/amt") {
+          this.allMenu = menu[0].tabs[1].tabs;
+        }
         if (this.titleMenu[i].route == "/v1/site/integral-ranking") {
           this.titleMenuCk = this.titleMenu[i].tabs;
+        }
+        if (this.titleMenu[0].route == "/v1/site/integral-ranking") {
+          this.showTitle.pming=false
+          this.showTitle.ckIntegral=true
         }
       }
     });
@@ -3431,17 +3458,17 @@ export default {
     // getZzTargetJoom().then(res => {
     //   this.zzJoom = res.data.data;
     // });
-    getSiteIndexXs().then(res => {
-      this.wcdxs = res.data.data;
-      this.wcdxsTotal = res.data.data;
-    });
-    getSiteIndexKf().then(res => {
-      this.wcdkf = res.data.data;
-      this.wcdkfTotal = res.data.data;
-    });
-    getSiteIndexBM().then(res => {
-      this.wcdbm = res.data.data;
-    });
+    // getSiteIndexXs().then(res => {
+    //   this.wcdxs = res.data.data;
+    //   this.wcdxsTotal = res.data.data;
+    // });
+    // getSiteIndexKf().then(res => {
+    //   this.wcdkf = res.data.data;
+    //   this.wcdkfTotal = res.data.data;
+    // });
+    // getSiteIndexBM().then(res => {
+    //   this.wcdbm = res.data.data;
+    // });
     getAmt(this.profitl1).then(res => {
       this.saleSh = res.data.data;
     });
@@ -3454,6 +3481,7 @@ export default {
     getDevAmt(this.profitl4).then(res => {
       this.saleDevelop = res.data.data;
     });
+
     ShangHaiTarget(this.profit1).then(res => {
       this.shanghaiTable = res.data.data;
     });
@@ -3476,6 +3504,9 @@ export default {
       date=Number(date)
       this.thisMonth=date
       this.lastMonth=date-1
+    });
+    getqueryInfojob().then(response => {
+      this.indexJob = response.data.data;
     });
     this.getCkIntegral();
     this.getNews();
