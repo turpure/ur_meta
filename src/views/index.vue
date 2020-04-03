@@ -216,7 +216,7 @@
                   </el-table-column>
                   </el-table-column>
                   <el-table-column :render-header="renderHeaderCk02"  align="center">
-                  <el-table-column prop="last_num" align="center" sortable="custom" :render-header="renderHeaderCk4" min-width="130">
+                  <el-table-column prop="last_num" align="center" sortable="custom" :render-header="renderHeaderCk44" min-width="130">
                     <template slot-scope="scope">
                       <span :class="scope.row.last_num<0?'colorRed':''">{{scope.row.last_num}}</span>
                     </template>
@@ -310,26 +310,26 @@
                       </div>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="depart" label="部门" align="center" width="80"></el-table-column>
+                  <el-table-column prop="depart" label="部门" align="center" width="88"></el-table-column>
                   <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
                   <el-table-column :render-header="renderHeaderCk01"  align="center">
                   <el-table-column
                     prop="thisProfit"
-                    label="本月毛利"
+                    label="毛利"
                     sortable="custom"
                     align="center"
                     width="110"
                   ></el-table-column>
                   <el-table-column
                     prop="thisAve"
-                    label="本月本平台平均毛利"
+                    label="本平台平均毛利"
                     sortable="custom"
                     align="center"
                     width="170"
                   ></el-table-column>
                   <el-table-column
                     prop="thisDiff"
-                    label="本月毛利差额"
+                    label="毛利差额"
                     sortable="custom"
                     align="center"
                     width="135"
@@ -342,21 +342,21 @@
                   <el-table-column :render-header="renderHeaderCk02"  align="center">
                   <el-table-column
                     prop="lastProfit"
-                    label="上月毛利"              
+                    label="毛利"              
                     sortable="custom"
                     align="center"
                     width="110"
                   ></el-table-column>
                   <el-table-column
                     prop="lastAve"
-                    label="上月本平台平均毛利"
+                    label="本平台平均毛利"
                     sortable="custom"
                     align="center"
                     width="175"
                   ></el-table-column>
                   <el-table-column
                     prop="lastDiff"
-                    label="上月毛利差额"
+                    label="毛利差额"
                     sortable="custom"
                     align="center"
                     width="145"
@@ -434,26 +434,26 @@
                       </div>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="depart" label="部门" align="center" width="80"></el-table-column>
+                  <el-table-column prop="depart" label="部门" align="center" width="88"></el-table-column>
                   <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
                   <el-table-column :render-header="renderHeaderCk01"  align="center">
                   <el-table-column
                     prop="thisProfit"
-                    label="本月毛利"
+                    label="毛利"
                     sortable="custom"
                     align="center"
                     width="110"
                   ></el-table-column>
                   <el-table-column
                     prop="thisAve"
-                    label="本月本平台平均毛利"
+                    label="本平台平均毛利"
                     sortable="custom"
                     align="center"
                     width="170"
                   ></el-table-column>
                   <el-table-column
                     prop="thisDiff"
-                    label="本月毛利差额"
+                    label="毛利差额"
                     sortable="custom"
                     align="center"
                     width="135"
@@ -466,21 +466,21 @@
                   <el-table-column :render-header="renderHeaderCk02"  align="center">
                   <el-table-column
                     prop="lastProfit"
-                    label="上月毛利"              
+                    label="毛利"              
                     sortable="custom"
                     align="center"
                     width="110"
                   ></el-table-column>
                   <el-table-column
                     prop="lastAve"
-                    label="上月本平台平均毛利"
+                    label="本平台平均毛利"
                     sortable="custom"
                     align="center"
                     width="175"
                   ></el-table-column>
                   <el-table-column
                     prop="lastDiff"
-                    label="上月毛利差额"
+                    label="毛利差额"
                     sortable="custom"
                     align="center"
                     width="145"
@@ -558,26 +558,26 @@
                       </div>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="depart" label="部门" align="center" width="80"></el-table-column>
+                  <el-table-column prop="depart" label="部门" align="center" width="88"></el-table-column>
                   <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
                   <el-table-column :render-header="renderHeaderCk01"  align="center">
                   <el-table-column
                     prop="thisProfit"
-                    label="本月毛利"
+                    label="毛利"
                     sortable="custom"
                     align="center"
                     width="110"
                   ></el-table-column>
                   <el-table-column
                     prop="thisAve"
-                    label="本月本平台平均毛利"
+                    label="本平台平均毛利"
                     sortable="custom"
                     align="center"
                     width="170"
                   ></el-table-column>
                   <el-table-column
                     prop="thisDiff"
-                    label="本月毛利差额"
+                    label="毛利差额"
                     sortable="custom"
                     align="center"
                     width="135"
@@ -590,21 +590,21 @@
                   <el-table-column :render-header="renderHeaderCk02"  align="center">
                   <el-table-column
                     prop="lastProfit"
-                    label="上月毛利"              
+                    label="毛利"              
                     sortable="custom"
                     align="center"
                     width="110"
                   ></el-table-column>
                   <el-table-column
                     prop="lastAve"
-                    label="上月本平台平均毛利"
+                    label="本平台平均毛利"
                     sortable="custom"
                     align="center"
                     width="175"
                   ></el-table-column>
                   <el-table-column
                     prop="lastDiff"
-                    label="上月毛利差额"
+                    label="毛利差额"
                     sortable="custom"
                     align="center"
                     width="145"
@@ -682,26 +682,26 @@
                       </div>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="depart" label="部门" align="center" width="80"></el-table-column>
+                  <el-table-column prop="depart" label="部门" align="center" width="88"></el-table-column>
                   <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
                   <el-table-column :render-header="renderHeaderCk01"  align="center">
                   <el-table-column
                     prop="thisProfit"
-                    label="本月毛利"
+                    label="毛利"
                     sortable="custom"
                     align="center"
                     width="110"
                   ></el-table-column>
                   <el-table-column
                     prop="thisAve"
-                    label="本月本平台平均毛利"
+                    label="本平台平均毛利"
                     sortable="custom"
                     align="center"
                     width="170"
                   ></el-table-column>
                   <el-table-column
                     prop="thisDiff"
-                    label="本月毛利差额"
+                    label="毛利差额"
                     sortable="custom"
                     align="center"
                     width="135"
@@ -714,21 +714,21 @@
                   <el-table-column :render-header="renderHeaderCk02"  align="center">
                   <el-table-column
                     prop="lastProfit"
-                    label="上月毛利"              
+                    label="毛利"              
                     sortable="custom"
                     align="center"
                     width="110"
                   ></el-table-column>
                   <el-table-column
                     prop="lastAve"
-                    label="上月本平台平均毛利"
+                    label="本平台平均毛利"
                     sortable="custom"
                     align="center"
                     width="175"
                   ></el-table-column>
                   <el-table-column
                     prop="lastDiff"
-                    label="上月毛利差额"
+                    label="毛利差额"
                     sortable="custom"
                     align="center"
                     width="145"
@@ -806,26 +806,26 @@
                       </div>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="depart" label="部门" align="center" width="80"></el-table-column>
+                  <el-table-column prop="depart" label="部门" align="center" width="88"></el-table-column>
                   <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
                   <el-table-column :render-header="renderHeaderCk01"  align="center">
                   <el-table-column
                     prop="thisProfit"
-                    label="本月毛利"
+                    label="毛利"
                     sortable="custom"
                     align="center"
                     width="110"
                   ></el-table-column>
                   <el-table-column
                     prop="thisAve"
-                    label="本月本平台平均毛利"
+                    label="本平台平均毛利"
                     sortable="custom"
                     align="center"
                     width="170"
                   ></el-table-column>
                   <el-table-column
                     prop="thisDiff"
-                    label="本月毛利差额"
+                    label="毛利差额"
                     sortable="custom"
                     align="center"
                     width="135"
@@ -838,21 +838,21 @@
                   <el-table-column :render-header="renderHeaderCk02"  align="center">
                   <el-table-column
                     prop="lastProfit"
-                    label="上月毛利"              
+                    label="毛利"              
                     sortable="custom"
                     align="center"
                     width="110"
                   ></el-table-column>
                   <el-table-column
                     prop="lastAve"
-                    label="上月本平台平均毛利"
+                    label="本平台平均毛利"
                     sortable="custom"
                     align="center"
                     width="175"
                   ></el-table-column>
                   <el-table-column
                     prop="lastDiff"
-                    label="上月毛利差额"
+                    label="毛利差额"
                     sortable="custom"
                     align="center"
                     width="145"
@@ -930,26 +930,26 @@
                       </div>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="depart" label="部门" align="center" width="80"></el-table-column>
+                  <el-table-column prop="depart" label="部门" align="center" width="88"></el-table-column>
                   <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
                   <el-table-column :render-header="renderHeaderCk01"  align="center">
                   <el-table-column
                     prop="thisProfit"
-                    label="本月毛利"
+                    label="毛利"
                     sortable="custom"
                     align="center"
                     width="110"
                   ></el-table-column>
                   <el-table-column
                     prop="thisAve"
-                    label="本月本平台平均毛利"
+                    label="本平台平均毛利"
                     sortable="custom"
                     align="center"
                     width="170"
                   ></el-table-column>
                   <el-table-column
                     prop="thisDiff"
-                    label="本月毛利差额"
+                    label="毛利差额"
                     sortable="custom"
                     align="center"
                     width="135"
@@ -962,21 +962,21 @@
                   <el-table-column :render-header="renderHeaderCk02"  align="center">
                   <el-table-column
                     prop="lastProfit"
-                    label="上月毛利"              
+                    label="毛利"              
                     sortable="custom"
                     align="center"
                     width="110"
                   ></el-table-column>
                   <el-table-column
                     prop="lastAve"
-                    label="上月本平台平均毛利"
+                    label="本平台平均毛利"
                     sortable="custom"
                     align="center"
                     width="175"
                   ></el-table-column>
                   <el-table-column
                     prop="lastDiff"
-                    label="上月毛利差额"
+                    label="毛利差额"
                     sortable="custom"
                     align="center"
                     width="145"
@@ -1054,26 +1054,26 @@
                       </div>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="depart" label="部门" align="center" width="80"></el-table-column>
+                  <el-table-column prop="depart" label="部门" align="center" width="88"></el-table-column>
                   <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
                   <el-table-column :render-header="renderHeaderCk01"  align="center">
                   <el-table-column
                     prop="thisProfit"
-                    label="本月毛利"
+                    label="毛利"
                     sortable="custom"
                     align="center"
                     width="110"
                   ></el-table-column>
                   <el-table-column
                     prop="thisAve"
-                    label="本月本平台平均毛利"
+                    label="本平台平均毛利"
                     sortable="custom"
                     align="center"
                     width="170"
                   ></el-table-column>
                   <el-table-column
                     prop="thisDiff"
-                    label="本月毛利差额"
+                    label="毛利差额"
                     sortable="custom"
                     align="center"
                     width="135"
@@ -1086,21 +1086,21 @@
                   <el-table-column :render-header="renderHeaderCk02"  align="center">
                   <el-table-column
                     prop="lastProfit"
-                    label="上月毛利"              
+                    label="毛利"              
                     sortable="custom"
                     align="center"
                     width="110"
                   ></el-table-column>
                   <el-table-column
                     prop="lastAve"
-                    label="上月本平台平均毛利"
+                    label="本平台平均毛利"
                     sortable="custom"
                     align="center"
                     width="175"
                   ></el-table-column>
                   <el-table-column
                     prop="lastDiff"
-                    label="上月毛利差额"
+                    label="毛利差额"
                     sortable="custom"
                     align="center"
                     width="145"
@@ -1178,26 +1178,26 @@
                       </div>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="depart" label="部门" align="center" width="80"></el-table-column>
+                  <el-table-column prop="depart" label="部门" align="center" width="88"></el-table-column>
                   <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
                   <el-table-column :render-header="renderHeaderCk01"  align="center">
                   <el-table-column
                     prop="thisProfit"
-                    label="本月毛利"
+                    label="毛利"
                     sortable="custom"
                     align="center"
                     width="110"
                   ></el-table-column>
                   <el-table-column
                     prop="thisAve"
-                    label="本月本平台平均毛利"
+                    label="本平台平均毛利"
                     sortable="custom"
                     align="center"
                     width="170"
                   ></el-table-column>
                   <el-table-column
                     prop="thisDiff"
-                    label="本月毛利差额"
+                    label="毛利差额"
                     sortable="custom"
                     align="center"
                     width="135"
@@ -1210,21 +1210,21 @@
                   <el-table-column :render-header="renderHeaderCk02"  align="center">
                   <el-table-column
                     prop="lastProfit"
-                    label="上月毛利"              
+                    label="毛利"              
                     sortable="custom"
                     align="center"
                     width="110"
                   ></el-table-column>
                   <el-table-column
                     prop="lastAve"
-                    label="上月本平台平均毛利"
+                    label="本平台平均毛利"
                     sortable="custom"
                     align="center"
                     width="175"
                   ></el-table-column>
                   <el-table-column
                     prop="lastDiff"
-                    label="上月毛利差额"
+                    label="毛利差额"
                     sortable="custom"
                     align="center"
                     width="145"
@@ -1575,11 +1575,9 @@
                   <el-table-column prop="depart" :render-header="renderHeadertic" align="center"></el-table-column>
                 </el-table-column>
                 <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
-                <el-table-column :render-header="renderHeaderCk02"  align="center">
-                <el-table-column prop="lastProfit" align="center" label="上月毛利" sortable="custom"></el-table-column>
-                </el-table-column>
-                <el-table-column :render-header="renderHeaderCk01"  align="center">
-                <el-table-column prop="profit" align="center" label="本月毛利" sortable="custom"></el-table-column>
+                <el-table-column :render-header="renderHeaderCk022"  align="center">
+                <el-table-column prop="lastProfit" align="center" :render-header="renderHeaderCk02none" sortable="custom"></el-table-column>
+                <el-table-column prop="profit" align="center" :render-header="renderHeaderCk01none" sortable="custom"></el-table-column>
                 </el-table-column>
                 <el-table-column prop="rate" align="center" label="本月VS上月" sortable="custom">
                   <template slot-scope="scope">
@@ -1619,11 +1617,9 @@
                 <el-table-column prop="depart" label="部门" align="center">
                   <el-table-column prop="depart" :render-header="renderHeadertic2" align="center"></el-table-column>
                 </el-table-column>
-                <el-table-column :render-header="renderHeaderCk02"  align="center">
-                <el-table-column prop="lastProfit" align="center" label="上月毛利" sortable="custom"></el-table-column>
-                </el-table-column>
-                <el-table-column :render-header="renderHeaderCk01"  align="center">
-                <el-table-column prop="profit" label="本月毛利" align="center" sortable="custom"></el-table-column>
+                <el-table-column :render-header="renderHeaderCk022"  align="center">
+                <el-table-column prop="lastProfit" align="center" :render-header="renderHeaderCk02none" sortable="custom"></el-table-column>
+                <el-table-column prop="profit" align="center" :render-header="renderHeaderCk01none" sortable="custom"></el-table-column>
                 </el-table-column>
                 <el-table-column prop="rate" label="本月VS上月" align="center" sortable="custom">
                   <template slot-scope="scope">
@@ -1667,11 +1663,9 @@
                 <!-- <el-table-column prop="role"
                                align="center"
                 label="角色"></el-table-column>-->
-                <el-table-column :render-header="renderHeaderCk02"  align="center">
-                <el-table-column prop="lastProfit" align="center" label="上月毛利" sortable="custom"></el-table-column>
-                </el-table-column>
-                <el-table-column :render-header="renderHeaderCk01"  align="center">
-                <el-table-column prop="profit" align="center" label="本月毛利" sortable="custom"></el-table-column>
+                <el-table-column :render-header="renderHeaderCk022"  align="center">
+                <el-table-column prop="lastProfit" align="center" :render-header="renderHeaderCk02none" sortable="custom"></el-table-column>
+                <el-table-column prop="profit" align="center" :render-header="renderHeaderCk01none" sortable="custom"></el-table-column>
                 </el-table-column>
                 <el-table-column prop="rate" align="center" label="本月VS上月" sortable="custom">
                   <template slot-scope="scope">
@@ -1719,11 +1713,9 @@
                 <!-- <el-table-column prop="role"
                                align="center"
                 label="角色"></el-table-column>-->
-                <el-table-column :render-header="renderHeaderCk02"  align="center">
-                <el-table-column prop="lastAmt" align="center" label="上月销售额" sortable="custom"></el-table-column>
-                </el-table-column>
-                <el-table-column :render-header="renderHeaderCk01"  align="center">
-                <el-table-column prop="amt" align="center" label="本月销售额" sortable="custom"></el-table-column>
+                <el-table-column :render-header="renderHeaderCk011"  align="center">
+                <el-table-column prop="lastAmt" align="center" :render-header="renderHeaderCk02none" sortable="custom"></el-table-column>
+                <el-table-column prop="amt" align="center" :render-header="renderHeaderCk01none" sortable="custom"></el-table-column>
                 </el-table-column>
                 <el-table-column prop="rate" align="center" label="本月VS上月" sortable="custom">
                   <template slot-scope="scope">
@@ -1807,11 +1799,9 @@
                 <el-table-column prop="depart" label="部门" align="center">
                   <el-table-column prop="depart" :render-header="renderHeaderPic2" align="center"></el-table-column>
                 </el-table-column>
-                <el-table-column :render-header="renderHeaderCk02"  align="center">
-                <el-table-column prop="lastAmt" align="center" label="上月销售额" sortable="custom"></el-table-column>
-                </el-table-column>
-                <el-table-column :render-header="renderHeaderCk01"  align="center">
-                <el-table-column prop="amt" label="本月销售额" align="center" sortable="custom"></el-table-column>
+                <el-table-column :render-header="renderHeaderCk011"  align="center">
+                <el-table-column prop="lastAmt" align="center" :render-header="renderHeaderCk02none" sortable="custom"></el-table-column>
+                <el-table-column prop="amt" :render-header="renderHeaderCk01none" align="center" sortable="custom"></el-table-column>
                 </el-table-column>
                 <el-table-column prop="rate" label="本月VS上月" align="center" sortable="custom">
                   <template slot-scope="scope">
@@ -1855,11 +1845,9 @@
                 <!-- <el-table-column prop="role"
                                align="center"
                 label="角色"></el-table-column>-->
-                <el-table-column :render-header="renderHeaderCk02"  align="center">
-                <el-table-column prop="lastAmt" align="center" label="上月销售额" sortable="custom"></el-table-column>
-                </el-table-column>
-                <el-table-column :render-header="renderHeaderCk01"  align="center">
-                <el-table-column prop="amt" align="center" label="本月销售额" sortable="custom"></el-table-column>
+                <el-table-column :render-header="renderHeaderCk011"  align="center">
+                <el-table-column prop="lastAmt" align="center" :render-header="renderHeaderCk02none" sortable="custom"></el-table-column>
+                <el-table-column prop="amt" align="center" :render-header="renderHeaderCk01none" sortable="custom"></el-table-column>
                 </el-table-column>
                 <el-table-column prop="rate" align="center" label="本月VS上月" sortable="custom">
                   <template slot-scope="scope">
@@ -2299,17 +2287,59 @@ export default {
         return h(
           'span',
           [ 
+            h('span',{
+              style:'color:red;font-size:16px;'
+            }, '本月'),
             h('span', {
               style:'color:red;font-size:16px;'
             },'('+pmMonth+'月)'),
           ],
         );
     },
+    renderHeaderCk011(h,{column}) { // h即为cerateElement的简写，具体可看vue官方文档
+        return h(
+          'span',
+          [ 
+            h('span', '销售额($)'),
+          ],
+        );
+    },    
+    renderHeaderCk022(h,{column}) { 
+        return h(
+          'span',
+          [ 
+            h('span', '毛利(￥)'),
+          ],
+        );
+    },
+    renderHeaderCk02none(h,{column}) { // h即为cerateElement的简写，具体可看vue官方文档
+        var pmMonth=this.lastMonth
+        return h(
+          'span',
+          [ 
+            h('span', '上月'),
+            h('span','('+pmMonth+'月)'),
+          ],
+        );
+    },  
+    renderHeaderCk01none(h,{column}) { // h即为cerateElement的简写，具体可看vue官方文档
+        var pmMonth=this.thisMonth
+        return h(
+          'span',
+          [ 
+            h('span', '本月'),
+            h('span','('+pmMonth+'月)'),
+          ],
+        );
+    },          
     renderHeaderCk02(h,{column}) { // h即为cerateElement的简写，具体可看vue官方文档
         var pmMonth=this.lastMonth
         return h(
           'span',
           [ 
+            h('span',{
+              style:'color:red;font-size:16px;'
+            }, '上月'),
             h('span', {
               style:'color:red;font-size:16px;'
             },'('+pmMonth+'月)'),
@@ -2321,7 +2351,6 @@ export default {
         return h(
           'span',
           [ 
-            h('span', '本月'),
             h('span', '总积分'),
           ],
         );
@@ -2367,11 +2396,19 @@ export default {
         return h(
           'span',
           [ 
-            h('span', '上月'),
-            h('span', '积分'),
+            h('span', '总积分'),
           ],
         );
     },
+    renderHeaderCk44(h,{column}) { // h即为cerateElement的简写，具体可看vue官方文档
+        var pmMonth=this.lastMonth
+        return h(
+          'span',
+          [ 
+            h('span', '本岗位积分'),
+          ],
+        );
+    },    
     renderHeaderPm1(h,{column}) { // h即为cerateElement的简写，具体可看vue官方文档
         var pmMonth=this.lastMonth
         return h(
