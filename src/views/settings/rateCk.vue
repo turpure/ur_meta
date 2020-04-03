@@ -103,7 +103,22 @@
             </el-col>
           </div>
           <el-col :span="24">
-            2121
+            <el-table
+            :data="dateArt"
+            border
+            class="elTable"
+            :header-cell-style="getRowClass" 
+            :height="tableHeightCk"
+            style="width: 97.1%;margin-left:1.2%;margin-top:15px"
+          >
+            <el-table-column type="index" fixed align="center" width="60" header-align="center"></el-table-column>
+            <el-table-column label="参数名称" align="center" prop="type">
+            </el-table-column>
+            <el-table-column label="参数值" align="center" prop="rate">
+            </el-table-column>
+            <el-table-column label="更新时间" align="center" prop="update">
+            </el-table-column>
+          </el-table>
           </el-col>
         </el-row>
       </div>
@@ -183,7 +198,8 @@ export default {
       allMenu: ['参数设置','数据导入'],
       action: "upload",
       headers: Object(),
-      tableHeight: window.innerHeight - 145,
+      tableHeight: window.innerHeight - 175,
+      tableHeightCk: window.innerHeight - 195,
       dateArt: [],
       data01: [['name', 'month', 'job', 'team', 'labeling_days', 'sorting_days', 'other_integral', 'deduction_integral']],
       dialogPictureArt: false,
@@ -408,8 +424,8 @@ export default {
 </style>
 <style scoped>
 .ckBox{
-  width: 98%;
-  margin-left: .7%;
+  width: 97%;
+  margin-left: 1.2%;
   border: 1px solid #e2e2e2;
   background: #f8f8f8;
   padding: 12px 0;
