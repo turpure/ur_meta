@@ -97,8 +97,8 @@
                 </el-button>
               </el-col>
               <div class="ckRight">
-                <span class="ckText"><span class="ckActive" :class="ckindex==1?'ckActiveBlock':''"></span><span>导入记录</span></span>
-                <span class="ckText"><span class="ckActive" :class="ckindex==0?'ckActiveBlock':''"></span><span>导入列表</span></span>
+                <span class="ckText" @click="tabcl('1')"><span class="ckActive" :class="ckindex==1?'ckActiveBlock':''"></span><span>导入记录</span></span>
+                <span class="ckText" @click="tabcl('0')"><span class="ckActive" :class="ckindex==0?'ckActiveBlock':''"></span><span>导入列表</span></span>
               </div>  
             </el-col>
           </div>
@@ -106,13 +106,31 @@
             <el-table
             :data="dateArt"
             border
+            v-show="ckindex==0"
             class="elTable"
             :header-cell-style="getRowClass" 
             :height="tableHeightCk"
             style="width: 97.1%;margin-left:1.2%;margin-top:15px"
           >
             <el-table-column type="index" fixed align="center" width="60" header-align="center"></el-table-column>
-            <el-table-column label="参数名称" align="center" prop="type">
+            <el-table-column label="参数1名称" align="center" prop="type">
+            </el-table-column>
+            <el-table-column label="参数值" align="center" prop="rate">
+            </el-table-column>
+            <el-table-column label="更新时间" align="center" prop="update">
+            </el-table-column>
+          </el-table>
+          <el-table
+            :data="dateArt"
+            border
+            class="elTable"
+            v-show="ckindex==1"
+            :header-cell-style="getRowClass" 
+            :height="tableHeightCk"
+            style="width: 97.1%;margin-left:1.2%;margin-top:15px"
+          >
+            <el-table-column type="index" fixed align="center" width="60" header-align="center"></el-table-column>
+            <el-table-column label="参数1名称" align="center" prop="type">
             </el-table-column>
             <el-table-column label="参数值" align="center" prop="rate">
             </el-table-column>
@@ -218,6 +236,9 @@ export default {
     };
   },
   methods: {
+    tabcl(n){
+      this.ckindex=n
+    },
     handleClick(tab, event) {
       if (tab.label === "参数设置") {
         this.show.sz = true;
