@@ -374,17 +374,15 @@
                     label="入职时长(月)"
                     sortable="custom"
                     align="center"
-                    min-width="125"
+                    min-width="130"
                   ></el-table-column>
                   <el-table-column
                     prop="createDate"
                     label="统计时间"
-                    sortable="custom"
                     align="center"
-                    min-width="120"
+                    min-width="110"
                   >
                     <template slot-scope="scope">
-                      <i class="el-icon-time"></i>
                       <span>{{dateFormatter(scope.row.createDate)}}</span>
                     </template>
                   </el-table-column>
@@ -498,17 +496,16 @@
                     label="入职时长(月)"
                     sortable="custom"
                     align="center"
-                    min-width="125"
+                    min-width="130"
                   ></el-table-column>
                   <el-table-column
                     prop="createDate"
                     label="统计时间"
                     sortable="custom"
                     align="center"
-                    min-width="120"
+                    min-width="110"
                   >
                     <template slot-scope="scope">
-                      <i class="el-icon-time"></i>
                       <span>{{dateFormatter(scope.row.createDate)}}</span>
                     </template>
                   </el-table-column>
@@ -622,17 +619,16 @@
                     label="入职时长(月)"
                     sortable="custom"
                     align="center"
-                    min-width="125"
+                    min-width="130"
                   ></el-table-column>
                   <el-table-column
                     prop="createDate"
                     label="统计时间"
                     sortable="custom"
                     align="center"
-                    min-width="120"
+                    min-width="110"
                   >
                     <template slot-scope="scope">
-                      <i class="el-icon-time"></i>
                       <span>{{dateFormatter(scope.row.createDate)}}</span>
                     </template>
                   </el-table-column>
@@ -746,17 +742,16 @@
                     label="入职时长(月)"
                     sortable="custom"
                     align="center"
-                    min-width="125"
+                    min-width="130"
                   ></el-table-column>
                   <el-table-column
                     prop="createDate"
                     label="统计时间"
                     sortable="custom"
                     align="center"
-                    min-width="120"
+                    min-width="110"
                   >
                     <template slot-scope="scope">
-                      <i class="el-icon-time"></i>
                       <span>{{dateFormatter(scope.row.createDate)}}</span>
                     </template>
                   </el-table-column>
@@ -870,17 +865,16 @@
                     label="入职时长(月)"
                     sortable="custom"
                     align="center"
-                    min-width="125"
+                    min-width="130"
                   ></el-table-column>
                   <el-table-column
                     prop="createDate"
                     label="统计时间"
                     sortable="custom"
                     align="center"
-                    min-width="120"
+                    min-width="110"
                   >
                     <template slot-scope="scope">
-                      <i class="el-icon-time"></i>
                       <span>{{dateFormatter(scope.row.createDate)}}</span>
                     </template>
                   </el-table-column>
@@ -994,17 +988,16 @@
                     label="入职时长(月)"
                     sortable="custom"
                     align="center"
-                    min-width="125"
+                    min-width="130"
                   ></el-table-column>
                   <el-table-column
                     prop="createDate"
                     label="统计时间"
                     sortable="custom"
                     align="center"
-                    min-width="120"
+                    min-width="110"
                   >
                     <template slot-scope="scope">
-                      <i class="el-icon-time"></i>
                       <span>{{dateFormatter(scope.row.createDate)}}</span>
                     </template>
                   </el-table-column>
@@ -1118,17 +1111,16 @@
                     label="入职时长(月)"
                     sortable="custom"
                     align="center"
-                    min-width="125"
+                    min-width="130"
                   ></el-table-column>
                   <el-table-column
                     prop="createDate"
                     label="统计时间"
                     sortable="custom"
                     align="center"
-                    min-width="120"
+                    min-width="115"
                   >
                     <template slot-scope="scope">
-                      <i class="el-icon-time"></i>
                       <span>{{dateFormatter(scope.row.createDate)}}</span>
                     </template>
                   </el-table-column>
@@ -1242,17 +1234,16 @@
                     label="入职时长(月)"
                     sortable="custom"
                     align="center"
-                    min-width="125"
+                    min-width="130"
                   ></el-table-column>
                   <el-table-column
                     prop="createDate"
                     label="统计时间"
                     sortable="custom"
                     align="center"
-                    min-width="120"
+                    min-width="115"
                   >
                     <template slot-scope="scope">
-                      <i class="el-icon-time"></i>
                       <span>{{dateFormatter(scope.row.createDate)}}</span>
                     </template>
                   </el-table-column>
@@ -2304,10 +2295,10 @@ export default {
           'span',
           [ 
             h('span',{
-              style:'color:red;font-size:16px;'
+              style:'color:red;'
             }, '本月'),
             h('span', {
-              style:'color:red;font-size:16px;'
+              style:'color:red;'
             },'('+pmMonth+'月)'),
           ],
         );
@@ -2354,10 +2345,10 @@ export default {
           'span',
           [ 
             h('span',{
-              style:'color:red;font-size:16px;'
+              style:'color:red;'
             }, '上月'),
             h('span', {
-              style:'color:red;font-size:16px;'
+              style:'color:red;'
             },'('+pmMonth+'月)'),
           ],
         );
@@ -3816,6 +3807,7 @@ h2:hover {
   padding: 0;
   margin: 0;
   padding: 12px 18px;
+  font-size: 16px;
   border-top: 1px solid #dcdfe6;
   border-bottom: 1px solid #dcdfe6;
   border-right: 1px solid #dcdfe6;
@@ -4861,5 +4853,14 @@ h2:hover {
   border-left: none !important;
   border-right: none !important;
   border-top: none !important;
+}
+.tabsPm .el-tabs__item{
+  font-size: 16px !important;
+}
+.left-box td{
+  font-size: 15px !important;
+}
+.left-box th{
+  font-size: 15px !important;
 }
 </style>

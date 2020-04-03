@@ -97,14 +97,14 @@
                 </el-button>
               </el-col>
               <div class="ckRight">
-                <span class="ckText" @click="tabcl('1')"><span class="ckActive" :class="ckindex==1?'ckActiveBlock':''"></span><span>导入记录</span></span>
-                <span class="ckText" @click="tabcl('0')"><span class="ckActive" :class="ckindex==0?'ckActiveBlock':''"></span><span>导入列表</span></span>
+                <span class="ckText" @click="tabcl('1')"><span class="ckActive" :class="ckindex==1?'ckActiveBlock':''"></span><span>导入列表</span></span>
+                <span class="ckText" @click="tabcl('0')"><span class="ckActive" :class="ckindex==0?'ckActiveBlock':''"></span><span>导入记录</span></span>
               </div>  
             </el-col>
           </div>
           <el-col :span="24">
             <el-table
-            :data="dateArt"
+            :data="data1"
             border
             v-show="ckindex==0"
             class="elTable"
@@ -113,15 +113,19 @@
             style="width: 97.1%;margin-left:1.2%;margin-top:15px"
           >
             <el-table-column type="index" fixed align="center" width="60" header-align="center"></el-table-column>
-            <el-table-column label="参数1名称" align="center" prop="type">
+            <el-table-column label="文件名" align="center" prop="fileName">
             </el-table-column>
-            <el-table-column label="参数值" align="center" prop="rate">
+            <el-table-column label="文件大小" align="center" prop="fileSize">
             </el-table-column>
-            <el-table-column label="更新时间" align="center" prop="update">
+            <el-table-column label="上传人" align="center" prop="creator">
+            </el-table-column>
+            <el-table-column label="创建时间" align="center" prop="createdDate">
+            </el-table-column>
+            <el-table-column label="更新时间" align="center" prop="updatedDate">
             </el-table-column>
           </el-table>
           <el-table
-            :data="dateArt"
+            :data="data2"
             border
             class="elTable"
             v-show="ckindex==1"
@@ -130,11 +134,21 @@
             style="width: 97.1%;margin-left:1.2%;margin-top:15px"
           >
             <el-table-column type="index" fixed align="center" width="60" header-align="center"></el-table-column>
-            <el-table-column label="参数1名称" align="center" prop="type">
+            <el-table-column label="姓名" align="center" prop="name">
             </el-table-column>
-            <el-table-column label="参数值" align="center" prop="rate">
+            <el-table-column label="月份" align="center" prop="month">
             </el-table-column>
-            <el-table-column label="更新时间" align="center" prop="update">
+            <el-table-column label="小组" align="center" prop="team">
+            </el-table-column>
+            <el-table-column label="出勤天数" align="center" prop="all_days">
+            </el-table-column>
+            <el-table-column label="贴标出勤天数" align="center" prop="labeling_days">
+            </el-table-column>
+            <el-table-column label="分拣出勤天数" align="center" prop="sorting_days">
+            </el-table-column>
+            <el-table-column label="其它得分项" align="center" prop="other_integral">
+            </el-table-column>
+            <el-table-column label="扣分项" align="center" prop="deduction_integral">
             </el-table-column>
           </el-table>
           </el-col>
@@ -212,6 +226,8 @@ export default {
         sz:true,
         sj:false
       },
+      data1:[],
+      data2:[],
       ckindex:0,
       activeName:'参数设置',
       allMenu: ['参数设置','数据导入'],
@@ -396,7 +412,8 @@ export default {
     },
     getLog(){
       getintegralLog().then(res => {
-        // this.dateArt = res.data.data;
+        this.data1 = res.data.data.log;
+        this.data2 = res.data.data.content;
       });
     },
   },
