@@ -182,7 +182,8 @@
 import {
   getwarehouseRate,
   getSavewarehouseRate,
-  getDeletewarehouseRate
+  getDeletewarehouseRate,
+  getintegralLog
 } from "../../api/product";
 import { uploadJoom, getHeaders } from "../../api/api";
 import XLSX from 'xlsx'
@@ -243,36 +244,45 @@ export default {
       console.log(err);
     },
     export01Excel() {
-      /* convert state to workbook */
-      const ws = XLSX.utils.aoa_to_sheet(this.data01)
-      const wb = XLSX.utils.book_new()
-      const date = new Date()
-      const year = date.getFullYear()
-      let month = date.getMonth() + 1
-      let strDate = date.getDate()
-      let hour = date.getHours()
-      let minute = date.getMinutes()
-      let second = date.getSeconds()
-      if (month >= 1 && month <= 9) {
-        month = '0' + month
-      }
-      if (strDate >= 0 && strDate <= 9) {
-        strDate = '0' + strDate
-      }
-      if (hour >= 0 && hour <= 9) {
-        hour = '0' + hour
-      }
-      if (minute >= 0 && minute <= 9) {
-        minute = '0' + minute
-      }
-      if (second >= 0 && second <= 9) {
-        second = '0' + second
-      }
-      const filename =
-        'example' + year + month + strDate + hour + minute + second
-      XLSX.utils.book_append_sheet(wb, ws, 'Y_saleofflineclearn')
-      /* generate file and send to client */
-      XLSX.writeFile(wb, filename + '.xlsx')
+      var dataArr =[
+        {
+          "name":'庄美英',
+          "month":'2020-03',
+          "job":'打包',
+          "team":'周芹英',
+          "all_days":'0',
+          "labeling_days":'2',
+          "sorting_days":'0',
+          "other_integral":'11',
+          "deduction_integral":'22'
+        }
+      ]
+      const th = [
+        "name",
+        "month",
+        "job",
+        "team",
+        "all_days",
+        "labeling_days",
+        "sorting_days",
+        "other_integral",
+        "deduction_integral"
+      ];
+      const filterVal = [
+        "name",
+        "month",
+        "job",
+        "team",
+        "all_days",
+        "labeling_days",
+        "sorting_days",
+        "other_integral",
+        "deduction_integral"
+      ];
+      const Filename = "example";
+      const data = dataArr.map(v => filterVal.map(k => v[k]));
+      const [fileName, fileType, sheetName] = [Filename, "xls"];
+      this.$toExcel({ th, data, fileName, fileType, sheetName });
     },    
     getRowClass({ row, column, rowIndex, columnIndex }) {
       if (rowIndex == 0) {
@@ -362,12 +372,18 @@ export default {
       getwarehouseRate().then(res => {
         this.dateArt = res.data.data;
       });
-    }
+    },
+    getLog(){
+      getintegralLog().then(res => {
+        // this.dateArt = res.data.data;
+      });
+    },
   },
   mounted() {
     this.action = uploadJoom();
     this.headers = getHeaders();
     this.getDateArt();
+    this.getLog();
   }
 };
 </script>

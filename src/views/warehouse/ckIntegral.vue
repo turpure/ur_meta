@@ -62,6 +62,7 @@
               <span style="color:red;">{{scope.row.wages}}</span>
             </template>
           </el-table-column>
+          <el-table-column label="出勤天数" header-align="center" align="center" prop="all_days" width="110" sortable="custom"></el-table-column>
           <el-table-column label="贴标出勤天数" header-align="center" align="center" prop="labeling_days" width="130" sortable="custom"></el-table-column>
           <el-table-column label="分拣出勤天数" header-align="center" align="center" prop="sorting_days" width="130" sortable="custom"></el-table-column>  
           <el-table-column label="组别" header-align="center" align="center" prop="group" width="80"></el-table-column>
@@ -188,6 +189,7 @@ export default {
         "组别",
         "职位",
         "小组",
+        "出勤天数",
         "贴标出勤天数",
         "分拣出勤天数",
         "采购入库包裹",
@@ -222,6 +224,7 @@ export default {
         "group",
         "job",
         "team",
+        "all_days",
         "labeling_days",
         "sorting_days",
         "pur_in_package_num",
