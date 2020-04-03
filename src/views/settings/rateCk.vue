@@ -150,6 +150,8 @@
             </el-table-column>
             <el-table-column label="扣分项" align="center" prop="deduction_integral">
             </el-table-column>
+            <el-table-column label="更新时间" align="center" prop="update_time">
+            </el-table-column>
           </el-table>
           </el-col>
         </el-row>

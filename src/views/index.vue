@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="dashboard-editor-container newIndex" style="height: 970px;">
+    <div class="dashboard-editor-container newIndex" :style="{ height: tableHeightNewTop + 'px' }">
       <section>
-        <div class="left-box" :style="{ width: leftWidth + '%' }">
+        <div class="left-box" :style="{ width: leftWidth + '%'}">
           <el-card>
             <div style="padding-top:20px;padding-left:12px;padding-bottom:5px;">
               <!-- <el-radio-group v-model="activeTitle">
@@ -41,7 +41,7 @@
               <el-table
                   :data="ckintegral"
                   size="small"
-                  height="798"
+                  :height="tableHeightNew"
                   ref="table1"
                   v-show="inCk.zb"
                   @sort-change="sortNumberCk"
@@ -154,7 +154,7 @@
                 <el-table
                   :data="ckintegral"
                   size="small"
-                  height="798"
+                  :height="tableHeightNew"
                   ref="table1"
                   v-show="inCk.qt"
                   @sort-change="sortNumberCk"
@@ -267,7 +267,7 @@
                 ></el-tab-pane>
               </el-tabs>
               <div v-show="pmShow.pmYW">
-                <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" height="800">
+                <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" :height="tableHeightNew">
                   <el-table-column
                     prop="order"
                     label="排名"
@@ -389,7 +389,7 @@
                 </el-table>
               </div>
               <div v-show="pmShow.pmHW">
-                <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" height="800">
+                <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" :height="tableHeightNew">
                   <el-table-column
                     prop="order"
                     label="排名"
@@ -501,7 +501,6 @@
                   <el-table-column
                     prop="createDate"
                     label="统计时间"
-                    sortable="custom"
                     align="center"
                     min-width="110"
                   >
@@ -512,7 +511,7 @@
                 </el-table>
               </div>
               <div v-show="pmShow.pmWISH">
-                <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" height="800">
+                <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" :height="tableHeightNew">
                   <el-table-column
                     prop="order"
                     label="排名"
@@ -624,7 +623,6 @@
                   <el-table-column
                     prop="createDate"
                     label="统计时间"
-                    sortable="custom"
                     align="center"
                     min-width="110"
                   >
@@ -635,7 +633,7 @@
                 </el-table>
               </div>
               <div v-show="pmShow.pmSMT">
-                <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" height="800">
+                <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" :height="tableHeightNew">
                   <el-table-column
                     prop="order"
                     label="排名"
@@ -747,7 +745,6 @@
                   <el-table-column
                     prop="createDate"
                     label="统计时间"
-                    sortable="custom"
                     align="center"
                     min-width="110"
                   >
@@ -758,7 +755,7 @@
                 </el-table>
               </div>
               <div v-show="pmShow.pmAMA">
-                <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" height="800">
+                <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" :height="tableHeightNew">
                   <el-table-column
                     prop="order"
                     label="排名"
@@ -870,7 +867,6 @@
                   <el-table-column
                     prop="createDate"
                     label="统计时间"
-                    sortable="custom"
                     align="center"
                     min-width="110"
                   >
@@ -881,7 +877,7 @@
                 </el-table>
               </div>
               <div v-show="pmShow.pmJOOM">
-                <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" height="800">
+                <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" :height="tableHeightNew">
                   <el-table-column
                     prop="order"
                     label="排名"
@@ -993,7 +989,6 @@
                   <el-table-column
                     prop="createDate"
                     label="统计时间"
-                    sortable="custom"
                     align="center"
                     min-width="110"
                   >
@@ -1004,7 +999,7 @@
                 </el-table>
               </div>
               <div v-show="pmShow.pmShopee">
-                <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" height="800">
+                <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" :height="tableHeightNew">
                   <el-table-column
                     prop="order"
                     label="排名"
@@ -1116,7 +1111,6 @@
                   <el-table-column
                     prop="createDate"
                     label="统计时间"
-                    sortable="custom"
                     align="center"
                     min-width="115"
                   >
@@ -1127,7 +1121,7 @@
                 </el-table>
               </div>
               <div v-show="pmShow.pmVOVA">
-                <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" height="800">
+                <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" :height="tableHeightNew">
                   <el-table-column
                     prop="order"
                     label="排名"
@@ -1239,7 +1233,6 @@
                   <el-table-column
                     prop="createDate"
                     label="统计时间"
-                    sortable="custom"
                     align="center"
                     min-width="115"
                   >
@@ -1558,7 +1551,7 @@
               <el-table
                 :data="shanghaiTable"
                 size="small"
-                height="798"
+                :height="tableHeightNew"
                 ref="table1"
                 v-show="show.shanghai"
                 v-scrollBar:slim
@@ -1644,7 +1637,7 @@
               </el-table>
               <el-table
                 :data="developerTable"
-                height="798"
+                :height="tableHeightNew"
                 size="small"
                 v-show="show.developer"
                 @sort-change="sortNumber"
@@ -1693,7 +1686,7 @@
               <el-table
                 :data="saleSh"
                 size="small"
-                height="798"
+                :height="tableHeightNew"
                 ref="table1"
                 v-show="sale.shanghai"
                 v-scrollBar:slim
@@ -1742,7 +1735,7 @@
                 :data="saleZz"
                 @sort-change="sortNumber"
                 size="small"
-                height="798"
+                :height="tableHeightNew"
                 v-show="sale.zhengzhou"
               >
                 <el-table-column type="index" align="center"></el-table-column>
@@ -1785,7 +1778,7 @@
               <el-table
                 :data="saleDepartment"
                 size="small"
-                height="798"
+                :height="tableHeightNew"
                 v-show="sale.depart"
                 @sort-change="sortNumber"
               >
@@ -1826,7 +1819,7 @@
               </el-table>
               <el-table
                 :data="saleDevelop"
-                height="798"
+                :height="tableHeightNew"
                 size="small"
                 v-show="sale.developer"
                 @sort-change="sortNumber"
@@ -1873,7 +1866,7 @@
             </div>
           </el-card>
         </div>
-        <el-card class="box-card" :style="{ width: rightWidth + '%' }">
+        <el-card class="box-card" :style="{ width: rightWidth + '%',height: tableHeightNewTop1 + 'px' }">
           <div slot="header" class="clearfix-list">
             <h2>公告栏</h2>
           </div>
@@ -1918,7 +1911,7 @@
             v-text="this.page>=this.newsData.page?'加载更多':'已无更多'"
           ></el-button>
         </el-card>
-        <el-card class="box-card1" :style="{ width: rightWidth + '%' }">
+        <el-card class="box-card1" :style="{ width: rightWidth + '%',height: tableHeightNewTop2 + 'px'  }">
           <div slot="header" class="clearfix-list">
             <h2>更新日志</h2>
           </div>
@@ -2000,7 +1993,12 @@ import { getMenu } from "../api/login";
 export default {
   data() {
     return {
-      leftWidth:'99.8',
+      tableHeightNewTop1: window.innerHeight /2-28,
+      tableHeightNewTop2: window.innerHeight /2,
+      tableHeightNewTop: window.innerHeight + 19,
+      tableHeightNewTop: window.innerHeight + 19,
+      tableHeightNew: window.innerHeight - 138,
+      leftWidth:'99.6',
       rightWidth:'0',
       indexJob:[],
       thisMonth:0,
@@ -2195,7 +2193,7 @@ export default {
     indexShrink(){
       this.shrinkFlag=!this.shrinkFlag
       if(this.shrinkFlag){
-        this.leftWidth='99.8'
+        this.leftWidth='99.6'
         this.rightWidth='0'
       }else{
         this.leftWidth='69'
@@ -3709,7 +3707,7 @@ export default {
   // width: 69%;
   float: left;
   margin-top: 1.5%;
-  height: 900px;
+  // height: 900px;
 }
 .left-boxCase {
   width: 100%;
@@ -3722,7 +3720,7 @@ export default {
 }
 .box-card {
   // width: 30%;
-  height: 375px;
+  // height: 375px;
   overflow-y: scroll;
   float: right;
   margin-top: 1.5%;
@@ -3767,7 +3765,7 @@ export default {
 }
 .box-card1 {
   // width: 30%;
-  height: 530px;
+  // height: 530px;
   float: right;
   margin-top: 10px;
   overflow-y: scroll;
