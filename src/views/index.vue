@@ -1510,11 +1510,7 @@
                 ></el-tab-pane>
               </el-tabs>
             </div>
-            <div
-              class="tabs-container tab-index-pan"
-              v-show="showTitle.sale"
-              style="width:100%;padding-left:14px;"
-            >
+            <div class="tabs-container tab-index-pan" v-show="showTitle.sale" style="width:100%;padding-left:14px;">
               <el-tabs v-model="activeSale" @tab-click="handleClickSale">
                 <el-tab-pane
                   v-for="(item, index) in allMenu"
@@ -1530,7 +1526,7 @@
                 size="small"
                 height="798"
                 ref="table1"
-                v-if="show.shanghai"
+                v-show="show.shanghai"
                 v-scrollBar:slim
                 @sort-change="sortNumber"
               >
@@ -1539,9 +1535,6 @@
                   <el-table-column prop="depart" :render-header="renderHeadertic" align="center"></el-table-column>
                 </el-table-column>
                 <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
-                <!-- <el-table-column prop="role"
-                               align="center"
-                label="角色"></el-table-column>-->
                 <el-table-column prop="lastProfit" align="center" :render-header="renderHeaderticMl1" sortable="custom"></el-table-column>
                 <el-table-column prop="profit" align="center" :render-header="renderHeaderticMl2" sortable="custom"></el-table-column>
                 <el-table-column prop="rate" align="center" label="本月VS上月" sortable="custom">
@@ -1568,50 +1561,6 @@
                   <template slot-scope="scope">
                     <i class="el-icon-time"></i>
                     <span>{{dateFormatter(scope.row.updateTime)}}</span>
-                  </template>
-                </el-table-column>
-              </el-table>
-              <el-table
-                :data="zhengzhouTable"
-                @sort-change="sortNumber"
-                size="small"
-                height="798"
-                v-show="show.zhengzhou"
-              >
-                <el-table-column type="index" align="center"></el-table-column>
-                <el-table-column prop="depart" align="center" label="部门">
-                  <el-table-column prop="depart" :render-header="renderHeadertic1" align="center"></el-table-column>
-                </el-table-column>
-                <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
-                <!-- <el-table-column prop="role"
-                               align="center"
-                label="角色"></el-table-column>-->
-                <el-table-column prop="lastProfit" align="center" :render-header="renderHeaderticMl1" sortable="custom"></el-table-column>
-                <el-table-column prop="profit" align="center" :render-header="renderHeaderticMl2" sortable="custom"></el-table-column>
-                <el-table-column prop="rate" align="center" label="本月VS上月" sortable="custom">
-                  <template slot-scope="scope">
-                    <el-progress
-                      :text-inside="true"
-                      :stroke-width="18"
-                      :status="checkStatus(scope.row,'rate')"
-                      :percentage="Math.round(scope.row.rate*10000)/100"
-                    ></el-progress>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="dateRate" align="center" label="时间进度">
-                  <template slot-scope="scope">
-                    <el-progress
-                      :text-inside="true"
-                      :stroke-width="18"
-                      status="exception"
-                      :percentage="Math.round(scope.row.dateRate*10000)/100"
-                    ></el-progress>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="updateTime" align="center" label="统计截止日期">
-                  <template slot-scope="scope">
-                    <i class="el-icon-time"></i>
-                    <span>{{ dateFormatter(scope.row.updateTime) }}</span>
                   </template>
                 </el-table-column>
               </el-table>
@@ -1706,7 +1655,7 @@
                 size="small"
                 height="798"
                 ref="table1"
-                v-if="sale.shanghai"
+                v-show="sale.shanghai"
                 v-scrollBar:slim
                 @sort-change="sortNumber"
               >
@@ -3318,9 +3267,9 @@ export default {
         const tableName = tab + "Table";
         const data = this[tableName];
         if (column.order === "descending") {
-          this.tableData = data.sort(compareDown(data, column.prop));
+          this.tableName = data.sort(compareDown(data, column.prop));
         } else {
-          this.tableData = data.sort(compareUp(data, column.prop));
+          this.tableName = data.sort(compareUp(data, column.prop));
         }
       } else if (this.activeTitle === "销售额增长表") {
         var tab;
@@ -3336,9 +3285,9 @@ export default {
         const tableName = tab;
         const data = this[tableName];
         if (column.order === "descending") {
-          this.tableData = data.sort(compareDown(data, column.prop));
+          this.tableName = data.sort(compareDown(data, column.prop));
         } else {
-          this.tableData = data.sort(compareUp(data, column.prop));
+          this.tableName = data.sort(compareUp(data, column.prop));
         }
       } else {
         const data = this.proTable;
