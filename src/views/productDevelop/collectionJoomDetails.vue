@@ -15,29 +15,35 @@
     </el-col>
     <div class="w98">
       <el-col :span="24">
-        <el-col :span="8" class="top15">
-          <el-col :span="4" class="titCenter">标题</el-col>
-          <el-col :span="18">
+        <el-col :span="6" class="top15">
+          <el-col :span="6" class="titCenter">标题</el-col>
+          <el-col :span="17">
             <el-input v-model="editForm.proName" clearable></el-input>
           </el-col>
         </el-col>
-        <el-col :span="8" class="top15">
-          <el-col :span="4" class="titCenter">标签</el-col>
-          <el-col :span="18">
+        <el-col :span="6" class="top15">
+          <el-col :span="6" class="titCenter">标签</el-col>
+          <el-col :span="17">
             <el-input v-model="editForm.tags" clearable></el-input>
           </el-col>
         </el-col>
-        <el-col :span="8" class="top15">
-          <el-col :span="4" class="titCenter">商品编码</el-col>
-          <el-col :span="18">
+        <el-col :span="6" class="top15">
+          <el-col :span="6" class="titCenter">商品编码</el-col>
+          <el-col :span="17">
             <el-input v-model="editForm.goodsCode" clearable></el-input>
+          </el-col>
+        </el-col>
+        <el-col :span="6" class="top15">
+          <el-col :span="6" class="titCenter">店铺ID</el-col>
+          <el-col :span="17">
+            <el-input v-model="editForm.storeId" clearable></el-input>
           </el-col>
         </el-col>
       </el-col>
       <el-col :span="24">
-        <el-col :span="8" class="top15">
-          <el-col :span="4" class="titCenter">主类目</el-col>
-          <el-col :span="18">
+        <el-col :span="6" class="top15">
+          <el-col :span="6" class="titCenter">主类目</el-col>
+          <el-col :span="17">
             <el-select
               v-model="editForm.cat"
               clearable
@@ -48,17 +54,17 @@
             </el-select>
           </el-col>
         </el-col>
-        <el-col :span="8" class="top15">
-          <el-col :span="4" class="titCenter">子类目</el-col>
-          <el-col :span="18">
+        <el-col :span="6" class="top15">
+          <el-col :span="6" class="titCenter">子类目</el-col>
+          <el-col :span="17">
             <el-select v-model="editForm.subCat" clearable style="width:100%;">
               <el-option v-for="item in subCate" :value="item" :key="item"></el-option>
             </el-select>
           </el-col>
         </el-col>
-        <el-col :span="8" class="top15">
-          <el-col :span="4" class="titCenter">特殊属性</el-col>
-          <el-col :span="18">
+        <el-col :span="6" class="top15">
+          <el-col :span="6" class="titCenter">特殊属性</el-col>
+          <el-col :span="17">
             <el-select v-model="editForm.spAttribute" clearable style="width: 100%">
               <el-option
                 v-for="(item, key) in specificity"
