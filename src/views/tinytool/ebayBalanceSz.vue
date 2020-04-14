@@ -86,7 +86,9 @@
             <span class="appSpan">出账单日期</span>
           </el-col>
           <el-col :span="18">
-            <el-input placeholder="日期" v-model="add.balanceTime" clearable></el-input>
+            <el-select v-model="add.balanceTime" placeholder="请选择" style="width:100%">
+              <el-option v-for="item in options" :key="item" :label="item" :value="item"></el-option>
+            </el-select>
           </el-col>
         </el-col>
       </el-row>
@@ -109,6 +111,7 @@ import { getAccount } from "../../api/profit";
 export default {
   data() {
     return {
+      options: ["月初", "月中", "月末"],
       tableData: [],
       title: null,
       accountList: [],
@@ -161,7 +164,7 @@ export default {
       );
     },
     saveData() {
-      if ((this.title = "更新账单")) {
+      if (this.title == "更新账单") {
         getebayBalanceTimeUpdate(this.add).then(response => {
           if (response.data.code === 200) {
             this.$message({
