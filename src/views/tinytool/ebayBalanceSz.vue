@@ -174,7 +174,7 @@ export default {
             this.dialogVisible = false;
             this.getData();
           } else {
-            this.$message.error(response.data.msg);
+            this.$message.error(response.data.message);
           }
         });
       } else {
@@ -187,7 +187,7 @@ export default {
             this.dialogVisible = false;
             this.getData();
           } else {
-            this.$message.error(response.data.msg);
+            this.$message.error(response.data.message);
           }
         });
       }
