@@ -103,6 +103,13 @@
                                              align="center">
                             </el-table-column>
                         </el-table-column>
+                        <el-table-column label="本地货币"
+                                         header-align="center">
+                            <el-table-column prop="localCurrency"
+                                             :render-header="renderHeaderPic"
+                                             align="center">
+                            </el-table-column>
+                        </el-table-column>
                         <el-table-column label="后缀"
                                          header-align="center">
                             <el-table-column prop="suffix"
@@ -342,6 +349,7 @@
             'suffix': null,
             'mainImg': null,
             'parentCategory': null,
+            'localCurrency':null,
             'rate':null,
             'pageSize': 20,
             'page': 1
@@ -563,6 +571,33 @@
               [
                 h('el-input', {
                   props: {
+                    value: this.condition.localCurrency ,
+                    size: 'mini',
+                    clearable: true
+                  },
+                  on: {
+                    input: value => {
+                      this.condition.localCurrency  = value
+                      this.$emit('input', value)
+                    },
+                    change: value => {
+                      this.getDateWish()
+                    }
+                  }
+                })
+              ]
+            )
+          }else if ($index === 3) {
+            return h(
+              'div',
+              {
+                style: {
+                  height: '30px'
+                }
+              },
+              [
+                h('el-input', {
+                  props: {
                     value: this.condition.suffix,
                     size: 'mini',
                     clearable: true
@@ -579,7 +614,7 @@
                 })
               ]
             )
-          } else if ($index === 3) {
+          } else if ($index === 4) {
             return h(
               'div',
               {
@@ -606,7 +641,7 @@
                 })
               ]
             )
-          } else if ($index === 4) {
+          } else if ($index === 5) {
             return h(
               'div',
               {
