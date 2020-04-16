@@ -733,6 +733,7 @@ export default {
               account: [joomAcount[i]]
             };
             APIPlatExportJoom(objStr1).then(res => {
+              console.log(res)
               const blob = new Blob([res.data], {
                 type: "data:text/csv;charset=utf-8"
               });
