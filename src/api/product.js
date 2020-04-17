@@ -1948,3 +1948,12 @@ export function getebayBalanceTimeUpdate(param) {
   })
 }
 
+export function APIExtendDetail(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data/extend-detail',
+    method: 'post',
+    data
+  })
+}
+
