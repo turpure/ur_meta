@@ -356,7 +356,7 @@ export default {
   data() {
     return {
       tableHeight: window.innerHeight - 275,
-      options:['RMB','USD'],
+      options:['CNY','USD'],
       allMenu: [],
       activeName: "",
       date: [],
