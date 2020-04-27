@@ -50,7 +50,7 @@
             <el-table-column property="ruleMark" label="规则备注" align="center" width="130"></el-table-column>
             <el-table-column property="country" label="国家" align="center" width="120"></el-table-column>
             <el-table-column property="genTimeStart" label="上架时间" align="center" width="128">
-              <template slot-scope="scope">{{scope.row.genTimeStart}} - {{scope.row.genTimeEnd}}</template>
+              <template slot-scope="scope">{{scope.row.listedTime[0]}} - {{scope.row.listedTime[1]}}</template>
             </el-table-column>
             <!-- <el-table-column property="genTimeEnd" label="上架时间" align="center" width="80"></el-table-column> -->
             <el-table-column property="historicalSoldStart" label="总销售件数" align="center" width="125">
@@ -128,13 +128,13 @@
                 <p class="basp">上架时间</p>
               </el-col>
               <el-col :span="7">
-                <el-input v-model="ebayXp.genTimeStart" placeholder="开始"></el-input>
+                <el-input v-model="ebayXp.listedTime[0]" placeholder="开始"></el-input>
               </el-col>
               <el-col :span="1">
                 <span class="colspan">-</span>
               </el-col>
               <el-col :span="7">
-                <el-input v-model="ebayXp.genTimeEnd" placeholder="结束"></el-input>
+                <el-input v-model="ebayXp.listedTime[1]" placeholder="结束"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
@@ -291,13 +291,13 @@
                 <p class="basp">上架时间</p>
               </el-col>
               <el-col :span="7">
-                <el-input v-model="addEbayXp.genTimeStart" placeholder="开始"></el-input>
+                <el-input v-model="addEbayXp.listedTime[0]" placeholder="开始"></el-input>
               </el-col>
               <el-col :span="1">
                 <span class="colspan">-</span>
               </el-col>
               <el-col :span="7">
-                <el-input v-model="addEbayXp.genTimeEnd" placeholder="结束"></el-input>
+                <el-input v-model="addEbayXp.listedTime[1]" placeholder="结束"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
@@ -853,8 +853,6 @@ export default {
     saveEbayXp() {
       this.ebaydisLoginxp = true;
       this.ebayXp.country=='马来西亚'?this.ebayXp.country='1':this.ebayXp.country=='印度尼西亚'?this.ebayXp.country='2':this.ebayXp.country=='泰国'?this.ebayXp.country='3':this.ebayXp.country=='菲律宾'?this.ebayXp.country='4':this.ebayXp.country=='台湾'?this.ebayXp.country='5':this.ebayXp.country=='新加坡'?this.ebayXp.country='6':this.ebayXp.country='7'
-      this.ebayXp.listedTime.push(this.ebayXp.genTimeStart)
-      this.ebayXp.listedTime.push(this.ebayXp.genTimeEnd)
       wishProductsSaveRule(this.ebayXp).then(res => {
         if (res.data.data) {
           this.$message({
@@ -872,8 +870,6 @@ export default {
     addSaveEbayXp() {
       if (this.addEbayXp.ruleName) {
         this.addEbayXp.country=='马来西亚'?this.addEbayXp.country='1':this.addEbayXp.country=='印度尼西亚'?this.addEbayXp.country='2':this.addEbayXp.country=='泰国'?this.addEbayXp.country='3':this.addEbayXp.country=='菲律宾'?this.addEbayXp.country='4':this.addEbayXp.country=='台湾'?this.addEbayXp.country='5':this.addEbayXp.country=='新加坡'?this.addEbayXp.country='6':this.addEbayXp.country='7'
-        this.addEbayXp.listedTime.push(this.addEbayXp.genTimeStart)
-        this.addEbayXp.listedTime.push(this.addEbayXp.genTimeEnd)
         wishProductsSaveRule(this.addEbayXp).then(res => {
           if (res.data.data) {
             this.$message({
