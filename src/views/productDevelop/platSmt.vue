@@ -11,6 +11,36 @@
           type="success"
           @click="keepWs()"
         >保存并完善</el-button>
+        <el-tooltip class="item" effect="dark" content="提示：此分类对应所有所选产品，不同类的产品请分多次操作！" placement="top-start">
+          <el-cascader
+          v-model="category"
+          style="width: 250px;float: left;"
+          :show-all-levels="false"
+          placeholder="选择类目"
+          :options="options"
+          clearable
+          :props="defaultPropsApp"
+          @change="handleChange"></el-cascader>
+        </el-tooltip>
+        <el-select
+          placeholder="--所有账号--"
+          clearable
+          multiple
+          collapse-tags
+          v-model="accountNum"
+          style="width: 250px;float: left;"
+          class="selee"
+        >
+          <el-button plain type="info" @click="selectalld1">全选</el-button>
+          <el-button plain type="info" @click="noselectd1">取消</el-button>
+          <el-option
+            v-for="(item, key) in accountNumber"
+            :key="item.key"
+            :label="item"
+            :value="item"
+          ></el-option>
+        </el-select>  
+        <span class="exportAccount" @click="exportSmt">添加导出队列</span>
       </el-col>
     </el-col>
     <el-row>
@@ -499,10 +529,27 @@
   </section>
 </template>
 <script type="text/ecmascript-6">
-import { APIPlatInfo, APIDeleteEbaySku, APISaveSmt, APISaveFinishPlat } from "../../api/product";
+import {
+  APIPlatInfo,
+  APIDeleteEbaySku,
+  APISaveSmt,
+  APISaveFinishPlat,
+  getPlatSmtAccount,
+  getPlatSmtCategory,
+  APIPlatExportSmt
+} from "../../api/product";
 export default {
   data() {
     return {
+      defaultPropsApp: {
+        children: "children",
+        label: "name",
+        value:'id'
+      },
+      category:[],
+      options:[],
+      accountNum:[],
+      accountNumber:[],
       rows: null,
       time: null,
       advicePrice: null,
@@ -564,6 +611,39 @@ export default {
     };
   },
   methods: {
+    handleChange(value) {
+    },    
+    selectalld1() {
+      var ard1 = [];
+      for (const item in this.accountNumber) {
+        ard1.push(this.accountNumber[item]);
+      }
+      this.accountNum = ard1;
+    },
+    noselectd1() {
+      this.accountNum = [];
+    },    
+    exportSmt() {
+      if(this.accountNum.length!=0 && this.category.length!=0){
+        let objStr = {
+          ids:[this.smtForm.infoId],
+          suffix:this.accountNum,
+          category: this.category[this.category.length-1]
+        };
+        APIPlatExportSmt(objStr).then(res => {
+          if (res.data.code === 200) {
+            this.$message({
+              message: "成功",
+              type: "success"
+            });
+          } else {
+            this.$message.error(res.data.message);
+          }
+        });
+      }else{
+        this.$message.error('请选择分类或者账号');
+      }
+    },
     delSku(index, row) {
       let aryId = {
         id: row.id,
@@ -723,11 +803,9 @@ export default {
     },
     keepWs() {
       const data = {
-        id:this.smtForm.infoId,
+        id: this.smtForm.infoId,
         plat: "smt",
-        basicInfo: {
-
-        },
+        basicInfo: {},
         skuInfo: []
       };
       data.basicInfo = this.smtForm;
@@ -813,18 +891,25 @@ export default {
           ? (this.smtForm.autoDelay = "是")
           : (this.smtForm.autoDelay = "否");
         //图片添加到数组
-        this.url=[]
+        this.url = [];
         for (let key in this.smtForm) {
           if (key.indexOf("imageUrl") > -1) {
             this.url.push(this.smtForm[key]);
           }
         }
+        this.url.shift();
       });
     }
   },
   mounted() {
     this.condition.id = this.$route.params.id;
     this.getData();
+    getPlatSmtAccount().then(response => {
+      this.accountNumber=response.data.data
+    });
+    getPlatSmtCategory().then(response => {
+      this.options=response.data.data
+    });
   }
 };
 </script>
@@ -968,9 +1053,12 @@ section {
   cursor: pointer;
   background: linear-gradient(to bottom, #f5f7fa 0%, #f5f7fa 45%, #d4d4d4 100%);
 }
+.leftmedia {
+  margin-left: 18.5%;
+}
 @media screen and (max-width: 1600px) {
   .leftmedia {
-    margin-left: 20px;
+    margin-left: 9.5%;
   }
   //  .ptom60{
   //    padding-bottom: 50px;
@@ -1015,14 +1103,6 @@ section {
     float: right;
     font-size: 13px;
     border: #eee solid 1px;
-  }
-}
-.leftmedia {
-  margin-left: 32.8%;
-}
-@media screen and (max-width: 1300px) {
-  .leftmedia {
-    margin-left: 1px;
   }
 }
 .smtp {
