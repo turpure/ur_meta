@@ -1957,3 +1957,12 @@ export function APIExtendDetail(param) {
   })
 }
 
+export function APISaveSmt(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/save-smt-info',
+    method: 'post',
+    data
+  })
+}
+
