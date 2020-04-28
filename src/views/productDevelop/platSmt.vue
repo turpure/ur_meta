@@ -813,6 +813,7 @@ export default {
           ? (this.smtForm.autoDelay = "是")
           : (this.smtForm.autoDelay = "否");
         //图片添加到数组
+        this.url=[]
         for (let key in this.smtForm) {
           if (key.indexOf("imageUrl") > -1) {
             this.url.push(this.smtForm[key]);
