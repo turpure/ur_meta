@@ -606,7 +606,7 @@ export default {
         "吨",
         "码"
       ],
-      wsvalidnum: ["14", "30"],
+      wsvalidnum: [14, 30],
       smtForm: {}
     };
   },
