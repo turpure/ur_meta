@@ -31,7 +31,7 @@
         <el-button plain type="info" @click="noselectd1">取消</el-button>
         <el-option v-for="(item, key) in joomArr" :key="item.key" :label="item" :value="item"></el-option>
       </el-select>
-      <span class="exportAccount" @click="exportJoom">导出Joom</span>
+      <span class="exportAccount" @click="exportJoom">导出Joom模板</span>
       <el-select
         placeholder="--请选择账号--"
         clearable
@@ -45,7 +45,7 @@
         <el-button plain type="info" @click="noselectd3">取消</el-button>
         <el-option v-for="(item, key) in vovaArr" :key="item.key" :label="item" :value="item"></el-option>
       </el-select>
-      <span class="exportAccount" @click="exportVova">导出vova</span>
+      <span class="exportAccount" @click="exportVova">导出vova模板</span>
       <el-tooltip class="item" effect="dark" content="提示：此分类对应所有所选产品，不同类的产品请分多次操作！" placement="bottom-start">
           <el-cascader
           v-model="category"
@@ -2835,7 +2835,7 @@ export default {
     width: 124px !important;
   }
   .none16001 {
-    width: 150px !important;
+    width: 120px !important;
     margin-left: 5px !important;
   }
   .none16002 {
