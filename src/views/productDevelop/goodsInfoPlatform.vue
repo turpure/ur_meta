@@ -81,6 +81,7 @@
         <span class="signPerfectWish" @click="keepPerfect('wish')">标记Wish完善</span>
         <span class="signPerfectEbay" @click="keepPerfect('ebay')">标记eBay完善</span>
         <span class="signPerfectJoom" @click="keepPerfect('joom')">标记Joom完善</span>
+        <span class="signPerfectSmt" @click="keepPerfect('aliexpress')">标记Aliexpress完善</span>
         <span class="signPerfectTotal" @click="keepPerfect('total')">标记全部完善</span>
       </div>
     </el-col>
@@ -2055,8 +2056,10 @@ export default {
           dataObj.plat = ["ebay"];
         } else if (n == "joom") {
           dataObj.plat = ["joom"];
+        }else if (n == "aliexpress") {
+          dataObj.plat = ["aliexpress"];
         } else {
-          dataObj.plat = ["wish", "ebay", "joom"];
+          dataObj.plat = ["wish", "ebay", "joom","aliexpress"];
         }
         APIFinishPlat(dataObj).then(res => {
           if (res.data.code == 200) {
@@ -2814,6 +2817,17 @@ export default {
   float: left;
   line-height: 30px;
   background: #008d4c;
+  color: #fff;
+  cursor: pointer;
+  margin-left: 10px;
+  border-radius: 5px;
+}
+.signPerfectSmt {
+  padding: 0 10px;
+  display: block;
+  float: left;
+  line-height: 30px;
+  background: #d30101;
   color: #fff;
   cursor: pointer;
   margin-left: 10px;
