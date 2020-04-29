@@ -210,32 +210,32 @@
           </el-col>
           <el-col :span="24">
             <el-col :span="8" style="margin-top: 10px">
-              <el-col :span="6" style="text-align: center;margin-top: 8px" class="font13">商品包装长度</el-col>
-              <el-col :span="17">
+              <el-col :span="8" style="text-align: center;margin-top: 8px" class="font13">商品包装长度(CM)</el-col>
+              <el-col :span="15">
                 <el-input v-model="smtForm.packageLength" placeholder="CM"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-top: 10px">
-              <el-col :span="6" style="text-align: center;margin-top: 8px" class="font13">商品包装宽度</el-col>
-              <el-col :span="17">
+              <el-col :span="8" style="text-align: center;margin-top: 8px" class="font13">商品包装宽度(CM)</el-col>
+              <el-col :span="15">
                 <el-input v-model="smtForm.packageWidth" placeholder="CM"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-top: 10px">
-              <el-col :span="6" style="text-align: center;margin-top: 8px" class="font13">商品包装高度</el-col>
-              <el-col :span="17">
+              <el-col :span="8" style="text-align: center;margin-top: 8px" class="font13">商品包装高度(CM)</el-col>
+              <el-col :span="15">
                 <el-input v-model="smtForm.packageHeight" placeholder="CM"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-top: 20px">
-              <el-col :span="6" style="text-align: center;margin-top: 8px" class="font13">商品毛重</el-col>
-              <el-col :span="17">
+              <el-col :span="8" style="text-align: center;margin-top: 8px" class="font13">商品毛重(KG)</el-col>
+              <el-col :span="15">
                 <el-input v-model="smtForm.grossWeight" placeholder="KG"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-top: 20px">
-              <el-col :span="6" style="text-align: center;margin-top: 8px" class="font13">是否自定义计重</el-col>
-              <el-col :span="17">
+              <el-col :span="8" style="text-align: center;margin-top: 8px" class="font13">是否自定义计重</el-col>
+              <el-col :span="15">
                 <el-select
                   v-model="smtForm.isPackSell"
                   placeholder="请选择"
