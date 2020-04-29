@@ -16,7 +16,7 @@
         ref="condition"
       >
         <el-form-item
-          label="捡货人："
+          label="拣货人："
           prop="suffix"
           :rules="[{required: true, message: '请填写字段', trigger: 'blur'}]"
         >
@@ -25,8 +25,7 @@
             style="width:230px;"
             filterable
             clearable
-            allow-create
-            default-first-option
+            @blur="currentSel"
           >
             <el-option v-for="item in suffix" :key="item" :value="item"></el-option>
           </el-select>
@@ -142,6 +141,9 @@ export default {
     };
   },
   methods: {
+    currentSel(e){
+      this.condition.suffix=e.target.value
+    },
     handleSizeChange(val) {
       this.reccondition.pageSize = val;
       this.getPic();
