@@ -62,6 +62,6 @@ export default {
 </style>
 <style>
 .testPurTable .cell{
-    line-height: 25px;
+    line-height: 25px !important;
 }
 </style>
