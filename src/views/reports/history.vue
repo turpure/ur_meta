@@ -20,7 +20,7 @@
               v-model="condition.department"
               multiple
               collapse-tags
-              style="width:140px;"
+              class="hisPut"
               placeholder="部门"
               @change="choosed"
             >
@@ -39,7 +39,7 @@
             <el-select
               size="small"
               v-model="condition.secDepartment"
-              style="width:180px;"
+              class="hisPut"
               multiple
               collapse-tags
               placeholder="二级部门"
@@ -61,7 +61,7 @@
               size="small"
               v-model="condition.plat"
               multiple
-              style="width:180px;"
+              class="hisPut"
               collapse-tags
               placeholder="销售平台"
             >
@@ -79,7 +79,7 @@
           <el-form-item label="销售员" class="input">
             <el-select
               size="small"
-              style="width:170px;"
+              class="hisPut"
               v-model="condition.member"
               filterable
               multiple
@@ -760,6 +760,9 @@ export default {
 }
 .abcSs span {
   display: block;
+}
+.hisPut{
+  width: 190px;
 }
 @media screen and (max-width: 1361px) {
   .abcSs {
