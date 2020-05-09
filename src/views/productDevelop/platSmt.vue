@@ -352,7 +352,7 @@
           </el-col>
           <el-col :span="24">
             <el-col :span="8" style="margin-top: 10px">
-              <el-col :span="8" style="text-align: center;margin-top: 8px" class="font13">分类</el-col>
+              <el-col :span="8" style="text-align: center;margin-top: 8px;color:red" class="font13">*分类</el-col>
               <el-col :span="15">
                 <el-tooltip
                   class="item"
@@ -374,25 +374,25 @@
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-top: 10px">
-              <el-col :span="8" style="text-align: center;margin-top: 8px" class="font13">商品包装长度(CM)</el-col>
+              <el-col :span="8" style="text-align: center;margin-top: 8px;color:red" class="font13">*商品包装长度(CM)</el-col>
               <el-col :span="15">
                 <el-input v-model="smtForm.packageLength" placeholder="CM"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-top: 10px">
-              <el-col :span="8" style="text-align: center;margin-top: 8px" class="font13">商品包装宽度(CM)</el-col>
+              <el-col :span="8" style="text-align: center;margin-top: 8px;color:red" class="font13">*商品包装宽度(CM)</el-col>
               <el-col :span="15">
                 <el-input v-model="smtForm.packageWidth" placeholder="CM"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-top: 10px">
-              <el-col :span="8" style="text-align: center;margin-top: 8px" class="font13">商品包装高度(CM)</el-col>
+              <el-col :span="8" style="text-align: center;margin-top: 8px;color:red" class="font13">*商品包装高度(CM)</el-col>
               <el-col :span="15">
                 <el-input v-model="smtForm.packageHeight" placeholder="CM"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-top: 20px">
-              <el-col :span="8" style="text-align: center;margin-top: 8px" class="font13">商品毛重(KG)</el-col>
+              <el-col :span="8" style="text-align: center;margin-top: 8px;color:red" class="font13">*商品毛重(KG)</el-col>
               <el-col :span="15">
                 <el-input v-model="smtForm.grossWeight" placeholder="KG"></el-input>
               </el-col>
