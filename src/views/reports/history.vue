@@ -170,7 +170,7 @@
     <div class="abcSs">
       <button
         v-show="tableData.length!=0"
-        style="margin-left:15px;margin-top:20px;"
+        style="margin-left:15px;margin-top:15px;"
         type="primary"
         @click="dexz()"
       >{{defaultay}}</button>
