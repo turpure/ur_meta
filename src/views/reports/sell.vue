@@ -1140,7 +1140,6 @@ export default {
       for (let i = 0; i < allDepartments.length; i++) {
         allDepartmentsMap[allDepartments[i].id] = allDepartments[i].department;
       }
-      console.log(allDepartmentsMap)
       // 人员处理
       res = this.allMember;
       let per = [];
