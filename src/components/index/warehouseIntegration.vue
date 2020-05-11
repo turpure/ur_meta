@@ -438,8 +438,14 @@ export default {
       getCkIntegral(container).then(res => {
         this.ckintegral = res.data.data;
         for(let i =0;i<this.ckintegral.length;i++){
-          if(this.ckintegral[i].this_total_num=='0'){
-            this.ckintegral.splice(i--,1);
+          if(container.type=='all'){
+            if(this.ckintegral[i].this_total_num=='0'){
+              this.ckintegral.splice(i--,1);
+            }
+          }else{
+            if(this.ckintegral[i].this_job_num=='0'){
+              this.ckintegral.splice(i--,1);
+            }
           }
         }
         var date=this.ckintegral[0].update_time
