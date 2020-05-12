@@ -51,7 +51,7 @@
                 <el-input v-model="smtForm.sku"></el-input>
               </el-col>
             </el-col>
-            <el-col :span="8" style="margin-top: 10px">
+            <!-- <el-col :span="8" style="margin-top: 10px">
               <el-col
                 :span="6"
                 style="text-align: center;margin-top: 8px;color: red;"
@@ -60,7 +60,7 @@
               <el-col :span="17">
                 <el-input v-model="smtForm.itemtitle"></el-input>
               </el-col>
-            </el-col>
+            </el-col> -->
             <el-col :span="8" style="margin-top: 10px">
               <el-col :span="6" style="text-align: center;margin-top: 8px" class="font13">商品单价</el-col>
               <el-col :span="17">
