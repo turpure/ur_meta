@@ -56,8 +56,10 @@
           style="width: 100%;margin:auto;"
         >
           <el-table-column type="index" fixed align="center" width="50" header-align="center"></el-table-column>
+          <el-table-column label="入库单号" header-align="center" align="center" prop="billNumber">
+              <el-table-column prop="billNumber" :render-header="renderHeader" align="center"></el-table-column>
+          </el-table-column>
           <el-table-column label="姓名" header-align="center" align="center" prop="recorder"></el-table-column>
-          <el-table-column label="单号" header-align="center" align="center" prop="billNumber"></el-table-column>
           <el-table-column label="时间" header-align="center" align="center" prop="makeDate" :formatter="formatter"></el-table-column>
         </el-table>
         <div class="toolbar">
@@ -93,6 +95,7 @@ export default {
       condition: {
         member: null,
         pageSize: 100,
+        billNumber:null,
         page: 1,
         date: []
       },
@@ -133,6 +136,37 @@ export default {
     }
   },
   methods: {
+    renderHeader(h, { column, $index }) {
+      if ($index === 0) {
+        return h(
+          "div",
+          {
+            style: {
+              width:'95%',  
+              height: "30px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition.billNumber,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition.billNumber = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.getData();
+                }
+              }
+            })
+          ]
+        );
+      }
+    },      
     showAll() {
       this.handleSizeChange(this.total)
     },
