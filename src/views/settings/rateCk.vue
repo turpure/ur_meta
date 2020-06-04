@@ -134,13 +134,13 @@
             style="width: 97.1%;margin-left:1.2%;margin-top:15px"
           >
             <el-table-column type="index" fixed align="center" width="60" header-align="center"></el-table-column>
-            <el-table-column label="姓名" align="center" prop="name">
+            <el-table-column label="姓 名" align="center" prop="name">
             </el-table-column>
-            <el-table-column label="职位" align="center" prop="job">
+            <el-table-column label="职 位" align="center" prop="job">
             </el-table-column>
-            <el-table-column label="月份" align="center" prop="month">
+            <el-table-column label="月 份" align="center" prop="month">
             </el-table-column>
-            <el-table-column label="小组" align="center" prop="team">
+            <el-table-column label="小 组" align="center" prop="team">
             </el-table-column>
             <el-table-column label="出勤天数" align="center" prop="all_days">
             </el-table-column>
