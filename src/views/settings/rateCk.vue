@@ -292,6 +292,7 @@ export default {
         {
           "name":'庄美英',
           "month":'2020-03',
+          "group":'生产组',
           "job":'打包',
           "team":'周芹英',
           "all_days":'0',
@@ -304,6 +305,7 @@ export default {
       const th = [
         "name",
         "month",
+        "group",
         "job",
         "team",
         "all_days",
@@ -315,6 +317,7 @@ export default {
       const filterVal = [
         "name",
         "month",
+        "group",
         "job",
         "team",
         "all_days",
