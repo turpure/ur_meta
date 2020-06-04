@@ -138,6 +138,8 @@
             </el-table-column>
             <el-table-column label="职 位" align="center" prop="job">
             </el-table-column>
+            <el-table-column label="组 别" align="center" prop="group">
+            </el-table-column>
             <el-table-column label="月 份" align="center" prop="month">
             </el-table-column>
             <el-table-column label="小 组" align="center" prop="team">
