@@ -155,6 +155,9 @@
             <el-table-column label="扣分项" align="center" prop="deduction_integral">
             </el-table-column>
             <el-table-column label="更新时间" align="center" prop="update_time">
+              <template slot-scope="scope">
+                {{scope.row.update_time | cutOutDate}}
+              </template>
             </el-table-column>
           </el-table>
           </el-col>
@@ -256,6 +259,12 @@ export default {
         rate:null
       }
     };
+  },
+  filters: {
+    cutOutDate(value) {
+      value = value.substring(0, 15);
+      return value;
+    },
   },
   methods: {
     tabcl(n){
