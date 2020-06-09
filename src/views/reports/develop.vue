@@ -1067,8 +1067,8 @@
       <div class="block toolbar" style="overflow:hidden">
          <div style="float:left;">
             <el-pagination background
-                       @size-change='handleSizeChangeDead'
-                       @current-change='handleCurrentChangeDead'
+                       @size-change='handleSizeChangeDead1'
+                       @current-change='handleCurrentChangeDead1'
                        :current-page="this.dead.page"
                        :page-size="this.dead.pageSize"
                        :page-sizes="[10,20,30,40]"
@@ -1242,6 +1242,14 @@ export default {
       this.dead.page = val
       this.onSubmit1(this.condition)
     },
+    handleSizeChangeDead1(val) {
+      this.dead.pageSize = val
+      this.onSubmit2(this.condition)
+    },
+    handleCurrentChangeDead1(val) {
+      this.dead.page = val
+      this.onSubmit2(this.condition)
+    },    
     sortNumber1(column, prop, order) {
       const data = this.tableData1
       if (column.order === 'descending') {
