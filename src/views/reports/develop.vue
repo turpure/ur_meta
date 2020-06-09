@@ -117,7 +117,10 @@
                        name="second">
           </el-tab-pane>
           <el-tab-pane label="死库明细"
-                       name="sikiu">
+                       name="siku">
+          </el-tab-pane>
+          <el-tab-pane label="毛利详情"
+                       name="maoli">
           </el-tab-pane>
         </el-tabs>
       </el-col>
@@ -931,12 +934,156 @@
         </div>
       </div>
     </div>
+    <div v-show="showis3">
+      <el-table :data="tableDetail"
+                @sort-change="sortNumber2"
+                :height="tableHeightOb"
+                border 
+                class="elTable"
+                v-loading="load2"
+                :header-cell-style="getRowClass"
+                style="width: 100%;font-size:13px;">
+        <el-table-column prop="timeGroup"
+                         label="时间分组"
+                         header-align="center"
+                         align="center"
+                         width="100">
+                         <template slot-scope="scope">{{scope.row.timeGroup}}</template>
+        </el-table-column>     
+        <el-table-column prop="salerName"
+                         label="业绩归属人1"
+                         header-align="center"
+                         align="center"
+                         width="100">
+                         <template slot-scope="scope">{{scope.row.salerName}}</template>
+        </el-table-column>     
+        <el-table-column prop="salerName2"
+                         label="业绩归属人2"
+                         header-align="center"
+                         align="center"
+                          width="100">
+                         <template slot-scope="scope">{{scope.row.salerName2}}</template>
+        </el-table-column>     
+        <el-table-column prop="goodsCode"
+                         label="商品编码"
+                         header-align="center"
+                         align="center"
+                         width="100">
+                         <template slot-scope="scope">{{scope.row.goodsCode}}</template>
+        </el-table-column>
+        <el-table-column prop="sku"
+                         label="SKU"
+                         header-align="center"
+                         align="center"
+                         width="110">
+                         <template slot-scope="scope">{{scope.row.sku}}</template>
+        </el-table-column>
+        <el-table-column prop="goodsName"
+                         label="商品名称"
+                         header-align="center"
+                         align="center"
+                         width="140">
+                         <template slot-scope="scope">{{scope.row.goodsName}}</template>
+        </el-table-column>
+        <el-table-column prop="categoryName"
+                         label="类目"
+                         header-align="center"
+                         align="center"
+                         width="100">
+                         <template slot-scope="scope">{{scope.row.categoryName}}</template>
+        </el-table-column>
+        <el-table-column prop="goodsSkuStatus"
+                         label="状态"
+                         header-align="center"
+                         align="center"
+                         width="125">
+                         <template slot-scope="scope">{{scope.row.goodsSkuStatus}}</template>
+        </el-table-column>
+        <el-table-column prop="createDate"
+                         label="开发时间"
+                         sortable
+                         header-align="center"
+                         align="center"
+                         width="125">
+                         <template slot-scope="scope">{{scope.row.createDate}}</template>
+        </el-table-column>
+        <el-table-column prop="saleMoneyRmbZn"
+                         label="销售额"
+                         sortable
+                         header-align="center"
+                         align="center"
+                         width="125">
+                         <template slot-scope="scope">{{scope.row.saleMoneyRmbZn | cutOut}}</template>
+        </el-table-column>
+        <el-table-column prop="costMoneyRmb"
+                         label="成本"
+                         sortable
+                         header-align="center"
+                         align="center"
+                         width="125">
+                         <template slot-scope="scope">{{scope.row.costMoneyRmb}}</template>
+        </el-table-column>
+        <el-table-column prop="ppEbayZn"
+                         label="pp和ebay费用"
+                         sortable
+                         header-align="center"
+                         align="center"
+                         width="130">
+                         <template slot-scope="scope">{{scope.row.ppEbayZn | cutOut}}</template>
+        </el-table-column>
+        <el-table-column prop="packageFeeRmb"
+                         label="打包费"
+                         sortable
+                         header-align="center"
+                         align="center"
+                         width="110">
+                         <template slot-scope="scope">{{scope.row.packageFeeRmb}}</template>
+        </el-table-column>
+        <el-table-column prop="expressFareRmb"
+                         label="物流费"
+                         sortable
+                         header-align="center"
+                         align="center"
+                         width="110">
+                         <template slot-scope="scope">{{scope.row.expressFareRmb}}</template>
+        </el-table-column>
+        <el-table-column prop="profit"
+                         label="毛利"
+                         sortable
+                         header-align="center"
+                         align="center"
+                         width="110">
+                         <template slot-scope="scope">{{scope.row.profit | cutOut}}</template>
+        </el-table-column>
+        <el-table-column prop="rate"
+                         label="毛利率(%)"
+                         sortable
+                         header-align="center"
+                         align="center"
+                         width="110">
+                         <template slot-scope="scope">{{scope.row.rate}}</template>
+        </el-table-column>                 
+      </el-table>
+      <div class="block toolbar" style="overflow:hidden">
+         <div style="float:left;">
+            <el-pagination background
+                       @size-change='handleSizeChangeDead'
+                       @current-change='handleCurrentChangeDead'
+                       :current-page="this.dead.page"
+                       :page-size="this.dead.pageSize"
+                       :page-sizes="[10,20,30,40]"
+                       layout="total,sizes,prev,pager,next,jumper"
+                       :total="this.totalDetail">
+        </el-pagination>
+         </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
 import {APIReportExport} from '../../api/product'
-import { getSection, getMember, getDevelop,getOtherDeadFee } from '../../api/profit'
+import { getSection, getMember, getDevelop,getOtherDeadFee,getDevProfitDetail } from '../../api/profit'
 import { compareUp, compareDown, getMonthDate } from '../../api/tools'
 import { isAdmin } from '../../api/api'
 
@@ -944,10 +1091,14 @@ export default {
   data() {
     return {
       totalPrice:0,
+      totalDetail:0,
       currentPrice:0,
       showis1:true,
       showis2:false,
+      showis3:false,
       tableData1:[],
+      tableDetail:[],
+      searchDetail:[],
       dead: {
         dateType: [],
         dateRange: [],
@@ -1014,6 +1165,7 @@ export default {
       searchValue: '',
       listLoading: false,
       load1:false,
+      load2:false,
       department: [],
       res: [],
       member: [],
@@ -1098,6 +1250,14 @@ export default {
         this.tableData1 = data.sort(compareUp(data, column.prop))
       }
     },
+    sortNumber2(column, prop, order) {
+      const data = this.tableDetail
+      if (column.order === 'descending') {
+        this.tableDetail = data.sort(compareDown(data, column.prop))
+      } else {
+        this.tableDetail = data.sort(compareUp(data, column.prop))
+      }
+    },    
     handleCheck1() {
       !this.checked1
     },
@@ -1288,6 +1448,7 @@ export default {
         this.show3 = true
         this.showis1=true
         this.showis2=false
+        this.showis3=false
         if(this.tableData01.length==0){
           this.onSubmit(this.condition)
         }
@@ -1296,14 +1457,76 @@ export default {
         this.show3 = false
         this.showis1=true
         this.showis2=false
+        this.showis3=false
         if(this.tableData02.length==0){
           this.onSubmit(this.condition)
         }
+      }else if(this.activeName === 'maoli'){
+        this.showis1=false
+        this.showis2=false
+        this.showis3=true
+        this.onSubmit2(this.condition)
       }else {
         this.showis1=false
+        this.showis3=false
         this.showis2=true
         this.onSubmit1(this.condition)
       }
+    },
+    onSubmit2(form) {
+      this.load2=true
+      const myform = JSON.parse(JSON.stringify(form))
+      this.dead.dateType=myform.dateType
+      this.dead.dateRange=myform.dateRange
+      const height = document.getElementById('app').clientHeight
+      this.tableHeightOb = height - 245 + 'px'
+      let admin = ''
+          const username = sessionStorage.getItem('user')
+          for (let i = 0; i < this.res.length; i++) {
+            admin = this.res[i].username
+          }
+          if (
+                  username === admin &&
+                  this.formInline.region.length === 0 &&
+                  myform.member.length === 0
+          ) {
+            myform.member = this.member.map(m => {
+              return m.username
+            })
+          } else if (username !== admin && isAdmin() === false) {
+            myform.member = this.member.map(m => {
+              return m.username
+            })
+          } else if (
+                  this.formInline.region.length !== 0 &&
+                  myform.member.length === 0
+          ) {
+            const val = this.formInline.region
+            const res = this.allMember
+            for (let i = 0; i < val.length; i++) {
+              const per = res.filter(
+                      ele =>
+                      (ele.department === val[i] || ele.parent_department === val[i]) &&
+                      ele.position === '开发'
+              )
+              this.member.concat(per)
+            }
+            myform.member = this.member.map(m => {
+              return m.username
+            })
+          } else {
+            myform.member = this.condition.member
+          }
+          this.listLoading = true
+          this.dead.member=myform.member
+          getDevProfitDetail(this.dead).then(response => {
+            this.listLoading = false
+            this.tableDetail = this.searchDetail= response.data.data.items
+            this.totalDetail = response.data.data._meta.totalCount
+            this.dead.page = response.data.data._meta.currentPage
+            this.dead.pageSize = response.data.data._meta.perPage
+            this.load2=false
+          })
     },
     onSubmit1(form) {
       this.load1=true
@@ -1448,6 +1671,21 @@ export default {
           })
         } else {
           this.tableData1 = data
+        }
+      }else if(this.activeName === 'maoli'){
+        const data = this.searchDetail
+        if (searchValue) {
+          this.tableDetail = data.filter(function(row) {
+            return Object.keys(row).some(function(key) {
+              return (
+                      String(row[key])
+                              .toLowerCase()
+                              .indexOf(searchValue) > -1
+              )
+            })
+          })
+          } else {
+          this.tableDetail = data
         }
       }else {
         const activeTable = this.activeName
