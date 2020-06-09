@@ -939,6 +939,8 @@
                 @sort-change="sortNumber2"
                 :height="tableHeightOb"
                 border 
+                show-summary
+                :summary-method="getSummariesDev"
                 class="elTable"
                 v-loading="load2"
                 :header-cell-style="getRowClass"
@@ -1082,7 +1084,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-import {APIReportExport} from '../../api/product'
+import {APIReportExport,APIDevelopExport} from '../../api/product'
 import { getSection, getMember, getDevelop,getOtherDeadFee,getDevProfitDetail } from '../../api/profit'
 import { compareUp, compareDown, getMonthDate } from '../../api/tools'
 import { isAdmin } from '../../api/api'
@@ -1090,6 +1092,13 @@ import { isAdmin } from '../../api/api'
 export default {
   data() {
     return {
+      totalCostMoney: 0,
+      totalExpress: 0,
+      totalPackage: 0,
+      totalPpEbay: 0,
+      totalProfit: 0,
+      totalRate: 0,
+      totalSaleMoney:0,
       totalPrice:0,
       totalDetail:0,
       currentPrice:0,
@@ -1533,6 +1542,13 @@ export default {
             this.totalDetail = response.data.data._meta.totalCount
             this.dead.page = response.data.data._meta.currentPage
             this.dead.pageSize = response.data.data._meta.perPage
+            this.totalCostMoney=response.data.data.extra.totalCostMoney.toFixed(2)
+            this.totalExpress=response.data.data.extra.totalExpress.toFixed(2)
+            this.totalPackage=response.data.data.extra.totalPackage.toFixed(2)
+            this.totalPpEbay=response.data.data.extra.totalPpEbay.toFixed(2)
+            this.totalProfit=response.data.data.extra.totalProfit.toFixed(2)
+            this.totalRate=response.data.data.extra.totalRate.toFixed(2)
+            this.totalSaleMoney=response.data.data.extra.totalSaleMoney.toFixed(2)
             this.load2=false
           })
     },
@@ -1659,7 +1675,9 @@ export default {
             return false
           }
         })
-      }else {
+      }else if(this.activeName === 'maoli') {
+        this.onSubmit2(form)
+      }else{
         this.onSubmit1(form)
       }
     },
@@ -1762,6 +1780,56 @@ export default {
           (sums[fileds.indexOf('netprofittotal')] * 10000) /
             sums[fileds.indexOf('salemoneyrmbtotal')]
         ) / 100
+      return sums
+    },
+    getSummariesDev(param) {
+      const { columns, data } = param
+      const sums = []
+      const fileds = columns.map(item => item.property)
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = '合计'
+          return
+        }
+        const values = data.map(item =>
+          Number(item[column.property] ? item[column.property] : 'unkonwn')
+        )
+        if (!values.every(value => isNaN(value))) {
+          sums[index] = values.reduce((prev, curr) => {
+            const value = Number(curr)
+            if (!isNaN(value)) {
+              return prev + curr
+            } else {
+              return prev
+            }
+          }, 0)
+          sums[index] = Math.round(sums[index] * 100) / 100
+        } else {
+          sums[index] = 'N/A'
+        }
+        let arr=sums
+        if(index==9){
+            sums[index] = this.totalSaleMoney;
+        }
+        if(index==10){
+            sums[index] = this.totalCostMoney;
+        }
+        if(index==11){
+            sums[index] = this.totalPpEbay;
+        }
+        if(index==12){
+            sums[index] = this.totalPackage;
+        }
+        if(index==13){
+            sums[index] = this.totalExpress;
+        }
+        if(index==14){
+            sums[index] = this.totalProfit;
+        }
+        if(index==15){
+            sums[index] = this.totalRate;
+        }
+      })
       return sums
     },
     // 数字排序
@@ -1880,6 +1948,77 @@ export default {
         const data = this.tableData02.map(v => filterVal.map(k => v[k]))
         const [fileName, fileType, sheetName] = [FileName, 'xls']
         this.$toExcel({ th, data, fileName, fileType, sheetName })
+      }else if(this.activeName === 'maoli'){
+        let arrTk={}
+        let admin=''
+        arrTk.department=this.formInline.region
+        arrTk.dateRange=this.condition.dateRange
+        arrTk.dateType=this.condition.dateType
+        const username = sessionStorage.getItem('user')
+        for (let i = 0; i < this.res.length; i++) {
+          admin = this.res[i].username
+        }
+        if (username === admin && this.formInline.region.length === 0 && this.condition.member.length === 0) {
+            arrTk.member = this.member.map(m => {
+            return m.username
+            })
+          } else if (username !== admin && isAdmin() === false) {
+             arrTk.member = this.member.map(m => {
+                return m.username
+              })
+            } else if (this.formInline.region.length !== 0 && this.condition.member.length === 0) {
+              const val = this.formInline.region
+              const res = this.allMember
+              for (let i = 0; i < val.length; i++) {
+                const per = res.filter(
+                        ele =>
+                        (ele.department === val[i] || ele.parent_department === val[i]) &&
+                        ele.position === '开发'
+                )
+                this.member.concat(per)
+              }
+              arrTk.member = this.member.map(m => {
+                return m.username
+              })
+            } else {
+              arrTk.member = this.condition.member
+            }
+        APIDevelopExport(arrTk).then(res => {
+          const blob = new Blob([res.data], {
+            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
+          })
+          const downloadElement = document.createElement('a')
+          const objectUrl = window.URL.createObjectURL(blob)
+          downloadElement.href = objectUrl
+          const date = new Date()
+          const year = date.getFullYear()
+          let month = date.getMonth() + 1
+          let strDate = date.getDate()
+          let hour = date.getHours()
+          let minute = date.getMinutes()
+          let second = date.getSeconds()
+          if (month >= 1 && month <= 9) {
+            month = '0' + month
+          }
+          if (strDate >= 0 && strDate <= 9) {
+            strDate = '0' + strDate
+          }
+          if (hour >= 0 && hour <= 9) {
+            hour = '0' + hour
+          }
+          if (minute >= 0 && minute <= 9) {
+            minute = '0' + minute
+          }
+          if (second >= 0 && second <= 9) {
+            second = '0' + second
+          }
+          const filename =
+                  '毛利明细_' + year + month + strDate + hour + minute + second
+          downloadElement.download = filename + '.xls'
+          document.body.appendChild(downloadElement)
+          downloadElement.click()
+          document.body.removeChild(downloadElement)
+        })
       }else{
         let arrTk={}
         let admin=''
@@ -1949,7 +2088,7 @@ export default {
             second = '0' + second
           }
           const filename =
-                  '司库明细_' + year + month + strDate + hour + minute + second
+                  '死库明细_' + year + month + strDate + hour + minute + second
           downloadElement.download = filename + '.xls'
           document.body.appendChild(downloadElement)
           downloadElement.click()
