@@ -525,14 +525,14 @@
             style="padding: 0;margin-left: 15px;">
       <h3 class="toolbar essential" style="margin-top: 15px;margin-bottom: 15px">SKU<span style="float:right;margin-right: 78px;font-size: 14px;margin-bottom: 15px;display: block">共{{skuTotal}}条<span style="margin-left: 15px">第1-{{skuTotal}}条数据</span></span>
       </h3>
-       <el-input style="float:left;width:100px;" placeholder="替换前" v-model="ordColor"></el-input>
-        <el-input style="float:left;width:100px;margin-left:5px;" placeholder="替换后" v-model="newColor"></el-input>
+       <el-input style="float:left;" placeholder="替换前" v-model="ordColor" class="wid100"></el-input>
+        <el-input style="float:left;margin-left:5px;" placeholder="替换后" v-model="newColor" class="wid100"></el-input>
         <el-button type="success" style="float:left;width:100px;margin-left:5px;" @click="replaceColor">替换款式1</el-button>
-        <el-input style="float:left;width:100px;margin-left:10px;" placeholder="替换前" v-model="ordSize"></el-input>
-        <el-input style="float:left;width:100px;margin-left:5px;" placeholder="替换后" v-model="newSize"></el-input>
+        <el-input style="float:left;margin-left:10px;" placeholder="替换前" v-model="ordSize" class="wid100"></el-input>
+        <el-input style="float:left;margin-left:5px;" placeholder="替换后" v-model="newSize" class="wid100"></el-input>
         <el-button type="danger" style="float:left;width:100px;margin-left:5px;" @click="replaceSize">替换款式2</el-button>
-        <el-input style="float:left;width:100px;margin-left:10px;" placeholder="替换前" v-model="ordpro"></el-input>
-        <el-input style="float:left;width:100px;margin-left:5px;" placeholder="替换后" v-model="newpro"></el-input>
+        <el-input style="float:left;margin-left:10px;" placeholder="替换前" v-model="ordpro" class="wid100"></el-input>
+        <el-input style="float:left;margin-left:5px;" placeholder="替换后" v-model="newpro" class="wid100"></el-input>
         <el-button type="warning" style="float:left;width:100px;margin-left:5px;" @click="replacePro">替换款式3</el-button>
     </el-col>
     <el-col :span="24" style="margin-top:15px;">
@@ -567,7 +567,7 @@
       </el-table-column>
       <el-table-column label="SKU"
                        prop="sku"
-                       min-width="150"
+                       min-width="110"
                        header-align="center">
         <template slot-scope="scope">
           <el-input size="small"
@@ -575,6 +575,7 @@
         </template>
       </el-table-column>
       <el-table-column label="款式1"
+                       min-width="100"
                        prop="property1"
                        header-align="center">
         <template slot-scope="scope">
@@ -584,6 +585,7 @@
       </el-table-column>
       <el-table-column label="款式2"
                        prop="property2"
+                       min-width="100"
                        header-align="center">
         <template slot-scope="scope">
           <el-input size="small"
@@ -592,6 +594,7 @@
       </el-table-column>
       <el-table-column label="款式3"
                        prop="property3"
+                       min-width="100"
                        header-align="center">
         <template slot-scope="scope">
           <el-input size="small"
@@ -600,6 +603,7 @@
       </el-table-column>
       <el-table-column label="成本价"
                        prop="costPrice"
+                       min-width="100"
                        header-align="center">
         <template slot-scope="scope">
           <el-input size="small"
@@ -608,6 +612,7 @@
       </el-table-column>
       <el-table-column label="重量"
                        prop="weight"
+                       min-width="100"
                        header-align="center">
         <template slot-scope="scope">
           <el-input size="small"
@@ -616,6 +621,7 @@
       </el-table-column>
       <el-table-column label="零售价"
                        prop="retailPrice"
+                       min-width="100"
                        header-align="center">
         <template slot-scope="scope">
           <el-input size="small"
@@ -624,6 +630,7 @@
       </el-table-column>
       <el-table-column label="joom零售价"
                        prop="joomPrice"
+                       min-width="100"
                        header-align="center">
         <template slot-scope="scope">
           <el-input size="small"
@@ -632,6 +639,7 @@
       </el-table-column>
       <el-table-column label="joom运费"
                        prop="joomShipping"
+                       min-width="100"
                        header-align="center">
         <template slot-scope="scope">
           <el-input size="small"
@@ -640,6 +648,7 @@
       </el-table-column>
       <el-table-column label="备货数量"
                        prop="stockNum"
+                       min-width="100"
                        header-align="center">
         <template slot-scope="scope">
           <el-input size="small"
@@ -648,6 +657,36 @@
                     v-model="scope.row.stockNum" disabled v-if="editForm.stockUp=='否'"></el-input>
         </template>
       </el-table-column>
+      <!-- <el-table-column label="款式1"
+                       min-width="100"
+                       prop="property2"
+                       header-align="center">
+        <template slot-scope="scope">
+          <el-select v-model="value" placeholder="请选择">
+            <el-option
+              v-for="item in options1"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </template>
+      </el-table-column>
+      <el-table-column label="款式2"
+                       min-width="100"
+                       prop="property2"
+                       header-align="center">
+        <template slot-scope="scope">
+          <el-select v-model="value" placeholder="请选择">
+            <el-option
+              v-for="item in options2"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </template>
+      </el-table-column> -->
     </el-table>
     <el-row style="margin-top:15px;padding-left: 1%">
       <el-col :span="3">
@@ -725,6 +764,8 @@
                  </el-button>
       <el-button size="small"
                  type="danger" @click="createOrder" :disabled="orderTrue">生成采购单</el-button>
+      <!-- <el-button size="small"
+                 type="success" @click="synchro1688">同步1688</el-button>            -->
       <!--<el-button size="small"-->
                  <!--type="danger">删除行</el-button>-->
     </div>
@@ -756,7 +797,7 @@
   </section>
 </template>
 <script type="text/ecmascript-6">
-import { APIAttributeInfo, APISaveAttribute, APIAttribute,APISaveFinishAttribute,APIDeleteVariant,APIAttributeToShopElf,APIMakePurchasingOrder  } from '../../api/product'
+import { APIAttributeInfo, APISaveAttribute, APIAttribute,APISaveFinishAttribute,APIDeleteVariant,APIAttributeToShopElf,APIMakePurchasingOrder,APIsync1688Goods,APIget1688Suppliers  } from '../../api/product'
 import { getMember, getGoodscats, getAttributeInfoPackName, getAttributeInfoSpecialAttribute, getAttributeInfoStoreName, getAttributeInfoSeason, getAttributeInfoPlat, getAttributeInfoSalesman, getAttributeInfoCat, getAttributeInfoSubCat } from '../../api/profit'
 import { getMenu } from '../../api/login'
 export default {
@@ -802,32 +843,8 @@ export default {
       childrenCategory: [],
       screen: [],
       foremost: 0,
-      options: [
-        {
-          value: '选项1',
-          label: '一键生成SKU'
-        },
-        {
-          value: '选项2',
-          label: '保存当前数据'
-        },
-        {
-          value: '选项3',
-          label: '保存并完善'
-        },
-        {
-          value: '选项4',
-          label: '导入普源'
-        },
-        {
-          value: '选项5',
-          label: '生成采购单'
-        },
-        {
-          value: '选项6',
-          label: '删除行'
-        }
-      ],
+      options1: [],
+      options2: [],
       condition: {
         id: 0
       },
@@ -844,6 +861,22 @@ export default {
     }
   },
   methods: {
+    synchro1688(){
+      let obj={
+        id:this.oaGoods.nid,
+      }
+      APIsync1688Goods(obj).then(res => {
+          this.get1688Suppliers();  
+      })
+    },
+    get1688Suppliers(){
+      let obj={
+        id:this.oaGoods.nid,
+      }
+      APIget1688Suppliers(obj).then(res => {
+            
+      })
+    },
     saveFb(){
       if(this.saveFlag){
         this.titleTips=true
@@ -1669,6 +1702,9 @@ section {
   left: -20rem;
   z-index: 999;
 }
+.wid100{
+  width: 100px;
+}
 @media screen and (max-width: 1500px){
    .font13{
      font-size: 13px;
@@ -1678,6 +1714,9 @@ section {
    .font13{
      font-size: 12px;
    }
+   .wid100{
+    width: 80px;
+  }
 }
 .pos{
   position: relative
