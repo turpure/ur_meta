@@ -758,7 +758,8 @@
           :label="item.companyName"
           :value="item">
         </el-option>
-      </el-select>                      
+      </el-select>
+      <span style="font-size:13px;color:red;margin-left:10px;">单属性产品只需要选择1688商品就可以，无需选择1688样式。</span>                      
       <!--<el-button size="small"-->
                  <!--type="danger">删除行</el-button>-->
     </div>
