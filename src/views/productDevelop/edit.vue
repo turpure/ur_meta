@@ -759,7 +759,7 @@
           :value="item">
         </el-option>
       </el-select>
-      <span style="font-size:13px;color:red;margin-left:10px;">提示：请先选择offerId再选择1688style，1688style没有对应信息可无需选择，如果没有offerId，请先同步1688。</span>                      
+      <span style="font-size:13px;color:red;margin-left:10px;">提示：先同步1688->选择offerId->再选择1688style，如果1688style没有对应信息无需选择。</span>                      
       <!--<el-button size="small"-->
                  <!--type="danger">删除行</el-button>-->
     </div>
