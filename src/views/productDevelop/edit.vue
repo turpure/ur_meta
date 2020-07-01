@@ -885,7 +885,16 @@ export default {
       }
       this.loading=true
       APIsync1688Goods(obj).then(res => {
-          this.get1688Suppliers();  
+        if(res.data.code=='200'){
+          this.$message({
+            message: '同步成功',
+            type: 'success'
+          })
+          this.get1688Suppliers();
+        }else{
+          this.loading=false 
+          this.$message.error(res.data.message)
+        }  
       })
     },
     get1688Suppliers(){
