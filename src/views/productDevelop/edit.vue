@@ -545,7 +545,7 @@
                  <!--:label="item.label"-->
                  <!--:value="item.value"></el-option>-->
     <!--</el-select>-->
-    <el-table :data="tableData" border style="width: 98%;margin-left: 1%" @selection-change="selsChange" max-height="1000">
+    <el-table :data="tableData" border style="width: 98%;margin-left: 1%" @selection-change="selsChange" max-height="700" v-loading="loading">
       <!-- <el-table-column type="selection"
                        align="center"
                        header-align="center"></el-table-column> -->
@@ -657,36 +657,21 @@
                     v-model="scope.row.stockNum" disabled v-if="editForm.stockUp=='否'"></el-input>
         </template>
       </el-table-column>
-      <!-- <el-table-column label="款式1"
+      <el-table-column label="1688style"
                        min-width="100"
                        prop="property2"
                        header-align="center">
         <template slot-scope="scope">
-          <el-select v-model="value" placeholder="请选择">
+          <el-select v-model="scope.row.specId" placeholder="请选择">
             <el-option
-              v-for="item in options1"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
+              v-for="(item,index) in style1688Data"
+              :key="index"
+              :label="item.value"
+              :value="item.id">
             </el-option>
           </el-select>
         </template>
       </el-table-column>
-      <el-table-column label="款式2"
-                       min-width="100"
-                       prop="property2"
-                       header-align="center">
-        <template slot-scope="scope">
-          <el-select v-model="value" placeholder="请选择">
-            <el-option
-              v-for="item in options2"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select>
-        </template>
-      </el-table-column> -->
     </el-table>
     <el-row style="margin-top:15px;padding-left: 1%">
       <el-col :span="3">
@@ -764,8 +749,16 @@
                  </el-button>
       <el-button size="small"
                  type="danger" @click="createOrder" :disabled="orderTrue">生成采购单</el-button>
-      <!-- <el-button size="small"
-                 type="success" @click="synchro1688">同步1688</el-button>            -->
+      <el-button size="small"
+                 type="success" @click="synchro1688">同步1688</el-button>
+      <el-select v-model="value1688" placeholder="请选择" value-key="companyName" size="small" @change="currentSel">
+        <el-option
+          v-for="item in data1688"
+          :key="item.companyName"
+          :label="item.companyName"
+          :value="item">
+        </el-option>
+      </el-select>                      
       <!--<el-button size="small"-->
                  <!--type="danger">删除行</el-button>-->
     </div>
@@ -797,7 +790,7 @@
   </section>
 </template>
 <script type="text/ecmascript-6">
-import { APIAttributeInfo, APISaveAttribute, APIAttribute,APISaveFinishAttribute,APIDeleteVariant,APIAttributeToShopElf,APIMakePurchasingOrder,APIsync1688Goods,APIget1688Suppliers  } from '../../api/product'
+import { APIAttributeInfo, APISaveAttribute, APIAttribute,APISaveFinishAttribute,APIDeleteVariant,APIAttributeToShopElf,APIMakePurchasingOrder,APIsync1688Goods,APIget1688Suppliers,APIsync1688GoodStyle  } from '../../api/product'
 import { getMember, getGoodscats, getAttributeInfoPackName, getAttributeInfoSpecialAttribute, getAttributeInfoStoreName, getAttributeInfoSeason, getAttributeInfoPlat, getAttributeInfoSalesman, getAttributeInfoCat, getAttributeInfoSubCat } from '../../api/profit'
 import { getMenu } from '../../api/login'
 export default {
@@ -857,24 +850,55 @@ export default {
       dictionaryName1: '',
       mapPersons1: '',
       allMenu:[],
-      sels:[]
+      sels:[],
+      data1688:[],
+      value1688:null,
+      loading:false,
+      style1688Data:[],
+      id1688:null,
     }
   },
   methods: {
+    currentSel(selVal){
+      let obj = {
+        offerId:selVal.offerId,
+        subject:selVal.subject,
+        companyName:selVal.companyName,
+      }
+      APIsync1688GoodStyle(obj).then(res => {
+        let obj = res.data.data
+        const arr = []
+        for(var key in obj){
+          let str = {
+            id:key,
+            value:obj[key],
+          }
+          arr.push(str)
+        }
+        this.style1688Data=arr
+        this.id1688=selVal.offerId
+      })
+    },
     synchro1688(){
       let obj={
-        id:this.oaGoods.nid,
+        id:this.condition.id,
       }
+      this.loading=true
       APIsync1688Goods(obj).then(res => {
           this.get1688Suppliers();  
       })
     },
     get1688Suppliers(){
       let obj={
-        id:this.oaGoods.nid,
+        id:this.condition.id,
       }
       APIget1688Suppliers(obj).then(res => {
-            
+         if(res.data.code==200){
+           this.data1688=res.data.data
+         }else{
+           this.$message.error(res.data.message)
+         }  
+         this.loading=false 
       })
     },
     saveFb(){
@@ -1213,7 +1237,6 @@ export default {
         for (let i = 0; i < this.tableData.length; i++) {
           this.tableData[i].costPrice = this.costprice
         }
-        console.log(this.tableData)
       } else {
         return false
       }
@@ -1361,6 +1384,7 @@ export default {
             origin3: this.oaGoods.origin3
           }
         },
+        offerId: this.value1688,
         skuInfo: this.tableData
       }
       APISaveFinishAttribute(saveInfo).then(res => {
@@ -1480,6 +1504,7 @@ export default {
             origin3: this.oaGoods.origin3
           }
         },
+        offerId: this.value1688,
         skuInfo: this.tableData
       }
       APISaveAttribute(saveInfo).then(res => {
@@ -1573,6 +1598,7 @@ export default {
             }
           }
         }
+        this.id1688=res.data.data.offerId
       })
     }
   },
@@ -1589,6 +1615,7 @@ export default {
     })
     this.condition.id = this.$route.params.id
     this.getData()
+    this.get1688Suppliers();
     getGoodscats().then(response => {
       this.category = this.cate = response.data.data
     })

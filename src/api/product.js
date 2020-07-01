@@ -2075,3 +2075,11 @@ export function APIget1688Suppliers(param) {
     data
   })
 }
+export function APIsync1688GoodStyle(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/get1688-goods-style',
+    method: 'post',
+    data
+  })
+}
