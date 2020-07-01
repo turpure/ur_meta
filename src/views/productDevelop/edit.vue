@@ -658,7 +658,7 @@
         </template>
       </el-table-column>
       <el-table-column label="1688style"
-                       min-width="100"
+                       min-width="130"
                        prop="property2"
                        header-align="center">
         <template slot-scope="scope">
@@ -1599,6 +1599,14 @@ export default {
           }
         }
         this.id1688=res.data.data.offerId
+        if(this.id1688){
+          for(var i =0;i<this.data1688.length;i++){
+            if(this.id1688==this.data1688[i].offerId){
+              this.value1688=this.data1688[i]
+            }
+          }
+          this.currentSel(this.value1688)
+        }
       })
     }
   },
@@ -1614,8 +1622,8 @@ export default {
       }
     })
     this.condition.id = this.$route.params.id
-    this.getData()
     this.get1688Suppliers();
+    this.getData()
     getGoodscats().then(response => {
       this.category = this.cate = response.data.data
     })
