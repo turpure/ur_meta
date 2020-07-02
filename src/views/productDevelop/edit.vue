@@ -579,9 +579,9 @@
                        prop="property2"
                        header-align="center">
         <template slot-scope="scope">
-          <el-input size="mini"
+          <el-input size="small"
                     v-model="scope.row.sku"></el-input>
-          <el-select v-model="scope.row.offerId" placeholder="请选择供应商" size="mini" style="width:100%;margin-top:5px;" @change="currentSel(scope.$index,$event)">
+          <el-select v-model="scope.row.offerId" placeholder="请选择供应商" size="small" style="width:100%;margin-top:5px;" @change="currentSel(scope.$index,$event)">
             <el-option
               v-for="(item,index) in data1688"
               :key="index"
@@ -589,7 +589,7 @@
               :value="item.offerId">
             </el-option>
           </el-select>
-          <el-select v-model="scope.row.specId" placeholder="请选择" style="width:100%;margin-top:5px;" size="mini">
+          <el-select v-model="scope.row.specId" placeholder="请选择" style="width:100%;margin-top:5px;" size="small">
             <el-option
               v-for="(item,index) in scope.row.selectData"
               :key="index"
@@ -612,12 +612,12 @@
                        prop="property1"
                        header-align="center">
         <template slot-scope="scope">
-          <el-input size="mini"
+          <el-input size="small"
                     v-model="scope.row.property1"></el-input>
-          <el-input size="mini"
+          <el-input size="small"
                     style="margin-top:5px;"
                     v-model="scope.row.property2"></el-input>
-          <el-input size="mini"
+          <el-input size="small"
                     style="margin-top:5px;"
                     v-model="scope.row.property3"></el-input>                    
         </template>
@@ -644,12 +644,12 @@
                        prop="costPrice"
                        header-align="center">
         <template slot-scope="scope">
-          <el-input size="mini"
+          <el-input size="small"
                     v-model="scope.row.costPrice"></el-input>
-          <el-input size="mini"
+          <el-input size="small"
                     style="margin-top:5px;"
                     v-model="scope.row.weight"></el-input>
-          <el-input size="mini"
+          <el-input size="small"
                     style="margin-top:5px;"
                     v-model="scope.row.retailPrice"></el-input>                    
         </template>
@@ -676,15 +676,15 @@
                        prop="joomPrice"
                        header-align="center">
         <template slot-scope="scope">
-          <el-input size="mini"
+          <el-input size="small"
                     v-model="scope.row.joomPrice"></el-input>
-          <el-input size="mini"
+          <el-input size="small"
                     style="margin-top:5px;"
                     v-model="scope.row.joomShipping"></el-input>
-          <el-input size="mini"
+          <el-input size="small"
                     style="margin-top:5px;"
                     v-model="scope.row.stockNum" v-if="editForm.stockUp=='是'"></el-input>
-          <el-input size="mini"
+          <el-input size="small"
                     style="margin-top:5px;"
                     v-model="scope.row.stockNum" disabled v-if="editForm.stockUp=='否'"></el-input>             
         </template>
