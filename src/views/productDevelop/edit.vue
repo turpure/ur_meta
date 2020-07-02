@@ -559,13 +559,14 @@
       <!-- <el-table-column type="selection"
                        align="center"
                        header-align="center"></el-table-column> -->
-      <el-table-column type="index"
+      <!-- <el-table-column type="index"
                        align="center"
                        header-align="center">
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column label="操作"
                        header-align="center"
                        width="50"
+                       fixed
                        align="center">
         <template slot-scope="scope">
           <el-tooltip content="删除">
@@ -575,56 +576,30 @@
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column label="SKU/供应商/1688规格"
-                       prop="property2"
-                       header-align="center">
-        <template slot-scope="scope">
-          <el-input size="small"
-                    v-model="scope.row.sku"></el-input>
-          <el-select v-model="scope.row.offerId" placeholder="请选择供应商" size="small" style="width:100%;margin-top:5px;" @change="currentSel(scope.$index,$event)">
-            <el-option
-              v-for="(item,index) in data1688"
-              :key="index"
-              :label="item.companyName"
-              :value="item.offerId">
-            </el-option>
-          </el-select>
-          <el-select v-model="scope.row.specId" placeholder="请选择" style="width:100%;margin-top:5px;" size="small">
-            <el-option
-              v-for="(item,index) in scope.row.selectData"
-              :key="index"
-              :label="item.style"
-              :value="item.specId">
-            </el-option>
-          </el-select>
-        </template>
-      </el-table-column>
-      <!-- <el-table-column label="SKU"
+      <el-table-column label="SKU"
                        prop="sku"
+                       fixed
                        width="160"
                        header-align="center">
         <template slot-scope="scope">
           <el-input size="small"
                     v-model="scope.row.sku"></el-input>
         </template>
-      </el-table-column> -->
-      <el-table-column label="款式1/2/3"
+      </el-table-column>
+      <el-table-column label="款式1"
                        prop="property1"
+                       width="180"
+                       fixed
                        header-align="center">
         <template slot-scope="scope">
           <el-input size="small"
-                    v-model="scope.row.property1"></el-input>
-          <el-input size="small"
-                    style="margin-top:5px;"
-                    v-model="scope.row.property2"></el-input>
-          <el-input size="small"
-                    style="margin-top:5px;"
-                    v-model="scope.row.property3"></el-input>                    
+                    v-model="scope.row.property1"></el-input>                  
         </template>
       </el-table-column>
-      <!-- <el-table-column label="款式2"
+      <el-table-column label="款式2"
                        prop="property2"
-                       width="100"
+                       width="140"
+                       fixed
                        header-align="center">
         <template slot-scope="scope">
           <el-input size="small"
@@ -633,28 +608,23 @@
       </el-table-column>
       <el-table-column label="款式3"
                        prop="property3"
-                       width="100"
+                       width="90"
                        header-align="center">
         <template slot-scope="scope">
           <el-input size="small"
                     v-model="scope.row.property3"></el-input>
         </template>
-      </el-table-column> -->
-      <el-table-column label="成本价/重量/零售价"
+      </el-table-column>
+      <el-table-column label="成本价"
                        prop="costPrice"
+                       width="90"
                        header-align="center">
         <template slot-scope="scope">
           <el-input size="small"
-                    v-model="scope.row.costPrice"></el-input>
-          <el-input size="small"
-                    style="margin-top:5px;"
-                    v-model="scope.row.weight"></el-input>
-          <el-input size="small"
-                    style="margin-top:5px;"
-                    v-model="scope.row.retailPrice"></el-input>                    
+                    v-model="scope.row.costPrice"></el-input>                 
         </template>
       </el-table-column>
-      <!-- <el-table-column label="重量"
+      <el-table-column label="重量"
                        prop="weight"
                        width="90"
                        header-align="center">
@@ -671,25 +641,17 @@
           <el-input size="small"
                     v-model="scope.row.retailPrice"></el-input>
         </template>
-      </el-table-column> -->
-      <el-table-column label="joom零售价/joom运费/备货数量"
+      </el-table-column>
+      <el-table-column label="joom零售价"
                        prop="joomPrice"
+                       width="100"
                        header-align="center">
         <template slot-scope="scope">
           <el-input size="small"
-                    v-model="scope.row.joomPrice"></el-input>
-          <el-input size="small"
-                    style="margin-top:5px;"
-                    v-model="scope.row.joomShipping"></el-input>
-          <el-input size="small"
-                    style="margin-top:5px;"
-                    v-model="scope.row.stockNum" v-if="editForm.stockUp=='是'"></el-input>
-          <el-input size="small"
-                    style="margin-top:5px;"
-                    v-model="scope.row.stockNum" disabled v-if="editForm.stockUp=='否'"></el-input>             
+                    v-model="scope.row.joomPrice"></el-input>            
         </template>
       </el-table-column>
-      <!-- <el-table-column label="joom运费"
+      <el-table-column label="joom运费"
                        prop="joomShipping"
                        width="90"
                        header-align="center">
@@ -700,7 +662,7 @@
       </el-table-column>
       <el-table-column label="备货数量"
                        prop="stockNum"
-                       width="100"
+                       width="90"
                        header-align="center">
         <template slot-scope="scope">
           <el-input size="small"
@@ -708,9 +670,25 @@
           <el-input size="small"
                     v-model="scope.row.stockNum" disabled v-if="editForm.stockUp=='否'"></el-input>
         </template>
-      </el-table-column> -->
-      <!-- <el-table-column label="1688规格"
+      </el-table-column>
+      <el-table-column label="供应商"
+                       width="190" 
                        prop="property2"
+                       header-align="center">
+        <template slot-scope="scope">
+          <el-select v-model="scope.row.offerId" placeholder="请选择供应商" size="small" style="width:100%;margin-top:5px;" @change="currentSel(scope.$index,$event)">
+            <el-option
+              v-for="(item,index) in data1688"
+              :key="index"
+              :label="item.companyName"
+              :value="item.offerId">
+            </el-option>
+          </el-select>
+        </template>
+      </el-table-column>
+      <el-table-column label="1688规格"
+                       prop="property2"
+                       width="300"
                        header-align="center">
         <template slot-scope="scope">
           <el-select v-model="scope.row.specId" placeholder="请选择" style="width:100%">
@@ -722,7 +700,7 @@
             </el-option>
           </el-select>
         </template>
-      </el-table-column> -->
+      </el-table-column>
     </el-table>
     <el-row style="margin-top:15px;padding-left: 1%">
       <el-col :span="3">
@@ -802,8 +780,8 @@
                  type="danger" @click="createOrder" :disabled="orderTrue">生成采购单</el-button>
       <el-button size="small"
                  type="success" @click="synchro1688">同步1688</el-button>
-      <!-- <el-button size="small"
-                 type="warning" @click="allStyle">一键填充款式</el-button>            -->
+      <el-button size="small"
+                 type="warning" @click="allStyle">一键填充款式</el-button>           
       <!-- <el-select v-model="value1688" placeholder="请选择供应商" value-key="companyName" size="small" @change="currentSel">
         <el-option
           v-for="item in data1688"
@@ -929,6 +907,7 @@ export default {
           for(let j =0;j<dataValue.length;j++){
             if(styleNumber==dataValue[j].specId){
               const arr = dataValue[j].style
+              this.tableData[i].property1=arr.split(' ')[0]
               this.tableData[i].property2=arr.split(' ')[1]
             }
           }
