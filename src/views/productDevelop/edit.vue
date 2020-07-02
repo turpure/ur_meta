@@ -802,8 +802,8 @@
                  type="danger" @click="createOrder" :disabled="orderTrue">生成采购单</el-button>
       <el-button size="small"
                  type="success" @click="synchro1688">同步1688</el-button>
-      <el-button size="small"
-                 type="warning" @click="allStyle">一键填充款式</el-button>           
+      <!-- <el-button size="small"
+                 type="warning" @click="allStyle">一键填充款式</el-button>            -->
       <!-- <el-select v-model="value1688" placeholder="请选择供应商" value-key="companyName" size="small" @change="currentSel">
         <el-option
           v-for="item in data1688"
