@@ -651,7 +651,7 @@
                     v-model="scope.row.weight"></el-input>
           <el-input size="mini"
                     style="margin-top:5px;"
-                    v-model="scope.row.coretailPricestPrice"></el-input>                    
+                    v-model="scope.row.retailPrice"></el-input>                    
         </template>
       </el-table-column>
       <!-- <el-table-column label="重量"
@@ -757,7 +757,7 @@
       <el-col :span="4">
         <input placeholder="零售价$" v-model="retailprice"
                style="width:50%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
-        <span class="xzz1" @click="price">零售确定</span>
+        <span class="xzz1" @click="priceAll">零售确定</span>
         <!--<el-input v-model="retailprice"-->
                   <!--size="small"-->
                   <!--placeholder="零售价$"-->
@@ -1334,10 +1334,11 @@ export default {
       }
     },
     // 零售价格确定
-    price() {
+    priceAll() {
       if (this.retailprice) {
         for (let i = 0; i < this.tableData.length; i++) {
           this.tableData[i].retailPrice = this.retailprice
+          console.log(this.tableData[i].retailPrice)
         }
       } else {
         return false
