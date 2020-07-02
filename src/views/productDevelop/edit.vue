@@ -525,15 +525,25 @@
             style="padding: 0;margin-left: 15px;">
       <h3 class="toolbar essential" style="margin-top: 15px;margin-bottom: 15px">SKU<span style="float:right;margin-right: 78px;font-size: 14px;margin-bottom: 15px;display: block">共{{skuTotal}}条<span style="margin-left: 15px">第1-{{skuTotal}}条数据</span></span>
       </h3>
-       <el-input style="float:left;" placeholder="替换前" v-model="ordColor" class="wid100"></el-input>
-        <el-input style="float:left;margin-left:5px;" placeholder="替换后" v-model="newColor" class="wid100"></el-input>
-        <el-button type="success" style="float:left;width:100px;margin-left:5px;" @click="replaceColor">替换款式1</el-button>
-        <el-input style="float:left;margin-left:10px;" placeholder="替换前" v-model="ordSize" class="wid100"></el-input>
-        <el-input style="float:left;margin-left:5px;" placeholder="替换后" v-model="newSize" class="wid100"></el-input>
-        <el-button type="danger" style="float:left;width:100px;margin-left:5px;" @click="replaceSize">替换款式2</el-button>
-        <el-input style="float:left;margin-left:10px;" placeholder="替换前" v-model="ordpro" class="wid100"></el-input>
-        <el-input style="float:left;margin-left:5px;" placeholder="替换后" v-model="newpro" class="wid100"></el-input>
-        <el-button type="warning" style="float:left;width:100px;margin-left:5px;" @click="replacePro">替换款式3</el-button>
+       <el-input style="float:left;" placeholder="替换前" v-model="ordColor" class="wid100" size="medium"></el-input>
+        <el-input style="float:left;margin-left:5px;" placeholder="替换后" v-model="newColor" class="wid100" size="medium"></el-input>
+        <el-button type="success" style="float:left;width:100px;margin-left:5px;" @click="replaceColor" size="medium">替换款式1</el-button>
+        <el-input style="float:left;margin-left:10px;" placeholder="替换前" v-model="ordSize" class="wid100" size="medium"></el-input>
+        <el-input style="float:left;margin-left:5px;" placeholder="替换后" v-model="newSize" class="wid100" size="medium"></el-input>
+        <el-button type="danger" style="float:left;width:100px;margin-left:5px;" @click="replaceSize" size="medium">替换款式2</el-button>
+        <el-input style="float:left;margin-left:10px;" placeholder="替换前" v-model="ordpro" class="wid100" size="medium"></el-input>
+        <el-input style="float:left;margin-left:5px;" placeholder="替换后" v-model="newpro" class="wid100" size="medium"></el-input>
+        <el-button type="warning" style="float:left;width:100px;margin-left:5px;" @click="replacePro" size="medium">替换款式3</el-button>
+        <el-select v-model="allSupplierValue" placeholder="请选择供应商" size="medium" style="float:left;width:150px;margin-left:5px;">
+            <el-option
+              v-for="(item,index) in data1688"
+              :key="index"
+              :label="item.companyName"
+              :value="item.offerId">
+            </el-option>
+        </el-select>
+        <el-button type="primary" style="float:left;width:105px;margin-left:5px;" @click="allSupplier" size="medium">设置供应商</el-button>
+        <!-- <el-button type="success" style="float:left;width:100px;margin-left:5px;" @click="allStyle" size="medium">填充款式</el-button> -->
     </el-col>
     <el-col :span="24" style="margin-top:15px;">
     </el-col>
@@ -545,14 +555,14 @@
                  <!--:label="item.label"-->
                  <!--:value="item.value"></el-option>-->
     <!--</el-select>-->
-    <el-table :data="tableData" border style="width: 98%;margin-left: 1%" @selection-change="selsChange" max-height="700" v-loading="loading">
+    <el-table :data="tableData" border style="width: 98%;margin-left: 1%" @selection-change="selsChange" max-height="500" :header-cell-style="getRowClass" v-loading="loading">
       <!-- <el-table-column type="selection"
                        align="center"
                        header-align="center"></el-table-column> -->
-      <!-- <el-table-column type="index"
+      <el-table-column type="index"
                        align="center"
                        header-align="center">
-      </el-table-column> -->
+      </el-table-column>
       <el-table-column label="操作"
                        header-align="center"
                        width="50"
@@ -565,7 +575,31 @@
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column label="SKU"
+      <el-table-column label="SKU/供应商/1688规格"
+                       prop="property2"
+                       header-align="center">
+        <template slot-scope="scope">
+          <el-input size="mini"
+                    v-model="scope.row.sku"></el-input>
+          <el-select v-model="scope.row.offerId" placeholder="请选择供应商" size="mini" style="width:100%;margin-top:5px;" @change="currentSel(scope.$index,$event)">
+            <el-option
+              v-for="(item,index) in data1688"
+              :key="index"
+              :label="item.companyName"
+              :value="item.offerId">
+            </el-option>
+          </el-select>
+          <el-select v-model="scope.row.specId" placeholder="请选择" style="width:100%;margin-top:5px;" size="mini">
+            <el-option
+              v-for="(item,index) in scope.row.selectData"
+              :key="index"
+              :label="item.style"
+              :value="item.specId">
+            </el-option>
+          </el-select>
+        </template>
+      </el-table-column>
+      <!-- <el-table-column label="SKU"
                        prop="sku"
                        width="160"
                        header-align="center">
@@ -573,17 +607,22 @@
           <el-input size="small"
                     v-model="scope.row.sku"></el-input>
         </template>
-      </el-table-column>
-      <el-table-column label="款式1"
-                       width="165"
+      </el-table-column> -->
+      <el-table-column label="款式1/2/3"
                        prop="property1"
                        header-align="center">
         <template slot-scope="scope">
-          <el-input size="small"
+          <el-input size="mini"
                     v-model="scope.row.property1"></el-input>
+          <el-input size="mini"
+                    style="margin-top:5px;"
+                    v-model="scope.row.property2"></el-input>
+          <el-input size="mini"
+                    style="margin-top:5px;"
+                    v-model="scope.row.property3"></el-input>                    
         </template>
       </el-table-column>
-      <el-table-column label="款式2"
+      <!-- <el-table-column label="款式2"
                        prop="property2"
                        width="100"
                        header-align="center">
@@ -600,17 +639,22 @@
           <el-input size="small"
                     v-model="scope.row.property3"></el-input>
         </template>
-      </el-table-column>
-      <el-table-column label="成本价"
+      </el-table-column> -->
+      <el-table-column label="成本价/重量/零售价"
                        prop="costPrice"
-                       width="90"
                        header-align="center">
         <template slot-scope="scope">
-          <el-input size="small"
+          <el-input size="mini"
                     v-model="scope.row.costPrice"></el-input>
+          <el-input size="mini"
+                    style="margin-top:5px;"
+                    v-model="scope.row.weight"></el-input>
+          <el-input size="mini"
+                    style="margin-top:5px;"
+                    v-model="scope.row.coretailPricestPrice"></el-input>                    
         </template>
       </el-table-column>
-      <el-table-column label="重量"
+      <!-- <el-table-column label="重量"
                        prop="weight"
                        width="90"
                        header-align="center">
@@ -627,17 +671,25 @@
           <el-input size="small"
                     v-model="scope.row.retailPrice"></el-input>
         </template>
-      </el-table-column>
-      <el-table-column label="joom零售价"
+      </el-table-column> -->
+      <el-table-column label="joom零售价/joom运费/备货数量"
                        prop="joomPrice"
-                       width="100"
                        header-align="center">
         <template slot-scope="scope">
-          <el-input size="small"
+          <el-input size="mini"
                     v-model="scope.row.joomPrice"></el-input>
+          <el-input size="mini"
+                    style="margin-top:5px;"
+                    v-model="scope.row.joomShipping"></el-input>
+          <el-input size="mini"
+                    style="margin-top:5px;"
+                    v-model="scope.row.stockNum" v-if="editForm.stockUp=='是'"></el-input>
+          <el-input size="mini"
+                    style="margin-top:5px;"
+                    v-model="scope.row.stockNum" disabled v-if="editForm.stockUp=='否'"></el-input>             
         </template>
       </el-table-column>
-      <el-table-column label="joom运费"
+      <!-- <el-table-column label="joom运费"
                        prop="joomShipping"
                        width="90"
                        header-align="center">
@@ -656,24 +708,8 @@
           <el-input size="small"
                     v-model="scope.row.stockNum" disabled v-if="editForm.stockUp=='否'"></el-input>
         </template>
-      </el-table-column>
-      <el-table-column label="供应商"
-                       width="195"
-                       prop="property2"
-                       header-align="center">
-        <template slot-scope="scope">
-          <el-select v-model="scope.row.offerId" placeholder="请选择供应商" size="small" @change="currentSel(scope.$index,$event)">
-            <el-option
-              v-for="(item,index) in data1688"
-              :key="index"
-              :label="item.companyName"
-              :value="item.offerId">
-            </el-option>
-          </el-select>
-        </template>
-      </el-table-column>
-      <el-table-column label="1688规格"
-                       width="330"
+      </el-table-column> -->
+      <!-- <el-table-column label="1688规格"
                        prop="property2"
                        header-align="center">
         <template slot-scope="scope">
@@ -686,7 +722,7 @@
             </el-option>
           </el-select>
         </template>
-      </el-table-column>
+      </el-table-column> -->
     </el-table>
     <el-row style="margin-top:15px;padding-left: 1%">
       <el-col :span="3">
@@ -766,6 +802,8 @@
                  type="danger" @click="createOrder" :disabled="orderTrue">生成采购单</el-button>
       <el-button size="small"
                  type="success" @click="synchro1688">同步1688</el-button>
+      <el-button size="small"
+                 type="warning" @click="allStyle">一键填充款式</el-button>           
       <!-- <el-select v-model="value1688" placeholder="请选择供应商" value-key="companyName" size="small" @change="currentSel">
         <el-option
           v-for="item in data1688"
@@ -812,6 +850,7 @@ import { getMenu } from '../../api/login'
 export default {
   data() {
     return {
+      allSupplierValue:null,
       ordColor:'',
       newColor:'',
       ordSize:'',
@@ -875,14 +914,43 @@ export default {
     }
   },
   methods: {
+    getRowClass({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex == 0) {
+        return "color:#3c8dbc;background:#f5f7fa";
+      } else {
+        return "";
+      }
+    },
+    allStyle(){
+      for(let i=0;i<this.tableData.length;i++){
+        const styleNumber=this.tableData[i].specId
+        for(let k =0;k<this.data1688.length;k++){
+          let dataValue = this.data1688[k].value
+          for(let j =0;j<dataValue.length;j++){
+            if(styleNumber==dataValue[j].specId){
+              const arr = dataValue[j].style
+              this.tableData[i].property2=arr.split(' ')[1]
+            }
+          }
+        }
+      }
+    },
+    allSupplier(){
+      for(let i =0;i<this.tableData.length;i++){
+        this.tableData[i].offerId=this.allSupplierValue
+        for(let k=0;k<this.data1688.length;k++){
+          if(this.tableData[i].offerId==this.data1688[k].offerId){
+            this.tableData[i].selectData=this.data1688[k].value
+          }
+        }
+      }
+    },    
     currentSel(index,e){
       for(var i =0;i<this.data1688.length;i++){
         if(this.data1688[i].offerId==e){
-          console.log(this.data1688[i].value)
           this.tableData[index].selectData=this.data1688[i].value
         }
       }
-      console.log(i,e)
     },
     synchro1688(){
       let obj={
