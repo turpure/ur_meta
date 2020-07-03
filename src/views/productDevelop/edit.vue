@@ -917,6 +917,7 @@ export default {
     allSupplier(){
       for(let i =0;i<this.tableData.length;i++){
         this.tableData[i].offerId=this.allSupplierValue
+        this.tableData[i].specId=''
         for(let k=0;k<this.data1688.length;k++){
           if(this.tableData[i].offerId==this.data1688[k].offerId){
             this.tableData[i].selectData=this.data1688[k].value
