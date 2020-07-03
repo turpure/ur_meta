@@ -534,15 +534,6 @@
         <el-input style="float:left;margin-left:10px;" placeholder="替换前" v-model="ordpro" class="wid100" size="medium"></el-input>
         <el-input style="float:left;margin-left:5px;" placeholder="替换后" v-model="newpro" class="wid100" size="medium"></el-input>
         <el-button type="warning" style="float:left;width:100px;margin-left:5px;" @click="replacePro" size="medium">替换款式3</el-button>
-        <el-select v-model="allSupplierValue" placeholder="请选择供应商" size="medium" style="float:left;width:150px;margin-left:5px;">
-            <el-option
-              v-for="(item,index) in data1688"
-              :key="index"
-              :label="item.companyName"
-              :value="item.offerId">
-            </el-option>
-        </el-select>
-        <el-button type="primary" style="float:left;width:105px;margin-left:5px;" @click="allSupplier" size="medium">设置供应商</el-button>
         <!-- <el-button type="success" style="float:left;width:100px;margin-left:5px;" @click="allStyle" size="medium">填充款式</el-button> -->
     </el-col>
     <el-col :span="24" style="margin-top:15px;">
@@ -780,6 +771,15 @@
                  type="danger" @click="createOrder" :disabled="orderTrue">生成采购单</el-button>
       <el-button size="small"
                  type="success" @click="synchro1688">同步1688</el-button>
+      <el-select v-model="allSupplierValue" placeholder="请选择供应商" size="small">
+            <el-option
+              v-for="(item,index) in data1688"
+              :key="index"
+              :label="item.companyName"
+              :value="item.offerId">
+            </el-option>
+        </el-select>
+      <el-button type="primary" @click="allSupplier" size="small">一键应用供应商</el-button>           
       <el-button size="small"
                  type="warning" @click="allStyle">一键填充款式</el-button>           
       <!-- <el-select v-model="value1688" placeholder="请选择供应商" value-key="companyName" size="small" @change="currentSel">
@@ -790,7 +790,7 @@
           :value="item">
         </el-option>
       </el-select> -->
-      <span style="font-size:13px;color:red;margin-left:10px;">提示：先同步1688->选择供应商->再选择1688规格，如果1688规格没有对应信息无需选择。</span>                      
+      <span style="font-size:13px;color:red;margin-left:10px;">提示：先同步1688->选择供应商->再选择1688规格，如果对应不了1688规格请选择无。</span>                      
       <!--<el-button size="small"-->
                  <!--type="danger">删除行</el-button>-->
     </div>
@@ -928,6 +928,7 @@ export default {
       for(var i =0;i<this.data1688.length;i++){
         if(this.data1688[i].offerId==e){
           this.tableData[index].selectData=this.data1688[i].value
+          this.tableData[index].specId=''
         }
       }
     },
