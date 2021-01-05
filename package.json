@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "animate.css": "^3.7.2",
-    "axios": "^0.15.3",
+    "axios": "^0.21.1",
     "babel-eslint": "^10.0.1",
     "cropperjs": "^1.4.0",
     "echarts": "^3.8.5",
